@@ -151,15 +151,6 @@ def get_rand_moves(f, n, tier):
     return random.choices(pool, weights=weights, k=n)
 
 
-# todo delete this if the game works fine:
-# def get_style_moves(f_or_style_name):
-#     if isinstance(f_or_style_name, str):
-#         style = f_or_style_name
-#     else:
-#         style = f_or_style_name.style.name
-#     return STYLE_MOVES_DICT.get(style, DEFAULT_STYLE_MOVE_DICT)
-
-
 def resolve_style_move(move_s, f):
     pool = []
     if move_s in ALL_MOVES_DICT:
@@ -185,14 +176,3 @@ def resolve_style_move(move_s, f):
         # print('warning: move {} not found'.format(move_s))
         pool = get_rand_moves(f, f.num_moves_choose, rndint_2d(1, 5))
     f.choose_new_move(pool)
-
-
-# todo delete this if the game works fine:
-# def try_get_style_move(f):
-#     moves = get_style_moves(f)
-#     lv = f.level
-#     move_s = moves.get(lv, None)
-#     if move_s is None:
-#         return
-#     else:
-#         return resolve_style_move(move_s, f)

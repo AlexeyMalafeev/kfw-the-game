@@ -16,6 +16,8 @@ AI:
 
 code:
     refactoring of techniques.py
+    refactoring of moves.py
+    remove move_gen.modified_move (not used)
 
 bug fixes:
 
