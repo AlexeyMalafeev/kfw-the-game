@@ -1,6 +1,3 @@
-#! python3
-
-
 from . import items
 from . import names
 from .utilities import *

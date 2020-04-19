@@ -441,19 +441,6 @@ def ultimate(m):
     return m
 
 
-# todo this is not used; do I need it?
-def modified_move(m, d):
-    new = m.copy()
-    new['name'] = d['name']
-    del d['name']
-    for k, v in d.items():
-        cur_v = m[k]
-        new[k] = eval(str(cur_v)+v)
-        if v.startswith('*'):
-            new[k] = round(new[k])
-    return new
-
-
 def gen_moves(moves):
     new_moves = []  # move dicts
     move_names = set()  # strings
