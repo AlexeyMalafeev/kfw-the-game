@@ -1,13 +1,18 @@
-Mon Apr 13 01:13:51 2020
+Sun Apr 19 22:37:08 2020
 Traceback (most recent call last):
-  File "C:\Users\amala\Desktop\kfw\NG autoplay.py", line 8, in <module>
-    g.new_game(num_players=4, coop=False, ai_only=True, auto_save_on=False)
-  File "C:\Users\amala\Desktop\kfw\kf_lib\game.py", line 352, in new_game
-    styles.default_styles = style_gen.get_styles_from_list(self.style_list)  # todo boy is this ugly
-  File "C:\Users\amala\Desktop\kfw\kf_lib\style_gen.py", line 123, in get_styles_from_list
-    return [get_style_from_str(s) for s in style_list]
-  File "C:\Users\amala\Desktop\kfw\kf_lib\style_gen.py", line 123, in <listcomp>
-    return [get_style_from_str(s) for s in style_list]
-  File "C:\Users\amala\Desktop\kfw\kf_lib\style_gen.py", line 115, in get_style_from_str
-    w1, w2, w3 = s.split()
-AttributeError: 'TechStyle' object has no attribute 'split'
+  File "D:\kfw_dev\load game.py", line 7, in <module>
+    g.load_game('save.txt')
+  File "D:\kfw_dev\kf_lib\game.py", line 323, in load_game
+    exec(line)
+  File "<string>", line 1, in <module>
+  File "D:\kfw_dev\kf_lib\player.py", line 57, in __init__
+    tech_names=tech_names, move_names=move_names, rand_atts_mode=rand_atts_mode)
+  File "D:\kfw_dev\kf_lib\fighter.py", line 207, in __init__
+    self.set_moves(move_names)
+  File "D:\kfw_dev\kf_lib\fighter.py", line 1051, in set_moves
+    self.learn_move(mn, silent=True)  # not to write log every time (e.g. when loading a game)
+  File "D:\kfw_dev\kf_lib\fighter.py", line 895, in learn_move
+    move = moves.get_move_obj(move)
+  File "D:\kfw_dev\kf_lib\moves.py", line 138, in get_move_obj
+    return ALL_MOVES_DICT[move_name]
+KeyError: 'Iron Fist'

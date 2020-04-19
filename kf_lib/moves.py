@@ -3,10 +3,6 @@ from .distances import DISTANCE_FEATURES
 from .utilities import *
 
 
-DEFAULT_STYLE_MOVE_DICT = {2: '',
-                           4: '',
-                           6: '',
-                           8: ''}
 # RARE_FEATURE = 'exotic'
 
 # move container (for easy retrieval)
@@ -143,6 +139,7 @@ def get_moves_by_features(features, tier):
     return moves
 
 
+# todo it seems that this function can return the same move multiple times
 def get_rand_moves(f, n, tier):
     """Uses frequency of moves; should never return style moves"""
     known_moves = set(f.moves)
@@ -152,6 +149,18 @@ def get_rand_moves(f, n, tier):
 
 
 def resolve_style_move(move_s, f):
+    # a special case with tier-only move_s
+    if len(move_s) == 1 and move_s.isdigit():
+        # print('we are here')
+        # input('...')
+        # todo reimplement
+        from .techniques import get_tech_obj
+        for t in f.techs:
+            t_obj = get_tech_obj(t)
+            for par in t_obj.params:
+                if par.endswith('_strike_mult'):
+                    par = par.replace('_strike_mult', '')
+                    move_s += f',{par}'
     pool = []
     if move_s in ALL_MOVES_DICT:
         move = ALL_MOVES_DICT[move_s]
@@ -172,6 +181,7 @@ def resolve_style_move(move_s, f):
         elif n > f.num_moves_choose:
             weights = [m.freq for m in pool]  # use move frequency
             pool = random.choices(pool, weights=weights, k=f.num_moves_choose)
+    # todo if move_s == '', make moves that have strike_mult > 1.0 more likely
     else:
         # print('warning: move {} not found'.format(move_s))
         pool = get_rand_moves(f, f.num_moves_choose, rndint_2d(1, 5))

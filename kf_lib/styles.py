@@ -8,6 +8,9 @@ all_tech_styles = {}
 all_no_tech_styles = {}
 
 
+DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4'}
+
+
 class BaseStyle(object):
     is_style = True
 
@@ -28,7 +31,8 @@ class TechStyle(BaseStyle):
     def __init__(self, name, techs_dict, move_str_dict):
         BaseStyle.__init__(self, name)
         self.techs = techs_dict if techs_dict is not None else {}
-        self.move_strings = move_str_dict if move_str_dict is not None else {}
+        self.move_strings = (move_str_dict if move_str_dict is not None
+                             else DEFAULT_STYLE_MOVE_DICT.copy())
         features = []
         for lv, t in self.techs.items():
             if t.descr_short not in features:
@@ -42,7 +46,9 @@ class NoTechStyle(BaseStyle):
 
     def __init__(self, name, move_str_dict=None):
         BaseStyle.__init__(self, name)
-        self.move_strings = move_str_dict if move_str_dict is not None else {}
+        # todo move next line to BaseStyle? TechStyle does the same
+        self.move_strings = (move_str_dict if move_str_dict is not None
+                             else DEFAULT_STYLE_MOVE_DICT.copy())
         all_no_tech_styles[self.name] = self
 
 
@@ -230,10 +236,10 @@ default_styles = [TechStyle('Bagua Zhang',
                         {3: StyleTech('Snake I', dodge_mult=b.EVADE1),
                          5: StyleTech('Snake II', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
                          7: StyleTech('Snake III', qp_max=b.QP_MAX1, qp_start=b.QP_START1)},
-                        {2: '1,palm',
-                         4: 'Trick Palm',  # todo 'Snake Strike'
-                         6: '3,shocking,palm',
-                         8: '4,palm'}  # todo 'Poisonous Snake'
+                        {2: '1,claw',
+                         4: 'Trick Claw',  # todo 'Snake Strike'
+                         6: '3,shocking,claw',
+                         8: '4,claw'}  # todo 'Poisonous Snake'
                         ),
               TechStyle('Taiji',
                         {3: StyleTech('Taiji I', guard_dfs_bonus=b.GUARD_DFS1),
@@ -397,4 +403,7 @@ def get_rand_std_style():
 
 
 def get_style_obj(sname):
+    if sname not in all_styles:
+        from .style_gen import get_style_from_str
+        get_style_from_str(sname)  # this should register the style in all_styles
     return all_styles[sname]
