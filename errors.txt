@@ -1,0 +1,13 @@
+Mon Apr 13 01:13:51 2020
+Traceback (most recent call last):
+  File "C:\Users\amala\Desktop\kfw\NG autoplay.py", line 8, in <module>
+    g.new_game(num_players=4, coop=False, ai_only=True, auto_save_on=False)
+  File "C:\Users\amala\Desktop\kfw\kf_lib\game.py", line 352, in new_game
+    styles.default_styles = style_gen.get_styles_from_list(self.style_list)  # todo boy is this ugly
+  File "C:\Users\amala\Desktop\kfw\kf_lib\style_gen.py", line 123, in get_styles_from_list
+    return [get_style_from_str(s) for s in style_list]
+  File "C:\Users\amala\Desktop\kfw\kf_lib\style_gen.py", line 123, in <listcomp>
+    return [get_style_from_str(s) for s in style_list]
+  File "C:\Users\amala\Desktop\kfw\kf_lib\style_gen.py", line 115, in get_style_from_str
+    w1, w2, w3 = s.split()
+AttributeError: 'TechStyle' object has no attribute 'split'

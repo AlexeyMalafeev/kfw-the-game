@@ -1,0 +1,4 @@
+<class 'kf_lib.ai_player.BaselineAIP'>: 564.21
+<class 'kf_lib.ai_player.LazyAIP'>: 505.35
+<class 'kf_lib.ai_player.SmartAIP'>: 480.2
+<class 'kf_lib.ai_player.VanillaAIP'>: 485.69
