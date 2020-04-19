@@ -1,0 +1,553 @@
+# Stance, Catch Breath
+      s.
+   O  s.
+  |_\/s.
+   |  s.
+   |\ s.
+  /  |s.
+# Step Back
+       s.
+ O     s.
+|_\/   s.
+ |     s.
+/ \    s.
+|  \   s.
+# Retreat
+        s.
+ O   ~~ s.
+|_\  ~~ s.
+ | \ ~~ s.
+/ \     s.
+\  \    s.
+# Leap Back
+        s.
+ O    ~~s.
+|_\/  ~~s.
+ / \  ~~s.
+ \  \   s.
+        s.
+# Step Forward
+        s.
+     O  s.
+    |_\/s.
+     |  s.
+    / \ s.
+   /   |s.
+# Charging Step, Rush Forward
+        s.
+ ~~  O  s.
+ ~~ |_\/s.
+ ~~  |  s.
+    / \ s.
+   /  / s.
+# Leap Forward
+         s.
+~~    O  s.
+~~   |/\/s.
+~~__/ \  s.
+      /  s.
+         s.
+# Block
+      .
+   O_\.
+   |\|.
+   |_ .
+   | /.
+  /   .
+# Guard
+      s.
+   O_|s.
+   |/ s.
+   |  s.
+   |\ s.
+  /  |s.
+# Focus
+      s.
+   O  s.
+   |//s.
+   |  s.
+   |\ s.
+  /  |s.
+# Dodge
+      s.
+      s.
+  O   s.
+ |_\| s.
+__|__ s.
+\    /s.
+# Punch
+        .
+    O __.
+   /_   .
+    |   .
+   / \  .
+  /  |  .
+# Energy Punch, Shocking Punch
+        .
+    O __.
+   /_ ~~.
+    |   .
+   / \  .
+  /  |  .
+# Heavy Punch, Power Punch
+         .
+     O __.
+    /_   .
+    |    .
+   / \   .
+  /  |   .
+# Charging Punch, Long Punch
+         .
+ ~~  O __.
+ ~~ /_   .
+ ~~ |    .
+   / \   .
+  /  |   .
+# Ultimate Punch
+         .
+     O __.
+    /_ ~~.
+    |    .
+   / \   .
+  /  |   .
+# Chain of Punches
+       .
+    O ~.
+    |V~.
+    |  .
+    |\ .
+   /  |.
+# Wing Chun Punch, Short Punch
+       .
+    O _.
+    |V .
+    |  .
+    |\ .
+   /  |.
+# Palm
+         .
+    O __,.
+   /_    .
+    |    .
+   / \   .
+  /  |   .
+# Long Palm, Charging Palm
+          .
+ ~~  O __,.
+ ~~ /_    .
+ ~~  |    .
+    / \   .
+   /  |   .
+# Heavy Palm, Power Palm
+         .
+    O __,.
+  /_     .
+    |    .
+   / \   .
+  /   |  .
+# Ultimate Palm, Buddha Palm
+         .
+    O __,.
+  /_  ~~ .
+    |    .
+   / \   .
+  /   |  .
+# Energy Palm, Shocking Palm
+         .
+    O __,.
+   /_ ~~ .
+    |    .
+   / \   .
+  /  |   .
+# Backfist
+        .
+    O _/.
+   /_   .
+    |   .
+   / \  .
+  /  |  .
+# Hammer Fist
+     \\ .
+    O _/.
+   /_   .
+    |   .
+   / \  .
+  /  |  .
+# Beak
+         .
+    O _/`.
+   /_    .
+    |    .
+   / \   .
+  /  |   .
+# Drunken Punch
+         .
+     O __.
+    /_   .
+    \    .
+   / \   .
+  / /    .
+# Walking Fist
+        .
+    O __.
+   /_   .
+    |   .
+   / \  .
+  /   | .
+# Hook
+        .
+   _O__/.
+    |   .
+    |   .
+   / \  .
+  /  |  .
+# Power Hook
+        .
+   _O__/.
+    |   .
+    /   .
+   / \  .
+  /  |  .
+# Uppercut
+        .
+    O   .
+   /| \/.
+    /   .
+   / \  .
+  /  |  .
+# Claw
+        .
+    O   .
+   /|\/`.
+    |   .
+   / \  .
+  /  |  .
+# Low Claw
+        .
+    O   .
+   /|\_,.
+    |   .
+   / \  .
+  /  |  .
+# Elbow
+       .
+    O__.
+   /| /.
+    |  .
+   / \ .
+  /  | .
+# Shocking Elbow, Energy Elbow
+       .
+    O__.
+   /|~/.
+    |  .
+   / \ .
+  /  | .
+# Flying Punch
+           .
+      O ___.
+     |/    .
+__ / \     .
+    /      .
+           .
+# Flying Claw
+           .
+      O___,.
+     |/    .
+__ / \     .
+    /      .
+           .
+# Low Punch
+         .
+         .
+    O ___.
+   |/    .
+  | \    .
+ /   |   .
+# Punch to Groin
+        .
+        .
+    O   .
+   |/ \_.
+  | \   .
+ /   |  .
+# Low Palm
+         .
+         .
+    O __,.
+   |/    .
+  | \    .
+ /   |   .
+# Finishing Punch
+        .
+        .
+     O  .
+   /_ \ .
+  | \  \.
+ /   |  .
+# Kick
+        .
+  O_\   .
+ /_  ___.
+   \/   .
+   |    .
+  /     .
+# Low Kick
+        .
+  O_\   .
+ /_     .
+   \ ___.
+   |    .
+   |    .
+# Knee Kick
+       .
+  O_\  .
+ /_    .
+   \__ .
+   |  \.
+  /    .
+# Kick to Groin
+        .
+  O_\   .
+ /_     .
+   \____.
+   |  //.
+  /     .
+# Finishing Kick
+        .
+     O_ .
+   /_  \.
+    /_  .
+   /   \.
+  /     .
+# Sweep
+        .
+        .
+ _ O    .
+ \ \/   .
+ _| ___ .
+ \     \.
+# Roundhouse Kick
+        .
+   O_\ /.
+  /_  / .
+    \   .
+    /   .
+   /    .
+# Spin Kick
+         .
+ /_ O_   .
+   |  / /.
+    \ /  .
+    /    .
+   /     .
+# Spin Kick to Body
+        .
+ /_ O_  .
+   |  / .
+    \__/.
+    /   .
+   /    .
+# Dragon's Tail
+        .
+ /_O_ ~/.
+   | // .
+    \   .
+    |   .
+    |   .
+# High Kick
+        .
+  O__| /.
+ /_\  / .
+    \/  .
+    |   .
+    |   .
+# Side Kick
+         .
+  O__|   .
+ /_\  ___.
+    \/   .
+    |    .
+    |    .
+# Flying Kick
+   O_      .
+  /_  \    .
+    \ _____.
+   /__     .
+           .
+           .
+# No-Shadow Kick
+   O_       .
+  /_  \     .
+     \ ___~~.
+      |__~~~.
+           ~.
+            .
+# Flying Spin Kick
+ /_O_    .
+   | /   .
+    \ __/.
+   /_    .
+         .
+         .
+# Knee
+       .
+    O  .
+   \_\|.
+    |__.
+   /  /.
+  /    .
+# Flying Knee        
+       O .
+     /_\|.
+      |__.
+   __/  /.
+         .
+         .
+# Headbutt
+        .
+       O.
+     /_ .
+    /   .
+   / \  .
+  /  /  .
+# Flying Headbutt
+         .
+      _ O.
+     /\\ .
+  __/\   .
+     /   .
+         .
+# Throw
+        .
+      O .
+     /\_.
+    /   .
+   / \  .
+  /  |  .
+# Shove
+         .
+      O  .
+     /===.
+    /    .
+   / \   .
+  /  |   .
+# Trip
+        .
+     O__.
+    |\_ .
+    |__ .
+    /  \.
+   /    .
+# Hit
+      .
+ O *  .
+ |_\_ .
+   \  .
+   |\ .
+  /  |.
+# Hit Effect
+!     .
+ O *  .
+ |_\_ .
+   \  .
+   |\ .
+  /  |.
+# Knockback
+       .
+ O *   .
+ |_\_  .
+   \__ .
+    \ \.
+    |  .
+# Falling
+       .
+ O *   .
+ |_\/  .
+   \__ .
+    \ \.
+       .
+# Lying
+      .
+      .
+      .
+      .
+ _    .
+|O|\__.
+# Lying Hit
+      .
+      .
+      .
+      .
+ _  * .
+|O|\__.
+# Lying Hit Effect
+      .
+      .
+      .
+!     .
+ _  * .
+|O|\__.
+# Lying Block
+      .
+      .
+      .
+   O_\.
+  /__ .
+__\  \.
+# Lying Dodge
+        s.
+        s.
+        s.
+   O    s.
+  /_\/  s.
+__\  \  s.
+# Win
+     | s.
+   O/  s.
+  /|   s.
+  \|   s.
+  / \  s.
+ |   | s.
+# Weapon
+          .
+    O    /.
+   /_ \_/ .
+    |     .
+   / \    .
+  /  |    .
+# Pair of Swords, Swords
+         .
+    O___).
+    |\_) .
+    |    .
+   / \   .
+  /  |   .
+# Saber
+          .
+    O    |.
+   /_ \_/ .
+    |     .
+   / \    .
+  /  |    .
+# Spear
+             .
+     O       .
+  __/__\_____.
+    /        .
+   / \       .
+  /   |      .
+# Staff
+          /.
+    O __ / .
+    |\_ /  .
+    /  /   .
+   / \/    .
+  /   |    .
+# Sword
+          .
+    O    /.
+   /_ \_/ .
+    |     .
+   / \    .
+  /  |    .
