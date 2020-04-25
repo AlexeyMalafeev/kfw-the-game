@@ -2,9 +2,9 @@
 
 import string
 import os
-import msvcrt
 import random
 import time
+import getch
 
 
 def add_pcnt(value):
@@ -136,7 +136,7 @@ def get_key():
     """
 If key is pressed, return its string; if no key is pressed, return 0
     """
-    return chr(ord(msvcrt.getch()))
+    return chr(ord(getch._Getch()()))
 
 
 def get_linear_bar(v, maxv, syma='#', symb='-'):
@@ -170,16 +170,14 @@ def hund(value):
 
 
 def main():
-    import msvcrt
     import sys
     print("Please press a key to see its value")
     while 1:
-        key = msvcrt.getch()
+        key = getch._Getch()()
         print("the key is")
         print(key)
         if ord(key) == 27:  # key nr 27 is escape
             sys.exit()
-
 
 def mean(values):
     return round(sum(values) / len(values), 2)
