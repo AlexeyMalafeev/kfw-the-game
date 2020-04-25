@@ -1,4 +1,4 @@
-#! python3
+import os
 
 
 def load_quotes(file_name):
