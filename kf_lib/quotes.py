@@ -3,7 +3,7 @@
 
 def load_quotes(file_name):
     try:
-        with open('quotes//' + file_name) as f:
+        with open(os.path.join('quotes', file_name)) as f:
             quotes = f.read().split('\n')
         return quotes
     except:

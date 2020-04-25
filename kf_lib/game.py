@@ -31,7 +31,7 @@ MAX_NUM_PLAYERS = 4
 MAX_NUM_STUDENTS = 8
 MAX_STUDENT_LEVEL = 8
 NUM_CONVICTS = 5
-SAVE_FOLDER = 'save\\'
+SAVE_FOLDER = 'save'
 TOWN_STAT_VALUES = [0.05, 0.1, 0.15, 0.2]
 WALK_EXTRA_ENC = 2
 
@@ -156,7 +156,7 @@ class Game(object):
                 sg = game_stats.StatGen(self)
                 stats = sg.get_full_report_string()
                 print(stats)
-                print(stats, file=open(SAVE_FOLDER + 'stats.txt', 'w'))
+                print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
                 self.play_indefinitely = yn('Keep playing indefinitely?')
                 # input('Press Enter to exit game.')
                 # self.quit()
@@ -316,7 +316,7 @@ class Game(object):
     def load_game(self, file_name):
         """Read and execute the save file."""
         g = self  # do not delete
-        with open(SAVE_FOLDER + file_name, 'r') as f:
+        with open(os.path.join(SAVE_FOLDER, file_name), 'r') as f:
             from .fighter import Fighter, Challenger, Master, Thug  # this is used for loading, do not delete
             for line in f:
                 # print(line)
@@ -501,7 +501,7 @@ class Game(object):
         stats = sg.get_full_report_string()
         cls()
         print(stats)
-        print(stats, file=open(SAVE_FOLDER + 'stats.txt', 'w'))
+        print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
         pak()
 
     def save_game(self, file_name):
@@ -596,7 +596,7 @@ class Game(object):
         def _save_stories():
             f.write('\n\ng.stories = {!r}'.format(self.stories))
 
-        with open(SAVE_FOLDER + file_name, 'w') as f:
+        with open(os.path.join(SAVE_FOLDER, file_name), 'w') as f:
             _save_all()
 
     def state_menu(self):

@@ -1,4 +1,4 @@
-#! python3
+import os
 
 
 def concat(a, b):
@@ -46,7 +46,7 @@ FIGHTER_ART_R = {}
 
 
 def set_ascii_art():
-    with open('move files\\ascii mapping.txt') as f:
+    with open(os.path.join('move files', 'ascii mapping.txt')) as f:
         blocks = f.read().split('# ')[1:]
         for b in blocks:
             b = b.rstrip()  # remove \n
