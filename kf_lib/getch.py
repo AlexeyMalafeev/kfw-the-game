@@ -38,8 +38,8 @@ class _GetchWindows:
 if __name__ == '__main__':
     import sys
     print("Please press a key to see its value")
+    getch = _Getch()
     while 1:
-        getch = _Getch()
         key = getch()
         print("the key is")
         print(key)

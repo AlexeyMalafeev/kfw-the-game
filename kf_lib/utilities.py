@@ -172,8 +172,9 @@ def hund(value):
 def main():
     import sys
     print("Please press a key to see its value")
+    input_key = getch._Getch()
     while 1:
-        key = getch._Getch()()
+        key = input_key()
         print("the key is")
         print(key)
         if ord(key) == 27:  # key nr 27 is escape
