@@ -149,19 +149,28 @@ def get_rand_moves(f, n, tier):
 
 
 def resolve_style_move(move_s, f):
+    pool = []
     # a special case with tier-only move_s
     if len(move_s) == 1 and move_s.isdigit():
         # print('we are here')
         # input('...')
         # todo reimplement
         from .techniques import get_tech_obj
+        features = []
         for t in f.techs:
             t_obj = get_tech_obj(t)
             for par in t_obj.params:
                 if par.endswith('_strike_mult'):
                     par = par.replace('_strike_mult', '')
-                    move_s += f',{par}'
-    pool = []
+                    features.append(par)
+        if features:
+            feat = random.choice(features)
+            move_s += f',{feat}'
+        else:
+            # todo reimplement function
+            pool = get_rand_moves(f, f.num_moves_choose, int(move_s))
+            f.choose_new_move(pool)
+            return
     if move_s in ALL_MOVES_DICT:
         move = ALL_MOVES_DICT[move_s]
         if move not in f.moves:

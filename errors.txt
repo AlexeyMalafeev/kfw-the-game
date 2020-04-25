@@ -1,18 +1,21 @@
-Sun Apr 19 22:37:08 2020
+Sun Apr 19 22:58:43 2020
 Traceback (most recent call last):
-  File "D:\kfw_dev\load game.py", line 7, in <module>
-    g.load_game('save.txt')
-  File "D:\kfw_dev\kf_lib\game.py", line 323, in load_game
-    exec(line)
-  File "<string>", line 1, in <module>
-  File "D:\kfw_dev\kf_lib\player.py", line 57, in __init__
-    tech_names=tech_names, move_names=move_names, rand_atts_mode=rand_atts_mode)
+  File "D:\kfw_dev\NG default.py", line 9, in <module>
+    g.new_game(forced_aip_class=SmartAIP)
+  File "D:\kfw_dev\kf_lib\game.py", line 408, in new_game
+    _init_schools()
+  File "D:\kfw_dev\kf_lib\game.py", line 399, in _init_schools
+    new_student = self.get_new_student(style.name)
+  File "D:\kfw_dev\kf_lib\game.py", line 308, in get_new_student
+    return fighter_factory.new_student(name, style_name, lv)
+  File "D:\kfw_dev\kf_lib\fighter_factory.py", line 297, in new_student
+    f = Challenger(name, style, lv)
   File "D:\kfw_dev\kf_lib\fighter.py", line 207, in __init__
     self.set_moves(move_names)
-  File "D:\kfw_dev\kf_lib\fighter.py", line 1051, in set_moves
-    self.learn_move(mn, silent=True)  # not to write log every time (e.g. when loading a game)
-  File "D:\kfw_dev\kf_lib\fighter.py", line 895, in learn_move
-    move = moves.get_move_obj(move)
-  File "D:\kfw_dev\kf_lib\moves.py", line 138, in get_move_obj
-    return ALL_MOVES_DICT[move_name]
-KeyError: 'Iron Fist'
+  File "D:\kfw_dev\kf_lib\fighter.py", line 1050, in set_moves
+    self.set_rand_moves()
+  File "D:\kfw_dev\kf_lib\fighter.py", line 1074, in set_rand_moves
+    moves.resolve_style_move(move_s, self)
+  File "D:\kfw_dev\kf_lib\moves.py", line 165, in resolve_style_move
+    if features:
+UnboundLocalError: local variable 'features' referenced before assignment

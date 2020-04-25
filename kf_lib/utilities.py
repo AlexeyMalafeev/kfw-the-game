@@ -4,7 +4,10 @@ import string
 import os
 import random
 import time
-import getch
+
+
+from . import getch
+getch_inst = getch.Getch()
 
 
 def add_pcnt(value):
@@ -136,7 +139,7 @@ def get_key():
     """
 If key is pressed, return its string; if no key is pressed, return 0
     """
-    return chr(ord(getch._Getch()()))
+    return chr(ord(getch_inst()))
 
 
 def get_linear_bar(v, maxv, syma='#', symb='-'):
@@ -172,7 +175,7 @@ def hund(value):
 def main():
     import sys
     print("Please press a key to see its value")
-    input_key = getch._Getch()
+    input_key = getch.Getch()
     while 1:
         key = input_key()
         print("the key is")

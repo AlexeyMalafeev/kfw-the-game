@@ -172,9 +172,9 @@ LINKED_TECHS = [(UpgradableTech('Qi Breathing', qp_gain=b.QP_GAIN1),
 
                 (UpgradableTech('Hardened Palms', palm_strike_mult=b.RARE_STRIKE_MULT1),
                  AdvancedTech('Palms of Justice', palm_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (UpgradableTech('Uncanny Strikes', exotic_strike_mult=b.RARE_STRIKE_MULT1),
-                 AdvancedTech('Whole Body Weapon', exotic_strike_mult=b.RARE_STRIKE_MULT2)),
+                # todo fix this
+                # (UpgradableTech('Uncanny Strikes', exotic_strike_mult=b.RARE_STRIKE_MULT1),
+                #  AdvancedTech('Whole Body Weapon', exotic_strike_mult=b.RARE_STRIKE_MULT2)),
 
                 (UpgradableTech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
                  AdvancedTech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2)),

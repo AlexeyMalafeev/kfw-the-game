@@ -1,4 +1,4 @@
-class _Getch:
+class Getch:
     """Gets a single character from standard input.  Does not echo to the
 screen."""
     def __init__(self):
@@ -38,7 +38,7 @@ class _GetchWindows:
 if __name__ == '__main__':
     import sys
     print("Please press a key to see its value")
-    getch = _Getch()
+    getch = Getch()
     while 1:
         key = getch()
         print("the key is")

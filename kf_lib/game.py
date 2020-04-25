@@ -351,7 +351,7 @@ class Game(object):
         if generated_styles == '?':
             generated_styles = yn('Randomly generated styles?')
         if generated_styles:
-            self.style_list = style_gen.generate_new_styles(12)  # todo this is a magic number
+            self.style_list = style_gen.generate_new_styles(10)  # todo this is a magic number
             styles.default_styles = self.style_list  # todo boy is this ugly
             styles.MAX_LEN_STYLE_NAME = max((len(s.name) for s in styles.default_styles))  # todo oh wow...
         def _init_players():
