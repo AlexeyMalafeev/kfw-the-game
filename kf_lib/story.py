@@ -181,6 +181,7 @@ class NinjaTurtlesStory(Story):
         self.end()
 
 
+# todo master uses a randomly-generated style
 class RenownedMaster(Story):
     def intro(self):
         g, p = self.game, self.player

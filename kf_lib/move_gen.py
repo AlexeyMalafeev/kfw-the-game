@@ -440,7 +440,7 @@ def ultimate(m):
     prefix(m, 'Ultimate')
     return m
 
-
+# todo ultra short kick
 def gen_moves(moves):
     new_moves = []  # move dicts
     move_names = set()  # strings

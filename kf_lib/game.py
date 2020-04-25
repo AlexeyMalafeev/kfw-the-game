@@ -628,9 +628,10 @@ class Game(object):
 
     def test(self):
         t = testing_tools.Tester(self)
+        t.test_story(story.NinjaTurtlesStory)
         # t.test_enc('Challenger')
-        self.current_player.learn_tech('Attack Is Defense')
-        t.two_players_fight()
+        # self.current_player.learn_tech('Attack Is Defense')
+        # t.two_players_fight()
         # self.current_player.learn_move("Shove")
         # self.current_player.learn_move("Charging Step")
 

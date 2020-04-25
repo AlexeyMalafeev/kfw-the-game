@@ -1,14 +1,10 @@
-#! python3
+import os
 
 
 def load_quotes(file_name):
-    try:
-        with open(os.path.join('quotes', file_name)) as f:
-            quotes = f.read().split('\n')
-        return quotes
-    except:
-        print('Failed to load quotes from ' + file_name)
-        return ['<empty quote>']
+    with open(os.path.join('quotes', file_name)) as f:
+        quotes = f.read().split('\n')
+    return quotes
 
 
 MISC = ''
