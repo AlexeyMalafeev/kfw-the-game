@@ -110,7 +110,7 @@ def read_moves(file_name):
     return moves, keys
 
 
-move_list = read_moves('move files\\all_moves.txt')[0]
+move_list = read_moves(os.path.join('move files', 'all_moves.txt'))[0]
 for mv in move_list:
     m_obj = Move(**mv)
 
