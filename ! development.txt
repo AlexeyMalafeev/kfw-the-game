@@ -19,9 +19,10 @@ code:
     refactoring of moves.py
     remove move_gen.modified_move (not used)
     remove RING_debug.py
+    Unix support (not yet tested)
 
 bug fixes:
-
+    properly linked ASCII for weapon moves
 
 gameplay:
     player confirms whether the randomly-generated fighter is ok in RING
@@ -41,6 +42,7 @@ testing:
 UI:
     move tier is displayed in some situations
     ASCII for some newer moves
+    
     
 _____________________________________________________
 

@@ -509,45 +509,87 @@ __\  \  s.
   \|   s.
   / \  s.
  |   | s.
-# Weapon
-          .
-    O    /.
-   /_ \_/ .
-    |     .
-   / \    .
-  /  |    .
-# Pair of Swords, Swords
+# Stick Strike, Baton Strike, Bludgeon Strike
+           .
+     O    /.
+    /_ \_/ .
+    |      .
+   / \     .
+  /  |     .
+# Stick Thrust
+             .
+     O       .
+    /_\______.
+    |        .
+   / \       .
+  /  |       .
+# Pair of Swords Slash
          .
     O___).
     |\_) .
     |    .
    / \   .
   /  |   .
-# Saber
+# Pair of Swords Stab
           .
-    O    |.
-   /_ \_/ .
+    O___._.
+    |\_._ .
     |     .
    / \    .
   /  |    .
-# Spear
+# Saber Slash
+           .
+     O    |.
+    /_ \_/ .
+    |      .
+   / \     .
+  /  |     .
+# Saber Thrust
+             .
+     O       .
+    /_ \_.__/.
+    |        .
+   / \       .
+  /  |       .
+# Spear Thrust
              .
      O       .
   __/__\_____.
     /        .
    / \       .
   /   |      .
-# Staff
+# Long Spear Thrust, Pole Thrust
+               .
+      O        .
+    _/__\______.
+    /          .
+   / \         .
+  /   |        .
+# Staff Strike, Pole Strike
           /.
     O __ / .
     |\_ /  .
     /  /   .
    / \/    .
   /   |    .
-# Sword
+# Sword Slash
           .
     O    /.
    /_ \_/ .
     |     .
    / \    .
   /  |    .
+# Sword Thrust
+             .
+     O       .
+    /_ \_.___.
+    |        .
+   / \       .
+  /  |       .
+# Rope Whip, Cloth Whip, Chain Whip
+             .
+     O   .~~~.
+    /_ \/    .
+    |        .
+   / \       .
+  /  |       .
