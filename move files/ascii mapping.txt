@@ -510,12 +510,75 @@ __\  \  s.
   / \  s.
  |   | s.
 # Stick Strike, Baton Strike, Bludgeon Strike
+          .
+    O    /.
+   /_ \_/ .
+    |     .
+   / \    .
+  /  /    .
+# Broom Strike
+          |/_.
+    O     /  .
+   /_ \_ /   .
+    |   /    .
+   / \       .
+  /  /       .
+# Broom Thrust
+               .
+     O         .
+    /_ \_____/_.
+    |        \ .
+   / \         .
+  /  |         . 
+# Baton Smash, Bludgeon Smash
            .
-     O    /.
-    /_ \_/ .
-    |      .
+     O  ~  .
+    /_\  ~ .
+    /  \___.
+   / \     .
+  /  |     .  
+# Guqin Smash
+              .
+     O   ~    .
+    /_\   ~__ .
+    /  \__/_o/.
+   / \        .
+  /  |        . 
+# Hammer Smash
+             .
+     O   ~   .
+     \\   ~  .
+    / \\___[].
+   / \     [].
+  /  |       .
+# Hammer Strike
+            .
+    O    [] .
+    |\\  /[].
+    | \\/   .
+   / \      .
+  /  |      .
+# Bench Smash
+           .
+     O  ==|.
+     \\   |.
+    / \\==|.
    / \     .
   /  |     .
+# Chair Smash
+             .
+     O       .
+     \\   |==.
+    / \\__|==.
+   / \       .
+  /  |       .
+# Axe Chop, Axe Slash
+           .
+    O    /).
+   /_ \_/  .
+    |      .
+   / \     .
+  /  /     .
 # Stick Thrust
              .
      O       .
@@ -523,6 +586,13 @@ __\  \  s.
     |        .
    / \       .
   /  |       .
+# Chopsticks Thrust
+           .
+     O __._.
+    /_     .
+    |      .
+   / \     .
+  /  |     .
 # Pair of Swords Slash
          .
     O___).
@@ -536,14 +606,14 @@ __\  \  s.
     |\_._ .
     |     .
    / \    .
-  /  |    .
+  /  /    .
 # Saber Slash
-           .
-     O    |.
-    /_ \_/ .
-    |      .
-   / \     .
-  /  |     .
+          .
+    O    |.
+   /_ \_/ .
+    |     .
+   / \    .
+  /  /    .
 # Saber Thrust
              .
      O       .
@@ -588,8 +658,43 @@ __\  \  s.
   /  |       .
 # Rope Whip, Cloth Whip, Chain Whip
              .
-     O   .~~~.
-    /_ \/    .
+     O  .~~~~.
+    /_\/     .
     |        .
    / \       .
   /  |       .
+# Umbrella Strike
+        _  .
+    O    /|.
+   /_ \_/  .
+    |  c   .
+   / \     .
+  /  /     .
+# Umbrella Thrust
+              .
+     O        .
+    /_ \_c___\.
+    |        /.
+   / \        .
+  /  |        .
+# Knife Slash
+          .
+     O    .
+    /_\ _).
+    |     .
+   / \    .
+  /  |    .
+# Knife Stab
+            .
+      O     .
+     /_ \_._.
+    /       .
+   / \      .
+  /  |      .
+# Fan Strike
+           .
+     O|    .
+    / \ _/_.
+    |      .
+   / \     .
+  /  |     .

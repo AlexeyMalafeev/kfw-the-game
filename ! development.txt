@@ -42,7 +42,7 @@ testing:
 UI:
     move tier is displayed in some situations
     ASCII for some newer moves
-    
+    ASCII for all weapon moves
     
 _____________________________________________________
 

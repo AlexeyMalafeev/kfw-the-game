@@ -30,7 +30,11 @@ def mirror(lines):
                   '>': '<',
                   '<': '>',
                   ')': '(',
-                  '(': ')'}
+                  '(': ')',
+                  'p': 'q',
+                  'c': 'D',  # todo better 'mirroring' for this symbol
+                  '[': ']',
+                  ']': '['}
     for line in lines:
         temp_s = ''
         for c in line:
