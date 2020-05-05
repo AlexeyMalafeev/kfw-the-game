@@ -72,7 +72,7 @@ def get_ascii(move_name):
         key = move_name
     else:
         words = move_name.split()
-        for i in range(-len(words) + 1, 0, -1):
+        for i in range(-len(words) + 1, 0, 1):
             temp = ' '.join(words[i:])
             if temp in FIGHTER_ART_L:
                 key = temp
