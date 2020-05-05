@@ -8,12 +8,7 @@ def main():
     play = True
     attempts = 3
     difficulty = menu([('easy', 0.9), ('normal', 1.0), ('hard', 1.1), ('extreme', 1.2)], "Choose the difficulty:")
-    start_lv = menu([1, 5, 10], title='Choose the start level')
-    p = fighter_factory.new_hcf(lv=start_lv)
-    print(p)
-    while not yn('Is this character ok?'):
-        p = fighter_factory.new_hcf(lv=start_lv)
-        print(p)
+    p = fighter_factory.new_custom_hcf()
     while play:
         opp = fighter_factory.from_exp_worth(p.get_exp_worth() * difficulty)
         if p.fight(opp[0], en_allies=opp[1:], hide_stats=difficulty >= 1.0):

@@ -104,15 +104,17 @@ def new_convict():
     return Thug('Criminal', style_name=styles.DIRTY_FIGHTING.name, level=lv)
 
 
+# todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
 def new_custom_hcf():
     name = input('Name: ')
     legend = [('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
               for s in styles.default_styles]
+    # todo select starting atts
     style = menu(legend, 'Choose a style:')
     level = get_num_input('Level:', 1, 20)
     f = HumanControlledFighter(name=name, style_name=style.name)
     if level > 1:
-        f.level_up(level - 1)
+        f.level_up(level - 1)  # fixme level-up doesn't work (e.g. level=10), only works once
     return f
 
 
@@ -146,6 +148,7 @@ def new_f(name, style, lv, weapon=None, n=1):
     else:
         add_numbers_to_names(fs)
         return fs
+
 
 def new_fat_girl():
     lv = rndint(*FAT_GIRL_LV)
@@ -262,7 +265,9 @@ def new_prize_fighter(lv):
     return Thug(name, styles.DIRTY_FIGHTING.name, lv)
 
 
-def new_random_fighter(styles_to_choose=list(styles.all_styles.values()), n=1):
+def new_random_fighter(styles_to_choose=None, n=1):
+    if styles_to_choose is None:
+        styles_to_choose = list(styles.all_styles.values())
     fs = []
     name = 'Random Fighter'
     for i in range(n):
