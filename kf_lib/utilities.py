@@ -75,7 +75,7 @@ def align_text(text, indent, align):
 
 
 def cls():
-    os.system("cls")
+    os.system("cls")  # todo look into Unix compatibility
 
 
 def dict_comp(d1, d2, sort_col_index=0, descending=True):
