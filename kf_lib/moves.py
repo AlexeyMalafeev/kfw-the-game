@@ -188,7 +188,7 @@ def resolve_style_move(move_s, f):
             if not pool:
                 print(f'warning: couldn\'t find any moves for move string {move_s}')
             diff = f.num_moves_choose - n
-            pool.extend(get_rand_moves(f, diff, tier, exceptions=pool))
+            pool.extend(get_rand_moves(f, diff, tier, exceptions=set(pool)))
         elif n > f.num_moves_choose:
             weights = [m.freq for m in pool]  # use move frequency
             pool = random.choices(pool, weights=weights, k=f.num_moves_choose)
