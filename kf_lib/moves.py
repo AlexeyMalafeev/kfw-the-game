@@ -111,9 +111,8 @@ def read_moves(file_name):
     return moves, keys
 
 
-os.chdir("move files")
-move_list = read_moves('all_moves.txt')[0]
-os.chdir("..")
+move_list = read_moves(os.path.join('move files', 'all_moves.txt'))[0]
+
 for mv in move_list:
     m_obj = Move(**mv)
 

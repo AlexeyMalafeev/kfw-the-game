@@ -509,45 +509,192 @@ __\  \  s.
   \|   s.
   / \  s.
  |   | s.
-# Weapon
+# Stick Strike, Baton Strike, Bludgeon Strike
           .
     O    /.
    /_ \_/ .
     |     .
    / \    .
-  /  |    .
-# Pair of Swords, Swords
+  /  /    .
+# Broom Strike
+          |/_.
+    O     /  .
+   /_ \_ /   .
+    |   /    .
+   / \       .
+  /  /       .
+# Broom Thrust
+               .
+     O         .
+    /_ \_____/_.
+    |        \ .
+   / \         .
+  /  |         . 
+# Baton Smash, Bludgeon Smash
+           .
+     O  ~  .
+    /_\  ~ .
+    /  \___.
+   / \     .
+  /  |     .  
+# Guqin Smash
+              .
+     O   ~    .
+    /_\   ~__ .
+    /  \__/_o/.
+   / \        .
+  /  |        . 
+# Hammer Smash
+             .
+     O   ~   .
+     \\   ~  .
+    / \\___[].
+   / \     [].
+  /  |       .
+# Hammer Strike
+            .
+    O    [] .
+    |\\  /[].
+    | \\/   .
+   / \      .
+  /  |      .
+# Bench Smash
+           .
+     O  ==|.
+     \\   |.
+    / \\==|.
+   / \     .
+  /  |     .
+# Chair Smash
+             .
+     O       .
+     \\   |==.
+    / \\__|==.
+   / \       .
+  /  |       .
+# Axe Chop, Axe Slash
+           .
+    O    /).
+   /_ \_/  .
+    |      .
+   / \     .
+  /  /     .
+# Stick Thrust
+             .
+     O       .
+    /_\______.
+    |        .
+   / \       .
+  /  |       .
+# Chopsticks Thrust
+           .
+     O __._.
+    /_     .
+    |      .
+   / \     .
+  /  |     .
+# Pair of Swords Slash
          .
     O___).
     |\_) .
     |    .
    / \   .
   /  |   .
-# Saber
+# Pair of Swords Stab
+          .
+    O___._.
+    |\_._ .
+    |     .
+   / \    .
+  /  /    .
+# Saber Slash
           .
     O    |.
    /_ \_/ .
     |     .
    / \    .
-  /  |    .
-# Spear
+  /  /    .
+# Saber Thrust
+             .
+     O       .
+    /_ \_.__/.
+    |        .
+   / \       .
+  /  |       .
+# Spear Thrust
              .
      O       .
   __/__\_____.
     /        .
    / \       .
   /   |      .
-# Staff
+# Long Spear Thrust, Pole Thrust
+               .
+      O        .
+    _/__\______.
+    /          .
+   / \         .
+  /   |        .
+# Staff Strike, Pole Strike
           /.
     O __ / .
     |\_ /  .
     /  /   .
    / \/    .
   /   |    .
-# Sword
+# Sword Slash
           .
     O    /.
    /_ \_/ .
     |     .
    / \    .
   /  |    .
+# Sword Thrust
+             .
+     O       .
+    /_ \_.___.
+    |        .
+   / \       .
+  /  |       .
+# Rope Whip, Cloth Whip, Chain Whip
+             .
+     O  .~~~~.
+    /_\/     .
+    |        .
+   / \       .
+  /  |       .
+# Umbrella Strike
+        _  .
+    O    /|.
+   /_ \_/  .
+    |  c   .
+   / \     .
+  /  /     .
+# Umbrella Thrust
+              .
+     O        .
+    /_ \_c___\.
+    |        /.
+   / \        .
+  /  |        .
+# Knife Slash
+          .
+     O    .
+    /_\ _).
+    |     .
+   / \    .
+  /  |    .
+# Knife Stab
+            .
+      O     .
+     /_ \_._.
+    /       .
+   / \      .
+  /  |      .
+# Fan Strike
+           .
+     O|    .
+    / \ _/_.
+    |      .
+   / \     .
+  /  |     .

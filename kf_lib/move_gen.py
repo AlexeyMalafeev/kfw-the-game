@@ -1,3 +1,6 @@
+import os
+
+
 TIER1_QI_COST = 5
 TIER2_QI_COST = 20
 TIER3_QI_COST = 35
@@ -563,15 +566,16 @@ def gen_wp_moves(moves):
 
 
 def main():
-    base_moves, keys = read_moves('..\\move files\\base_moves.txt')
-    save_moves(base_moves, keys, '..\\move files\\base_moves.txt')
-    extra_moves, keys = read_moves('..\\move files\\extra_moves.txt')
-    save_moves(extra_moves, keys, '..\\move files\\extra_moves.txt')
-    style_moves, keys = read_moves('..\\move files\\style_moves.txt')
-    save_moves(style_moves, keys, '..\\move files\\style_moves.txt')
+    from kf_lib.moves import read_moves
+    base_moves, keys = read_moves(os.path.join('..', 'move files', 'base_moves.txt'))
+    save_moves(base_moves, keys, os.path.join('..', 'move files', 'base_moves.txt'))
+    extra_moves, keys = read_moves(os.path.join('..', 'move files', 'extra_moves.txt'))
+    save_moves(extra_moves, keys, os.path.join('..', 'move files', 'extra_moves.txt'))
+    style_moves, keys = read_moves(os.path.join('..', 'move files', 'style_moves.txt'))
+    save_moves(style_moves, keys, os.path.join('..', 'move files', 'style_moves.txt'))
     moves = gen_moves(base_moves)  # generated moves also include base_moves
     moves += extra_moves + style_moves
-    save_moves(moves, keys, '..\\move files\\all_moves.txt', sort_alph=True)
+    save_moves(moves, keys, os.path.join('..', 'move files', 'all_moves.txt'), sort_alph=True)
 
     input('Press Enter to exit')
 

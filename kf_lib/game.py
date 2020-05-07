@@ -567,7 +567,7 @@ class Game(object):
                 f.write('\np.best_student = {}'.format(best))
 
                 # dump log
-                path = SAVE_FOLDER + '{}\'s log.txt'.format(p.name)
+                path = os.path.join(SAVE_FOLDER, '{}\'s log.txt'.format(p.name))
                 with open(path, 'a') as log_file:
                     log_file.write('\n'.join(p.plog))
                     p.plog = []

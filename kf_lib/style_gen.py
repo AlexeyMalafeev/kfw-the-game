@@ -124,7 +124,7 @@ W3 = {
 # todo strikes for new styles
 
 
-def generate_new_styles(n, overlap=True):
+def generate_new_styles(n, overlap=False):
     generated = []
     if overlap:
         words1 = random.choices(list(W1), k=n)

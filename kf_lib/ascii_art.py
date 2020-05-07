@@ -30,7 +30,11 @@ def mirror(lines):
                   '>': '<',
                   '<': '>',
                   ')': '(',
-                  '(': ')'}
+                  '(': ')',
+                  'p': 'q',
+                  'c': 'D',  # todo better 'mirroring' for this symbol
+                  '[': ']',
+                  ']': '['}
     for line in lines:
         temp_s = ''
         for c in line:
@@ -67,15 +71,14 @@ def get_ascii(move_name):
     if move_name in FIGHTER_ART_L:
         key = move_name
     else:
-        temp = ' '.join(move_name.split()[-2:])
-        if temp in FIGHTER_ART_L:
-            key = temp
-        else:
-            temp = move_name.split()[-1]
+        words = move_name.split()
+        for i in range(-len(words) + 1, 0, 1):
+            temp = ' '.join(words[i:])
             if temp in FIGHTER_ART_L:
                 key = temp
-            else:
-                key = DEFAULT_MOVE_ART
+                break
+        else:
+            key = DEFAULT_MOVE_ART
     ascii_l = FIGHTER_ART_L[key]
     ascii_r = FIGHTER_ART_R[key]
     return ascii_l, ascii_r

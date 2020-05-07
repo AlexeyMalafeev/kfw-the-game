@@ -21,3 +21,6 @@
 
 Wing Chun: at lv2, instead of ('Short Fast Punch', 'Charging Step') choose new move. 
 	Not the case with NPCs!
+
+- add 'flying' feature to acrobatic?
+- give at least some moves with bonus when choosing new moves
