@@ -1,6 +1,7 @@
 from .ascii_art import get_ascii
 from .distances import DISTANCE_FEATURES
 from .utilities import *
+import os
 
 
 # RARE_FEATURE = 'exotic'
@@ -111,6 +112,7 @@ def read_moves(file_name):
 
 
 move_list = read_moves(os.path.join('move files', 'all_moves.txt'))[0]
+
 for mv in move_list:
     m_obj = Move(**mv)
 
