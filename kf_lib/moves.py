@@ -1,7 +1,6 @@
 from .ascii_art import get_ascii
 from .distances import DISTANCE_FEATURES
 from .utilities import *
-import os
 
 
 # RARE_FEATURE = 'exotic'
@@ -141,10 +140,11 @@ def get_moves_by_features(features, tier):
     return moves
 
 
-# todo it seems that this function can return the same move multiple times
-def get_rand_moves(f, n, tier):
+def get_rand_moves(f, n, tier, exceptions=None):
     """Uses frequency of moves; should never return style moves"""
-    known_moves = set(f.moves)
+    if exceptions is None:
+        exceptions = set()
+    known_moves = set(f.moves) | exceptions
     pool = [m for m in MOVES_BY_TIERS[tier] if m not in known_moves]
     weights = [m.freq for m in pool]  # can never get style moves like this as their freq is 0
     return random.choices(pool, weights=weights, k=n)
@@ -188,7 +188,7 @@ def resolve_style_move(move_s, f):
             if not pool:
                 print(f'warning: couldn\'t find any moves for move string {move_s}')
             diff = f.num_moves_choose - n
-            pool.extend(get_rand_moves(f, diff, tier))
+            pool.extend(get_rand_moves(f, diff, tier, exceptions=pool))
         elif n > f.num_moves_choose:
             weights = [m.freq for m in pool]  # use move frequency
             pool = random.choices(pool, weights=weights, k=f.num_moves_choose)

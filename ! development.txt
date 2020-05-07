@@ -23,6 +23,7 @@ code:
 
 bug fixes:
     properly linked ASCII for weapon moves
+    don't get the same move more than once when level up
 
 gameplay:
     player confirms whether the randomly-generated fighter is ok in RING
