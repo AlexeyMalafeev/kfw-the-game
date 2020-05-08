@@ -1,20 +1,18 @@
-- Finishing Kick wrong ASCII
 - pre-fight: no quotes from opponent
 - no ASCII for Charging Step
 - Critical, then evade
 - exp bonuses don't work? don't register in statistics (gossip) 
 - fix scheduling for shock etc. (make immediate rescheduling)
 - miscalculating exp with weapons
-- Superior Trick Punch x2 in move selection
 - Fat Girl - no help from friends
 - At lv. 10 six moves to choose from - why though?
-- when move not found, e.g. Leopard at lv2 gets tier 3 moves to choose from
-- do shock and try shock in one move (change generating functions - look for features)
 - Bagua Zhang gets low exp for impro weapons
 - AI: come forward if + or if d=4 and opponent has 4-range attack
-- AI: come forward if group advantage
+- AI: come forward more if group advantage
 - remove Step Forward and Step Back when distance is not right
 - multiple strength-based dam in one strike in some auto-generated moves
 - when fights break out between school (not players'), show which school won
 - add 'flying' feature to acrobatic?
 - give at least some moves with bonus when choosing new moves
+- do_shock_move, try_shock_move in one move -> extra shock status?
+- status attacks are level-dependent

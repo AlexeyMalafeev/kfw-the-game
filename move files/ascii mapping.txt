@@ -23,8 +23,8 @@
         s.
  O    ~~s.
 |_\/  ~~s.
- / \  ~~s.
- \  \   s.
+ /_\  ~~s.
+    \   s.
         s.
 # Step Forward
         s.
@@ -41,12 +41,12 @@
     / \ s.
    /  / s.
 # Leap Forward
-         s.
-~~    O  s.
-~~   |/\/s.
-~~__/ \  s.
-      /  s.
-         s.
+          s.
+~~     O  s.
+~~    |/\/s.
+~~ __/ \  s.
+       /  s.
+          s.
 # Block
       .
    O_\.
@@ -102,14 +102,14 @@ __|__ s.
  ~~ /_   .
  ~~ |    .
    / \   .
-  /  |   .
-# Ultimate Punch
-         .
-     O __.
-    /_ ~~.
-    |    .
-   / \   .
-  /  |   .
+  /  /   .
+# Long Punch
+          .
+      O __.
+     /_   .
+    /     .
+   / \    .
+  /  |    .
 # Chain of Punches
        .
     O ~.
@@ -131,13 +131,20 @@ __|__ s.
     |    .
    / \   .
   /  |   .
-# Long Palm, Charging Palm
-          .
- ~~  O __,.
- ~~ /_    .
- ~~  |    .
-    / \   .
-   /  |   .
+# Charging Palm
+           .
+ ~~   O __,.
+ ~~  /_    .
+ ~~  /     .
+    / \    .
+   /  /    .
+# Long Palm
+           .
+      O __,.
+     /_    .
+    /      .
+   / \     .
+  /  |     .
 # Heavy Palm, Power Palm
          .
     O __,.
@@ -145,10 +152,10 @@ __|__ s.
     |    .
    / \   .
   /   |  .
-# Ultimate Palm, Buddha Palm
+# Buddha Palm
          .
     O __,.
-  /_  ~~ .
+  /_  ≈≈ .
     |    .
    / \   .
   /   |  .
@@ -159,21 +166,21 @@ __|__ s.
     |    .
    / \   .
   /  |   .
-# Backfist
+# Backfist - legacy
         .
     O _/.
    /_   .
     |   .
    / \  .
   /  |  .
-# Hammer Fist
+# Hammer Fist - legacy
      \\ .
     O _/.
    /_   .
     |   .
    / \  .
   /  |  .
-# Beak
+# Beak - legacy
          .
     O _/`.
    /_    .
@@ -194,21 +201,21 @@ __|__ s.
     |   .
    / \  .
   /   | .
-# Hook
+# Hook - legacy
         .
    _O__/.
     |   .
     |   .
    / \  .
   /  |  .
-# Power Hook
+# Power Hook - legacy
         .
    _O__/.
     |   .
     /   .
    / \  .
   /  |  .
-# Uppercut
+# Uppercut - legacy
         .
     O   .
    /| \/.
@@ -222,7 +229,7 @@ __|__ s.
     |   .
    / \  .
   /  |  .
-# Low Claw
+# Tiger Claw
         .
     O   .
    /|\_,.
@@ -252,12 +259,19 @@ __ / \     .
            .
 # Flying Claw
            .
+      O___ .
+     |/   `.
+__ / \     .
+    /      .
+           .
+# Flying Palm
+           .
       O___,.
      |/    .
 __ / \     .
     /      .
            .
-# Low Punch
+# Low Punch - legacy
          .
          .
     O ___.
@@ -271,7 +285,7 @@ __ / \     .
    |/ \_.
   | \   .
  /   |  .
-# Low Palm
+# Low Palm - legacy
          .
          .
     O __,.
@@ -292,7 +306,7 @@ __ / \     .
    \/   .
    |    .
   /     .
-# Low Kick
+# Low Kick - legacy
         .
   O_\   .
  /_     .
@@ -327,21 +341,21 @@ __ / \     .
  \ \/   .
  _| ___ .
  \     \.
-# Roundhouse Kick
+# Roundhouse Kick - legacy
         .
    O_\ /.
   /_  / .
     \   .
     /   .
    /    .
-# Spin Kick
+# Power Kick, Heavy Kick
          .
  /_ O_   .
    |  / /.
     \ /  .
     /    .
    /     .
-# Spin Kick to Body
+# Spin Kick to Body - legacy
         .
  /_ O_  .
    |  / .
@@ -355,35 +369,49 @@ __ / \     .
     \   .
     |   .
     |   .
-# High Kick
+# High Kick - legacy
         .
   O__| /.
  /_\  / .
     \/  .
     |   .
     |   .
-# Side Kick
+# Side Kick - legacy
          .
   O__|   .
  /_\  ___.
     \/   .
     |    .
     |    .
+# Long Kick
+          .
+  O__|    .
+ /_\      .
+    \ ----.
+   /      .
+  /       .
+# Charging Kick
+           .
+ ~~  O_\   .
+ ~~ /_  ___.
+ ~~   |/   .
+     /     .
+    /      .
 # Flying Kick
-   O_      .
-  /_  \    .
-    \ _____.
+  O_       .
+ /_ \ _____.
    /__     .
            .
            .
+           .
 # No-Shadow Kick
-   O_       .
-  /_  \     .
-     \ ___~~.
-      |__~~~.
-           ~.
-            .
-# Flying Spin Kick
+  O_       .
+ /_ \ ___~~.
+    \ __~~~.
+          ~.
+           .
+           .
+# Flying Spin Kick - legacy
  /_O_    .
    | /   .
     \ __/.
@@ -398,12 +426,12 @@ __ / \     .
    /  /.
   /    .
 # Flying Knee        
-       O .
-     /_\|.
-      |__.
-   __/  /.
-         .
-         .
+      O .
+    /_\|.
+     |__.
+  __/  /.
+        .
+        .
 # Headbutt
         .
        O.
@@ -411,13 +439,20 @@ __ / \     .
     /   .
    / \  .
   /  /  .
-# Flying Headbutt
+# Flying Headbutt - legacy
          .
       _ O.
      /\\ .
   __/\   .
      /   .
          .
+# Flying Headbutt
+     ___  .
+ __/\ \\ O.
+    /     .
+          .
+          .
+          .
 # Throw
         .
       O .
@@ -480,14 +515,14 @@ __ / \     .
       .
       .
  _  * .
-|O|\__.
+\O\\__.
 # Lying Hit Effect
       .
       .
       .
 !     .
  _  * .
-|O|\__.
+\O\\__.
 # Lying Block
       .
       .
