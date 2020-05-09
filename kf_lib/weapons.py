@@ -21,10 +21,10 @@ class Weapon(object):
         dfs = float_to_pcnt(dfs_bonus)
         pwr_min = min(m.power for m in self.moves)
         pwr_max = max(m.power for m in self.moves)
-        pwr = mean(tuple(m.power for m in self.moves))
+        pwr = mean([m.power for m in self.moves])
         acc_min = min(m.accuracy for m in self.moves)
         acc_max = max(m.accuracy for m in self.moves)
-        acc = mean(tuple(m.accuracy for m in self.moves))
+        acc = mean([m.accuracy for m in self.moves])
         self.atk_mean = mean((pwr, acc)) / 100
         atk = float_to_pcnt(self.atk_mean)
         rng_min = min(m.distance for m in self.moves)
@@ -42,7 +42,7 @@ class Weapon(object):
         return '{} {}'.format(self.name, self.descr)
 
     def get_exp_mult(self):
-        return 1.0 + self.dfs_bonus + self.atk_mean
+        return 1.0 + mean((self.dfs_bonus, self.atk_mean))
 
 
 class NormalWeapon(Weapon):

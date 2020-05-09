@@ -14,12 +14,15 @@ AI:
         BaseAI                   862
 
 
+balance:
+    reduced exp multiplier for weapons
+
 code:
     refactoring of techniques.py
     refactoring of moves.py
     remove move_gen.modified_move (not used)
     remove RING_debug.py
-    Unix support (not yet tested)
+    Unix support - the game is playable, although there are some small UI issues
 
 bug fixes:
     properly linked ASCII for weapon moves
@@ -45,6 +48,7 @@ UI:
     ASCII for some newer moves
     ASCII for all weapon moves
     more ASCII art for old moves
+    slightly changed output and more concise messages in fights
     
 _____________________________________________________
 

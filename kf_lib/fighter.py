@@ -267,10 +267,12 @@ weapon can also be weapon type"""
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
         n2 = self.current_fight.get_f_name_string(self.target)
-        self.current_fight.display('{}: {} @ {}'.format(n1, self.action.name, n2))
+        s = '{}: {} @ {}'.format(n1, self.action.name, n2)
+        self.current_fight.display(s)
         if self.guard_while_attacking:
-            self.current_fight.display(f'{n1} is guarding while attacking.')
+            self.current_fight.display(f' (guarding while attacking)')
             self.dfs_bonus += (self.guard_dfs_bonus * self.guard_while_attacking)
+        self.current_fight.display('=' * len(s))
         # print(n2, 'dfs_bonus', self.target.dfs_bonus)
         if not self.check_move_failed():
             self.calc_atk(self.action)
@@ -344,7 +346,8 @@ weapon can also be weapon type"""
         fall_dam = rndint(*FALL_DAMAGE)
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
-        self.current_fight.display('{} falls to the ground! -{} HP ({})'.format(self.name, fall_dam, self.hp))
+        # self.current_fight.display('{} falls to the ground! -{} HP ({})'.format(self.name, fall_dam, self.hp))
+        self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
         # print('$$$', self.status)
 
     def cause_knockback(self, dist):
@@ -352,12 +355,14 @@ weapon can also be weapon type"""
         self.change_distance(dist, opp)
         s = 's' if dist > 1 else ''
         self.set_ascii('Knockback')
-        self.current_fight.display('{} is knocked back {} step{}!'.format(self.name, dist, s))
+        # self.current_fight.display('{} is knocked back {} step{}!'.format(self.name, dist, s))
+        self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
 
     def cause_off_balance(self):
         ob_dur = rndint_2d(DUR_OFF_BAL_MIN, DUR_OFF_BAL_MAX) // self.speed_full
         self.add_status('off-balance', ob_dur)
-        self.current_fight.display('{} is off-balance!'.format(self.name))
+        # self.current_fight.display('{} is off-balance!'.format(self.name))
+        self.current_fight.display(' off-balance!', align=False)
         # print('$$$', self.status)
 
     def cause_shock(self):
@@ -367,7 +372,8 @@ weapon can also be weapon type"""
         self.add_status('skip', shock_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display('{} is shocked!'.format(self.name))
+        # self.current_fight.display('{} is shocked!'.format(self.name))
+        self.current_fight.display(' shocked!', align=False)
         # print('$$$', self.status)
 
     def cause_slow_down(self):
@@ -375,7 +381,8 @@ weapon can also be weapon type"""
         self.add_status('slowed down', slow_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''  # todo why this line everywhere?
         self.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display('{} is slowed down!'.format(self.name))
+        # self.current_fight.display('{} is slowed down!'.format(self.name))
+        self.current_fight.display(' slowed down!', align=False)
 
     def cause_stun(self):
         """Stun is not as bad as shock."""
@@ -384,7 +391,8 @@ weapon can also be weapon type"""
         self.add_status('skip', stun_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display('{} is stunned!'.format(self.name))
+        # self.current_fight.display('{} is stunned!'.format(self.name))
+        self.current_fight.display(' stunned!', align=False)
         # print('$$$', self.status)
 
     def change_att(self, att, amount):
@@ -522,8 +530,8 @@ weapon can also be weapon type"""
         # print('to dodge', self.to_dodge, 'to block', self.to_block)
         # print('to hit', atkr.to_hit)
         roll = rnd()
-        self.current_fight.display(f'dodge chance: {round(dodge_chance, 2)}, block chance: \
-{round(block_chance, 2)}, roll: {round(roll, 2)}')
+        # s = f'dodge chance: {round(dodge_chance, 2)}, block chance: {round(block_chance, 2)}, roll: {round(roll, 2)}'
+        # self.current_fight.display(s)
         prefix = 'Lying ' if self.check_status('lying') else ''
         if roll <= dodge_chance:
             atkr.dam = 0
@@ -550,8 +558,7 @@ weapon can also be weapon type"""
         targ = self.target
         dam = rndint_2d(1, self.agility_full * STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display('{} takes additional agility-based damage! -{} HP ({})'.format(targ.name,
-                                                                                                  dam, targ.hp))
+        self.current_fight.display(f' agility-based -{dam} HP ({targ.hp})', align=False)
 
     def do_knockback(self):
         dist = random.choice(KNOCKBACK_DIST_FORCED)
@@ -561,8 +568,7 @@ weapon can also be weapon type"""
         targ = self.target
         dam = rndint_2d(1, self.level * LEVEL_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display('{} takes additional level-based damage! -{} HP ({})'.format(targ.name,
-                                                                                                dam, targ.hp))
+        self.current_fight.display(f' level-based -{dam} HP ({targ.hp})', align=False)
 
     def do_mob_dam(self):
         self.target.cause_slow_down()
@@ -577,8 +583,7 @@ weapon can also be weapon type"""
         targ = self.target
         dam = rndint_2d(1, self.qp)
         targ.take_damage(dam)
-        self.current_fight.display('{} takes additional qi-based damage! -{} HP ({})'.format(targ.name,
-                                                                                             dam, targ.hp))
+        self.current_fight.display(f' qi-based -{dam} HP ({targ.hp})', align=False)
 
     def do_shock_move(self):
         self.target.cause_shock()
@@ -587,22 +592,20 @@ weapon can also be weapon type"""
         targ = self.target
         dam = rndint_2d(1, self.speed_full * STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display('{} takes additional speed-based damage! -{} HP ({})'.format(targ.name,
-                                                                                                dam, targ.hp))
+        self.current_fight.display(f' speed-based -{dam} HP ({targ.hp})', align=False)
 
     def do_stam_dam(self):
         targ = self.target
         targ.change_stamina(-STAMINA_DAMAGE)
         prefix = 'lying ' if targ.check_status('lying') else ''
         targ.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display('{} gasps for breath!'.format(targ.name))
+        self.current_fight.display(' gasps for breath!', align=False)
 
     def do_strength_based_dam(self):
         targ = self.target
         dam = rndint_2d(1, self.strength_full * STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display('{} takes additional strength-based damage! -{} HP ({})'.format(targ.name,
-                                                                                                   dam, targ.hp))
+        self.current_fight.display(f' strength-based -{dam} HP ({targ.hp})', align=False)
 
     def do_takedown(self):
         targ = self.target
@@ -943,8 +946,10 @@ weapon can also be weapon type"""
 
     def maneuver(self):
         m = self.action
-        s = self.current_fight.get_f_name_string(self)
-        self.current_fight.display('{}: {}'.format(s, m.name))
+        n = self.current_fight.get_f_name_string(self)
+        s = '{}: {}'.format(n, m.name)
+        self.current_fight.display(s)
+        self.current_fight.display('=' * len(s))
         if m.dist_change:
             self.change_distance(m.dist_change, self.target)
             self.check_move_failed()
@@ -1223,7 +1228,7 @@ weapon can also be weapon type"""
                 tgt.log('Knocked out by {}.'.format(self.name))
                 if not tgt.ascii_name.startswith('lying'):
                     tgt.set_ascii('Falling')
-                self.current_fight.display('{} is knocked out!'.format(tgt.name))
+                self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
 
     def try_shock_move(self):
         targ = self.target

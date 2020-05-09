@@ -176,7 +176,7 @@ class BaseFight(object):
         for f in self.all_fighters:
             f.disarm()
 
-    def display(self, text):
+    def display(self, text, **kwargs):
         n_min, n_sec = self.get_time()
         s = '{}:{} {}'.format(n_min, n_sec, text)
         self.timeline.append(s)
@@ -495,9 +495,9 @@ class NormalFight(AutoFight):
     def cls(self):
         self.main_player.cls()
 
-    def display(self, text):
-        BaseFight.display(self, text)
-        self.show(text)
+    def display(self, text, **kwargs):
+        BaseFight.display(self, text, **kwargs)
+        self.show(text, **kwargs)
 
     def pak(self):
         self.main_player.pak()
