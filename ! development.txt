@@ -36,9 +36,9 @@ gameplay:
     style generation
 
 moves:
+    Charging and Onslaught elbow, claw and knee moves are now possible (13803 -> 16125 moves)
 
-
-    ? 13803 ->  moves
+    ? 13803 -> 16125 moves
 
 testing:
     reworked test level significance
