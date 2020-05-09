@@ -72,13 +72,20 @@ def get_ascii(move_name):
         key = move_name
     else:
         words = move_name.split()
-        for i in range(-len(words) + 1, 0, 1):
-            temp = ' '.join(words[i:])
+        if 'Flying' in words:
+            temp = 'Flying ' + words[-1]
             if temp in FIGHTER_ART_L:
                 key = temp
-                break
+            else:
+                key = DEFAULT_MOVE_ART
         else:
-            key = DEFAULT_MOVE_ART
+            for i in range(-len(words) + 1, 0, 1):
+                temp = ' '.join(words[i:])
+                if temp in FIGHTER_ART_L:
+                    key = temp
+                    break
+            else:
+                key = DEFAULT_MOVE_ART
     ascii_l = FIGHTER_ART_L[key]
     ascii_r = FIGHTER_ART_R[key]
     return ascii_l, ascii_r
