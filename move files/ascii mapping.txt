@@ -96,11 +96,18 @@ __|__ s.
     |    .
    / \   .
   /  |   .
-# Charging Punch, Long Punch
+# Charging Punch
+          .
+ ~~   O __.
+ ~~  /_   .
+ ~~  |    .
+    / \   .
+   /  /   .
+# Pushing Punch
          .
- ~~  O __.
- ~~ /_   .
- ~~ |    .
+     O __.
+    /_   .
+    |    .
    / \   .
   /  /   .
 # Long Punch
@@ -138,6 +145,13 @@ __|__ s.
  ~~  /     .
     / \    .
    /  /    .
+# Pushing Palm
+         .
+    O __,.
+   /_    .
+   /     .
+  / \    .
+ /  /    .
 # Long Palm
            .
       O __,.
@@ -404,6 +418,13 @@ __|__ s.
  ~~   |/   .
      /     .
     /      .
+# Pushing Kick
+        .
+  O_\   .
+ /_  ___.
+   |/   .
+  /     .
+ /      .
 # Flying Kick
   O_       .
  /_ \ _____.
