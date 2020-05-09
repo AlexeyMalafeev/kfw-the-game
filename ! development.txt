@@ -37,6 +37,7 @@ gameplay:
 
 moves:
     Charging and Onslaught elbow, claw and knee moves are now possible (13803 -> 16125 moves)
+    'surprise', 'shocking' and 'debilitating' don't overlap in one move (16125 -> 16041 moves)
 
     ? 13803 -> 16125 moves
 
