@@ -6,6 +6,8 @@ from .utilities import *
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
         # + distance
         # + stats
+        # + elbow & knee & headbutt (rare!)
+        # + palm & claw
     "Mystic": StyleTech('Mystic Power', qp_gain=b.QP_GAIN1),
     "Vigorous": StyleTech('Vigor', hp_gain=b.HP_GAIN1),
     "Attacking": StyleTech('Attack Method', atk_mult=b.ATTACK1),

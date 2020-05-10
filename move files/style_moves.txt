@@ -1,8 +1,8 @@
 # name           |distance |dist_change |power |accuracy |complexity |stam_cost |time_cost |qi_cost |features                        |functions              |tier |freq 
 'Charging Step'  |0        |-2          |0     |0        |1          |10        |70        |10      |{'special', 'non-attack'}       |[]                     |0    |0    
 'Dragon Claw'    |2        |0           |20    |30       |1          |25        |50        |10      |{'special', 'claw'}             |['do_level_based_dam'] |0    |0    
-'Leopard Punch'  |2        |0           |27    |27       |1          |20        |50        |10      |{'punch', 'solar', 'special'}   |['do_stam_dam']        |0    |0    
-'Mantis Hook'    |1        |0           |26    |33       |1          |24        |45        |10      |{'surprise', 'claw', 'special'} |['try_shock_move']     |0    |0    
+'Leopard Punch'  |2        |0           |27    |27       |1          |20        |50        |10      |{'special', 'punch', 'solar'}   |['do_stam_dam']        |0    |0    
+'Mantis Hook'    |1        |0           |26    |33       |1          |24        |45        |10      |{'surprise', 'special', 'claw'} |['try_shock_move']     |0    |0    
 'No-Shadow_Kick' |4        |-3          |60    |40       |3          |40        |80        |70      |{'special', 'kick', 'flying'}   |['try_insta_ko']       |0    |0    
 
 # 5 moves

@@ -1,4 +1,4 @@
-Sat May  9 21:11:17 2020
+Mon May 11 00:23:42 2020
 Traceback (most recent call last):
   File "D:\kfw_dev\load game.py", line 8, in <module>
     g.play()
@@ -6,36 +6,6 @@ Traceback (most recent call last):
     play = self.game_loop()
   File "D:\kfw_dev\kf_lib\game.py", line 230, in game_loop
     brk = choice()
-  File "D:\kfw_dev\kf_lib\player.py", line 503, in pick_fights
-    encounters.random_encounters(self, encs)
-  File "D:\kfw_dev\kf_lib\encounters.py", line 1474, in random_encounters
-    e(p)
-  File "D:\kfw_dev\kf_lib\encounters.py", line 343, in __init__
-    Enc.__init__(self, player, test)
-  File "D:\kfw_dev\kf_lib\encounters.py", line 196, in __init__
-    self.run()
-  File "D:\kfw_dev\kf_lib\encounters.py", line 362, in run
-    self.do_fight()
-  File "D:\kfw_dev\kf_lib\encounters.py", line 368, in do_fight
-    p.fight(c, items_allowed=False)
-  File "D:\kfw_dev\kf_lib\fighter.py", line 631, in fight
-    return ffight(self, en, allies, en_allies, *args, **kwargs)
-  File "D:\kfw_dev\kf_lib\fight.py", line 48, in fight
-    f = NormalFight(side_a, side_b, environment_allowed, items_allowed, win_messages, school_display)
-  File "D:\kfw_dev\kf_lib\fight.py", line 480, in __init__
-    self.fight_loop()
-  File "D:\kfw_dev\kf_lib\fight.py", line 221, in fight_loop
-    f.exec_move()
-  File "D:\kfw_dev\kf_lib\fighter.py", line 618, in exec_move
-    self.attack()  # changing distance is included
-  File "D:\kfw_dev\kf_lib\fighter.py", line 285, in attack
-    self.hit_or_miss()
-  File "D:\kfw_dev\kf_lib\fighter.py", line 893, in hit_or_miss
-    self.try_ko()
-  File "D:\kfw_dev\kf_lib\fighter.py", line 1231, in try_ko
-    self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), alight=False)
-  File "D:\kfw_dev\kf_lib\fight.py", line 500, in display
-    self.show(text, **kwargs)
-  File "D:\kfw_dev\kf_lib\fight.py", line 512, in show
-    self.main_player.show(text, **kwargs)
-TypeError: show() got an unexpected keyword argument 'alight'
+  File "D:\kfw_dev\kf_lib\game.py", line 634, in test
+    p.give_money(50)
+AttributeError: 'HumanPlayer' object has no attribute 'give_money'

@@ -121,13 +121,6 @@ class BaseFight(object):
         # in-attack attributes
         self.current_fighter = None
 
-    def cancel_items(self):
-        if self.players and self.items_allowed:
-            for p in self.players:
-                if p.used_item:
-                    items.cancel_item(p.used_item, p)
-                    p.used_item = ''
-
     def check_epic(self):
         unique = set(self.cartoon)
         total = len(self.cartoon)
@@ -260,7 +253,6 @@ class BaseFight(object):
         else:
             los_exp = (sum([f.exp_yield for f in self.all_fighters]) // num_f // DRAW_EXP_DIVISOR)
             los_mess = 'Draw.'
-        self.handle_player_stats()
         for p in self.players:
             if p in self.winners:
                 exp = self.win_exp
@@ -274,10 +266,16 @@ class BaseFight(object):
             else:
                 exp = los_exp
                 p.log(los_mess)
+            # todo remove this when change the exp system
             if p.weapon:
                 exp /= p.weapon.get_exp_mult()
                 exp = round(exp)
+            # todo probably reimplement this when change the exp system
+            if self.items_allowed and p.used_item:
+                items.cancel_item(p.used_item, p)
+                p.used_item = ''
             p.gain_exp(exp)
+        self.handle_player_stats()
         self.main_player.pak()
 
     def handle_accompl(self):
@@ -483,7 +481,6 @@ class AutoFight(BaseFight):
             self.post_fight_menu()
         if self.main_player.is_player:
             self.handle_injuries()
-            self.cancel_items()
             self.handle_gossip()
             self.give_exp()
             self.handle_accompl()
@@ -540,8 +537,6 @@ class SpectateFight(NormalFight):
 
 class BaseSparring(BaseFight):
     """Doesn't have items, accomplishments, injuries, stats, quotes or gossip."""
-    def cancel_items(self):
-        pass
 
     def handle_accompl(self):
         pass

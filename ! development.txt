@@ -27,6 +27,9 @@ code:
 bug fixes:
     properly linked ASCII for weapon moves
     don't get the same move more than once when level up
+    fight items are now canceled after exp earned is calculated
+            (although this so far doesn't change exp amount)
+    exp bonuses are now properly recorded in statistics
 
 gameplay:
     player confirms whether the randomly-generated fighter is ok in RING
@@ -38,8 +41,7 @@ gameplay:
 moves:
     Charging and Onslaught elbow, claw and knee moves are now possible (13803 -> 16125 moves)
     'surprise', 'shocking' and 'debilitating' don't overlap in one move (16125 -> 16041 moves)
-
-    ? 13803 -> 16125 moves
+    x-based damage functions don't overlap (16041 -> 15789 moves)
 
 testing:
     reworked test level significance
