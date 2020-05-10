@@ -4,5 +4,6 @@
 'Leopard Punch'  |2        |0           |27    |27       |1          |20        |50        |10      |{'special', 'punch', 'solar'}   |['do_stam_dam']        |0    |0    
 'Mantis Hook'    |1        |0           |26    |33       |1          |24        |45        |10      |{'surprise', 'special', 'claw'} |['try_shock_move']     |0    |0    
 'No-Shadow_Kick' |4        |-3          |60    |40       |3          |40        |80        |70      |{'special', 'kick', 'flying'}   |['try_insta_ko']       |0    |0    
+'Backfist'       |1        |0           |26    |23       |1          |20        |50        |0       |{'punch'} |[]        |0    |0    
 
 # 5 moves

@@ -596,6 +596,7 @@ def main():
     save_moves(style_moves, keys, os.path.join('move files', 'style_moves.txt'))
     moves = gen_moves(base_moves)  # generated moves also include base_moves
     moves += extra_moves + style_moves
+    # todo generate grappling moves
     save_moves(moves, keys, os.path.join('move files', 'all_moves.txt'), sort_alph=True)
 
     input('Press Enter to exit')

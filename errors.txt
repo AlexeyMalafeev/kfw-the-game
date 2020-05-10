@@ -1,4 +1,4 @@
-Mon May 11 00:23:42 2020
+Mon May 11 00:50:07 2020
 Traceback (most recent call last):
   File "D:\kfw_dev\load game.py", line 8, in <module>
     g.play()
@@ -6,6 +6,19 @@ Traceback (most recent call last):
     play = self.game_loop()
   File "D:\kfw_dev\kf_lib\game.py", line 230, in game_loop
     brk = choice()
-  File "D:\kfw_dev\kf_lib\game.py", line 634, in test
-    p.give_money(50)
-AttributeError: 'HumanPlayer' object has no attribute 'give_money'
+  File "D:\kfw_dev\kf_lib\game.py", line 631, in test
+    t.test_story(story.ForeignerStory)
+  File "D:\kfw_dev\kf_lib\testing_tools.py", line 255, in test_story
+    s.advance()
+  File "D:\kfw_dev\kf_lib\story.py", line 52, in advance
+    exec('self.scene{}()'.format(self.state))
+  File "<string>", line 1, in <module>
+  File "D:\kfw_dev\kf_lib\story.py", line 118, in scene2
+    p.spectate([b], [f])
+  File "D:\kfw_dev\kf_lib\fighter.py", line 1542, in spectate
+    SpectateFight(side_a, side_b, environment_allowed)
+  File "D:\kfw_dev\kf_lib\fight.py", line 525, in __init__
+    self.show_win_message()
+  File "D:\kfw_dev\kf_lib\fight.py", line 417, in show_win_message
+    self.main_player.show_ascii()
+AttributeError: 'NoneType' object has no attribute 'show_ascii'

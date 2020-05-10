@@ -29,15 +29,25 @@ FIRST_NAME_PARTS = ['bai', 'cai', 'cao', 'chang', 'chao', 'chen', 'cheng',
                     'yan', 'yang', 'yao', 'ye', 'yi', 'yin', 'ying', 'yong', 'yu', 'yuan',
                     'zeng', 'zhang', 'zhao', 'zheng', 'zhong', 'zhou', 'zhu', 'ziu', 'zou']
 
-FOREIGN_COUNTRIES = 'England Germany Japan Korea'.split()
+FOREIGN_COUNTRIES = 'England Germany Japan Korea Thailand Brazil'.split()
 FOREIGN_NAMES = {'England': 'Smith Jones Taylor Brown Williams Wilson \
                             Johnson Walker Robinson Green Roberts'.split(),
                  'Germany': 'Muller Schmidt Schneider Fischer Meyer Weber \
                             Schulz Becker Hoffmann'.split(),
                  'Japan': 'Satou Suzuki Takahashi Tanaka Watanabe Itou \
                             Nakamura Yamamoto Kobayashi Saitou'.split(),
-                 'Korea': 'Kwan Kangjun Kai Khong Nham Thang Pohng'.split()
+                 'Korea': 'Kwan Kangjun Kai Khong Nham Thang Pohng'.split(),
+                 'Thailand': 'Awut Channarong Khemkhaeng Puenthai Somchair Thuanthong'.split(),
+                 'Brazil': 'Silva Santos Oliveira Souza Rodrigues'.split()
                  }
+
+# just for the record, here is the meanings of the Thai names:
+# Awut: "weapon"
+# Channarong: "experienced warrior"
+# Khemkhaeng: "strong"
+# Puenthai: "gun"
+# Somchair: "manly."
+# Thuanthong: Thai name meaning "golden spear."
 
 ROBBER_NICKNAMES = '''Atrocious Bloody Cruel Dragon Evil Fat Greedy Horrible
                     Immortal Jerky Killer Little Mad Nasty Opium Powerful

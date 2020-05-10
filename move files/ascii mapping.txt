@@ -180,7 +180,7 @@ __|__ s.
     |    .
    / \   .
   /  |   .
-# Backfist - legacy
+# Backfist
         .
     O _/.
    /_   .

@@ -628,15 +628,10 @@ class Game(object):
 
     def test(self):
         t = testing_tools.Tester(self)
-        t.quick_money(50)
+        en = fighter_factory.new_foreigner(5)
         p = self.current_player
-        p.strength_full = 10
-        p.agility_full = 10
-        p.speed_full = 10
-        en = fighter_factory.Fighter('dummy', level=1, atts_tuple=(3, 3, 3, 3))
-        p.fight(en)
-
-        t.test_enc('Gossip')
+        p.spar(en)
+        # t.test_story(story.ForeignerStory)
         # t.test_enc('Challenger')
         # self.current_player.learn_tech('Attack Is Defense')
         # t.two_players_fight()

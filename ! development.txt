@@ -1,57 +1,42 @@
 ..2020
-v.0.5.9 aka
+v.0.6.0 aka
 
 DONE:
 
 AI:
-    new fight AI: GeneticAIAggro that is good at both 1 on 1 and crowd vs crowd fights:
-        GeneticAIAggro           7629
-        GeneticAIExtraRules4     6870
-        GeneticAIExtraRules7     6852
-        GeneticAITrainedParams8  6795
-        GeneticAIExtraRules9     6786
-        WeightedActionsAI        6206
-        BaseAI                   862
 
 
 balance:
-    reduced exp multiplier for weapons
+
 
 code:
-    refactoring of techniques.py
-    refactoring of moves.py
-    remove move_gen.modified_move (not used)
-    remove RING_debug.py
-    Unix support - the game is playable, although there are some small UI issues
+
 
 bug fixes:
-    properly linked ASCII for weapon moves
-    don't get the same move more than once when level up
     fight items are now canceled after exp earned is calculated
             (although this so far doesn't change exp amount)
     exp bonuses are now properly recorded in statistics
 
 gameplay:
-    player confirms whether the randomly-generated fighter is ok in RING
-    successful blocks and dodges increase qp
-    nerfed weapons (not enough?)
-    foreign styles have appropriate strikes and techs
-    style generation
+
 
 moves:
-    Charging and Onslaught elbow, claw and knee moves are now possible (13803 -> 16125 moves)
-    'surprise', 'shocking' and 'debilitating' don't overlap in one move (16125 -> 16041 moves)
-    x-based damage functions don't overlap (16041 -> 15789 moves)
+    style moves: Backfist (karate)
+    default moves for some foreign styles
+
+    15789 moves ->
+
+names:
+    a handful of Thai and Brazilian names
+
+styles:
+    Capoeira
 
 testing:
-    reworked test level significance
+
 
 UI:
-    move tier is displayed in some situations
-    ASCII for some newer moves
-    ASCII for all weapon moves
-    more ASCII art for old moves
-    slightly changed output and more concise messages in fights
+
     
 _____________________________________________________
 
