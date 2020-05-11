@@ -347,6 +347,7 @@ MONSTER_KUNGFU = NoTechStyle('Monster Kung-fu')
 ZENS_STYLE = NoTechStyle('Savant')
 NO_STYLE = NoTechStyle('No Style')
 
+# todo add more foreign styles
 # NB! when adding new foreign style, add names to names.py as well!
 FOREIGN_STYLES = {
     'England': TechStyle('English Boxing',
@@ -360,6 +361,7 @@ FOREIGN_STYLES = {
                           8: '4,punch'}
                          ),
     'Germany': TechStyle('Wrestling',
+                         # todo add grabbing to wreslers (a defense move)
                          {3: StyleTech('Wrestling I', grappling_strike_mult=b.STRIKE_MULT1),
                           5: StyleTech('Wrestling II', strength_mult=b.STRENGTH1),
                           7: StyleTech('Wrestling III', hp_gain=b.HP_GAIN1)},
@@ -409,7 +411,6 @@ FOREIGN_STYLES = {
                          6: '3,acrobatic,kick',
                          8: '4,acrobatic,flying,kick'}
                         )
-    # todo add more foreign styles
 }
 
 

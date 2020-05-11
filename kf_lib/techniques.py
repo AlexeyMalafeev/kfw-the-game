@@ -193,6 +193,9 @@ LINKED_TECHS = [(UpgradableTech('Qi Breathing', qp_gain=b.QP_GAIN1),
 
                 (UpgradableTech('Guard While Striking', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
                  AdvancedTech('Attack Is Defense', guard_while_attacking=b.GUARD_WHILE_ATTACKING2)),
+
+                # todo 'momentum' technique - bonus after moving forward '+' and '++'
+                # possibly another technique that improves defense after moving back
                 ]
 
 UPG_MAP_ADV_REG = {t[1].name: t[0].name for t in LINKED_TECHS}

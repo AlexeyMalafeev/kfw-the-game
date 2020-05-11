@@ -12,7 +12,7 @@
 - remove Step Forward and Step Back when distance is not right
 - multiple strength-based dam in one strike in some auto-generated moves
 - when fights break out between school (not players'), show which school won
-- add 'flying' feature to acrobatic?
 - give at least some moves with bonus when choosing new moves
 - do_shock_move, try_shock_move in one move -> extra shock status?
 - status attacks are level-dependent
+- wrong ASCII: stunned when lying (e.g. very strong Finishing Kick), KO when lying

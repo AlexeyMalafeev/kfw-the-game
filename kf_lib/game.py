@@ -354,6 +354,7 @@ class Game(object):
             self.style_list = style_gen.generate_new_styles(10)  # todo this is a magic number
             styles.default_styles = self.style_list  # todo boy is this ugly
             styles.MAX_LEN_STYLE_NAME = max((len(s.name) for s in styles.default_styles))  # todo oh wow...
+
         def _init_players():
             coop_mode = False
             if num_players > 1 and coop == '?':
@@ -628,9 +629,11 @@ class Game(object):
 
     def test(self):
         t = testing_tools.Tester(self)
-        en = fighter_factory.new_foreigner(5)
+        f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
+        f2 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
         p = self.current_player
-        p.spar(en)
+        from kf_lib.fight import spectate
+        spectate(f1, f2)
         # t.test_story(story.ForeignerStory)
         # t.test_enc('Challenger')
         # self.current_player.learn_tech('Attack Is Defense')

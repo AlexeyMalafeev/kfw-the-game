@@ -16,15 +16,15 @@ bug fixes:
     fight items are now canceled after exp earned is calculated
             (although this so far doesn't change exp amount)
     exp bonuses are now properly recorded in statistics
+    fixed evil crash in spectating fights
 
 gameplay:
-
+    don't add random moves to choose from if there is at least one style string-based move -> more distinct styles
 
 moves:
     style moves: Backfist (karate)
     default moves for some foreign styles
-
-    15789 moves ->
+    generated some throws (15789 -> 15803 moves)
 
 names:
     a handful of Thai and Brazilian names
@@ -39,6 +39,8 @@ UI:
 
     
 _____________________________________________________
+
+implement 'momentum' - a bonus to attack after Step Forward ('+') and Rush Forward ('++'), or make it a tech
 
 generate new maneuvers (fast charging step etc.), a fixed chance at getting maneuvers when choosing new move
 

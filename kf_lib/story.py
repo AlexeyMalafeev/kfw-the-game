@@ -164,7 +164,6 @@ class NinjaTurtlesStory(Story):
     def reward(self):
         p = self.player
         p.add_accompl('TMNT')
-        from . import techniques
         from . import styles
         p.learn_tech(*list(styles.TURTLE_NUNJUTSU.techs.values()))
 

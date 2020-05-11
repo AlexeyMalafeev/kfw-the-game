@@ -549,20 +549,14 @@ def gen_moves(moves):
     return moves + new_moves
 
 
-def gen_wp_moves(moves):
+def gen_throws(moves):
     new_moves = []
     for m in moves:
+        # todo generate more throws (function x function like other moves)
         for f, others in (
-                (light, ()),
-                (heavy, ()),
                 (long, ()),
-                (short, ()),
                 (charging, ()),
-                (surprise, ()),
-                (shocking, ()),
                 (fast, ()),
-                (precise, ()),
-                (flying, ()),
                 (power, ()),
                 (trick, ()),
                 (lightning, ()),
@@ -577,13 +571,8 @@ def gen_wp_moves(moves):
             new = f(m)
             if new is not None:
                 new_moves.append(new)
-            # for f2 in others:
-            #     temp = f2(m)
-            #     if temp is not None:
-            #         new2 = f(temp)
-            #         if new2 is not None:
-            #             new_moves.append(new2)
-    return moves + new_moves
+
+    return new_moves
 
 
 def main():
@@ -596,7 +585,9 @@ def main():
     save_moves(style_moves, keys, os.path.join('move files', 'style_moves.txt'))
     moves = gen_moves(base_moves)  # generated moves also include base_moves
     moves += extra_moves + style_moves
-    # todo generate grappling moves
+    throw = [m for m in extra_moves if m['name'] == 'Throw']  # this is awkward, but oh well
+    throws = gen_throws(throw)  # generated moves DO NOT include source move(s) in this case
+    moves += throws
     save_moves(moves, keys, os.path.join('move files', 'all_moves.txt'), sort_alph=True)
 
     input('Press Enter to exit')

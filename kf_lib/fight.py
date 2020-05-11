@@ -531,6 +531,36 @@ class SpectateFight(NormalFight):
     def show(self, text, **kwargs):
         print(text)
 
+    def show_win_message(self):
+        self.cls()
+        self.side_a[0].show_ascii()
+        s = ''
+        if self.winners:
+            if self.win_messages:
+                if self.winners == self.side_a:
+                    s = self.win_messages[0]
+                elif self.winners == self.side_b:
+                    s = self.win_messages[1]
+            else:
+                wnr = self.winners[0]
+                if wnr.name in names.GROUP_NAMES:
+                    s = '{} win.'.format(names.GROUP_NAMES[wnr.name])
+                else:
+                    s = '{} wins.'.format(wnr.name)
+            self.handle_win_quote()
+        else:
+            s = 'Draw!'
+        n_min, n_sec_left = self.get_time()
+        if n_min:
+            t_string = '{} min. {} sec.'.format(n_min, n_sec_left)
+        else:
+            t_string = '{} sec.'.format(n_sec_left)
+        dur_st = 'The fight lasted {}'.format(t_string)
+        sep = '-' * len(dur_st)
+        s += '\n{}\n{}'.format(sep, dur_st)
+        self.show(s)
+        self.pak()
+
     def pak(self):
         pak()
 

@@ -172,13 +172,16 @@ def new_fighter(lv=0, n=1):
         return fs
 
 
-def new_foreigner(lv=0):
-    country = random.choice(names.FOREIGN_COUNTRIES)
-    name = random.choice(names.FOREIGN_NAMES[country])
-    style = styles.FOREIGN_STYLES[country].name
+def new_foreigner(lv=0, country=None, name=None, style_name=None):
     if not lv:
         lv = rndint(*FOREIGNER_LV)
-    f = Fighter(name, style, lv)
+    if country is None:
+        country = random.choice(names.FOREIGN_COUNTRIES)
+    if name is None:
+        name = random.choice(names.FOREIGN_NAMES[country])
+    if style_name is None:
+        style_name = styles.FOREIGN_STYLES[country].name
+    f = Fighter(name, style_name, lv)
     f.country = country  # used in story module
     return f
 

@@ -186,11 +186,12 @@ def resolve_style_move(move_s, f):
         features = features[1:]
         pool = [m for m in get_moves_by_features(features, tier) if m not in f.moves]
         n = len(pool)
-        if n < f.num_moves_choose:
-            if not pool:
-                print(f'warning: couldn\'t find any moves for move string {move_s}')
-            diff = f.num_moves_choose - n
-            pool.extend(get_rand_moves(f, diff, tier, exceptions=pool))
+        if not n:
+            print(f'warning: couldn\'t find any moves for move string {move_s}')
+            pool = get_rand_moves(f, f.num_moves_choose, tier)
+        elif n == 1:
+            f.learn_move(pool[0])
+            return
         elif n > f.num_moves_choose:
             weights = [m.freq for m in pool]  # use move frequency
             pool = random.choices(pool, weights=weights, k=f.num_moves_choose)
