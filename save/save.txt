@@ -1,356 +1,335 @@
 g.fighters_dict = fsd = {}
 
-fsd['Han Lu'] = HumanPlayer('Han Lu', 'Mystic Iron Cobra', 10, (6, 6, 6, 6), {'Iron Skin', 'Mystic Power', 'Attacking Cobra'}, ['Surprise Elbow', 'Pushing Surprise Kick', 'Fast Energy Elbow', 'Surprise Fast Shocking Kick', 'Long Trick Nerve Kick'], 2, ['unfriendly', 'brave'])
+fsd['Liu Gao'] = HumanPlayer('Liu Gao', 'Attacking Iron Dragon', 4, (4, 5, 5, 4), {'Attack Method'}, ['Rush Forward', 'Fast Light Punch'], 2, ['greedy', 'hardworking'])
 
-fsd['Fang Gui'] = HumanPlayer('Fang Gui', 'Attacking Storm Snake', 10, (6, 6, 6, 6), {'Attack Method', 'Relentless Storm', 'Twisting Snake'}, ['Long Punch', 'Retreating Surprise Punch', 'Flying Power Elbow', 'Short Fast Solar Kick', 'Light Shocking Trick Headbutt'], 2, ['narrow-minded', 'disciplined'])
+fsd['Wu Xiao'] = HumanPlayer('Wu Xiao', 'Shattering Misty Cobra', 4, (5, 5, 4, 4), {'Shattering Strikes', 'Strange But Deadly'}, ['Pushing Claw', 'Long Charging Palm'], 2, ['unfriendly', 'hardworking'])
 
-fsd['Ma Yangxiao'] = SmartAIP('Ma Yangxiao', 'Mystic Iron Cobra', 5, (4, 6, 3, 6), {'Iron Skin', 'Mystic Power'}, ['Light Headbutt', 'Strong Punch'], 2, ['narrow-minded', 'friendly'])
+fsd['Cao Maqiao'] = SmartAIP('Cao Maqiao', 'Elusive Emerald Phoenix', 3, (4, 5, 5, 3), {'Elusive Moves'}, ['Leap Forward'], 2, ['undisciplined', 'generous'])
 
-fsd['Wei Zhanggui'] = SmartAIP('Wei Zhanggui', 'Vigorous Razor Crab', 7, (4, 5, 3, 9), {'Defending Crab', 'Razor-Sharp Strikes', 'Vigor'}, ['Long Palm', 'Short Surprise Kick', 'Pushing Solar Kick'], 2, ['narrow-minded', 'disciplined'])
+fsd['Hou Penghou'] = SmartAIP('Hou Penghou', 'Guarding Stone Tiger', 3, (5, 4, 4, 4), {'Guard Form'}, ['Fast Kick'], 2, ['unfriendly', 'brave'])
 
-fsd['Master Gong'] = Master('Master Gong', 'Attacking Storm Snake', 11, (6, 9, 4, 6), {'Environment Fighting', 'Relentless Storm', 'Attack Method', 'Twisting Snake'}, ['Onslaught Strong Flying Punch', 'Charging Kick', 'Long Pushing Palm', 'Skillful Strong Punch', 'Surprise Light Shocking Punch'])
+fsd['Master Xiao'] = Master('Master Xiao', 'Elusive Emerald Phoenix', 11, (8, 5, 4, 8), {'Rising Phoenix', 'Elusive Moves', 'Emerald Flow', 'Qi Breathing'}, ['Precise Light Nerve Elbow', 'Surprise Kick', 'Short Light Palm', 'Flying Power Elbow', 'Long Acrobatic Retreating Headbutt'])
 
-fsd['Master Tian'] = Master('Master Tian', 'Defending Stone Ox', 11, (6, 8, 4, 7), {'Stone Forearms', 'Powerful Kicks', 'Defense Stance', "Ox's Stamina"}, ['Skillful Short Piercing Palm', 'Sweep', 'Energy Kick', 'Skillful Shocking Kick', 'Acrobatic Charging Surprise Kick'])
+fsd['Master Yan'] = Master('Master Yan', 'Rising Fire Toad', 11, (8, 7, 6, 4), {'Flying Strikes', "Toad's Toughness", 'Rising from the Ashes', 'Inferno'}, ['Charging Lightning Solar Claw', 'Flying Elbow', 'Fast Flying Kick', 'Flying Shocking Kick', 'Precise Flying Light Knee'])
 
-fsd['Master Yan'] = Master('Master Yan', 'Elusive Misty Crane', 10, (7, 6, 6, 5), {'Crane Flapping Wings', 'Elusive Moves', 'Misty Steps'}, ['Pushing Precise Lightning Palm', 'Pushing Punch', 'Skillful Surprise Claw', 'Pushing Precise Knee', 'Retreating Surprise Trick Claw'])
+fsd['Master Shen'] = Master('Master Shen', 'Defending Wooden Crab', 11, (5, 7, 6, 7), {'Guard While Striking', 'Wooden Limbs', 'Defending Crab', 'Defense Stance'}, ['Charging Debilitating Elbow', 'Short Punch', 'Fast Flying Knee', 'Short Precise Punch', 'Expert Palm'])
 
-fsd['Master Xue'] = Master('Master Xue', 'Guarding Ice Toad', 9, (4, 7, 7, 5), {"Toad's Toughness", 'Hard like Ice', 'Guard Form'}, ['Heavy Palm', 'Charging Heavy Kick', 'Long Charging Light Punch', 'Short Pushing Solar Palm'])
+fsd['Master Luo'] = Master('Master Luo', 'Shattering Misty Cobra', 11, (7, 5, 9, 4), {'Shattering Strikes', 'Attacking Cobra', 'Misty Steps', 'Shadow Slips Away'}, ['Skillful Fast Piercing Palm', 'Charging Claw', 'Solar Elbow', 'Surprise Fast Flying Knee', 'Vanishing Shocking Elbow'])
 
-fsd['Master Song'] = Master('Master Song', 'Invulnerable Wooden Lizard', 11, (6, 6, 7, 6), {'Wooden Limbs', 'Environment Fighting', 'Invulnerable', 'Regenerating Lizard'}, ['Retreating Strong Backflip Kick', 'Fast Palm', 'Fast Light Elbow', 'Superior Heavy Punch', 'Skillful Surprise Lightning Kick'])
+fsd['Master Xu'] = Master('Master Xu', 'Persevering Razor Ox', 9, (7, 8, 5, 3), {'Razor-Sharp Strikes', 'Perseverance', "Ox's Stamina"}, ['Retreating Palm', 'Skillful Charging Knee', 'Skillful Solar Punch', 'Flying Light Nerve Claw'])
 
-fsd['Master Liao'] = Master('Master Liao', 'Mystic Iron Cobra', 9, (6, 4, 6, 7), {'Iron Skin', 'Mystic Power', 'Attacking Cobra'}, ['Skillful Elbow', 'Short Light Palm', 'Retreating Precise Kick', 'Superior Long Pushing Palm'])
+fsd['Master Xiong'] = Master('Master Xiong', 'Invulnerable Water Crane', 12, (6, 5, 7, 8), {'Invulnerable', 'Powerful Kicks', 'Healing Water', 'Crane Flapping Wings'}, ['Retreating Precise Energy Punch', 'Retreating Shocking Piercing Palm', 'Pushing Kick', 'Long Fast Kick', 'Onslaught Heavy Kick', 'Long Surprise Lightning Kick'])
 
-fsd['Master Cai'] = Master('Master Cai', 'Persevering Emerald Phoenix', 10, (7, 4, 5, 8), {'Emerald Flow', 'Rising Phoenix', 'Perseverance'}, ['Superior Heavy Solar Elbow', 'Skillful Palm', 'Skillful Fast Headbutt', 'Skillful Pushing Surprise Claw', 'Skillful Short Strong Palm'])
+fsd['Master Kang'] = Master('Master Kang', 'Vigorous Ice Snake', 10, (6, 6, 6, 6), {'Twisting Snake', 'Vigor', 'Hard like Ice'}, ['Superior Long Lightning Elbow', 'Skillful Punch', 'Fast Light Elbow', 'Charging Strong Palm', 'Skillful Surprise Backflip Kick'])
 
-fsd['Master Hu'] = Master('Master Hu', 'Rising Fire Dragon', 11, (6, 7, 5, 7), {'Inferno', 'Unlikely Weapons', 'Rising from the Ashes', "Dragon's Energy"}, ['Retreating Strong Acrobatic Kick', 'Fast Elbow', 'Precise Claw', 'Fast Power Knee', 'Long Charging Trick Kick'])
+fsd['Master Lin'] = Master('Master Lin', 'Attacking Iron Dragon', 11, (7, 8, 5, 5), {"Dragon's Energy", 'Attack Method', 'Iron Skin', '18 Attack Forms'}, ['Fast Acrobatic Nerve Kick', 'Fast Palm', 'Superior Knee', 'Superior Charging Kick', 'Long Fast Energy Elbow'])
 
-fsd['Master Liang'] = Master('Master Liang', 'Shattering Water Tiger', 11, (7, 5, 8, 5), {'Shattering Strikes', "Tiger's Rage", 'Healing Water', 'Flying Strikes'}, ['Short Power Nerve Palm', 'Flying Headbutt', 'Fast Flying Kick', 'Strong Flying Punch', 'Strong Flying Light Kick'])
+fsd['Master Chen'] = Master('Master Chen', 'Guarding Stone Tiger', 9, (6, 7, 4, 6), {'Guard Form', 'Stone Forearms', "Tiger's Rage"}, ['Pushing Claw', 'Lightning Kick', 'Skillful Trick Punch', 'Advanced Charging Kick'])
 
-fsd['Master Xia'] = Master('Master Xia', 'Vigorous Razor Crab', 10, (5, 4, 9, 6), {'Vigor', 'Razor-Sharp Strikes', 'Defending Crab'}, ['Retreating Trick Solar Knee', 'Flying Palm', 'Skillful Flying Punch', 'Surprise Lightning Palm', 'Skillful Light Shocking Kick'])
+fsd['Master Mao'] = Master('Master Mao', 'Mystic Storm Lizard', 8, (6, 6, 6, 4), {'Mystic Power', 'Relentless Storm', 'Regenerating Lizard'}, ['Throw', 'Short Heavy Palm', 'Flying Nerve Knee', 'Short Pushing Shocking Kick'])
 
-fsd['Official Yu'] = Fighter('Official Yu', 'Flower Kung-fu', 3, (6, 4, 4, 3), set(), ['Long Headbutt'])
+fsd['Shao Ping'] = Challenger('Shao Ping', 'Elusive Emerald Phoenix', 6, (6, 3, 6, 5), {'Elusive Moves', 'Emerald Flow'}, ['Retreating Elbow', 'Surprise Light Claw', 'Skillful Short Pushing Kick'])
 
-fsd['Zhao Feng'] = Challenger('Zhao Feng', 'Attacking Storm Snake', 7, (5, 6, 4, 6), {'Attack Method', 'Relentless Storm', 'Twisting Snake'}, ['Surprise Claw', 'Strong Palm', 'Skillful Long Light Punch'])
+fsd['Cai Caolin'] = Challenger('Cai Caolin', 'Elusive Emerald Phoenix', 5, (5, 4, 5, 5), {'Elusive Moves', 'Emerald Flow'}, ['Long Kick', 'Precise Kick'])
 
-fsd['Wan Chao'] = Challenger('Wan Chao', 'Attacking Storm Snake', 6, (5, 4, 3, 8), {'Attack Method', 'Relentless Storm'}, ['Retreating Elbow', 'Retreating Light Knee', 'Precise Light Knee'])
+fsd['Wan Shen'] = Challenger('Wan Shen', 'Elusive Emerald Phoenix', 5, (4, 8, 3, 4), {'Elusive Moves', 'Emerald Flow'}, ['Long Punch', 'Skillful Pushing Kick'])
 
-fsd['Xiao Peng'] = Challenger('Xiao Peng', 'Attacking Storm Snake', 5, (4, 5, 4, 6), {'Attack Method', 'Relentless Storm'}, ['Heavy Claw', 'Charging Surprise Punch'])
+fsd['Qian Mo'] = Challenger('Qian Mo', 'Elusive Emerald Phoenix', 2, (4, 3, 4, 5), set(), ['Retreat'])
 
-fsd['Fan Shi'] = Challenger('Fan Shi', 'Attacking Storm Snake', 5, (4, 5, 6, 4), {'Attack Method', 'Relentless Storm'}, ['Surprise Palm', 'Retreating Heavy Claw'])
+fsd['Jia Laiyang'] = Challenger('Jia Laiyang', 'Elusive Emerald Phoenix', 1, (4, 3, 4, 4), set(), [])
 
-fsd['Qin Tanlei'] = Challenger('Qin Tanlei', 'Attacking Storm Snake', 5, (7, 3, 5, 4), {'Attack Method', 'Relentless Storm'}, ['Leap Forward', 'Fast Light Palm'])
+fsd['Xiao Xiangzheng'] = Challenger('Xiao Xiangzheng', 'Elusive Emerald Phoenix', 1, (4, 4, 3, 4), set(), [])
 
-fsd['Shi Yan'] = Challenger('Shi Yan', 'Attacking Storm Snake', 4, (4, 5, 4, 5), {'Attack Method'}, ['Surprise Elbow', 'Superior Punch'])
+fsd['Mao Tocheng'] = Challenger('Mao Tocheng', 'Rising Fire Toad', 7, (9, 4, 3, 5), {"Toad's Toughness", 'Rising from the Ashes', 'Inferno'}, ['Charging Knee', 'Skillful Long Claw', 'Fast Nerve Kick'])
 
-fsd['Xie To'] = Challenger('Xie To', 'Attacking Storm Snake', 3, (5, 4, 5, 3), {'Attack Method'}, ['Light Kick'])
+fsd['Wang Qin'] = Challenger('Wang Qin', 'Rising Fire Toad', 6, (3, 5, 5, 7), {'Rising from the Ashes', 'Inferno'}, ['Heavy Punch', 'Strong Kick', 'Pushing Solar Palm'])
 
-fsd['Pan Hungxiu'] = Challenger('Pan Hungxiu', 'Attacking Storm Snake', 2, (5, 4, 3, 4), set(), ['Pushing Kick'])
+fsd['Sun Min'] = Challenger('Sun Min', 'Rising Fire Toad', 5, (3, 5, 6, 5), {'Rising from the Ashes', 'Inferno'}, ['Light Kick', 'Solar Elbow'])
 
-fsd['Mao Yang'] = Challenger('Mao Yang', 'Defending Stone Ox', 5, (5, 6, 4, 4), {'Stone Forearms', 'Defense Stance'}, ['Surprise Claw', 'Skillful Short Punch'])
+fsd['Cheng Yan'] = Challenger('Cheng Yan', 'Rising Fire Toad', 3, (4, 4, 5, 4), {'Rising from the Ashes'}, ['Surprise Punch'])
 
-fsd['Xue Zou'] = Challenger('Xue Zou', 'Defending Stone Ox', 4, (4, 4, 6, 4), {'Defense Stance'}, ['Heavy Kick', 'Acrobatic Punch'])
+fsd['Wang Pingwen'] = Challenger('Wang Pingwen', 'Rising Fire Toad', 2, (5, 4, 3, 4), set(), ['Pushing Kick'])
 
-fsd['Gao Zougao'] = Challenger('Gao Zougao', 'Defending Stone Ox', 3, (3, 4, 6, 4), {'Defense Stance'}, ['Charging Kick'])
+fsd['Xiong Xiusu'] = Challenger('Xiong Xiusu', 'Rising Fire Toad', 1, (4, 3, 4, 4), set(), [])
 
-fsd['Shen Luyang'] = Challenger('Shen Luyang', 'Defending Stone Ox', 3, (5, 3, 6, 3), {'Defense Stance'}, ['Retreating Kick'])
+fsd['Long Caoliao'] = Challenger('Long Caoliao', 'Defending Wooden Crab', 5, (6, 4, 4, 5), {'Wooden Limbs', 'Defense Stance'}, ['Skillful Palm', 'Skillful Pushing Kick'])
 
-fsd['Xiao Zhuzhang'] = Challenger('Xiao Zhuzhang', 'Defending Stone Ox', 3, (3, 4, 3, 7), {'Defense Stance'}, ['Leap Back'])
+fsd['Zou Shenliao'] = Challenger('Zou Shenliao', 'Defending Wooden Crab', 5, (4, 5, 3, 7), {'Wooden Limbs', 'Defense Stance'}, ['Fast Palm', 'Skillful Retreating Elbow'])
 
-fsd['Zhong Ming'] = Challenger('Zhong Ming', 'Defending Stone Ox', 2, (3, 7, 3, 3), set(), ['Charging Palm'])
+fsd['Liang Fangfei'] = Challenger('Liang Fangfei', 'Defending Wooden Crab', 4, (5, 5, 5, 3), {'Defense Stance'}, ['Fast Palm', 'Power Knee'])
 
-fsd['Dong Sun'] = Challenger('Dong Sun', 'Elusive Misty Crane', 8, (6, 6, 5, 5), {'Crane Flapping Wings', 'Elusive Moves', 'Misty Steps'}, ['Heavy Knee', 'Charging Surprise Punch', 'Retreating Power Elbow', 'Long Heavy Solar Kick'])
+fsd['Yin Liuzheng'] = Challenger('Yin Liuzheng', 'Defending Wooden Crab', 3, (5, 3, 4, 5), {'Defense Stance'}, ['Fast Kick'])
 
-fsd['Tao Gu'] = Challenger('Tao Gu', 'Elusive Misty Crane', 7, (5, 3, 7, 6), {'Crane Flapping Wings', 'Elusive Moves', 'Misty Steps'}, ['Rush Forward', 'Skillful Pushing Elbow', 'Fast Backflip Kick'])
+fsd['Wan Yinfang'] = Challenger('Wan Yinfang', 'Defending Wooden Crab', 3, (3, 5, 5, 4), {'Defense Stance'}, ['Charging Kick'])
 
-fsd['Tian Zouto'] = Challenger('Tian Zouto', 'Elusive Misty Crane', 5, (4, 5, 6, 4), {'Elusive Moves', 'Misty Steps'}, ['Surprise Knee', 'Retreating Fast Elbow'])
+fsd['Gao Jun'] = Challenger('Gao Jun', 'Defending Wooden Crab', 2, (3, 5, 3, 5), set(), ['Retreating Kick'])
 
-fsd['Yin Jen'] = Challenger('Yin Jen', 'Elusive Misty Crane', 5, (4, 4, 6, 5), {'Elusive Moves', 'Misty Steps'}, ['Pushing Punch', 'Fast Flying Punch'])
+fsd['Xue Chen'] = Challenger('Xue Chen', 'Shattering Misty Cobra', 6, (5, 5, 6, 4), {'Shattering Strikes', 'Misty Steps'}, ['Pushing Claw', 'Short Fast Kick', 'Heavy Nerve Claw'])
 
-fsd['Kang Hungli'] = Challenger('Kang Hungli', 'Elusive Misty Crane', 5, (4, 4, 7, 4), {'Elusive Moves', 'Misty Steps'}, ['Long Kick', 'Flying Heavy Palm'])
+fsd['Xue Zhusun'] = Challenger('Xue Zhusun', 'Shattering Misty Cobra', 5, (6, 4, 5, 4), {'Shattering Strikes', 'Misty Steps'}, ['Sweep', 'Acrobatic Punch'])
 
-fsd['Guo Mao'] = Challenger('Guo Mao', 'Elusive Misty Crane', 3, (3, 5, 4, 5), {'Elusive Moves'}, ['Throw'])
+fsd['Xia Xieming'] = Challenger('Xia Xieming', 'Shattering Misty Cobra', 4, (3, 4, 7, 4), {'Shattering Strikes'}, ['Pushing Palm', 'Pushing Fast Knee'])
 
-fsd['Kong Chuyu'] = Challenger('Kong Chuyu', 'Guarding Ice Toad', 8, (6, 4, 6, 6), {"Toad's Toughness", 'Hard like Ice', 'Guard Form'}, ['Long Kick', 'Nerve Punch', 'Short Surprise Light Punch', 'Strong Solar Kick'])
+fsd['Yi Liufei'] = Challenger('Yi Liufei', 'Shattering Misty Cobra', 4, (4, 3, 7, 4), {'Shattering Strikes'}, ['Pushing Palm', 'Fast Light Punch'])
 
-fsd['Wen Zou'] = Challenger('Wen Zou', 'Guarding Ice Toad', 7, (6, 6, 5, 4), {"Toad's Toughness", 'Hard like Ice', 'Guard Form'}, ['Short Kick', 'Retreating Fast Kick', 'Long Surprise Light Palm'])
+fsd['Yan Yuduan'] = Challenger('Yan Yuduan', 'Shattering Misty Cobra', 3, (4, 5, 5, 3), {'Shattering Strikes'}, ['Charging Palm'])
 
-fsd['Yao Pengfang'] = Challenger('Yao Pengfang', 'Guarding Ice Toad', 6, (6, 4, 6, 4), {'Hard like Ice', 'Guard Form'}, ['Fast Punch', 'Pushing Heavy Palm', 'Charging Nerve Palm'])
+fsd['Yuan Xiang'] = Challenger('Yuan Xiang', 'Shattering Misty Cobra', 1, (4, 4, 3, 4), set(), [])
 
-fsd['Kang Dai'] = Challenger('Kang Dai', 'Guarding Ice Toad', 6, (5, 6, 3, 6), {'Hard like Ice', 'Guard Form'}, ['Skillful Elbow', 'Skillful Fast Headbutt', 'Charging Precise Kick'])
+fsd['Du Wentan'] = Challenger('Du Wentan', 'Persevering Razor Ox', 7, (4, 4, 3, 10), {'Razor-Sharp Strikes', 'Perseverance', "Ox's Stamina"}, ['Retreat', 'Charging Light Elbow', 'Fast Trick Punch'])
 
-fsd['Tao Xiangzhang'] = Challenger('Tao Xiangzhang', 'Guarding Ice Toad', 4, (4, 4, 5, 5), {'Guard Form'}, ['Flying Claw', 'Skillful Fast Knee'])
+fsd['Fang Zhou'] = Challenger('Fang Zhou', 'Persevering Razor Ox', 5, (5, 6, 4, 4), {'Razor-Sharp Strikes', 'Perseverance'}, ['Throw', 'Skillful Surprise Punch'])
 
-fsd['Su Gong'] = Challenger('Su Gong', 'Guarding Ice Toad', 2, (5, 3, 4, 4), set(), ['Retreating Kick'])
+fsd['Sun Chao'] = Challenger('Sun Chao', 'Persevering Razor Ox', 5, (3, 6, 4, 6), {'Razor-Sharp Strikes', 'Perseverance'}, ['Pushing Punch', 'Nerve Elbow'])
 
-fsd['Zhou Zengchang'] = Challenger('Zhou Zengchang', 'Guarding Ice Toad', 2, (4, 5, 4, 3), set(), ['Heavy Punch'])
+fsd['Liu Fei'] = Challenger('Liu Fei', 'Persevering Razor Ox', 3, (4, 5, 5, 3), {'Perseverance'}, ['Leap Back'])
 
-fsd['Jiang Dongfei'] = Challenger('Jiang Dongfei', 'Guarding Ice Toad', 2, (3, 5, 4, 4), set(), ['Long Kick'])
+fsd['Gao Lai'] = Challenger('Gao Lai', 'Persevering Razor Ox', 3, (6, 4, 3, 4), {'Perseverance'}, ['Skillful Kick'])
 
-fsd['Sun Lin'] = Challenger('Sun Lin', 'Invulnerable Wooden Lizard', 8, (5, 5, 6, 6), {'Wooden Limbs', 'Invulnerable', 'Regenerating Lizard'}, ['Heavy Claw', 'Pushing Heavy Palm', 'Skillful Vanishing Palm', 'Surprise Fast Trick Kick'])
+fsd['Xia Kongliu'] = Challenger('Xia Kongliu', 'Persevering Razor Ox', 1, (3, 3, 6, 3), set(), [])
 
-fsd['Qian Jie'] = Challenger('Qian Jie', 'Invulnerable Wooden Lizard', 7, (5, 4, 6, 6), {'Wooden Limbs', 'Invulnerable', 'Regenerating Lizard'}, ['Leap Forward', 'Pushing Fast Palm', 'Flying Solar Claw'])
+fsd['Fu Minhan'] = Challenger('Fu Minhan', 'Persevering Razor Ox', 1, (5, 4, 3, 3), set(), [])
 
-fsd['Li Shao'] = Challenger('Li Shao', 'Invulnerable Wooden Lizard', 7, (3, 5, 7, 6), {'Wooden Limbs', 'Invulnerable', 'Regenerating Lizard'}, ['Fast Punch', 'Pushing Heavy Palm', 'Pushing Nerve Claw'])
+fsd['Wang Housu'] = Challenger('Wang Housu', 'Invulnerable Water Crane', 7, (6, 5, 4, 6), {'Invulnerable', 'Healing Water', 'Crane Flapping Wings'}, ['Long Elbow', 'Skillful Light Punch', 'Short Solar Kick'])
 
-fsd['Dai Chao'] = Challenger('Dai Chao', 'Invulnerable Wooden Lizard', 7, (4, 5, 8, 4), {'Wooden Limbs', 'Invulnerable', 'Regenerating Lizard'}, ['Pushing Elbow', 'Short Fast Palm', 'Pushing Shocking Claw'])
+fsd['Shen Daimin'] = Challenger('Shen Daimin', 'Invulnerable Water Crane', 7, (7, 4, 4, 6), {'Invulnerable', 'Healing Water', 'Crane Flapping Wings'}, ['Pushing Claw', 'Charging Fast Palm', 'Skillful Short Light Kick'])
 
-fsd['Cui Lai'] = Challenger('Cui Lai', 'Invulnerable Wooden Lizard', 7, (5, 3, 5, 8), {'Wooden Limbs', 'Invulnerable', 'Regenerating Lizard'}, ['Light Kick', 'Skillful Flying Headbutt', 'Skillful Surprise Fast Palm'])
+fsd['Qiu Yi'] = Challenger('Qiu Yi', 'Invulnerable Water Crane', 5, (4, 5, 6, 4), {'Invulnerable', 'Healing Water'}, ['Flying Elbow', 'Long Fast Claw'])
 
-fsd['Xue Fang'] = Challenger('Xue Fang', 'Invulnerable Wooden Lizard', 6, (5, 3, 5, 7), {'Wooden Limbs', 'Invulnerable'}, ['Heavy Elbow', 'Skillful Heavy Kick', 'Precise Light Claw'])
+fsd['Tang Chushi'] = Challenger('Tang Chushi', 'Invulnerable Water Crane', 4, (6, 5, 3, 4), {'Invulnerable'}, ['Surprise Elbow', 'Nerve Punch'])
 
-fsd['Zeng Liaopeng'] = Challenger('Zeng Liaopeng', 'Invulnerable Wooden Lizard', 4, (4, 5, 4, 5), {'Invulnerable'}, ['Leap Forward', 'Long Heavy Punch'])
+fsd['Jia Liyuan'] = Challenger('Jia Liyuan', 'Invulnerable Water Crane', 2, (4, 4, 4, 4), set(), ['Surprise Knee'])
 
-fsd['Liu Zoujiu'] = Challenger('Liu Zoujiu', 'Invulnerable Wooden Lizard', 4, (6, 4, 3, 5), {'Invulnerable'}, ['Fast Knee', 'Acrobatic Knee'])
+fsd['Cheng Liubai'] = Challenger('Cheng Liubai', 'Invulnerable Water Crane', 2, (5, 4, 4, 3), set(), ['Charging Kick'])
 
-fsd['He Shaoxia'] = Challenger('He Shaoxia', 'Mystic Iron Cobra', 7, (6, 5, 5, 5), {'Iron Skin', 'Mystic Power', 'Attacking Cobra'}, ['Short Palm', 'Retreating Surprise Palm', 'Skillful Retreating Light Kick'])
+fsd['Lu Gong'] = Challenger('Lu Gong', 'Invulnerable Water Crane', 2, (3, 6, 4, 3), set(), ['Pushing Punch'])
 
-fsd['Yang Dingyin'] = Challenger('Yang Dingyin', 'Mystic Iron Cobra', 6, (4, 6, 4, 6), {'Iron Skin', 'Mystic Power'}, ['Short Palm', 'Charging Surprise Palm', 'Fast Flying Light Elbow'])
+fsd['Xia Lu'] = Challenger('Xia Lu', 'Invulnerable Water Crane', 1, (4, 3, 5, 3), set(), [])
 
-fsd['Yin Zhu'] = Challenger('Yin Zhu', 'Mystic Iron Cobra', 4, (4, 5, 4, 5), {'Mystic Power'}, ['Charging Punch', 'Short Surprise Palm'])
+fsd['Qin Liangxiong'] = Challenger('Qin Liangxiong', 'Vigorous Ice Snake', 6, (4, 4, 7, 5), {'Vigor', 'Hard like Ice'}, ['Surprise Elbow', 'Long Pushing Punch', 'Retreating Energy Palm'])
 
-fsd['Sun Shing'] = Challenger('Sun Shing', 'Mystic Iron Cobra', 3, (3, 4, 5, 5), {'Mystic Power'}, ['Charging Kick'])
+fsd['Guo Kong'] = Challenger('Guo Kong', 'Vigorous Ice Snake', 6, (6, 7, 4, 3), {'Vigor', 'Hard like Ice'}, ['Fast Punch', 'Acrobatic Punch', 'Long Shocking Punch'])
 
-fsd['Cheng Jinxie'] = Challenger('Cheng Jinxie', 'Mystic Iron Cobra', 3, (4, 7, 3, 3), {'Mystic Power'}, ['Pushing Palm'])
+fsd['Guo Yong'] = Challenger('Guo Yong', 'Vigorous Ice Snake', 4, (4, 5, 4, 5), {'Vigor'}, ['Surprise Claw', 'Long Fast Knee'])
 
-fsd['Fang Li'] = Challenger('Fang Li', 'Mystic Iron Cobra', 1, (4, 4, 3, 4), set(), [])
+fsd['Du Guo'] = Challenger('Du Guo', 'Vigorous Ice Snake', 3, (7, 3, 4, 3), {'Vigor'}, ['Light Punch'])
 
-fsd['Wang Chengshing'] = Challenger('Wang Chengshing', 'Persevering Emerald Phoenix', 8, (6, 5, 3, 8), {'Emerald Flow', 'Rising Phoenix', 'Perseverance'}, ['Heavy Palm', 'Short Heavy Punch', 'Long Nerve Palm', 'Skillful Fast Energy Palm'])
+fsd['Xia Zhumin'] = Challenger('Xia Zhumin', 'Vigorous Ice Snake', 2, (4, 4, 4, 4), set(), ['Fast Claw'])
 
-fsd['Fu Gangna'] = Challenger('Fu Gangna', 'Persevering Emerald Phoenix', 7, (3, 5, 6, 7), {'Emerald Flow', 'Rising Phoenix', 'Perseverance'}, ['Pushing Claw', 'Fast Light Elbow', 'Long Pushing Fast Knee'])
+fsd['Wu Liang'] = Challenger('Wu Liang', 'Vigorous Ice Snake', 2, (6, 3, 3, 4), set(), ['Leap Back'])
 
-fsd['Tan Minshen'] = Challenger('Tan Minshen', 'Persevering Emerald Phoenix', 7, (3, 4, 6, 8), {'Emerald Flow', 'Rising Phoenix', 'Perseverance'}, ['Rush Forward', 'Pushing Fast Kick', 'Skillful Surprise Light Elbow'])
+fsd['Lai Xiongjing'] = Challenger('Lai Xiongjing', 'Vigorous Ice Snake', 1, (3, 4, 5, 3), set(), [])
 
-fsd['Zhang Fu'] = Challenger('Zhang Fu', 'Persevering Emerald Phoenix', 6, (8, 4, 3, 5), {'Emerald Flow', 'Perseverance'}, ['Charging Palm', 'Long Charging Kick', 'Surprise Fast Light Claw'])
+fsd['Liang Wenxiao'] = Challenger('Liang Wenxiao', 'Attacking Iron Dragon', 6, (6, 6, 4, 4), {'Attack Method', 'Iron Skin'}, ['Leap Forward', 'Skillful Pushing Kick', 'Vanishing Surprise Palm'])
 
-fsd['Lai Jun'] = Challenger('Lai Jun', 'Persevering Emerald Phoenix', 4, (5, 5, 4, 4), {'Perseverance'}, ['Surprise Knee', 'Power Palm'])
+fsd['Deng Wuxiong'] = Challenger('Deng Wuxiong', 'Attacking Iron Dragon', 6, (8, 5, 4, 3), {'Attack Method', 'Iron Skin'}, ['Retreating Kick', 'Skillful Heavy Punch', 'Vanishing Light Elbow'])
 
-fsd['Lei Guo'] = Challenger('Lei Guo', 'Persevering Emerald Phoenix', 3, (4, 4, 4, 5), {'Perseverance'}, ['Short Kick'])
+fsd['Wei Laisun'] = Challenger('Wei Laisun', 'Attacking Iron Dragon', 5, (7, 4, 4, 4), {'Attack Method', 'Iron Skin'}, ['Skillful Kick', 'Skillful Flying Punch'])
 
-fsd['Wang Guo'] = Challenger('Wang Guo', 'Persevering Emerald Phoenix', 2, (4, 4, 3, 5), set(), ['Surprise Kick'])
+fsd['Shen Guo'] = Challenger('Shen Guo', 'Attacking Iron Dragon', 2, (5, 4, 4, 3), set(), ['Surprise Kick'])
 
-fsd['Zhu Chen'] = Challenger('Zhu Chen', 'Persevering Emerald Phoenix', 1, (3, 4, 4, 4), set(), [])
+fsd['Chang Tang'] = Challenger('Chang Tang', 'Attacking Iron Dragon', 1, (4, 4, 4, 3), set(), [])
 
-fsd['Xiong Xiong'] = Challenger('Xiong Xiong', 'Rising Fire Dragon', 7, (5, 4, 6, 6), {'Inferno', 'Rising from the Ashes', "Dragon's Energy"}, ['Long Punch', 'Skillful Long Kick', 'Long Pushing Surprise Headbutt'])
+fsd['Fang Huyuan'] = Challenger('Fang Huyuan', 'Attacking Iron Dragon', 1, (4, 4, 3, 4), set(), [])
 
-fsd['Qiao Yao'] = Challenger('Qiao Yao', 'Rising Fire Dragon', 6, (4, 5, 7, 4), {'Inferno', 'Rising from the Ashes'}, ['Skillful Elbow', 'Surprise Light Punch', 'Skillful Charging Heavy Kick'])
+fsd['Xu Yejiang'] = Challenger('Xu Yejiang', 'Guarding Stone Tiger', 4, (5, 6, 4, 3), {'Guard Form'}, ['Pushing Kick', 'Strong Punch'])
 
-fsd['Dong Kong'] = Challenger('Dong Kong', 'Rising Fire Dragon', 3, (4, 4, 4, 5), {'Rising from the Ashes'}, ['Fast Punch'])
+fsd['Qiu Jiangmo'] = Challenger('Qiu Jiangmo', 'Guarding Stone Tiger', 4, (7, 4, 4, 3), {'Guard Form'}, ['Heavy Palm', 'Surprise Fast Kick'])
 
-fsd['Hao Duzhu'] = Challenger('Hao Duzhu', 'Rising Fire Dragon', 3, (3, 5, 4, 5), {'Rising from the Ashes'}, ['Light Claw'])
+fsd['Shao Longzhou'] = Challenger('Shao Longzhou', 'Guarding Stone Tiger', 3, (5, 3, 5, 4), {'Guard Form'}, ['Skillful Claw'])
 
-fsd['Qiao Zhao'] = Challenger('Qiao Zhao', 'Rising Fire Dragon', 3, (6, 3, 3, 5), {'Rising from the Ashes'}, ['Surprise Knee'])
+fsd['Meng Qianfang'] = Challenger('Meng Qianfang', 'Guarding Stone Tiger', 3, (4, 3, 6, 4), {'Guard Form'}, ['Charging Palm'])
 
-fsd['Zheng He'] = Challenger('Zheng He', 'Rising Fire Dragon', 2, (3, 4, 4, 5), set(), ['Long Palm'])
+fsd['Ma Shenggang'] = Challenger('Ma Shenggang', 'Guarding Stone Tiger', 3, (5, 3, 6, 3), {'Guard Form'}, ['Long Knee'])
 
-fsd['Yang Luo'] = Challenger('Yang Luo', 'Shattering Water Tiger', 8, (7, 6, 4, 5), {'Shattering Strikes', "Tiger's Rage", 'Healing Water'}, ['Long Claw', 'Short Fast Palm', 'Pushing Precise Punch', 'Skillful Fast Shocking Palm'])
+fsd['Xu Maoyin'] = Challenger('Xu Maoyin', 'Guarding Stone Tiger', 2, (4, 4, 5, 3), set(), ['Flying Elbow'])
 
-fsd['Jen Bailiao'] = Challenger('Jen Bailiao', 'Shattering Water Tiger', 7, (4, 6, 6, 5), {'Shattering Strikes', "Tiger's Rage", 'Healing Water'}, ['Throw', 'Retreating Light Claw', 'Retreating Strong Punch'])
+fsd['Wan Jinyuan'] = Challenger('Wan Jinyuan', 'Guarding Stone Tiger', 2, (4, 4, 5, 3), set(), ['Flying Kick'])
 
-fsd['Wen Yu'] = Challenger('Wen Yu', 'Shattering Water Tiger', 6, (4, 4, 7, 5), {'Shattering Strikes', 'Healing Water'}, ['Retreating Headbutt', 'Vanishing Punch', 'Superior Surprise Elbow'])
+fsd['Liang Cui'] = Challenger('Liang Cui', 'Mystic Storm Lizard', 6, (3, 3, 5, 9), {'Mystic Power', 'Relentless Storm'}, ['Charging Punch', 'Pushing Heavy Palm', 'Skillful Long Heavy Kick'])
 
-fsd['Qiao Mo'] = Challenger('Qiao Mo', 'Shattering Water Tiger', 4, (5, 6, 4, 3), {'Shattering Strikes'}, ['Fast Palm', 'Energy Palm'])
+fsd['Yao Liao'] = Challenger('Yao Liao', 'Mystic Storm Lizard', 4, (3, 4, 5, 6), {'Mystic Power'}, ['Retreat', 'Pushing Fast Punch'])
 
-fsd['Fu Zhong'] = Challenger('Fu Zhong', 'Shattering Water Tiger', 3, (5, 3, 5, 4), {'Shattering Strikes'}, ['Flying Elbow'])
+fsd['Gu Liu'] = Challenger('Gu Liu', 'Mystic Storm Lizard', 3, (4, 6, 4, 3), {'Mystic Power'}, ['Long Kick'])
 
-fsd['Fan Shen'] = Challenger('Fan Shen', 'Shattering Water Tiger', 3, (3, 6, 3, 5), {'Shattering Strikes'}, ['Retreat'])
+fsd['Xiang Xiangchu'] = Challenger('Xiang Xiangchu', 'Mystic Storm Lizard', 2, (4, 3, 4, 5), set(), ['Pushing Punch'])
 
-fsd['Jen Li'] = Challenger('Jen Li', 'Shattering Water Tiger', 3, (5, 3, 3, 6), {'Shattering Strikes'}, ['Retreat'])
+fsd['Mo Gangpeng'] = Challenger('Mo Gangpeng', 'Mystic Storm Lizard', 2, (4, 4, 3, 5), set(), ['Long Kick'])
 
-fsd['Yao Junjiang'] = Challenger('Yao Junjiang', 'Vigorous Razor Crab', 7, (6, 4, 5, 6), {'Vigor', 'Razor-Sharp Strikes', 'Defending Crab'}, ['Surprise Palm', 'Skillful Flying Kick', 'Retreating Nerve Punch'])
+fsd['He Taopan'] = Challenger('He Taopan', 'Mystic Storm Lizard', 1, (4, 4, 3, 4), set(), [])
 
-fsd['Xiong Xiao'] = Challenger('Xiong Xiao', 'Vigorous Razor Crab', 7, (7, 5, 5, 4), {'Vigor', 'Razor-Sharp Strikes', 'Defending Crab'}, ['Flying Kick', 'Lightning Elbow', 'Skillful Short Retreating Kick'])
+fsd['Liao Zhao'] = Challenger('Liao Zhao', 'Mystic Storm Lizard', 1, (3, 4, 5, 3), set(), [])
 
-fsd['Ding Shen'] = Challenger('Ding Shen', 'Vigorous Razor Crab', 7, (4, 6, 4, 7), {'Vigor', 'Razor-Sharp Strikes', 'Defending Crab'}, ['Skillful Kick', 'Short Pushing Palm', 'Retreating Solar Claw'])
+fsd['Beggar Xiong'] = Master('Beggar Xiong', "Beggar's Fist", 10, (4, 9, 5, 6), {"Beggar's Fist I", "Beggar's Fist II", "Beggar's Fist III"}, ['Advanced Trick Elbow', 'Heavy Palm', 'Trick Palm', 'Skillful Energy Palm', 'Shocking Energy Kick'])
 
-fsd['Wen Bai'] = Challenger('Wen Bai', 'Vigorous Razor Crab', 5, (7, 3, 4, 5), {'Razor-Sharp Strikes', 'Vigor'}, ['Light Kick', 'Pushing Surprise Punch'])
+fsd['Drunkard Xiang'] = Master('Drunkard Xiang', 'Drunken Dragon', 12, (5, 7, 7, 7), {'Flying Strikes', 'Drunken Dragon II', 'Drunken Dragon I', 'Drunken Dragon III'}, ['Precise Flying Energy Palm', 'Strong Shocking Nerve Elbow', 'Flying Punch', 'Energy Kick', 'Strong Flying Trick Punch', 'Superior Vanishing Trick Claw'])
 
-fsd['Yu Lai'] = Challenger('Yu Lai', 'Vigorous Razor Crab', 4, (5, 4, 5, 4), {'Vigor'}, ['Fast Kick', 'Pushing Fast Palm'])
+fsd['Thief Meng'] = Thug('Thief Meng', "Thief's Shadow", 10, (5, 4, 11, 4), {"Thief's Shadow I", "Thief's Shadow III", "Thief's Shadow II"}, ['Expert Heavy Claw', 'Fast Elbow', 'Skillful Surprise Kick', 'Fast Shocking Punch', 'Fast Flying Trick Palm'])
 
-fsd['Tao Mo'] = Challenger('Tao Mo', 'Vigorous Razor Crab', 4, (4, 5, 4, 5), {'Vigor'}, ['Charging Palm', 'Skillful Surprise Kick'])
+fsd['Fat Girl'] = Fighter('Fat Girl', 'Xing Yi', 7, (5, 3, 5, 8), {'Xing Yi III', 'Xing Yi II', 'Xing Yi I'}, ['Light Punch', 'Shocking Claw', 'Long Lightning Punch'])
 
-fsd['Beggar Dai'] = Master('Beggar Dai', "Beggar's Fist", 9, (5, 5, 6, 7), {"Beggar's Fist I", "Beggar's Fist II", "Beggar's Fist III"}, ['Fast Palm', 'Strong Palm', 'Short Energy Palm', 'Retreating Fast Energy Kick'])
+fsd['Dragon Mo'] = Thug('Dragon Mo', 'Dirty Fighting', 7, (7, 5, 5, 4), set(), ['Heavy Claw', 'Power Palm', 'Pushing Shocking Headbutt'])
 
-fsd['Thief Xia'] = Thug('Thief Xia', "Thief's Shadow", 7, (6, 5, 6, 4), {"Thief's Shadow II", "Thief's Shadow III", "Thief's Shadow I"}, ['Fast Headbutt', 'Surprise Light Palm', 'Fast Shocking Kick'])
+fsd['Bloody Jia'] = Thug('Bloody Jia', 'Dirty Fighting', 4, (5, 3, 4, 6), set(), ['Heavy Punch', 'Power Elbow'])
 
-fsd['Drunkard Li'] = Master('Drunkard Li', 'Drunken Dragon', 9, (6, 5, 6, 6), {'Drunken Dragon I', 'Drunken Dragon III', 'Drunken Dragon II'}, ['Light Punch', 'Energy Kick', 'Superior Retreating Trick Elbow', 'Advanced Flying Trick Knee'])
+fsd['Unbeatable Jin'] = Thug('Unbeatable Jin', 'Dirty Fighting', 3, (4, 5, 3, 5), set(), ['Heavy Elbow'])
+
+fsd['Mad Sun'] = Thug('Mad Sun', 'Dirty Fighting', 10, (9, 4, 5, 6), set(), ['Fast Trick Nerve Kick', 'Heavy Punch', 'Power Elbow', 'Light Shocking Claw', 'Charging Surprise Trick Elbow'])
+
+fsd['Vicious Song'] = Thug('Vicious Song', 'Dirty Fighting', 5, (6, 4, 6, 3), set(), ['Heavy Kick', 'Power Headbutt'])
 
 g.fighters_list = list(fsd.values())
 
 g.masters = md = {}
-md['Attacking Storm Snake'] = g.fighters_dict['Master Gong']
-md['Defending Stone Ox'] = g.fighters_dict['Master Tian']
-md['Elusive Misty Crane'] = g.fighters_dict['Master Yan']
-md['Guarding Ice Toad'] = g.fighters_dict['Master Xue']
-md['Invulnerable Wooden Lizard'] = g.fighters_dict['Master Song']
-md['Mystic Iron Cobra'] = g.fighters_dict['Master Liao']
-md['Persevering Emerald Phoenix'] = g.fighters_dict['Master Cai']
-md['Rising Fire Dragon'] = g.fighters_dict['Master Hu']
-md['Shattering Water Tiger'] = g.fighters_dict['Master Liang']
-md['Vigorous Razor Crab'] = g.fighters_dict['Master Xia']
+md['Attacking Iron Dragon'] = g.fighters_dict['Master Lin']
+md['Defending Wooden Crab'] = g.fighters_dict['Master Shen']
+md['Elusive Emerald Phoenix'] = g.fighters_dict['Master Xiao']
+md['Guarding Stone Tiger'] = g.fighters_dict['Master Chen']
+md['Invulnerable Water Crane'] = g.fighters_dict['Master Xiong']
+md['Mystic Storm Lizard'] = g.fighters_dict['Master Mao']
+md['Persevering Razor Ox'] = g.fighters_dict['Master Xu']
+md['Rising Fire Toad'] = g.fighters_dict['Master Yan']
+md['Shattering Misty Cobra'] = g.fighters_dict['Master Luo']
+md['Vigorous Ice Snake'] = g.fighters_dict['Master Kang']
 
 g.schools = {}
 
-g.schools['Attacking Storm Snake'] = school = []
-school.append(g.fighters_dict['Fang Gui'])
-school.append(g.fighters_dict['Zhao Feng'])
-school.append(g.fighters_dict['Wan Chao'])
-school.append(g.fighters_dict['Xiao Peng'])
-school.append(g.fighters_dict['Fan Shi'])
-school.append(g.fighters_dict['Qin Tanlei'])
-school.append(g.fighters_dict['Shi Yan'])
-school.append(g.fighters_dict['Xie To'])
-school.append(g.fighters_dict['Pan Hungxiu'])
+g.schools['Attacking Iron Dragon'] = school = []
+school.append(g.fighters_dict['Liang Wenxiao'])
+school.append(g.fighters_dict['Deng Wuxiong'])
+school.append(g.fighters_dict['Wei Laisun'])
+school.append(g.fighters_dict['Liu Gao'])
+school.append(g.fighters_dict['Shen Guo'])
+school.append(g.fighters_dict['Chang Tang'])
+school.append(g.fighters_dict['Fang Huyuan'])
 
-g.schools['Defending Stone Ox'] = school = []
-school.append(g.fighters_dict['Mao Yang'])
-school.append(g.fighters_dict['Xue Zou'])
-school.append(g.fighters_dict['Gao Zougao'])
-school.append(g.fighters_dict['Shen Luyang'])
-school.append(g.fighters_dict['Xiao Zhuzhang'])
-school.append(g.fighters_dict['Zhong Ming'])
+g.schools['Defending Wooden Crab'] = school = []
+school.append(g.fighters_dict['Long Caoliao'])
+school.append(g.fighters_dict['Zou Shenliao'])
+school.append(g.fighters_dict['Liang Fangfei'])
+school.append(g.fighters_dict['Yin Liuzheng'])
+school.append(g.fighters_dict['Wan Yinfang'])
+school.append(g.fighters_dict['Gao Jun'])
 
-g.schools['Elusive Misty Crane'] = school = []
-school.append(g.fighters_dict['Dong Sun'])
-school.append(g.fighters_dict['Tao Gu'])
-school.append(g.fighters_dict['Tian Zouto'])
-school.append(g.fighters_dict['Yin Jen'])
-school.append(g.fighters_dict['Kang Hungli'])
-school.append(g.fighters_dict['Guo Mao'])
+g.schools['Elusive Emerald Phoenix'] = school = []
+school.append(g.fighters_dict['Shao Ping'])
+school.append(g.fighters_dict['Cai Caolin'])
+school.append(g.fighters_dict['Wan Shen'])
+school.append(g.fighters_dict['Cao Maqiao'])
+school.append(g.fighters_dict['Qian Mo'])
+school.append(g.fighters_dict['Jia Laiyang'])
+school.append(g.fighters_dict['Xiao Xiangzheng'])
 
-g.schools['Guarding Ice Toad'] = school = []
-school.append(g.fighters_dict['Kong Chuyu'])
-school.append(g.fighters_dict['Wen Zou'])
-school.append(g.fighters_dict['Yao Pengfang'])
-school.append(g.fighters_dict['Kang Dai'])
-school.append(g.fighters_dict['Tao Xiangzhang'])
-school.append(g.fighters_dict['Su Gong'])
-school.append(g.fighters_dict['Zhou Zengchang'])
-school.append(g.fighters_dict['Jiang Dongfei'])
+g.schools['Guarding Stone Tiger'] = school = []
+school.append(g.fighters_dict['Xu Yejiang'])
+school.append(g.fighters_dict['Qiu Jiangmo'])
+school.append(g.fighters_dict['Hou Penghou'])
+school.append(g.fighters_dict['Shao Longzhou'])
+school.append(g.fighters_dict['Meng Qianfang'])
+school.append(g.fighters_dict['Ma Shenggang'])
+school.append(g.fighters_dict['Xu Maoyin'])
+school.append(g.fighters_dict['Wan Jinyuan'])
 
-g.schools['Invulnerable Wooden Lizard'] = school = []
-school.append(g.fighters_dict['Sun Lin'])
-school.append(g.fighters_dict['Qian Jie'])
-school.append(g.fighters_dict['Li Shao'])
-school.append(g.fighters_dict['Dai Chao'])
-school.append(g.fighters_dict['Cui Lai'])
-school.append(g.fighters_dict['Xue Fang'])
-school.append(g.fighters_dict['Zeng Liaopeng'])
-school.append(g.fighters_dict['Liu Zoujiu'])
+g.schools['Invulnerable Water Crane'] = school = []
+school.append(g.fighters_dict['Wang Housu'])
+school.append(g.fighters_dict['Shen Daimin'])
+school.append(g.fighters_dict['Qiu Yi'])
+school.append(g.fighters_dict['Tang Chushi'])
+school.append(g.fighters_dict['Jia Liyuan'])
+school.append(g.fighters_dict['Cheng Liubai'])
+school.append(g.fighters_dict['Lu Gong'])
+school.append(g.fighters_dict['Xia Lu'])
 
-g.schools['Mystic Iron Cobra'] = school = []
-school.append(g.fighters_dict['Han Lu'])
-school.append(g.fighters_dict['He Shaoxia'])
-school.append(g.fighters_dict['Yang Dingyin'])
-school.append(g.fighters_dict['Ma Yangxiao'])
-school.append(g.fighters_dict['Yin Zhu'])
-school.append(g.fighters_dict['Sun Shing'])
-school.append(g.fighters_dict['Cheng Jinxie'])
-school.append(g.fighters_dict['Fang Li'])
+g.schools['Mystic Storm Lizard'] = school = []
+school.append(g.fighters_dict['Liang Cui'])
+school.append(g.fighters_dict['Yao Liao'])
+school.append(g.fighters_dict['Gu Liu'])
+school.append(g.fighters_dict['Xiang Xiangchu'])
+school.append(g.fighters_dict['Mo Gangpeng'])
+school.append(g.fighters_dict['He Taopan'])
+school.append(g.fighters_dict['Liao Zhao'])
 
-g.schools['Persevering Emerald Phoenix'] = school = []
-school.append(g.fighters_dict['Wang Chengshing'])
-school.append(g.fighters_dict['Fu Gangna'])
-school.append(g.fighters_dict['Tan Minshen'])
-school.append(g.fighters_dict['Zhang Fu'])
-school.append(g.fighters_dict['Lai Jun'])
-school.append(g.fighters_dict['Lei Guo'])
-school.append(g.fighters_dict['Wang Guo'])
-school.append(g.fighters_dict['Zhu Chen'])
+g.schools['Persevering Razor Ox'] = school = []
+school.append(g.fighters_dict['Du Wentan'])
+school.append(g.fighters_dict['Fang Zhou'])
+school.append(g.fighters_dict['Sun Chao'])
+school.append(g.fighters_dict['Liu Fei'])
+school.append(g.fighters_dict['Gao Lai'])
+school.append(g.fighters_dict['Xia Kongliu'])
+school.append(g.fighters_dict['Fu Minhan'])
 
-g.schools['Rising Fire Dragon'] = school = []
-school.append(g.fighters_dict['Xiong Xiong'])
-school.append(g.fighters_dict['Qiao Yao'])
-school.append(g.fighters_dict['Dong Kong'])
-school.append(g.fighters_dict['Hao Duzhu'])
-school.append(g.fighters_dict['Qiao Zhao'])
-school.append(g.fighters_dict['Zheng He'])
+g.schools['Rising Fire Toad'] = school = []
+school.append(g.fighters_dict['Mao Tocheng'])
+school.append(g.fighters_dict['Wang Qin'])
+school.append(g.fighters_dict['Sun Min'])
+school.append(g.fighters_dict['Cheng Yan'])
+school.append(g.fighters_dict['Wang Pingwen'])
+school.append(g.fighters_dict['Xiong Xiusu'])
 
-g.schools['Shattering Water Tiger'] = school = []
-school.append(g.fighters_dict['Yang Luo'])
-school.append(g.fighters_dict['Jen Bailiao'])
-school.append(g.fighters_dict['Wen Yu'])
-school.append(g.fighters_dict['Qiao Mo'])
-school.append(g.fighters_dict['Fu Zhong'])
-school.append(g.fighters_dict['Fan Shen'])
-school.append(g.fighters_dict['Jen Li'])
+g.schools['Shattering Misty Cobra'] = school = []
+school.append(g.fighters_dict['Xue Chen'])
+school.append(g.fighters_dict['Xue Zhusun'])
+school.append(g.fighters_dict['Wu Xiao'])
+school.append(g.fighters_dict['Xia Xieming'])
+school.append(g.fighters_dict['Yi Liufei'])
+school.append(g.fighters_dict['Yan Yuduan'])
+school.append(g.fighters_dict['Yuan Xiang'])
 
-g.schools['Vigorous Razor Crab'] = school = []
-school.append(g.fighters_dict['Yao Junjiang'])
-school.append(g.fighters_dict['Xiong Xiao'])
-school.append(g.fighters_dict['Ding Shen'])
-school.append(g.fighters_dict['Wei Zhanggui'])
-school.append(g.fighters_dict['Wen Bai'])
-school.append(g.fighters_dict['Yu Lai'])
-school.append(g.fighters_dict['Tao Mo'])
+g.schools['Vigorous Ice Snake'] = school = []
+school.append(g.fighters_dict['Qin Liangxiong'])
+school.append(g.fighters_dict['Guo Kong'])
+school.append(g.fighters_dict['Guo Yong'])
+school.append(g.fighters_dict['Du Guo'])
+school.append(g.fighters_dict['Xia Zhumin'])
+school.append(g.fighters_dict['Wu Liang'])
+school.append(g.fighters_dict['Lai Xiongjing'])
 
-g.beggar = g.fighters_dict['Beggar Dai']
-g.drunkard = None
-g.thief = g.fighters_dict['Thief Xia']
+g.beggar = g.fighters_dict['Beggar Xiong']
+g.drunkard = g.fighters_dict['Drunkard Xiang']
+g.thief = g.fighters_dict['Thief Meng']
 g.criminals = []
-g.fat_girl = None
+g.criminals.append(g.fighters_dict['Dragon Mo'])
+g.criminals.append(g.fighters_dict['Bloody Jia'])
+g.criminals.append(g.fighters_dict['Unbeatable Jin'])
+g.criminals.append(g.fighters_dict['Mad Sun'])
+g.criminals.append(g.fighters_dict['Vicious Song'])
+g.fat_girl = g.fighters_dict['Fat Girl']
 
-g.stories = {'ForeignerStory': story.ForeignerStory(g, state=None, player=None, boss=None), 'TreasuresStory': story.TreasuresStory(g, state=0, player=g.fighters_dict['Han Lu'], boss=g.fighters_dict['Official Yu']), 'StrangeDreamsStory': story.StrangeDreamsStory(g, state=None, player=None, boss=None), 'RenownedMaster': story.RenownedMaster(g, state=None, player=None, boss=None), 'NinjaTurtlesStory': story.NinjaTurtlesStory(g, state=None, player=None, boss=None)}
+g.stories = {'ForeignerStory': story.ForeignerStory(g, state=None, player=None, boss=None), 'TreasuresStory': story.TreasuresStory(g, state=None, player=None, boss=None), 'StrangeDreamsStory': story.StrangeDreamsStory(g, state=None, player=None, boss=None), 'RenownedMaster': story.RenownedMaster(g, state=None, player=None, boss=None), 'NinjaTurtlesStory': story.NinjaTurtlesStory(g, state=None, player=None, boss=None)}
 
 g.town_name = 'Foshan'
-g.poverty = 0.05
-g.crime = 0.046
+g.poverty = 0.1
+g.crime = 0.1
 g.kung_fu = 0.2
-g.day = 27
-g.month = 4
+g.day = 9
+g.month = 2
 g.year = 1
 g.auto_save_on = True
 g.play_indefinitely = False
-g.fights_total = 124
-g.enc_count_dict = {'Ambush': 0, 'Beggar': 6, 'BookSeller': 5, 'Brawler': 15, 'Challenger': 43, 'ContinueStory': 0, 'Craftsman': 2, 'Criminal': 16, 'Drunkard': 14, 'Extorters': 6, 'FatGirl': 5, 'FindItem': 5, 'FriendMatch': 2, 'Gambler': 13, 'Gossip': 11, 'HelpPolice': 2, 'LoseItem': 1, 'MasterTrial': 5, 'Merchant': 16, 'OverhearConversation': 17, 'PlayerMatch': 1, 'PrizeFighting': 8, 'Robbers': 10, 'RobbingSomeone': 9, 'SchoolBullying': 14, 'SchoolChallenge': 53, 'StreetPerformer': 18, 'Students': 0, 'Thief': 6, 'Weirdo': 9, 'WiseMan': 12, 'GMerchant': 108, 'GChallenger': 24, 'GRobbers': 5, 'GGambler': 3, 'GDrunkard': 4}
+g.fights_total = 15
+g.enc_count_dict = {'Ambush': 0, 'Beggar': 7, 'BookSeller': 1, 'Brawler': 4, 'Challenger': 12, 'ContinueStory': 0, 'Craftsman': 1, 'Criminal': 5, 'Drunkard': 6, 'Extorters': 2, 'FatGirl': 3, 'FindItem': 3, 'FriendMatch': 1, 'Gambler': 5, 'Gossip': 4, 'HelpPolice': 8, 'LoseItem': 0, 'MasterTrial': 0, 'Merchant': 9, 'OverhearConversation': 6, 'PlayerMatch': 1, 'PrizeFighting': 1, 'Robbers': 4, 'RobbingSomeone': 6, 'SchoolBullying': 3, 'SchoolChallenge': 20, 'StreetPerformer': 9, 'Students': 0, 'Thief': 3, 'Weirdo': 3, 'WiseMan': 2, 'GMerchant': 54}
 
 g.players = []
 
 ################################################################################
 
-g.players.append(g.fighters_dict['Han Lu'])
+g.players.append(g.fighters_dict['Liu Gao'])
 p = g.players[-1]
-p.exp = 3167
-p.home_training_exp_mult = 1.0
-p.is_master = False
-p.new_school_name = ''
-p.money = 55
-p.reputation = -4
-p.inactive = 0
-p.inact_status = ''
-p.inventory = {'Monkey Herb': 0, 'Ginseng Root': 1, 'Tiger Herb': 3, 'Fly Herb': 0}
-p.ended_turn = False
-p.accompl = ['Narrow Victory', 'Against All Odds', 'Split-Second Victory', "Drunkard's Friend"]
-p.accompl_dates = ['22/2/1', '16/3/1', '9/4/1', '12/4/1']
-p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 53, 'fights_won': 39, 'num_kos': 41, 'humil_defeat': ('14/4/1', 9, ['Ding Shen, lv.7 Vigorous Razor Crab'], 0.76), 'aston_victory': ('16/3/1', 5, ['Unbeatable Huang, lv.9 Dirty Fighting, axe'], 3.4), 'exp_bonuses': 0, 'times_koed': 14, 'days_inactive': 8, 'donated': 0, 'got_drunk': 1, 'num_stories': 1, 'money_earned': 2050, 'rew_money_earned': 410, 'prize_money_earned': 200, 'num_tourn': 4, 'tourn_won': 0, 'gamb_won': 0, 'gamb_lost': 230, 'money_robbed': 0, 'stolen_from': 0, 'spent_on_training': 340, 'items_obtained': 20, 'items_bought': 18, 'items_found': 1, 'fight_items_used': 3, 'healers_used': 13, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
-p.current_story = g.stories['TreasuresStory']
-
-p.friends = [g.fighters_dict['Fang Gui'], g.fighters_dict['Drunkard Li'], ]
-
-p.enemies = []
-
-p.students = 0
-
-p.best_student = None
-
-################################################################################
-
-g.players.append(g.fighters_dict['Fang Gui'])
-p = g.players[-1]
-p.exp = 2739
+p.exp = 539
 p.home_training_exp_mult = 1.5
 p.is_master = False
 p.new_school_name = ''
-p.money = 775
-p.reputation = 14
+p.money = 190
+p.reputation = 0
 p.inactive = 0
 p.inact_status = ''
-p.inventory = {'Elephant Herb': 2, 'Tiger Herb': 2, 'Ginseng Root': 2, 'Fly Herb': 0, 'Monkey Herb': 1, 'wooden mannequin': 1, 'cough medicine': 1}
+p.inventory = {'Ginseng Root': 2, 'Fly Herb': 1}
 p.ended_turn = False
-p.accompl = ['Against All Odds', 'Fat Girl Defeated']
-p.accompl_dates = ['24/2/1', '8/3/1']
-p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 42, 'fights_won': 36, 'num_kos': 40, 'humil_defeat': ('27/3/1', 7, ['Wei Zhanggui, lv.6 Vigorous Razor Crab, saber'], 0.74), 'aston_victory': ('24/2/1', 4, ['Tiger Hao, lv.3 Dirty Fighting, knife'], 2.0), 'exp_bonuses': 0, 'times_koed': 6, 'days_inactive': 8, 'donated': 10, 'got_drunk': 0, 'num_stories': 0, 'money_earned': 2550, 'rew_money_earned': 210, 'prize_money_earned': 1125, 'num_tourn': 5, 'tourn_won': 2, 'gamb_won': 30, 'gamb_lost': 40, 'money_robbed': 0, 'stolen_from': 75, 'spent_on_training': 480, 'items_obtained': 20, 'items_bought': 17, 'items_found': 2, 'fight_items_used': 4, 'healers_used': 7, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 1, 'super_herbs_obtained': 0}
+p.accompl = ['Against All Odds']
+p.accompl_dates = ['23/1/1']
+p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 4, 'fights_won': 3, 'num_kos': 2, 'humil_defeat': None, 'aston_victory': ('23/1/1', 2, ['Thief, lv.1 Dirty Fighting, knife'], 1.76), 'exp_bonuses': 0, 'times_koed': 1, 'days_inactive': 2, 'donated': 10, 'got_drunk': 1, 'num_stories': 0, 'money_earned': 600, 'rew_money_earned': 30, 'prize_money_earned': 0, 'num_tourn': 0, 'tourn_won': 0, 'gamb_won': 30, 'gamb_lost': 0, 'money_robbed': 0, 'stolen_from': 0, 'spent_on_training': 240, 'items_obtained': 4, 'items_bought': 3, 'items_found': 1, 'fight_items_used': 0, 'healers_used': 1, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
 
-p.friends = [g.fighters_dict['Han Lu'], ]
+p.friends = [g.fighters_dict['Wu Xiao'], ]
 
 p.enemies = []
 
@@ -360,23 +339,23 @@ p.best_student = None
 
 ################################################################################
 
-g.players.append(g.fighters_dict['Ma Yangxiao'])
+g.players.append(g.fighters_dict['Wu Xiao'])
 p = g.players[-1]
-p.exp = 730
-p.home_training_exp_mult = 1.0
+p.exp = 478
+p.home_training_exp_mult = 1.5
 p.is_master = False
 p.new_school_name = ''
-p.money = 135
-p.reputation = -17
+p.money = 30
+p.reputation = 4
 p.inactive = 0
 p.inact_status = ''
-p.inventory = {}
+p.inventory = {'Tiger Herb': 1, 'Ginseng Root': 1, 'Fly Herb': 1}
 p.ended_turn = False
 p.accompl = []
 p.accompl_dates = []
-p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 12, 'fights_won': 2, 'num_kos': 2, 'humil_defeat': None, 'aston_victory': None, 'exp_bonuses': 0, 'times_koed': 10, 'days_inactive': 48, 'donated': 0, 'got_drunk': 2, 'num_stories': 0, 'money_earned': 1700, 'rew_money_earned': 0, 'prize_money_earned': 0, 'num_tourn': 5, 'tourn_won': 0, 'gamb_won': 0, 'gamb_lost': 30, 'money_robbed': 300, 'stolen_from': 75, 'spent_on_training': 520, 'items_obtained': 0, 'items_bought': 0, 'items_found': 0, 'fight_items_used': 0, 'healers_used': 0, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
+p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 3, 'fights_won': 3, 'num_kos': 2, 'humil_defeat': None, 'aston_victory': None, 'exp_bonuses': 0, 'times_koed': 0, 'days_inactive': 0, 'donated': 10, 'got_drunk': 0, 'num_stories': 0, 'money_earned': 780, 'rew_money_earned': 30, 'prize_money_earned': 0, 'num_tourn': 0, 'tourn_won': 0, 'gamb_won': 0, 'gamb_lost': 120, 'money_robbed': 0, 'stolen_from': 0, 'spent_on_training': 420, 'items_obtained': 3, 'items_bought': 3, 'items_found': 0, 'fight_items_used': 0, 'healers_used': 0, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
 
-p.friends = [g.fighters_dict['Wei Zhanggui'], ]
+p.friends = [g.fighters_dict['Liu Gao'], ]
 
 p.enemies = []
 
@@ -386,23 +365,49 @@ p.best_student = None
 
 ################################################################################
 
-g.players.append(g.fighters_dict['Wei Zhanggui'])
+g.players.append(g.fighters_dict['Cao Maqiao'])
 p = g.players[-1]
-p.exp = 1745
+p.exp = 277
 p.home_training_exp_mult = 1.0
 p.is_master = False
 p.new_school_name = ''
-p.money = 175
-p.reputation = 23
-p.inactive = 3
+p.money = 155
+p.reputation = -3
+p.inactive = 1
 p.inact_status = 'injured'
-p.inventory = {'Monkey Herb': 0, 'Ginseng Root': 0}
+p.inventory = {'Ginseng Root': 0}
 p.ended_turn = False
-p.accompl = ['Against All Odds']
-p.accompl_dates = ['3/3/1']
-p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 23, 'fights_won': 16, 'num_kos': 17, 'humil_defeat': None, 'aston_victory': ('22/3/1', 6, ['Little Cui, lv.6 Dirty Fighting, axe'], 2.57), 'exp_bonuses': 0, 'times_koed': 7, 'days_inactive': 30, 'donated': 0, 'got_drunk': 1, 'num_stories': 0, 'money_earned': 1350, 'rew_money_earned': 490, 'prize_money_earned': 0, 'num_tourn': 4, 'tourn_won': 0, 'gamb_won': 0, 'gamb_lost': 0, 'money_robbed': 50, 'stolen_from': 0, 'spent_on_training': 980, 'items_obtained': 3, 'items_bought': 1, 'items_found': 2, 'fight_items_used': 1, 'healers_used': 1, 'items_lost': 1, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
+p.accompl = []
+p.accompl_dates = []
+p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 4, 'fights_won': 0, 'num_kos': 1, 'humil_defeat': ('2/2/1', 3, ['Prize Fighter, lv.2 Dirty Fighting'], 0.77), 'aston_victory': None, 'exp_bonuses': 0, 'times_koed': 4, 'days_inactive': 9, 'donated': 10, 'got_drunk': 1, 'num_stories': 0, 'money_earned': 750, 'rew_money_earned': 0, 'prize_money_earned': 0, 'num_tourn': 0, 'tourn_won': 0, 'gamb_won': 25, 'gamb_lost': 0, 'money_robbed': 170, 'stolen_from': 0, 'spent_on_training': 240, 'items_obtained': 2, 'items_bought': 2, 'items_found': 0, 'fight_items_used': 0, 'healers_used': 2, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
 
-p.friends = [g.fighters_dict['Ma Yangxiao'], ]
+p.friends = [g.fighters_dict['Hou Penghou'], ]
+
+p.enemies = []
+
+p.students = 0
+
+p.best_student = None
+
+################################################################################
+
+g.players.append(g.fighters_dict['Hou Penghou'])
+p = g.players[-1]
+p.exp = 439
+p.home_training_exp_mult = 1.0
+p.is_master = False
+p.new_school_name = ''
+p.money = 185
+p.reputation = -2
+p.inactive = 0
+p.inact_status = ''
+p.inventory = {'Elephant Herb': 1, 'Ginseng Root': 0, 'Dragon Herb': 2}
+p.ended_turn = False
+p.accompl = ['Narrow Victory']
+p.accompl_dates = ['4/1/1']
+p.stats_dict = {'became_master': '--', 'became_master_at_lv': 0, 'num_fights': 6, 'fights_won': 3, 'num_kos': 3, 'humil_defeat': None, 'aston_victory': ('15/1/1', 2, ['Brawler, lv.5 Dirty Fighting'], 1.39), 'exp_bonuses': 0, 'times_koed': 3, 'days_inactive': 9, 'donated': 10, 'got_drunk': 1, 'num_stories': 0, 'money_earned': 650, 'rew_money_earned': 0, 'prize_money_earned': 0, 'num_tourn': 0, 'tourn_won': 0, 'gamb_won': 0, 'gamb_lost': 25, 'money_robbed': 0, 'stolen_from': 0, 'spent_on_training': 220, 'items_obtained': 6, 'items_bought': 3, 'items_found': 2, 'fight_items_used': 2, 'healers_used': 1, 'items_lost': 0, 'items_stolen_from': 0, 'mock_items_bought': 0, 'super_herbs_obtained': 0}
+
+p.friends = [g.fighters_dict['Cao Maqiao'], ]
 
 p.enemies = []
 

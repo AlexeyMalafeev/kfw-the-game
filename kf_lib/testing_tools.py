@@ -10,6 +10,9 @@ from .utilities import *
 from . import weapons
 
 
+TESTS_FOLDER = 'tests'
+
+
 class Tester(object):
     def __init__(self, game):
         self.game = self.g = game
@@ -82,8 +85,9 @@ class Tester(object):
         p.fight(enemies[0], allies, en_allies, hide_stats=False)
 
     def test_fight_balance(self, rand_actions=True, n=1000, file_name_prefix='test f.b.'):
-        file_name = '{} rand.act.={} n={}.txt'.format(file_name_prefix, rand_actions, n)
-        with open(file_name, 'w') as f:
+        file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
+        file_path = os.path.join(TESTS_FOLDER, file_name)
+        with open(file_path, 'w') as f:
             f.write(get_time() + '\n')
 
         def _output_results(d_wnr, d_lsr, first_line=''):
@@ -169,30 +173,31 @@ class Tester(object):
             _output_results(d_w, d_l, legend)
         input('Press Enter')
 
-    def test_level_vs_crowds(self, lv_in_crowd=1, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):
-        lines = [[''] + ['n=%s' % n for n in range(n_crowd_min, n_crowd_max + 1)]]
-        print('\t'.join(lines[0]))
-        for lv in range(1, lv_max + 1):
-            f1 = ff.new_fighter(lv=lv)
-            # exp1 = f1.get_exp_worth()
-            s = f'lv.{lv}'
-            lines.append([s])
-            print(s, end='\t')
-            for n in range(n_crowd_min, n_crowd_max + 1):
-                wins = 0
-                for i in range(n_fights):
-                    f1 = ff.new_fighter(lv=lv)
-                    fs2 = ff.new_fighter(lv=lv_in_crowd, n=n)
-                    if f1.fight(fs2[0], en_allies=fs2[1:]):
-                        wins += 1
-                # exp2 = sum([f.get_exp_worth() for f in fs2])
-                # print('lv {} (exp {}) vs {} opponents (exp {}); wins: {}'.format(lv, exp1, n, exp2, wins))
-                s = pcnt(wins, n_fights, as_string=True)
-                lines[-1].append(s)
+    def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):
+        for lv_in_crowd in range(1, 6):
+            print()
+            print('Level in crowd:', lv_in_crowd)
+            lines = [[''] + ['n=%s' % n for n in range(n_crowd_min, n_crowd_max + 1)]]
+            print('\t'.join(lines[0]))
+            for lv in range(1, lv_max + 1):
+                f1 = ff.new_fighter(lv=lv)
+                s = f'lv.{lv}'
+                lines.append([s])
                 print(s, end='\t')
-            print('')
-        table = pretty_table(lines, sep='\t')
-        print(table, file=open('lv_vs_crowd {} {}.txt'.format(lv_in_crowd, n_fights), 'w'))
+                for n in range(n_crowd_min, n_crowd_max + 1):
+                    wins = 0
+                    for i in range(n_fights):
+                        f1 = ff.new_fighter(lv=lv)
+                        fs2 = ff.new_fighter(lv=lv_in_crowd, n=n)
+                        if f1.fight(fs2[0], en_allies=fs2[1:]):
+                            wins += 1
+                    s = pcnt(wins, n_fights, as_string=True)
+                    lines[-1].append(s)
+                    print(s, end='\t')
+                print('')
+            table = pretty_table(lines, sep='\t')
+            file_path = os.path.join(TESTS_FOLDER, f'lv_vs_crowd {lv_in_crowd} {n_fights}.txt')
+            print(table, file=open(file_path, 'w', encoding='utf-8'))
 
     def test_level_significance(self, rep=100):
         """Make a table of 1-20 levels fighting against each other"""
@@ -216,7 +221,8 @@ class Tester(object):
         s += '\n\nWith smoothing:\n\n'
         s += pretty_table(sm_table)
         print(s)
-        print(s, file=open(f'test level significance rep={rep}.txt', 'w'))
+        file_path = os.path.join(TESTS_FOLDER, f'test level significance rep={rep}.txt')
+        print(s, file=open(file_path, 'w'))
 
     def test_rand_att_schemes(self):
         wins = {'0': 0, '1': 0, '2': 0}

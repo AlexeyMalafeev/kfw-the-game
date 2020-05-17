@@ -1,9 +1,9 @@
-#! python3
-
-
 from .fight import AutoFight
 from . import fighter_factory as ff
 from .utilities import *
+
+
+TESTS_FOLDER = 'tests'
 
 
 class FightAITest(object):
@@ -16,7 +16,7 @@ class FightAITest(object):
         self.bname = self.ai2.__name__
         self.rep = rep
         self.write_log = write_log
-        self.output_file = open('fight ai test.txt', 'a')
+        self.output_file = open(os.path.join(TESTS_FOLDER, 'fight ai test.txt'), 'a')
         self.run_test()
         self.output_total()
         self.output_file.close()
@@ -51,7 +51,8 @@ class FightAITest(object):
                     self.wins[ind2] += 1
 
     def output_total(self):
-        s = 'total: {}\n{} wins: {}\n{} wins: {}'.format(self.rep*2, self.aname, self.wins[0], self.bname, self.wins[1])
+        s = 'total: {}\n{} wins: {}\n{} wins: {}'.format(self.rep*2, self.aname, self.wins[0],
+                                                         self.bname, self.wins[1])
         print(s)
         print(s, file=self.output_file)
 
@@ -72,7 +73,7 @@ class CrowdVsCrowdFair(FightAITest):
     def get_allies(self):
         al1, al2 = [], []
         n1 = n2 = rndint(4, 9)
-        al_lv = lv=rndint(1, 5)
+        al_lv = lv = rndint(1, 5)
         for i in range(n1):
             al1.append(ff.new_opponent(lv=al_lv))
         for i in range(n2):

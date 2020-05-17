@@ -1,6 +1,7 @@
 #! python3
 
 from . import events
+from . import experience
 from . import fighter_factory
 from . import items
 from . import lang_tools
@@ -114,7 +115,6 @@ REP_NOT_BRAWL = 1
 REP_REFORM_ENEMY = 10
 
 # misc
-BOOK_EXP = (20, 100)
 FAILED_ESCAPE_BEATING = (3, 5)
 PERFORMER_EXP_REWARD = 50
 
@@ -303,7 +303,7 @@ Buy it?'''.format(p.name, price)
                     t = 'The book turns out to be complete rubbish!'
                     p.write(t)
                 else:
-                    exp = random.randint(*BOOK_EXP)
+                    exp = random.randint(*experience.BOOK_EXP)
                     p.gain_exp(exp)
             p.pak()
 
@@ -469,7 +469,7 @@ class Drunkard(Enc):
             p.log('Refuses to drink.')
             roll = rnd()
             if (p.check_lv(*REQ_LV_DRUNKARD_FIGHT_STRONG) and roll <= CH_DRUNKARD_FIGHT_STRONG and
-                        p.game.drunkard is not None):
+                    p.game.drunkard is not None):
                 self.do_fight(strong=True)
             elif not p.is_master and roll <= CH_DRUNKARD_FIGHT_WEAK:
                 self.do_fight()
@@ -1091,7 +1091,7 @@ class SchoolBullying(Enc):
         p.show(t)
         p.log('Is bullied at his school.')
         school = p.get_school()
-        opp = random.choice(school[:p.school_rank-1])  # adjusts for Python indexing and skips self
+        opp = random.choice(school[:p.school_rank - 1])  # adjusts for Python indexing and skips self
         opp_strength = p.get_rel_strength(opp)
         esc_chance = get_escape_chance(p)
         if p.fight_or_run(opp_strength, esc_chance):

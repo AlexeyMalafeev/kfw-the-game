@@ -19,7 +19,8 @@ bug fixes:
     fixed evil crash in spectating fights
 
 gameplay:
-    don't add random moves to choose from if there is at least one style string-based move -> more distinct styles
+    don't add random moves to choose from if there is at least one style string-based move
+            -> more distinct styles
 
 moves:
     style moves: Backfist (karate)

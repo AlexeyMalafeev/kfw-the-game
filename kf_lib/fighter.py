@@ -1,5 +1,6 @@
 from . import ascii_art
 from .distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
+from . import experience
 from .fight_ai import DefaultFightAI
 from . import moves
 from . import quotes
@@ -681,36 +682,7 @@ weapon can also be weapon type"""
 
     def get_exp_worth(self):
         """Return how many experience points the fighter is 'worth'."""
-        # n = round(self.strength_full * self.agility_full * self.speed_full * self.health_full *
-        # (len(self.techs) + 1) * (len(self.moves) / 2) * 0.1)
-
-        # this works reasonably well; overestimates higher-level crowds
-        # n = 12 + 3 * self.level + 1 * len(self.techs)
-
-        # 7 + 2 + 2
-        n = (10 + (self.strength * self.agility * self.speed * self.health) * 0.01 * 3 +
-             len(self.techs) * 3)
-
-        if self.weapon:
-            w = self.weapon
-            w_s = w.get_exp_mult()
-            n *= w_s
-
-        n = round(n)
-
-        # this underestimates crowds even at lower levels
-        # n = 12 + 3 * self.level + 1.5 * (len(self.techs) ** 2)
-
-        # try: 11 + 2 * (num.allies+self) + 2 * level + 2 * techs + 1 * (techs ** 2)
-        # has to be external function
-        # experiment with quadratic features and interaction features
-
-        # c1 = 12, c2 = 0.5; this works reasonably well; underestimates crowds
-        # n = 15 + 0.3 * (self.level * (len(self.techs)+1))
-
-        # works rather poorly; badly underestimates crowds
-        # n = 12 + 0.5 * (self.level ** 2) + 0.3 * (len(self.techs) ** 2)
-        return n
+        return experience.fighter_to_exp(self)
 
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
