@@ -28,7 +28,7 @@ TOUGH_THIEF_LV = (7, 10)
 TOURN_PART_LV = (5, 10)
 
 
-def from_exp_worth(x):
+def from_exp_worth(x):  # todo reimplement
     """Return a list of fighters with x exp worth."""
     max_diff = round(x / 10)
     too_high = x + max_diff + 1

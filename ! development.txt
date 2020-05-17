@@ -10,7 +10,9 @@ balance:
 
 
 code:
-
+    utilities.multiply(numbers)
+    experience.extract_features(side_a, side_b)
+    ml_fighter_pwr.py
 
 bug fixes:
     fight items are now canceled after exp earned is calculated
@@ -34,7 +36,9 @@ styles:
     Capoeira
 
 testing:
-
+    _run_test_lv_vs_crowd.py shortcut
+    'tests' folder
+    improved Tester.test_level_vs_crowds
 
 UI:
 

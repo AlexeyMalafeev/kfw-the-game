@@ -1,3 +1,6 @@
+from .utilities import *
+
+
 BOOK_EXP = (10, 50)
 FIGHT_EXP_BASE = 20
 
@@ -21,6 +24,46 @@ def fighter_to_exp(f):
         exp *= w_mult
     exp = round(exp)
     return exp
+
+
+def extract_features(side_a, side_b):
+    # side_a.average_lv, side_b.average_lv, lv_relation
+    # side_a.average_atts, side_b.average_atts, att_relation
+    # side_a.average_techs, side_b.average_techs, tech_relation
+    # side_a.n, side_b.n
+    features = []
+
+    # level-related
+    val1 = mean([f.level for f in side_a])
+    features.append(val1)
+    val2 = mean([f.level for f in side_b])
+    features.append(val2)
+    val3 = round(val1 / val2, 2)
+    features.append(val3)
+
+    # att-related
+    val1 = mean([multiply(f.get_att_values_full()) for f in side_a])
+    features.append(val1)
+    val2 = mean([multiply(f.get_att_values_full()) for f in side_b])
+    features.append(val2)
+    val3 = round(val1 / val2, 2)
+    features.append(val3)
+
+    # tech-related
+    val1 = 1 + mean([len(f.techs) for f in side_a])
+    features.append(val1)
+    val2 = 1 + mean([len(f.techs) for f in side_b])
+    features.append(val2)
+    val3 = round(val1 / val2, 2)
+    features.append(val3)
+
+    # crowd
+    val = len(side_a)
+    features.append(val)
+    val = len(side_b)
+    features.append(val)
+
+    return features
 
 
 def fighters_to_exp(fs):

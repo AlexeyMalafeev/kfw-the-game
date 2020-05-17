@@ -652,6 +652,9 @@ weapon can also be weapon type"""
         aster = '*' if full > base else ''
         return s + aster
 
+    def get_att_values_full(self):
+        return tuple(self.get_full_att_value(att) for att in self.att_names)
+
     def get_atts_to_choose(self):
         return random.sample(self.att_names, self.num_atts_choose)
 

@@ -254,6 +254,11 @@ def msg(message):
     pak()
 
 
+def multiply(numbers):
+    from functools import reduce
+    return reduce(lambda x, y: x*y, numbers)
+
+
 def my_trace(*args, show_time=True, blank_line=True):
     if show_time:
         import time
