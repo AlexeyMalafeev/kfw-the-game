@@ -13,6 +13,7 @@ code:
     utilities.multiply(numbers)
     experience.extract_features(side_a, side_b)
     ml_fighter_pwr.py
+    the LR trained model's intercept and coefficients can be used without any heavy dependencies
 
 bug fixes:
     fight items are now canceled after exp earned is calculated
@@ -23,6 +24,7 @@ bug fixes:
 gameplay:
     don't add random moves to choose from if there is at least one style string-based move
             -> more distinct styles
+    ! machine learning-based prediction for fight outcomes, 90-91% accurate (LR, RF)
 
 moves:
     style moves: Backfist (karate)

@@ -1,5 +1,3 @@
-#! python3
-
 from kf_lib.events import Tournament2 as Tnt
 from kf_lib import game
 # from kf_lib import styles
