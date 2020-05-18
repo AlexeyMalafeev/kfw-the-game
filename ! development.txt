@@ -23,6 +23,7 @@ bug fixes:
 gameplay:
     don't add random moves to choose from if there is at least one style string-based move
             -> more distinct styles
+    ! machine learning-based prediction for fight outcomes, 90-91% accurate (LR, RF)
 
 moves:
     style moves: Backfist (karate)

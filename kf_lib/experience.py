@@ -58,10 +58,12 @@ def extract_features(side_a, side_b):
     features.append(val3)
 
     # crowd
-    val = len(side_a)
-    features.append(val)
-    val = len(side_b)
-    features.append(val)
+    val1 = len(side_a)
+    features.append(val1)
+    val2 = len(side_b)
+    features.append(val2)
+    val3 = round(val1 / val2, 2)
+    features.append(val3)
 
     return features
 

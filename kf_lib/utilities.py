@@ -384,10 +384,21 @@ def roman(x):
     return 'X' * tens + repl[rem]
 
 
-def sigmoid(z):
+def sigmoid_old(z):
     import math
     ans = 1.0 / (1.0 + math.exp(-z))
     return ans
+
+
+def sigmoid(x):
+    """Numerically-stable sigmoid function."""
+    import math
+    if x >= 0:
+        z = math.exp(-x)
+        return 1 / (1 + z)
+    else:
+        z = math.exp(x)
+        return z / (1 + z)
 
 
 def summary(data):
