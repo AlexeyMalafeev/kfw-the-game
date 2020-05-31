@@ -20,11 +20,14 @@ bug fixes:
             (although this so far doesn't change exp amount)
     exp bonuses are now properly recorded in statistics
     fixed evil crash in spectating fights
+	style generation: styles were generated from the same subset of strings
 
 gameplay:
     don't add random moves to choose from if there is at least one style string-based move
             -> more distinct styles
     ! machine learning-based prediction for fight outcomes, 90-91% accurate (LR, RF)
+	always try to learn a move with bonus 
+	# todo add this to learn_new_move
 
 moves:
     style moves: Backfist (karate)

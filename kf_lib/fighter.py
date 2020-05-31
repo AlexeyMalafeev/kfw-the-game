@@ -906,13 +906,10 @@ weapon can also be weapon type"""
                 # learn new tech if possible
                 if self.level in LVS_GET_NEW_TECH:
                     self.choose_new_tech()
-            if self.level in self.style.move_strings:
+            if self.level in LVS_GET_NEW_MOVE:
                 # print(self.style.move_strings[self.level])
                 # input('...')
                 return moves.resolve_style_move(self.style.move_strings[self.level], self)
-            if self.level in LVS_GET_NEW_MOVE:  # advanced moves, so a wider choice is more fitting
-                pool = moves.get_rand_moves(self, self.num_moves_choose * 2, NEW_MOVE_TIERS[self.level])
-                self.choose_new_move(pool)
             # no need to refresh full atts here since they are refreshed when upgrading atts and learning techs
 
     def log(self, text):
