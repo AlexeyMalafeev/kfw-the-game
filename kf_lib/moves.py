@@ -199,4 +199,8 @@ def resolve_style_move(move_s, f):
     else:
         # print('warning: move {} not found'.format(move_s))
         pool = get_rand_moves(f, f.num_moves_choose, rndint_2d(1, 5))
-    f.choose_new_move(pool)
+    try:
+        f.choose_new_move(pool)
+    except IndexError:
+        print('Cannot choose new move for pool={pool}, move_s_arg={move_s_arg}, move_s={move_s}, f={f}')
+        input('...')

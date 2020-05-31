@@ -1,13 +1,21 @@
-Mon May 11 02:57:44 2020
+Mon Jun  1 01:07:00 2020
 Traceback (most recent call last):
-  File "D:\kfw_dev\load game.py", line 8, in <module>
+  File "D:\kfw_dev\NG autoplay.py", line 9, in <module>
     g.play()
   File "D:\kfw_dev\kf_lib\game.py", line 443, in play
     play = self.game_loop()
-  File "D:\kfw_dev\kf_lib\game.py", line 230, in game_loop
-    brk = choice()
-  File "D:\kfw_dev\kf_lib\game.py", line 632, in test
-    f1 = fighter_factory.new_foreigner(8, 'Capoeira')
-  File "D:\kfw_dev\kf_lib\fighter_factory.py", line 183, in new_foreigner
-    f = Fighter(name, style_name, lv)
-UnboundLocalError: local variable 'name' referenced before assignment
+  File "D:\kfw_dev\kf_lib\game.py", line 255, in game_loop
+    self.next_day()
+  File "D:\kfw_dev\kf_lib\game.py", line 430, in next_day
+    ev.randevent(self)
+  File "D:\kfw_dev\kf_lib\events.py", line 95, in randevent
+    func(g)
+  File "D:\kfw_dev\kf_lib\events.py", line 72, in new_tournament
+    Tournament(g, *t)
+  File "D:\kfw_dev\kf_lib\events.py", line 130, in __init__
+    self.run()
+  File "D:\kfw_dev\kf_lib\events.py", line 178, in run
+    add = random.sample(av_fighters, k)
+  File "D:\Anaconda3\lib\random.py", line 321, in sample
+    raise ValueError("Sample larger than population or is negative")
+ValueError: Sample larger than population or is negative

@@ -21,6 +21,7 @@ bug fixes:
     exp bonuses are now properly recorded in statistics
     fixed evil crash in spectating fights
 	style generation: styles were generated from the same subset of strings
+	fixed bug in learning new moves at level 10+
 
 gameplay:
     don't add random moves to choose from if there is at least one style string-based move

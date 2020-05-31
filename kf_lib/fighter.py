@@ -909,7 +909,12 @@ weapon can also be weapon type"""
             if self.level in LVS_GET_NEW_MOVE:
                 # print(self.style.move_strings[self.level])
                 # input('...')
-                return moves.resolve_style_move(self.style.move_strings[self.level], self)
+                move_s = ''
+                if self.level in self.style.move_strings:
+                    move_s = self.style.move_strings[self.level]
+                else:
+                    move_s = str(NEW_MOVE_TIERS[self.level])
+                return moves.resolve_style_move(move_s, self)
             # no need to refresh full atts here since they are refreshed when upgrading atts and learning techs
 
     def log(self, text):
