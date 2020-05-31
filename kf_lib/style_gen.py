@@ -138,12 +138,15 @@ def generate_new_styles(n, overlap=False):
         words2 = random.choices(list(W2), k=n)
         words3 = random.choices(list(W3), k=n)
     else:
-        words1 = list(W1)[:n]
+        words1 = list(W1)
         random.shuffle(words1)
-        words2 = list(W2)[:n]
+        words1 = words1[:n]
+        words2 = list(W2)
         random.shuffle(words2)
-        words3 = list(W3)[:n]
+        words2 = words2[:n]
+        words3 = list(W3)
         random.shuffle(words3)
+        words3 = words3[:n]
     results = [' '.join(triple) for triple in zip(words1, words2, words3)]
     if overlap:
         results = list(set(results))  # remove possible duplicates
