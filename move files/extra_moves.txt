@@ -6,50 +6,50 @@
 'Catch Breath'    |0        |0           |0     |0        |0          |-20       |80        |0       |{'non-attack'}                                      |[]               |0    |5    
 'Rush Forward'    |0        |-2          |0     |0        |1          |15        |75        |5       |{'non-attack'}                                      |[]               |1    |5    
 'Retreat'         |0        |2           |0     |0        |1          |15        |85        |5       |{'non-attack'}                                      |[]               |1    |5    
-'Leap Forward'    |0        |-2          |0     |0        |2          |15        |70        |5       |{'non-attack', 'jump'}                              |[]               |1    |5    
-'Leap Back'       |0        |2           |0     |0        |2          |15        |80        |5       |{'non-attack', 'jump'}                              |[]               |1    |5    
+'Leap Forward'    |0        |-2          |0     |0        |2          |15        |70        |5       |{'jump', 'non-attack'}                              |[]               |1    |5    
+'Leap Back'       |0        |2           |0     |0        |2          |15        |80        |5       |{'jump', 'non-attack'}                              |[]               |1    |5    
 'Shove'           |1        |0           |10    |30       |1          |20        |50        |0       |{'grappling', 'knockback'}                          |['do_knockback'] |0    |5    
-'Sweep'           |2        |0           |20    |20       |2          |30        |80        |5       |{'kick', 'takedown'}                                |['do_takedown']  |0    |1    
-'Throw'           |1        |0           |10    |30       |3          |30        |90        |5       |{'takedown', 'grappling'}                           |['do_takedown']  |0    |1    
-'Trip'            |1        |0           |10    |20       |1          |20        |70        |5       |{'takedown', 'grappling'}                           |['do_takedown']  |0    |1    
+'Sweep'           |2        |0           |20    |20       |2          |30        |80        |5       |{'takedown', 'kick'}                                |['do_takedown']  |0    |1    
+'Throw'           |1        |0           |10    |30       |3          |30        |90        |5       |{'grappling', 'takedown'}                           |['do_takedown']  |0    |1    
+'Trip'            |1        |0           |10    |20       |1          |20        |70        |5       |{'grappling', 'takedown'}                           |['do_takedown']  |0    |1    
 'Finishing Punch' |1        |0           |28    |32       |1          |20        |70        |0       |{'antiground only', 'punch'}                        |[]               |0    |5    
-'Finishing Kick'  |2        |0           |32    |28       |1          |20        |70        |0       |{'kick', 'antiground only'}                         |[]               |0    |5    
+'Finishing Kick'  |2        |0           |32    |28       |1          |20        |70        |0       |{'antiground only', 'kick'}                         |[]               |0    |5    
 'Axe Chop'        |2        |0           |60    |38       |1          |27        |60        |0       |{'axe', 'chop', 'weapon', 'also antiground'}        |[]               |0    |5    
 'Axe Slash'       |2        |0           |55    |32       |1          |25        |60        |0       |{'axe', 'slash', 'weapon'}                          |[]               |0    |5    
-'Baton Smash'     |2        |0           |50    |35       |1          |30        |70        |0       |{'weapon', 'smash', 'baton'}                        |[]               |0    |5    
-'Baton Strike'    |2        |0           |45    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'weapon', 'baton'}    |[]               |0    |5    
-'Bench Smash'     |2        |0           |40    |32       |1          |33        |77        |0       |{'also antiground', 'weapon', 'bench', 'smash'}     |[]               |0    |5    
-'Bludgeon Smash'  |2        |0           |52    |35       |1          |30        |70        |0       |{'weapon', 'bludgeon', 'smash'}                     |[]               |0    |5    
-'Bludgeon Strike' |2        |0           |48    |40       |1          |25        |50        |0       |{'also antiground', 'strike', 'weapon', 'bludgeon'} |[]               |0    |5    
-'Broom Strike'    |2        |0           |38    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'weapon', 'broom'}    |[]               |0    |5    
-'Broom Thrust'    |3        |0           |40    |40       |1          |25        |60        |0       |{'also antiground', 'thrust', 'weapon', 'broom'}    |[]               |0    |5    
+'Baton Smash'     |2        |0           |50    |35       |1          |30        |70        |0       |{'smash', 'baton', 'weapon'}                        |[]               |0    |5    
+'Baton Strike'    |2        |0           |45    |45       |1          |25        |50        |0       |{'strike', 'baton', 'weapon', 'also antiground'}    |[]               |0    |5    
+'Bench Smash'     |2        |0           |40    |32       |1          |33        |77        |0       |{'smash', 'bench', 'weapon', 'also antiground'}     |[]               |0    |5    
+'Bludgeon Smash'  |2        |0           |52    |35       |1          |30        |70        |0       |{'smash', 'bludgeon', 'weapon'}                     |[]               |0    |5    
+'Bludgeon Strike' |2        |0           |48    |40       |1          |25        |50        |0       |{'strike', 'bludgeon', 'weapon', 'also antiground'} |[]               |0    |5    
+'Broom Strike'    |2        |0           |38    |45       |1          |25        |50        |0       |{'strike', 'broom', 'weapon', 'also antiground'}    |[]               |0    |5    
+'Broom Thrust'    |3        |0           |40    |40       |1          |25        |60        |0       |{'broom', 'thrust', 'weapon', 'also antiground'}    |[]               |0    |5    
 'Chain Whip'      |3        |0           |40    |45       |1          |25        |77        |0       |{'chain', 'whip', 'weapon', 'also antiground'}      |[]               |0    |5    
 
 # name                 |distance |dist_change |power |accuracy |complexity |stam_cost |time_cost |qi_cost |features                                                 |functions |tier |freq 
-'Chair Smash'          |2        |0           |35    |32       |1          |30        |77        |0       |{'also antiground', 'weapon', 'chair', 'smash'}          |[]        |0    |5    
-'Chopstics Thrust'     |2        |0           |30    |36       |1          |22        |54        |0       |{'also antiground', 'thrust', 'weapon', 'chopsticks'}    |[]        |0    |5    
-'Cloth Whip'           |3        |0           |20    |45       |1          |23        |70        |0       |{'also antiground', 'whip', 'weapon', 'cloth'}           |[]        |0    |5    
-'Fan Strike'           |2        |0           |20    |40       |1          |22        |45        |0       |{'also antiground', 'fan', 'strike', 'weapon'}           |[]        |0    |5    
-'Guqin Smash'          |2        |0           |25    |35       |1          |30        |70        |0       |{'also antiground', 'guqin', 'weapon', 'smash'}          |[]        |0    |5    
-'Hammer Smash'         |2        |0           |55    |28       |1          |33        |77        |0       |{'weapon', 'smash', 'hammer'}                            |[]        |0    |5    
-'Hammer Strike'        |2        |0           |50    |40       |1          |28        |55        |0       |{'also antiground', 'strike', 'weapon', 'hammer'}        |[]        |0    |5    
-'Knife Slash'          |2        |0           |45    |36       |1          |25        |60        |0       |{'weapon', 'knife', 'slash', 'also antiground'}          |[]        |0    |5    
-'Knife Stab'           |1        |0           |55    |40       |1          |20        |50        |0       |{'also antiground', 'knife', 'weapon', 'stab'}           |[]        |0    |5    
-'Pole Strike'          |3        |0           |40    |45       |1          |28        |55        |0       |{'also antiground', 'pole', 'strike', 'weapon'}          |[]        |0    |5    
-'Pole Thrust'          |4        |0           |45    |40       |1          |28        |66        |0       |{'also antiground', 'pole', 'thrust', 'weapon'}          |[]        |0    |5    
-'Rope Whip'            |3        |0           |25    |45       |1          |23        |70        |0       |{'also antiground', 'rope', 'whip', 'weapon'}            |[]        |0    |5    
-'Saber Slash'          |2        |0           |55    |40       |1          |25        |60        |0       |{'also antiground', 'saber', 'slash', 'weapon'}          |[]        |0    |5    
-'Saber Thrust'         |3        |0           |45    |40       |1          |25        |60        |0       |{'also antiground', 'saber', 'weapon', 'thrust'}         |[]        |0    |5    
-'Long Spear Thrust'    |4        |0           |55    |40       |1          |25        |60        |0       |{'also antiground', 'thrust', 'weapon', 'spear'}         |[]        |0    |5    
-'Spear Thrust'         |3        |0           |55    |40       |1          |25        |60        |0       |{'also antiground', 'thrust', 'weapon', 'spear'}         |[]        |0    |5    
-'Staff Strike'         |2        |0           |40    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'weapon', 'staff'}         |[]        |0    |5    
-'Stick Strike'         |2        |0           |35    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'weapon', 'stick'}         |[]        |0    |5    
-'Stick Thrust'         |3        |0           |38    |40       |1          |25        |60        |0       |{'also antiground', 'thrust', 'weapon', 'stick'}         |[]        |0    |5    
-'Sword Slash'          |2        |0           |45    |40       |1          |25        |60        |0       |{'also antiground', 'sword', 'slash', 'weapon'}          |[]        |0    |5    
-'Sword Thrust'         |3        |0           |55    |40       |1          |25        |60        |0       |{'also antiground', 'sword', 'weapon', 'thrust'}         |[]        |0    |5    
-'Pair of Swords Slash' |2        |0           |45    |40       |1          |22        |54        |0       |{'also antiground', 'slash', 'pair of swords', 'weapon'} |[]        |0    |5    
-'Pair of Swords Stab'  |1        |0           |50    |40       |1          |20        |50        |0       |{'also antiground', 'stab', 'weapon', 'pair of swords'}  |[]        |0    |5    
-'Umbrella Strike'      |2        |0           |30    |45       |1          |25        |50        |0       |{'also antiground', 'umbrella', 'strike', 'weapon'}      |[]        |0    |5    
-'Umbrella Thrust'      |3        |0           |32    |40       |1          |25        |60        |0       |{'also antiground', 'umbrella', 'thrust', 'weapon'}      |[]        |0    |5    
+'Chair Smash'          |2        |0           |35    |32       |1          |30        |77        |0       |{'smash', 'chair', 'weapon', 'also antiground'}          |[]        |0    |5    
+'Chopsticks Thrust'    |2        |0           |30    |36       |1          |22        |54        |0       |{'thrust', 'chopsticks', 'weapon', 'also antiground'}    |[]        |0    |5    
+'Cloth Whip'           |3        |0           |20    |45       |1          |23        |70        |0       |{'whip', 'cloth', 'weapon', 'also antiground'}           |[]        |0    |5    
+'Fan Strike'           |2        |0           |20    |40       |1          |22        |45        |0       |{'strike', 'fan', 'weapon', 'also antiground'}           |[]        |0    |5    
+'Guqin Smash'          |2        |0           |25    |35       |1          |30        |70        |0       |{'smash', 'guqin', 'weapon', 'also antiground'}          |[]        |0    |5    
+'Hammer Smash'         |2        |0           |55    |28       |1          |33        |77        |0       |{'smash', 'hammer', 'weapon'}                            |[]        |0    |5    
+'Hammer Strike'        |2        |0           |50    |40       |1          |28        |55        |0       |{'strike', 'hammer', 'weapon', 'also antiground'}        |[]        |0    |5    
+'Knife Slash'          |2        |0           |45    |36       |1          |25        |60        |0       |{'slash', 'knife', 'weapon', 'also antiground'}          |[]        |0    |5    
+'Knife Stab'           |1        |0           |55    |40       |1          |20        |50        |0       |{'stab', 'knife', 'weapon', 'also antiground'}           |[]        |0    |5    
+'Pole Strike'          |3        |0           |40    |45       |1          |28        |55        |0       |{'strike', 'pole', 'weapon', 'also antiground'}          |[]        |0    |5    
+'Pole Thrust'          |4        |0           |45    |40       |1          |28        |66        |0       |{'thrust', 'pole', 'weapon', 'also antiground'}          |[]        |0    |5    
+'Rope Whip'            |3        |0           |25    |45       |1          |23        |70        |0       |{'whip', 'rope', 'weapon', 'also antiground'}            |[]        |0    |5    
+'Saber Slash'          |2        |0           |55    |40       |1          |25        |60        |0       |{'saber', 'slash', 'weapon', 'also antiground'}          |[]        |0    |5    
+'Saber Thrust'         |3        |0           |45    |40       |1          |25        |60        |0       |{'thrust', 'saber', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Long Spear Thrust'    |4        |0           |55    |40       |1          |25        |60        |0       |{'spear', 'thrust', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Spear Thrust'         |3        |0           |55    |40       |1          |25        |60        |0       |{'spear', 'thrust', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Staff Strike'         |2        |0           |40    |45       |1          |25        |50        |0       |{'strike', 'staff', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Stick Strike'         |2        |0           |35    |45       |1          |25        |50        |0       |{'strike', 'stick', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Stick Thrust'         |3        |0           |38    |40       |1          |25        |60        |0       |{'stick', 'thrust', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Sword Slash'          |2        |0           |45    |40       |1          |25        |60        |0       |{'weapon', 'sword', 'slash', 'also antiground'}          |[]        |0    |5    
+'Sword Thrust'         |3        |0           |55    |40       |1          |25        |60        |0       |{'thrust', 'sword', 'weapon', 'also antiground'}         |[]        |0    |5    
+'Pair of Swords Slash' |2        |0           |45    |40       |1          |22        |54        |0       |{'pair of swords', 'slash', 'weapon', 'also antiground'} |[]        |0    |5    
+'Pair of Swords Stab'  |1        |0           |50    |40       |1          |20        |50        |0       |{'pair of swords', 'weapon', 'stab', 'also antiground'}  |[]        |0    |5    
+'Umbrella Strike'      |2        |0           |30    |45       |1          |25        |50        |0       |{'strike', 'umbrella', 'weapon', 'also antiground'}      |[]        |0    |5    
+'Umbrella Thrust'      |3        |0           |32    |40       |1          |25        |60        |0       |{'umbrella', 'thrust', 'weapon', 'also antiground'}      |[]        |0    |5    
 
 # 50 moves

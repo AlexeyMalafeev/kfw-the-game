@@ -72,7 +72,7 @@ NORMAL_WEAPONS = (
 _IW = ImprovisedWeapon
 IMPROVISED_WEAPONS = (
     _IW('fan', 0.25, ('Fan Strike', )),
-    _IW('chopsticks', 0.2, ('Chopstics Thrust', )),
+    _IW('chopsticks', 0.2, ('Chopsticks Thrust', )),
     _IW('broom', 0.4, ('Broom Strike', 'Broom Thrust', )),
     _IW('stick', 0.35, ('Stick Strike', 'Stick Thrust', )),
     _IW('pole', 0.25, ('Pole Strike', 'Pole Thrust', )),
