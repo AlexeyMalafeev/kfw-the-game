@@ -2,10 +2,14 @@ import numpy as np
 import pandas as pd
 
 
-from .experience import extract_features
-from .fighter_factory import new_fighter, new_prize_fighter
-from .fight import AutoFight
-from .utilities import *
+from kf_lib.experience import extract_features
+from kf_lib.fighter_factory import new_fighter, new_prize_fighter
+from kf_lib.fight import AutoFight
+from kf_lib.utilities import *
+#from .experience import extract_features
+# from .fighter_factory import new_fighter, new_prize_fighter
+# from .fight import AutoFight
+# from .utilities import *
 
 
 np.random.seed(0)
@@ -16,7 +20,8 @@ feature_labels = feature_labels_str.split(',')
 
 def generate_data(examples=1000, min_lv=1, max_lv=20, max_n=8, group_fight_chance=0.5,
                   one_vs_many_subchance=0.5, tech_style_chance=0.75):
-    data_file = open('ML_fight_data.csv', 'a', encoding='utf-8')
+    data_file = open(os.path.join('ml', f'ML_fight_data m={examples}, lv={min_lv}-{max_lv}, max_crowd={max_n}.csv'),
+                     'a', encoding='utf-8')
     data_file.write(feature_labels_str)
     for i in range(examples):
         if not i % 100:
@@ -84,7 +89,7 @@ def learn_LR(data_file, feature_list=None):
     clf = 'LR'
     n = len(df)
     feats = len(features)
-    report_file = open(f'ML report {clf} n={n} m={feats}.txt', 'w', encoding='utf-8')
+    report_file = open(os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print(classification_report(test_y, h), file=report_file)
 
     # REFERENCE, DO NOT DELETE!
@@ -114,8 +119,9 @@ def learn_LR(data_file, feature_list=None):
     # print('predict =', model.predict(new))
     # print('predict_proba =', model.predict_proba(new))
     # print('y =', 1)
+    # REFERENCE, DO NOT DELETE!
 
-    coef_file = open(f'ML LR coef n={n} m={feats}.txt', 'w', encoding='utf-8')
+    coef_file = open(os.path.join('ml', f'ML LR coef m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print('intercept:', model.intercept_, 'coefficients:', model.coef_, file=coef_file)
 
 
@@ -147,9 +153,9 @@ def learn_RFC(data_file, feature_list=None):
     from sklearn.metrics import classification_report
     print(classification_report(test_y, h))
     clf = 'RFC'
-    n = len(df)
+    m = len(df)
     feats = len(features)
-    report_file = open(f'ML report {clf} n={n} m={feats}.txt', 'w', encoding='utf-8')
+    report_file = open(os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print(classification_report(test_y, h), file=report_file)
 
     #print(model.coef_)

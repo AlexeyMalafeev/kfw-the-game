@@ -1,4 +1,4 @@
-from kf_lib import ml_fighter_pwr
+from ml import ml_fighter_pwr
 
 
 try:
