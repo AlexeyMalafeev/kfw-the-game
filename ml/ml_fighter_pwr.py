@@ -76,7 +76,7 @@ def learn_LR(data_file, feature_list=None):
     from sklearn.model_selection import train_test_split
     train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=1)
 
-    print('initializing the model')
+    print('initializing the LR model')
     model = LogisticRegression(solver='lbfgs', random_state=0)
     print(f'training on {len(train_X)} samples')
     model.fit(train_X, train_y)
@@ -87,7 +87,7 @@ def learn_LR(data_file, feature_list=None):
     from sklearn.metrics import classification_report
     print(classification_report(test_y, h))
     clf = 'LR'
-    n = len(df)
+    m = len(df)
     feats = len(features)
     report_file = open(os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print(classification_report(test_y, h), file=report_file)
@@ -121,7 +121,8 @@ def learn_LR(data_file, feature_list=None):
     # print('y =', 1)
     # REFERENCE, DO NOT DELETE!
 
-    coef_file = open(os.path.join('ml', f'ML LR coef m={m} n={feats}.txt'), 'w', encoding='utf-8')
+    # save model
+    coef_file = open(os.path.join('ml', f'ML LR model coef m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print('intercept:', model.intercept_, 'coefficients:', model.coef_, file=coef_file)
 
 
@@ -138,7 +139,7 @@ def learn_RFC(data_file, feature_list=None):
     from sklearn.model_selection import train_test_split
     train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=1)
 
-    print('initializing the model')
+    print('initializing the RFC model')
     model = RandomForestClassifier(n_jobs=2, random_state=0)
     print(f'training on {len(train_X)} samples')
     model.fit(train_X, train_y)
