@@ -14,14 +14,15 @@ from kf_lib.utilities import *
 
 np.random.seed(0)
 
-feature_labels_str = 'lv1,lv2,lvrel,att1,att2,attrel,tech1,tech2,techrel,n1,n2,nrel,y'
+feature_labels_str = 'lv1,lv2,lvrel,att1,att2,attrel,tech1,tech2,techrel,n1,n2,nrel,wp1,wp2,wprel,y'
 feature_labels = feature_labels_str.split(',')
 
 
+# todo refactor generate_data
 def generate_data(examples=1000, min_lv=1, max_lv=20, max_n=8, group_fight_chance=0.5,
-                  one_vs_many_subchance=0.5, tech_style_chance=0.75):
+                  one_vs_many_subchance=0.5, tech_style_chance=0.75, wp_chance=0.1):
     data_file = open(os.path.join('ml', f'ML_fight_data m={examples}, lv={min_lv}-{max_lv}, max_crowd={max_n}.csv'),
-                     'a', encoding='utf-8')
+                     'w', encoding='utf-8')
     data_file.write(feature_labels_str)
     for i in range(examples):
         if not i % 100:
@@ -55,6 +56,10 @@ def generate_data(examples=1000, min_lv=1, max_lv=20, max_n=8, group_fight_chanc
                 f2 = new_prize_fighter(lv=rndint(min_lv, max_lv))
             side_a = [f1]
             side_b = [f2]
+        # arm some fighters
+        for f in side_a + side_b:
+            if rnd() <= wp_chance:
+                f.arm()
         feat_vals = extract_features(side_a, side_b)
         f = AutoFight(side_a=side_a, side_b=side_b)
         feat_vals.append(float(f.win))
@@ -63,6 +68,7 @@ def generate_data(examples=1000, min_lv=1, max_lv=20, max_n=8, group_fight_chanc
     data_file.close()
 
 
+# todo refactor learn_LR
 def learn_LR(data_file, feature_list=None):
     from sklearn.linear_model import LogisticRegression
     if feature_list is None:
@@ -77,7 +83,8 @@ def learn_LR(data_file, feature_list=None):
     train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=1)
 
     print('initializing the LR model')
-    model = LogisticRegression(solver='lbfgs', random_state=0)
+    print(features)
+    model = LogisticRegression(solver='lbfgs', random_state=0, max_iter=1000)
     print(f'training on {len(train_X)} samples')
     model.fit(train_X, train_y)
 
@@ -123,9 +130,12 @@ def learn_LR(data_file, feature_list=None):
 
     # save model
     coef_file = open(os.path.join('ml', f'ML LR model coef m={m} n={feats}.txt'), 'w', encoding='utf-8')
+    print(features, file=coef_file)
     print('intercept:', model.intercept_, 'coefficients:', model.coef_, file=coef_file)
+    coef_file.close()
 
 
+# todo refactor learn_RFC
 def learn_RFC(data_file, feature_list=None):
     from sklearn.ensemble import RandomForestClassifier
     if feature_list is None:
@@ -140,6 +150,7 @@ def learn_RFC(data_file, feature_list=None):
     train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=1)
 
     print('initializing the RFC model')
+    print(features)
     model = RandomForestClassifier(n_jobs=2, random_state=0)
     print(f'training on {len(train_X)} samples')
     model.fit(train_X, train_y)
