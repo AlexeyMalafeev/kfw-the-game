@@ -103,6 +103,13 @@ __|__ s.
  ~~  |    .
     / \   .
    /  /   .
+# Onslaught Punch
+           .
+ ~~~   O __.
+ ~~~  /_   .
+ ~~~  |    .
+     / \   .
+    /  /   .
 # Pushing Punch
          .
      O __.
@@ -145,6 +152,13 @@ __|__ s.
  ~~  /     .
     / \    .
    /  /    .
+# Onslaught Palm
+            .
+ ~~~   O __,.
+ ~~~  /_    .
+ ~~~  /     .
+     / \    .
+    /  /    .
 # Pushing Palm
          .
     O __,.
@@ -167,12 +181,12 @@ __|__ s.
    / \   .
   /   |  .
 # Buddha Palm
-         .
-    O __,.
-  /_  ≈≈ .
-    |    .
-   / \   .
-  /   |  .
+          .
+    O __,≈.
+  /_     ≈.
+    |     .
+   / \    .
+  /   |   .
 # Energy Palm, Shocking Palm
          .
     O __,.
@@ -245,8 +259,8 @@ __|__ s.
   /  |  .
 # Tiger Claw
         .
-    O   .
-   /|\_,.
+    O  ,.
+   /|\/ .
     |   .
    / \  .
   /  |  .
@@ -264,6 +278,34 @@ __|__ s.
     |  .
    / \ .
   /  | .
+# Power Elbow, Heavy Elbow
+        .
+     O__.
+    |/ /.
+    /   .
+   / \  .
+  /  |  .
+# Charging Elbow
+         .
+ ~~    O__.
+ ~~   |/ /.
+ ~~  /   .
+    / \  .
+   /  /  .
+# Onslaught Elbow
+          .
+ ~~~    O__.
+ ~~~   |/ /.
+ ~~~  /   .
+     / \  .
+    /  /  .
+# Pushing Elbow, Long Elbow
+        .
+      O__.
+     |/ /.
+    /   .
+   / \  .
+  /  /  .
 # Flying Elbow
           .
        O _.
@@ -418,6 +460,13 @@ __|__ s.
  ~~   |/   .
      /     .
     /      .
+# Onslaught Kick
+            .
+ ~~~  O_\   .
+ ~~~ /_  ___.
+ ~~~   |/   .
+      /     .
+     /      .
 # Pushing Kick
         .
   O_\   .
@@ -448,11 +497,46 @@ __|__ s.
          .
 # Knee
        .
+   O   .
+  |_\/ .
+    \__.
+    | /.
+   /   .
+# Heavy Knee, Power Knee
+       .
+   O   .
+  /_\/ .
+    \__.
+   /  /.
+  /    .
+# Pushing Knee
+       .
     O  .
    \_\|.
     |__.
    /  /.
   /    .
+# Charging Knee
+        .
+ ~~  O  .
+ ~~ \_\|.
+ ~~  |__.
+    /  /.
+   /    .
+# Onslaught Knee
+         .
+ ~~~  O  .
+ ~~~ \_\|.
+ ~~~  |__.
+     /  /.
+    /    .
+# Long Knee
+        .
+  O     .
+  \/\/  .
+    \ __.
+   /   /.
+  /     .
 # Flying Knee        
       O .
     /_\|.
@@ -467,6 +551,34 @@ __|__ s.
     /   .
    / \  .
   /  /  .
+# Heavy Headbutt, Power Headbutt
+        .
+       O.
+     /_ .
+    /   .
+ __/ \  .
+     /  .
+# Charging Headbutt
+          .
+ ~~      O.
+ ~~    /_ .
+ ~~   /   .
+   __/ \  .
+       /  .
+# Onslaught Headbutt
+           .
+ ~~~      O.
+ ~~~    /_ .
+ ~~~   /   .
+    __/ \  .
+        /  .
+# Long Headbutt, Pushing Headbutt
+         .
+        O.
+      /  .
+    / \  .
+ __/ \   .
+     /   .
 # Flying Headbutt - legacy
          .
       _ O.
