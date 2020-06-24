@@ -1,0 +1,2 @@
+['lvrel', 'attrel', 'techrel', 'nrel', 'wprel']
+intercept: [-10.17320892] coefficients: [[2.25830237 0.40053776 0.30494284 6.05689325 0.43199118]]
