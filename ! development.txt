@@ -1,5 +1,5 @@
-..2020
-v.0.6.0 aka
+31.10.2020
+v.0.6.0 aka I'll Be Watching You
 
 DONE:
 
@@ -24,6 +24,7 @@ bug fixes:
 	fixed bug in learning new moves at level 10+
 
 gameplay:
+    ! ability to observe what AI players do during their turns
     don't add random moves to choose from if there is at least one style string-based move
             -> more distinct styles
     ! machine learning-based prediction for fight outcomes, 90-91% accurate (LR, RF)

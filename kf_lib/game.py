@@ -16,7 +16,14 @@ from . import game_stats
 from . import items
 from .moves import BASIC_MOVES
 from . import names
-from .player import HumanPlayer, LazyAIP, SmartAIP, VanillaAIP, BaselineAIP, ALL_AI_PLAYERS  # used in load/new_game
+from .player import (HumanPlayer,
+                     LazyAIP,
+                     SmartAIP,
+                     VanillaAIP,
+                     BaselineAIP,
+                     ALL_AI_PLAYERS,  # used in load/new_game
+                     SmartAIPVisible,
+                     )
 from . import story
 from . import style_gen
 from . import styles
@@ -186,7 +193,7 @@ class Game(object):
         for p in self.players:
             p.log_new_day()
             if not p.inactive:
-                p.practice_home()
+                p.practice_home(suppress_log=True)
 
     def do_monthly(self):
         """This is guaranteed to execute only once per month"""
@@ -248,6 +255,7 @@ class Game(object):
                         self.enc.rand_enc()
 
                 # end turn
+                p.end_turn()
                 p.ended_turn = True
 
             if self.check_victory():

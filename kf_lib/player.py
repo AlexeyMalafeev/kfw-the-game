@@ -306,6 +306,9 @@ class Player(Fighter):
         self.change_stat('rew_money_earned', amount)
         self.write('{} earns a {}-coin reward.'.format(self.name, amount))
 
+    def end_turn(self):
+        pass
+
     def enter_tourn(self, fee):
         self.log('Takes part in a kung-fu tournament.')
         self.pay(fee)
@@ -326,7 +329,7 @@ class Player(Fighter):
     def gain_exp(self, amount, silent=False):
         if not silent:
             self.show('{} gains {} exp.'.format(self.name, amount))
-        self.log('Gains {} exp.'.format(amount))
+            self.log('Gains {} exp.'.format(amount))
         self.exp += amount
         while self.exp >= self.next_level:
             self.level_up()
@@ -370,8 +373,11 @@ class Player(Fighter):
                                                   self.get_stat('num_kos'))
 
     def get_inact_info(self):
-        return '{} is {} and needs {} day{} to recover.'.format(self.name, self.inact_status, self.inactive,
-                                                                's' if self.inactive > 1 else '')
+        s = '{} is {} and needs {} day{} to recover.'.format(
+            self.name, self.inact_status, self.inactive, 's' if self.inactive > 1 else ''
+        )
+        self.log(s)
+        return s
 
     def get_init_atts(self):
         """Return tuple of attributes used by __init__"""
@@ -503,8 +509,9 @@ class Player(Fighter):
         encounters.random_encounters(self, encs)
         return True  # to end turn
 
-    def practice_home(self):
-        self.log('Practices at home.')
+    def practice_home(self, suppress_log=False):
+        if not suppress_log:
+            self.log('Practices at home.')
         exp = round((self.level + len(self.friends)) * self.home_training_exp_mult)
         self.gain_exp(exp, silent=True)
 
@@ -784,6 +791,32 @@ class SmartAIP(AIPlayer):
     min_master_money = 150
     min_students_to_teach = 5
     non_master_practice_chance = 0.8
+
+
+class SmartAIPVisible(SmartAIP):
+
+    def cls(self):
+        cls()
+
+    def end_turn(self):
+        print(f'\n*{self.name} ends his turn*')
+        pak()
+
+    def log(self, text):
+        self.plog.append(text)
+        print(text)
+        pak()
+
+    def log_new_day(self):
+        self.plog.append('\n\n*NEW DAY*')
+        self.plog.append(self.game.get_date())
+        self.plog.append(self.get_p_info())
+
+    def see_day_info(self):
+        cls()
+        print(f'*{self.name}\'s turn*\n')
+        print(f'{self.style.name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
+              f'money:{self.money}\n')
 
 
 class VanillaAIP(AIPlayer):
