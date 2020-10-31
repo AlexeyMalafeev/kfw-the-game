@@ -799,7 +799,7 @@ class SmartAIPVisible(SmartAIP):
         cls()
 
     def end_turn(self):
-        print(f'\n*{self.name} ends his turn*')
+        print(f'\n---{self.name} ends his turn---')
         pak()
 
     def log(self, text):
@@ -814,7 +814,7 @@ class SmartAIPVisible(SmartAIP):
 
     def see_day_info(self):
         cls()
-        print(f'*{self.name}\'s turn*\n')
+        print(f'---{self.name}\'s turn---\n')
         print(f'{self.style.name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
               f'money:{self.money}\n')
 
