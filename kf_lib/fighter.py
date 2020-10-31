@@ -118,6 +118,7 @@ class Fighter(object):
     exotic_strike_mult = 1.0
     flying_strike_mult = 1.0
     grappling_strike_mult = 1.0
+    head_strike_mult = 1.0
     kick_strike_mult = 1.0
     knee_strike_mult = 1.0
     palm_strike_mult = 1.0
