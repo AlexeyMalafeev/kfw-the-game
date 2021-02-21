@@ -26,17 +26,12 @@ DUR_SLOW_MIN = 300
 DUR_SLOW_MAX = 600
 DUR_STUN_MIN = 50
 DUR_STUN_MAX = 150
-EXP_CONSTANT1 = 12
-EXP_CONSTANT2 = 0.5
-# EXP_CONSTANT3 = 1
-FALL_DAMAGE = [25, 50]
+FALL_DAMAGE = (25, 50)
 HP_PER_HEALTH_LV = 50
 INSTA_KO_CHANCE = 0.25
-KNOCKBACK_DIST_FORCED = [1, 1, 1, 2, 2, 3]
-KNOCKBACK_HP_DIVISOR1 = 3.5
-KNOCKBACK_HP_DIVISOR2 = 3
-KNOCKBACK_HP_DIVISOR3 = 2.5
-KNOCKDOWN_HP_DIVISOR = 2
+KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
+KNOCKBACK_HP_THRESHOLDS = (0.3, 0.35, 0.4)  # correspond to levels of knockback: 1, 2, 3
+KNOCKDOWN_HP_DIVISOR = 2     # todo make 0.5 like above thresholds
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
 NEW_MOVE_TIERS = {
@@ -1083,9 +1078,7 @@ class Fighter(object):
             self.set_rand_moves()
         else:
             for mn in move_names:
-                self.learn_move(
-                    mn, silent=True
-                )  # not to write log every time (e.g. when loading a game)
+                self.learn_move(mn, silent=True)
 
     def set_rand_atts(self):
         for i in range(self.level + 2):
@@ -1249,14 +1242,13 @@ class Fighter(object):
 
     def try_knockback(self):
         targ = self.target
-        if not targ.check_status('lying') and self.dam >= targ.hp_max / KNOCKBACK_HP_DIVISOR1:
+        kb = 0
+        if not targ.check_status('lying'):
             dam_ratio = self.dam / targ.hp_max
-            if dam_ratio >= KNOCKBACK_HP_DIVISOR3:
-                kb = 3
-            elif dam_ratio >= KNOCKBACK_HP_DIVISOR2:
-                kb = 2
-            else:
-                kb = 1
+            for thresh in KNOCKBACK_HP_THRESHOLDS:
+                if dam_ratio > thresh:
+                    kb += 1
+        if kb > 0:
             targ.cause_knockback(kb)
 
     def try_knockdown(self):
