@@ -29,14 +29,19 @@ class Weapon(object):
         atk = float_to_pcnt(self.atk_mean)
         rng_min = min(m.distance for m in self.moves)
         rng_max = max(m.distance for m in self.moves)
-        self.descr = '(Pwr:{}-{}  Acc:{}-{}  Rng:{}-{}  Dfs:{})'.format(pwr_min, pwr_max, acc_min, acc_max, rng_min,
-                                                                        rng_max, dfs)
+        self.descr = '(Pwr:{}-{}  Acc:{}-{}  Rng:{}-{}  Dfs:{})'.format(
+            pwr_min, pwr_max, acc_min, acc_max, rng_min, rng_max, dfs
+        )
         self.descr_short = '({}|{})'.format(atk, dfs)
         all_weapons[self.name] = self
 
     def __repr__(self):
-        return '{}({!r}, {}, ({},))'.format(self.__class__.__name__, self.name, self.dfs_bonus, ', '.join((repr(
-            m.name) for m in self.moves)))
+        return '{}({!r}, {}, ({},))'.format(
+            self.__class__.__name__,
+            self.name,
+            self.dfs_bonus,
+            ', '.join((repr(m.name) for m in self.moves)),
+        )
 
     def __str__(self):
         return '{} {}'.format(self.name, self.descr)
@@ -60,31 +65,60 @@ class RobberWeapon(Weapon):
 class PoliceWeapon(Weapon):
     wp_type = 'police'
 
+
 _NW = NormalWeapon
 NORMAL_WEAPONS = (
     _NW('pair of swords', 0.5, ('Pair of Swords Slash', 'Pair of Swords Stab')),
     _NW('saber', 0.35, ('Saber Slash', 'Saber Thrust')),
     _NW('spear', 0.3, ('Long Spear Thrust', 'Spear Thrust')),
-    _NW('staff', 0.45, ('Staff Strike', )),
-    _NW('sword', 0.4, ('Sword Slash', 'Sword Thrust'))
-    )
+    _NW('staff', 0.45, ('Staff Strike',)),
+    _NW('sword', 0.4, ('Sword Slash', 'Sword Thrust')),
+)
 
 _IW = ImprovisedWeapon
 IMPROVISED_WEAPONS = (
-    _IW('fan', 0.25, ('Fan Strike', )),
-    _IW('chopsticks', 0.2, ('Chopsticks Thrust', )),
-    _IW('broom', 0.4, ('Broom Strike', 'Broom Thrust', )),
-    _IW('stick', 0.35, ('Stick Strike', 'Stick Thrust', )),
-    _IW('pole', 0.25, ('Pole Strike', 'Pole Thrust', )),
-    _IW('umbrella', 0.35, ('Pole Strike', 'Pole Thrust', )),
-    _IW('bench', 0.25, ('Bench Smash', )),
-    _IW('chair', 0.3, ('Chair Smash', )),
-    _IW('guqin', 0.25, ('Guqin Smash', )),
+    _IW('fan', 0.25, ('Fan Strike',)),
+    _IW('chopsticks', 0.2, ('Chopsticks Thrust',)),
+    _IW(
+        'broom',
+        0.4,
+        (
+            'Broom Strike',
+            'Broom Thrust',
+        ),
+    ),
+    _IW(
+        'stick',
+        0.35,
+        (
+            'Stick Strike',
+            'Stick Thrust',
+        ),
+    ),
+    _IW(
+        'pole',
+        0.25,
+        (
+            'Pole Strike',
+            'Pole Thrust',
+        ),
+    ),
+    _IW(
+        'umbrella',
+        0.35,
+        (
+            'Pole Strike',
+            'Pole Thrust',
+        ),
+    ),
+    _IW('bench', 0.25, ('Bench Smash',)),
+    _IW('chair', 0.3, ('Chair Smash',)),
+    _IW('guqin', 0.25, ('Guqin Smash',)),
     _IW('hammer', 0.2, ('Hammer Smash', 'Hammer Strike')),
-    _IW('cloth', 0.2, ('Cloth Whip', )),
-    _IW('rope', 0.25, ('Rope Whip', )),
-    _IW('chain', 0.25, ('Chain Whip', ))
-    )
+    _IW('cloth', 0.2, ('Cloth Whip',)),
+    _IW('rope', 0.25, ('Rope Whip',)),
+    _IW('chain', 0.25, ('Chain Whip',)),
+)
 
 _RW = RobberWeapon
 ROBBER_WEAPONS = (

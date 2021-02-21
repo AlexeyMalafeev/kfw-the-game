@@ -54,17 +54,32 @@ def ef_recover(target):
     target.recover()
 
 
-EFFECTS = {MEDICINE: (ef_recover, {}),
-           STR_BOOSTER: (ef_boost, {'strength_full': ATT_BOOST1}),
-           AGI_BOOSTER: (ef_boost, {'agility_full': ATT_BOOST1}),
-           SPD_BOOSTER: (ef_boost, {'speed_full': ATT_BOOST1}),
-           QI_BOOSTER: (ef_boost, {'qp_max': boosts.QP_MAX2, 'qp_gain': boosts.QP_GAIN2}),
-           HLT_BOOSTER: (ef_boost, {'health_full': ATT_BOOST1}),
-           STAM_BOOSTER: (ef_boost, {'stamina_max': boosts.STAM_MAX2, 'stamina_gain': boosts.STAM_RESTORE2}),
-           SUPER_BOOSTER: (ef_boost, {'strength_full': ATT_BOOST1, 'agility_full': ATT_BOOST1, 'speed_full': ATT_BOOST1,
-                                      'qp_max': boosts.QP_MAX2, 'qp_gain': boosts.QP_GAIN2, 'health_full': ATT_BOOST1,
-                                      'stamina_max': boosts.STAM_MAX2, 'stamina_gain': boosts.STAM_RESTORE2}),
-           MANNEQUIN: (ef_boost, {'home_training_exp_mult': boosts.HOME_TRAIN_BONUS})}
+EFFECTS = {
+    MEDICINE: (ef_recover, {}),
+    STR_BOOSTER: (ef_boost, {'strength_full': ATT_BOOST1}),
+    AGI_BOOSTER: (ef_boost, {'agility_full': ATT_BOOST1}),
+    SPD_BOOSTER: (ef_boost, {'speed_full': ATT_BOOST1}),
+    QI_BOOSTER: (ef_boost, {'qp_max': boosts.QP_MAX2, 'qp_gain': boosts.QP_GAIN2}),
+    HLT_BOOSTER: (ef_boost, {'health_full': ATT_BOOST1}),
+    STAM_BOOSTER: (
+        ef_boost,
+        {'stamina_max': boosts.STAM_MAX2, 'stamina_gain': boosts.STAM_RESTORE2},
+    ),
+    SUPER_BOOSTER: (
+        ef_boost,
+        {
+            'strength_full': ATT_BOOST1,
+            'agility_full': ATT_BOOST1,
+            'speed_full': ATT_BOOST1,
+            'qp_max': boosts.QP_MAX2,
+            'qp_gain': boosts.QP_GAIN2,
+            'health_full': ATT_BOOST1,
+            'stamina_max': boosts.STAM_MAX2,
+            'stamina_gain': boosts.STAM_RESTORE2,
+        },
+    ),
+    MANNEQUIN: (ef_boost, {'home_training_exp_mult': boosts.HOME_TRAIN_BONUS}),
+}
 
 
 for k, v in EFFECTS.items():

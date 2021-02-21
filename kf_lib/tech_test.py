@@ -17,7 +17,14 @@ class TechTester(object):
     techs3 = techniques.get_weapon_techs()
     techs4 = techniques.get_style_techs()
 
-    def __init__(self, n_fights=100, upgradable_techs=True, advanced_techs=True, weapon_techs=True, style_techs=True):
+    def __init__(
+        self,
+        n_fights=100,
+        upgradable_techs=True,
+        advanced_techs=True,
+        weapon_techs=True,
+        style_techs=True,
+    ):
         self.n_fights = n_fights
         order = []
         if upgradable_techs:
@@ -33,8 +40,12 @@ class TechTester(object):
         self.wins_crowd = {}
         self.wins_wp = {}
         self.wins_total = {}
-        self.fight_types = (('vs 1', self.wins_vs1), ('vs 4', self.wins_crowd), ('weapons', self.wins_wp),
-                            ('total', self.wins_total))
+        self.fight_types = (
+            ('vs 1', self.wins_vs1),
+            ('vs 4', self.wins_crowd),
+            ('weapons', self.wins_wp),
+            ('total', self.wins_total),
+        )
         open('tech test.txt', 'w')  # clear the output file
         self.output = open('tech test.txt', 'a')
         self.run()
@@ -46,22 +57,24 @@ class TechTester(object):
         if self.baseline_allowed:
             self.test_tech(None)
         for name, techs in self.order:
-            print('*'*50)
+            print('*' * 50)
             print('testing {}...'.format(name))
-            print('*'*50)
+            print('*' * 50)
             for t in techs:
                 self.test_tech(t)
-            print('*'*50)
+            print('*' * 50)
             print('statistics...')
-            print('*'*50)
+            print('*' * 50)
             self.stats(name, techs)
 
     def stats(self, name, techs):
-        text = '\n\n{}\n{}\n{}\n\n'.format('*'*50, name, '*'*50)
+        text = '\n\n{}\n{}\n{}\n\n'.format('*' * 50, name, '*' * 50)
         # self.wins_total = {t: 0 for t in techs}
         for legend, wins in self.fight_types:
             tuples = [(v, k) for k, v in wins.items() if k in techs]
-            as_str = '\n'.join(['{} {} ({})'.format(v, k, techniques.get_descr(k)) for v, k in sorted(tuples)])
+            as_str = '\n'.join(
+                ['{} {} ({})'.format(v, k, techniques.get_descr(k)) for v, k in sorted(tuples)]
+            )
             text += '\n  {}:\n{}\n'.format(legend, as_str)
             # if not wins is self.wins_total:
             # print('wins\n', wins)

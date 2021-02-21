@@ -7,12 +7,13 @@ from .utilities import *
 # constants
 # required levels
 # don't forget that the last element in range is not included!
-REQ_LV = {'ForeignerStory': range(10, 13),
-          'NinjaTurtlesStory': range(13, 16),
-          'RenownedMaster': range(14, 17),
-          'StrangeDreamsStory': range(6, 9),
-          'TreasuresStory': range(8, 11)
-          }
+REQ_LV = {
+    'ForeignerStory': range(10, 13),
+    'NinjaTurtlesStory': range(13, 16),
+    'RenownedMaster': range(14, 17),
+    'StrangeDreamsStory': range(6, 9),
+    'TreasuresStory': range(8, 11),
+}
 
 # exp
 DREAM1_EXP = 50
@@ -73,7 +74,9 @@ class Story(object):
             b_ref = self.game.get_fighter_ref(self.boss)
         else:
             b_ref = None
-        return 'story.{}(g, state={!r}, player={}, boss={})'.format(self.__class__.__name__, self.state, p_ref, b_ref)
+        return 'story.{}(g, state={!r}, player={}, boss={})'.format(
+            self.__class__.__name__, self.state, p_ref, b_ref
+        )
 
     def intro(self):
         pass
@@ -91,14 +94,15 @@ class Story(object):
 
 
 class ForeignerStory(Story):
-
     def intro(self):
         g = self.game
         g.cls()
         b = self.boss = fighter_factory.new_foreigner()
         g.register_fighter(b)
         t = 'Rumor has it that {}, a renowned martial artist from {}, has arrived in {} to defeat local masters and \
-             prove the superiority of his own fighting style, {}.'.format(b.name, b.country, g.town_name, b.style.name)
+             prove the superiority of his own fighting style, {}.'.format(
+            b.name, b.country, g.town_name, b.style.name
+        )
         g.msg(t)
 
     def reward(self):
@@ -108,8 +112,10 @@ class ForeignerStory(Story):
 
     def scene1(self):
         g, b = self.game, self.boss
-        t = 'The people of {} keep talking about the foreigner, {}. He has already defeated some good ' \
+        t = (
+            'The people of {} keep talking about the foreigner, {}. He has already defeated some good '
             'fighters.'.format(g.town_name, b.name)
+        )
         g.msg(t)
 
     def scene2(self):
@@ -119,7 +125,9 @@ class ForeignerStory(Story):
         t = "{b} has challenged some martial artists in {f}, yet again. Today {p} watched him fight, in a few of \
         his \'friendly matches\', which didn\'t seem all that friendly. In the last fight, {b} defeated three \
         opponents at once, injuring them badly. He is a formidable adversary... \nBy watching {b} fight {p} gained \
-        some valuable insights into the foreigner\'s technique.".format(b=b.name, f=g.town_name, p=p.name)
+        some valuable insights into the foreigner\'s technique.".format(
+            b=b.name, f=g.town_name, p=p.name
+        )
         g.show(t)
         base_exp = 10
         p.gain_exp(rndint(base_exp, base_exp * 3))
@@ -137,11 +145,17 @@ class ForeignerStory(Story):
         else:
             f = random.choice(list(g.masters.values()))
             f_st = '{} of {}'.format(f.name, f.style.name)
-        t = '{} finds out that {} beat {}! Can no one stop this arrogant foreigner?'.format(p.name, b.name, f_st)
+        t = '{} finds out that {} beat {}! Can no one stop this arrogant foreigner?'.format(
+            p.name, b.name, f_st
+        )
         g.show(t)
         if not p.is_human or g.yn('Challenge {}?'.format(b.name)):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
-                g.show('{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(p.name))
+                g.show(
+                    '{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(
+                        p.name
+                    )
+                )
                 g.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
                 self.reward()
             else:
@@ -155,9 +169,11 @@ class NinjaTurtlesStory(Story):
     def intro(self):
         g = self.game
         g.cls()
-        t = ('A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
-             'human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed '
-             'tones, clearly deciding what to do next...')
+        t = (
+            'A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
+            'human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed '
+            'tones, clearly deciding what to do next...'
+        )
         g.show(t)
         g.pak()
 
@@ -165,11 +181,14 @@ class NinjaTurtlesStory(Story):
         p = self.player
         p.add_accompl('TMNT')
         from . import styles
+
         p.learn_tech(*list(styles.TURTLE_NUNJUTSU.techs.values()))
 
     def scene1(self):
         p = self.player
-        p.write('{} encounters the four teenage mutant ninja turtles travelling in time.'.format(p.name))
+        p.write(
+            '{} encounters the four teenage mutant ninja turtles travelling in time.'.format(p.name)
+        )
         p.pak()
         # p.choose_best_norm_wp()
         ens = fighter_factory.new_ninja_turtles()
@@ -188,29 +207,37 @@ class RenownedMaster(Story):
         name = g.get_new_name(prefix='Master')
         b = self.boss = fighter_factory.new_master_challenger(p.level, name)
         g.register_fighter(b)
-        t = '{}, a renowned master of {} kung-fu from a remote province, comes to {} and stays at a local ' \
+        t = (
+            '{}, a renowned master of {} kung-fu from a remote province, comes to {} and stays at a local '
             'tavern.'.format(b.name, b.style.name, g.town_name)
+        )
         g.msg(t)
 
     def reward(self):
         p = self.player
         p.add_accompl('Renowned Master')
-        t = 'Having defeated such a strong opponent, {} gained an important insight into his own fighting ' \
+        t = (
+            'Having defeated such a strong opponent, {} gained an important insight into his own fighting '
             'technique.'.format(p.name)
+        )
         p.write(t)
         p.choose_tech_to_upgrade()
 
     def scene1(self):
         g, p, b = self.game, self.player, self.boss
-        t = '{p} meets {b}. {b}: "I feel that I have reached perfection in my kung-fu, {bs}. I have been looking for ' \
-            'a worthy opponent for a very, very long time. I will be honored to test your famous {ps} ' \
+        t = (
+            '{p} meets {b}. {b}: "I feel that I have reached perfection in my kung-fu, {bs}. I have been looking for '
+            'a worthy opponent for a very, very long time. I will be honored to test your famous {ps} '
             'kung-fu."'.format(p=p.name, b=b.name, bs=b.style.name, ps=p.style.name)
+        )
         g.show(t)
         p.log('Challenged by {}.'.format(b.name))
         g.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
-            t = '{}: "Yes... As expected of {}. Your skills are remarkable... I thank you for showing me that I ' \
+            t = (
+                '{}: "Yes... As expected of {}. Your skills are remarkable... I thank you for showing me that I '
                 'still have something to learn."'.format(b.name, p.name)
+            )
             g.show(t)
             self.reward()
         else:
@@ -270,8 +297,10 @@ class TreasuresStory(Story):
     def intro(self):
         g = self.game
         g.cls()
-        t = 'Everybody in {} talks about national treasures being stolen and sold to foreign buyers. Who could be ' \
+        t = (
+            'Everybody in {} talks about national treasures being stolen and sold to foreign buyers. Who could be '
             'responsible for such horrible crimes?'.format(g.town_name)
+        )
         g.msg(t)
         self.boss = b = fighter_factory.new_official(g.get_new_name('Official'))
         g.register_fighter(b)
@@ -283,23 +312,29 @@ class TreasuresStory(Story):
 
     def scene1(self):
         g, p, b = self.game, self.player, self.boss
-        t = '{p} sees a pompous official surrounded by his bodyguards. As they walk down {f}\'s main street, ' \
-            'they push walkers-by around and otherwise behave rudely. An old man standing next to {p} says, ' \
-            '"This is {b}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'.format(p=p.name,
-                                                                                                        f=g.town_name,
-                                                                                                        b=b.name)
+        t = (
+            '{p} sees a pompous official surrounded by his bodyguards. As they walk down {f}\'s main street, '
+            'they push walkers-by around and otherwise behave rudely. An old man standing next to {p} says, '
+            '"This is {b}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'.format(
+                p=p.name, f=g.town_name, b=b.name
+            )
+        )
         g.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
-        t = '{0} accidentally bumps into {1}. Although {0} apologizes, {1} is enraged. "Teach this fool a good ' \
-            'lesson!" he orders his bodyguards. "Unless..." he looks at {0}, "...you want to pay a fine of {2} coins ' \
+        t = (
+            '{0} accidentally bumps into {1}. Although {0} apologizes, {1} is enraged. "Teach this fool a good '
+            'lesson!" he orders his bodyguards. "Unless..." he looks at {0}, "...you want to pay a fine of {2} coins '
             'for insulting an official?"'.format(p.name, b.name, BRIBE)
+        )
         g.show(t)
         if (not p.is_human or g.yn('Pay the bribe?')) and p.check_money(BRIBE):
             if rnd() <= p.feel_too_greedy:
-                p.show('{} feels too greedy to pay this ridiculous "fine": "You are no better than a '
-                       'robber!"'.format(p.name))
+                p.show(
+                    '{} feels too greedy to pay this ridiculous "fine": "You are no better than a '
+                    'robber!"'.format(p.name)
+                )
                 p.show('{}: You...'.format(b.name))
                 p.log('Feels too greedy to pay the bribe.')
                 p.pak()
@@ -314,8 +349,10 @@ class TreasuresStory(Story):
         enemies = [fighter_factory.new_bodyguard(weak=True) for i in range(num_en)]
         p.check_help(allies=False, master=False, school=False)
         if p.fight(enemies[0], en_allies=enemies[1:], af_option=True):
-            t = '{}: "I should hire better bodyguards... What idiots! You are lucky I don\'t have time to beat you ' \
+            t = (
+                '{}: "I should hire better bodyguards... What idiots! You are lucky I don\'t have time to beat you '
                 'up myself!" \n{}: "...Whatever..."'.format(b.name, p.name)
+            )
             g.show(t)
         else:
             g.show('{}: "That will teach you! Next time just pay.'.format(b.name))
@@ -323,19 +360,26 @@ class TreasuresStory(Story):
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
-        t = '{p} accidentally overhears a conversation between {b} and some foreigner. {p} could swear he heard the ' \
-            'words \'treasures\', \'foreign partners\' and \'good money\'. Could it be that {b} is somehow connected ' \
-            'with national treasures being stolen? Too bad {p} lacks solid proof...'.format(p=p.name, b=b.name)
+        t = (
+            '{p} accidentally overhears a conversation between {b} and some foreigner. {p} could swear he heard the '
+            'words \'treasures\', \'foreign partners\' and \'good money\'. Could it be that {b} is somehow connected '
+            'with national treasures being stolen? Too bad {p} lacks solid proof...'.format(
+                p=p.name, b=b.name
+            )
+        )
         g.msg(t)
 
     def scene4(self):
         g, p, b = self.game, self.player, self.boss
-        t = '{p} sees some suspicious-looking men carrying crates. {p}\'s intuition tells him something is fishy. He ' \
-            'secretly follows them to find that they are taking the crates to a guarded warehouse. As {p} sneaks in, ' \
-            'he sees that the crates are full of ancient treasures that have recently been stolen all over the ' \
-            'country. \nSuddenly, {b} appears with his two elite bodyguards. \nSo it was him!.. He is behind all ' \
-            'this!.. {p} barely has time to figure this out before {b}\'s thugs jump at him...'.format(p=p.name,
-                                                                                                       b=b.name)
+        t = (
+            '{p} sees some suspicious-looking men carrying crates. {p}\'s intuition tells him something is fishy. He '
+            'secretly follows them to find that they are taking the crates to a guarded warehouse. As {p} sneaks in, '
+            'he sees that the crates are full of ancient treasures that have recently been stolen all over the '
+            'country. \nSuddenly, {b} appears with his two elite bodyguards. \nSo it was him!.. He is behind all '
+            'this!.. {p} barely has time to figure this out before {b}\'s thugs jump at him...'.format(
+                p=p.name, b=b.name
+            )
+        )
         g.msg(t)
         # first fight
         enemies = fighter_factory.new_bodyguard(n=2)
@@ -343,17 +387,23 @@ class TreasuresStory(Story):
             g.show('{}: "This can\'t be... They were supposed to..."'.format(b.name))
             g.pak()
             if p.fight(b):
-                t = 'The police arrested {}... The people of {} are proud of {}!'.format(b.name, g.town_name, p.name)
+                t = 'The police arrested {}... The people of {} are proud of {}!'.format(
+                    b.name, g.town_name, p.name
+                )
                 g.show(t)
                 self.reward()
             else:
                 t = '''{b}: "What just happened?.."
 Did {p} really lose to {b}?..
-Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t stop him.'''.format(b=b.name, p=p.name)
+Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t stop him.'''.format(
+                    b=b.name, p=p.name
+                )
                 g.show(t)
         else:
-            t = 'As {p} comes to, he realizes that {b} and his men have disappeared. They took all the treasures, ' \
+            t = (
+                'As {p} comes to, he realizes that {b} and his men have disappeared. They took all the treasures, '
                 'too. But frankly, {p} is lucky to be alive...'.format(p=p.name, b=b.name)
+            )
             g.show(t)
         g.pak()
         # end of the story
@@ -361,4 +411,10 @@ Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t 
 
 
 # in the order added, though the order doesn't matter
-all_stories = (ForeignerStory, TreasuresStory, StrangeDreamsStory, RenownedMaster, NinjaTurtlesStory)
+all_stories = (
+    ForeignerStory,
+    TreasuresStory,
+    StrangeDreamsStory,
+    RenownedMaster,
+    NinjaTurtlesStory,
+)

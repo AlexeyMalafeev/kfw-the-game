@@ -46,6 +46,7 @@ class BaseAI(object):
 class WeightedActionsAI(BaseAI):
     """Choose a random opponent and an action based on action weights (weighted random choice).
     Considers only atk_pwr * to_hit."""
+
     force_integer_weights = True
     catch_breath_mult = 50
     change_dist_mult = 40
@@ -85,7 +86,9 @@ class WeightedActionsAI(BaseAI):
 
     def init_weights(self):
         self.weights = {a: 1 for a in self.owner.av_moves}
-        self.weights[catch_breath_move] = (self.owner.stamina / self.owner.stamina_max) * self.catch_breath_mult
+        self.weights[catch_breath_move] = (
+            self.owner.stamina / self.owner.stamina_max
+        ) * self.catch_breath_mult
         self.weights[guard_move] = (self.owner.stamina / self.owner.stamina_max) * self.guard_mult
 
     def weigh_atk_move(self, move):
@@ -99,6 +102,7 @@ class WeightedActionsAI(BaseAI):
 
 class CarefulManeuvers5(WeightedActionsAI):
     """Kind of works with the new system, but needs improvement."""
+
     change_dist_mult = 50
 
     def factor_in_distance(self, move):
@@ -162,11 +166,17 @@ class NewSystemAI(BaseAI):
                 self.weights[move] += wt
             if move in add_stam_weights:
                 wt = add_stam_weights[move] / max_add_stam_wt
-                self.weights[move] += wt * (1 - (min(owner.stamina + owner.stamina_gain, owner.stamina_max) /
-                                                 owner.stamina_max))
+                self.weights[move] += wt * (
+                    1
+                    - (
+                        min(owner.stamina + owner.stamina_gain, owner.stamina_max)
+                        / owner.stamina_max
+                    )
+                )
             if move in add_qi_weights:
-                score = (len([m for m in owner.moves if m.qi_cost > owner.qp]) /
-                         (len([m for m in owner.moves if m.qi_cost > 0]) + 1))
+                score = len([m for m in owner.moves if m.qi_cost > owner.qp]) / (
+                    len([m for m in owner.moves if m.qi_cost > 0]) + 1
+                )
                 self.weights[move] += add_qi_weights[move] * score
             self.weights[move] *= time_weights[move]
 
@@ -193,7 +203,7 @@ class NewSystemAI(BaseAI):
         owner.calc_atk(move)
         wt = owner.atk_pwr * owner.to_hit
         if move.functions:
-            wt *= (len(move.functions) + 1)
+            wt *= len(move.functions) + 1
         return wt
 
     def weigh_dist_change(self, move):
@@ -219,6 +229,7 @@ class NewSystemAI(BaseAI):
 class GeneticAI(BaseAI):
     """Choose a random opponent and an action based on action weights (weighted random choice).
     Considers only atk_pwr * to_hit."""
+
     prob_atk = 10.0
     prob_move = 3.0
     prob_focus = 1.0
@@ -303,6 +314,7 @@ class GeneticAI(BaseAI):
 class GeneticAI2(GeneticAI):
     """Just a copy of GeneticAI to use with different parameters every time.
     Used in fight_ai_gen, do not remove."""
+
     pass
 
 
@@ -368,6 +380,7 @@ class GeneticAITrainedParams11(GeneticAI):
 
 class GeneticAIExtraRules(GeneticAITrainedParams8):
     group_advantage_thresh = 1.0
+
     def choose_move(self):
         owner = self.owner
         options = self.options = []
@@ -380,10 +393,12 @@ class GeneticAIExtraRules(GeneticAITrainedParams8):
         if maneuver is not None:
             options.append(maneuver)
             weights.append(self.prob_move)
-        force_move = (maneuver is not None
-                      and (len(owner.act_allies) / len(owner.act_targets)) >= self.group_advantage_thresh
-                      and atk_move is None
-                      and owner.stamina >= owner.stamina_max / 2)
+        force_move = (
+            maneuver is not None
+            and (len(owner.act_allies) / len(owner.act_targets)) >= self.group_advantage_thresh
+            and atk_move is None
+            and owner.stamina >= owner.stamina_max / 2
+        )
         if owner.qp < owner.qp_max and not force_move:
             options.append(focus_move)
             weights.append(self.prob_focus)
@@ -474,28 +489,85 @@ class GeneticAIAggro(GeneticAITrainedParams8):
 DefaultFightAI = GeneticAIAggro
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
 
+
 def set_gen_ai_params(gen_ai, params):
     for i, name in enumerate(GENETIC_AI_PARAM_NAMES):
         setattr(gen_ai, name, params[i])
 
 
-params3 = [0.8744186089036129, 0.03379275893072364, 0.07051723329372817, 0.03379275893072364, 0.19930517062871012]
+params3 = [
+    0.8744186089036129,
+    0.03379275893072364,
+    0.07051723329372817,
+    0.03379275893072364,
+    0.19930517062871012,
+]
 set_gen_ai_params(GeneticAITrainedParams3, params3)
-params4 = [0.9281074633432324, 0.02765915621432158, 0.1314327152378909, 0.19725010868827675, 0.02765915621432158]
+params4 = [
+    0.9281074633432324,
+    0.02765915621432158,
+    0.1314327152378909,
+    0.19725010868827675,
+    0.02765915621432158,
+]
 set_gen_ai_params(GeneticAITrainedParams4, params4)
-params5 = [0.9281074633432324, 0.02765915621432158, 0.1314327152378909, 0.10447222975667958, 0.1863387747517773]
+params5 = [
+    0.9281074633432324,
+    0.02765915621432158,
+    0.1314327152378909,
+    0.10447222975667958,
+    0.1863387747517773,
+]
 set_gen_ai_params(GeneticAITrainedParams5, params5)
-params6 = [0.9281074633432324, 0.02765915621432158, 0.1314327152378909, 0.10447222975667958, 0.1429829688487113]
+params6 = [
+    0.9281074633432324,
+    0.02765915621432158,
+    0.1314327152378909,
+    0.10447222975667958,
+    0.1429829688487113,
+]
 set_gen_ai_params(GeneticAITrainedParams6, params6)
-params7 = [0.7268550239297114, 0.02765915621432158, 0.1314327152378909, 0.10447222975667958, 0.1429829688487113]
+params7 = [
+    0.7268550239297114,
+    0.02765915621432158,
+    0.1314327152378909,
+    0.10447222975667958,
+    0.1429829688487113,
+]
 set_gen_ai_params(GeneticAITrainedParams7, params7)
-params8 = [0.9946880510412656, 0.0142349288726894, 0.08002718630747185, 0.09367532368847631, 0.051144214847717806]
-set_gen_ai_params(GeneticAITrainedParams8, params8)  # best so far; trained against GeneticAITrainedParams3
-params9 = [0.9946880510412656, 0.029220693875186443, 0.08002718630747185, 0.09519259074648034, 0.2643083577189722]
+params8 = [
+    0.9946880510412656,
+    0.0142349288726894,
+    0.08002718630747185,
+    0.09367532368847631,
+    0.051144214847717806,
+]
+set_gen_ai_params(
+    GeneticAITrainedParams8, params8
+)  # best so far; trained against GeneticAITrainedParams3
+params9 = [
+    0.9946880510412656,
+    0.029220693875186443,
+    0.08002718630747185,
+    0.09519259074648034,
+    0.2643083577189722,
+]
 set_gen_ai_params(GeneticAITrainedParams9, params9)
-params10 = [0.9916748240763598, 0.40989405252973, 0.037890000127675516, 0.15929562050637247, 0.1338310453333521]
+params10 = [
+    0.9916748240763598,
+    0.40989405252973,
+    0.037890000127675516,
+    0.15929562050637247,
+    0.1338310453333521,
+]
 set_gen_ai_params(GeneticAITrainedParams10, params10)  # infighting 12th generation
-params11 = [0.9916748240763598, 0.18781151091520898, 0.037890000127675516, 0.07273478376240317, 0.1338310453333521]
+params11 = [
+    0.9916748240763598,
+    0.18781151091520898,
+    0.037890000127675516,
+    0.07273478376240317,
+    0.1338310453333521,
+]
 set_gen_ai_params(GeneticAITrainedParams11, params11)  # infighting 30th generation
 
 # todo train against Params3, etc. -> cycle this

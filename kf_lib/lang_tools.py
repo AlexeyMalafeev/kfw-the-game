@@ -38,12 +38,14 @@ def remove_article(word):
     else:
         return word
 
+
 def sg_or_pl(number):
     """Return 's' if number is greater than 1. Return '' if number is 1."""
     if number > 1:
         return 's'
     elif number == 1:
         return ''
+
 
 def sign_number(number):
     pass

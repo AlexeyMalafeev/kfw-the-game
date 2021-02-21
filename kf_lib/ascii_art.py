@@ -25,16 +25,18 @@ def finalize(lines):
 
 def mirror(lines):
     temp = []
-    repl_table = {'\\': '/',
-                  '/': '\\',
-                  '>': '<',
-                  '<': '>',
-                  ')': '(',
-                  '(': ')',
-                  'p': 'q',
-                  'c': 'D',  # todo better 'mirroring' for this symbol
-                  '[': ']',
-                  ']': '['}
+    repl_table = {
+        '\\': '/',
+        '/': '\\',
+        '>': '<',
+        '<': '>',
+        ')': '(',
+        '(': ')',
+        'p': 'q',
+        'c': 'D',  # todo better 'mirroring' for this symbol
+        '[': ']',
+        ']': '[',
+    }
     for line in lines:
         temp_s = ''
         for c in line:

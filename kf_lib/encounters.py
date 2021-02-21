@@ -68,16 +68,20 @@ REQ_LV_DRUNKARD_FIGHT_WEAK = (1, 5)
 REQ_LV_MASTER_TRIAL = fighter_factory.MASTER_LV[0]
 
 # lines
-LINES_ENEMY = ('Does it hurt? I\'ll KILL you next time!',
-               'That\'ll teach ya!',
-               'What\'s wrong? Can\'t get up, huh?',
-               'This is what happens if you mess with me!',
-               'You are much weaker than I thought!')
-LINES_ROBBER = ('Hey, I really need {} coins. Do you think you can help me out?',
-                'If you don\'t give me {} coins, you\'ll need a doctor, and a good one!',
-                'Hey you! This is my territory. Entering is free, but leaving in one piece costs {} coins.',
-                'You know, I need {} coins to buy medicine for my sick grandma. Wanna share?',
-                'It is important to share what you have with others. Pay {} coins and you are free to go.')
+LINES_ENEMY = (
+    'Does it hurt? I\'ll KILL you next time!',
+    'That\'ll teach ya!',
+    'What\'s wrong? Can\'t get up, huh?',
+    'This is what happens if you mess with me!',
+    'You are much weaker than I thought!',
+)
+LINES_ROBBER = (
+    'Hey, I really need {} coins. Do you think you can help me out?',
+    'If you don\'t give me {} coins, you\'ll need a doctor, and a good one!',
+    'Hey you! This is my territory. Entering is free, but leaving in one piece costs {} coins.',
+    'You know, I need {} coins to buy medicine for my sick grandma. Wanna share?',
+    'It is important to share what you have with others. Pay {} coins and you are free to go.',
+)
 
 # money
 MONEY_BOOK = 100
@@ -137,6 +141,7 @@ def check_feeling_greedy(p):
 
 def check_scary_fight(p, ratio):
     from .fighter import RATIO_LOW_RISK
+
     if ratio >= RATIO_LOW_RISK and rnd() <= p.feel_too_scared:
         p.show('{} feels too scared to fight!'.format(p.name))
         p.log('Feels too scared to fight.')
@@ -164,8 +169,9 @@ def try_enemy(p, en, chance):
     if rnd() <= chance:
         old_name = en.name.split()[0]
         en.name = p.game.get_new_name(random.choice(names.ROBBER_NICKNAMES))
-        t = '{}: "You\'ll regret messing with {}! From now on, you\'d better watch your back!"'.format(old_name,
-                                                                                                       en.name)
+        t = '{}: "You\'ll regret messing with {}! From now on, you\'d better watch your back!"'.format(
+            old_name, en.name
+        )
         p.show(t)
         p.add_enemy(en)
         p.pak()
@@ -222,7 +228,9 @@ class Ambush(Enc):
         self.e = random.choice(p.enemies)
         num_thugs = rndint(NUM_AMBUSH_THUGS[0], NUM_AMBUSH_THUGS[1])
         self.thugs = fighter_factory.new_thug(weak=True, n=num_thugs)
-        p.show('{} is ambushed by his enemy {} with {} thugs!!'.format(p.name, self.e.name, num_thugs))
+        p.show(
+            '{} is ambushed by his enemy {} with {} thugs!!'.format(p.name, self.e.name, num_thugs)
+        )
         p.log('Is ambushed by {} with {} thugs.'.format(self.e.name, num_thugs))
         opp = [self.e] + self.thugs
         opp_strength = p.get_rel_strength(*opp)
@@ -238,7 +246,11 @@ class Ambush(Enc):
         if p.fight(self.e, p.allies, self.thugs):
             events.crime_down(p.game)
             if rnd() <= CH_ENEMY_REPENTS:
-                p.msg('{}: "Please forgive me! I swear you\'ll never see me again!"'.format(self.e.name))
+                p.msg(
+                    '{}: "Please forgive me! I swear you\'ll never see me again!"'.format(
+                        self.e.name
+                    )
+                )
                 p.remove_enemy(self.e)
                 p.gain_rep(REP_REFORM_ENEMY)
                 p.add_accompl('Enemy Reformed')
@@ -266,13 +278,18 @@ class Beggar(Enc):
         if b is None:
             return
         t = '''As {} turns to leave however, the beggar stops him.
-Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from {}!'''.format(p.name,
-                                                                                                          b.name)
+Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from {}!'''.format(
+            p.name, b.name
+        )
         p.show(t)
         p.log('{} gives {} a free kung-fu lesson.'.format(b.name, p.name))
         p.pak()
         if p.spar(b):
-            p.show('{}: "Your skill is very impressive! Let\'s practice again some time."'.format(b.name))
+            p.show(
+                '{}: "Your skill is very impressive! Let\'s practice again some time."'.format(
+                    b.name
+                )
+            )
             p.add_friend(b)
             p.add_accompl('Beggar\'s Friend')
             p.game.beggar = None
@@ -291,7 +308,9 @@ class BookSeller(Enc):
         t = '''{0} meets a traveling book seller.
 Book Seller: "Ah, a martial artist! I'm selling this wonderful kung-fu book for only {1} coins! Its secret and
 powerful techniques will make you a legendary fighter! What do you say?"
-Buy it?'''.format(p.name, price)
+Buy it?'''.format(
+            p.name, price
+        )
         p.show(t)
         p.log('Meets a book seller.')
         if p.buy_item_or_not() and not check_feeling_greedy(p):
@@ -315,7 +334,9 @@ class Brawler(Enc):
     def run(self):
         p = self.player
         t = '''A man bumps into {} in the street.
-Man: "Hey you! Apologize or I\'ll beat you up!"'''.format(p.name)
+Man: "Hey you! Apologize or I\'ll beat you up!"'''.format(
+            p.name
+        )
         p.show(t)
         p.log('Encounters a brawler.')
         b = fighter_factory.new_brawler()
@@ -324,8 +345,7 @@ Man: "Hey you! Apologize or I\'ll beat you up!"'''.format(p.name)
             p.log('Is provoked.')
             p.gain_rep(REP_PEN_BRAWL)
             p.fight(b)
-            p.show('{}: "I shouldn\'t have been provoked so easily..."'.
-                   format(p.name))
+            p.show('{}: "I shouldn\'t have been provoked so easily..."'.format(p.name))
             p.pak()
         else:
             p.log('Apologizes.')
@@ -352,7 +372,9 @@ class Challenger(Enc):
         c = self.c = random.choice(school_members)
         rank = school_members.index(c) + 1
         t = '{}, number {} in the {} school, stops {} in the street and yells: "My kung-fu is {}better than \
-        yours!!"'.format(c.name, rank, school_name, p.name, color)
+        yours!!"'.format(
+            c.name, rank, school_name, p.name, color
+        )
         p.show(t)
         p.log('Challenged by {}, number {} in the {} school.'.format(c.name, rank, c.style.name))
         opp_strength = p.get_rel_strength(c)
@@ -394,7 +416,9 @@ class Craftsman(Enc):
         t = '''{0} meets a craftsman.
 Craftsman: "Ah, a martial artist! You're lucky! I'm selling this excellent {1} ({3}). It's only {2} coins! Don't \
 worry, if you don't have enough money right now, you can pay the rest later."
-Buy it?'''.format(p.name, item, price, items.get_item_descr(item))
+Buy it?'''.format(
+            p.name, item, price, items.get_item_descr(item)
+        )
         p.show(t)
         p.log('Meets a craftsman.')
         if p.buy_item_or_not() and not check_feeling_greedy(p):
@@ -468,8 +492,11 @@ class Drunkard(Enc):
             p.show("{} refuses to drink.".format(p.name))
             p.log('Refuses to drink.')
             roll = rnd()
-            if (p.check_lv(*REQ_LV_DRUNKARD_FIGHT_STRONG) and roll <= CH_DRUNKARD_FIGHT_STRONG and
-                    p.game.drunkard is not None):
+            if (
+                p.check_lv(*REQ_LV_DRUNKARD_FIGHT_STRONG)
+                and roll <= CH_DRUNKARD_FIGHT_STRONG
+                and p.game.drunkard is not None
+            ):
                 self.do_fight(strong=True)
             elif not p.is_master and roll <= CH_DRUNKARD_FIGHT_WEAK:
                 self.do_fight()
@@ -480,7 +507,9 @@ class Drunkard(Enc):
         if strong:
             d = p.game.drunkard
             t = '''Drunkard: "What? Just ignoring Legendary {}? \
-            Let me teach you some manners!"'''.format(d.name.replace('Drunkard ', ''))
+            Let me teach you some manners!"'''.format(
+                d.name.replace('Drunkard ', '')
+            )
         else:
             t = '''Drunkard: "You think you're too good for drinkin' with me?"'''
             d = fighter_factory.new_drunkard(strong=False)
@@ -490,7 +519,9 @@ class Drunkard(Enc):
         if p.fight(d, items_allowed=False):
             if strong:
                 t = '''{}: "Whoa, you are good! I was just as good and just as arrogant in my day... \
-                I\'m sure we\'ll meet again."'''.format(d.name)
+                I\'m sure we\'ll meet again."'''.format(
+                    d.name
+                )
                 p.show(t)
                 p.add_friend(d)
                 p.add_accompl('Drunkard\'s Friend')
@@ -508,8 +539,7 @@ class Extorters(Enc):
     def run(self):
         p = self.player
         num_en = rndint(*NUM_EXTORTERS)
-        p.show("{} sees {} men in a shop demanding 'protection' money.".format(
-            p.name, num_en))
+        p.show("{} sees {} men in a shop demanding 'protection' money.".format(p.name, num_en))
         p.log('Sees {} extorters in a shop.'.format(num_en))
         en = fighter_factory.new_thug(n=num_en)
         for e in en:
@@ -530,8 +560,10 @@ class Extorters(Enc):
                             pp.show('{} gets {} from the grateful shop owner.'.format(p.name, item))
                             pp.obtain_item(item)
                 else:
-                    t = ('Shop owner: "Oh boy... You martial artists only know how to fight and break things! '
-                         'Look what you\'ve done to my shop! Who\'s gonna pay for the breakages?..')
+                    t = (
+                        'Shop owner: "Oh boy... You martial artists only know how to fight and break things! '
+                        'Look what you\'ve done to my shop! Who\'s gonna pay for the breakages?..'
+                    )
                     p.show(t)
                     cost = random.choice(MONEY_SHOP_BREAKAGES)
                     if p.check_money(cost) and not check_feeling_greedy(p):
@@ -562,8 +594,10 @@ class FatGirl(Enc):
         self.g = p.game.fat_girl
         opp_strength = p.get_rel_strength(self.g)
         esc_chance = get_escape_chance(p)
-        p.show('Fat Girl: "You look like a martial artist! '
-               "Surely you'll make a fine husband. MARRY ME NOW OR I'LL BEAT THE CRAP OUT OF YOU!")
+        p.show(
+            'Fat Girl: "You look like a martial artist! '
+            "Surely you'll make a fine husband. MARRY ME NOW OR I'LL BEAT THE CRAP OUT OF YOU!"
+        )
         if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(p, opp_strength[0]):
             self.do_fight()
         else:
@@ -577,7 +611,9 @@ class FatGirl(Enc):
             p.game.fat_girl = None
             p.add_accompl('Fat Girl Defeated')
         else:
-            p.msg('Fat Girl: "Now that I think about it, you are too weak to be my husband anyway!"')
+            p.msg(
+                'Fat Girl: "Now that I think about it, you are too weak to be my husband anyway!"'
+            )
 
 
 class FindItem(Enc):
@@ -633,7 +669,9 @@ class Gambler(Enc):
         p = self.player
         self.bet = random.choice(MONEY_GAMBLING_BETS)
         t = '''Gambler: "Hey, do you want to play? You could make some serious money!"
-One bet is {} coins.'''.format(self.bet)
+One bet is {} coins.'''.format(
+            self.bet
+        )
         p.show(t)
         p.log('Meets a gambler.')
         if p.gamble_or_not() or rnd() < p.gamble_with_gambler:
@@ -664,7 +702,9 @@ One bet is {} coins.'''.format(self.bet)
         skewed = random.choice((1, 0))
         if skewed:
             weights = [rndint(1, 3) for _ in range(3)]
-            gambler_options = ['Rock'] * weights[0] + ['Paper'] * weights[1] + ['Scissors'] * weights[2]
+            gambler_options = (
+                ['Rock'] * weights[0] + ['Paper'] * weights[1] + ['Scissors'] * weights[2]
+            )
         else:
             gambler_options = ['Rock', 'Paper', 'Scissors']
         i = 0
@@ -682,9 +722,11 @@ One bet is {} coins.'''.format(self.bet)
                             p.show('Tie!')
                             p.pak()
                             continue
-                        if ((yc == 'Rock' and gc == 'Scissors') or
-                                (yc == 'Paper' and gc == 'Rock') or
-                                (yc == 'Scissors' and gc == 'Paper')):
+                        if (
+                            (yc == 'Rock' and gc == 'Scissors')
+                            or (yc == 'Paper' and gc == 'Rock')
+                            or (yc == 'Scissors' and gc == 'Paper')
+                        ):
                             p.money += self.bet * 2
                             p.show('{} wins!'.format(p.name))
                             p.pak()
@@ -732,7 +774,9 @@ class Gossip(Enc):
     def run(self):
         p = self.player
         cost = random.choice(MONEY_GOSSIP_COST)
-        t = '{} meets a local gossipmonger. Pay {} coins to hear the latest rumors?'.format(p.name, cost)
+        t = '{} meets a local gossipmonger. Pay {} coins to hear the latest rumors?'.format(
+            p.name, cost
+        )
         p.show(t)
         p.log('Meets a gossipmonger.')
         if p.hear_rumors_or_not() and p.check_money(cost):
@@ -789,15 +833,22 @@ class LoseItem(Enc):
 class MasterTrial(Enc):
     def test(self):
         p = self.player
-        return (not p.is_master and p.school_rank == 1 and p.check_lv(REQ_LV_MASTER_TRIAL) and rnd() <=
-                ENC_CH_MASTER_TRIAL)
+        return (
+            not p.is_master
+            and p.school_rank == 1
+            and p.check_lv(REQ_LV_MASTER_TRIAL)
+            and rnd() <= ENC_CH_MASTER_TRIAL
+        )
 
     def run(self):
         p = self.player
         m = p.get_master()
-        t = ('{0} meets his master. \n{1}: "{0}, you are one of my best students. '
-             'You have made a lot of progress in {2}. But you might be ready to found your own '
-             'kung-fu school... ' 'Let\'s find that out!"'.format(p.name, m.name, p.style.name))
+        t = (
+            '{0} meets his master. \n{1}: "{0}, you are one of my best students. '
+            'You have made a lot of progress in {2}. But you might be ready to found your own '
+            'kung-fu school... '
+            'Let\'s find that out!"'.format(p.name, m.name, p.style.name)
+        )
         p.show(t)
         p.log('Is offered a trial to become a master.')
         opp_strength = p.get_rel_strength(m)
@@ -806,8 +857,11 @@ class MasterTrial(Enc):
                 p.show('{}: "Yes, you ARE ready!"'.format(m.name))
                 p.add_friend(m)
                 outlay = MONEY_OPEN_SCHOOL
-                p.show('To open a martial arts school, {} needs to make the initial outlay of {} coins.'.format(p.name,
-                                                                                                                outlay))
+                p.show(
+                    'To open a martial arts school, {} needs to make the initial outlay of {} coins.'.format(
+                        p.name, outlay
+                    )
+                )
                 p.pay(outlay)
                 p.is_master = True
                 p.log('Becomes a master and founds his own school.')
@@ -841,7 +895,9 @@ class Merchant(Enc):
         descr_s = ' ({})'.format(descr) if descr else ''
         t = '''{} meets a street merchant.
 Merchant: "Please buy this {}{}!"
-Buy it for {} coins?'''.format(p.name, item, descr_s, price)
+Buy it for {} coins?'''.format(
+            p.name, item, descr_s, price
+        )
         p.show(t)
         p.log('Meets a street merchant.')
         if not p.check_money(price):
@@ -871,12 +927,18 @@ class OverhearConversation(Enc):
 
     def run(self):
         p = self.player
-        t = '{} accidentally overhears a conversation of two young kung-fu practitioners.'.format(p.name)
+        t = '{} accidentally overhears a conversation of two young kung-fu practitioners.'.format(
+            p.name
+        )
         p.log('Overhears a conversation.')
         p.show(t)
         self.collect_facts()
         if not self.facts:
-            p.show('"They talk about such silly things instead of practicing!" - {} thinks.'.format(p.name))
+            p.show(
+                '"They talk about such silly things instead of practicing!" - {} thinks.'.format(
+                    p.name
+                )
+            )
             p.log('Nothing interesting.')
         else:
             random.shuffle(self.facts)
@@ -889,12 +951,16 @@ class OverhearConversation(Enc):
                 opp_str = lang_tools.enum_words(opps)
             if fact == 'humil_defeat':
                 t = '''One of them says: "Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to \
-kung-fu!"'''.format(person.name, lv, opp_str)
+kung-fu!"'''.format(
+                    person.name, lv, opp_str
+                )
                 p.show(t)
                 p.log("Something about {}'s astonishing victory.".format(person.name))
             elif fact == 'aston_victory':
                 t = '''One of them says: "Haven't you heard? {} at lv.{} beat {}. What an astonishing \
-victory!"'''.format(person.name, lv, opp_str)
+victory!"'''.format(
+                    person.name, lv, opp_str
+                )
                 p.show(t)
                 p.log("Something about {}'s humiliating defeat.".format(person.name))
         p.pak()
@@ -919,7 +985,9 @@ class PlayerMatch(Enc):
         p = self.player
         opp = random.choice(self.av_p)
         t = '''{0} meets {1} (lv.{2}).
-{1}: "Let\'s have a friendly match!"'''.format(p.name, opp.name, opp.level)
+{1}: "Let\'s have a friendly match!"'''.format(
+            p.name, opp.name, opp.level
+        )
         p.show(t)
         p.log('Meets {}'.format(opp.name))
         if p.p_match_or_not():
@@ -936,9 +1004,13 @@ class PrizeFighting(Enc):
 
     def run(self):
         p = self.player
-        t = ('{} meets a shady character who offers to participate in an underground prize fighting contest. '
-             '"It\'s simple. You pay {} coins to enter. There are five stages in the contest. The more opponents you '
-             'beat, the more money you win. How does that sound?"'.format(p.name, MONEY_PRIZE_FIGHTING_FEE))
+        t = (
+            '{} meets a shady character who offers to participate in an underground prize fighting contest. '
+            '"It\'s simple. You pay {} coins to enter. There are five stages in the contest. The more opponents you '
+            'beat, the more money you win. How does that sound?"'.format(
+                p.name, MONEY_PRIZE_FIGHTING_FEE
+            )
+        )
         p.show(t)
         p.log('Offered to take part in an underground prize fighting contest.')
         if not p.check_money(MONEY_PRIZE_FIGHTING_FEE):
@@ -1091,7 +1163,9 @@ class SchoolBullying(Enc):
         p.show(t)
         p.log('Is bullied at his school.')
         school = p.get_school()
-        opp = random.choice(school[:p.school_rank - 1])  # adjusts for Python indexing and skips self
+        opp = random.choice(
+            school[: p.school_rank - 1]
+        )  # adjusts for Python indexing and skips self
         opp_strength = p.get_rel_strength(opp)
         esc_chance = get_escape_chance(p)
         if p.fight_or_run(opp_strength, esc_chance):
@@ -1109,7 +1183,9 @@ class SchoolChallenge(Enc):
         p = self.player
         m = self.player.get_master()
         t = '''{0} meets his master.
-{1}: "{0}, you have been practicing hard. It is now time to test your kung-fu!"'''.format(p.name, m.name)
+{1}: "{0}, you have been practicing hard. It is now time to test your kung-fu!"'''.format(
+            p.name, m.name
+        )
         p.show(t)
         p.log('Is offered a trial at his school.')
         school = p.get_school()
@@ -1121,16 +1197,22 @@ class SchoolChallenge(Enc):
                 opp.arm_normal()
             if p.spar(opp, hide_stats=False):
                 school.remove(p)
-                school.insert(p.school_rank - 2, p)  # adjusts for Python indexing and skips defeated fighter
+                school.insert(
+                    p.school_rank - 2, p
+                )  # adjusts for Python indexing and skips defeated fighter
                 p.refresh_school_rank()
                 if p.school_rank > 1:
-                    t = ('{}: "{}, I can see that you have mastered some aspects of {}. However, you must keep '
-                         'practicing as you still have a long way to go."'.format(m.name, p.name, p.style.name))
+                    t = (
+                        '{}: "{}, I can see that you have mastered some aspects of {}. However, you must keep '
+                        'practicing as you still have a long way to go."'.format(
+                            m.name, p.name, p.style.name
+                        )
+                    )
                     p.show(t)
                 else:
                     # t = ('{}: "Well done, {}. Now it is time you learned the secret technique of our school, '
                     #      '"{}".'.format(m.name, p.name, m.style.tech.name))
-                    t = ('{}: "Well done, {}."'.format(m.name, p.name))
+                    t = '{}: "Well done, {}."'.format(m.name, p.name)
                     p.show(t)
                     # p.learn_tech(m.style.tech.name)
             else:
@@ -1151,7 +1233,11 @@ class StreetPerformer(Enc):
         p = self.player
         c = self.performer = fighter_factory.new_performer()
         c.name = p.game.get_new_name(prefix='Master')
-        p.show('{} sees a travelling kung-fu master demonstrating his skills in the street.'.format(p.name))
+        p.show(
+            '{} sees a travelling kung-fu master demonstrating his skills in the street.'.format(
+                p.name
+            )
+        )
         p.log('Sees a kung-fu master demonstrating his skills in the street.')
         # challenge, protect from thugs, buy items
         func = random.choice((self.challenge, self.challenge, self.sell, self.sell, self.thugs))
@@ -1161,11 +1247,17 @@ class StreetPerformer(Enc):
         p = self.player
         c = self.performer
         cost = random.choice(MONEY_PERFORMER)
-        p.show('{}: "Now, who dares to challenge me? It costs {} coins - if you win, you\'ll get twice '
-               'as much!"'.format(c.name, cost))
+        p.show(
+            '{}: "Now, who dares to challenge me? It costs {} coins - if you win, you\'ll get twice '
+            'as much!"'.format(c.name, cost)
+        )
         p.log('The master offers a challenge.')
         opp_strength = p.get_rel_strength(c)
-        if p.fight_or_not(opp_strength) and p.check_money(cost) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if (
+            p.fight_or_not(opp_strength)
+            and p.check_money(cost)
+            and not check_scary_fight(p, ratio=opp_strength[0])
+        ):
             p.pay(cost)
             if rnd() <= CH_CHALLENGER_ARMED:
                 set_up_weapon_fight(p, c)
@@ -1193,8 +1285,10 @@ class StreetPerformer(Enc):
             p.obtain_item(item)
             p.pak()
         elif reward == 't':
-            p.show('Your kung-fu is very good; however, I can help you improve it."'
-                   '\n{} teaches {} some of his moves.'.format(c.name, p.name))
+            p.show(
+                'Your kung-fu is very good; however, I can help you improve it."'
+                '\n{} teaches {} some of his moves.'.format(c.name, p.name)
+            )
             tech = random.choice(techniques.weapon_techs)
             if tech in p.techs:
                 p.gain_exp(PERFORMER_EXP_REWARD)
@@ -1206,9 +1300,11 @@ class StreetPerformer(Enc):
         p = self.player
         c = self.performer
         price = random.choice(MONEY_PERFORMER)
-        p.show('{}: "Now, if you want to become as strong as I am and cure all your diseases, buy this '
-               'Golden Magnificent Elixir. It\'s only {} coins".\nThis seems a little fishy... '
-               'Could be the real thing though. Buy it?'.format(c.name, price))
+        p.show(
+            '{}: "Now, if you want to become as strong as I am and cure all your diseases, buy this '
+            'Golden Magnificent Elixir. It\'s only {} coins".\nThis seems a little fishy... '
+            'Could be the real thing though. Buy it?'.format(c.name, price)
+        )
         p.log('The master offers to buy Golden Magnificent Elixir.')
         if not p.check_money(price):
             p.show('{} doesn\'t have enough money.'.format(p.name))
@@ -1219,8 +1315,12 @@ class StreetPerformer(Enc):
             else:
                 item = items.get_random_mock_item()
                 p.change_stat('mock_items_bought', 1)
-            p.show('{} collects the money from all those willing to buy his Elixir and quickly walks away.'
-                   '\nLater, the "Golden Magnificent Elixir" turns out to be a simple {}.'.format(c.name, item))
+            p.show(
+                '{} collects the money from all those willing to buy his Elixir and quickly walks away.'
+                '\nLater, the "Golden Magnificent Elixir" turns out to be a simple {}.'.format(
+                    c.name, item
+                )
+            )
             p.log('The Elixir turns out to be a {}.'.format(item))
             p.buy_item(item, price)
             p.pak()
@@ -1229,8 +1329,11 @@ class StreetPerformer(Enc):
         p = self.player
         c = self.performer
         n = rndint(*NUM_PERFORMER_THUGS)
-        p.show('Suddenly, {} thugs appear and attack the master. Apparently, they are after his money. Help him?'.
-               format(n))
+        p.show(
+            'Suddenly, {} thugs appear and attack the master. Apparently, they are after his money. Help him?'.format(
+                n
+            )
+        )
         p.log('{} thugs attack the master.'.format(n))
         thugs = fighter_factory.new_thug(weak=True, n=n)
         opp_strength = p.get_rel_strength(*thugs, allies=[c])
@@ -1242,8 +1345,11 @@ class StreetPerformer(Enc):
 
 class Students(Enc):
     def test(self):
-        return (self.p.is_master and self.p.students < self.p.game.MAX_NUM_STUDENTS and
-                rnd() <= min(self.p.get_fame(), ENC_CH_STUDENT))
+        return (
+            self.p.is_master
+            and self.p.students < self.p.game.MAX_NUM_STUDENTS
+            and rnd() <= min(self.p.get_fame(), ENC_CH_STUDENT)
+        )
 
     def run(self):
         p = self.player
@@ -1251,22 +1357,30 @@ class Students(Enc):
         if n_can_join >= NUM_STUD_CHALLENGERS[0] and rnd() <= CH_STUDENT_CHALLENGE:
             num_st = rndint(NUM_STUD_CHALLENGERS[0], min(NUM_STUD_CHALLENGERS[1], n_can_join))
             t = '''Young men: "Master {}! We want to learn kung-fu. Please show us your skill!"'''.format(
-                p.name.split()[0])
+                p.name.split()[0]
+            )
             p.show(t)
             p.log('Is approached by a group of potential students.')
             p.pak()
-            students = fighter_factory.new_opponent(lv=rndint(*LV_STUD_CHALLENGERS), n=num_st, rand_atts_mode=0)
+            students = fighter_factory.new_opponent(
+                lv=rndint(*LV_STUD_CHALLENGERS), n=num_st, rand_atts_mode=0
+            )
             if p.fight(students[0], en_allies=students[1:], hide_stats=False, items_allowed=False):
-                t = 'Young men: "Thank you Master, now we see that you\'re very strong! Please teach us to be ' \
+                t = (
+                    'Young men: "Thank you Master, now we see that you\'re very strong! Please teach us to be '
                     'strong too!"'
+                )
                 p.show(t)
                 p.add_students(num_st)
             else:
                 p.show('Young men: "Sorry, Master, we\'ll learn kung-fu elsewhere."')
             p.pak()
         else:
-            p.show('Young man: "Master {}! Please accept me as your student!"'.
-                   format(p.name.split()[0]))
+            p.show(
+                'Young man: "Master {}! Please accept me as your student!"'.format(
+                    p.name.split()[0]
+                )
+            )
             p.log('Is approached by a potential student.')
             if p.is_human:
                 choice = yn('Accept the young man?')
@@ -1299,7 +1413,9 @@ class Thief(Enc):
     def nothing_to_steal(self):
         p = self.p
         t = '''A thief tries to steal something from {} but fails to find anything!
-Thief: "What\'s with that? Are you poor or something?"'''.format(p.name)
+Thief: "What\'s with that? Are you poor or something?"'''.format(
+            p.name
+        )
         p.show(t)
         p.log('A thief fails to find anything to steal from {0}.'.format(p.name))
         p.pak()
@@ -1327,11 +1443,12 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(p.name)
 
     def fail(self):
         p = self.player
-        p.show('A thief tries to steal from {0}, but fails.'.
-               format(p.name))
+        p.show('A thief tries to steal from {0}, but fails.'.format(p.name))
         p.log('A thief fails to steal from {}.'.format(p.name))
         if rnd() <= CH_THIEF_ESCAPES:
-            t = '{} tries to stop him, but the pickpocket quickly disappears in the crowd.'.format(p.name)
+            t = '{} tries to stop him, but the pickpocket quickly disappears in the crowd.'.format(
+                p.name
+            )
             p.show(t)
             p.log('The thief escapes.')
         else:
@@ -1369,13 +1486,17 @@ class Weirdo(Enc):
         p = self.player
         item = random.choice(items.MOCK_ITEMS)
         reward = items.SUPER_BOOSTER
-        t = 'A very strange-looking man bumps into {}.\nWeirdo: "Quick! I need a {}!"'.format(p.name, item)
+        t = 'A very strange-looking man bumps into {}.\nWeirdo: "Quick! I need a {}!"'.format(
+            p.name, item
+        )
         p.show(t)
         p.log('Meets a strange-looking man asking for {}.'.format(item))
         if p.check_item(item):
-            t = ('{0}: "Here, I happen to have one."\nWeirdo: "THANKS! I\'ll give you this in return."'
-                 '\nWith these words, the strange man rushes off. {0} is left with a {1} in his hands, and a '
-                 'strong feeling of confusion.'.format(p.name, reward))
+            t = (
+                '{0}: "Here, I happen to have one."\nWeirdo: "THANKS! I\'ll give you this in return."'
+                '\nWith these words, the strange man rushes off. {0} is left with a {1} in his hands, and a '
+                'strong feeling of confusion.'.format(p.name, reward)
+            )
             p.show(t)
             p.log('Trades {} for a {}.'.format(item, reward))
             p.lose_item(item)
@@ -1401,8 +1522,10 @@ class WiseMan(Enc):
             if p.talk_wise_or_not() and not check_feeling_greedy(p):
                 p.pay(MONEY_WISE_MAN)
                 trait = traits.get_rand_traits(negative=False)
-                p.show('{} and the wise man have a long conversation in a nearby tavern. The wise man talks about '
-                       'the importance of being {}.'.format(p.name, trait))
+                p.show(
+                    '{} and the wise man have a long conversation in a nearby tavern. The wise man talks about '
+                    'the importance of being {}.'.format(p.name, trait)
+                )
                 p.log('The wise man talks about the importance of being {}.'.format(trait))
                 if rnd() <= CH_CHANGE_TRAIT and trait not in p.traits:
                     p.show('This conversation changes {}\'s life.'.format(p.name))
@@ -1415,8 +1538,11 @@ class WiseMan(Enc):
             else:
                 return
         else:
-            p.show('Too bad {} doesn\'t have enough money to treat the wise man to lunch and talk to him.'.format(
-                p.name))
+            p.show(
+                'Too bad {} doesn\'t have enough money to treat the wise man to lunch and talk to him.'.format(
+                    p.name
+                )
+            )
         p.pak()
 
 
@@ -1445,21 +1571,68 @@ class GRobbers(Guaranteed, Robbers):
 
 
 # all encounters; can happen regardless of the day action chosen (except 'Rest', with no encounters)
-ENC_LIST = [Ambush, Beggar, BookSeller, Brawler, Challenger, ContinueStory, Craftsman, Criminal, Drunkard, Extorters,
-            FatGirl, FindItem, FriendMatch, Gambler, Gossip, HelpPolice, LoseItem, MasterTrial, Merchant,
-            OverhearConversation, PlayerMatch, PrizeFighting, Robbers, RobbingSomeone, SchoolBullying,
-            SchoolChallenge, StreetPerformer, Students, Thief, Weirdo, WiseMan]
+ENC_LIST = [
+    Ambush,
+    Beggar,
+    BookSeller,
+    Brawler,
+    Challenger,
+    ContinueStory,
+    Craftsman,
+    Criminal,
+    Drunkard,
+    Extorters,
+    FatGirl,
+    FindItem,
+    FriendMatch,
+    Gambler,
+    Gossip,
+    HelpPolice,
+    LoseItem,
+    MasterTrial,
+    Merchant,
+    OverhearConversation,
+    PlayerMatch,
+    PrizeFighting,
+    Robbers,
+    RobbingSomeone,
+    SchoolBullying,
+    SchoolChallenge,
+    StreetPerformer,
+    Students,
+    Thief,
+    Weirdo,
+    WiseMan,
+]
 
 # extra chance of getting these encounters when choosing the corresponding day actions
-BUY_ITEMS_ENCS = [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
-FIGHT_CRIME_ENCS = [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [HelpPolice] * 7 + [RobbingSomeone] * 7
+BUY_ITEMS_ENCS = (
+    [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
+)
+FIGHT_CRIME_ENCS = (
+    [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [HelpPolice] * 7 + [RobbingSomeone] * 7
+)
 HELP_POOR_ENCS = [GBeggar] * 3 + [Beggar] * 10 + [WiseMan] * 5
-PICK_FIGHTS_ENCS = [Brawler] * 3 + [GChallenger] + [Challenger] * 3 + [FriendMatch] * 3 + [PlayerMatch] * 3
+PICK_FIGHTS_ENCS = (
+    [Brawler] * 3 + [GChallenger] + [Challenger] * 3 + [FriendMatch] * 3 + [PlayerMatch] * 3
+)
 PRACTICE_SCHOOL_ENCS = [MasterTrial] * 3 + [SchoolChallenge] * 3 + [SchoolBullying]
-SEEDY_PLACES_ENCS = [GGambler] * 1 + [GDrunkard] * 1 + [Gambler] * 3 + [Drunkard] * 3 + [OverhearConversation] * 3 + \
-                    [PrizeFighting] * 3
-WALK_ENCS = [ContinueStory] * 3 + [OverhearConversation] * 3 + [StreetPerformer] * 3 + [Merchant] * 3 + [Gossip] * 3 \
-            + [Weirdo] * 3
+SEEDY_PLACES_ENCS = (
+    [GGambler] * 1
+    + [GDrunkard] * 1
+    + [Gambler] * 3
+    + [Drunkard] * 3
+    + [OverhearConversation] * 3
+    + [PrizeFighting] * 3
+)
+WALK_ENCS = (
+    [ContinueStory] * 3
+    + [OverhearConversation] * 3
+    + [StreetPerformer] * 3
+    + [Merchant] * 3
+    + [Gossip] * 3
+    + [Weirdo] * 3
+)
 WORK_ENCS = []
 
 

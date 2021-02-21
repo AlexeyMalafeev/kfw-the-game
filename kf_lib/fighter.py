@@ -39,8 +39,28 @@ KNOCKBACK_HP_DIVISOR3 = 2.5
 KNOCKDOWN_HP_DIVISOR = 2
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
-NEW_MOVE_TIERS = {1: 1, 2: 1, 3: 2, 4: 2, 5: 3, 6: 3, 7: 4, 8: 4, 9: 5, 10: 5,
-                  11: 6, 12: 6, 13: 7, 14: 7, 15: 8, 16: 8, 17: 9, 18: 9, 19: 10, 20: 10}
+NEW_MOVE_TIERS = {
+    1: 1,
+    2: 1,
+    3: 2,
+    4: 2,
+    5: 3,
+    6: 3,
+    7: 4,
+    8: 4,
+    9: 5,
+    10: 5,
+    11: 6,
+    12: 6,
+    13: 7,
+    14: 7,
+    15: 8,
+    16: 8,
+    17: 9,
+    18: 9,
+    19: 10,
+    20: 10,
+}
 LVS_GET_NEW_TECH = {11, 13, 15, 17, 19}
 MOB_DAM_PENALTY = 0.3
 OFF_BALANCE_HP_DIVISOR = 4
@@ -130,14 +150,22 @@ class Fighter(object):
     dodge_mult = 1.0
 
     # the order of arguments should not be changed, or saving will break
-    def __init__(self, name='', style_name=styles.FLOWER_KUNGFU.name, level=1, atts_tuple=None,
-                 tech_names=None, move_names=None, rand_atts_mode=0):
+    def __init__(
+        self,
+        name='',
+        style_name=styles.FLOWER_KUNGFU.name,
+        level=1,
+        atts_tuple=None,
+        tech_names=None,
+        move_names=None,
+        rand_atts_mode=0,
+    ):
         self.name = name
         self.level = level
 
         # weapon
         self.weapon = None
-        self.weapon_bonus = {}  # keys are either weapon name or weapon type; values are [atk_bonus, dfs_bonus]
+        self.weapon_bonus = {}  # {<weapon name OR type>: [atk_bonus, dfs_bonus]}
 
         # AI
         self.fight_ai = None
@@ -205,7 +233,7 @@ class Fighter(object):
         # moves
         self.moves = []  # Move objects
         for m in moves.BASIC_MOVES:
-            self.learn_move(m.name, silent=True)  # 'silent' is not to write in the log about learning basic moves
+            self.learn_move(m.name, silent=True)  # silent = don't write log
         self.set_moves(move_names)
 
     def __repr__(self):
@@ -235,7 +263,7 @@ class Fighter(object):
 
     def arm(self, weapon=None):
         """Arm fighter with weapon (default = random).
-weapon can also be weapon type"""
+        weapon can also be weapon type"""
         # disarm fighter to avoid double weapon bonus
         self.disarm()
         # make new weapon
@@ -273,7 +301,7 @@ weapon can also be weapon type"""
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus += (self.guard_dfs_bonus * self.guard_while_attacking)
+            self.dfs_bonus += self.guard_dfs_bonus * self.guard_while_attacking
         self.current_fight.display('=' * len(s))
         # print(n2, 'dfs_bonus', self.target.dfs_bonus)
         if not self.check_move_failed():
@@ -300,11 +328,14 @@ weapon can also be weapon type"""
         strike_mult = 1.0
         strike_mult *= getattr(self, 'dist{}_bonus'.format(action.distance), 1.0)
         for feature in action.features:
-            strike_mult *= getattr(self, '{}_strike_mult'.format(feature), 1.0)  # todo do this nicely
+            # low-prio todo reimplement computing strike_mult without getattr, use dict
+            strike_mult *= getattr(self, '{}_strike_mult'.format(feature), 1.0)
         self.atk_bonus = self.atk_mult * strike_mult
         if self.check_status('off-balance'):
             self.atk_bonus *= self.off_balance_atk_mult
-        self.atk_pwr = self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
+        self.atk_pwr = (
+            self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
+        )
         self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
 
     # todo how is it used? why not relative to attacker?
@@ -318,13 +349,9 @@ weapon can also be weapon type"""
             atk_action = attacker.action
             rep_actions_factor = attacker.get_rep_actions_factor(atk_action)
             # todo recalc as a value in (0.0, 1.0)?
-            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10  # * 10 because of new system
+            # * 10 because of new system:
+            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
             x *= self.stamina_factor * rep_actions_factor
-#             print(self.name)
-#             print('self.dfs_penalty_mult, self.agility_full, self.dodge_mult, self.stamina_factor, \
-# rep_actions_factor', self.dfs_penalty_mult, self.agility_full, self.dodge_mult, self.stamina_factor,
-#                   rep_actions_factor)
-#             print('x before dfs_bonus', x)
             x *= self.dfs_bonus
             # print('x after dfs_bonus', x)
             if self.check_status('off-balance'):
@@ -348,7 +375,6 @@ weapon can also be weapon type"""
         fall_dam = rndint(*FALL_DAMAGE)
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
-        # self.current_fight.display('{} falls to the ground! -{} HP ({})'.format(self.name, fall_dam, self.hp))
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
         # print('$$$', self.status)
 
@@ -381,7 +407,8 @@ weapon can also be weapon type"""
     def cause_slow_down(self):
         slow_dur = rndint_2d(DUR_SLOW_MIN, DUR_SLOW_MAX) // self.speed_full
         self.add_status('slowed down', slow_dur)
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''  # todo why this line everywhere?
+        # todo do not repeat this line in all functions, use helper
+        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
         # self.current_fight.display('{} is slowed down!'.format(self.name))
         self.current_fight.display(' slowed down!', align=False)
@@ -529,21 +556,21 @@ weapon can also be weapon type"""
         atkr.dam = atkr.atk_pwr
         dodge_chance = self.to_dodge / atkr.to_hit
         block_chance = self.to_block / atkr.to_hit
-        # print('to dodge', self.to_dodge, 'to block', self.to_block)
-        # print('to hit', atkr.to_hit)
         roll = rnd()
-        # s = f'dodge chance: {round(dodge_chance, 2)}, block chance: {round(block_chance, 2)}, roll: {round(roll, 2)}'
-        # self.current_fight.display(s)
         prefix = 'Lying ' if self.check_status('lying') else ''
         if roll <= dodge_chance:
             atkr.dam = 0
             self.change_qp(self.qp_gain)
-            self.current_fight.display('{} {}dodges!'.format(self.name, get_adverb(dodge_chance, 'barely', 'easily')))
+            self.current_fight.display(
+                '{} {}dodges!'.format(self.name, get_adverb(dodge_chance, 'barely', 'easily'))
+            )
             self.set_ascii(prefix + 'Dodge')
         elif roll <= block_chance:
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
-            self.current_fight.display('{} {}blocks!'.format(self.name, get_adverb(block_chance, 'barely', 'easily')))
+            self.current_fight.display(
+                '{} {}blocks!'.format(self.name, get_adverb(block_chance, 'barely', 'easily'))
+            )
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()
         else:
@@ -626,10 +653,9 @@ weapon can also be weapon type"""
         self.current_fight.show(self.visualize_fight_state())
         self.show_ascii()
 
-    # def fight(self, en, allies=None, en_allies=None, auto_fight=False, af_option=True, hide_stats=True,
-    #           environment_allowed=True, items_allowed=True, win_messages=None):
     def fight(self, en, allies=None, en_allies=None, *args, **kwargs):
         from .fight import fight as ffight
+
         return ffight(self, en, allies, en_allies, *args, **kwargs)
 
     def get_all_atts_str(self):
@@ -669,8 +695,9 @@ weapon can also be weapon type"""
                 if m.distance:
                     right_distance = m.distance == self.distances[self.target]
                     if right_distance:
-                        anti_ground = ('antiground only' in m.features or
-                                       'also antiground' in m.features) and lying_op
+                        anti_ground = (
+                            'antiground only' in m.features or 'also antiground' in m.features
+                        ) and lying_op
                         anti_standing = 'antiground only' not in m.features and not lying_op
                         if anti_ground or anti_standing:
                             av_moves.append(m)
@@ -697,8 +724,9 @@ weapon can also be weapon type"""
         if short:
             info = '{}, lv.{} {}{}'.format(s.name, s.level, s.style.name, w_info)
         else:
-            info = '{}, lv.{} {}{}\n{}'.format(s.name, s.level, s.get_style_string(show_st_emph), w_info,
-                                               s.get_all_atts_str())
+            info = '{}, lv.{} {}{}\n{}'.format(
+                s.name, s.level, s.get_style_string(show_st_emph), w_info, s.get_all_atts_str()
+            )
         return info
 
     def get_full_att_value(self, att):
@@ -706,9 +734,14 @@ weapon can also be weapon type"""
 
     def get_init_atts(self):
         """Return tuple of attributes used by __init__"""
-        return self.name, self.style.name, self.level, self.get_base_atts_tup(), self.techs, [m.name for m in
-                                                                                              self.moves if m not in
-                                                                                              moves.BASIC_MOVES]
+        return (
+            self.name,
+            self.style.name,
+            self.level,
+            self.get_base_atts_tup(),
+            self.techs,
+            [m.name for m in self.moves if m not in moves.BASIC_MOVES],
+        )
 
     def get_init_string(self):
         return '{}{!r}'.format(self.__class__.__name__, self.get_init_atts())
@@ -751,21 +784,32 @@ weapon can also be weapon type"""
         size2 = max([len(s) for s in ['LEV '] + [str(f.level) + ' ' for f in fs]])
         size3 = max([len(s) for s in ['STYLE '] + [f.style.name + ' ' for f in fs]])
         att_names = ' '.join(self.att_names_short) if not basic_info_only else ''
-        s += ('NAME'.ljust(size1) + 'LEV'.ljust(size2) + 'STYLE'.ljust(size3) + att_names)
+        s += 'NAME'.ljust(size1) + 'LEV'.ljust(size2) + 'STYLE'.ljust(size3) + att_names
         if any([f.weapon for f in fs]) and not basic_info_only:
             s += ' WEAPON'
         for f in fs:
             if side_b and f == side_b[0]:
                 s += '\n-vs-'
-            s += ('\n{:<{}}{:<{}}{:<{}}'.format(f.name, size1, f.level, size2, f.style.name, size3,))
+            s += '\n{:<{}}{:<{}}{:<{}}'.format(
+                f.name,
+                size1,
+                f.level,
+                size2,
+                f.style.name,
+                size3,
+            )
             if basic_info_only:
                 continue
-            if ((not hide_enemy_stats) or f.is_human or (f in side_a and any([ff.is_human for ff in side_a])) or
-                    (side_b and f in side_b and any([ff.is_human for ff in side_b]))):
-                atts_wb = ((f.get_att_str_prefight(att) for att in self.att_names))
+            if (
+                (not hide_enemy_stats)
+                or f.is_human
+                or (f in side_a and any([ff.is_human for ff in side_a]))
+                or (side_b and f in side_b and any([ff.is_human for ff in side_b]))
+            ):
+                atts_wb = (f.get_att_str_prefight(att) for att in self.att_names)
             else:
-                atts_wb = ((f.get_att_str_prefight(att, hide=True) for att in self.att_names))
-            s += ('{:<4}{:<4}{:<4}{:<4}'.format(*atts_wb))
+                atts_wb = (f.get_att_str_prefight(att, hide=True) for att in self.att_names)
+            s += '{:<4}{:<4}{:<4}{:<4}'.format(*atts_wb)
             if f.weapon:
                 s += '{} {}'.format(f.weapon.name, f.weapon.descr_short)
             s += '\n{}{}'.format(' ' * (size1 + size2), f.style.descr_short)
@@ -778,12 +822,14 @@ weapon can also be weapon type"""
         if allies:
             own_pwr += sum([al.get_exp_worth() for al in allies])
         ratio = round(pwr / own_pwr, 2)
-        table = [(RATIO_NO_RISK, 'no risk'),
-                 (RATIO_VERY_LOW_RISK, 'very low risk'),
-                 (RATIO_LOW_RISK, 'low risk'),
-                 (RATIO_SOMEWHAT_RISKY, 'somewhat risky'),
-                 (RATIO_VERY_RISKY, 'very risky'),
-                 (RATIO_EXTREMELY_RISKY, 'impossible')]
+        table = [
+            (RATIO_NO_RISK, 'no risk'),
+            (RATIO_VERY_LOW_RISK, 'very low risk'),
+            (RATIO_LOW_RISK, 'low risk'),
+            (RATIO_SOMEWHAT_RISKY, 'somewhat risky'),
+            (RATIO_VERY_RISKY, 'very risky'),
+            (RATIO_EXTREMELY_RISKY, 'impossible'),
+        ]
         table.reverse()
         for threshold, legend in table:
             if ratio >= threshold:
@@ -803,7 +849,7 @@ weapon can also be weapon type"""
         elif self.check_status('stunned'):
             excl = 1
         # inact = '{}'.format('!' * excl) if excl else ''
-        inact = '!' * excl    
+        inact = '!' * excl
         padding = ' ' if lying or inact else ''
         return '{}{}{}{}{}'.format(padding, slowed_down, off_bal, lying, inact)
 
@@ -914,7 +960,8 @@ weapon can also be weapon type"""
             elif self.level in LVS_GET_NEW_ADVANCED_MOVE:
                 move_s = str(NEW_MOVE_TIERS[self.level])
                 moves.resolve_style_move(move_s, self)
-            # no need to refresh full atts here since they are refreshed when upgrading atts and learning techs
+            # no need to refresh full atts here since they are refreshed when upgrading atts and
+            # learning techs
 
     def log(self, text):
         """Empty method for convenience."""
@@ -945,7 +992,11 @@ weapon can also be weapon type"""
         self.previous_actions = ['', '', '']
         self.is_auto_fighting = True
         self.distances = d = {}
-        for f2 in self.current_fight.all_fighters:  # todo optimize not to walk over the same pair of fighters twice
+        for (
+            f2
+        ) in (
+            self.current_fight.all_fighters
+        ):  # todo optimize not to walk over the same pair of fighters twice
             if self is f2:
                 d[f2] = 0
             else:
@@ -976,6 +1027,7 @@ weapon can also be weapon type"""
             i = move_list.index(mv_a)
             move_list.remove(mv_a)
             move_list.insert(i, mv_b)
+
         _rep_in_list(rep_mv, rep_with, self.moves)
 
     def say_prefight_quote(self):
@@ -1031,7 +1083,9 @@ weapon can also be weapon type"""
             self.set_rand_moves()
         else:
             for mn in move_names:
-                self.learn_move(mn, silent=True)  # not to write log every time (e.g. when loading a game)
+                self.learn_move(
+                    mn, silent=True
+                )  # not to write log every time (e.g. when loading a game)
 
     def set_rand_atts(self):
         for i in range(self.level + 2):
@@ -1050,7 +1104,7 @@ weapon can also be weapon type"""
         for lv, moves_to_learn in self.style.move_strings.items():
             if self.level >= lv:
                 if isinstance(moves_to_learn, str):  # can be a tuple, can be a string
-                    moves_to_learn = (moves_to_learn, )
+                    moves_to_learn = (moves_to_learn,)
                 for move_s in moves_to_learn:
                     moves.resolve_style_move(move_s, self)
 
@@ -1103,15 +1157,30 @@ weapon can also be weapon type"""
         # if pic != prev:
         self.current_fight.cartoon.append(pic)
 
-    def spar(self, en, allies=None, en_allies=None, auto_fight=False, af_option=True, hide_stats=False,
-             environment_allowed=True):
+    def spar(
+        self,
+        en,
+        allies=None,
+        en_allies=None,
+        auto_fight=False,
+        af_option=True,
+        hide_stats=False,
+        environment_allowed=True,
+    ):
         from .fight import spar as f_spar
-        return f_spar(self, en, allies, en_allies, auto_fight, af_option, hide_stats, environment_allowed)
+
+        return f_spar(
+            self, en, allies, en_allies, auto_fight, af_option, hide_stats, environment_allowed
+        )
 
     def start_fight_turn(self):
         cur_fight = self.current_fight
-        self.act_targets = cur_fight.active_side_b if self in cur_fight.active_side_a else cur_fight.active_side_a
-        self.act_allies = cur_fight.active_side_b if self in cur_fight.active_side_b else cur_fight.active_side_a
+        self.act_targets = (
+            cur_fight.active_side_b if self in cur_fight.active_side_a else cur_fight.active_side_a
+        )
+        self.act_allies = (
+            cur_fight.active_side_b if self in cur_fight.active_side_b else cur_fight.active_side_a
+        )
         self.action = None
         self.dfs_bonus = 1.0
         self.dfs_penalty_mult = 1.0
@@ -1139,7 +1208,11 @@ weapon can also be weapon type"""
             self.current_fight.display('CRITICAL!')
 
     def try_environment(self, mode):
-        if self.environment_chance and self.current_fight.environment_allowed and rnd() <= self.environment_chance:
+        if (
+            self.environment_chance
+            and self.current_fight.environment_allowed
+            and rnd() <= self.environment_chance
+        ):
             if mode == 'attack':
                 self.atk_pwr *= self.current_fight.environment_bonus
                 self.to_hit *= self.current_fight.environment_bonus
@@ -1156,8 +1229,12 @@ weapon can also be weapon type"""
             self.current_fight.display('{} disarms {} while attacking'.format(self.name, tgt.name))
 
     def try_in_fight_impro_wp(self):
-        if (self.in_fight_impro_wp_chance and not self.weapon and self.current_fight.environment_allowed and
-                rnd() <= self.in_fight_impro_wp_chance):
+        if (
+            self.in_fight_impro_wp_chance
+            and not self.weapon
+            and self.current_fight.environment_allowed
+            and rnd() <= self.in_fight_impro_wp_chance
+        ):
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display('{} grabs an improvised weapon!'.format(s))
@@ -1213,7 +1290,9 @@ weapon can also be weapon type"""
 
     def try_stun(self):
         targ = self.target
-        if (self.dam >= targ.hp_max / STUN_HP_DIVISOR) or (self.stun_chance and rnd() <= self.stun_chance):
+        if (self.dam >= targ.hp_max / STUN_HP_DIVISOR) or (
+            self.stun_chance and rnd() <= self.stun_chance
+        ):
             targ.cause_stun()
 
     def try_unblockable(self):
@@ -1274,6 +1353,7 @@ class HumanControlledFighter(Fighter):
 
     def choose_best_norm_wp(self):
         from . import techniques, weapons
+
         wpts = techniques.get_weapon_techs(self)
         line = 'Pick a weapon:'
         if wpts:
@@ -1291,11 +1371,16 @@ class HumanControlledFighter(Fighter):
             # print('status', self.status)
             # print('opp status', self.target.status)
             # print(self.dfs_bonus)
-            m_names = [f'{m.name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}' for m in self.av_moves]
+            m_names = [
+                f'{m.name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}'
+                for m in self.av_moves
+            ]
             max_len = max((len(m_name) for m_name in m_names))
             m_hints = [self.get_move_hints(m) for m in self.av_moves]
-            options = [('{:<{}} {}'.format(m_names[i], max_len, m_hints[i]), m)
-                       for i, m in enumerate(self.av_moves)]
+            options = [
+                ('{:<{}} {}'.format(m_names[i], max_len, m_hints[i]), m)
+                for i, m in enumerate(self.av_moves)
+            ]
             options.sort(key=lambda x: not x[1].power)
             # print(self.current_fight.order)
             d = self.get_vis_distance(self.distances[self.target])
@@ -1303,23 +1388,30 @@ class HumanControlledFighter(Fighter):
 
     def choose_new_move(self, sample):
         first_line = ('Move', 'Tier', 'Dist', 'Pwr', 'Acc', 'Cmpl', 'Sta', 'Time', 'Qi', 'Func')
-        options = [(f'{m.name}{self.get_move_stars(m)}',
-                    roman(m.tier),
-                    f'{m.distance}({m.dist_change})' if m.dist_change else str(m.distance),
-                    str(m.power),
-                    str(m.accuracy),
-                    str(m.complexity),
-                    str(m.stam_cost),
-                    str(m.time_cost),
-                    str(m.qi_cost),
-                    ', '.join(m.functions))
-                   for m in sample]
+        options = [
+            (
+                f'{m.name}{self.get_move_stars(m)}',
+                roman(m.tier),
+                f'{m.distance}({m.dist_change})' if m.dist_change else str(m.distance),
+                str(m.power),
+                str(m.accuracy),
+                str(m.complexity),
+                str(m.stam_cost),
+                str(m.time_cost),
+                str(m.qi_cost),
+                ', '.join(m.functions),
+            )
+            for m in sample
+        ]
         options = [first_line] + options
         options = pretty_table(options, sep=' ', as_list=True)
         first_line = options[0]
         options = options[1:]
         options = list(zip(options, [m.name for m in sample]))
-        mn = menu(options, title='Choose a move to learn:\n     ' + first_line,)
+        mn = menu(
+            options,
+            title='Choose a move to learn:\n     ' + first_line,
+        )
         self.learn_move(mn)
 
     def choose_new_tech(self):
@@ -1347,12 +1439,16 @@ class HumanControlledFighter(Fighter):
                     else:
                         wp_info = ''
                     marks = f.get_status_marks()
-                    options.append(('%s' % dist,
-                                    '%s%s' % (n, marks),
-                                    '(lv.%s' % lev,
-                                    'HP:%s' % hp,
-                                    'SP:%s' % stam,
-                                    'QP:%s%s)' % (qi, wp_info)))
+                    options.append(
+                        (
+                            '%s' % dist,
+                            '%s%s' % (n, marks),
+                            '(lv.%s' % lev,
+                            'HP:%s' % hp,
+                            'SP:%s' % stam,
+                            'QP:%s%s)' % (qi, wp_info),
+                        )
+                    )
                 options = pretty_table(options, sep='  ', as_list=True)
                 options = list(zip(options, self.act_targets))
                 tgt = self.menu(options, title='Choose target:')
@@ -1410,8 +1506,15 @@ class HumanControlledFighter(Fighter):
             if move_obj.stam_cost == min_s:
                 least_stamina = 's'
             effects = '!' * len(move_obj.functions)
-        mh = ('{}{}{}{}{}{}{}'.format(fail_warning, likely_hit, have_time, most_powerful, most_accurate,
-                                      least_stamina, effects))
+        mh = '{}{}{}{}{}{}{}'.format(
+            fail_warning,
+            likely_hit,
+            have_time,
+            most_powerful,
+            most_accurate,
+            least_stamina,
+            effects,
+        )
         return mh
 
     def get_move_stars(self, move_obj):
@@ -1422,7 +1525,10 @@ class HumanControlledFighter(Fighter):
                 val_b = getattr(self, feature + '_mult', 1.0)
                 if max(val_a, val_b) > 1.0:
                     n += 1
-        if hasattr(move_obj, 'distance') and getattr(self, 'dist{}_bonus'.format(move_obj.distance), 1.0) > 1.0:
+        if (
+            hasattr(move_obj, 'distance')
+            and getattr(self, 'dist{}_bonus'.format(move_obj.distance), 1.0) > 1.0
+        ):
             n += 1
         return '*' * n
 
@@ -1515,6 +1621,7 @@ class HumanControlledFighter(Fighter):
     @staticmethod
     def spectate(side_a, side_b, environment_allowed=True):
         from .fight import SpectateFight
+
         SpectateFight(side_a, side_b, environment_allowed)
 
     def write(self, text, align=False):

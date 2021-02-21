@@ -4,10 +4,10 @@ from .techniques import StyleTech
 from .utilities import *
 
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
-        # + distance
-        # + stats
-        # + elbow & knee & headbutt (rare!)
-        # + palm & claw
+    # + distance
+    # + stats
+    # + elbow & knee & headbutt (rare!)
+    # + palm & claw
     "Mystic": StyleTech('Mystic Power', qp_gain=b.QP_GAIN1),
     "Vigorous": StyleTech('Vigor', hp_gain=b.HP_GAIN1),
     "Attacking": StyleTech('Attack Method', atk_mult=b.ATTACK1),
@@ -16,15 +16,23 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Rising": StyleTech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
     "Guarding": StyleTech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
     "Persevering": StyleTech('Perseverance', stamina_gain=b.STAM_RESTORE1),
-    "Shattering": StyleTech('Shattering Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+    "Shattering": StyleTech(
+        'Shattering Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1
+    ),
     "Elusive": StyleTech('Elusive Moves', dodge_mult=b.EVADE1),
     "Indestructible": StyleTech('Indestructible Body', block_mult=b.BLOCK1),
     "Punching": StyleTech('Fist Training', punch_strike_mult=b.STRIKE_MULT1),
-    "Palm-Striking": StyleTech('Palm Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1),
-    #"Clawing": StyleTech('Claw Training', claw_strike_mult=b.STRIKE_MULT1),
+    "Palm-Striking": StyleTech(
+        'Palm Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
+    ),
+    # "Clawing": StyleTech('Claw Training', claw_strike_mult=b.STRIKE_MULT1),
     "Kicking": StyleTech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
-    "Exotic": StyleTech('Exotic Strikes Training', knee_strike_mult=b.STRIKE_MULT1, elbow_strike_mult=b.STRIKE_MULT1,
-        head_strike_mult=b.STRIKE_MULT1),
+    "Exotic": StyleTech(
+        'Exotic Strikes Training',
+        knee_strike_mult=b.STRIKE_MULT1,
+        elbow_strike_mult=b.STRIKE_MULT1,
+        head_strike_mult=b.STRIKE_MULT1,
+    ),
     "Grappling": StyleTech('Grappling Training', grappling_strike_mult=b.STRIKE_MULT1),
     "Flying": StyleTech('Jump Technique', flying_strike_mult=b.STRIKE_MULT1),
     "Close-Range": StyleTech('Close-Range Fighting', dist1_bonus=b.STRIKE_MULT1),
@@ -40,8 +48,6 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Tough": StyleTech('Toughness', health_mult=b.HEALTH1),
     "Unstoppable": StyleTech('Unstoppable Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Paralyzing": StyleTech('Paralyzing Strikes', stun_chance=b.STUN_CH1),
-
-    
 }
 
 # exclude resist_ko=b.RESIST_KO1
@@ -71,10 +77,8 @@ W2 = {
     # "": StyleTech('', health_mult=b.HEALTH1),
     # "": StyleTech('', unblock_chance=b.UNBLOCK_CHANCE1),
     # "": StyleTech('', stun_chance=b.STUN_CH1),
-
     # obsidian, adamant, crystal, colors, colorless, moon, solar, snow, mountain, river, rainbow
     # meteor, astral, imperial, golden, southern, northern
-
 }
 
 W3 = {
@@ -90,7 +94,9 @@ W3 = {
     "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
     "Mantis": StyleTech('Praying Mantis', block_mult=b.BLOCK1),
     "Lion": StyleTech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
-    "Centipede": StyleTech('Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1),
+    "Centipede": StyleTech(
+        'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
+    ),
     "Scorpion": StyleTech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
     # "Fox": StyleTech('Fox\'s Cunning', exotic_strike_mult=b.RARE_STRIKE_MULT1),
     "Eagle": StyleTech('Flying Eagle', flying_strike_mult=b.STRIKE_MULT1),
@@ -104,10 +110,8 @@ W3 = {
     "Elephant": StyleTech('Elephant\'s Health', health_mult=b.HEALTH1),
     "Panther": StyleTech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Viper": StyleTech('Stinging Viper', stun_chance=b.STUN_CH1),
-
     # crab, turtle, crow, horse, spider, shark, dog, rat, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
-    
 }
 '''
 

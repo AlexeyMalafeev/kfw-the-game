@@ -16,14 +16,15 @@ from . import game_stats
 from . import items
 from .moves import BASIC_MOVES
 from . import names
-from .player import (HumanPlayer,
-                     LazyAIP,
-                     SmartAIP,
-                     VanillaAIP,
-                     BaselineAIP,
-                     ALL_AI_PLAYERS,  # used in load/new_game
-                     SmartAIPVisible,
-                     )
+from .player import (
+    HumanPlayer,
+    LazyAIP,
+    SmartAIP,
+    VanillaAIP,
+    BaselineAIP,
+    ALL_AI_PLAYERS,  # used in load/new_game
+    SmartAIPVisible,
+)
 from . import story
 from . import style_gen
 from . import styles
@@ -89,7 +90,9 @@ class Game(object):
         self.town_name = 'Foshan'
         self.poverty = random.choice(TOWN_STAT_VALUES)
         self.crime = random.choice(TOWN_STAT_VALUES)
-        self.kung_fu = random.choice(TOWN_STAT_VALUES)  # todo g.kung_fu is used only for tournaments
+        self.kung_fu = random.choice(
+            TOWN_STAT_VALUES
+        )  # todo g.kung_fu is used only for tournaments
         self.fights_total = 0
         self.chosen_quit = False
         self.chosen_load = False
@@ -141,14 +144,15 @@ class Game(object):
         victory_types = []
         for p in self.players:
             # victory conditions
-            vc = {'Grandmaster': p.check_lv(GRANDMASTER_LV),
-                  'Folk Hero': p.reputation >= FOLK_HERO_REP,
-                  'Kung-fu Legend': len(p.accompl) >= KFLEGEND_ACCOMPL,
-                  'Greatest Fighter': (p.get_stat('fights_won') >=
-                                       GT_FIGHTER_FIGHTS[0] and
-                                       p.get_stat('num_kos') >=
-                                       GT_FIGHTER_FIGHTS[1])
-                  }
+            vc = {
+                'Grandmaster': p.check_lv(GRANDMASTER_LV),
+                'Folk Hero': p.reputation >= FOLK_HERO_REP,
+                'Kung-fu Legend': len(p.accompl) >= KFLEGEND_ACCOMPL,
+                'Greatest Fighter': (
+                    p.get_stat('fights_won') >= GT_FIGHTER_FIGHTS[0]
+                    and p.get_stat('num_kos') >= GT_FIGHTER_FIGHTS[1]
+                ),
+            }
             for k in vc:
                 if vc[k]:
                     wins.append('{} becomes {}!'.format(p.name, k))
@@ -160,6 +164,7 @@ class Game(object):
                 input('Press Enter to see stats.')
                 self.save_game('game over.txt')
                 from . import game_stats
+
                 sg = game_stats.StatGen(self)
                 stats = sg.get_full_report_string()
                 print(stats)
@@ -172,9 +177,22 @@ class Game(object):
             if self.write_win_data:
                 with open('win_data.tab', 'a') as f:
                     for i, p in enumerate(winners):
-                        data = '\t'.join(str(x) for x in (p.__class__.__name__, p.style.name, p.level,
-                                                          p.get_base_atts_tup(), p.techs, p.traits, self.crime,
-                                                          self.poverty, self.kung_fu, victory_types[i], n_days))
+                        data = '\t'.join(
+                            str(x)
+                            for x in (
+                                p.__class__.__name__,
+                                p.style.name,
+                                p.level,
+                                p.get_base_atts_tup(),
+                                p.techs,
+                                p.traits,
+                                self.crime,
+                                self.poverty,
+                                self.kung_fu,
+                                victory_types[i],
+                                n_days,
+                            )
+                        )
                         f.write('\n{}'.format(data))
                         print(data)
             self.n_days_to_win = n_days
@@ -287,8 +305,10 @@ class Game(object):
             if yn('Is this character ok?'):
                 break
 
-        legend = [('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
-                  for s in self.style_list]
+        legend = [
+            ('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
+            for s in self.style_list
+        ]
 
         style = menu(legend, 'Choose a style')
         p.set_style(style.name)
@@ -325,7 +345,13 @@ class Game(object):
         """Read and execute the save file."""
         g = self  # do not delete
         with open(os.path.join(SAVE_FOLDER, file_name), 'r') as f:
-            from .fighter import Fighter, Challenger, Master, Thug  # this is used for loading, do not delete
+            from .fighter import (
+                Fighter,
+                Challenger,
+                Master,
+                Thug,
+            )  # this is used for loading, do not delete
+
             for line in f:
                 # print(line)
                 exec(line)
@@ -343,8 +369,17 @@ class Game(object):
             self.spectator.show(text, align=align)
             self.spectator.pak()
 
-    def new_game(self, num_players=0, coop='?', ai_only=False, auto_save_on='?', forced_aip_class=None,
-                 output_stats=True, write_win_data=False, generated_styles='?'):
+    def new_game(
+        self,
+        num_players=0,
+        coop='?',
+        ai_only=False,
+        auto_save_on='?',
+        forced_aip_class=None,
+        output_stats=True,
+        write_win_data=False,
+        generated_styles='?',
+    ):
         """Initialize a new game."""
         self.output_stats = output_stats
         self.write_win_data = write_win_data
@@ -355,18 +390,27 @@ class Game(object):
             self.auto_save_on = yn('Auto save?')
         elif auto_save_on in (True, False):
             self.auto_save_on = auto_save_on
-        assert generated_styles in ('?', True, False), 'generated_styles option must be in (True, False, "?")'
+        assert generated_styles in (
+            '?',
+            True,
+            False,
+        ), 'generated_styles option must be in (True, False, "?")'
         if generated_styles == '?':
             generated_styles = yn('Randomly generated styles?')
         if generated_styles:
             self.style_list = style_gen.generate_new_styles(10)  # todo this is a magic number
             styles.default_styles = self.style_list  # todo boy is this ugly
-            styles.MAX_LEN_STYLE_NAME = max((len(s.name) for s in styles.default_styles))  # todo oh wow...
+            styles.MAX_LEN_STYLE_NAME = max(
+                (len(s.name) for s in styles.default_styles)
+            )  # todo oh wow...
 
         def _init_players():
             coop_mode = False
             if num_players > 1 and coop == '?':
-                coop_mode = menu((('Full co-op', 'full'), ('2x2', '2x2'), ('No co-op', False)), title='Co-op mode?')
+                coop_mode = menu(
+                    (('Full co-op', 'full'), ('2x2', '2x2'), ('No co-op', False)),
+                    title='Co-op mode?',
+                )
             for i in range(num_players):
                 if not ai_only and yn('Player {} -- human player?'.format(i + 1)):
                     pp = self.get_new_human_player()
@@ -411,14 +455,15 @@ class Game(object):
                 # print(school)
 
         def _init_stories():
-            self.stories = {'{}'.format(S.__name__): S(self)
-                            for S in story.all_stories}
+            self.stories = {'{}'.format(S.__name__): S(self) for S in story.all_stories}
 
         _init_schools()
         _init_players()
         _init_stories()
         for p in self.players:
-            p.school_rank = p.get_school().index(p) + 1  # for the subsequent rerank to work properly
+            p.school_rank = (
+                p.get_school().index(p) + 1
+            )  # for the subsequent rerank to work properly
         self.rerank_schools()
         self.save_game('test save.txt')
 
@@ -466,6 +511,7 @@ class Game(object):
     @staticmethod
     def quit():
         import sys
+
         sys.exit()
 
     def refresh_roster(self):
@@ -475,9 +521,18 @@ class Game(object):
             if s.boss:
                 bosses.append(s.boss)
         students = [s for school in self.schools.values() for s in school if not s.is_player]
-        special_npcs = [f for f in (self.beggar, self.drunkard, self.thief, self.fat_girl) if f is not None]
-        self.fighters_list = (self.players + list(self.masters.values()) + bosses + students + special_npcs +
-                              self.criminals + [en for p in self.players for en in p.enemies])
+        special_npcs = [
+            f for f in (self.beggar, self.drunkard, self.thief, self.fat_girl) if f is not None
+        ]
+        self.fighters_list = (
+            self.players
+            + list(self.masters.values())
+            + bosses
+            + students
+            + special_npcs
+            + self.criminals
+            + [en for p in self.players for en in p.enemies]
+        )
         for p in self.players:
             for fr in p.friends:
                 if fr not in self.fighters_list:
@@ -486,7 +541,11 @@ class Game(object):
 
     def register_fighter(self, f):
         if f.name in self.fighters_dict:
-            raise Exception('Cannot register {} because a fighter with this name is already registered.'.format(f))
+            raise Exception(
+                'Cannot register {} because a fighter with this name is already registered.'.format(
+                    f
+                )
+            )
         self.fighters_list.append(f)
         self.fighters_dict[f.name] = f
         self.used_names.add(f.name)
@@ -554,8 +613,11 @@ class Game(object):
 
                 # save current story
                 if p.current_story:
-                    f.write('p.current_story = g.stories[{!r}]\n'.format(
-                        p.current_story.__class__.__name__))
+                    f.write(
+                        'p.current_story = g.stories[{!r}]\n'.format(
+                            p.current_story.__class__.__name__
+                        )
+                    )
 
                 # friends
                 f.write('\np.friends = [')
@@ -571,8 +633,7 @@ class Game(object):
 
                 # students
                 f.write('\np.students = {!r}\n'.format(p.students))
-                best = (p.best_student.get_init_string() if p.best_student
-                        else 'None')
+                best = p.best_student.get_init_string() if p.best_student else 'None'
                 f.write('\np.best_student = {}'.format(best))
 
                 # dump log
@@ -594,13 +655,23 @@ class Game(object):
             thf = self.thief
             crmls = self.criminals
             fg = self.fat_girl
-            f.write('\n\ng.beggar = {}'.format(self.get_fighter_ref(bgr) if bgr is not None else 'None'))
-            f.write('\ng.drunkard = {}'.format(self.get_fighter_ref(drkd) if drkd is not None else 'None'))
-            f.write('\ng.thief = {}'.format(self.get_fighter_ref(thf) if thf is not None else 'None'))
+            f.write(
+                '\n\ng.beggar = {}'.format(self.get_fighter_ref(bgr) if bgr is not None else 'None')
+            )
+            f.write(
+                '\ng.drunkard = {}'.format(
+                    self.get_fighter_ref(drkd) if drkd is not None else 'None'
+                )
+            )
+            f.write(
+                '\ng.thief = {}'.format(self.get_fighter_ref(thf) if thf is not None else 'None')
+            )
             f.write('\ng.criminals = []')
             for c in crmls:
                 f.write('\ng.criminals.append({})'.format(self.get_fighter_ref(c)))
-            f.write('\ng.fat_girl = {}'.format(self.get_fighter_ref(fg) if fg is not None else 'None'))
+            f.write(
+                '\ng.fat_girl = {}'.format(self.get_fighter_ref(fg) if fg is not None else 'None')
+            )
 
         def _save_stories():
             f.write('\n\ng.stories = {!r}'.format(self.stories))
@@ -618,7 +689,11 @@ class Game(object):
         p.show('Moves:')
         print(', '.join([str(m) for m in p.moves if m not in BASIC_MOVES]))
         print()
-        choice = menu(('Items', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit'), keys='ibslqx', new_line=False)
+        choice = menu(
+            ('Items', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit'),
+            keys='ibslqx',
+            new_line=False,
+        )
         if choice == 'Items':
             cls()
             print(p.get_inventory_info())

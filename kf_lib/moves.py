@@ -11,7 +11,7 @@ ALL_MOVES_DICT = {}  # list derives later
 
 class Move(object):
     """
-functions are names of Fighter methods."""
+    functions are names of Fighter methods."""
 
     def __init__(self, **kwargs):
         self.name = ''
@@ -57,11 +57,15 @@ functions are names of Fighter methods."""
                 d += f'(+{self.dist_change})'
             elif self.dist_change < 0:
                 d += f'({self.dist_change})'
-            self.descr = f'{t} Dist:{d} Pwr:{self.power} Acc:{self.accuracy} '\
+            self.descr = (
+                f'{t} Dist:{d} Pwr:{self.power} Acc:{self.accuracy} '
                 f'Cpl:{self.complexity} Cost:S{self.stam_cost}/T{self.time_cost}/Q{self.qi_cost} {fun}'
+            )
         else:
-            self.descr = f'{t} Dist:{self.dist_change} Cpl:{self.complexity} '\
+            self.descr = (
+                f'{t} Dist:{self.dist_change} Cpl:{self.complexity} '
                 f'Cost:S{self.stam_cost}/T{self.time_cost}/Q{self.qi_cost} {fun}'
+            )
         self.descr_short = ''
 
 
@@ -116,9 +120,21 @@ for mv in move_list:
     m_obj = Move(**mv)
 
 
-BASIC_MOVES = [ALL_MOVES_DICT[mn] for mn in ('Punch', 'Kick', 'Shove', 'Step Forward', 'Step Back',
-                                             'Guard', 'Focus', 'Catch Breath', 'Finishing Punch',
-                                             'Finishing Kick')]
+BASIC_MOVES = [
+    ALL_MOVES_DICT[mn]
+    for mn in (
+        'Punch',
+        'Kick',
+        'Shove',
+        'Step Forward',
+        'Step Back',
+        'Guard',
+        'Focus',
+        'Catch Breath',
+        'Finishing Punch',
+        'Finishing Kick',
+    )
+]
 
 
 ALL_MOVES_LIST = list(ALL_MOVES_DICT.values())
@@ -136,7 +152,9 @@ def get_move_obj(move_name):
 
 
 def get_moves_by_features(features, tier):
-    moves = [m for m in ALL_MOVES_LIST if m.tier == tier and all((f in m.features for f in features))]
+    moves = [
+        m for m in ALL_MOVES_LIST if m.tier == tier and all((f in m.features for f in features))
+    ]
     return moves
 
 
@@ -160,6 +178,7 @@ def resolve_style_move(move_s, f):
         # input('...')
         # todo reimplement
         from .techniques import get_tech_obj
+
         features = []
         for t in f.techs:
             t_obj = get_tech_obj(t)
@@ -202,5 +221,7 @@ def resolve_style_move(move_s, f):
     try:
         f.choose_new_move(pool)
     except IndexError:
-        print('Cannot choose new move for pool={pool}, move_s_arg={move_s_arg}, move_s={move_s}, f={f}')
+        print(
+            'Cannot choose new move for pool={pool}, move_s_arg={move_s_arg}, move_s={move_s}, f={f}'
+        )
         input('...')

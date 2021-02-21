@@ -25,11 +25,15 @@ class GeneticAlgorithm(object):
         self.curr_generation = 0
         self.mutations_occurred = 0
 
-    def crossover(self):  # todo remove doubles -> generate random individuals after a few failed crossover attempts
+    def crossover(
+        self,
+    ):  # todo remove doubles -> generate random individuals after a few failed crossover attempts
         print(time.ctime())
         print('starting crossover')
         new_population = self.fittest[:]
-        random.shuffle(new_population)  # to cancel out the effect of sorting when performing selection
+        random.shuffle(
+            new_population
+        )  # to cancel out the effect of sorting when performing selection
         for i in range(0, self.n_top, 2):
             parent_a = new_population[i]
             parent_b = new_population[i + 1]
@@ -38,7 +42,7 @@ class GeneticAlgorithm(object):
             pprint(parent_b)
             ind = list(range(self.n_genes))
             random.shuffle(ind)
-            ind = ind[:random.randint(1, len(ind) - 1)]
+            ind = ind[: random.randint(1, len(ind) - 1)]
             print('crossing genes with indices:')
             pprint(ind)
             child_a = parent_a[:]
@@ -65,7 +69,9 @@ class GeneticAlgorithm(object):
             ai = fight_ai.GeneticAI
             for i, name in enumerate(self.gene_names):
                 setattr(ai, name, individual[i])
-            t = fight_ai_test.FightAITest(ai, fight_ai.GeneticAITrainedParams3, rep=n_rep, write_log=False)
+            t = fight_ai_test.FightAITest(
+                ai, fight_ai.GeneticAITrainedParams3, rep=n_rep, write_log=False
+            )
             self.fit_values.append(t.wins[0])
             print('result:', t.wins[0])
         print('all fit values:')
@@ -103,7 +109,7 @@ class GeneticAlgorithm(object):
         print(time.ctime())
         print('starting mutation')
         # only the new children mutate to ensure preserving top fit values from the previous generation
-        for individual in self.population[len(self.fittest):]:
+        for individual in self.population[len(self.fittest) :]:
             if rnd() <= self.mut_prob:
                 print('mutation occurs for individual:')
                 pprint(individual)
@@ -158,8 +164,8 @@ Record holder: {self.record_holder}
         print('starting selection')
         scores = [(val, self.population[i]) for i, val in enumerate(self.fit_values)]
         scores = sorted(scores, reverse=True)
-        self.fittest = [tup[1] for tup in scores][:self.n_top]
-        self.fit_values_sorted = [tup[0] for tup in scores][:self.n_top]
+        self.fittest = [tup[1] for tup in scores][: self.n_top]
+        self.fit_values_sorted = [tup[0] for tup in scores][: self.n_top]
         print('scores:')
         pprint(scores)
         if self.fit_values_sorted[0] > self.all_time_record:

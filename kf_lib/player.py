@@ -5,13 +5,16 @@ from . import encounters
 from .fighter import Fighter, HumanControlledFighter
 from . import items
 from . import lang_tools
+
 # from . import techniques
 from . import traits
 from . import quotes
 from .utilities import *
 
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
-LV_UP_EXP = [25 * x ** 2 + 75 * x for x in range(0, 51)]  # ignore value at index 0; index = current lv (how many exp
+LV_UP_EXP = [
+    25 * x ** 2 + 75 * x for x in range(0, 51)
+]  # ignore value at index 0; index = current lv (how many exp
 # to next?); max lv = 50
 MASTER_GREETING_CHANCE = 0.1
 SCHOOL_TRAINING_EXP = 10
@@ -50,11 +53,28 @@ class Player(Fighter):
     wage_mult = 1.0
 
     # the order of arguments should not be changed, or saving will break
-    def __init__(self, name='', style_name=None, level=1, atts_tuple=None, tech_names=None, move_names=None,
-                 rand_atts_mode=2, traits_list=None):
+    def __init__(
+        self,
+        name='',
+        style_name=None,
+        level=1,
+        atts_tuple=None,
+        tech_names=None,
+        move_names=None,
+        rand_atts_mode=2,
+        traits_list=None,
+    ):
         self.plog = []
-        Fighter.__init__(self, name=name, style_name=style_name, level=level, atts_tuple=atts_tuple,
-                         tech_names=tech_names, move_names=move_names, rand_atts_mode=rand_atts_mode)
+        Fighter.__init__(
+            self,
+            name=name,
+            style_name=style_name,
+            level=level,
+            atts_tuple=atts_tuple,
+            tech_names=tech_names,
+            move_names=move_names,
+            rand_atts_mode=rand_atts_mode,
+        )
         self.ended_turn = False
 
         self.traits = []
@@ -141,7 +161,11 @@ class Player(Fighter):
             self.activate_trait(trait)
             self.write('{} becomes {}.'.format(self.name, trait))
         else:
-            raise Exception('Cannot add trait "{}" to player {}\'s traits: {}'.format(trait, self.name, self.traits))
+            raise Exception(
+                'Cannot add trait "{}" to player {}\'s traits: {}'.format(
+                    trait, self.name, self.traits
+                )
+            )
 
     def buy_item(self, item, price):
         self.pay(price)
@@ -229,7 +253,11 @@ class Player(Fighter):
                 mates = random.sample(av_mates, n)
                 a_str = lang_tools.enum_words([f.name for f in mates])
                 p.allies = mates
-                self.msg('{}, who were passing by, join the fight on {}\'s side.'.format(a_str, self.name))
+                self.msg(
+                    '{}, who were passing by, join the fight on {}\'s side.'.format(
+                        a_str, self.name
+                    )
+                )
 
     def check_injured(self):
         return self.inact_status == 'injured'
@@ -247,8 +275,9 @@ class Player(Fighter):
         else:
             partners = []
             for a in self.friends:
-                if ((a.is_player and not a.inactive and rnd() <= self.coop_joins_training) or
-                        (not a.is_player and rnd() <= self.friend_joins_training)):
+                if (a.is_player and not a.inactive and rnd() <= self.coop_joins_training) or (
+                    not a.is_player and rnd() <= self.friend_joins_training
+                ):
                     partners.append(a)
             if partners:
                 if len(partners) > 1:
@@ -351,26 +380,32 @@ class Player(Fighter):
 
     def get_day_actions(self):
         """Return list of available options"""
-        ops = [('Practice at school', self.practice_school) if not self.is_master else
-               ('Practice', self.practice_master),
-               ('Go to work', self.go_work),
-               ('Buy items', self.buy_items),
-               ('Fight crime', self.fight_crime),
-               ('Help the poor', self.help_poor),
-               ('Pick fights', self.pick_fights) if not self.is_master else
-               ('Teach students', self.teach_students),
-               ('Go to seedy places', self.go_seedy),
-               ('Go for a walk', self.go_walk),
-               # ('Dummy', self.fight_dummy)
-               ]
+        ops = [
+            ('Practice at school', self.practice_school)
+            if not self.is_master
+            else ('Practice', self.practice_master),
+            ('Go to work', self.go_work),
+            ('Buy items', self.buy_items),
+            ('Fight crime', self.fight_crime),
+            ('Help the poor', self.help_poor),
+            ('Pick fights', self.pick_fights)
+            if not self.is_master
+            else ('Teach students', self.teach_students),
+            ('Go to seedy places', self.go_seedy),
+            ('Go for a walk', self.go_walk),
+            # ('Dummy', self.fight_dummy)
+        ]
         return ops
 
     def get_fame(self):
-        return (self.get_stat('tourn_won') + len(self.accompl) + (self.get_stat('fights_won') // 10)) * 0.01
+        return (
+            self.get_stat('tourn_won') + len(self.accompl) + (self.get_stat('fights_won') // 10)
+        ) * 0.01
 
     def get_fight_statistics(self):
-        return 'Fights/Wins/KOs: {}/{}/{}'.format(self.get_stat('num_fights'), self.get_stat('fights_won'),
-                                                  self.get_stat('num_kos'))
+        return 'Fights/Wins/KOs: {}/{}/{}'.format(
+            self.get_stat('num_fights'), self.get_stat('fights_won'), self.get_stat('num_kos')
+        )
 
     def get_inact_info(self):
         s = '{} is {} and needs {} day{} to recover.'.format(
@@ -381,7 +416,10 @@ class Player(Fighter):
 
     def get_init_atts(self):
         """Return tuple of attributes used by __init__"""
-        return Fighter.get_init_atts(self) + (self.rand_atts_mode, self.traits,)
+        return Fighter.get_init_atts(self) + (
+            self.rand_atts_mode,
+            self.traits,
+        )
 
     def get_inventory_info(self):
         lines = []
@@ -407,12 +445,17 @@ class Player(Fighter):
 
     def get_p_info(self):
         s = self
-        return '{} lv.{} exp:{}/{}\nmoney:{}\n'.format(s.name, s.level, s.exp, s.next_level, s.money)
+        return '{} lv.{} exp:{}/{}\nmoney:{}\n'.format(
+            s.name, s.level, s.exp, s.next_level, s.money
+        )
 
     def get_p_info_verbose(self):
-        lines = [self.get_f_info(), 'exp:{}/{} money:{}'.format(self.exp, self.next_level, self.money),
-                 'traits: {}'.format(lang_tools.enum_words(self.traits)),
-                 'rank in school: {}/{}'.format(self.school_rank, self.max_school_rank)]
+        lines = [
+            self.get_f_info(),
+            'exp:{}/{} money:{}'.format(self.exp, self.next_level, self.money),
+            'traits: {}'.format(lang_tools.enum_words(self.traits)),
+            'rank in school: {}/{}'.format(self.school_rank, self.max_school_rank),
+        ]
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
         en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
         stud_info = 'students:{}'.format(self.students) if self.students else ''
@@ -422,7 +465,9 @@ class Player(Fighter):
 
     def get_random_other_school(self):
         # avoid empty schools
-        schools = [(s_name, members) for s_name, members in self.get_other_schools().items() if members]
+        schools = [
+            (s_name, members) for s_name, members in self.get_other_schools().items() if members
+        ]
         return random.choice(schools)  # returns a tuple!
 
     def get_school(self):
@@ -586,7 +631,10 @@ class Player(Fighter):
 
     def set_rand_traits(self):
         from . import traits
-        self.traits = [traits.get_rand_traits(1, player=self, positive=False)]  # have to add traits one by one
+
+        self.traits = [
+            traits.get_rand_traits(1, player=self, positive=False)
+        ]  # have to add traits one by one
         self.traits += [traits.get_rand_traits(1, player=self, negative=False)]  # to avoid clashes
 
     def set_stat(self, stat_name, value):
@@ -794,7 +842,6 @@ class SmartAIP(AIPlayer):
 
 
 class SmartAIPVisible(SmartAIP):
-
     def cls(self):
         cls()
 
@@ -815,8 +862,10 @@ class SmartAIPVisible(SmartAIP):
     def see_day_info(self):
         cls()
         print(f'---{self.name}\'s turn---\n')
-        print(f'{self.style.name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
-              f'money:{self.money}\n')
+        print(
+            f'{self.style.name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
+            f'money:{self.money}\n'
+        )
 
 
 class VanillaAIP(AIPlayer):
@@ -827,8 +876,13 @@ class HumanPlayer(HumanControlledFighter, Player):
     is_human = True
 
     def brawl_or_not(self, opp_info):
-        return self.menu((('"What? I\'ll teach you a lesson! ({})"'.format(opp_info[1]), True),
-                          ('"I\'m sorry."', False)), title='{}:'.format(self.name))
+        return self.menu(
+            (
+                ('"What? I\'ll teach you a lesson! ({})"'.format(opp_info[1]), True),
+                ('"I\'m sorry."', False),
+            ),
+            title='{}:'.format(self.name),
+        )
 
     @staticmethod
     def buy_item_or_not():
@@ -839,9 +893,9 @@ class HumanPlayer(HumanControlledFighter, Player):
         options = self.get_day_actions()
         n = len(options)
         keys = ''.join([str(x) for x in list(range(1, n + 1))])
-        options.extend([('Rest', self.rest),
-                        ('State', self.game.state_menu),
-                        ('Test', self.game.test)])
+        options.extend(
+            [('Rest', self.rest), ('State', self.game.state_menu), ('Test', self.game.test)]
+        )
         keys += 'rst'
         # choose what to do; choice is a function
         return self.menu(options, keys=keys, options_per_page=15)
@@ -870,11 +924,19 @@ class HumanPlayer(HumanControlledFighter, Player):
     @staticmethod
     def fight_or_run(opp_info, esc_chance):
         """Return True if fight is chosen"""
-        return menu([('Fight! ({})'.format(opp_info[1]), True), ('Run! ({})'.format(float_to_pcnt(esc_chance)), False)])
+        return menu(
+            [
+                ('Fight! ({})'.format(opp_info[1]), True),
+                ('Run! ({})'.format(float_to_pcnt(esc_chance)), False),
+            ]
+        )
 
     def fight_run_or_pay(self, opp_info, esc_chance, money):
         """Return 'f', 'r' or 'p'"""
-        options = [('Fight! ({})'.format(opp_info[1]), 'f'), ('Run away ({})'.format(float_to_pcnt(esc_chance)), 'r')]
+        options = [
+            ('Fight! ({})'.format(opp_info[1]), 'f'),
+            ('Run away ({})'.format(float_to_pcnt(esc_chance)), 'r'),
+        ]
         if self.check_money(money):
             options.append(('Give {} coins'.format(money), 'p'))
         return menu(options)
@@ -919,8 +981,10 @@ class HumanPlayer(HumanControlledFighter, Player):
     def use_fight_item_or_not(self):
         av_items = self.get_items(as_dict=True)
         options = (('Do not use items', False),)
-        options += tuple(('{} ({}) ({})'.format(k, items.get_item_descr(k), av_items[k]), k)
-                         for k in sorted(av_items.keys()))
+        options += tuple(
+            ('{} ({}) ({})'.format(k, items.get_item_descr(k), av_items[k]), k)
+            for k in sorted(av_items.keys())
+        )
         choice = menu(options, '{} - use an item?'.format(self.name))
         return choice
 

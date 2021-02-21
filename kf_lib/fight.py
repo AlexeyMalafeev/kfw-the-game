@@ -5,10 +5,12 @@ from .utilities import *
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
 
 # legend: name of the bonus, exp mult, condition
-EXP_BONUSES = (('Quick victory', 1.25, 'self.timer / TIME_TO_SEC_DIVISOR <= 10'),
-               ('Not a scratch', 1.25, 'not p.took_damage'),
-               ('Multi-knockout', 1.25, 'p.kos_this_fight >= 3'),
-               ('Strong enemy', 1.25, 'p.exp_yield < self.win_exp'))
+EXP_BONUSES = (
+    ('Quick victory', 1.25, 'self.timer / TIME_TO_SEC_DIVISOR <= 10'),
+    ('Not a scratch', 1.25, 'not p.took_damage'),
+    ('Multi-knockout', 1.25, 'p.kos_this_fight >= 3'),
+    ('Strong enemy', 1.25, 'p.exp_yield < self.win_exp'),
+)
 DRAW_EXP_DIVISOR = 2
 LOSER_EXP_DIVISOR = 4
 
@@ -22,14 +24,28 @@ NARROW_VICTORY_HP_PCNT = 0.05
 TIME_TO_SEC_DIVISOR = 2
 
 
-def fight(f1, f2, f1_allies=None, f2_allies=None, auto_fight=False, af_option=True, hide_stats=True,
-          environment_allowed=True, items_allowed=True, win_messages=None, school_display=False):
+def fight(
+    f1,
+    f2,
+    f1_allies=None,
+    f2_allies=None,
+    auto_fight=False,
+    af_option=True,
+    hide_stats=True,
+    environment_allowed=True,
+    items_allowed=True,
+    win_messages=None,
+    school_display=False,
+):
     """Return True if f1 wins, False otherwise (including draw)."""
     side_a, side_b = get_sides(f1, f2, f1_allies, f2_allies)
     all_fighters = side_a + side_b
     if any((f.is_human for f in all_fighters)):
         if not any((f.is_human for f in side_a)):
-            side_a, side_b = side_b, side_a  # swap sides for human player's convenience (e.g. in tournaments)
+            side_a, side_b = (
+                side_b,
+                side_a,
+            )  # swap sides for human player's convenience (e.g. in tournaments)
             if win_messages:
                 temp = win_messages[:]
                 win_messages = [temp[1], temp[0]]  # swap win messages also
@@ -43,9 +59,13 @@ def fight(f1, f2, f1_allies=None, f2_allies=None, auto_fight=False, af_option=Tr
     else:
         auto_fight = True
     if auto_fight:
-        f = AutoFight(side_a, side_b, environment_allowed, items_allowed, win_messages, school_display)
+        f = AutoFight(
+            side_a, side_b, environment_allowed, items_allowed, win_messages, school_display
+        )
     else:
-        f = NormalFight(side_a, side_b, environment_allowed, items_allowed, win_messages, school_display)
+        f = NormalFight(
+            side_a, side_b, environment_allowed, items_allowed, win_messages, school_display
+        )
     return f.win
 
 
@@ -59,8 +79,16 @@ def get_sides(f1, f2, f1_allies, f2_allies):
     return side_a, side_b
 
 
-def spar(f1, f2, f1_allies=None, f2_allies=None, auto_fight=False, af_option=True, hide_stats=False,
-         environment_allowed=True):
+def spar(
+    f1,
+    f2,
+    f1_allies=None,
+    f2_allies=None,
+    auto_fight=False,
+    af_option=True,
+    hide_stats=False,
+    environment_allowed=True,
+):
     """Return True if f1 wins, False otherwise (including draw).
     A sparring is different from a fight in that there are no injuries and items are not allowed.
     Everything else is the same."""
@@ -84,7 +112,9 @@ def spar(f1, f2, f1_allies=None, f2_allies=None, auto_fight=False, af_option=Tru
 
 def spectate(f1, f2, f1_allies=None, f2_allies=None, environment_allowed=True, win_messages=None):
     side_a, side_b = get_sides(f1, f2, f1_allies, f2_allies)
-    SpectateFight(side_a, side_b, environment_allowed=environment_allowed, win_messages=win_messages)
+    SpectateFight(
+        side_a, side_b, environment_allowed=environment_allowed, win_messages=win_messages
+    )
 
 
 class BaseFight(object):
@@ -248,10 +278,10 @@ class BaseFight(object):
         num_f = len(self.all_fighters)
         if self.winners:
             self.win_exp = sum([f.exp_yield for f in self.losers]) // num_w
-            los_exp = (sum([w.exp_yield for w in self.winners]) // num_l // LOSER_EXP_DIVISOR)
+            los_exp = sum([w.exp_yield for w in self.winners]) // num_l // LOSER_EXP_DIVISOR
             los_mess = 'Loses.'
         else:
-            los_exp = (sum([f.exp_yield for f in self.all_fighters]) // num_f // DRAW_EXP_DIVISOR)
+            los_exp = sum([f.exp_yield for f in self.all_fighters]) // num_f // DRAW_EXP_DIVISOR
             los_mess = 'Draw.'
         for p in self.players:
             if p in self.winners:
@@ -299,18 +329,34 @@ class BaseFight(object):
             if self.winners:  # not draw
                 if p in self.winners and len(self.winners) == 1:
                     ratio = round(sum([f.exp_yield for f in self.losers]) / p.exp_yield, 2)
-                    curr_stat = p.get_stat('aston_victory')  # tuple: (date, p.level, [enemies], big ratio)
-                    if ((curr_stat is None and ratio >= ASTON_VICTORY_MIN_RATIO) or
-                            (curr_stat is not None and ratio > curr_stat[-1])):
-                        tup = (p.game.get_date(), p.level, [f.get_f_info(short=True) for f in self.losers], ratio)
+                    curr_stat = p.get_stat(
+                        'aston_victory'
+                    )  # tuple: (date, p.level, [enemies], big ratio)
+                    if (curr_stat is None and ratio >= ASTON_VICTORY_MIN_RATIO) or (
+                        curr_stat is not None and ratio > curr_stat[-1]
+                    ):
+                        tup = (
+                            p.game.get_date(),
+                            p.level,
+                            [f.get_f_info(short=True) for f in self.losers],
+                            ratio,
+                        )
                         p.write_stat('aston_victory', tup)
                         p.log('What an astonishing victory! ({})'.format(tup[-1]))
                 elif p in self.losers and len(self.losers) == 1:
                     ratio = round(sum([f.exp_yield for f in self.winners]) / p.exp_yield, 2)
-                    curr_stat = p.get_stat('humil_defeat')  # tuple: (date, p.level, [enemies], small ratio)
-                    if ((curr_stat is None and ratio <= HUMIL_DEFEAT_MIN_RATIO) or
-                            (curr_stat is not None and ratio < curr_stat[-1])):
-                        tup = (p.game.get_date(), p.level, [f.get_f_info(short=True) for f in self.winners], ratio)
+                    curr_stat = p.get_stat(
+                        'humil_defeat'
+                    )  # tuple: (date, p.level, [enemies], small ratio)
+                    if (curr_stat is None and ratio <= HUMIL_DEFEAT_MIN_RATIO) or (
+                        curr_stat is not None and ratio < curr_stat[-1]
+                    ):
+                        tup = (
+                            p.game.get_date(),
+                            p.level,
+                            [f.get_f_info(short=True) for f in self.winners],
+                            ratio,
+                        )
                         p.write_stat('humil_defeat', tup)
                         p.log('What a humiliating defeat! ({})'.format(tup[-1]))
 
@@ -383,8 +429,12 @@ class BaseFight(object):
         if not self.cartoon[0]:
             self.cartoon = self.cartoon[1:]
         s = self.check_epic()
-        options = (('Stats', self.show_stats), ('Timeline', self.show_timeline), ('Slideshow ({})'.format(len(
-            self.cartoon)) + s, self.slideshow), ('Save slideshow', self.save_slideshow))
+        options = (
+            ('Stats', self.show_stats),
+            ('Timeline', self.show_timeline),
+            ('Slideshow ({})'.format(len(self.cartoon)) + s, self.slideshow),
+            ('Save slideshow', self.save_slideshow),
+        )
         while True:
             choice = menu(options, keys='stlv', weak=True)
             if choice:
@@ -458,8 +508,16 @@ class BaseFight(object):
 
 class AutoFight(BaseFight):
     """Has all fight mechanics but no output of what happens during the fight."""
-    def __init__(self, side_a, side_b, environment_allowed=True, items_allowed=True, win_messages=None,
-                 school_display=False):
+
+    def __init__(
+        self,
+        side_a,
+        side_b,
+        environment_allowed=True,
+        items_allowed=True,
+        win_messages=None,
+        school_display=False,
+    ):
         BaseFight.__init__(self, side_a, side_b, environment_allowed=environment_allowed)
         self.items_allowed = items_allowed
         self.win_messages = win_messages
@@ -489,6 +547,7 @@ class AutoFight(BaseFight):
 
 class NormalFight(AutoFight):
     """Does not only have fight mechanics, but also outputs what happens during the fight."""
+
     def cls(self):
         self.main_player.cls()
 
@@ -510,8 +569,12 @@ class NormalFight(AutoFight):
 
 
 class SpectateFight(NormalFight):
-    def __init__(self, side_a, side_b, environment_allowed=True, win_messages=None, school_display=False):
-        BaseFight.__init__(self, side_a=side_a, side_b=side_b, environment_allowed=environment_allowed)
+    def __init__(
+        self, side_a, side_b, environment_allowed=True, win_messages=None, school_display=False
+    ):
+        BaseFight.__init__(
+            self, side_a=side_a, side_b=side_b, environment_allowed=environment_allowed
+        )
         self.win_messages = win_messages
         self.school_display = school_display
         self.cls()

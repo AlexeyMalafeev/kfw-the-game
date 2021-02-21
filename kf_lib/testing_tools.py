@@ -137,7 +137,10 @@ class Tester(object):
                 lsr = f.losers[0]
                 # att values
                 for att in att_names:
-                    for f, d, d_full in ((wnr, d_atts_wnr, d_full_atts_wnr), (lsr, d_atts_lsr, d_full_atts_lsr)):
+                    for f, d, d_full in (
+                        (wnr, d_atts_wnr, d_full_atts_wnr),
+                        (lsr, d_atts_lsr, d_full_atts_lsr),
+                    ):
                         d[att] += getattr(f, att)
                         d_full[att] += getattr(f, att + '_full')
                 # att diffs
@@ -162,13 +165,15 @@ class Tester(object):
                         for feat in m.features:
                             add_to_dict(d, feat, 1)
         # output
-        tuples = ((d_atts_wnr, d_atts_lsr, 'atts:'),
-                  (d_full_atts_wnr, d_full_atts_lsr, 'full atts:'),
-                  (att_diffs_wnr, att_diffs_lsr, 'att diffs:'),
-                  (styles_wnr, styles_lsr, 'styles:'),
-                  (techs1_wnr, techs1_lsr, 'techs 1:'),
-                  (techs2_wnr, techs2_lsr, 'techs 2:'),
-                  (moves_wnr, moves_lsr, 'moves:'))
+        tuples = (
+            (d_atts_wnr, d_atts_lsr, 'atts:'),
+            (d_full_atts_wnr, d_full_atts_lsr, 'full atts:'),
+            (att_diffs_wnr, att_diffs_lsr, 'att diffs:'),
+            (styles_wnr, styles_lsr, 'styles:'),
+            (techs1_wnr, techs1_lsr, 'techs 1:'),
+            (techs2_wnr, techs2_lsr, 'techs 2:'),
+            (moves_wnr, moves_lsr, 'moves:'),
+        )
         for d_w, d_l, legend in tuples:
             _output_results(d_w, d_l, legend)
         input('Press Enter')
@@ -206,8 +211,16 @@ class Tester(object):
         sm_table = [first_line]
         for lv1 in range(1, 21):
             print('level', lv1)
-            table.append([lv1, ])
-            sm_table.append([lv1, ])
+            table.append(
+                [
+                    lv1,
+                ]
+            )
+            sm_table.append(
+                [
+                    lv1,
+                ]
+            )
             for lv2 in range(1, 21):
                 wins = 0
                 for i in range(rep):
@@ -240,8 +253,14 @@ class Tester(object):
                 print(group_0[i])
                 print(group_1[i])
                 print(group_2[i])
-                for gr_a, gr_b in ((group_0, group_1), (group_0, group_2), (group_1, group_2), (group_1, group_0),
-                                   (group_2, group_0), (group_2, group_1)):
+                for gr_a, gr_b in (
+                    (group_0, group_1),
+                    (group_0, group_2),
+                    (group_1, group_2),
+                    (group_1, group_0),
+                    (group_2, group_0),
+                    (group_2, group_1),
+                ):
                     wins_loc = 0
                     f1 = gr_a[i]
                     f2 = gr_b[i]

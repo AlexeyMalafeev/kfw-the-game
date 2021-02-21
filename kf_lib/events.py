@@ -44,15 +44,23 @@ def crime_up(g, rate=CRIME_INCREASE_MONTHLY, mult=1.0):
 def kungfu_down(g):
     g.cls()
     g.kung_fu = max(g.kung_fu - KUNGFU_CHANGE, MIN_KUNGFU)
-    g.msg('Old man: The people of {} are losing their \
-interest in kung-fu...'.format(g.town_name))
+    g.msg(
+        'Old man: The people of {} are losing their \
+interest in kung-fu...'.format(
+            g.town_name
+        )
+    )
 
 
 def kungfu_up(g):
     g.cls()
     g.kung_fu = min(g.kung_fu + KUNGFU_CHANGE, MAX_KUNGFU)
-    g.msg('Old man: It seems everybody in {} wants \
-to practice kung-fu nowadays...'.format(g.town_name))
+    g.msg(
+        'Old man: It seems everybody in {} wants \
+to practice kung-fu nowadays...'.format(
+            g.town_name
+        )
+    )
 
 
 def new_story(g):
@@ -75,7 +83,11 @@ def new_tournament(g):
 def poverty_down(g):
     g.cls()
     g.poverty = max(g.poverty - POVERTY_CHANGE, MIN_POVERTY)
-    g.msg('Old woman: There are not as many poor and homeless people in {} as before...'.format(g.town_name))
+    g.msg(
+        'Old woman: There are not as many poor and homeless people in {} as before...'.format(
+            g.town_name
+        )
+    )
 
 
 def poverty_up(g):
@@ -85,10 +97,11 @@ def poverty_up(g):
 
 
 def randevent(g):
-    order = [(CH_STORY_BEGINS, new_story),
-             (CH_SCHOOL_VS_SCHOOL, school_vs_school),
-             (CH_TOURNAMENT_BEGINS, new_tournament)
-             ]
+    order = [
+        (CH_STORY_BEGINS, new_story),
+        (CH_SCHOOL_VS_SCHOOL, school_vs_school),
+        (CH_TOURNAMENT_BEGINS, new_tournament),
+    ]
     random.shuffle(order)
     for chance, func in order:
         if rnd() <= chance:
@@ -152,8 +165,11 @@ class Tournament(object):
 
     def run(self):
         self.g.cls()
-        self.g.msg('A kung-fu tournament ({} level) is organized in {}. The participation fee is {}.'.format(
-            self.category, self.g.town_name, self.fee))
+        self.g.msg(
+            'A kung-fu tournament ({} level) is organized in {}. The participation fee is {}.'.format(
+                self.category, self.g.town_name, self.fee
+            )
+        )
 
         # player participants
         participants = []
@@ -173,7 +189,7 @@ class Tournament(object):
         # known fighters
         pool = list(self.g.masters.values())
         pool += [f for s in self.g.schools.values() for f in s]
-        av_fighters = ([f for f in pool if f.check_lv(self.min_lv, self.max_lv) and not f.is_player])
+        av_fighters = [f for f in pool if f.check_lv(self.min_lv, self.max_lv) and not f.is_player]
         k = self.num_participants - len(participants)
         add = random.sample(av_fighters, k)
         participants += add

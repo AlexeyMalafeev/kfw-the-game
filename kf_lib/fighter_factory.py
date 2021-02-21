@@ -107,8 +107,10 @@ def new_convict():
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
 def new_custom_hcf():
     name = input('Name: ')
-    legend = [('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
-              for s in styles.default_styles]
+    legend = [
+        ('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
+        for s in styles.default_styles
+    ]
     # todo select starting atts
     style = menu(legend, 'Choose a style:')
     level = get_num_input('Level:', 1, 20)
@@ -356,7 +358,7 @@ def add_numbers_to_names(fighters):
 
 def copy_fighter(orig):
     """Return a Fighter copy of original fighter/player, e.g. for simulation.
-Weapons are included."""
+    Weapons are included."""
     atts = Fighter.get_init_atts(orig)
     new = Fighter(*atts)
     if orig.weapon:

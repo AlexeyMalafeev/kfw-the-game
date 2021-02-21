@@ -18,9 +18,10 @@ weapon_techs = []
 
 class Tech(object):
     """
-General technique class;
-params is parameters dict,
-descr is tech description."""
+    General technique class;
+    params is parameters dict,
+    descr is tech description."""
+
     is_style_tech = False
     is_unique = False
     is_upgradable = False
@@ -75,6 +76,7 @@ class StyleTech(Tech):
 
 class WeaponTech(Tech):
     """Technique used when equipping a weapon. Adds to atk and dfs."""
+
     is_weapon_tech = True
 
     def __init__(self, name, **kwargs):
@@ -107,96 +109,125 @@ class WeaponTech(Tech):
 
 
 # todo weapon techniques do nothing; implement
-_WEAPON_TECHS = [WeaponTech('Strange But Deadly'),
-                 WeaponTech('Weapons Competence'),
-                 WeaponTech('Butterfly Swords'),
-                 WeaponTech('Sky Saber'),
-                 WeaponTech('Lightning Spear'),
-                 WeaponTech('Thunder Staff'),
-                 WeaponTech('Star Sword')
-                 ]
+_WEAPON_TECHS = [
+    WeaponTech('Strange But Deadly'),
+    WeaponTech('Weapons Competence'),
+    WeaponTech('Butterfly Swords'),
+    WeaponTech('Sky Saber'),
+    WeaponTech('Lightning Spear'),
+    WeaponTech('Thunder Staff'),
+    WeaponTech('Star Sword'),
+]
 
-LINKED_TECHS = [(UpgradableTech('Qi Breathing', qp_gain=b.QP_GAIN1),
-                 AdvancedTech('Energy Breathing', qp_gain=b.QP_GAIN2)),
-
-                (UpgradableTech('Health Breathing', hp_gain=b.HP_GAIN1),
-                 AdvancedTech('Vitality Breathing', hp_gain=b.HP_GAIN2)),
-
-                (UpgradableTech('Monkey and Fox', block_disarm=b.BLOCK_DISARM1, hit_disarm=b.HIT_DISARM1),
-                 AdvancedTech('Flying Monkey and Golden Fox', block_disarm=b.BLOCK_DISARM2, hit_disarm=b.HIT_DISARM2)),
-
-                (UpgradableTech('18 Attack Forms', atk_mult=b.ATTACK1),
-                 AdvancedTech('36 Attack Forms', atk_mult=b.ATTACK2)),
-
-                (UpgradableTech('18 Defense Forms', dfs_mult=b.DEFENSE1),
-                 AdvancedTech('36 Defense Forms', dfs_mult=b.DEFENSE2)),
-
-                (UpgradableTech('Advanced Guard', guard_dfs_bonus=b.GUARD_DFS1),
-                 AdvancedTech('Dragon Guards a Treasure', guard_dfs_bonus=b.GUARD_DFS2)),
-
-                (UpgradableTech('Lotus Stance', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
-                 AdvancedTech('Golden Lotus Stance', qp_max=b.QP_MAX2, qp_start=b.QP_START2)),
-
-                (UpgradableTech('Horse-like Stamina', stamina_gain=b.STAM_RESTORE1),
-                 AdvancedTech('Strong as an Ox', stamina_max=b.STAM_MAX2, stamina_gain=b.STAM_RESTORE1)),
-
-                (UpgradableTech('Fierce Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
-                 AdvancedTech('Explosive Strikes', critical_chance=b.CRIT_CH2, critical_mult=b.CRIT_M2)),
-
-                (UpgradableTech('Iron Vest', dam_reduc=b.DAM_REDUC1),
-                 AdvancedTech('Superior Iron Vest', dam_reduc=b.DAM_REDUC2)),
-
-                (UpgradableTech('Shadow Slips Away', dodge_mult=b.EVADE1),
-                 AdvancedTech('Shadow of a Shadow', dodge_mult=b.EVADE2)),
-
-                (UpgradableTech('Wall-like Protection', block_mult=b.BLOCK1),
-                 AdvancedTech('Emperor\'s Fortress', block_mult=b.BLOCK2)),
-
-                (UpgradableTech('Behind You', dfs_penalty_step=b.DFS_PEN1),
-                 AdvancedTech('Behind You All', dfs_penalty_step=b.DFS_PEN2)),
-
-                (UpgradableTech('Iron Fist', punch_strike_mult=b.STRIKE_MULT1),
-                 AdvancedTech('Cannon Fist', punch_strike_mult=b.STRIKE_MULT2)),
-
-                (UpgradableTech('Powerful Kicks', kick_strike_mult=b.STRIKE_MULT1),
-                 AdvancedTech('Hurricane Legs', kick_strike_mult=b.STRIKE_MULT2)),
-
-                (UpgradableTech('Elbow Boxing', elbow_strike_mult=b.RARE_STRIKE_MULT1),
-                 AdvancedTech('Mighty Elbows', elbow_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (UpgradableTech('Knee Boxing', knee_strike_mult=b.RARE_STRIKE_MULT1),
-                 AdvancedTech('Mighty Knees', knee_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (UpgradableTech('Flying Strikes', flying_strike_mult=b.RARE_STRIKE_MULT1),
-                 AdvancedTech('Sky Dragon', flying_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (UpgradableTech('Hardened Palms', palm_strike_mult=b.RARE_STRIKE_MULT1),
-                 AdvancedTech('Palms of Justice', palm_strike_mult=b.RARE_STRIKE_MULT2)),
-                # todo fix this
-                # (UpgradableTech('Uncanny Strikes', exotic_strike_mult=b.RARE_STRIKE_MULT1),
-                #  AdvancedTech('Whole Body Weapon', exotic_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (UpgradableTech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
-                 AdvancedTech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2)),
-
-                (UpgradableTech('Environment Fighting', environment_chance=b.ENVIRONMENT_CH1),
-                 AdvancedTech('Environment Domination', environment_chance=b.ENVIRONMENT_CH2)),
-
-                (UpgradableTech('Unlikely Weapons', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH1),
-                 AdvancedTech('Anything Is a Weapon', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH2)),
-
-                (UpgradableTech('Debilitating Strikes', stun_chance=b.STUN_CH1),
-                 AdvancedTech('Crippling Strikes', stun_chance=b.STUN_CH2)),
-
-                (UpgradableTech('Brawler\'s Resilience', resist_ko=b.RESIST_KO1),
-                 AdvancedTech('Hero\'s Resilience', resist_ko=b.RESIST_KO2)),
-
-                (UpgradableTech('Guard While Striking', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-                 AdvancedTech('Attack Is Defense', guard_while_attacking=b.GUARD_WHILE_ATTACKING2)),
-
-                # todo 'momentum' technique - bonus after moving forward '+' and '++'
-                # possibly another technique that improves defense after moving back
-                ]
+LINKED_TECHS = [
+    (
+        UpgradableTech('Qi Breathing', qp_gain=b.QP_GAIN1),
+        AdvancedTech('Energy Breathing', qp_gain=b.QP_GAIN2),
+    ),
+    (
+        UpgradableTech('Health Breathing', hp_gain=b.HP_GAIN1),
+        AdvancedTech('Vitality Breathing', hp_gain=b.HP_GAIN2),
+    ),
+    (
+        UpgradableTech('Monkey and Fox', block_disarm=b.BLOCK_DISARM1, hit_disarm=b.HIT_DISARM1),
+        AdvancedTech(
+            'Flying Monkey and Golden Fox', block_disarm=b.BLOCK_DISARM2, hit_disarm=b.HIT_DISARM2
+        ),
+    ),
+    (
+        UpgradableTech('18 Attack Forms', atk_mult=b.ATTACK1),
+        AdvancedTech('36 Attack Forms', atk_mult=b.ATTACK2),
+    ),
+    (
+        UpgradableTech('18 Defense Forms', dfs_mult=b.DEFENSE1),
+        AdvancedTech('36 Defense Forms', dfs_mult=b.DEFENSE2),
+    ),
+    (
+        UpgradableTech('Advanced Guard', guard_dfs_bonus=b.GUARD_DFS1),
+        AdvancedTech('Dragon Guards a Treasure', guard_dfs_bonus=b.GUARD_DFS2),
+    ),
+    (
+        UpgradableTech('Lotus Stance', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
+        AdvancedTech('Golden Lotus Stance', qp_max=b.QP_MAX2, qp_start=b.QP_START2),
+    ),
+    (
+        UpgradableTech('Horse-like Stamina', stamina_gain=b.STAM_RESTORE1),
+        AdvancedTech('Strong as an Ox', stamina_max=b.STAM_MAX2, stamina_gain=b.STAM_RESTORE1),
+    ),
+    (
+        UpgradableTech('Fierce Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+        AdvancedTech('Explosive Strikes', critical_chance=b.CRIT_CH2, critical_mult=b.CRIT_M2),
+    ),
+    (
+        UpgradableTech('Iron Vest', dam_reduc=b.DAM_REDUC1),
+        AdvancedTech('Superior Iron Vest', dam_reduc=b.DAM_REDUC2),
+    ),
+    (
+        UpgradableTech('Shadow Slips Away', dodge_mult=b.EVADE1),
+        AdvancedTech('Shadow of a Shadow', dodge_mult=b.EVADE2),
+    ),
+    (
+        UpgradableTech('Wall-like Protection', block_mult=b.BLOCK1),
+        AdvancedTech('Emperor\'s Fortress', block_mult=b.BLOCK2),
+    ),
+    (
+        UpgradableTech('Behind You', dfs_penalty_step=b.DFS_PEN1),
+        AdvancedTech('Behind You All', dfs_penalty_step=b.DFS_PEN2),
+    ),
+    (
+        UpgradableTech('Iron Fist', punch_strike_mult=b.STRIKE_MULT1),
+        AdvancedTech('Cannon Fist', punch_strike_mult=b.STRIKE_MULT2),
+    ),
+    (
+        UpgradableTech('Powerful Kicks', kick_strike_mult=b.STRIKE_MULT1),
+        AdvancedTech('Hurricane Legs', kick_strike_mult=b.STRIKE_MULT2),
+    ),
+    (
+        UpgradableTech('Elbow Boxing', elbow_strike_mult=b.RARE_STRIKE_MULT1),
+        AdvancedTech('Mighty Elbows', elbow_strike_mult=b.RARE_STRIKE_MULT2),
+    ),
+    (
+        UpgradableTech('Knee Boxing', knee_strike_mult=b.RARE_STRIKE_MULT1),
+        AdvancedTech('Mighty Knees', knee_strike_mult=b.RARE_STRIKE_MULT2),
+    ),
+    (
+        UpgradableTech('Flying Strikes', flying_strike_mult=b.RARE_STRIKE_MULT1),
+        AdvancedTech('Sky Dragon', flying_strike_mult=b.RARE_STRIKE_MULT2),
+    ),
+    (
+        UpgradableTech('Hardened Palms', palm_strike_mult=b.RARE_STRIKE_MULT1),
+        AdvancedTech('Palms of Justice', palm_strike_mult=b.RARE_STRIKE_MULT2),
+    ),
+    # todo fix this
+    # (UpgradableTech('Uncanny Strikes', exotic_strike_mult=b.RARE_STRIKE_MULT1),
+    #  AdvancedTech('Whole Body Weapon', exotic_strike_mult=b.RARE_STRIKE_MULT2)),
+    (
+        UpgradableTech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
+        AdvancedTech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2),
+    ),
+    (
+        UpgradableTech('Environment Fighting', environment_chance=b.ENVIRONMENT_CH1),
+        AdvancedTech('Environment Domination', environment_chance=b.ENVIRONMENT_CH2),
+    ),
+    (
+        UpgradableTech('Unlikely Weapons', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH1),
+        AdvancedTech('Anything Is a Weapon', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH2),
+    ),
+    (
+        UpgradableTech('Debilitating Strikes', stun_chance=b.STUN_CH1),
+        AdvancedTech('Crippling Strikes', stun_chance=b.STUN_CH2),
+    ),
+    (
+        UpgradableTech('Brawler\'s Resilience', resist_ko=b.RESIST_KO1),
+        AdvancedTech('Hero\'s Resilience', resist_ko=b.RESIST_KO2),
+    ),
+    (
+        UpgradableTech('Guard While Striking', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
+        AdvancedTech('Attack Is Defense', guard_while_attacking=b.GUARD_WHILE_ATTACKING2),
+    ),
+    # todo 'momentum' technique - bonus after moving forward '+' and '++'
+    # possibly another technique that improves defense after moving back
+]
 
 UPG_MAP_ADV_REG = {t[1].name: t[0].name for t in LINKED_TECHS}
 UPG_MAP_REG_ADV = {t[0].name: t[1].name for t in LINKED_TECHS}
@@ -241,7 +272,7 @@ def get_tech_obj(tech_name):
 
 def get_upgradable_techs(fighter=None):
     """If fighter is None, return list of all upgradable techs.
-If fighter is given, return names of techs fighter can upgrade."""
+    If fighter is given, return names of techs fighter can upgrade."""
     if fighter is None:
         return upgradable_techs
     else:
@@ -250,7 +281,7 @@ If fighter is given, return names of techs fighter can upgrade."""
 
 def get_upgraded_techs(fighter=None):
     """If fighter is None, return list of all upgraded techs.
-If fighter is given, return names of upgraded techs fighter doesn't have."""
+    If fighter is given, return names of upgraded techs fighter doesn't have."""
     if fighter is None:
         return advanced_techs
     else:
@@ -259,7 +290,7 @@ If fighter is given, return names of upgraded techs fighter doesn't have."""
 
 def get_weapon_techs(fighter=None):
     """If fighter is None, return list of all weapon techs.
-If fighter is given, return list of weapon techs fighter has."""
+    If fighter is given, return list of weapon techs fighter has."""
     if fighter is None:
         return weapon_techs
     else:

@@ -19,6 +19,10 @@ WISDOM = load_quotes('wisdom.txt')
 MASTER_CRITICISM = load_quotes('master_criticism.txt')
 TRAINING_INJURY = load_quotes('training_injury.txt')
 
-PREFIGHT_QUOTES = {'challenger': CHALLENGER_PREFIGHT, 'hero': HERO_PREFIGHT, 'thug': THUG_PREFIGHT,
-                   'master': WISDOM}
+PREFIGHT_QUOTES = {
+    'challenger': CHALLENGER_PREFIGHT,
+    'hero': HERO_PREFIGHT,
+    'thug': THUG_PREFIGHT,
+    'master': WISDOM,
+}
 WIN_QUOTES = {'challenger': CHALLENGER_WIN, 'hero': HERO_WIN, 'thug': THUG_WIN, 'master': WISDOM}

@@ -7,6 +7,7 @@ import time
 
 
 from . import getch
+
 getch_inst = getch.Getch()
 
 
@@ -40,7 +41,7 @@ def align_text(text, indent, align):
     lines = []
     lengths = []
     curr_line = []
-    words_len = 0    # length of all words in a line, no spaces
+    words_len = 0  # length of all words in a line, no spaces
     int_spaces = -1  # spaces between words in a line
     for word in words:
         wlen = len(word)
@@ -92,7 +93,7 @@ def dict_comp(d1, d2, sort_col_index=0, descending=True):
         m = mean((v1, v2))
         tups.append((k, v1, v2, pcnt(v1 - m, m), s))
     tups.sort(key=lambda x: x[sort_col_index], reverse=descending)
-    tups = [(i+1, *t) for i, t in enumerate(tups)]
+    tups = [(i + 1, *t) for i, t in enumerate(tups)]
     # noinspection PyTypeChecker
     tups = [('#', 'Key', 'D1', 'D2', 'Diff%', 'Sum')] + tups
     return tups
@@ -137,7 +138,7 @@ def get_bar(curr_val, max_val, filled_sym, empty_sym, bar_length, mirror=False):
 
 def get_key():
     """
-If key is pressed, return its string; if no key is pressed, return 0
+    If key is pressed, return its string; if no key is pressed, return 0
     """
     return chr(ord(getch_inst()))
 
@@ -150,7 +151,7 @@ def get_linear_bar(v, maxv, syma='#', symb='-'):
 
 def get_num_input(message, a, b):
     """
-Return an integer in range [a, b] (both included) input by user.
+    Return an integer in range [a, b] (both included) input by user.
     """
     print(message)
     inp = input(' ({}-{})>'.format(a, b))
@@ -174,6 +175,7 @@ def hund(value):
 
 def main():
     import sys
+
     print("Please press a key to see its value")
     input_key = getch.Getch()
     while 1:
@@ -182,6 +184,7 @@ def main():
         print(key)
         if ord(key) == 27:  # key nr 27 is escape
             sys.exit()
+
 
 def mean(values):
     return round(sum(values) / len(values), 2)
@@ -200,14 +203,20 @@ def median(values):
         return values[i]
 
 
-def menu(opt_list, title='', keys='1234567890' + string.ascii_lowercase, new_line=True, weak=False,
-         options_per_page=10):
+def menu(
+    opt_list,
+    title='',
+    keys='1234567890' + string.ascii_lowercase,
+    new_line=True,
+    weak=False,
+    options_per_page=10,
+):
     """
-Ask the user to choose one of the options from the option list.
-The option list is either a list of strings
-(then return the selected option string on user choice),
-or a list of tuples (string, object),
-(then return the object matching the choice).
+    Ask the user to choose one of the options from the option list.
+    The option list is either a list of strings
+    (then return the selected option string on user choice),
+    or a list of tuples (string, object),
+    (then return the object matching the choice).
     """
     if isinstance(opt_list[0], tuple) and len(opt_list[0]) == 2:
         options = []
@@ -220,9 +229,9 @@ or a list of tuples (string, object),
     i = 0
     has_pages = False
     while True:
-        curr_options = options[i:i + options_per_page]
-        curr_returnables = returnables[i:i + options_per_page]
-        curr_keys = keys[:len(curr_options)]
+        curr_options = options[i : i + options_per_page]
+        curr_returnables = returnables[i : i + options_per_page]
+        curr_keys = keys[: len(curr_options)]
         if len(opt_list) > options_per_page:
             curr_options += ['Previous page', 'Next page']
             curr_keys += '<>'
@@ -240,7 +249,7 @@ or a list of tuples (string, object),
                 cls()
                 if choice == '<':
                     i = max(0, i - options_per_page)
-                elif options[i + options_per_page:]:
+                elif options[i + options_per_page :]:
                     i += options_per_page
                 break
             elif choice in curr_keys:
@@ -256,12 +265,14 @@ def msg(message):
 
 def multiply(numbers):
     from functools import reduce
-    return reduce(lambda x, y: x*y, numbers)
+
+    return reduce(lambda x, y: x * y, numbers)
 
 
 def my_trace(*args, show_time=True, blank_line=True):
     if show_time:
         import time
+
         time_string = time.ctime()
     else:
         time_string = ''
@@ -304,8 +315,8 @@ def rndint_2d(a, b):
 
 def pak(silent=True):
     """
-Press any key.
-Wait for user to press any key.
+    Press any key.
+    Wait for user to press any key.
     """
     if not silent:
         print('(Press any key)')
@@ -341,7 +352,9 @@ def pretty_table(table, sep='  ', as_list=False):
     max_lens = [max([len(str(elt)) for elt in col]) for col in columns]
     new_lines = []
     for line in table:
-        new_lines.append(sep.join(('{:<{}}'.format(elt, max_lens[i]) for i, elt in enumerate(line))))
+        new_lines.append(
+            sep.join(('{:<{}}'.format(elt, max_lens[i]) for i, elt in enumerate(line)))
+        )
     if as_list:
         return new_lines
     else:
@@ -371,21 +384,24 @@ def roman(x):
     """Incomplete."""
     tens = x // 10
     rem = x % 10
-    repl = {1: "I",
-            2: "II",
-            3: "III",
-            4: "IV",
-            5: "V",
-            6: "VI",
-            7: "VII",
-            8: "VIII",
-            9: "IX",
-            0: ""}
+    repl = {
+        1: "I",
+        2: "II",
+        3: "III",
+        4: "IV",
+        5: "V",
+        6: "VI",
+        7: "VII",
+        8: "VIII",
+        9: "IX",
+        0: "",
+    }
     return 'X' * tens + repl[rem]
 
 
 def sigmoid_old(z):
     import math
+
     ans = 1.0 / (1.0 + math.exp(-z))
     return ans
 
@@ -393,6 +409,7 @@ def sigmoid_old(z):
 def sigmoid(x):
     """Numerically-stable sigmoid function."""
     import math
+
     if x >= 0:
         z = math.exp(-x)
         return 1 / (1 + z)
@@ -406,7 +423,9 @@ def summary(data):
     if isinstance(data, dict):
         data = list(data.values())
     mx, mn = max(data), min(data)
-    return 'Min: {}, Max: {}, Range: {}, Median: {}, Mean: {}'.format(mn, mx, mx-mn, median(data), mean(data))
+    return 'Min: {}, Max: {}, Range: {}, Median: {}, Mean: {}'.format(
+        mn, mx, mx - mn, median(data), mean(data)
+    )
 
 
 def weighted_rand_choice(wts_dict, force_integers=True):
