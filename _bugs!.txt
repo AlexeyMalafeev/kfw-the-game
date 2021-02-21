@@ -1,3 +1,8 @@
+- l for slideshow doesn't work
+- multiple attempts for defeating beggars?
+
+- tier I move at level 20
+
 - pre-fight: no quotes from opponent
 - no ASCII for Charging Step
 - Critical, then evade

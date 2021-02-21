@@ -636,12 +636,15 @@ class Game(object):
             self.chosen_quit = True
 
     def test(self):
-        t = testing_tools.Tester(self)
-        f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
-        f2 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
         p = self.current_player
-        from kf_lib.fight import spectate
-        spectate(f1, f2)
+        p.level_up()
+
+        # t = testing_tools.Tester(self)
+        # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
+        # f2 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
+        # from kf_lib.fight import spectate
+        # spectate(f1, f2)
+
         # t.test_story(story.ForeignerStory)
         # t.test_enc('Challenger')
         # self.current_player.learn_tech('Attack Is Defense')

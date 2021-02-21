@@ -38,7 +38,7 @@ KNOCKBACK_HP_DIVISOR2 = 3
 KNOCKBACK_HP_DIVISOR3 = 2.5
 KNOCKDOWN_HP_DIVISOR = 2
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
-LVS_GET_NEW_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
+LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
 NEW_MOVE_TIERS = {1: 1, 2: 1, 3: 2, 4: 2, 5: 3, 6: 3, 7: 4, 8: 4, 9: 5, 10: 5,
                   11: 6, 12: 6, 13: 7, 14: 7, 15: 8, 16: 8, 17: 9, 18: 9, 19: 10, 20: 10}
 LVS_GET_NEW_TECH = {11, 13, 15, 17, 19}
@@ -891,6 +891,7 @@ weapon can also be weapon type"""
 
     def level_up(self, n=1):
         self.disarm()
+        # print(self.style.move_strings)
         for i in range(n):
             self.level += 1
             # increase a stat
@@ -907,15 +908,12 @@ weapon can also be weapon type"""
                 # learn new tech if possible
                 if self.level in LVS_GET_NEW_TECH:
                     self.choose_new_tech()
-            if self.level in LVS_GET_NEW_MOVE:
-                # print(self.style.move_strings[self.level])
-                # input('...')
-                move_s = ''
-                if self.level in self.style.move_strings:
-                    move_s = self.style.move_strings[self.level]
-                else:
-                    move_s = str(NEW_MOVE_TIERS[self.level])
-                return moves.resolve_style_move(move_s, self)
+            if self.level in self.style.move_strings:
+                move_s = self.style.move_strings[self.level]
+                moves.resolve_style_move(move_s, self)
+            elif self.level in LVS_GET_NEW_ADVANCED_MOVE:
+                move_s = str(NEW_MOVE_TIERS[self.level])
+                moves.resolve_style_move(move_s, self)
             # no need to refresh full atts here since they are refreshed when upgrading atts and learning techs
 
     def log(self, text):
@@ -1043,7 +1041,7 @@ weapon can also be weapon type"""
             setattr(self, att, value + 1)
 
     def set_rand_moves(self):
-        for lv in LVS_GET_NEW_MOVE:
+        for lv in LVS_GET_NEW_ADVANCED_MOVE:
             if self.level >= lv:
                 tier = NEW_MOVE_TIERS[lv]
                 self.learn_move(moves.get_rand_moves(self, 1, tier)[0])
