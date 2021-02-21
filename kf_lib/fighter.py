@@ -58,11 +58,12 @@ NEW_MOVE_TIERS = {
 }
 LVS_GET_NEW_TECH = {11, 13, 15, 17, 19}
 MOB_DAM_PENALTY = 0.3
-OFF_BALANCE_HP_DIVISOR = 4
+OFF_BALANCE_HP_DIVISOR = 4  # todo make 0.25 like above thresholds
 RATIO_NO_RISK = 0
 RATIO_VERY_LOW_RISK = 0.5
 RATIO_LOW_RISK = 0.8
-RATIO_SOMEWHAT_RISKY = 1.0
+RATIO_FAIR_FIGHT = 0.95
+RATIO_RISKY = 1.1
 RATIO_VERY_RISKY = 1.5
 RATIO_EXTREMELY_RISKY = 2
 SHOCK_CHANCE = 0.5  # for moves
@@ -817,15 +818,15 @@ class Fighter(object):
         if allies:
             own_pwr += sum([al.get_exp_worth() for al in allies])
         ratio = round(pwr / own_pwr, 2)
-        table = [
-            (RATIO_NO_RISK, 'no risk'),
-            (RATIO_VERY_LOW_RISK, 'very low risk'),
-            (RATIO_LOW_RISK, 'low risk'),
-            (RATIO_SOMEWHAT_RISKY, 'somewhat risky'),
-            (RATIO_VERY_RISKY, 'very risky'),
+        table = (
             (RATIO_EXTREMELY_RISKY, 'impossible'),
-        ]
-        table.reverse()
+            (RATIO_VERY_RISKY, 'very risky'),
+            (RATIO_RISKY, 'risky'),
+            (RATIO_FAIR_FIGHT, 'fair fight'),
+            (RATIO_LOW_RISK, 'low risk'),
+            (RATIO_VERY_LOW_RISK, 'very low risk'),
+            (RATIO_NO_RISK, 'no risk'),
+        )
         for threshold, legend in table:
             if ratio >= threshold:
                 return ratio, legend
