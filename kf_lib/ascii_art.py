@@ -1,5 +1,13 @@
 import os
 
+r"""
+   [}    {]
+  /_\|  |/ |
+   |      |
+   | \  /  \
+   / |  |   \
+"""
+
 
 def concat(a, b):
     lines_a = a.split('\n')
@@ -36,6 +44,8 @@ def mirror(lines):
         'c': 'D',  # todo better 'mirroring' for this symbol
         '[': ']',
         ']': '[',
+        '{': '}',
+        '}': '{',
     }
     for line in lines:
         temp_s = ''
