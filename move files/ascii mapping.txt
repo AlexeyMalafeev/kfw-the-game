@@ -1,69 +1,69 @@
 # Stance, Catch Breath
       s.
-   [} s.
+   (} s.
   |_\/s.
    |  s.
    |\ s.
   /  |s.
 # Step Back
        s.
- [}    s.
+ (}    s.
 |_\/   s.
  |     s.
 / \    s.
 |  \   s.
 # Retreat
         s.
- [}  ~~ s.
+ (}  ~~ s.
 |_\  ~~ s.
  | \ ~~ s.
 / \     s.
 \  \    s.
 # Leap Back
         s.
- [}   ~~s.
+ (}   ~~s.
 |_\/  ~~s.
  /_\  ~~s.
     \   s.
         s.
 # Step Forward
         s.
-     [} s.
+     (} s.
     |_\/s.
      |  s.
     / \ s.
    /   |s.
 # Charging Step, Rush Forward
          s.
- ~~   [} s.
+ ~~   (} s.
  ~~  |_\/s.
  ~~  /   s.
     / \  s.
    /  /  s.
 # Leap Forward
           s.
-~~     [} s.
+~~     (} s.
 ~~    |/\/s.
 ~~ __/ \  s.
        /  s.
           s.
 # Block
       .
-   [}\.
+   (}\.
    |\|.
    |_ .
    | /.
   /   .
 # Guard
       s.
-   [}|s.
+   (}|s.
    |/ s.
    |  s.
    |\ s.
   /  |s.
 # Focus
       s.
-   [} s.
+   (} s.
    |//s.
    |  s.
    |\ s.
@@ -71,265 +71,265 @@
 # Dodge
       s.
       s.
-  [}  s.
+  (}  s.
  |_\| s.
 __|__ s.
 \    /s.
 # Punch
         .
-    [}__.
+    (}__.
    /_   .
     |   .
    / \  .
   /  |  .
 # Energy Punch, Shocking Punch
         .
-    [}__.
+    (}__.
    /_ ~~.
     |   .
    / \  .
   /  |  .
 # Heavy Punch, Power Punch
          .
-     [}__.
+     (}__.
     /_   .
     |    .
    / \   .
   /  |   .
 # Charging Punch
           .
- ~~   [}__.
+ ~~   (}__.
  ~~  /_   .
  ~~  |    .
     / \   .
    /  /   .
 # Onslaught Punch
            .
- ~~~   [}__.
+ ~~~   (}__.
  ~~~  /_   .
  ~~~  |    .
      / \   .
     /  /   .
 # Pushing Punch
          .
-     [}__.
+     (}__.
     /_   .
     |    .
    / \   .
   /  /   .
 # Long Punch
           .
-      [}__.
+      (}__.
      /_   .
     /     .
    / \    .
   /  |    .
 # Chain of Punches
         .
-    [}_~.
+    (}_~.
     |V ~.
     |   .
     |\  .
    /  | .
 # Wing Chun Punch, Short Punch
        .
-    [}_.
+    (}_.
     |V .
     |  .
     |\ .
    /  |.
 # Palm
          .
-    [}__,.
+    (}__,.
    /_    .
     |    .
    / \   .
   /  |   .
 # Charging Palm
            .
- ~~   [}__,.
+ ~~   (}__,.
  ~~  /_    .
  ~~  /     .
     / \    .
    /  /    .
 # Onslaught Palm
             .
- ~~~   [}__,.
+ ~~~   (}__,.
  ~~~  /_    .
  ~~~  /     .
      / \    .
     /  /    .
 # Pushing Palm
          .
-    [}__,.
+    (}__,.
    /_    .
    /     .
   / \    .
  /  /    .
 # Long Palm
            .
-      [}__,.
+      (}__,.
      /_    .
     /      .
    / \     .
   /  |     .
 # Heavy Palm, Power Palm
          .
-    [}__,.
+    (}__,.
   /_     .
     |    .
    / \   .
   /   |  .
 # Buddha Palm
           .
-    [}__,≈.
+    (}__,≈.
   /_     ≈.
     |     .
    / \    .
   /   |   .
 # Energy Palm, Shocking Palm
          .
-    [}__,.
+    (}__,.
    /_ ~~ .
     |    .
    / \   .
   /  |   .
 # Backfist
         .
-    [}_/.
+    (}_/.
    /_   .
     |   .
    / \  .
   /  |  .
 # Hammer Fist - legacy
      \\ .
-    [}_/.
+    (}_/.
    /_   .
     |   .
    / \  .
   /  |  .
 # Beak - legacy
          .
-    [}_/`.
+    (}_/`.
    /_    .
     |    .
    / \   .
   /  |   .
 # Drunken Punch
          .
-     [}__.
+     (}__.
     /_   .
     \    .
    / \   .
   / /    .
 # Walking Fist
         .
-    [}__.
+    (}__.
    /_   .
     |   .
    / \  .
   /   | .
 # Hook - legacy
         .
-   _[}_/.
+   _(}_/.
     |   .
     |   .
    / \  .
   /  |  .
 # Power Hook - legacy
         .
-   _[}_/.
+   _(}_/.
     |   .
     /   .
    / \  .
   /  |  .
 # Uppercut - legacy
         .
-    [}  .
+    (}  .
    /| \/.
     /   .
    / \  .
   /  |  .
 # Claw
         .
-    [}  .
+    (}  .
    /|\/`.
     |   .
    / \  .
   /  |  .
 # Tiger Claw
         .
-    [} ,.
+    (} ,.
    /|\/ .
     |   .
    / \  .
   /  |  .
 # Elbow
        .
-    [}_.
+    (}_.
    /| /.
     |  .
    / \ .
   /  | .
 # Shocking Elbow, Energy Elbow
        .
-    [}_.
+    (}_.
    /|~/.
     |  .
    / \ .
   /  | .
 # Power Elbow, Heavy Elbow
         .
-     [}_.
+     (}_.
     |/ /.
     /   .
    / \  .
   /  |  .
 # Charging Elbow
          .
- ~~    [}_.
+ ~~    (}_.
  ~~   |/ /.
  ~~  /   .
     / \  .
    /  /  .
 # Onslaught Elbow
           .
- ~~~    [}_.
+ ~~~    (}_.
  ~~~   |/ /.
  ~~~  /   .
      / \  .
     /  /  .
 # Pushing Elbow, Long Elbow
         .
-      [}_.
+      (}_.
      |/ /.
     /   .
    / \  .
   /  /  .
 # Flying Elbow
           .
-       [}_.
+       (}_.
       |/ /.
  __ / \   .
      /    .
           .
 # Flying Punch
             .
-       [}___.
+       (}___.
       |/    .
  __ / \     .
      /      .
             .
 # Flying Claw
             .
-       [}__ .
+       (}__ .
       |/   `.
  __ / \     .
      /      .
             .
 # Flying Palm
             .
-       [}__,.
+       (}__,.
       |/    .
  __ / \     .
      /      .
@@ -337,62 +337,62 @@ __|__ s.
 # Low Punch - legacy
          .
          .
-    [}___.
+    (}___.
    |/    .
   | \    .
  /   |   .
 # Punch to Groin
         .
         .
-    [}  .
+    (}  .
    |/ \_.
   | \   .
  /   |  .
 # Low Palm - legacy
          .
          .
-    [}__,.
+    (}__,.
    |/    .
   | \    .
  /   |   .
 # Finishing Punch
         .
         .
-    [}  .
+    (}  .
    /_ \ .
   | \  \.
  /   |  .
 # Kick
         .
- [}_\   .
+ (}_\   .
  /_  ___.
    \/   .
    |    .
   /     .
 # Low Kick - legacy
         .
- [}_\   .
+ (}_\   .
  /_     .
    \ ___.
    |    .
    |    .
 # Knee Kick
        .
- [}_\  .
+ (}_\  .
  /_    .
    \__ .
    |  \.
   /    .
 # Kick to Groin
         .
- [}_\   .
+ (}_\   .
  /_     .
    \____.
    |  //.
   /     .
 # Finishing Kick
         .
-    [}_ .
+    (}_ .
    /_  \.
     /_  .
    /   \.
@@ -400,96 +400,96 @@ __|__ s.
 # Sweep
         .
         .
- _[}    .
+ _(}    .
  \ \/   .
  _| ___ .
  \     \.
 # Roundhouse Kick - legacy
         .
-  [}_\ /.
+  (}_\ /.
   /_  / .
     \   .
     /   .
    /    .
 # Power Kick, Heavy Kick
          .
- /_[}_   .
+ /_(}_   .
    |  / /.
     \ /  .
     /    .
    /     .
 # Spin Kick to Body - legacy
         .
- /_[}_  .
+ /_(}_  .
    |  / .
     \__/.
     /   .
    /    .
 # Dragon's Tail
         .
- /_[} ~/.
+ /_(} ~/.
    | // .
     \   .
     |   .
     |   .
 # High Kick - legacy
         .
-  [}_| /.
+  (}_| /.
  /_\  / .
     \/  .
     |   .
     |   .
 # Side Kick - legacy
          .
-  [}_|   .
+  (}_|   .
  /_\  ___.
     \/   .
     |    .
     |    .
 # Long Kick
           .
-  [}_|    .
+  (}_|    .
  /_\      .
     \ ----.
    /      .
   /       .
 # Charging Kick
            .
- ~~  [}\   .
+ ~~  (}\   .
  ~~ /_  ___.
  ~~   |/   .
      /     .
     /      .
 # Onslaught Kick
             .
- ~~~  [}\   .
+ ~~~  (}\   .
  ~~~ /_  ___.
  ~~~   |/   .
       /     .
      /      .
 # Pushing Kick
         .
-  [}\   .
+  (}\   .
  /_  ___.
    |/   .
   /     .
  /      .
 # Flying Kick
-  [}       .
+  (}       .
  /_ \ _____.
    /__     .
            .
            .
            .
 # No-Shadow Kick
-  [}       .
+  (}       .
  /_ \ ___~~.
     \ __~~~.
           ~.
            .
            .
 # Flying Spin Kick - legacy
- /_[}    .
+ /_(}    .
    | /   .
     \ __/.
    /_    .
@@ -497,48 +497,48 @@ __|__ s.
          .
 # Knee
        .
-   [}  .
+   (}  .
   |_\/ .
     \__.
     | /.
    /   .
 # Heavy Knee, Power Knee
        .
-   [}  .
+   (}  .
   /_\/ .
     \__.
    /  /.
   /    .
 # Pushing Knee
        .
-   [}  .
+   (}  .
    \_\|.
     |__.
    /  /.
   /    .
 # Charging Knee
         .
- ~~ [}  .
+ ~~ (}  .
  ~~ \_\|.
  ~~  |__.
     /  /.
    /    .
 # Onslaught Knee
          .
- ~~~ [}  .
+ ~~~ (}  .
  ~~~ \_\|.
  ~~~  |__.
      /  /.
     /    .
 # Long Knee
         .
-  [}    .
+  (}    .
   \/\/  .
     \ __.
    /   /.
   /     .
 # Flying Knee        
-     [} .
+     (} .
     /_\|.
      |__.
   __/  /.
@@ -546,329 +546,329 @@ __|__ s.
         .
 # Headbutt
         .
-      [}.
+      (}.
      /_ .
     /   .
    / \  .
   /  /  .
 # Heavy Headbutt, Power Headbutt
         .
-      [}.
+      (}.
      /_ .
     /   .
  __/ \  .
      /  .
 # Charging Headbutt
           .
- ~~     [}.
+ ~~     (}.
  ~~    /_ .
  ~~   /   .
    __/ \  .
        /  .
 # Onslaught Headbutt
            .
- ~~~     [}.
+ ~~~     (}.
  ~~~    /_ .
  ~~~   /   .
     __/ \  .
         /  .
 # Long Headbutt, Pushing Headbutt
          .
-       [}.
+       (}.
       /  .
     / \  .
  __/ \   .
      /   .
 # Flying Headbutt - legacy
          .
-      _[}.
+      _(}.
      /\\ .
   __/\   .
      /   .
          .
 # Flying Headbutt
           .
-     ___[}.
+     ___(}.
  __/\ \\  .
     /     .
           .
           .
 # Throw
         .
-      [}.
+      (}.
      /\_.
     /   .
    / \  .
   /  |  .
 # Shove
          .
-     [}  .
+     (}  .
      /===.
     /    .
    / \   .
   /  |   .
 # Trip
         .
-    [}__.
+    (}__.
     |\_ .
     |__ .
     /  \.
    /    .
 # Hit
       .
- [} * .
+ (} * .
  |_\_ .
    \  .
    |\ .
   /  |.
 # Hit Effect
 !     .
- [} * .
+ (} * .
  |_\_ .
    \  .
    |\ .
   /  |.
 # Knockback
        .
- [} *  .
+ (} *  .
  |_\_  .
    \__ .
     \ \.
     |  .
 # Falling
        .
- [}*   .
+ (}*   .
  |_\/  .
    \__ .
     \ \.
        .
 # Lying
-      .
-      .
-      .
-      .
- _    .
-|O|\__.
+       .
+       .
+       .
+       .
+ __    .
+|()|\__.
 # Lying Hit
-      .
-      .
-      .
-      .
- _  * .
-\O\\__.
+       .
+       .
+       .
+       .
+ _  *  .
+\()\\__.
 # Lying Hit Effect
-      .
-      .
-      .
-!     .
- _  * .
-\O\\__.
+       .
+       .
+       .
+!      .
+ _  *  .
+\()\\__.
 # Lying Block
       .
       .
       .
-   [}\.
+   (}\.
   /__ .
 __\  \.
 # Lying Dodge
         s.
         s.
         s.
-   [}   s.
+   (}   s.
   /_\/  s.
 __\  \  s.
 # Win
      | s.
-  [}/  s.
+  (}/  s.
   /|   s.
   \|   s.
   / \  s.
  |   | s.
 # Stick Strike, Baton Strike, Bludgeon Strike
           .
-    [}   /.
+    (}   /.
    /_ \_/ .
     |     .
    / \    .
   /  /    .
 # Broom Strike
           |/_.
-    [}    /  .
+    (}    /  .
    /_ \_ /   .
     |   /    .
    / \       .
   /  /       .
 # Broom Thrust
                .
-     [}        .
+     (}        .
     /_ \_____/_.
     |        \ .
    / \         .
   /  |         . 
 # Baton Smash, Bludgeon Smash
            .
-     [} ~  .
+     (} ~  .
     /_\  ~ .
     /  \___.
    / \     .
   /  |     .  
 # Guqin Smash
               .
-     [}  ~    .
+     (}  ~    .
     /_\   ~__ .
     /  \__/_o/.
    / \        .
   /  |        . 
 # Hammer Smash
              .
-     [}  ~   .
+     (}  ~   .
      \\   ~  .
-    / \\___[].
-   / \     [].
+    / \\___().
+   / \     ().
   /  |       .
 # Hammer Strike
             .
-    [}   [] .
-    |\\  /[].
+    (}   () .
+    |\\  /().
     | \\/   .
    / \      .
   /  |      .
 # Bench Smash
            .
-     [} ==|.
+     (} ==|.
      \\   |.
     / \\==|.
    / \     .
   /  |     .
 # Chair Smash
              .
-     [}      .
+     (}      .
      \\   |==.
     / \\__|==.
    / \       .
   /  |       .
 # Axe Chop, Axe Slash
            .
-    [}   /).
+    (}   /).
    /_ \_/  .
     |      .
    / \     .
   /  /     .
 # Stick Thrust
              .
-     [}      .
+     (}      .
     /_\______.
     |        .
    / \       .
   /  |       .
 # Chopsticks Thrust
            .
-     [}__._.
+     (}__._.
     /_     .
     |      .
    / \     .
   /  |     .
 # Pair of Swords Slash
          .
-    [}__).
+    (}__).
     |\_) .
     |    .
    / \   .
   /  |   .
 # Pair of Swords Stab
           .
-    [}__._.
+    (}__._.
     |\_._ .
     |     .
    / \    .
   /  /    .
 # Saber Slash
           .
-    [}   |.
+    (}   |.
    /_ \_/ .
     |     .
    / \    .
   /  /    .
 # Saber Thrust
              .
-     [}      .
+     (}      .
     /_ \_.__/.
     |        .
    / \       .
   /  |       .
 # Spear Thrust
              .
-     [}      .
+     (}      .
   __/__\_____.
     /        .
    / \       .
   /   |      .
 # Long Spear Thrust, Pole Thrust
                .
-      [}       .
+      (}       .
     _/__\______.
     /          .
    / \         .
   /   |        .
 # Staff Strike, Pole Strike
           /.
-    [}__ / .
+    (}__ / .
     |\_ /  .
     /  /   .
    / \/    .
   /   |    .
 # Sword Slash
           .
-    [}   /.
+    (}   /.
    /_ \_/ .
     |     .
    / \    .
   /  |    .
 # Sword Thrust
              .
-     [}      .
+     (}      .
     /_ \_.___.
     |        .
    / \       .
   /  |       .
 # Rope Whip, Cloth Whip, Chain Whip
              .
-    [}  .~~~~.
+    (}  .~~~~.
    /_ \/     .
     |        .
    / \       .
   /  |       .
 # Umbrella Strike
         _  .
-    [}   /|.
+    (}   /|.
    /_ \_/  .
     |  c   .
    / \     .
   /  /     .
 # Umbrella Thrust
               .
-     [}       .
+     (}       .
     /_ \_c___\.
     |        /.
    / \        .
   /  |        .
 # Knife Slash
           .
-     [}   .
+     (}   .
     /_\ _).
     |     .
    / \    .
   /  |    .
 # Knife Stab
             .
-      [}    .
+      (}    .
      /_ \_._.
     /       .
    / \      .
   /  |      .
 # Fan Strike
            .
-    [}|    .
+    (}|    .
     | \ _/_.
     |      .
    / \     .
