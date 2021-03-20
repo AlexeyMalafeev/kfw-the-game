@@ -128,6 +128,8 @@ BASIC_MOVES = [
         'Shove',
         'Step Forward',
         'Step Back',
+        'Rush Forward',
+        'Retreat',
         'Guard',
         'Focus',
         'Catch Breath',
@@ -172,6 +174,8 @@ def get_rand_moves(f, n, tier, exceptions=None):
 
 def resolve_style_move(move_s, f):
     pool = []
+    features = None
+    tier = None
     # a special case with tier-only move_s
     if len(move_s) == 1 and move_s.isdigit():
         # print('we are here')
@@ -222,6 +226,6 @@ def resolve_style_move(move_s, f):
         f.choose_new_move(pool)
     except IndexError:
         print(
-            'Cannot choose new move for pool={pool}, move_s_arg={move_s_arg}, move_s={move_s}, f={f}'
+            f'Cannot choose new move for {pool=}, {move_s}, {features=}, {tier=} {f=}'
         )
         input('...')

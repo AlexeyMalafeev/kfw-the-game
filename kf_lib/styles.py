@@ -162,7 +162,7 @@ default_styles = [
             7: StyleTech('Gecko III', flying_strike_mult=b.STRIKE_MULT1),
         },
         {
-            1: 'Retreat',  # todo more suitable moves for Gecko
+            1: 'Leap Back',
             2: '1,long-range',
             4: '2,long-range',
             6: '3,extra long-range',
@@ -187,7 +187,7 @@ default_styles = [
             7: StyleTech('Leopard III', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
         },
         {
-            1: ('Rush Forward', 'Retreat'),
+            1: ('Leap Forward', 'Leap Back'),
             2: 'Leopard Punch',
             4: '2,elbow',
             6: '3,knee',
@@ -202,7 +202,7 @@ default_styles = [
             5: StyleTech('Whirlwind Kicks', kick_strike_mult=b.STRIKE_MULT1),
             7: StyleTech('Long Fist III', atk_mult=b.ATTACK1),
         },
-        {1: 'Retreat', 2: 'Long Punch', 4: '2,long,kick', 6: '3,acrobatic', 8: '4,acrobatic'},
+        {1: 'Leap Back', 2: 'Long Punch', 4: '2,long,kick', 6: '3,acrobatic', 8: '4,acrobatic'},
     ),
     TechStyle(
         'Monkey',
