@@ -1,0 +1,1 @@
+Change move in base/extra/style_moves.txt, then run move_gen.py from root dir for changes to take effect (they will be reflected in the all_moves.txt file)

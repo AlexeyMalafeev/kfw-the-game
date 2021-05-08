@@ -1,55 +1,20 @@
-31.10.2020
-v.0.6.0 aka I'll Be Watching You
+..2021
+v.0.6.1 aka 
 
 DONE:
 
-AI:
+fix:
+	players didn't learn new moves when leveling up
 
+refactor:
+	Black
 
-balance:
+feat:
+	'fair fight' in risk ratios
+	ASCII heads (}
+	Rush Forward and Retreat are available to all fighters by default
+	ASCII floor
 
-
-code:
-    utilities.multiply(numbers)
-    experience.extract_features(side_a, side_b)
-    ml_fighter_pwr.py
-    the LR trained model's intercept and coefficients can be used without any heavy dependencies
-
-bug fixes:
-    fight items are now canceled after exp earned is calculated
-            (although this so far doesn't change exp amount)
-    exp bonuses are now properly recorded in statistics
-    fixed evil crash in spectating fights
-	style generation: styles were generated from the same subset of strings
-	fixed bug in learning new moves at level 10+
-
-gameplay:
-    ! ability to observe what AI players do during their turns
-    don't add random moves to choose from if there is at least one style string-based move
-            -> more distinct styles
-    ! machine learning-based prediction for fight outcomes, 90-91% accurate (LR, RF)
-	always try to learn a move with bonus 
-	# todo add this to learn_new_move
-
-moves:
-    style moves: Backfist (karate)
-    default moves for some foreign styles
-    generated some throws (15789 -> 15803 moves)
-
-names:
-    a handful of Thai and Brazilian names
-
-styles:
-    Capoeira
-
-testing:
-    _run_test_lv_vs_crowd.py shortcut
-    'tests' folder
-    improved Tester.test_level_vs_crowds
-
-UI:
-
-    
 _____________________________________________________
 
 implement 'momentum' - a bonus to attack after Step Forward ('+') and Rush Forward ('++'), or make it a tech
@@ -72,8 +37,6 @@ free-for-all fights
 grab enemy's weapon
 
 now we can actually create own styles (with 27 boosts -> 2925 combinations without repetition [n! / (r!(n-r)!)]
-
-style generator; could use words like 'mad', 'wooden' + 'dragon', 'fist' etc. (Yu Fist; name + noun)
 
 spectate tournaments option
 
@@ -142,7 +105,6 @@ fight AI often steps back at distance 4
 
 
 
-? already done? moves of higher tier when leveling up (including random moves for generated fighters)
 
 collect 'most damage dealt in one blow' stat
 
@@ -163,15 +125,11 @@ improved items
 
 day action: go to tavern
 
-at lv 15 learn _any_ strike/move + _any_ tech?
-
-strikes are more "fixed" depending on style, but can choose any strike sometimes, at certain lv (like tech)
-
 more life sim
 
 add persuade/talk into checks, dependent on trait (add new trait?)
 
-temp traits after talking to wise man
+temp traits after talking to wise man?
 
 debt collectors
 

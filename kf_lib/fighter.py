@@ -547,6 +547,10 @@ class Fighter(object):
             return
         self.upgrade_tech(random.choice(av_techs))
 
+    def cls(self):
+        """Empty method for convenience"""
+        pass
+
     def defend(self):
         atkr = self.target
         atkr.dam = atkr.atk_pwr
