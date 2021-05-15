@@ -29,7 +29,7 @@ class FightAITest(object):
         return lv, lv
 
     def run_test(self):
-        s = '\n{}\n{} vs {}'.format(self.__class__.__name__, self.aname, self.bname)
+        s = f'\n{self.__class__.__name__}\n{self.aname} vs {self.bname}'
         print(s)
         print(s, file=self.output_file)
         for i in range(self.rep):

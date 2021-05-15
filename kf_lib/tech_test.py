@@ -58,7 +58,7 @@ class TechTester(object):
             self.test_tech(None)
         for name, techs in self.order:
             print('*' * 50)
-            print('testing {}...'.format(name))
+            print(f'testing {name}...')
             print('*' * 50)
             for t in techs:
                 self.test_tech(t)
@@ -68,14 +68,14 @@ class TechTester(object):
             self.stats(name, techs)
 
     def stats(self, name, techs):
-        text = '\n\n{}\n{}\n{}\n\n'.format('*' * 50, name, '*' * 50)
+        text = f"\n\n{'*' * 50}\n{name}\n{'*' * 50}\n\n"
         # self.wins_total = {t: 0 for t in techs}
         for legend, wins in self.fight_types:
             tuples = [(v, k) for k, v in wins.items() if k in techs]
             as_str = '\n'.join(
-                ['{} {} ({})'.format(v, k, techniques.get_descr(k)) for v, k in sorted(tuples)]
+                [f'{v} {k} ({techniques.get_descr(k)})' for v, k in sorted(tuples)]
             )
-            text += '\n  {}:\n{}\n'.format(legend, as_str)
+            text += f'\n  {legend}:\n{as_str}\n'
             # if not wins is self.wins_total:
             # print('wins\n', wins)
             # print('wins total\n', self.wins_total)
@@ -85,8 +85,8 @@ class TechTester(object):
             mn, mx = min(wins.values()), max(wins.values())
             aver = mean(wins.values())
             rng = mx - mn
-            text += '\n min:{}, max:{}, range:{}, mean:{}'.format(mn, mx, rng, aver)
-            text += '\n baseline: {}\n\n'.format(wins[self.BASELINE])
+            text += f'\n min:{mn}, max:{mx}, range:{rng}, mean:{aver}'
+            text += f'\n baseline: {wins[self.BASELINE]}\n\n'
             print(wins)
         print(text)
         self.output.write(text)
@@ -94,7 +94,7 @@ class TechTester(object):
     def test_tech(self, t):
         """If t is None, False etc., get baseline result."""
         if t:
-            print('testing {} ({})'.format(t, techniques.get_descr(t)))
+            print(f'testing {t} ({techniques.get_descr(t)})')
         else:
             print('getting baseline...')
             t = self.BASELINE

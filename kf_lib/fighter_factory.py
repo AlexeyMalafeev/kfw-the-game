@@ -353,7 +353,7 @@ def new_thug(weak=False, n=1):
 # utility functions
 def add_numbers_to_names(fighters):
     for i, f in enumerate(fighters):
-        f.name += ' {}'.format(i + 1)
+        f.name += f' {i + 1}'
 
 
 def copy_fighter(orig):

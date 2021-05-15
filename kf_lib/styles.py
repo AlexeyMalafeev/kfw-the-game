@@ -21,7 +21,7 @@ class BaseStyle(object):
         all_styles[self.name] = self
 
     def __str__(self):
-        return '{} ({})'.format(self.name, self.descr)
+        return f'{self.name} ({self.descr})'
 
 
 class TechStyle(BaseStyle):
@@ -37,7 +37,7 @@ class TechStyle(BaseStyle):
         for lv, t in self.techs.items():
             if t.descr_short not in features:
                 features.append(t.descr_short)
-        self.descr_short = '({})'.format(', '.join(features))
+        self.descr_short = f"({', '.join(features)})"
         all_tech_styles[self.name] = self
 
 

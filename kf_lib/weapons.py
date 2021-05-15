@@ -32,7 +32,7 @@ class Weapon(object):
         self.descr = '(Pwr:{}-{}  Acc:{}-{}  Rng:{}-{}  Dfs:{})'.format(
             pwr_min, pwr_max, acc_min, acc_max, rng_min, rng_max, dfs
         )
-        self.descr_short = '({}|{})'.format(atk, dfs)
+        self.descr_short = f'({atk}|{dfs})'
         all_weapons[self.name] = self
 
     def __repr__(self):
@@ -44,7 +44,7 @@ class Weapon(object):
         )
 
     def __str__(self):
-        return '{} {}'.format(self.name, self.descr)
+        return f'{self.name} {self.descr}'
 
     def get_exp_mult(self):
         return 1.0 + mean((self.dfs_bonus, self.atk_mean))

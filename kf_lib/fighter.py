@@ -293,7 +293,7 @@ class Fighter(object):
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
         n2 = self.current_fight.get_f_name_string(self.target)
-        s = '{}: {} @ {}'.format(n1, self.action.name, n2)
+        s = f'{n1}: {self.action.name} @ {n2}'
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
@@ -322,10 +322,10 @@ class Fighter(object):
     def calc_atk(self, action):
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
         strike_mult = 1.0
-        strike_mult *= getattr(self, 'dist{}_bonus'.format(action.distance), 1.0)
+        strike_mult *= getattr(self, f'dist{action.distance}_bonus', 1.0)
         for feature in action.features:
             # low-prio todo reimplement computing strike_mult without getattr, use dict
-            strike_mult *= getattr(self, '{}_strike_mult'.format(feature), 1.0)
+            strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
         self.atk_bonus = self.atk_mult * strike_mult
         if self.check_status('off-balance'):
             self.atk_bonus *= self.off_balance_atk_mult
@@ -663,7 +663,7 @@ class Fighter(object):
         for i, att in enumerate(self.att_names):
             short = self.att_names_short[i]
             v = self.get_att_str(att)
-            atts_info.append('{}:{}'.format(short, v))
+            atts_info.append(f'{short}:{v}')
         return ' '.join(atts_info)
 
     def get_allies_power(self):  # TBD: this is not used yet
@@ -671,7 +671,7 @@ class Fighter(object):
 
     def get_att_str(self, att):
         base, full = self.get_base_att_value(att), self.get_full_att_value(att)
-        return '{}({})'.format(full, base) if full > base else str(base)
+        return f'{full}({base})' if full > base else str(base)
 
     def get_att_str_prefight(self, att, hide=False):
         base, full = self.get_base_att_value(att), self.get_full_att_value(att)
@@ -718,11 +718,11 @@ class Fighter(object):
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
         if s.weapon:
-            w_info = ', {}'.format(s.weapon.name)
+            w_info = f', {s.weapon.name}'
         else:
             w_info = ''
         if short:
-            info = '{}, lv.{} {}{}'.format(s.name, s.level, s.style.name, w_info)
+            info = f'{s.name}, lv.{s.level} {s.style.name}{w_info}'
         else:
             info = '{}, lv.{} {}{}\n{}'.format(
                 s.name, s.level, s.get_style_string(show_st_emph), w_info, s.get_all_atts_str()
@@ -744,7 +744,7 @@ class Fighter(object):
         )
 
     def get_init_string(self):
-        return '{}{!r}'.format(self.__class__.__name__, self.get_init_atts())
+        return f'{self.__class__.__name__}{self.get_init_atts()!r}'
 
     def get_max_att_value(self):
         return max(self.get_base_atts_tup())
@@ -811,8 +811,8 @@ class Fighter(object):
                 atts_wb = (f.get_att_str_prefight(att, hide=True) for att in self.att_names)
             s += '{:<4}{:<4}{:<4}{:<4}'.format(*atts_wb)
             if f.weapon:
-                s += '{} {}'.format(f.weapon.name, f.weapon.descr_short)
-            s += '\n{}{}'.format(' ' * (size1 + size2), f.style.descr_short)
+                s += f'{f.weapon.name} {f.weapon.descr_short}'
+            s += f"\n{' ' * (size1 + size2)}{f.style.descr_short}"
         return s
 
     def get_rel_strength(self, *opp, allies=None):
@@ -851,14 +851,14 @@ class Fighter(object):
         # inact = '{}'.format('!' * excl) if excl else ''
         inact = '!' * excl
         padding = ' ' if lying or inact else ''
-        return '{}{}{}{}{}'.format(padding, slowed_down, off_bal, lying, inact)
+        return f'{padding}{slowed_down}{off_bal}{lying}{inact}'
 
     def get_style_string(self, show_emph=False):
         if show_emph:
-            emph_info = '\n {}'.format(self.style.descr_short)
+            emph_info = f'\n {self.style.descr_short}'
         else:
             emph_info = ''
-        return '{}{}'.format(self.style.name, emph_info)
+        return f'{self.style.name}{emph_info}'
 
     def get_techs_string(self, descr=True, header='Techniques:'):
         if not self.techs:
@@ -868,7 +868,7 @@ class Fighter(object):
         d = ''
         for t in self.techs:
             if descr:
-                d = '- {}'.format(techniques.get_descr(t))
+                d = f'- {techniques.get_descr(t)}'
             output.append('{:<{}}{}'.format(t, align, d))
         output = [header] + sorted(output)
         return '\n'.join(output)
@@ -906,7 +906,7 @@ class Fighter(object):
         if self.dam > 0:
             self.dam = max(self.dam - tgt.dam_reduc, 0)
             tgt.take_damage(self.dam)
-            self.current_fight.display('hit: -{} HP ({})'.format(self.dam, tgt.hp))
+            self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_hit_disarm()
             self.do_move_functions(self.action)
             self.try_stun()
@@ -920,8 +920,8 @@ class Fighter(object):
             move = moves.get_move_obj(move)
         self.moves.append(move)
         if not silent:
-            self.show('{} learns {} ({}).'.format(self.name, move.name, move.descr))
-            self.log('Learns {} ({})'.format(move.name, move.descr))
+            self.show(f'{self.name} learns {move.name} ({move.descr}).')
+            self.log(f'Learns {move.name} ({move.descr})')
             self.pak()
 
     def learn_tech(self, *techs):
@@ -931,8 +931,8 @@ class Fighter(object):
             if tn not in self.techs:
                 descr = techniques.get_descr(tn)
                 self.add_tech(tn)
-                self.show('{} learns {} ({}).'.format(self.name, tn, descr))
-                self.log('Learns {} ({})'.format(tn, descr))
+                self.show(f'{self.name} learns {tn} ({descr}).')
+                self.log(f'Learns {tn} ({descr})')
                 self.pak()
 
     def level_up(self, n=1):
@@ -970,7 +970,7 @@ class Fighter(object):
     def maneuver(self):
         m = self.action
         n = self.current_fight.get_f_name_string(self)
-        s = '{}: {}'.format(n, m.name)
+        s = f'{n}: {m.name}'
         self.current_fight.display(s)
         self.current_fight.display('=' * len(s))
         if m.dist_change:
@@ -1034,7 +1034,7 @@ class Fighter(object):
         pool = quotes.PREFIGHT_QUOTES.get(self.quotes, None)
         if pool is not None:
             q = random.choice(pool)
-            self.current_fight.show('{}: "{}"'.format(self.name, q))
+            self.current_fight.show(f'{self.name}: "{q}"')
             return True
         else:
             return False
@@ -1043,7 +1043,7 @@ class Fighter(object):
         pool = quotes.WIN_QUOTES.get(self.quotes, None)
         if pool is not None:
             q = random.choice(pool)
-            self.current_fight.show('{}: "{}"'.format(self.name, q))
+            self.current_fight.show(f'{self.name}: "{q}"')
 
     def see_fight_info(self, *args, **kwargs):
         pass
@@ -1198,7 +1198,7 @@ class Fighter(object):
         atkr = self.target
         if atkr.weapon and self.block_disarm and rnd() <= self.block_disarm:
             atkr.disarm()
-            self.current_fight.display('{} disarms {} while blocking'.format(self.name, atkr.name))
+            self.current_fight.display(f'{self.name} disarms {atkr.name} while blocking')
 
     def try_critical(self):
         if self.critical_chance and rnd() <= self.critical_chance:
@@ -1218,13 +1218,13 @@ class Fighter(object):
                 self.dfs_pwr *= self.current_fight.environment_bonus
                 self.to_block *= self.current_fight.environment_bonus
                 self.to_dodge *= self.current_fight.environment_bonus
-            self.current_fight.display('{} uses the environment!'.format(self.name))
+            self.current_fight.display(f'{self.name} uses the environment!')
 
     def try_hit_disarm(self):
         tgt = self.target
         if tgt.weapon and self.hit_disarm and rnd() <= self.hit_disarm:
             tgt.disarm()
-            self.current_fight.display('{} disarms {} while attacking'.format(self.name, tgt.name))
+            self.current_fight.display(f'{self.name} disarms {tgt.name} while attacking')
 
     def try_in_fight_impro_wp(self):
         if (
@@ -1235,7 +1235,7 @@ class Fighter(object):
         ):
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
-            self.current_fight.display('{} grabs an improvised weapon!'.format(s))
+            self.current_fight.display(f'{s} grabs an improvised weapon!')
             self.current_fight.pak()
 
     def try_insta_ko(self):
@@ -1274,8 +1274,8 @@ class Fighter(object):
                 self.current_fight.display(f'{tgt.name} resists being knocked out!')
             else:
                 self.kos_this_fight += 1
-                self.log('Knocks out {}.'.format(tgt.name))
-                tgt.log('Knocked out by {}.'.format(self.name))
+                self.log(f'Knocks out {tgt.name}.')
+                tgt.log(f'Knocked out by {self.name}.')
                 if not tgt.ascii_name.startswith('lying'):
                     tgt.set_ascii('Falling')
                 self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
@@ -1319,7 +1319,7 @@ class Fighter(object):
         n_a, n_b = len(side_a), len(side_b)
         hp_a, hp_b = sum((f.hp for f in side_a)), sum((f.hp for f in side_b))
         bar = get_bar(hp_a, hp_a + hp_b, '/', '\\', 20)
-        s = '\n{} {} {}\n'.format(n_a, bar, n_b)
+        s = f'\n{n_a} {bar} {n_b}\n'
         return s
 
     def write(self, *args, **kwargs):
@@ -1354,8 +1354,8 @@ class HumanControlledFighter(Fighter):
         wpts = techniques.get_weapon_techs(self)
         line = 'Pick a weapon:'
         if wpts:
-            line += '\n({}\'s weapon techniques: {})'.format(self.name, ', '.join(wpts))
-        options = [('{} {}'.format(wp.name, wp.descr), wp) for wp in weapons.NORMAL_WEAPONS]
+            line += f"\n({self.name}'s weapon techniques: {', '.join(wpts)})"
+        options = [(f'{wp.name} {wp.descr}', wp) for wp in weapons.NORMAL_WEAPONS]
         wn = self.menu(sorted(options), line)
         self.arm(wn)
 
@@ -1381,7 +1381,7 @@ class HumanControlledFighter(Fighter):
             options.sort(key=lambda x: not x[1].power)
             # print(self.current_fight.order)
             d = self.get_vis_distance(self.distances[self.target])
-            self.action = menu(options, title=' {}'.format(d))
+            self.action = menu(options, title=f' {d}')
 
     def choose_new_move(self, sample):
         first_line = ('Move', 'Tier', 'Dist', 'Pwr', 'Acc', 'Cmpl', 'Sta', 'Time', 'Qi', 'Func')
@@ -1432,18 +1432,18 @@ class HumanControlledFighter(Fighter):
                     dist = self.get_vis_distance(self.distances[f])
                     n, lev, hp, stam, qi = f.name, f.level, f.hp, f.stamina, f.qp
                     if f.weapon:
-                        wp_info = ' {}'.format(f.weapon.name)
+                        wp_info = f' {f.weapon.name}'
                     else:
                         wp_info = ''
                     marks = f.get_status_marks()
                     options.append(
                         (
-                            '%s' % dist,
-                            '%s%s' % (n, marks),
-                            '(lv.%s' % lev,
-                            'HP:%s' % hp,
-                            'SP:%s' % stam,
-                            'QP:%s%s)' % (qi, wp_info),
+                            f'{dist}',
+                            f'{n}{marks}',
+                            f'(lv.{lev}',
+                            f'HP:{hp}',
+                            f'SP:{stam}',
+                            f'QP:{qi}{wp_info})',
                         )
                     )
                 options = pretty_table(options, sep='  ', as_list=True)
@@ -1523,13 +1523,13 @@ class HumanControlledFighter(Fighter):
                     n += 1
         if (
             hasattr(move_obj, 'distance')
-            and getattr(self, 'dist{}_bonus'.format(move_obj.distance), 1.0) > 1.0
+            and getattr(self, f'dist{move_obj.distance}_bonus', 1.0) > 1.0
         ):
             n += 1
         return '*' * n
 
     def level_up(self, times=1):
-        self.msg('{}: *LEVEL UP*'.format(self.name))
+        self.msg(f'{self.name}: *LEVEL UP*')
         self.cls()
         self.show('*LEVEL UP*')
         Fighter.level_up(self, times)
@@ -1562,7 +1562,7 @@ class HumanControlledFighter(Fighter):
                 for i, line in enumerate(lines_a):
                     a, b = line
                     pad = line_len - (len(a) + len(b)) + 1
-                    lines_a[i] = '{}{}{}'.format(a, ' ' * pad, b)
+                    lines_a[i] = f"{a}{' ' * pad}{b}"
                 return lines_a
 
         def fill_lines(lines_to_be_filled, f, right=False):
@@ -1574,22 +1574,22 @@ class HumanControlledFighter(Fighter):
             elt1, elt2, elt3 = 'HP', health_bar, f.hp
             if right:
                 elt1, elt3 = elt3, elt1
-            lines_f[1].append('{} {} {}'.format(elt1, elt2, elt3))
+            lines_f[1].append(f'{elt1} {elt2} {elt3}')
 
             stamina_bar = get_bar(f.stamina, f.stamina_max, '#', '-', 10, mirror=right)
             elt1, elt2, elt3 = 'SP', stamina_bar, f.stamina
             if right:
                 elt1, elt3 = elt3, elt1
-            lines_f[2].append('{} {} {}'.format(elt1, elt2, elt3))
+            lines_f[2].append(f'{elt1} {elt2} {elt3}')
 
             qi_bar = get_bar(f.qp, f.qp_max, '@', '~', 10, mirror=right)
             elt1, elt2, elt3 = 'QP', qi_bar, f.qp
             if right:
                 elt1, elt3 = elt3, elt1
-            lines_f[3].append('{} {} {}'.format(elt1, elt2, elt3))
+            lines_f[3].append(f'{elt1} {elt2} {elt3}')
 
             if f.weapon:
-                lines_f[4].append('({})'.format(f.weapon.name))
+                lines_f[4].append(f'({f.weapon.name})')
             else:
                 lines_f[4].append('')
 

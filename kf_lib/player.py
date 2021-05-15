@@ -122,7 +122,7 @@ class Player(Fighter):
         if label not in self.accompl:
             self.accompl.append(label)
             self.accompl_dates.append(self.game.get_date())
-            self.write('Accomplishment: {}'.format(label))
+            self.write(f'Accomplishment: {label}')
             # gain experience points; the more accomplishments, the more exp.p.
             self.gain_exp(ACCOMPL_EXP[len(self.accompl)])
             self.pak()
@@ -159,7 +159,7 @@ class Player(Fighter):
         if trait not in self.traits and opp_trait not in self.traits:
             self.traits.append(trait)
             self.activate_trait(trait)
-            self.write('{} becomes {}.'.format(self.name, trait))
+            self.write(f'{self.name} becomes {trait}.')
         else:
             raise Exception(
                 'Cannot add trait "{}" to player {}\'s traits: {}'.format(
@@ -169,7 +169,7 @@ class Player(Fighter):
 
     def buy_item(self, item, price):
         self.pay(price)
-        self.log('Buys {} for {}.'.format(item, price))
+        self.log(f'Buys {item} for {price}.')
         self.change_stat('items_bought', 1)
         self.obtain_item(item)
 
@@ -237,13 +237,13 @@ class Player(Fighter):
             if rnd() <= self.master_joins_fight:
                 m = p.get_master()
                 p.show('{}: "What\'s going on here?"'.format(m.name))
-                p.log("{} joins the fight on {}'s side.".format(m.name, p.name))
+                p.log(f"{m.name} joins the fight on {p.name}'s side.")
                 p.allies = [m]
                 p.pak()
         elif x == 'w':
             if rnd() <= self.grab_improvised_weapon:
                 p.arm_improv()
-                p.show('{} grabs an improvised weapon!'.format(p.name))
+                p.show(f'{p.name} grabs an improvised weapon!')
                 p.log('Grabs an improvised weapon.')
                 p.pak()
         elif x == 's':
@@ -291,8 +291,8 @@ class Player(Fighter):
     def check_training_injury(self):
         if rnd() <= self.training_injury:
             q = random.choice(quotes.TRAINING_INJURY)
-            self.show('{}: "{}"'.format(self.name, q))
-            self.msg('{} gets injured during training.'.format(self.name))
+            self.show(f'{self.name}: "{q}"')
+            self.msg(f'{self.name} gets injured during training.')
             self.injure(1)
 
     def cls(self):
@@ -309,7 +309,7 @@ class Player(Fighter):
         if not amount:
             self.log('Doesn\'t give anything.')
         else:
-            self.log('Donates {} c.'.format(amount))
+            self.log(f'Donates {amount} c.')
             self.money -= amount
             self.change_stat('donated', amount)
             self.gain_rep(round(amount * 0.2))
@@ -323,17 +323,17 @@ class Player(Fighter):
     def earn_money(self, amount):
         self.money += amount
         self.change_stat('money_earned', amount)
-        self.log('Earns {} c.'.format(amount))
+        self.log(f'Earns {amount} c.')
 
     def earn_prize(self, amount):
         self.money += amount
         self.change_stat('prize_money_earned', amount)
-        self.write('{} earns a {}-coin prize.'.format(self.name, amount))
+        self.write(f'{self.name} earns a {amount}-coin prize.')
 
     def earn_reward(self, amount):
         self.money += amount
         self.change_stat('rew_money_earned', amount)
-        self.write('{} earns a {}-coin reward.'.format(self.name, amount))
+        self.write(f'{self.name} earns a {amount}-coin reward.')
 
     def end_turn(self):
         pass
@@ -357,8 +357,8 @@ class Player(Fighter):
 
     def gain_exp(self, amount, silent=False):
         if not silent:
-            self.show('{} gains {} exp.'.format(self.name, amount))
-            self.log('Gains {} exp.'.format(amount))
+            self.show(f'{self.name} gains {amount} exp.')
+            self.log(f'Gains {amount} exp.')
         self.exp += amount
         while self.exp >= self.next_level:
             self.level_up()
@@ -425,7 +425,7 @@ class Player(Fighter):
         lines = []
         for k, v in self.inventory.items():
             if v > 0:
-                lines.append('{}: {}'.format(k, v))
+                lines.append(f'{k}: {v}')
         lines = ['{}\'s items:'.format(self.name)] + sorted(lines)
         return '\n'.join(lines)
 
@@ -445,20 +445,18 @@ class Player(Fighter):
 
     def get_p_info(self):
         s = self
-        return '{} lv.{} exp:{}/{}\nmoney:{}\n'.format(
-            s.name, s.level, s.exp, s.next_level, s.money
-        )
+        return f'{s.name} lv.{s.level} exp:{s.exp}/{s.next_level}\nmoney:{s.money}\n'
 
     def get_p_info_verbose(self):
         lines = [
             self.get_f_info(),
-            'exp:{}/{} money:{}'.format(self.exp, self.next_level, self.money),
-            'traits: {}'.format(lang_tools.enum_words(self.traits)),
-            'rank in school: {}/{}'.format(self.school_rank, self.max_school_rank),
+            f'exp:{self.exp}/{self.next_level} money:{self.money}',
+            f'traits: {lang_tools.enum_words(self.traits)}',
+            f'rank in school: {self.school_rank}/{self.max_school_rank}',
         ]
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
         en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
-        stud_info = 'students:{}'.format(self.students) if self.students else ''
+        stud_info = f'students:{self.students}' if self.students else ''
         lines.append(' '.join(w for w in (fr_info, en_info, stud_info) if w))
         lines.append(self.get_fight_statistics())
         return '\n'.join([line for line in lines if line])
@@ -477,7 +475,7 @@ class Player(Fighter):
         return self.stats_dict[stat_name]
 
     def go_seedy(self):
-        self.log('Goes to the seedy places of {}.'.format(self.game.town_name))
+        self.log(f'Goes to the seedy places of {self.game.town_name}.')
         encs = encounters.SEEDY_PLACES_ENCS
         encounters.random_encounters(self, encs)
         return True  # to end turn
@@ -488,7 +486,7 @@ class Player(Fighter):
         encounters.random_encounters(self, encs)
         if self.is_master and rnd() <= MASTER_GREETING_CHANCE:
             self.refresh_screen()
-            self.show('Woman: Good day, Master {}!'.format(self.name.split()[0]))
+            self.show(f'Woman: Good day, Master {self.name.split()[0]}!')
             self.pak()
         return True  # to end turn
 
@@ -496,7 +494,7 @@ class Player(Fighter):
         self.log('Goes to work.')
         if self.is_master:
             self.refresh_screen()
-            self.show('Man: Master {}! Why are you here?'.format(self.name.split()[0]))
+            self.show(f'Man: Master {self.name.split()[0]}! Why are you here?')
             self.pak()
         self.earn_money(round(WAGE * self.wage_mult))
         return True  # to end turn
@@ -516,7 +514,7 @@ class Player(Fighter):
 
     def level_up(self, times=1):
         Fighter.level_up(self, times)
-        self.log('Reaches level {}.'.format(self.level))
+        self.log(f'Reaches level {self.level}.')
         self.next_level = self.get_next_lv_exp()
 
     def log(self, text):
@@ -530,7 +528,7 @@ class Player(Fighter):
     def lose_item(self, item_name, quantity=1):
         self.inventory[item_name] -= quantity
         total = self.inventory[item_name]
-        self.log('{}: {}({})'.format(item_name, -quantity, total))
+        self.log(f'{item_name}: {-quantity}({total})')
 
     def obtain_item(self, item_name, quantity=1):
         if self.check_item(item_name):
@@ -538,7 +536,7 @@ class Player(Fighter):
         else:
             self.inventory[item_name] = quantity
         total = self.inventory[item_name]
-        self.log('{}: {}({})'.format(item_name, quantity, total))
+        self.log(f'{item_name}: {quantity}({total})')
         self.change_stat('items_obtained', quantity)
 
     def pak(self):
@@ -546,7 +544,7 @@ class Player(Fighter):
 
     def pay(self, amount):
         self.money -= amount
-        self.log('Pays {} c.'.format(amount))
+        self.log(f'Pays {amount} c.')
 
     def pick_fights(self):
         self.log('Intends to pick fights.')
@@ -621,7 +619,7 @@ class Player(Fighter):
     def remove_trait(self, trait):
         self.traits.remove(trait)
         self.deactivate_trait(trait)
-        self.write('{} is no longer {}.'.format(self.name, trait))
+        self.write(f'{self.name} is no longer {trait}.')
 
     @staticmethod
     def rest():
@@ -662,7 +660,7 @@ class Player(Fighter):
         self.recover()
 
     def use_item(self, item):
-        self.log('Uses {}.'.format(item))
+        self.log(f'Uses {item}.')
         self.lose_item(item)
         items.use_item(item, self)
         if item in items.FIGHT_ITEMS:
@@ -881,7 +879,7 @@ class HumanPlayer(HumanControlledFighter, Player):
                 ('"What? I\'ll teach you a lesson! ({})"'.format(opp_info[1]), True),
                 ('"I\'m sorry."', False),
             ),
-            title='{}:'.format(self.name),
+            title=f'{self.name}:',
         )
 
     @staticmethod
@@ -906,27 +904,27 @@ class HumanPlayer(HumanControlledFighter, Player):
             if school_name not in self.game.schools:
                 return school_name
             else:
-                self.show(' A school with the name "{}" already exists.'.format(school_name))
+                self.show(f' A school with the name "{school_name}" already exists.')
 
     def donate_or_not(self, amount):
         """Return an amount or 0"""
         options = []
         if self.check_money(amount):
-            options.append(('Give {} coins'.format(amount), amount))
+            options.append((f'Give {amount} coins', amount))
         options.append(('Ignore', 0))
         return self.menu(options)
 
     @staticmethod
     def fight_or_not(opp_info):
         """Return True if fight is chosen"""
-        return menu([('Fight! ({})'.format(opp_info[1]), True), ('Ignore', False)])
+        return menu([(f'Fight! ({opp_info[1]})', True), ('Ignore', False)])
 
     @staticmethod
     def fight_or_run(opp_info, esc_chance):
         """Return True if fight is chosen"""
         return menu(
             [
-                ('Fight! ({})'.format(opp_info[1]), True),
+                (f'Fight! ({opp_info[1]})', True),
                 ('Run! ({})'.format(float_to_pcnt(esc_chance)), False),
             ]
         )
@@ -934,11 +932,11 @@ class HumanPlayer(HumanControlledFighter, Player):
     def fight_run_or_pay(self, opp_info, esc_chance, money):
         """Return 'f', 'r' or 'p'"""
         options = [
-            ('Fight! ({})'.format(opp_info[1]), 'f'),
+            (f'Fight! ({opp_info[1]})', 'f'),
             ('Run away ({})'.format(float_to_pcnt(esc_chance)), 'r'),
         ]
         if self.check_money(money):
-            options.append(('Give {} coins'.format(money), 'p'))
+            options.append((f'Give {money} coins', 'p'))
         return menu(options)
 
     @staticmethod
@@ -950,7 +948,7 @@ class HumanPlayer(HumanControlledFighter, Player):
         return yn('')
 
     def level_up(self, times=1):
-        self.msg('{}: *LEVEL UP*'.format(self.name))
+        self.msg(f'{self.name}: *LEVEL UP*')
         self.cls()
         self.show('*LEVEL UP*')
         Player.level_up(self, times)
@@ -976,21 +974,21 @@ class HumanPlayer(HumanControlledFighter, Player):
         return yn('Treat the wise man to lunch and talk to him?')
 
     def tourn_or_not(self):
-        return yn('{}: Participate?'.format(self.name))
+        return yn(f'{self.name}: Participate?')
 
     def use_fight_item_or_not(self):
         av_items = self.get_items(as_dict=True)
         options = (('Do not use items', False),)
         options += tuple(
-            ('{} ({}) ({})'.format(k, items.get_item_descr(k), av_items[k]), k)
+            (f'{k} ({items.get_item_descr(k)}) ({av_items[k]})', k)
             for k in sorted(av_items.keys())
         )
-        choice = menu(options, '{} - use an item?'.format(self.name))
+        choice = menu(options, f'{self.name} - use an item?')
         return choice
 
     @staticmethod
     def use_med_or_not():
-        return yn('Use the {} medicine?'.format(items.MEDICINE))
+        return yn(f'Use the {items.MEDICINE} medicine?')
 
 
 ALL_AI_PLAYERS = (LazyAIP, SmartAIP, VanillaAIP, BaselineAIP)

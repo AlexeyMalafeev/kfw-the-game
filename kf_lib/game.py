@@ -155,7 +155,7 @@ class Game(object):
             }
             for k in vc:
                 if vc[k]:
-                    wins.append('{} becomes {}!'.format(p.name, k))
+                    wins.append(f'{p.name} becomes {k}!')
                     winners.append(p)
                     victory_types.append(k)
         if wins:
@@ -193,7 +193,7 @@ class Game(object):
                                 n_days,
                             )
                         )
-                        f.write('\n{}'.format(data))
+                        f.write(f'\n{data}')
                         print(data)
             self.n_days_to_win = n_days
             return True
@@ -284,11 +284,11 @@ class Game(object):
         return [p for p in self.players if not p.inactive]
 
     def get_date(self):
-        return '{}/{}/{}'.format(self.day, self.month, self.year)
+        return f'{self.day}/{self.month}/{self.year}'
 
     @staticmethod
     def get_fighter_ref(fighter):
-        return 'g.fighters_dict[{!r}]'.format(fighter.name)
+        return f'g.fighters_dict[{fighter.name!r}]'
 
     def get_new_ai_player(self, klass=None):
         style = styles.get_rand_std_style()
@@ -322,9 +322,9 @@ class Game(object):
                 if not prefix:
                     nf = rndint(1, 2)
                     fir = ''.join(random.sample(names.FIRST_NAME_PARTS, nf))
-                    name = '{} {}'.format(sur, fir).title()
+                    name = f'{sur} {fir}'.title()
                 else:
-                    name = '{} {}'.format(prefix, sur).title()
+                    name = f'{prefix} {sur}'.title()
                 if name not in self.used_names:
                     return name
             print('1000 names failed')
@@ -412,7 +412,7 @@ class Game(object):
                     title='Co-op mode?',
                 )
             for i in range(num_players):
-                if not ai_only and yn('Player {} -- human player?'.format(i + 1)):
+                if not ai_only and yn(f'Player {i + 1} -- human player?'):
                     pp = self.get_new_human_player()
                 else:
                     if forced_aip_class is None:
@@ -455,7 +455,7 @@ class Game(object):
                 # print(school)
 
         def _init_stories():
-            self.stories = {'{}'.format(S.__name__): S(self) for S in story.all_stories}
+            self.stories = {f'{S.__name__}': S(self) for S in story.all_stories}
 
         _init_schools()
         _init_players()
@@ -557,7 +557,7 @@ class Game(object):
                 if p in school:
                     new_rank = school.index(p) + 1
                     if p.school_rank != new_rank:
-                        p.msg('{} is now number {} at his school.'.format(p.name, new_rank))
+                        p.msg(f'{p.name} is now number {new_rank} at his school.')
                         p.school_rank = new_rank
 
     def show(self, text, align=True):
@@ -586,7 +586,7 @@ class Game(object):
             self.refresh_roster()  # this is only to order the fighters
             f.write('g.fighters_dict = fsd = {}')
             for ftr in self.fighters_list:
-                f.write('\n\nfsd[{!r}] = {}'.format(ftr.name, ftr.get_init_string()))
+                f.write(f'\n\nfsd[{ftr.name!r}] = {ftr.get_init_string()}')
             f.write('\n\ng.fighters_list = list(fsd.values())')
 
         def _save_game_atts():
@@ -598,13 +598,13 @@ class Game(object):
             f.write('\n\ng.masters = md = {}')
             for sn in sorted(self.masters):
                 m = self.masters[sn]
-                f.write('\nmd[{!r}] = {}'.format(sn, self.get_fighter_ref(m)))
+                f.write(f'\nmd[{sn!r}] = {self.get_fighter_ref(m)}')
 
         def _save_players():
             f.write('\n\ng.players = []')
             for p in self.players:
                 f.write('\n\n' + '#' * 80)
-                f.write('\n\ng.players.append({})\n'.format(self.get_fighter_ref(p)))
+                f.write(f'\n\ng.players.append({self.get_fighter_ref(p)})\n')
                 f.write('p = g.players[-1]\n')
 
                 # save player attributes
@@ -622,19 +622,19 @@ class Game(object):
                 # friends
                 f.write('\np.friends = [')
                 for friend in p.friends:
-                    f.write('{}, '.format(self.get_fighter_ref(friend)))
+                    f.write(f'{self.get_fighter_ref(friend)}, ')
                 f.write(']\n')
 
                 # enemies
                 f.write('\np.enemies = [')
                 for en in p.enemies:
-                    f.write('{}, '.format(self.get_fighter_ref(en)))
+                    f.write(f'{self.get_fighter_ref(en)}, ')
                 f.write(']\n')
 
                 # students
-                f.write('\np.students = {!r}\n'.format(p.students))
+                f.write(f'\np.students = {p.students!r}\n')
                 best = p.best_student.get_init_string() if p.best_student else 'None'
-                f.write('\np.best_student = {}'.format(best))
+                f.write(f'\np.best_student = {best}')
 
                 # dump log
                 path = os.path.join(SAVE_FOLDER, '{}\'s log.txt'.format(p.name))
@@ -645,9 +645,9 @@ class Game(object):
         def _save_schools():
             f.write('\n\ng.schools = {}')
             for sn in sorted(self.schools):
-                f.write('\n\ng.schools[{!r}] = school = []'.format(sn))
+                f.write(f'\n\ng.schools[{sn!r}] = school = []')
                 for student in self.schools[sn]:
-                    f.write('\nschool.append({})'.format(self.get_fighter_ref(student)))
+                    f.write(f'\nschool.append({self.get_fighter_ref(student)})')
 
         def _save_special_npcs():
             bgr = self.beggar
@@ -656,7 +656,7 @@ class Game(object):
             crmls = self.criminals
             fg = self.fat_girl
             f.write(
-                '\n\ng.beggar = {}'.format(self.get_fighter_ref(bgr) if bgr is not None else 'None')
+                f"\n\ng.beggar = {self.get_fighter_ref(bgr) if bgr is not None else 'None'}"
             )
             f.write(
                 '\ng.drunkard = {}'.format(
@@ -664,17 +664,17 @@ class Game(object):
                 )
             )
             f.write(
-                '\ng.thief = {}'.format(self.get_fighter_ref(thf) if thf is not None else 'None')
+                f"\ng.thief = {self.get_fighter_ref(thf) if thf is not None else 'None'}"
             )
             f.write('\ng.criminals = []')
             for c in crmls:
-                f.write('\ng.criminals.append({})'.format(self.get_fighter_ref(c)))
+                f.write(f'\ng.criminals.append({self.get_fighter_ref(c)})')
             f.write(
-                '\ng.fat_girl = {}'.format(self.get_fighter_ref(fg) if fg is not None else 'None')
+                f"\ng.fat_girl = {self.get_fighter_ref(fg) if fg is not None else 'None'}"
             )
 
         def _save_stories():
-            f.write('\n\ng.stories = {!r}'.format(self.stories))
+            f.write(f'\n\ng.stories = {self.stories!r}')
 
         with open(os.path.join(SAVE_FOLDER, file_name), 'w') as f:
             _save_all()

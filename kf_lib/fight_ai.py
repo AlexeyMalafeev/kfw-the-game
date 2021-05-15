@@ -17,7 +17,7 @@ class BaseAI(object):
         self.choice = None
         self.weights = {}
         if write_log:
-            self.file = open('{}.txt'.format(self.__class__.__name__), 'a')
+            self.file = open(f'{self.__class__.__name__}.txt', 'a')
         else:
             self.file = None
 
@@ -37,8 +37,8 @@ class BaseAI(object):
         target = owner.target
         dist = owner.distances[target]
         self.file.write('-' * 10 + '\n')
-        self.file.write('owner: hp:{} sp:{}\n'.format(owner.hp, owner.stamina))
-        self.file.write('target: hp:{} sp:{}\n'.format(target.hp, target.stamina))
+        self.file.write(f'owner: hp:{owner.hp} sp:{owner.stamina}\n')
+        self.file.write(f'target: hp:{target.hp} sp:{target.stamina}\n')
         self.file.write(str(self.weights) + '\n')
         self.file.write('d = ' + str(dist) + ': ' + repr(self.choice) + '\n')
 
@@ -304,8 +304,8 @@ class GeneticAI(BaseAI):
         target = owner.target
         dist = owner.distances[target]
         self.file.write('-' * 10 + '\n')
-        self.file.write('owner: hp:{} sp:{}\n'.format(owner.hp, owner.stamina))
-        self.file.write('target: hp:{} sp:{}\n'.format(target.hp, target.stamina))
+        self.file.write(f'owner: hp:{owner.hp} sp:{owner.stamina}\n')
+        self.file.write(f'target: hp:{target.hp} sp:{target.stamina}\n')
         self.file.write(str(self.options) + '\n')
         self.file.write(str(self.weights) + '\n')
         self.file.write('d = ' + str(dist) + ': ' + repr(self.choice) + '\n')

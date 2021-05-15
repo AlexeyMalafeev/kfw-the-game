@@ -50,7 +50,7 @@ class Story(object):
         p = self.player
         g.cls()
         g.show(p.get_p_info(), align=False)
-        exec('self.scene{}()'.format(self.state))
+        exec(f'self.scene{self.state}()')
 
     def check_hasnt_started(self):
         return self.state is None
@@ -144,12 +144,12 @@ class ForeignerStory(Story):
             f_st = '{}\'s friend {}'.format(p.name, f.name)
         else:
             f = random.choice(list(g.masters.values()))
-            f_st = '{} of {}'.format(f.name, f.style.name)
+            f_st = f'{f.name} of {f.style.name}'
         t = '{} finds out that {} beat {}! Can no one stop this arrogant foreigner?'.format(
             p.name, b.name, f_st
         )
         g.show(t)
-        if not p.is_human or g.yn('Challenge {}?'.format(b.name)):
+        if not p.is_human or g.yn(f'Challenge {b.name}?'):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
                 g.show(
                     '{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(
@@ -159,7 +159,7 @@ class ForeignerStory(Story):
                 g.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
                 self.reward()
             else:
-                g.msg('Having proved his superiority, {} leaves {}.'.format(b.name, g.town_name))
+                g.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
                 # get depressed?
         # end of the story
         self.end()
@@ -187,7 +187,7 @@ class NinjaTurtlesStory(Story):
     def scene1(self):
         p = self.player
         p.write(
-            '{} encounters the four teenage mutant ninja turtles travelling in time.'.format(p.name)
+            f'{p.name} encounters the four teenage mutant ninja turtles travelling in time.'
         )
         p.pak()
         # p.choose_best_norm_wp()
@@ -231,7 +231,7 @@ class RenownedMaster(Story):
             'kung-fu."'.format(p=p.name, b=b.name, bs=b.style.name, ps=p.style.name)
         )
         g.show(t)
-        p.log('Challenged by {}.'.format(b.name))
+        p.log(f'Challenged by {b.name}.')
         g.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
             t = (
@@ -241,7 +241,7 @@ class RenownedMaster(Story):
             g.show(t)
             self.reward()
         else:
-            g.show('{}: "I am disappointed - yet again."'.format(b.name))
+            g.show(f'{b.name}: "I am disappointed - yet again."')
         self.end()
         g.pak()
 
@@ -261,7 +261,7 @@ class StrangeDreamsStory(Story):
 
     def scene1(self):
         p = self.player
-        p.write('{} has a strange dream...'.format(p.name))
+        p.write(f'{p.name} has a strange dream...')
         p.choose_best_norm_wp()
         ens = fighter_factory.new_opponent(n=4, rand_atts_mode=0)
         for en in ens:
@@ -272,7 +272,7 @@ class StrangeDreamsStory(Story):
 
     def scene2(self):
         p = self.player
-        p.write('{} has a strange dream...'.format(p.name))
+        p.write(f'{p.name} has a strange dream...')
         p.pak()
         en = fighter_factory.new_monster(lv=p.level)
         en.name = 'Weird ' + en.name
@@ -282,7 +282,7 @@ class StrangeDreamsStory(Story):
 
     def scene3(self):
         p = self.player
-        p.write('{} has a strange dream...'.format(p.name))
+        p.write(f'{p.name} has a strange dream...')
         p.pak()
         en = fighter_factory.copy_fighter(p)
         en.__class__ = fighter_factory.Fighter
@@ -335,13 +335,13 @@ class TreasuresStory(Story):
                     '{} feels too greedy to pay this ridiculous "fine": "You are no better than a '
                     'robber!"'.format(p.name)
                 )
-                p.show('{}: You...'.format(b.name))
+                p.show(f'{b.name}: You...')
                 p.log('Feels too greedy to pay the bribe.')
                 p.pak()
             else:
                 p.pay(BRIBE)
-                g.show('{}: "Good. Now get out of my sight!"'.format(b.name))
-                p.log('Pays a bribe to {}.'.format(b.name))
+                g.show(f'{b.name}: "Good. Now get out of my sight!"')
+                p.log(f'Pays a bribe to {b.name}.')
                 p.gain_rep(BRIBERY_REP_PENALTY)
                 p.pak()
                 return
@@ -355,7 +355,7 @@ class TreasuresStory(Story):
             )
             g.show(t)
         else:
-            g.show('{}: "That will teach you! Next time just pay.'.format(b.name))
+            g.show(f'{b.name}: "That will teach you! Next time just pay.')
         g.pak()
 
     def scene3(self):

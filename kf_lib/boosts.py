@@ -158,7 +158,7 @@ def set_descr(obj):
             v = obj.params[param]
             for f in funcs:
                 v = f(v)
-            descr_list.append('{} {}'.format(v, long))
+            descr_list.append(f'{v} {long}')
             descr_short_set.add(short)
     obj.descr = '; '.join(descr_list)
     obj.descr_short = ', '.join(sorted(descr_short_set))

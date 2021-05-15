@@ -201,7 +201,7 @@ class BaseFight(object):
 
     def display(self, text, **kwargs):
         n_min, n_sec = self.get_time()
-        s = '{}:{} {}'.format(n_min, n_sec, text)
+        s = f'{n_min}:{n_sec} {text}'
         self.timeline.append(s)
 
     def fight_loop(self):
@@ -258,7 +258,7 @@ class BaseFight(object):
 
     def get_f_name_string(self, f):
         if self.school_display:
-            return '{} ({})'.format(f.name, f.style.name)
+            return f'{f.name} ({f.style.name})'
         else:
             return f.name
 
@@ -288,7 +288,7 @@ class BaseFight(object):
                 exp = self.win_exp
                 for bname, bmult, bcond in EXP_BONUSES:
                     if eval(bcond):
-                        s = '{}!'.format(bname)
+                        s = f'{bname}!'
                         p.show(p.name + ': ' + s)
                         p.log(s)
                         exp = round(exp * bmult)
@@ -342,7 +342,7 @@ class BaseFight(object):
                             ratio,
                         )
                         p.write_stat('aston_victory', tup)
-                        p.log('What an astonishing victory! ({})'.format(tup[-1]))
+                        p.log(f'What an astonishing victory! ({tup[-1]})')
                 elif p in self.losers and len(self.losers) == 1:
                     ratio = round(sum([f.exp_yield for f in self.winners]) / p.exp_yield, 2)
                     curr_stat = p.get_stat(
@@ -358,7 +358,7 @@ class BaseFight(object):
                             ratio,
                         )
                         p.write_stat('humil_defeat', tup)
-                        p.log('What a humiliating defeat! ({})'.format(tup[-1]))
+                        p.log(f'What a humiliating defeat! ({tup[-1]})')
 
     def handle_injuries(self):
         for f in self.all_fighters:
@@ -475,20 +475,20 @@ class BaseFight(object):
             else:
                 wnr = self.winners[0]
                 if wnr.name in names.GROUP_NAMES:
-                    s = '{} win.'.format(names.GROUP_NAMES[wnr.name])
+                    s = f'{names.GROUP_NAMES[wnr.name]} win.'
                 else:
-                    s = '{} wins.'.format(wnr.name)
+                    s = f'{wnr.name} wins.'
             self.handle_win_quote()
         else:
             s = 'Draw!'
         n_min, n_sec_left = self.get_time()
         if n_min:
-            t_string = '{} min. {} sec.'.format(n_min, n_sec_left)
+            t_string = f'{n_min} min. {n_sec_left} sec.'
         else:
-            t_string = '{} sec.'.format(n_sec_left)
-        dur_st = 'The fight lasted {}'.format(t_string)
+            t_string = f'{n_sec_left} sec.'
+        dur_st = f'The fight lasted {t_string}'
         sep = '-' * len(dur_st)
-        s += '\n{}\n{}'.format(sep, dur_st)
+        s += f'\n{sep}\n{dur_st}'
         self.main_player.show(s)
 
     def show_stats(self):
@@ -607,20 +607,20 @@ class SpectateFight(NormalFight):
             else:
                 wnr = self.winners[0]
                 if wnr.name in names.GROUP_NAMES:
-                    s = '{} win.'.format(names.GROUP_NAMES[wnr.name])
+                    s = f'{names.GROUP_NAMES[wnr.name]} win.'
                 else:
-                    s = '{} wins.'.format(wnr.name)
+                    s = f'{wnr.name} wins.'
             self.handle_win_quote()
         else:
             s = 'Draw!'
         n_min, n_sec_left = self.get_time()
         if n_min:
-            t_string = '{} min. {} sec.'.format(n_min, n_sec_left)
+            t_string = f'{n_min} min. {n_sec_left} sec.'
         else:
-            t_string = '{} sec.'.format(n_sec_left)
-        dur_st = 'The fight lasted {}'.format(t_string)
+            t_string = f'{n_sec_left} sec.'
+        dur_st = f'The fight lasted {t_string}'
         sep = '-' * len(dur_st)
-        s += '\n{}\n{}'.format(sep, dur_st)
+        s += f'\n{sep}\n{dur_st}'
         self.show(s)
         self.pak()
 

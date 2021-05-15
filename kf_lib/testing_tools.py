@@ -31,7 +31,7 @@ class Tester(object):
             exp1 = sum(f.get_exp_worth() for f in f1)
             exp2 = sum(f.get_exp_worth() for f in f2)
             print('exp:', exp1, exp2)
-            print('wins: {}'.format(wins))
+            print(f'wins: {wins}')
         pe()
 
     def test_disarm(self):
@@ -71,10 +71,10 @@ class Tester(object):
         allies = []
         if num_fighters1 > 1:
             for i in range(1, num_fighters1):
-                allies.append(Fighter('Ally {}'.format(i)))
+                allies.append(Fighter(f'Ally {i}'))
         enemies = []
         for i in range(1, num_fighters2 + 1):
-            enemies.append(Fighter('Enemy {}'.format(i)))
+            enemies.append(Fighter(f'Enemy {i}'))
         if len(enemies) > 1:
             en_allies = enemies[1:]
         else:
@@ -100,8 +100,8 @@ class Tester(object):
 
         output = '-' * 40 + '\n\n'
         if not rand_actions:
-            output += 'fight AI={}\n'.format(fight_ai.DefaultFightAI.__name__)
-        output += 'rand_actions={}\n\n'.format(rand_actions)
+            output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
+        output += f'rand_actions={rand_actions}\n\n'
         # init dicts
         dummy = ff.new_dummy_fighter(1)
         att_names = dummy.att_names
@@ -122,7 +122,7 @@ class Tester(object):
         # fight!
         for i in range(n):
             if not i % (n / 20):
-                print('fight {} / {}'.format(i + 1, n))
+                print(f'fight {i + 1} / {n}')
             lv = random.randint(1, 20)
             f1 = ff.new_fighter(lv=lv)
             f1.name = 'Dummy A'
@@ -182,7 +182,7 @@ class Tester(object):
         for lv_in_crowd in range(1, 6):
             print()
             print('Level in crowd:', lv_in_crowd)
-            lines = [[''] + ['n=%s' % n for n in range(n_crowd_min, n_crowd_max + 1)]]
+            lines = [[''] + [f'n={n}' for n in range(n_crowd_min, n_crowd_max + 1)]]
             print('\t'.join(lines[0]))
             for lv in range(1, lv_max + 1):
                 f1 = ff.new_fighter(lv=lv)
@@ -305,7 +305,7 @@ class Tester(object):
                 if f1.fight(f2):
                     wins += 1
             print('exp1', f1.get_exp_worth(), 'exp2', f2.get_exp_worth())
-            print('wins: {}'.format(wins))
+            print(f'wins: {wins}')
         pe()
 
     def test_weapons(self):

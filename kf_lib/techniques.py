@@ -97,10 +97,10 @@ class WeaponTech(Tech):
         a = add_sign(self.wp_bonus[0])
         d = add_sign(self.wp_bonus[1])
         if self.wp_type in weapons.WEAPON_TYPES:
-            w = '{} weapons'.format(self.wp_type)
+            w = f'{self.wp_type} weapons'
         else:
             w = self.wp_type
-        self.descr = '{} {}/{}'.format(w, a, d)
+        self.descr = f'{w} {a}/{d}'
 
     def undo(self, f):
         bonus = f.weapon_bonus[self.wp_type]  # list of 2

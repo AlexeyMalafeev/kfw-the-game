@@ -18,7 +18,7 @@ try:
         results[ai_class] = days_dict[ai_class] / n_games
     print(results)
     with open('AI players comparison.txt', 'w') as f:
-        lines = ['{}: {}'.format(ai_class, av_days) for ai_class, av_days in results.items()]
+        lines = [f'{ai_class}: {av_days}' for ai_class, av_days in results.items()]
         f.write('\n'.join(lines))
     input('Press Enter to exit')
 

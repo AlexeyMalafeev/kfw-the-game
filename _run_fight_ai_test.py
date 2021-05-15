@@ -14,7 +14,7 @@ try:
            fight_ai.GeneticAIAggro)
     if write_log:
         for AI in AIs:
-            with open('{}.txt'.format(AI.__name__), 'w') as f:
+            with open(f'{AI.__name__}.txt', 'w') as f:
                 f.write('')
     # tests = (fight_ai_test.FightAITest, fight_ai_test.CrowdVsCrowd)
     # tests = (fight_ai_test.CrowdVsCrowd, fight_ai_test.CrowdVsCrowdFair)

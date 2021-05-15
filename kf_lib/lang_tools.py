@@ -25,9 +25,9 @@ def enum_words(words_iterable):
     elif len(ws) == 1:
         return ws[0]
     elif len(ws) == 2:
-        return '{} and {}'.format(ws[0], ws[1])
+        return f'{ws[0]} and {ws[1]}'
     elif len(ws) >= 3:
-        return '{} and {}'.format(', '.join(ws[:-1]), ws[-1])
+        return f"{', '.join(ws[:-1])} and {ws[-1]}"
 
 
 def remove_article(word):

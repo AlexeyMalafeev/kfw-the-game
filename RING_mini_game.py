@@ -15,11 +15,11 @@ def main():
             p.level_up()
         else:
             attempts -= 1
-            print(' Remaining attempts: {}'.format(attempts))
+            print(f' Remaining attempts: {attempts}')
             pak()
         if attempts == 0:
             break
-    print(' You have reached level {}.'.format(p.level))
+    print(f' You have reached level {p.level}.')
     print(' ***Game over***')
     pak()
 

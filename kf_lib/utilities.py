@@ -12,7 +12,7 @@ getch_inst = getch.Getch()
 
 
 def add_pcnt(value):
-    return '{}%'.format(value)
+    return f'{value}%'
 
 
 def add_sign(number):
@@ -22,7 +22,7 @@ def add_sign(number):
     0 -> '0'
     """
     if number > 0:
-        return '+{}'.format(number)
+        return f'+{number}'
     else:
         return str(number)
 
@@ -72,7 +72,7 @@ def align_text(text, indent, align):
         line = (' ' * (1 + even_spaces)).join(line)
         lines[i] = line
     lines[-1] = ' '.join(lines[-1])
-    return ' ' * indent + '\n{}'.format(' ' * indent).join(lines)
+    return ' ' * indent + f"\n{' ' * indent}".join(lines)
 
 
 def cls():
@@ -154,7 +154,7 @@ def get_num_input(message, a, b):
     Return an integer in range [a, b] (both included) input by user.
     """
     print(message)
-    inp = input(' ({}-{})>'.format(a, b))
+    inp = input(f' ({a}-{b})>')
     if a <= int(inp) <= b:
         return int(inp)
 
@@ -162,7 +162,7 @@ def get_num_input(message, a, b):
 def get_prop_bar(value, max_value):
     mx = 10
     b = round(mx / max_value * value)
-    return '{}{}'.format('=' * b, '-' * (mx - b))
+    return f"{'=' * b}{'-' * (mx - b)}"
 
 
 def get_time():
