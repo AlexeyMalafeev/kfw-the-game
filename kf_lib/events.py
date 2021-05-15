@@ -91,8 +91,12 @@ def new_tournament(g):
         },
     ]
     t = random.choice(tournaments)
-    print(t)
-    Tournament(game=g, **t)
+    n = random.choices(
+        population=(8, 16, 12, 10, 14, 18, 20),
+        weights=(1.0, 0.5, 0.05, 0.05, 0.05, 0.025, 0.025),
+    )[0]
+    # print(t, n)
+    Tournament(game=g, num_participants=n, **t)
 
 
 def poverty_down(g):
@@ -213,9 +217,9 @@ class Tournament(object):
                        f.check_lv(self.min_lv, self.max_lv) and not f.is_player]
         k = self.num_participants - len(participants)
         if k > len(av_fighters) or k < 0:
-            print('warning: invalid k in Tournament._gather_participants')
-            print(f'{participants = }, {self.participants = }, {k = }')
-            input('setting k to len(av_fighters), press Enter to continue')
+            # print('warning: invalid k in Tournament._gather_participants')
+            # print(f'{participants = }, {self.participants = }, {len(av_fighters) = }, {k = }')
+            # input('setting k to len(av_fighters), press Enter to continue')
             k = len(av_fighters)
         add = random.sample(av_fighters, k)
         participants += add

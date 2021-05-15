@@ -1458,8 +1458,7 @@ class HumanControlledFighter(Fighter):
         t = self.menu(av_techs, 'Choose a technique to improve:')
         self.upgrade_tech(t)
 
-    @staticmethod
-    def cls():
+    def cls(self):
         cls()
 
     def get_move_hints(self, move_obj):

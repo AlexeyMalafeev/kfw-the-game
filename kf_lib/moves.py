@@ -59,7 +59,8 @@ class Move(object):
                 d += f'({self.dist_change})'
             self.descr = (
                 f'{t} Dist:{d} Pwr:{self.power} Acc:{self.accuracy} '
-                f'Cpl:{self.complexity} Cost:S{self.stam_cost}/T{self.time_cost}/Q{self.qi_cost} {fun}'
+                f'Cpl:{self.complexity} Cost:S{self.stam_cost}/T{self.time_cost}/Q{self.qi_cost} '
+                f'{fun}'
             )
         else:
             self.descr = (
@@ -158,6 +159,11 @@ def get_moves_by_features(features, tier):
         m for m in ALL_MOVES_LIST if m.tier == tier and all((f in m.features for f in features))
     ]
     return moves
+
+
+def get_rand_move(f, tier, exceptions=None):
+    """Special case of get_rand_moves"""
+    return get_rand_moves(f=f, n=1, tier=tier, exceptions=exceptions)[0]
 
 
 def get_rand_moves(f, n, tier, exceptions=None):

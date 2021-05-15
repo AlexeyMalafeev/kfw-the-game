@@ -1,15 +1,14 @@
-#! python3
-
-from . import events
-from . import experience
-from . import fighter_factory
-from . import items
-from . import lang_tools
-from . import names
-from . import quotes
-from . import techniques
-from . import traits
-from .utilities import *
+from kf_lib import events
+from kf_lib import experience
+from kf_lib import fighter_factory
+from kf_lib import items
+from kf_lib import lang_tools
+from kf_lib import moves
+from kf_lib import names
+from kf_lib import quotes
+from kf_lib import techniques
+from kf_lib import traits
+from kf_lib.utilities import *
 
 # constants
 # encounter chances
@@ -37,6 +36,7 @@ ENC_CH_WISE_MAN = 0.02
 # misc chances
 CH_BEGGAR_FIGHT = 0.1
 CH_BOOK_RUBBISH = 0.3
+CH_BOOK_MOVE = 0.3  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
 CH_BRAWLER_ATTACKS = 0.2
 CH_CHALLENGER_ARMED = 0.3
 CH_CHALLENGER_FRIEND = 0.1
@@ -98,6 +98,9 @@ MONEY_PRIZE_FIGHTING_WIN = (25, 50, 100, 150, 250)
 MONEY_SHOP_BREAKAGES = (30, 50, 70)
 MONEY_THIEF_STEALS = (25, 50, 75, 100, 200)
 MONEY_WISE_MAN = 10
+
+# moves
+BOOK_MOVE_TIERS = (1, 5)
 
 # numbers
 NUM_AMBUSH_THUGS = (2, 4)
@@ -169,9 +172,8 @@ def try_enemy(p, en, chance):
     if rnd() <= chance:
         old_name = en.name.split()[0]
         en.name = p.game.get_new_name(random.choice(names.ROBBER_NICKNAMES))
-        t = '{}: "You\'ll regret messing with {}! From now on, you\'d better watch your back!"'.format(
-            old_name, en.name
-        )
+        t = f'{old_name}: "You\'ll regret messing with {en.name}! ' \
+            'From now on, you\'d better watch your back!"'
         p.show(t)
         p.add_enemy(en)
         p.pak()
@@ -277,10 +279,9 @@ class Beggar(Enc):
         b = p.game.beggar
         if b is None:
             return
-        t = '''As {} turns to leave however, the beggar stops him.
-Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from {}!'''.format(
-            p.name, b.name
-        )
+        t = f'''As {p.name} turns to leave however, the beggar stops him.
+Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from \
+{b.name}!'''
         p.show(t)
         p.log('{} gives {} a free kung-fu lesson.'.format(b.name, p.name))
         p.pak()
@@ -305,12 +306,10 @@ class BookSeller(Enc):
     def run(self):
         p = self.player
         price = MONEY_BOOK
-        t = '''{0} meets a traveling book seller.
-Book Seller: "Ah, a martial artist! I'm selling this wonderful kung-fu book for only {1} coins! Its secret and
-powerful techniques will make you a legendary fighter! What do you say?"
-Buy it?'''.format(
-            p.name, price
-        )
+        t = f'''{p.name} meets a traveling book seller.
+Book Seller: "Ah, a martial artist! I'm selling this wonderful kung-fu book for only {price} \
+coins! Its secret and powerful techniques will make you a legendary fighter! What do you say?"
+Buy it?'''
         p.show(t)
         p.log('Meets a book seller.')
         if p.buy_item_or_not() and not check_feeling_greedy(p):
@@ -322,8 +321,13 @@ Buy it?'''.format(
                     t = 'The book turns out to be complete rubbish!'
                     p.write(t)
                 else:
-                    exp = random.randint(*experience.BOOK_EXP)
-                    p.gain_exp(exp)
+                    if rnd() < CH_BOOK_MOVE:
+                        tier = random.randint(*BOOK_MOVE_TIERS)
+                        move = moves.get_rand_move(f=p, tier=tier, exceptions=None)
+                        p.learn_move(move)
+                    else:
+                        exp = random.randint(*experience.BOOK_EXP)
+                        p.gain_exp(exp)
             p.pak()
 
 

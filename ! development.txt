@@ -14,6 +14,7 @@ feat:
 	ASCII heads (}
 	Rush Forward and Retreat are available to all fighters by default
 	ASCII floor
+    more flexible tournaments (variable number of participants, dynamic prize calculation)
 
 _____________________________________________________
 
