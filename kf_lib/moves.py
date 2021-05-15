@@ -126,6 +126,7 @@ BASIC_MOVES = [
     for mn in (
         'Punch',
         'Kick',
+        'Weak Short Punch',
         'Shove',
         'Step Forward',
         'Step Back',

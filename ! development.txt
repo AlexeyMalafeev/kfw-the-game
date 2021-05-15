@@ -8,6 +8,7 @@ fix:
 
 refactor:
 	Black
+    flynt (convert to f-strings)
 
 feat:
 	'fair fight' in risk ratios
@@ -15,6 +16,9 @@ feat:
 	Rush Forward and Retreat are available to all fighters by default
 	ASCII floor
     more flexible tournaments (variable number of participants, dynamic prize calculation)
+    books sometimes give moves
+    if lose to strong Beggar/Drunkard/Performer, still learn a move
+    new default move: Weak Short Punch
 
 _____________________________________________________
 

@@ -17066,5 +17066,6 @@
 'Vanishing Trick Solar Knee'  |1        |2           |32    |25       |3          |31        |102       |60      |{'knee', 'vanishing', 'trick', 'solar'}  |['do_stam_dam', 'do_agility_based_dam'] |6    |1    
 'Vanishing Trick Solar Palm'  |2        |2           |23    |26       |2          |24        |72        |60      |{'vanishing', 'palm', 'trick', 'solar'}  |['do_stam_dam', 'do_agility_based_dam'] |6    |3    
 'Vanishing Trick Solar Punch' |2        |2           |26    |23       |2          |25        |72        |60      |{'punch', 'vanishing', 'trick', 'solar'} |['do_stam_dam', 'do_agility_based_dam'] |6    |4    
+'Weak Short Punch'            |1        |0           |20    |23       |1          |20        |50        |0       |{'punch', 'short'}                       |[]                                      |0    |5    
 
-# 15803 moves
+# 15804 moves
