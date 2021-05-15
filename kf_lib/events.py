@@ -135,11 +135,11 @@ def school_vs_school(g):
     b = [f for f in b if not f.is_player or not f.inactive]
     style_a = a[0].style.name
     style_b = b[0].style.name
-    s = 'A fight breaks out between students of {} and {}!'.format(style_a, style_b)
+    s = f'A fight breaks out between students of {style_a} and {style_b}!'
     g.msg(s)
     for f in a + b:
         f.log(s)
-    win_messages = tuple('{} school wins!'.format(st) for st in (style_a, style_b))
+    win_messages = tuple(f'{st} school wins!' for st in (style_a, style_b))
     fight.fight(a[0], b[0], a[1:], b[1:], win_messages=win_messages, school_display=True)
 
 
@@ -226,7 +226,7 @@ class Tournament(object):
 
     def _give_prize(self):
         winner = self.winner
-        self.g.msg('{} wins the tournament!'.format(winner.name))
+        self.g.msg(f'{winner.name} wins the tournament!')
         if winner.is_player:
             winner.win_tourn(self.prize)
 
