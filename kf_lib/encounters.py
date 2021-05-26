@@ -302,7 +302,7 @@ Beggar: "In thanks for your kindness, young man, let me teach you some special k
             p.show(f'{b.name}: "Still got a lot to learn, huh..."')
             p.show(
                 f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
-                'has improved"'
+                'has improved."'
             )
             tier = rndint(*BEGGAR_LOSE_MOVE_TIERS)
             move = moves.get_rand_move(f=p, tier=tier)

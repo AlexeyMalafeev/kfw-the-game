@@ -670,6 +670,7 @@ class Player(Fighter):
         self.earn_prize(prize)
         self.change_stat('tourn_won', 1)
         self.log('Wins the tournament')
+        self.pak()
         if self.get_stat('tourn_won') >= 3:
             self.add_accompl('Tournament Champion')
 
