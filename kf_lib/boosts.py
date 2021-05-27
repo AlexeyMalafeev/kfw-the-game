@@ -1,6 +1,3 @@
-#! python3
-
-
 from .utilities import *
 
 
@@ -59,10 +56,13 @@ RESIST_KO1 = 0.25
 RESIST_KO2 = 0.5
 SPEED1 = 0.3
 SPEED2 = 0.6
-STAM_MAX1 = 20
-STAM_MAX2 = 40
-STAM_RESTORE1 = 2
-STAM_RESTORE2 = 4
+
+# added to multipliers
+STAM_MAX1 = 0.1
+STAM_MAX2 = 0.2
+STAM_RESTORE1 = 0.1
+STAM_RESTORE2 = 0.2
+
 STRENGTH1 = 0.3
 STRENGTH2 = 0.6
 STRIKE_MULT1 = 0.25
@@ -128,8 +128,8 @@ PMAP = (
     ('resist_ko', 'resist KO', 'chance to resist KO', [hund, add_sign, add_pcnt]),
     ('speed_full', 'speed', 'speed', [add_sign]),
     ('speed_mult', 'speed', 'speed', [hund, add_sign, add_pcnt]),
-    ('stamina_max', 'stamina', 'max stamina', [add_sign]),
-    ('stamina_gain', 'stamina', 'restore stamina', [add_sign]),
+    ('stamina_max_mult', 'stamina', 'max stamina', [hund, add_sign, add_pcnt]),
+    ('stamina_gain_mult', 'stamina', 'restore stamina', [hund, add_sign, add_pcnt]),
     ('strength_full', 'strength', 'strength', [add_sign]),
     ('strength_mult', 'strength', 'strength', [hund, add_sign, add_pcnt]),
     ('stun_chance', 'stun', 'stun chance', [hund, add_sign, add_pcnt]),

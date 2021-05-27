@@ -15,7 +15,9 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Invulnerable": StyleTech('Invulnerable', dam_reduc=b.DAM_REDUC1),
     "Rising": StyleTech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
     "Guarding": StyleTech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
-    "Persevering": StyleTech('Perseverance', stamina_gain=b.STAM_RESTORE1),
+    "Persevering": StyleTech(
+        'Perseverance', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+    ),
     "Shattering": StyleTech(
         'Shattering Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1
     ),
@@ -58,7 +60,9 @@ W2 = {
     "Ice": StyleTech('Hard like Ice', dfs_mult=b.DEFENSE1),
     "Iron": StyleTech('Iron Skin', dam_reduc=b.DAM_REDUC1),
     "Wooden": StyleTech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
-    "Storm": StyleTech('Relentless Storm', stamina_gain=b.STAM_RESTORE1),
+    "Storm": StyleTech(
+        'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+    ),
     "Razor": StyleTech('Razor-Sharp Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
     "Misty": StyleTech('Misty Steps', dodge_mult=b.EVADE1),
     "Stone": StyleTech('Stone Forearms', block_mult=b.BLOCK1),
@@ -89,7 +93,9 @@ W3 = {
     "Toad": StyleTech('Toad\'s Toughness', dam_reduc=b.DAM_REDUC1),
     "Phoenix": StyleTech('Rising Phoenix', resist_ko=b.RESIST_KO1),
     "Crab": StyleTech('Defending Crab', guard_dfs_bonus=b.GUARD_DFS1),
-    "Ox": StyleTech('Ox\'s Stamina', stamina_gain=b.STAM_RESTORE1),
+    "Ox": StyleTech(
+        'Ox\'s Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+    ),
     "Cobra": StyleTech('Attacking Cobra', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
     "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
     "Mantis": StyleTech('Praying Mantis', block_mult=b.BLOCK1),

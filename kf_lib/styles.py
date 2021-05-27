@@ -173,7 +173,9 @@ default_styles = [
         'Hung Ga',
         {
             3: StyleTech('Hung Ga I', punch_strike_mult=b.STRIKE_MULT1),
-            5: StyleTech('Hung Ga II', stamina_gain=b.STAM_RESTORE1, stamina_max=b.STAM_MAX1),
+            5: StyleTech(
+                'Hung Ga II', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+            ),
             7: StyleTech('Hung Ga III', strength_mult=b.STRENGTH1),
         },
         {1: 'Short Punch', 2: '1,punch', 4: '2,punch', 6: '3,punch', 8: 'No-Shadow Kick'},
@@ -293,7 +295,9 @@ default_styles = [
         {
             3: StyleTech('Tiger I', atk_mult=b.ATTACK1),
             5: StyleTech('Tiger II', strength_mult=b.STRENGTH1),
-            7: StyleTech('Tiger III', stamina_gain=b.STAM_RESTORE1, stamina_max=b.STAM_MAX1),
+            7: StyleTech(
+                'Tiger III', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+            ),
         },
         {
             2: '1,claw',  # todo 'Tiger Claw' causes bleeding and not at lv2
@@ -461,7 +465,9 @@ FOREIGN_STYLES = {
         {
             3: StyleTech('Capoeira I', agility_mult=b.AGILITY1),
             5: StyleTech('Capoeira II', strength_mult=b.STRENGTH1),
-            7: StyleTech('Capoeira III', stamina_gain=b.STAM_RESTORE1, stamina_max=b.STAM_MAX1),
+            7: StyleTech(
+                'Capoeira III', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+            ),
         },
         {2: '1,kick', 4: 'Acrobatic Kick', 6: '3,acrobatic,kick', 8: '4,acrobatic,flying,kick'},
     ),

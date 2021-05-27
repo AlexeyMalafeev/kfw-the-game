@@ -1,5 +1,3 @@
-#! python3
-
 from . import boosts as b
 from . import weapons
 from .utilities import *
@@ -151,8 +149,12 @@ LINKED_TECHS = [
         AdvancedTech('Golden Lotus Stance', qp_max=b.QP_MAX2, qp_start=b.QP_START2),
     ),
     (
-        UpgradableTech('Horse-like Stamina', stamina_gain=b.STAM_RESTORE1),
-        AdvancedTech('Strong as an Ox', stamina_max=b.STAM_MAX2, stamina_gain=b.STAM_RESTORE1),
+        UpgradableTech(
+            'Horse-like Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+        ),
+        AdvancedTech(
+            'Strong as an Ox', stamina_max_mult=b.STAM_MAX2, stamina_gain_mult=b.STAM_RESTORE2
+        ),
     ),
     (
         UpgradableTech('Fierce Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
