@@ -68,7 +68,7 @@ RATIO_VERY_RISKY = 1.5
 RATIO_EXTREMELY_RISKY = 2
 SHOCK_CHANCE = 0.5  # for moves
 STAMINA_BASE = 50  # for all fighter levels
-STAMINA_DAMAGE = 20  # for moves
+STAMINA_DAMAGE = 0.2  # for moves
 STAMINA_FACTOR_BIAS = 0.5
 STAMINA_INCR_PER_LV = 10
 STAT_BASED_DAM_UPPER_MULT = 5
@@ -630,7 +630,8 @@ class Fighter(object):
 
     def do_stam_dam(self):
         targ = self.target
-        targ.change_stamina(-STAMINA_DAMAGE)
+        dam = round(targ.stamina_max * STAMINA_DAMAGE)
+        targ.change_stamina(-dam)
         prefix = 'lying ' if targ.check_status('lying') else ''
         targ.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' gasps for breath!', align=False)
