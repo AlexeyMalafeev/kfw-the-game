@@ -67,8 +67,10 @@ RATIO_RISKY = 1.1
 RATIO_VERY_RISKY = 1.5
 RATIO_EXTREMELY_RISKY = 2
 SHOCK_CHANCE = 0.5  # for moves
+STAMINA_BASE = 50 # for all fighter levels
 STAMINA_DAMAGE = 20  # for moves
 STAMINA_FACTOR_BIAS = 0.5
+STAMINA_INCR_PER_LV = 5
 STAT_BASED_DAM_UPPER_MULT = 5
 STUN_HP_DIVISOR = 2.8
 TIME_UNIT_MULTIPLIER = 20
@@ -113,8 +115,8 @@ class Fighter(object):
     off_balance_atk_mult = 0.75
     off_balance_dfs_mult = 0.75
     speed_mult = 1.0
-    stamina_gain = 10
-    stamina_max = 100
+    stamina_gain_mult = 1.0
+    stamina_max_mult = 1.0
     strength_mult = 1.0
     stun_chance = 0.0
     qp_gain = 10
@@ -125,7 +127,7 @@ class Fighter(object):
     unblock_chance = 0.0
     wp_dfs_bonus = 1.0
 
-    # strike multipliers todo reimplement as an empty dict?
+    # strike multipliers todo reimplement as a default dict? a data class?
     claw_strike_mult = 1.0
     dist1_bonus = 1.0
     dist2_bonus = 1.0
@@ -213,7 +215,9 @@ class Fighter(object):
         self.kos_this_fight = 0
         self.qp = 0
         self.previous_actions = ['', '', '']
-        self.stamina = self.stamina_max
+        self.stamina_max = 0
+        self.stamina_gain = 0
+        self.stamina = 0
         self.stamina_factor = 1.0
         self.status = {}  # {'status_name': status_dur}
         self.target = None  # both for attacker and defender
@@ -362,6 +366,7 @@ class Fighter(object):
             self.dfs_pwr *= self.stamina_factor * self.wp_dfs_bonus  # todo divide by sth?
 
     def calc_stamina_factor(self):
+        # todo docstring calc_stamina_factor
         self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
     def cause_fall(self):
@@ -940,9 +945,11 @@ class Fighter(object):
         # print(self.style.move_strings)
         for i in range(n):
             self.level += 1
+
             # increase a stat
             self.choose_att_to_upgrade()
-            # upgrade a tech if possible
+
+            # techs
             if self.style.is_tech_style:
                 # learn new style tech if possible
                 t = self.style.techs.get(self.level)
@@ -954,6 +961,8 @@ class Fighter(object):
                 # learn new tech if possible
                 if self.level in LVS_GET_NEW_TECH:
                     self.choose_new_tech()
+
+            # moves
             if self.level in self.style.move_strings:
                 move_s = self.style.move_strings[self.level]
                 moves.resolve_style_move(move_s, self)
@@ -1021,6 +1030,10 @@ class Fighter(object):
             base = getattr(self, att)
             mult = getattr(self, att + '_mult')
             setattr(self, att + '_full', round(base * mult))
+        self.stamina_max = round(
+            (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
+        )
+        self.stamina_gain = round(self.stamina_max / 10 * self.stamina_gain_mult)
 
     def replace_move(self, rep_mv, rep_with):
         def _rep_in_list(mv_a, mv_b, move_list):
