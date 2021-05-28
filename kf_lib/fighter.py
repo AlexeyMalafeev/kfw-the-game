@@ -59,6 +59,8 @@ NEW_MOVE_TIERS = {
 LVS_GET_NEW_TECH = {11, 13, 15, 17, 19}
 MOB_DAM_PENALTY = 0.3
 OFF_BALANCE_HP_DIVISOR = 4  # todo make 0.25 like above thresholds
+QP_BASE = 0
+QP_INCR_PER_LV = 5
 RATIO_NO_RISK = 0
 RATIO_VERY_LOW_RISK = 0.5
 RATIO_LOW_RISK = 0.8
@@ -119,9 +121,8 @@ class Fighter(object):
     stamina_max_mult = 1.0
     strength_mult = 1.0
     stun_chance = 0.0
-    qp_gain = 10
-    qp_max = 100
-    qp_start = 0.0
+    qp_gain_mult = 1.0
+    qp_max_mult = 1.0
     quotes = 'fighter'
     resist_ko = 0.0
     unblock_chance = 0.0
@@ -212,9 +213,12 @@ class Fighter(object):
         self.is_auto_fighting = True
         self.kos_this_fight = 0
         self.qp = 0
+        self.qp_gain = 0
+        self.qp_max = 0
+        self.qp_start = 0.0  # portion of total
         self.previous_actions = ['', '', '']
-        self.stamina_max = 0
         self.stamina_gain = 0
+        self.stamina_max = 0
         self.stamina = 0
         self.stamina_factor = 1.0
         self.status = {}  # {'status_name': status_dur}
@@ -774,6 +778,7 @@ class Fighter(object):
 
     def get_numerical_status(self):
         """This can be used as a simple metric for how 'well' the fighter is."""
+        # todo make this metric weighted, as hp is more important than stamina / qp
         return mean((self.hp / self.hp_max, self.stamina / self.stamina_max, self.qp / self.qp_max))
 
     def get_opponents_power(self):  # TBD: this can be useful for AI
@@ -1030,6 +1035,10 @@ class Fighter(object):
             (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
         )
         self.stamina_gain = round(self.stamina_max / 10 * self.stamina_gain_mult)
+        self.qp_max = round(
+            (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
+        )
+        self.qp_gain = round(self.qp_max / 5 * self.qp_gain_mult)
 
     def replace_move(self, rep_mv, rep_with):
         def _rep_in_list(mv_a, mv_b, move_list):
