@@ -205,7 +205,9 @@ class BaseFight(object):
         self.timeline.append(s)
 
     def fight_loop(self):
-        """The most important method that determines what happens and in what order during a fight."""
+        """
+        The most important method that determines what happens and in what order during a fight.
+        """
 
         # determine initial order
         adjust = max(f.speed_full for f in self.active_fighters)
