@@ -424,7 +424,7 @@ FOREIGN_STYLES = {
             7: StyleTech('Wrestling III', hp_gain=b.HP_GAIN1),
         },
         {
-            1: ('Rush Forward', 'Throw'),
+            1: 'Throw',
             2: '1,grappling',
             4: '2,grappling',
             6: '3,grappling',

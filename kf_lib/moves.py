@@ -135,6 +135,7 @@ BASIC_MOVES = [
         'Guard',
         'Focus',
         'Catch Breath',
+        'Do Nothing',
         'Finishing Punch',
         'Finishing Kick',
     )

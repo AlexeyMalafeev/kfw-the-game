@@ -44,10 +44,10 @@ HP_MULT = 1.5  # todo this is not used
 IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
 QI_WHEN_ATK = 0.5  # todo this is not used
-QP_GAIN1 = 5
-QP_GAIN2 = 10
-QP_MAX1 = 50
-QP_MAX2 = 100
+QP_GAIN1 = 0.1
+QP_GAIN2 = 0.2
+QP_MAX1 = 0.1
+QP_MAX2 = 0.2
 QP_START1 = 0.5
 QP_START2 = 1.0
 RARE_STRIKE_MULT1 = 0.4
@@ -122,8 +122,8 @@ PMAP = (
         [hund, add_sign, add_pcnt],
     ),
     ('qi_when_atk', 'qi/atk', 'qi when attacking', [hund, add_sign, add_pcnt]),
-    ('qp_gain', 'qi', 'QP/turn', [add_sign]),
-    ('qp_max', 'qi', 'max QP', [add_sign]),
+    ('qp_gain', 'qi', 'QP/turn', [hund, add_sign, add_pcnt]),
+    ('qp_max', 'qi', 'max QP', [hund, add_sign, add_pcnt]),
     ('qp_start', 'qi', 'QP to start with', [hund, add_sign, add_pcnt]),
     ('resist_ko', 'resist KO', 'chance to resist KO', [hund, add_sign, add_pcnt]),
     ('speed_full', 'speed', 'speed', [add_sign]),
