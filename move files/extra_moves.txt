@@ -1,7 +1,7 @@
 # name            |distance |dist_change |power |accuracy |complexity |stam_cost |time_cost |qi_cost |features                                            |functions        |tier |freq 
 'Step Forward'    |0        |-1          |0     |0        |1          |5         |50        |0       |{'non-attack'}                                      |[]               |0    |5    
 'Step Back'       |0        |1           |0     |0        |1          |5         |60        |0       |{'non-attack'}                                      |[]               |0    |5    
-'Guard'           |0        |0           |0     |0        |0          |-10       |60        |5       |{'non-attack'}                                      |['guard']        |0    |5    
+'Guard'           |0        |0           |0     |0        |0          |0         |60        |0       |{'non-attack'}                                      |['guard']        |0    |5    
 'Focus'           |0        |0           |0     |0        |0          |0         |60        |-20     |{'non-attack'}                                      |[]               |0    |5    
 'Catch Breath'    |0        |0           |0     |0        |0          |-20       |80        |0       |{'non-attack'}                                      |[]               |0    |5    
 'Rush Forward'    |0        |-2          |0     |0        |1          |15        |75        |0       |{'non-attack'}                                      |[]               |0    |5    

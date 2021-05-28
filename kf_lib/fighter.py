@@ -200,8 +200,6 @@ class Fighter(object):
         self.atk_pwr = 0
         self.atk_bonus = 0
         self.av_moves = []
-        self.can_attack = True  # todo not used so far!
-        self.can_defend = True  # todo not used so far!
         self.current_fight = None  # ...Fight object
         self.dam = 0
         self.dfs_bonus = 1.0  # for moves like Guard
@@ -1002,11 +1000,8 @@ class Fighter(object):
         self.previous_actions = ['', '', '']
         self.is_auto_fighting = True
         self.distances = d = {}
-        for (
-            f2
-        ) in (
-            self.current_fight.all_fighters
-        ):  # todo optimize not to walk over the same pair of fighters twice
+        # todo optimize not to walk over the same pair of fighters twice
+        for f2 in self.current_fight.all_fighters:
             if self is f2:
                 d[f2] = 0
             else:
