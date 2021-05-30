@@ -114,7 +114,6 @@ PMAP = (
     ('hit_disarm', 'disarm', 'disarm chance when attacking', [hund, add_sign, add_pcnt]),
     ('home_training_exp_mult', 'home train.', 'home training', [hund, add_sign, add_pcnt]),
     ('hp_gain', 'HP gain', 'HP/turn', [add_sign]),
-    ('hp_per_health_lv', 'HP/lv.', 'HP/health level', [add_sign]),
     (
         'in_fight_impro_wp_chance',
         'weapons',
