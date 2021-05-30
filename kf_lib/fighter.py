@@ -14,6 +14,8 @@ from . import weapons
 # used to be: c1 = 12, c2 = 3, c3 = 1; worked decently
 ADVANCED_TECH_AT_LV = 20
 BLOCK_DIVISOR = 2
+COUNTER_CHANCE_BASE = 0.1
+COUNTER_CHANCE_INCR_PER_LV = 2
 DAM_DIVISOR = 2
 DODGE_DIVISOR = 3
 DUR_LYING_MIN = 100
@@ -1060,6 +1062,10 @@ class Fighter(object):
             (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
         )
         self.qp_gain = round(self.qp_max / 5 * self.qp_gain_mult)
+        self.counter_chance = round(
+            (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
+            self.counter_chance_mult
+        )
 
     def replace_move(self, rep_mv, rep_with):
         def _rep_in_list(mv_a, mv_b, move_list):
