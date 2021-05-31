@@ -61,6 +61,7 @@ NEW_MOVE_TIERS = {
 LVS_GET_NEW_TECH = {11, 13, 15, 17, 19}
 MOB_DAM_PENALTY = 0.3
 OFF_BALANCE_HP_DIVISOR = 4  # todo make 0.25 like above thresholds
+QI_BASED_DAM_UPPER_MULT = 3
 QP_BASE = 0
 QP_INCR_PER_LV = 5
 RATIO_NO_RISK = 0
@@ -622,7 +623,7 @@ class Fighter(object):
 
     def do_qi_based_dam(self):
         targ = self.target
-        dam = rndint_2d(1, self.qp)
+        dam = rndint_2d(self.qp, self.qp * QI_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' qi-based -{dam} HP ({targ.hp})', align=False)
 
@@ -1377,6 +1378,8 @@ class Fighter(object):
             return s
         except ZeroDivisionError:
             from pprint import pprint
+            import traceback
+            traceback.print_exc()
             pprint(vars())
             pprint(vars(self))
             pprint(self.current_fight.timeline)
