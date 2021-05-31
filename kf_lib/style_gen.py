@@ -23,6 +23,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     ),
     "Elusive": StyleTech('Elusive Moves', dodge_mult=b.EVADE1),
     "Indestructible": StyleTech('Indestructible Body', block_mult=b.BLOCK1),
+    "Retaliating": StyleTech('Retaliation', counter_chance_mult=b.COUNTER_CH_MULT1),
     "Punching": StyleTech('Fist Training', punch_strike_mult=b.STRIKE_MULT1),
     "Palm-Striking": StyleTech(
         'Palm Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
@@ -66,6 +67,7 @@ W2 = {
     "Razor": StyleTech('Razor-Sharp Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
     "Misty": StyleTech('Misty Steps', dodge_mult=b.EVADE1),
     "Stone": StyleTech('Stone Forearms', block_mult=b.BLOCK1),
+    "Vengeful": StyleTech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
     # "": StyleTech('', punch_strike_mult=b.STRIKE_MULT1),
     # "": StyleTech('', palm_strike_mult=b.STRIKE_MULT_HALF),
     # "": StyleTech('', kick_strike_mult=b.STRIKE_MULT1),
@@ -99,12 +101,12 @@ W3 = {
     "Cobra": StyleTech('Attacking Cobra', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
     "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
     "Mantis": StyleTech('Praying Mantis', block_mult=b.BLOCK1),
+    "Fox": StyleTech('Fox Strikes Back', counter_chance_mult=b.COUNTER_CH_MULT1),
     "Lion": StyleTech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
     "Centipede": StyleTech(
         'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
     "Scorpion": StyleTech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
-    # "Fox": StyleTech('Fox\'s Cunning', exotic_strike_mult=b.RARE_STRIKE_MULT1),
     "Eagle": StyleTech('Flying Eagle', flying_strike_mult=b.STRIKE_MULT1),
     "Leopard": StyleTech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     "Boar": StyleTech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
@@ -115,8 +117,9 @@ W3 = {
     "Bear": StyleTech('Bear\'s Strength', strength_mult=b.STRENGTH1),
     "Elephant": StyleTech('Elephant\'s Health', health_mult=b.HEALTH1),
     "Panther": StyleTech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
+    # "Rat": StyleTech('Cornered Rat', gain bonus when low on hp)
     "Viper": StyleTech('Stinging Viper', stun_chance=b.STUN_CH1),
-    # crab, turtle, crow, horse, spider, shark, dog, rat, bull
+    # turtle, crow, horse, spider, shark, dog, rat, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }
 '''

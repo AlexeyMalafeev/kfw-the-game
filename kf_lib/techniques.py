@@ -227,6 +227,10 @@ LINKED_TECHS = [
         UpgradableTech('Guard While Striking', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
         AdvancedTech('Attack Is Defense', guard_while_attacking=b.GUARD_WHILE_ATTACKING2),
     ),
+    (
+        UpgradableTech('Retaliative Blows', counter_chance_mult=b.COUNTER_CH_MULT1),
+        AdvancedTech('Vengeful Fox', counter_chance_mult=b.COUNTER_CH_MULT2),
+    ),
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]

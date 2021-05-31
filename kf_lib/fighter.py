@@ -1246,7 +1246,7 @@ class Fighter(object):
             self.current_fight.display(f'{self.name} disarms {atkr.name} while blocking')
 
     def try_counter(self):
-        if self.defended and self.hp >= 0 and rnd() <= self.counter_chance:
+        if self.defended and self.hp > 0 and rnd() <= self.counter_chance:
             self.do_counter()
 
     def try_critical(self):
@@ -1379,6 +1379,7 @@ class Fighter(object):
             from pprint import pprint
             pprint(vars())
             pprint(vars(self))
+            pprint(self.current_fight.timeline)
             pak()
 
     def write(self, *args, **kwargs):

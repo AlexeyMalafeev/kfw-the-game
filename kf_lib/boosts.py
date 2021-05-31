@@ -10,8 +10,8 @@ BLOCK_DISARM1 = 0.5
 BLOCK_DISARM2 = 1.0
 BLOCK1 = 0.4
 BLOCK2 = 0.8
-COUNTER_CH1 = 0.2
-COUNTER_CH2 = 0.4
+COUNTER_CH_MULT1 = 0.25
+COUNTER_CH_MULT2 = 0.5
 CRIT_CH1 = 0.15
 CRIT_CH2 = 0.3
 CRIT_M1 = 0.5
@@ -83,7 +83,7 @@ PMAP = (
     ('atk_mult', 'attack', 'attack', [hund, add_sign, add_pcnt]),
     ('block_disarm', 'disarm', 'disarm chance when defending', [hund, add_sign, add_pcnt]),
     ('block_mult', 'blocks', 'block efficiency', [hund, add_sign, add_pcnt]),
-    ('counter_chance', 'counters', 'counterattack chance', [hund, add_sign, add_pcnt]),
+    ('counter_chance_mult', 'counters', 'counterattack chance', [hund, add_sign, add_pcnt]),
     ('critical_chance', 'criticals', 'critical attack chance', [hund, add_sign, add_pcnt]),
     ('critical_mult', 'criticals', 'critical attack power', [hund, add_sign, add_pcnt]),
     ('dam_reduc', 'dam.reduc.', 'damage reduction', [add_sign]),
