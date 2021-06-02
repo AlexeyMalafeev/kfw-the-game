@@ -1,11 +1,10 @@
 #! python3
 
 from kf_lib import game
-from kf_lib import fighter_factory as ff
+from kf_lib.actors import fighter_factory as ff
 from kf_lib import human_player
-from kf_lib import moves
-from kf_lib import styles
-from kf_lib.utilities import *
+from kf_lib.kung_fu import styles, moves
+from kf_lib.utils.utilities import *
 
 
 class Zen(human_player.HumanPlayer):

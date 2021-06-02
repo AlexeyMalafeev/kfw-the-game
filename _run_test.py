@@ -1,6 +1,6 @@
 from kf_lib import game
 from kf_lib import testing_tools as tt
-from kf_lib.utilities import *
+from kf_lib.utils.utilities import *
 
 try:
     g = game.Game()

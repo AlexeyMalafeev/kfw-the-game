@@ -1,14 +1,11 @@
-from . import encounters
-from . import fight
-from . import fight_ai
-from .fighter import Fighter
-from . import fighter_factory as ff
-from . import styles
+from .town import encounters
+from .fighting import fight
+from .ai import fight_ai
+from kf_lib.actors.fighter import Fighter
+from .actors import fighter_factory as ff
+from .kung_fu import styles, techniques, weapons
 from . import tech_test
-from . import techniques
-from .utilities import *
-from . import weapons
-
+from kf_lib.utils.utilities import *
 
 TESTS_FOLDER = 'tests'
 

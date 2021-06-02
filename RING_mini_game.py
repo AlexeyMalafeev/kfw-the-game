@@ -1,5 +1,5 @@
-from kf_lib import fighter_factory
-from kf_lib.utilities import *
+from kf_lib.actors import fighter_factory
+from kf_lib.utils.utilities import *
 
 
 def main():

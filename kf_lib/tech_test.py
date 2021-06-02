@@ -1,8 +1,8 @@
 #! python3
 
-from . import fighter_factory
-from . import techniques
-from .utilities import *
+from .actors import fighter_factory
+from .kung_fu import techniques
+from kf_lib.utils.utilities import *
 
 
 class TechTester(object):

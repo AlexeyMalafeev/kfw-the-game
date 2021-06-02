@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 
 
-from kf_lib.experience import extract_features
-from kf_lib.fighter_factory import new_fighter, new_prize_fighter
-from kf_lib.fight import AutoFight
-from kf_lib.utilities import *
+from kf_lib.actors.experience import extract_features
+from kf_lib.actors.fighter_factory import new_fighter, new_prize_fighter
+from kf_lib.fighting.fight import AutoFight
+from kf_lib.utils.utilities import *
 #from .experience import extract_features
 # from .fighter_factory import new_fighter, new_prize_fighter
 # from .fight import AutoFight

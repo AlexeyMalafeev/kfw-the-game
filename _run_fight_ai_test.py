@@ -1,8 +1,7 @@
 #! python3
 
-from kf_lib import fight_ai
-from kf_lib import fight_ai_test
-from kf_lib.utilities import *
+from kf_lib.ai import fight_ai, fight_ai_test
+from kf_lib.utils.utilities import *
 
 try:
     write_log = True

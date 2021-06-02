@@ -1,5 +1,4 @@
-from kf_lib import fight_ai
-from kf_lib import fight_ai_gen
+from kf_lib.ai import fight_ai, fight_ai_gen
 
 try:
     # ga = fight_ai_gen.GeneticAlgorithm(pop_size=20, n_genes=5, gene_names=fight_ai.GENETIC_AI_PARAM_NAMES,

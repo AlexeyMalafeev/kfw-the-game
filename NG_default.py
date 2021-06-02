@@ -1,6 +1,6 @@
 from kf_lib import game
-from kf_lib.player import SmartAIP, SmartAIPVisible
-from kf_lib.utilities import yn
+from kf_lib.actors.player import SmartAIP, SmartAIPVisible
+from kf_lib.utils.utilities import yn
 
 
 try:

@@ -879,7 +879,7 @@ def gen_throws(moves):
 
 
 def main():
-    from kf_lib.moves import read_moves
+    from kf_lib.kung_fu.moves import read_moves
 
     base_moves, keys = read_moves(os.path.join('move files', 'base_moves.txt'))
     save_moves(base_moves, keys, os.path.join('move files', 'base_moves.txt'))
