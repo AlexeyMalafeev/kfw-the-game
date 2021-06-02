@@ -1,8 +1,6 @@
-#! python3
-
-
 from . import encounters
-from .fighter import Fighter, HumanControlledFighter
+from .fighter import Fighter
+from .human_controlled_fighter import HumanControlledFighter
 from . import items
 from . import lang_tools
 

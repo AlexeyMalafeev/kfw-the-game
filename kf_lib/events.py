@@ -1,7 +1,8 @@
 from typing import Any, Optional
 
 from . import fight
-from .fighter import Fighter, HumanControlledFighter
+from .fighter import Fighter
+from .human_controlled_fighter import HumanControlledFighter
 from .player import Player
 from .utilities import *
 

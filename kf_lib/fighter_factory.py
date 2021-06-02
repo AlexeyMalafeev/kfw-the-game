@@ -1,6 +1,5 @@
-#! python3
-
-from .fighter import Fighter, HumanControlledFighter, Challenger, Master, Thug
+from .fighter import Fighter, Challenger, Master, Thug
+from .human_controlled_fighter import HumanControlledFighter
 from . import names
 from . import styles
 from .utilities import *

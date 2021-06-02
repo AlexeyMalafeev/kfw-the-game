@@ -1,5 +1,3 @@
-#! python3
-
 import tkinter as tk
 
 from . import game

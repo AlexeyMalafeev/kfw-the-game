@@ -16,6 +16,7 @@ def calc_fight_exp(winners, losers):
     )  # can't be 0 because there are always losers
     win_exp_relative = round(win_exp_total / lose_exp_total * FIGHT_EXP_BASE)
     lose_exp_relative = round(lose_exp_total / win_exp_total * FIGHT_EXP_BASE / LOSER_EXP_DIVISOR)
+    # todo finish calc_fight_exp
 
 
 def fighter_to_exp(f):

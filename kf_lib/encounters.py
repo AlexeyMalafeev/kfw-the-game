@@ -1,14 +1,14 @@
-from kf_lib import events
-from kf_lib import experience
-from kf_lib import fighter_factory
-from kf_lib import items
-from kf_lib import lang_tools
-from kf_lib import moves
-from kf_lib import names
-from kf_lib import quotes
-from kf_lib import techniques
-from kf_lib import traits
-from kf_lib.utilities import *
+from . import events
+from . import experience
+from . import fighter_factory
+from . import items
+from . import lang_tools
+from . import moves
+from . import names
+from . import quotes
+from . import techniques
+from . import traits
+from .utilities import *
 
 # constants
 # encounter chances
