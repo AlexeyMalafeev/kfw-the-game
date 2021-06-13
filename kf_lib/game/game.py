@@ -7,20 +7,21 @@ g.play()
 
 """
 
-from kf_lib.town import events as ev, encounters, story
-from kf_lib.actors import fighter_factory, names
-from kf_lib.game import game_stats
-from kf_lib.kung_fu.moves import BASIC_MOVES
-from kf_lib.actors.player import (
+from ..town import events as ev, encounters, story
+from ..actors import fighter_factory, names
+from ..game import game_stats
+from ..kung_fu.moves import BASIC_MOVES
+from ..actors.player import (
     HumanPlayer,
     ALL_AI_PLAYERS,  # used in load/new_game
 )
-from kf_lib.kung_fu import styles, style_gen, items
-from kf_lib.utils.utilities import *
+from ..kung_fu import styles, style_gen, items
+from ..utils.utilities import *
 
 
 # constants
-# AI_NAMES = {LazyAIP: 'Lazy AI', SmartAIP: 'Smart AI', VanillaAIP: 'Vanilla AI', BaselineAIP: 'Baseline AI'}
+# AI_NAMES = {LazyAIP: 'Lazy AI', SmartAIP: 'Smart AI', VanillaAIP: 'Vanilla AI',
+# BaselineAIP: 'Baseline AI'}
 CH_STUDENT_LV_UP = 0.1
 MAX_NUM_PLAYERS = 4
 MAX_NUM_STUDENTS = 8
@@ -92,8 +93,8 @@ class Game(object):
         for e in encounters.ENC_LIST:
             self.enc_count_dict[e.__name__] = 0
 
-        self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on play_indefinitely
-                               fights_total enc_count_dict'''.split()
+        self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
+        play_indefinitely fights_total enc_count_dict'''.split()
 
         self.enc = encounters.EncControl(self)
 
@@ -284,7 +285,6 @@ class Game(object):
         return klass(name=self.get_new_name(), style_name=style.name)
 
     def get_new_human_player(self):
-        p = None
         while True:
             cls()
             p = HumanPlayer(name=self.get_new_name())
@@ -330,13 +330,20 @@ class Game(object):
     # noinspection PyUnresolvedReferences
     def load_game(self, file_name):
         """Read and execute the save file."""
+        # todo reimplement game loading
         g = self  # do not delete
         with open(os.path.join(SAVE_FOLDER, file_name), 'r') as f:
-            from .fighter import (
+            from ..actors.fighter import (
                 Fighter,
                 Challenger,
                 Master,
                 Thug,
+            )  # this is used for loading, do not delete
+            from ..actors.player import (
+                LazyAIP,
+                SmartAIP,
+                VanillaAIP,
+                BaselineAIP,
             )  # this is used for loading, do not delete
 
             for line in f:

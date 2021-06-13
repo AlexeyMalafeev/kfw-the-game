@@ -1,4 +1,4 @@
-from kf_lib.town import encounters
+from ..town import encounters
 from .fighter import Fighter
 from ..game import game_stats
 from .human_controlled_fighter import HumanControlledFighter
@@ -7,7 +7,7 @@ from ..utils import lang_tools
 
 # from . import techniques
 from . import traits, quotes
-from kf_lib.utils.utilities import *
+from ..utils.utilities import *
 
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 LV_UP_EXP = [
@@ -21,8 +21,8 @@ WAGE = 50
 
 
 class Player(Fighter):
-    savable_atts = '''exp home_training_exp_mult is_master new_school_name money reputation inactive inact_status
-    inventory ended_turn accompl accompl_dates stats_dict'''.split()
+    savable_atts = '''exp home_training_exp_mult is_master new_school_name money reputation 
+    inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
     challenger_friend_mult = 1.0
     coop_joins_fight = 0.5
     coop_joins_training = 0.25
