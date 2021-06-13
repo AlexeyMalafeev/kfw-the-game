@@ -208,7 +208,7 @@ def menu(
     keys='1234567890' + string.ascii_lowercase,
     new_line=True,
     weak=False,
-    options_per_page=10,
+    options_per_page=20,
 ):
     """
     Ask the user to choose one of the options from the option list.
