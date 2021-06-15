@@ -7,6 +7,7 @@ g.play()
 
 """
 
+from .. import testing_tools
 from ..town import events as ev, encounters, story
 from ..actors import fighter_factory, names
 from ..game import game_stats
@@ -706,7 +707,21 @@ class Game(object):
 
     def test(self):
         p = self.current_player
-        p.level_up()
+        # p.level_up()
+        p.obtain_item('Dragon Herb')
+        p.obtain_item('Ox Herb')
+        from ..kung_fu.moves import get_rand_moves
+        m1 = get_rand_moves(p, 1, 4)[0]
+        m2 = get_rand_moves(p, 1, 5)[0]
+        m3 = get_rand_moves(p, 1, 7)[0]
+        m4 = get_rand_moves(p, 1, 8)[0]
+        m5 = get_rand_moves(p, 1, 10)[0]
+        for move in m1, m2, m3, m4, m5:
+            if move:
+                p.learn_move(move, silent=False)
+        f1 = fighter_factory.new_thug(weak=False)
+        p.fight(f1)
+        # p.fight(f1)
 
         # t = testing_tools.Tester(self)
         # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')

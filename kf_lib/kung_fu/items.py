@@ -1,9 +1,6 @@
-#! python3
-
-
 import random
 
-from kf_lib.kung_fu import boosts
+from . import boosts
 
 # constants
 ATT_BOOST1 = 3
@@ -31,6 +28,7 @@ PRICES = (70, 80, 100, 120, 150)
 all_items = {}
 
 
+# todo use item descriptions somewhere in game
 class Item(object):
     """Instantiated only for descriptions."""
 
@@ -58,11 +56,17 @@ EFFECTS = {
     STR_BOOSTER: (ef_boost, {'strength_full': ATT_BOOST1}),
     AGI_BOOSTER: (ef_boost, {'agility_full': ATT_BOOST1}),
     SPD_BOOSTER: (ef_boost, {'speed_full': ATT_BOOST1}),
-    QI_BOOSTER: (ef_boost, {'qp_max': boosts.QP_MAX2, 'qp_gain': boosts.QP_GAIN2}),
+    QI_BOOSTER: (ef_boost, {
+        'qp_gain_mult': boosts.QP_GAIN2,
+        'qp_max_mult': boosts.QP_MAX2,
+        'qp_start': boosts.QP_START2,
+    }),
     HLT_BOOSTER: (ef_boost, {'health_full': ATT_BOOST1}),
     STAM_BOOSTER: (
-        ef_boost,
-        {'stamina_max': boosts.STAM_MAX2, 'stamina_gain': boosts.STAM_RESTORE2},
+        ef_boost, {
+            'stamina_max_mult': boosts.STAM_MAX2,
+            'stamina_gain_mult': boosts.STAM_RESTORE2,
+        },
     ),
     SUPER_BOOSTER: (
         ef_boost,
@@ -70,11 +74,12 @@ EFFECTS = {
             'strength_full': ATT_BOOST1,
             'agility_full': ATT_BOOST1,
             'speed_full': ATT_BOOST1,
-            'qp_max': boosts.QP_MAX2,
-            'qp_gain': boosts.QP_GAIN2,
+            'qp_gain_mult': boosts.QP_GAIN2,
+            'qp_max_mult': boosts.QP_MAX2,
+            'qp_start': boosts.QP_START2,
             'health_full': ATT_BOOST1,
-            'stamina_max': boosts.STAM_MAX2,
-            'stamina_gain': boosts.STAM_RESTORE2,
+            'stamina_max_mult': boosts.STAM_MAX2,
+            'stamina_gain_mult': boosts.STAM_RESTORE2,
         },
     ),
     MANNEQUIN: (ef_boost, {'home_training_exp_mult': boosts.HOME_TRAIN_BONUS}),

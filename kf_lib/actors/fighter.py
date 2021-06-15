@@ -1,8 +1,9 @@
-from kf_lib.fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
-from kf_lib.actors import experience, quotes
-from kf_lib.ai.fight_ai import DefaultFightAI
-from kf_lib.kung_fu import styles, moves, techniques, ascii_art, weapons
-from kf_lib.utils.utilities import *
+from ..fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
+from ..fighting.fight import fight
+from ..actors import experience, quotes
+from ..ai.fight_ai import DefaultFightAI
+from ..kung_fu import styles, moves, techniques, ascii_art, weapons
+from ..utils.utilities import *
 
 # EXP_FOR_TECH = 1
 # used to be: c1 = 12, c2 = 3, c3 = 1; worked decently
@@ -311,6 +312,7 @@ class Fighter(object):
         for k, v in kwargs.items():
             curr_v = getattr(self, k)
             setattr(self, k, curr_v + v)
+        self.refresh_full_atts()
 
     def calc_atk(self, action):
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
@@ -676,9 +678,7 @@ class Fighter(object):
         self.show_ascii()
 
     def fight(self, en, allies=None, en_allies=None, *args, **kwargs):
-        from kf_lib.fighting.fight import fight as ffight
-
-        return ffight(self, en, allies, en_allies, *args, **kwargs)
+        return fight(self, en, allies, en_allies, *args, **kwargs)
 
     def get_all_atts_str(self):
         atts_info = []
@@ -1057,7 +1057,7 @@ class Fighter(object):
             (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
         )
         self.qp_gain = round(self.qp_max / 5 * self.qp_gain_mult)
-        self.counter_chance = round(
+        self.counter_chance = (
             (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
             self.counter_chance_mult
         )
@@ -1351,6 +1351,7 @@ class Fighter(object):
         for k, v in kwargs.items():
             kwargs_copy[k] = -v
         self.boost(**kwargs_copy)
+        self.refresh_full_atts()
 
     def unlearn_tech(self, tech):
         self.techs.remove(tech)

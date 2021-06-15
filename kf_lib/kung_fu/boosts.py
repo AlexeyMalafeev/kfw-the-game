@@ -1,4 +1,4 @@
-from kf_lib.utils.utilities import *
+from ..utils.utilities import *
 
 
 AGILITY1 = 0.3
@@ -121,8 +121,8 @@ PMAP = (
         [hund, add_sign, add_pcnt],
     ),
     ('qi_when_atk', 'qi/atk', 'qi when attacking', [hund, add_sign, add_pcnt]),
-    ('qp_gain', 'qi', 'QP/turn', [hund, add_sign, add_pcnt]),
-    ('qp_max', 'qi', 'max QP', [hund, add_sign, add_pcnt]),
+    ('qp_gain_mult', 'qi', 'QP/turn', [hund, add_sign, add_pcnt]),
+    ('qp_max_mult', 'qi', 'max QP', [hund, add_sign, add_pcnt]),
     ('qp_start', 'qi', 'QP to start with', [hund, add_sign, add_pcnt]),
     ('resist_ko', 'resist KO', 'chance to resist KO', [hund, add_sign, add_pcnt]),
     ('speed_full', 'speed', 'speed', [add_sign]),
