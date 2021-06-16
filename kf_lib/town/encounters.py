@@ -2,7 +2,8 @@ from . import events
 from ..actors import fighter_factory, experience, traits, quotes, names
 from ..actors.fighter import RATIO_LOW_RISK
 from ..utils import lang_tools
-from ..kung_fu import moves, techniques, items
+from ..kung_fu import moves, techniques
+from ..things import items
 from ..utils.utilities import *
 
 # constants

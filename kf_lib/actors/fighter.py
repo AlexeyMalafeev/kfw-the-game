@@ -2,7 +2,8 @@ from ..fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
 from ..fighting.fight import fight
 from ..actors import experience, quotes
 from ..ai.fight_ai import DefaultFightAI
-from ..kung_fu import styles, moves, techniques, ascii_art, weapons
+from ..kung_fu import styles, moves, techniques, ascii_art
+from ..things import weapons
 from ..utils.utilities import *
 
 # EXP_FOR_TECH = 1

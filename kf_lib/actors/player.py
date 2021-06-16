@@ -2,7 +2,7 @@ from ..town import encounters
 from .fighter import Fighter
 from ..game import game_stats
 from .human_controlled_fighter import HumanControlledFighter
-from ..kung_fu import items
+from ..things import items
 from ..utils import lang_tools
 
 # from . import techniques

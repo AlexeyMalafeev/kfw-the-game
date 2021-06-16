@@ -1,8 +1,9 @@
 v.0.6.2
 
 
-
-
+feat: add debug menu to status screen
+fix: proper input validation in get_int_from_user
+feat: ability to get money via debug menu
 
 
 v.0.6.1

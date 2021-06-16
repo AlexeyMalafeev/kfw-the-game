@@ -16,7 +16,8 @@ from ..actors.player import (
 from .debug_menu import DebugMenu
 from . import game_stats
 from ..kung_fu.moves import BASIC_MOVES
-from ..kung_fu import styles, style_gen, items
+from ..kung_fu import styles, style_gen
+from ..things import items
 from ..town import events as ev, encounters, story
 from ..utils.utilities import *
 

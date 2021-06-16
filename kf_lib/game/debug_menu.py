@@ -8,6 +8,7 @@
 # from ..kung_fu.moves import BASIC_MOVES
 # from ..kung_fu import styles, style_gen, items
 # from ..town import events as ev, encounters, story
+from ..things import items
 from ..utils.utilities import *
 
 
@@ -33,7 +34,9 @@ class DebugMenu:
 
     def debug_get_item(self):
         p = self.current_player
-
+        item = menu(sorted(items.all_items, key=str.lower) + items.MOCK_ITEMS, title='Which item?')
+        quantity = get_int_from_user('How many?', 1, 1000000000)
+        p.obtain_item(item, quantity)
 
     def debug_level_up(self):
         p = self.current_player
