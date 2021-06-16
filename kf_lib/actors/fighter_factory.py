@@ -112,7 +112,7 @@ def new_custom_hcf():
     ]
     # todo select starting atts
     style = menu(legend, 'Choose a style:')
-    level = get_num_input('Level:', 1, 20)
+    level = get_int_from_user('Level:', 1, 20)
     f = HumanControlledFighter(name=name, style_name=style.name)
     if level > 1:
         f.level_up(level - 1)  # fixme level-up doesn't work (e.g. level=10), only works once

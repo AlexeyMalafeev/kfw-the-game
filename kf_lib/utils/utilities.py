@@ -148,14 +148,23 @@ def get_linear_bar(v, maxv, syma='#', symb='-'):
     return syma * v + symb * (maxv - v)
 
 
-def get_num_input(message, a, b):
+def get_int_from_user(message, min_, max_):
     """
     Return an integer in range [a, b] (both included) input by user.
     """
-    print(message)
-    inp = input(f' ({a}-{b})>')
-    if a <= int(inp) <= b:
-        return int(inp)
+    while True:
+        error_msg = 'invalid input, try again'
+        print(message)
+        inp = input(f' ({min_}-{max_})>')
+        try:
+            inp = int(inp)
+        except ValueError:
+            print(error_msg)
+            continue
+        if min_ <= inp <= max_:
+            return inp
+        else:
+            print(error_msg)
 
 
 def get_prop_bar(value, max_value):

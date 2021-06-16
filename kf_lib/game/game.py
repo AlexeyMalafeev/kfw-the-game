@@ -382,7 +382,7 @@ class Game(DebugMenu):
         self.write_win_data = write_win_data
         # options
         if not num_players:
-            num_players = get_num_input('Number of players?', 1, MAX_NUM_PLAYERS)
+            num_players = get_int_from_user('Number of players?', 1, MAX_NUM_PLAYERS)
         if auto_save_on == '?':
             self.auto_save_on = yn('Auto save?')
         elif auto_save_on in (True, False):
