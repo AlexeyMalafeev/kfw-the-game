@@ -1,13 +1,3 @@
-# from .. import testing_tools
-# from ..actors import fighter_factory, names
-# from ..actors.player import (
-#     HumanPlayer,
-#     ALL_AI_PLAYERS,  # used in load/new_game
-# )
-# from . import game_stats
-# from ..kung_fu.moves import BASIC_MOVES
-# from ..kung_fu import styles, style_gen, items
-# from ..town import events as ev, encounters, story
 from ..things import items
 from ..utils.utilities import *
 
@@ -40,7 +30,8 @@ class DebugMenu:
 
     def debug_level_up(self):
         p = self.current_player
-
+        n = get_int_from_user('How many levels up?', 1, 100)
+        p.level_up(n)
 
     def debug_learn_move(self):
         p = self.current_player
