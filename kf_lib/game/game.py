@@ -684,6 +684,7 @@ class Game(object):
         p.show('Moves:')
         print(', '.join([str(m) for m in p.moves if m not in BASIC_MOVES]))
         print()
+        # add move screen with more detailed descriptions
         choice = menu(
             ('Items', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit'),
             keys='ibslqx',
