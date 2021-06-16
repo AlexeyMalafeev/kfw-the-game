@@ -269,6 +269,7 @@ class HumanControlledFighter(Fighter):
         self.cls()
         output = '\n'.join(lines)
         self.show(output, align=False)
+        # todo show standing fighters with distance?
 
     def show(self, text, align=True):
         """Print aligned text in paragraphs."""

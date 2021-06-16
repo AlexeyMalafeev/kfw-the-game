@@ -28,7 +28,8 @@ class DebugMenu:
 
     def debug_get_money(self):
         p = self.current_player
-
+        amount = get_int_from_user('How much money?', 1, 1000000000)
+        p.earn_money(amount, silent=True)
 
     def debug_get_item(self):
         p = self.current_player
