@@ -136,6 +136,28 @@ for w in ALL_WEAPONS_LIST:
     else:
         WEAPON_TYPES[w.wp_type] = [w]
 
+# todo add evil weapons
+# todo add nunchaku
+# todo add possible other kung-fu weapons:
+# Rope dart
+# Double tiger hook swords
+# Double hammers
+# Battle axe
+# Snake Halberd
+# Kwan Dao
+# Twin broadswords
+# Double-edged sword
+# Chinese Spear
+# Three-section chain whip
+# Double daggers
+# Double crutches
+# Monk's spade
+# Staff
+# Tiger fork
+# Rattan shield
+# Single butterfly sword
+# Three-section staff
+
 
 def get_rnd_wp_by_type(wp_type):
     """Return random weapon name by type."""

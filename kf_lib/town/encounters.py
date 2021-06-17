@@ -189,9 +189,8 @@ def try_escape(p, esc_chance):
         beating(p)
 
 
-# classes
-class Enc(object):
-    """Generic encounter class."""
+class BaseEncounter(object):
+    """Base encounter class."""
 
     def __init__(self, player, test=True):
         self.p = self.player = player
@@ -218,11 +217,11 @@ class Guaranteed(object):
         return True
 
 
-class Ambush(Enc):
+class Ambush(BaseEncounter):
     def __init__(self, player, test=True):
         self.e = None
         self.thugs = []
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return self.p.enemies and rnd() <= len(self.p.enemies) * 0.02
@@ -262,7 +261,7 @@ class Ambush(Enc):
             p.msg(f'{self.e.name}: "{random.choice(LINES_ENEMY)}"')
 
 
-class Beggar(Enc):
+class Beggar(BaseEncounter):
     def test(self):
         return rnd() <= self.p.game.poverty / 2
 
@@ -304,7 +303,7 @@ Beggar: "In thanks for your kindness, young man, let me teach you some special k
         p.pak()
 
 
-class BookSeller(Enc):
+class BookSeller(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_BOOK_SELLER
 
@@ -336,7 +335,7 @@ Buy it?"""
             p.pak()
 
 
-class Brawler(Enc):
+class Brawler(BaseEncounter):
     def test(self):
         return not self.player.is_master and rnd() <= ENC_CH_BRAWLER
 
@@ -364,10 +363,10 @@ Man: "Hey you! Apologize or I'll beat you up!\"'''
                 p.fight(b)
 
 
-class Challenger(Enc):
+class Challenger(BaseEncounter):
     def __init__(self, player, test=True):
         self.c = None
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return not self.p.is_master and rnd() <= ENC_CH_CHALLENGER
@@ -401,7 +400,7 @@ class Challenger(Enc):
             p.pak()
 
 
-class ContinueStory(Enc):
+class ContinueStory(BaseEncounter):
     def test(self):
         p = self.player
         s = p.current_story
@@ -412,7 +411,7 @@ class ContinueStory(Enc):
         s.advance()
 
 
-class Craftsman(Enc):
+class Craftsman(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_CRAFTSMAN and not self.p.check_item(items.MANNEQUIN)
 
@@ -433,11 +432,11 @@ Buy it?""".format(
             items.use_item(item, p)
 
 
-class Criminal(Enc):
+class Criminal(BaseEncounter):
     def __init__(self, player, test=True):
         self.c = None
         self.allies = None
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return rnd() <= ENC_CH_CRIMINAL and self.p.game.criminals
@@ -482,7 +481,7 @@ class Criminal(Enc):
         p.pak()
 
 
-class Drunkard(Enc):
+class Drunkard(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_DRUNKARD
 
@@ -546,7 +545,7 @@ class Drunkard(Enc):
             p.show(f'{d.name}: "You should have just shown me some respect!.."')
 
 
-class Extorters(Enc):
+class Extorters(BaseEncounter):
     def test(self):
         return rnd() <= self.p.game.crime / 4
 
@@ -594,10 +593,10 @@ class Extorters(Enc):
             p.log("Looks the other way.")
 
 
-class FatGirl(Enc):
+class FatGirl(BaseEncounter):
     def __init__(self, player, test=True):
         self.g = player.game.fat_girl
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         p = self.p
@@ -632,7 +631,7 @@ class FatGirl(Enc):
             )
 
 
-class FindItem(Enc):
+class FindItem(BaseEncounter):
     def test(self):
         p = self.player
         return rnd() <= p.item_is_found
@@ -647,10 +646,10 @@ class FindItem(Enc):
         p.pak()
 
 
-class FriendMatch(Enc):
+class FriendMatch(BaseEncounter):
     def __init__(self, player, test=True):
         self.av_fr = []
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         self.av_fr = self.player.get_nonhuman_friends()
@@ -672,11 +671,11 @@ class FriendMatch(Enc):
             p.log("Refuses.")
 
 
-class Gambler(Enc):
+class Gambler(BaseEncounter):
     def __init__(self, player, test=True):
         self.bet = 0
         self.won = 0
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return rnd() <= ENC_CH_GAMBLER
@@ -781,7 +780,7 @@ One bet is {self.bet} coins."""
             p.pak()
 
 
-class Gossip(Enc):
+class Gossip(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_GOSSIP
 
@@ -799,7 +798,7 @@ class Gossip(Enc):
             p.game.show_stats()
 
 
-class HelpPolice(Enc):
+class HelpPolice(BaseEncounter):
     def test(self):
         return rnd() <= self.player.game.crime / 4
 
@@ -828,7 +827,7 @@ class HelpPolice(Enc):
             p.log("Does not help the police.")
 
 
-class LoseItem(Enc):
+class LoseItem(BaseEncounter):
     def test(self):
         p = self.player
         return rnd() <= p.item_is_lost and p.get_items(incl_healer=True)
@@ -844,7 +843,7 @@ class LoseItem(Enc):
         p.pak()
 
 
-class MasterTrial(Enc):
+class MasterTrial(BaseEncounter):
     def test(self):
         p = self.player
         return (
@@ -893,7 +892,7 @@ class MasterTrial(Enc):
             p.pak()
 
 
-class Merchant(Enc):
+class Merchant(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_MERCHANT
 
@@ -919,12 +918,12 @@ Buy it for {price} coins?"""
             p.buy_item(item, price)
 
 
-class OverhearConversation(Enc):
+class OverhearConversation(BaseEncounter):
     """Hear interesting facts about players."""
 
     def __init__(self, player, test=True):
         self.facts = []
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def collect_facts(self):
         g = self.player.game
@@ -978,12 +977,12 @@ victory!"'''.format(
         p.pak()
 
 
-class PlayerMatch(Enc):
+class PlayerMatch(BaseEncounter):
     """Works with computer players as opponents only (for both human and computer players)."""
 
     def __init__(self, player, test=True):
         self.av_p = []
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def set_available_players(self):
         p, g = self.player, self.player.game
@@ -1010,7 +1009,7 @@ class PlayerMatch(Enc):
             p.log("Refuses.")
 
 
-class PrizeFighting(Enc):
+class PrizeFighting(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_PRIZE_FIGHTING
 
@@ -1057,7 +1056,7 @@ class PrizeFighting(Enc):
             p.pak()
 
 
-class Robbers(Enc):
+class Robbers(BaseEncounter):
     def __init__(self, player, test=True):
         self.num_r = 0
         self.r = None
@@ -1066,7 +1065,7 @@ class Robbers(Enc):
         self.sv = ""
         self.escape_chance = 0
         self.money = random.choice(MONEY_GIVE_ROBBERS)
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return rnd() <= self.player.game.crime / 2
@@ -1139,7 +1138,7 @@ class Robbers(Enc):
         self.p.msg(f"The robber{self.sn} decide{self.sv} to let {self.p.name} go.")
 
 
-class RobbingSomeone(Enc):
+class RobbingSomeone(BaseEncounter):
     def test(self):
         return rnd() <= self.player.game.crime / 4
 
@@ -1163,7 +1162,7 @@ class RobbingSomeone(Enc):
             p.log("Looks the other way.")
 
 
-class SchoolBullying(Enc):
+class SchoolBullying(BaseEncounter):
     def test(self):
         p = self.p
         return not p.is_master and p.school_rank > 1 and rnd() <= ENC_CH_SCHOOL_BULLYING
@@ -1186,7 +1185,7 @@ class SchoolBullying(Enc):
             try_escape(p, esc_chance)
 
 
-class SchoolChallenge(Enc):
+class SchoolChallenge(BaseEncounter):
     def test(self):
         p = self.p
         return not p.is_master and p.school_rank > 1 and rnd() <= ((len(p.get_school()) - 1) / 100)
@@ -1233,10 +1232,10 @@ class SchoolChallenge(Enc):
             p.pak()
 
 
-class StreetPerformer(Enc):
+class StreetPerformer(BaseEncounter):
     def __init__(self, player, test=True):
         self.performer = None
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return rnd() <= ENC_CH_STREET_PERFORMER
@@ -1362,7 +1361,7 @@ class StreetPerformer(Enc):
                 self.reward()
 
 
-class Students(Enc):
+class Students(BaseEncounter):
     def test(self):
         return (
             self.p.is_master
@@ -1407,10 +1406,10 @@ class Students(Enc):
                 p.add_students(1)
 
 
-class Thief(Enc):
+class Thief(BaseEncounter):
     def __init__(self, player, test=True):
         self.players_items = None
-        Enc.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, test)
 
     def test(self):
         return rnd() <= self.player.game.crime / 3
@@ -1495,7 +1494,7 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
             p.show('{}: "Can\'t stop me, can you? Ha-ha-ha!"'.format(thief.name))
 
 
-class Weirdo(Enc):
+class Weirdo(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_WEIRDO
 
@@ -1526,7 +1525,7 @@ class Weirdo(Enc):
         p.pak()
 
 
-class WiseMan(Enc):
+class WiseMan(BaseEncounter):
     def test(self):
         return rnd() <= ENC_CH_WISE_MAN
 
@@ -1622,6 +1621,9 @@ ENC_LIST = [
     WiseMan,
 ]
 
+# todo reimplement enc extra chances with random.choices
+
+
 # extra chance of getting these encounters when choosing the corresponding day actions
 BUY_ITEMS_ENCS = (
     [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
@@ -1664,7 +1666,7 @@ def random_encounters(p, encs=None):
         e(p)
 
 
-class EncControl(object):
+class EncControl:
     def __init__(self, game):
         self.g = self.game = game
 

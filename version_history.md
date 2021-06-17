@@ -5,6 +5,9 @@ feat: add debug menu to status screen
 fix: proper input validation in get_int_from_user
 feat: ability to get money via debug menu
 feat: ability to get items via debug menu
+feat: ability to level up via debug menu
+feat: first custom exception - MoveNotFoundError
+feat: randomly choosing weapons in school challenges
 
 
 v.0.6.1

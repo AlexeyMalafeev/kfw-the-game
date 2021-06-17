@@ -1,6 +1,7 @@
-from kf_lib.kung_fu.ascii_art import get_ascii
-from kf_lib.fighting.distances import DISTANCE_FEATURES
-from kf_lib.utils.utilities import *
+from ..kung_fu.ascii_art import get_ascii
+from ..fighting.distances import DISTANCE_FEATURES
+from ..utils import exceptions
+from ..utils.utilities import *
 
 
 # RARE_FEATURE = 'exotic'
@@ -153,6 +154,8 @@ for mv in ALL_MOVES_LIST:
 
 
 def get_move_obj(move_name):
+    if move_name not in ALL_MOVES_DICT:
+        raise exceptions.MoveNotFoundError(f'"{move_name}" is not a known move')
     return ALL_MOVES_DICT[move_name]
 
 

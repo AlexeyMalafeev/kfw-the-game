@@ -951,6 +951,7 @@ class Fighter(object):
             self.pak()
 
     def learn_tech(self, *techs):
+        """techs can be Tech objects or tech name strings (or mixed)"""
         for tn in techs:
             if isinstance(tn, techniques.Tech):
                 tn = tn.name
