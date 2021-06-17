@@ -1,3 +1,4 @@
+from ..actors import fighter_factory
 from ..things import items
 from ..utils import exceptions
 from ..utils.utilities import *
@@ -14,25 +15,30 @@ class DebugMenu:
                 ('Get Item', self.debug_get_item),
                 ('Level up', self.debug_level_up),
                 ('Learn Move', self.debug_learn_move),
+                ('Fight Thug(s)', self.debug_fight_thugs),
             )
         )
         choice()
+
+    def debug_fight_thugs(self):
+        p = self.current_player
+        n = get_int_from_user('How many thugs?', 1, 20)
+        thugs = fighter_factory.new_thug(n=n)
+        if n == 1:
+            p.fight(thugs)
+        else:
+            p.fight(thugs[0], en_allies=thugs[1:])
+
+    def debug_get_item(self):
+        p = self.current_player
+        item = menu(sorted(items.all_items, key=str.lower) + items.MOCK_ITEMS, title='Which item?')
+        quantity = get_int_from_user(f'How many {item}s?', 1, 1000000000)
+        p.obtain_item(item, quantity)
 
     def debug_get_money(self):
         p = self.current_player
         amount = get_int_from_user('How much money?', 1, 1000000000)
         p.earn_money(amount)
-
-    def debug_get_item(self):
-        p = self.current_player
-        item = menu(sorted(items.all_items, key=str.lower) + items.MOCK_ITEMS, title='Which item?')
-        quantity = get_int_from_user('How many?', 1, 1000000000)
-        p.obtain_item(item, quantity)
-
-    def debug_level_up(self):
-        p = self.current_player
-        n = get_int_from_user('How many levels up?', 1, 100)
-        p.level_up(n)
 
     def debug_learn_move(self):
         p = self.current_player
@@ -42,12 +48,10 @@ class DebugMenu:
         else:
             p.learn_move(move_name)
 
-
-
-
-    # f1 = fighter_factory.new_thug(weak=False)
-    # p.fight(f1)
-    # p.fight(f1)
+    def debug_level_up(self):
+        p = self.current_player
+        n = get_int_from_user('How many levels up?', 1, 100)
+        p.level_up(n)
 
     # t = testing_tools.Tester(self)
     # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
