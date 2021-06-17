@@ -1,6 +1,6 @@
 import random
 
-from . import boosts
+from ..kung_fu import boosts
 
 # constants
 ATT_BOOST1 = 3
@@ -28,7 +28,6 @@ PRICES = (70, 80, 100, 120, 150)
 all_items = {}
 
 
-# todo use item descriptions somewhere in game
 class Item(object):
     """Instantiated only for descriptions."""
 

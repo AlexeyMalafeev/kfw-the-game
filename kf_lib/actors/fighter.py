@@ -2,7 +2,9 @@ from ..fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
 from ..fighting.fight import fight
 from ..actors import experience, quotes
 from ..ai.fight_ai import DefaultFightAI
-from ..kung_fu import styles, moves, techniques, ascii_art, weapons
+from ..kung_fu import styles, moves, techniques, ascii_art
+from ..things import weapons
+from ..utils import exceptions
 from ..utils.utilities import *
 
 # EXP_FOR_TECH = 1
@@ -942,14 +944,29 @@ class Fighter(object):
     def learn_move(self, move, silent=False):
         """move can be a Move object or a move name string"""
         if isinstance(move, str):
-            move = moves.get_move_obj(move)
+            try:
+                move = moves.get_move_obj(move)
+            except exceptions.MoveNotFoundError as e:
+                print(e)
+                pak()
+                return
         self.moves.append(move)
         if not silent:
             self.show(f'{self.name} learns {move.name} ({move.descr}).')
             self.log(f'Learns {move.name} ({move.descr})')
             self.pak()
 
+    def learn_random_move(self, move_tier, silent=False):
+        try:
+            move_obj = moves.get_rand_move(self, move_tier)
+        except exceptions.MoveNotFoundError as e:
+            print(e)
+            pak()
+            return
+        self.learn_move(move_obj, silent=silent)
+
     def learn_tech(self, *techs):
+        """techs can be Tech objects or tech name strings (or mixed)"""
         for tn in techs:
             if isinstance(tn, techniques.Tech):
                 tn = tn.name

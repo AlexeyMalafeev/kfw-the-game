@@ -7,16 +7,18 @@ g.play()
 
 """
 
-from .. import testing_tools
-from ..town import events as ev, encounters, story
+from .. import testing_tools  # noqa
 from ..actors import fighter_factory, names
-from ..game import game_stats
-from ..kung_fu.moves import BASIC_MOVES
 from ..actors.player import (
     HumanPlayer,
     ALL_AI_PLAYERS,  # used in load/new_game
 )
-from ..kung_fu import styles, style_gen, items
+from .debug_menu import DebugMenu
+from . import game_stats
+from ..kung_fu.moves import BASIC_MOVES
+from ..kung_fu import styles, style_gen
+from ..things import items
+from ..town import events as ev, encounters, story
 from ..utils.utilities import *
 
 
@@ -39,7 +41,7 @@ KFLEGEND_ACCOMPL = 8
 GT_FIGHTER_FIGHTS = (100, 150)  # fights_won, num_kos
 
 
-class Game(object):
+class Game(DebugMenu):
     MAX_NUM_STUDENTS = MAX_NUM_STUDENTS
 
     def __init__(self):
@@ -331,8 +333,9 @@ class Game(object):
     # noinspection PyUnresolvedReferences
     def load_game(self, file_name):
         """Read and execute the save file."""
-        # todo reimplement game loading
-        g = self  # do not delete
+        # todo reimplement game loading to avoid using exec
+        # do not delete the below line; needed for loading
+        g = self  # noqa
         with open(os.path.join(SAVE_FOLDER, file_name), 'r') as f:
             from ..actors.fighter import (
                 Fighter,
@@ -380,7 +383,7 @@ class Game(object):
         self.write_win_data = write_win_data
         # options
         if not num_players:
-            num_players = get_num_input('Number of players?', 1, MAX_NUM_PLAYERS)
+            num_players = get_int_from_user('Number of players?', 1, MAX_NUM_PLAYERS)
         if auto_save_on == '?':
             self.auto_save_on = yn('Auto save?')
         elif auto_save_on in (True, False):
@@ -684,9 +687,10 @@ class Game(object):
         p.show('Moves:')
         print(', '.join([str(m) for m in p.moves if m not in BASIC_MOVES]))
         print()
+        # add move screen with more detailed descriptions
         choice = menu(
-            ('Items', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit'),
-            keys='ibslqx',
+            ('Items', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu'),
+            keys='ibslqxd',
             new_line=False,
         )
         if choice == 'Items':
@@ -704,6 +708,8 @@ class Game(object):
         elif choice == 'Save and Quit':
             self.save_game('save.txt')
             self.chosen_quit = True
+        elif choice == 'Debug Menu':
+            self.debug_menu()
 
     def test(self):
         p = self.current_player

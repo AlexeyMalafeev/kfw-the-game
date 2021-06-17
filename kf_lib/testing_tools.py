@@ -3,7 +3,8 @@ from .fighting import fight
 from .ai import fight_ai
 from .actors.fighter import Fighter
 from .actors import fighter_factory as ff
-from .kung_fu import styles, techniques, weapons
+from .kung_fu import styles, techniques
+from .things import weapons
 from . import tech_test
 from .utils.utilities import *
 

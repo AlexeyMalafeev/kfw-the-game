@@ -1,5 +1,5 @@
 from .fighter import Fighter, INDENT, ALIGN
-from kf_lib.utils.utilities import menu, roman, pretty_table, cls, pak, get_bar, align_text
+from ..utils.utilities import menu, roman, pretty_table, cls, pak, get_bar, align_text
 
 
 class HumanControlledFighter(Fighter):
@@ -12,17 +12,14 @@ class HumanControlledFighter(Fighter):
         att = self.menu(options, 'Improve:')
         self.change_att(att, 1)
 
-    def choose_best_norm_wp(self):
-        from . import weapons
-        from .kung_fu import techniques
-
-        wpts = techniques.get_weapon_techs(self)
-        line = 'Pick a weapon:'
-        if wpts:
-            line += f"\n({self.name}'s weapon techniques: {', '.join(wpts)})"
-        options = [(f'{wp.name} {wp.descr}', wp) for wp in weapons.NORMAL_WEAPONS]
-        wn = self.menu(sorted(options), line)
-        self.arm(wn)
+    # def choose_best_norm_wp(self):
+    #     wpts = techniques.get_weapon_techs(self)
+    #     line = 'Pick a weapon:'
+    #     if wpts:
+    #         line += f"\n({self.name}'s weapon techniques: {', '.join(wpts)})"
+    #     options = [(f'{wp.name} {wp.descr}', wp) for wp in weapons.NORMAL_WEAPONS]
+    #     wn = self.menu(sorted(options), line)
+    #     self.arm(wn)
 
     def choose_move(self):
         if self.is_auto_fighting:
@@ -269,6 +266,7 @@ class HumanControlledFighter(Fighter):
         self.cls()
         output = '\n'.join(lines)
         self.show(output, align=False)
+        # todo show standing fighters with distance?
 
     def show(self, text, align=True):
         """Print aligned text in paragraphs."""

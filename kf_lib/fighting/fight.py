@@ -1,4 +1,4 @@
-from kf_lib.kung_fu import items
+from kf_lib.things import items
 from kf_lib.actors import names
 from kf_lib.utils.utilities import *
 

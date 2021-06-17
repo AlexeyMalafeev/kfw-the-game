@@ -2,7 +2,7 @@ from ..town import encounters
 from .fighter import Fighter
 from ..game import game_stats
 from .human_controlled_fighter import HumanControlledFighter
-from ..kung_fu import items
+from ..things import items
 from ..utils import lang_tools
 
 # from . import techniques
@@ -317,10 +317,11 @@ class Player(Fighter):
         self.inact_status = 'sick'
         self.change_stat('got_drunk', 1)
 
-    def earn_money(self, amount):
+    def earn_money(self, amount, silent=False):
         self.money += amount
-        self.change_stat('money_earned', amount)
-        self.log(f'Earns {amount} c.')
+        if not silent:
+            self.change_stat('money_earned', amount)
+            self.log(f'Earns {amount} c.')
 
     def earn_prize(self, amount):
         self.money += amount
