@@ -333,7 +333,7 @@ class Game(DebugMenu):
     # noinspection PyUnresolvedReferences
     def load_game(self, file_name):
         """Read and execute the save file."""
-        # todo reimplement game loading
+        # todo reimplement game loading to avoid using exec
         # do not delete the below line; needed for loading
         g = self  # noqa
         with open(os.path.join(SAVE_FOLDER, file_name), 'r') as f:

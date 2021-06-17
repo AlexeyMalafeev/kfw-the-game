@@ -166,19 +166,23 @@ def get_moves_by_features(features, tier):
     return moves
 
 
-def get_rand_move(f, tier, exceptions=None):
+def get_rand_move(f, tier, moves_to_exclude=None):
     """Special case of get_rand_moves"""
-    return get_rand_moves(f=f, n=1, tier=tier, exceptions=exceptions)[0]
+    return get_rand_moves(f=f, n=1, tier=tier, moves_to_exclude=moves_to_exclude)[0]
 
 
-def get_rand_moves(f, n, tier, exceptions=None):
+def get_rand_moves(f, n, tier, moves_to_exclude=None):
     """Uses frequency of moves; should never return style moves"""
-    if exceptions is None:
-        exceptions = set()
+    if moves_to_exclude is None:
+        moves_to_exclude = set()
     else:
-        exceptions = set(exceptions)
-    known_moves = set(f.moves) | exceptions
+        moves_to_exclude = set(moves_to_exclude)
+    known_moves = set(f.moves) | moves_to_exclude
     pool = [m for m in MOVES_BY_TIERS[tier] if m not in known_moves]
+    if not pool:
+        raise exceptions.MoveNotFoundError(
+            f'Cannot find any moves to learn at tier {tier} for {f}'
+        )
     weights = [m.freq for m in pool]  # can never get style moves like this as their freq is 0
     return random.choices(pool, weights=weights, k=n)
 

@@ -327,7 +327,7 @@ Buy it?"""
                 else:
                     if rnd() < CH_BOOK_MOVE:
                         tier = random.randint(*BOOK_MOVE_TIERS)
-                        move = moves.get_rand_move(f=p, tier=tier, exceptions=None)
+                        move = moves.get_rand_move(f=p, tier=tier, moves_to_exclude=None)
                         p.learn_move(move)
                     else:
                         exp = random.randint(*experience.BOOK_EXP)

@@ -8,6 +8,7 @@ feat: ability to get items via debug menu
 feat: ability to level up via debug menu
 feat: first custom exception - MoveNotFoundError
 feat: randomly choosing weapons in school challenges
+feat: ability to learn moves (by name or tier) via debug menu
 
 
 v.0.6.1

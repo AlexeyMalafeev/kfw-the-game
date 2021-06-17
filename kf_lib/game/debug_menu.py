@@ -1,4 +1,5 @@
 from ..things import items
+from ..utils import exceptions
 from ..utils.utilities import *
 
 
@@ -20,7 +21,7 @@ class DebugMenu:
     def debug_get_money(self):
         p = self.current_player
         amount = get_int_from_user('How much money?', 1, 1000000000)
-        p.earn_money(amount, silent=True)
+        p.earn_money(amount)
 
     def debug_get_item(self):
         p = self.current_player
@@ -35,24 +36,15 @@ class DebugMenu:
 
     def debug_learn_move(self):
         p = self.current_player
+        move_name = input('Enter move name or tier: ')
+        if move_name.isdigit() and 1 <= (move_tier := int(move_name)) <= 10:
+            p.learn_random_move(move_tier)
+        else:
+            p.learn_move(move_name)
 
 
 
 
-
-
-    # p.level_up()
-    # p.obtain_item('Dragon Herb')
-    # p.obtain_item('Ox Herb')
-    # from ..kung_fu.moves import get_rand_moves
-    # m1 = get_rand_moves(p, 1, 4)[0]
-    # m2 = get_rand_moves(p, 1, 5)[0]
-    # m3 = get_rand_moves(p, 1, 7)[0]
-    # m4 = get_rand_moves(p, 1, 8)[0]
-    # m5 = get_rand_moves(p, 1, 10)[0]
-    # for move in m1, m2, m3, m4, m5:
-    #     if move:
-    #         p.learn_move(move, silent=False)
     # f1 = fighter_factory.new_thug(weak=False)
     # p.fight(f1)
     # p.fight(f1)
