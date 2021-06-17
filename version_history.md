@@ -1,5 +1,6 @@
 v.0.6.2
-
+"Debug Menu"
+June 17, 2021
 
 feat: add debug menu to status screen
 fix: proper input validation in get_int_from_user
