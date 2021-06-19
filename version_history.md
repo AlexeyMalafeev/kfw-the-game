@@ -1,3 +1,9 @@
+
+
+fix: qp-related custom styles
+
+
+
 v.0.6.2
 "Debug Menu"
 June 17, 2021
