@@ -164,6 +164,7 @@ def get_escape_chance(p):
 
 def set_up_weapon_fight(p, c):
     p.show('{}: "A fist fight carries no weight. Let\'s duel with blades."'.format(c.name))
+    p.pak()
     c.choose_best_norm_wp()
     p.choose_best_norm_wp()
 
@@ -282,7 +283,7 @@ class Beggar(BaseEncounter):
             return
         t = f"""As {p.name} turns to leave however, the beggar stops him.
 Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from \
-{b.name}!"""
+{b.name}!\""""
         p.show(t)
         p.log(f"{b.name} gives {p.name} a free kung-fu lesson.")
         p.pak()

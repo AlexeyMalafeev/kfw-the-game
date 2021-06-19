@@ -8,7 +8,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
     # + elbow & knee & headbutt (rare!)
     # + palm & claw
-    "Mystic": StyleTech('Mystic Power', qp_gain=b.QP_GAIN1),
+    "Mystic": StyleTech('Mystic Power', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Vigorous": StyleTech('Vigor', hp_gain=b.HP_GAIN1),
     "Attacking": StyleTech('Attack Method', atk_mult=b.ATTACK1),
     "Defending": StyleTech('Defense Stance', dfs_mult=b.DEFENSE1),
@@ -55,7 +55,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
 
 # exclude resist_ko=b.RESIST_KO1
 W2 = {
-    "Emerald": StyleTech('Emerald Flow', qp_gain=b.QP_GAIN1),
+    "Emerald": StyleTech('Emerald Flow', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Water": StyleTech('Healing Water', hp_gain=b.HP_GAIN1),
     "Fire": StyleTech('Inferno', atk_mult=b.ATTACK1),
     "Ice": StyleTech('Hard like Ice', dfs_mult=b.DEFENSE1),
@@ -88,7 +88,7 @@ W2 = {
 }
 
 W3 = {
-    "Dragon": StyleTech('Dragon\'s Energy', qp_gain=b.QP_GAIN1),
+    "Dragon": StyleTech('Dragon\'s Energy', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Lizard": StyleTech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
     "Tiger": StyleTech('Tiger\'s Rage', atk_mult=b.ATTACK1),
     "Crane": StyleTech('Crane Flapping Wings', dfs_mult=b.DEFENSE1),
