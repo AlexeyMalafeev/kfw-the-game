@@ -1308,12 +1308,9 @@ class StreetPerformer(BaseEncounter):
                 'Your kung-fu is very good; however, I can help you improve it."'
                 "\n{} teaches {} some of his moves.".format(c.name, p.name)
             )
-            tech = random.choice(techniques.weapon_techs)
-            if tech in p.techs:
-                p.gain_exp(PERFORMER_EXP_REWARD)
-                p.pak()
-            else:
-                p.learn_tech(tech)
+            tier = rndint(*PERFORMER_LOSE_MOVE_TIERS)
+            move = moves.get_rand_move(f=p, tier=tier)
+            p.learn_move(move)
 
     def sell(self):
         p = self.player
