@@ -1,5 +1,7 @@
 
 
+feat: new "Super" fight items  
+fix: fight items have relative effect  
 fix: qp-related custom styles  
 fix: qi cost rebalance  
 

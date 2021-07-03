@@ -8,15 +8,34 @@ ATT_BOOST1 = 3
 # items
 MEDICINE = 'Ginseng Root'
 STR_BOOSTER = 'Tiger Herb'
+STR_BOOSTER2 = 'Super Tiger Herb'
 AGI_BOOSTER = 'Monkey Herb'
+AGI_BOOSTER2 = 'Super Monkey Herb'
 SPD_BOOSTER = 'Fly Herb'
+SPD_BOOSTER2 = 'Super Fly Herb'
 QI_BOOSTER = 'Dragon Herb'
+QI_BOOSTER2 = 'Super Dragon Herb'
 HLT_BOOSTER = 'Elephant Herb'
+HLT_BOOSTER2 = 'Super Elephant Herb'
 STAM_BOOSTER = 'Ox Herb'
-SUPER_BOOSTER = 'Super Herb'
+STAM_BOOSTER2 = 'Super Ox Herb'
+SUPER_BOOSTER = 'Super Mega Herb'
 MANNEQUIN = 'wooden mannequin'
 
-STD_FIGHT_ITEMS = [STR_BOOSTER, AGI_BOOSTER, SPD_BOOSTER, QI_BOOSTER, HLT_BOOSTER, STAM_BOOSTER]
+STD_FIGHT_ITEMS = [
+    STR_BOOSTER,
+    STR_BOOSTER2,
+    AGI_BOOSTER,
+    AGI_BOOSTER2,
+    SPD_BOOSTER,
+    SPD_BOOSTER2,
+    QI_BOOSTER,
+    QI_BOOSTER2,
+    HLT_BOOSTER,
+    HLT_BOOSTER2,
+    STAM_BOOSTER,
+    STAM_BOOSTER2,
+]
 FIGHT_ITEMS = STD_FIGHT_ITEMS + [SUPER_BOOSTER]
 ALL_ITEMS = FIGHT_ITEMS + [MEDICINE]
 ALL_STD_ITEMS = STD_FIGHT_ITEMS + [MEDICINE]
@@ -53,15 +72,30 @@ def ef_recover(target):
 EFFECTS = {
     MEDICINE: (ef_recover, {}),
     STR_BOOSTER: (ef_boost, {'strength_mult': boosts.STRENGTH1}),
+    STR_BOOSTER2: (ef_boost, {'strength_mult': boosts.STRENGTH2}),
     AGI_BOOSTER: (ef_boost, {'agility_mult': boosts.AGILITY1}),
+    AGI_BOOSTER2: (ef_boost, {'agility_mult': boosts.AGILITY2}),
     SPD_BOOSTER: (ef_boost, {'speed_mult': boosts.SPEED1}),
+    SPD_BOOSTER2: (ef_boost, {'speed_mult': boosts.SPEED2}),
     QI_BOOSTER: (ef_boost, {
+        'qp_gain_mult': boosts.QP_GAIN1,
+        'qp_max_mult': boosts.QP_MAX1,
+        'qp_start': boosts.QP_START1,
+    }),
+    QI_BOOSTER2: (ef_boost, {
         'qp_gain_mult': boosts.QP_GAIN2,
         'qp_max_mult': boosts.QP_MAX2,
         'qp_start': boosts.QP_START2,
     }),
     HLT_BOOSTER: (ef_boost, {'health_mult': boosts.HEALTH1}),
+    HLT_BOOSTER2: (ef_boost, {'health_mult': boosts.HEALTH2}),
     STAM_BOOSTER: (
+        ef_boost, {
+            'stamina_max_mult': boosts.STAM_MAX1,
+            'stamina_gain_mult': boosts.STAM_RESTORE1,
+        },
+    ),
+    STAM_BOOSTER2: (
         ef_boost, {
             'stamina_max_mult': boosts.STAM_MAX2,
             'stamina_gain_mult': boosts.STAM_RESTORE2,
@@ -70,13 +104,13 @@ EFFECTS = {
     SUPER_BOOSTER: (
         ef_boost,
         {
-            'strength_mult': boosts.STRENGTH1,
-            'agility_mult': boosts.AGILITY1,
-            'speed_mult': boosts.SPEED1,
+            'strength_mult': boosts.STRENGTH2,
+            'agility_mult': boosts.AGILITY2,
+            'speed_mult': boosts.SPEED2,
             'qp_gain_mult': boosts.QP_GAIN2,
             'qp_max_mult': boosts.QP_MAX2,
             'qp_start': boosts.QP_START2,
-            'health_mult': boosts.HEALTH1,
+            'health_mult': boosts.HEALTH2,
             'stamina_max_mult': boosts.STAM_MAX2,
             'stamina_gain_mult': boosts.STAM_RESTORE2,
         },
