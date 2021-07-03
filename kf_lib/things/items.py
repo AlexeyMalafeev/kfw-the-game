@@ -52,15 +52,15 @@ def ef_recover(target):
 
 EFFECTS = {
     MEDICINE: (ef_recover, {}),
-    STR_BOOSTER: (ef_boost, {'strength_full': ATT_BOOST1}),
-    AGI_BOOSTER: (ef_boost, {'agility_full': ATT_BOOST1}),
-    SPD_BOOSTER: (ef_boost, {'speed_full': ATT_BOOST1}),
+    STR_BOOSTER: (ef_boost, {'strength_mult': boosts.STRENGTH1}),
+    AGI_BOOSTER: (ef_boost, {'agility_mult': boosts.AGILITY1}),
+    SPD_BOOSTER: (ef_boost, {'speed_mult': boosts.SPEED1}),
     QI_BOOSTER: (ef_boost, {
         'qp_gain_mult': boosts.QP_GAIN2,
         'qp_max_mult': boosts.QP_MAX2,
         'qp_start': boosts.QP_START2,
     }),
-    HLT_BOOSTER: (ef_boost, {'health_full': ATT_BOOST1}),
+    HLT_BOOSTER: (ef_boost, {'health_mult': boosts.HEALTH1}),
     STAM_BOOSTER: (
         ef_boost, {
             'stamina_max_mult': boosts.STAM_MAX2,
@@ -70,13 +70,13 @@ EFFECTS = {
     SUPER_BOOSTER: (
         ef_boost,
         {
-            'strength_full': ATT_BOOST1,
-            'agility_full': ATT_BOOST1,
-            'speed_full': ATT_BOOST1,
+            'strength_mult': boosts.STRENGTH1,
+            'agility_mult': boosts.AGILITY1,
+            'speed_mult': boosts.SPEED1,
             'qp_gain_mult': boosts.QP_GAIN2,
             'qp_max_mult': boosts.QP_MAX2,
             'qp_start': boosts.QP_START2,
-            'health_full': ATT_BOOST1,
+            'health_mult': boosts.HEALTH1,
             'stamina_max_mult': boosts.STAM_MAX2,
             'stamina_gain_mult': boosts.STAM_RESTORE2,
         },

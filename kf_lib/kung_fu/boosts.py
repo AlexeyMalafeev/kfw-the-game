@@ -78,7 +78,6 @@ WP_STRIKE_MULT2 = 0.5
 
 # att_name, short_descr, long_descr, funcs
 PMAP = (
-    ('agility_full', 'agility', 'agility', [add_sign]),
     ('agility_mult', 'agility', 'agility', [hund, add_sign, add_pcnt]),
     ('atk_mult', 'attack', 'attack', [hund, add_sign, add_pcnt]),
     ('block_disarm', 'disarm', 'disarm chance when defending', [hund, add_sign, add_pcnt]),
@@ -109,7 +108,6 @@ PMAP = (
         'guard while attacking',
         [hund, add_sign, add_pcnt],
     ),
-    ('health_full', 'health', 'health', [add_sign]),
     ('health_mult', 'health', 'health', [hund, add_sign, add_pcnt]),
     ('hit_disarm', 'disarm', 'disarm chance when attacking', [hund, add_sign, add_pcnt]),
     ('home_training_exp_mult', 'home train.', 'home training', [hund, add_sign, add_pcnt]),
@@ -125,11 +123,9 @@ PMAP = (
     ('qp_max_mult', 'qi', 'max QP', [hund, add_sign, add_pcnt]),
     ('qp_start', 'qi', 'QP to start with', [hund, add_sign, add_pcnt]),
     ('resist_ko', 'resist KO', 'chance to resist KO', [hund, add_sign, add_pcnt]),
-    ('speed_full', 'speed', 'speed', [add_sign]),
     ('speed_mult', 'speed', 'speed', [hund, add_sign, add_pcnt]),
     ('stamina_max_mult', 'stamina', 'max stamina', [hund, add_sign, add_pcnt]),
     ('stamina_gain_mult', 'stamina', 'restore stamina', [hund, add_sign, add_pcnt]),
-    ('strength_full', 'strength', 'strength', [add_sign]),
     ('strength_mult', 'strength', 'strength', [hund, add_sign, add_pcnt]),
     ('stun_chance', 'stun', 'stun chance', [hund, add_sign, add_pcnt]),
     ('unblock_chance', 'unblock.', 'unblockable attack', [hund, add_sign, add_pcnt]),
