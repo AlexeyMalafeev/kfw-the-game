@@ -1,5 +1,7 @@
 
 
+fix: import bug in turtles reward  
+feat: one of the rewards for protecting street performer from thugs is new move  
 feat: new "Super" fight items  
 fix: fight items have relative effect  
 fix: qp-related custom styles  

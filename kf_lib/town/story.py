@@ -1,7 +1,6 @@
-#! python3
-
-from kf_lib.actors import fighter_factory
-from kf_lib.utils.utilities import *
+from ..actors import fighter_factory
+from ..kung_fu import styles
+from ..utils.utilities import *
 
 
 # constants
@@ -180,8 +179,6 @@ class NinjaTurtlesStory(Story):
     def reward(self):
         p = self.player
         p.add_accompl('TMNT')
-        from .kung_fu import styles
-
         p.learn_tech(*list(styles.TURTLE_NUNJUTSU.techs.values()))
 
     def scene1(self):
