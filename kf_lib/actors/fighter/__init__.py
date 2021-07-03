@@ -1,14 +1,13 @@
-from ..fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
-from ..fighting.fight import fight
-from ..actors import experience, quotes
-from ..ai.fight_ai import DefaultFightAI
-from ..kung_fu import styles, moves, techniques, ascii_art
-from ..things import weapons
-from ..utils import exceptions
-from ..utils.utilities import *
+from ...fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
+from ...fighting.fight import fight
+from ...actors import experience, quotes
+from ...ai.fight_ai import DefaultFightAI
+from ...kung_fu import styles, moves, techniques, ascii_art
+from ...things import weapons
+from ...utils import exceptions
+from ...utils.utilities import *
 
-# EXP_FOR_TECH = 1
-# used to be: c1 = 12, c2 = 3, c3 = 1; worked decently
+
 ADVANCED_TECH_AT_LV = 20
 BLOCK_DIVISOR = 2
 COUNTER_CHANCE_BASE = 0.1

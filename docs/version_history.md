@@ -1,5 +1,6 @@
 
-
+refactor: fighter module becomes a package  
+refactor: put docs to separate folder, add some todos  
 fix: import bug in turtles reward  
 feat: one of the rewards for protecting street performer from thugs is new move  
 feat: new "Super" fight items  
