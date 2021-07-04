@@ -2,20 +2,22 @@ from ...fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
 from ...fighting.fight import fight
 from ...actors import experience, quotes
 from ...ai.fight_ai import DefaultFightAI
-from ...kung_fu import styles, moves, techniques, ascii_art
+from ...kung_fu import styles, moves, ascii_art
 from ...things import weapons
 from ...utils import exceptions
 from ...utils.utilities import *
 
 from ._constants import *
+from ._techs import TechUser
 
 
-class Fighter(object):
+class Fighter(
+    TechUser,
+):
     is_human = False
     is_player = False
 
     # the following attribute values can be modified by Techs and Styles
-    adv_tech_at_lv = ADVANCED_TECH_AT_LV
     agility_mult = 1.0
     atk_mult = 1.0
     atk_wp_bonus = 0
@@ -38,8 +40,6 @@ class Fighter(object):
     lying_dfs_mult = 0.5
     num_atts_choose = 3
     num_moves_choose = 3
-    num_techs_choose = 3
-    num_techs_choose_upgrade = 3
     off_balance_atk_mult = 0.75
     off_balance_dfs_mult = 0.75
     speed_mult = 1.0
@@ -158,7 +158,6 @@ class Fighter(object):
         self.took_damage = False
 
         # techniques
-        self.techs = set()  # Tech names (strings)
         self.set_techs(tech_names)
 
         # moves
@@ -182,15 +181,6 @@ class Fighter(object):
         if status not in self.status:
             self.status[status] = 0
         self.status[status] += dur
-
-    def add_tech(self, tn):
-        self.techs.add(tn)
-        self.apply_tech(tn)
-
-    def apply_tech(self, *tech_names):
-        for tn in tech_names:
-            techniques.apply(tn, self)
-        self.refresh_full_atts()  # in case techs affects them
 
     def arm(self, weapon=None):
         """Arm fighter with weapon (default = random).
@@ -456,23 +446,11 @@ class Fighter(object):
     def choose_new_move(self, sample):
         self.learn_move(random.choice(sample).name)
 
-    def choose_new_tech(self):
-        sample = self.get_techs_to_choose()
-        if not sample:
-            return
-        self.learn_tech(random.choice(sample))
-
     def choose_target(self):
         if len(self.act_targets) == 1:
             self.set_target(self.act_targets[0])
         else:
             self.set_target(self.fight_ai.choose_target())
-
-    def choose_tech_to_upgrade(self):
-        av_techs = self.get_techs_to_choose(for_upgrade=True)
-        if not av_techs:
-            return
-        self.upgrade_tech(random.choice(av_techs))
 
     def cls(self):
         """Empty method for convenience"""
@@ -816,36 +794,6 @@ class Fighter(object):
             emph_info = ''
         return f'{self.style.name}{emph_info}'
 
-    def get_techs_string(self, descr=True, header='Techniques:'):
-        if not self.techs:
-            return ''
-        align = max((len(t) for t in self.techs)) + 1
-        output = []
-        d = ''
-        for t in self.techs:
-            if descr:
-                d = f'- {techniques.get_descr(t)}'
-            output.append('{:<{}}{}'.format(t, align, d))
-        output = [header] + sorted(output)
-        return '\n'.join(output)
-
-    def get_techs_to_choose(self, annotated=False, for_upgrade=False):
-        if for_upgrade:
-            num = self.num_techs_choose_upgrade
-            av_techs = techniques.get_upgradable_techs(self)
-        else:
-            num = self.num_techs_choose
-            av_techs = techniques.get_learnable_techs(self)
-        if annotated:
-            d = techniques.get_descr
-            av_techs = [('{} ({})'.format(t, d(t)), t) for t in av_techs]
-        if 0 < len(av_techs) < num:
-            return av_techs
-        elif not av_techs:
-            return []
-        else:
-            return random.sample(av_techs, num)
-
     @staticmethod
     def get_vis_distance(dist):
         return DISTANCES_VISUALIZATION[dist]
@@ -894,18 +842,6 @@ class Fighter(object):
             return
         self.learn_move(move_obj, silent=silent)
 
-    def learn_tech(self, *techs):
-        """techs can be Tech objects or tech name strings (or mixed)"""
-        for tn in techs:
-            if isinstance(tn, techniques.Tech):
-                tn = tn.name
-            if tn not in self.techs:
-                descr = techniques.get_descr(tn)
-                self.add_tech(tn)
-                self.show(f'{self.name} learns {tn} ({descr}).')
-                self.log(f'Learns {tn} ({descr})')
-                self.pak()
-
     def level_up(self, n=1):
         self.disarm()
         # print(self.style.move_strings)
@@ -917,16 +853,7 @@ class Fighter(object):
 
             # techs
             if self.style.is_tech_style:
-                # learn new style tech if possible
-                t = self.style.techs.get(self.level)
-                if t:
-                    self.learn_tech(t.name)
-                # upgrade tech if possible
-                if self.check_lv(self.adv_tech_at_lv, self.adv_tech_at_lv):
-                    self.choose_tech_to_upgrade()
-                # learn new tech if possible
-                if self.level in LVS_GET_NEW_TECH:
-                    self.choose_new_tech()
+                self.resolve_techs_on_level_up()
 
             # moves
             if self.level in self.style.move_strings:
@@ -937,10 +864,6 @@ class Fighter(object):
                 moves.resolve_style_move(move_s, self)
             # no need to refresh full atts here since they are refreshed when upgrading atts and
             # learning techs
-
-    def log(self, text):
-        """Empty method for convenience."""
-        pass
 
     def maneuver(self):
         m = self.action
@@ -954,12 +877,6 @@ class Fighter(object):
         self.do_move_functions(m)
         self.change_stamina(-m.stam_cost)
         self.change_qp(-m.qi_cost)
-
-    def msg(self, *args, **kwargs):
-        pass
-
-    def pak(self):
-        pass
 
     def prepare_for_fight(self):
         self.hp = self.hp_max
@@ -1092,21 +1009,6 @@ class Fighter(object):
                 for move_s in moves_to_learn:
                     moves.resolve_style_move(move_s, self)
 
-    def set_rand_techs(self):
-        n = len([lv for lv in LVS_GET_NEW_TECH if lv <= self.level])
-        if self.style.is_tech_style:
-            techs = []
-            for lv, t in self.style.techs.items():
-                if self.level >= lv:
-                    techs.append(t.name)
-            if n:
-                techs += random.sample(techniques.get_upgradable_techs(), n)
-            self.techs = set(techs)
-            if self.check_lv(self.adv_tech_at_lv):
-                t = random.choice(techniques.get_upgradable_techs(self))
-                self.techs.remove(t)
-                self.techs.add(techniques.reg_to_adv(t))
-
     def set_style(self, style_name):
         if style_name is not None:
             style_obj = styles.get_style_obj(style_name)
@@ -1117,16 +1019,6 @@ class Fighter(object):
     def set_target(self, target):
         self.target = target
         target.target = self
-
-    def set_techs(self, tech_names):
-        if not tech_names:
-            self.set_rand_techs()
-        else:
-            self.techs = set(tech_names)
-        self.apply_tech(*self.techs)
-
-    def show(self, text, align=False):
-        pass
 
     def show_ascii(self):
         if self in self.current_fight.side_a:
@@ -1298,15 +1190,6 @@ class Fighter(object):
             kwargs_copy[k] = -v
         self.boost(**kwargs_copy)
         self.refresh_full_atts()
-
-    def unlearn_tech(self, tech):
-        self.techs.remove(tech)
-        techniques.undo(tech, self)
-
-    def upgrade_tech(self, tech):
-        self.unlearn_tech(tech)
-        new_tech = techniques.reg_to_adv(tech)
-        self.learn_tech(new_tech)
 
     def visualize_fight_state(self):
         try:

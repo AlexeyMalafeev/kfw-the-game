@@ -246,6 +246,7 @@ def adv_to_reg(tech_name):
 def apply(tn, f):
     t = get_tech_obj(tn)
     t.apply(f)
+    f.refresh_full_atts()  # in case techs affects them
 
 
 def get_descr(tech_name):
