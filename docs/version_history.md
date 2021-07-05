@@ -1,4 +1,6 @@
 
+
+refactor: fighter._constants  
 refactor: fighter module becomes a package  
 refactor: put docs to separate folder, add some todos  
 fix: import bug in turtles reward  
