@@ -1,5 +1,6 @@
 
 
+refactor: quotes, exp worth
 refactor: fighter._weapons
 fix: bug when fights didn't happen because fighters started with 0 hp
 feat: debug mode in user input (get_key)

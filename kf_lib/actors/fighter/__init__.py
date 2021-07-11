@@ -1,17 +1,20 @@
 from ...fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
 from ...fighting.fight import fight
-from ...actors import experience, quotes
 from ...ai.fight_ai import DefaultFightAI
 from ...kung_fu import styles, moves, ascii_art
 from ...utils import exceptions
 from ...utils.utilities import *
 
 from ._constants import *
+from ._exp_worth import ExpWorthUser
+from ._quotes import QuoteUser
 from ._techs import TechUser
 from ._weapons import WeaponUser
 
 
 class Fighter(
+    ExpWorthUser,
+    QuoteUser,
     TechUser,
     WeaponUser,
 ):
@@ -49,7 +52,6 @@ class Fighter(
     stun_chance = 0.0
     qp_gain_mult = 1.0
     qp_max_mult = 1.0
-    quotes = 'fighter'
     resist_ko = 0.0
     unblock_chance = 0.0
 
@@ -130,7 +132,6 @@ class Fighter(
         self.dfs_penalty_mult = 1.0
         self.dfs_pwr = 0
         self.distances = {}  # fighter_obj: int
-        self.exp_yield = 0
         self.hp = 0
         self.hp_max = 0
         self.hp_gain = 0
@@ -538,9 +539,6 @@ class Fighter(
             atts_info.append(f'{short}:{v}')
         return ' '.join(atts_info)
 
-    def get_allies_power(self):  # TBD: this is not used yet
-        return sum([f.get_exp_worth() for f in self.act_allies])
-
     def get_att_str(self, att):
         base, full = self.get_base_att_value(att), self.get_full_att_value(att)
         return f'{full}({base})' if full > base else str(base)
@@ -584,10 +582,6 @@ class Fighter(
 
     def get_base_atts_tup(self):
         return self.strength, self.agility, self.speed, self.health
-
-    def get_exp_worth(self):
-        """Return how many experience points the fighter is 'worth'."""
-        return experience.fighter_to_exp(self)
 
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
@@ -647,9 +641,6 @@ class Fighter(
         # todo make this metric weighted, as hp is more important than stamina / qp
         return mean((self.hp / self.hp_max, self.stamina / self.stamina_max, self.qp / self.qp_max))
 
-    def get_opponents_power(self):  # TBD: this can be useful for AI
-        return sum([f.get_exp_worth() for f in self.act_targets])
-
     def get_prefight_info(self, side_a, side_b=None, hide_enemy_stats=False, basic_info_only=False):
         fs = side_a[:]
         if side_b:
@@ -689,26 +680,6 @@ class Fighter(
                 s += f'{f.weapon.name} {f.weapon.descr_short}'
             s += f"\n{' ' * (size1 + size2)}{f.style.descr_short}"
         return s
-
-    def get_rel_strength(self, *opp, allies=None):
-        """Return ratio (number, the lower the weaker) and legend (string, e.g. 'very risky')"""
-        pwr = sum([op.get_exp_worth() for op in opp])
-        own_pwr = self.get_exp_worth()
-        if allies:
-            own_pwr += sum([al.get_exp_worth() for al in allies])
-        ratio = round(pwr / own_pwr, 2)
-        table = (
-            (RATIO_EXTREMELY_RISKY, 'impossible'),
-            (RATIO_VERY_RISKY, 'very risky'),
-            (RATIO_RISKY, 'risky'),
-            (RATIO_FAIR_FIGHT, 'fair fight'),
-            (RATIO_LOW_RISK, 'low risk'),
-            (RATIO_VERY_LOW_RISK, 'very low risk'),
-            (RATIO_NO_RISK, 'no risk'),
-        )
-        for threshold, legend in table:
-            if ratio >= threshold:
-                return ratio, legend
 
     def get_rep_actions_factor(self, move):
         n = self.previous_actions.count(move.name)  # 0-3
@@ -784,7 +755,6 @@ class Fighter(
         self.learn_move(move_obj, silent=silent)
 
     def level_up(self, n=1):
-        self.disarm()
         # print(self.style.move_strings)
         for i in range(n):
             self.level += 1
@@ -872,23 +842,7 @@ class Fighter(
             i = move_list.index(mv_a)
             move_list.remove(mv_a)
             move_list.insert(i, mv_b)
-
         _rep_in_list(rep_mv, rep_with, self.moves)
-
-    def say_prefight_quote(self):
-        pool = quotes.PREFIGHT_QUOTES.get(self.quotes, None)
-        if pool is not None:
-            q = random.choice(pool)
-            self.current_fight.show(f'{self.name}: "{q}"')
-            return True
-        else:
-            return False
-
-    def say_win_quote(self):
-        pool = quotes.WIN_QUOTES.get(self.quotes, None)
-        if pool is not None:
-            q = random.choice(pool)
-            self.current_fight.show(f'{self.name}: "{q}"')
 
     def see_fight_info(self, *args, **kwargs):
         pass

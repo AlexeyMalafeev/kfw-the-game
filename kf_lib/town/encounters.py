@@ -1,8 +1,9 @@
 from . import events
-from ..actors import fighter_factory, experience, traits, quotes, names
+from ..actors import fighter_factory, traits, quotes, names
+from ..mechanics import experience
 from ..actors.fighter import RATIO_LOW_RISK
 from ..utils import lang_tools
-from ..kung_fu import moves, techniques
+from ..kung_fu import moves
 from ..things import items
 from ..utils.utilities import *
 
