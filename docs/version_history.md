@@ -1,5 +1,6 @@
 
 
+feat: a few new quotes, inspired by Lady Bloodfight
 refactor: fighter._constants  
 refactor: fighter module becomes a package  
 refactor: put docs to separate folder, add some todos  

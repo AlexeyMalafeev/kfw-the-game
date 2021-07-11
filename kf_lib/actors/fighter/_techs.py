@@ -13,7 +13,7 @@ class TechUser(FighterBase):
     adv_tech_at_lv = ADVANCED_TECH_AT_LV
     num_techs_choose = 3
     num_techs_choose_upgrade = 3
-    techs = None  # set
+    techs = None  # set of tech names
 
     def add_tech(self, tn):
         self.techs.add(tn)
@@ -63,6 +63,9 @@ class TechUser(FighterBase):
             return []
         else:
             return random.sample(av_techs, num)
+
+    def get_weapon_techs(self):
+        return techniques.get_weapon_techs(self)
 
     def learn_tech(self, *techs):
         """techs can be Tech objects or tech name strings (or mixed)"""

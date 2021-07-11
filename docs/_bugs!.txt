@@ -1,3 +1,6 @@
+через блок больше отнимает, чем без блока
+
+
 - l for slideshow doesn't work
 - multiple attempts for defeating beggars?
 

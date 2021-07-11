@@ -412,20 +412,23 @@ class Fighter(
         self.change_att(att, 1)
 
     def choose_best_norm_wp(self):
-        wns = weapons.NORMAL_WEAPONS
-        best_bonus = 0
-        chosen_tech = None
-        for t in techniques.get_weapon_techs(fighter=self):
-            t = techniques.get_tech_obj(t)
-            if t.wp_type == 'normal' or t.wp_type in wns:
-                bon = t.wp_bonus[0] + t.wp_bonus[1]
-                if bon > best_bonus:
-                    best_bonus = bon
-                    chosen_tech = t
-        if chosen_tech:
-            self.arm(chosen_tech.wp_type)
-            return
-        self.arm_normal()
+        # wns = weapons.NORMAL_WEAPONS
+        # best_bonus = 0
+        wp_techs = self.get_weapon_techs()
+        if wp_techs:
+            # todo add choose best normal weapon logic
+            # if t.wp_type == 'normal' or t.wp_type in wns:
+            #     bon = t.wp_bonus[0] + t.wp_bonus[1]
+            #     if bon > best_bonus:
+            #         best_bonus = bon
+            #         chosen_tech = t
+            # # or:
+            # chosen_tech = random.choice(wp_techs)
+            # if chosen_tech:
+            #     self.arm(chosen_tech.wp_type)
+            self.arm_normal()
+        else:
+            self.arm_normal()
 
     def choose_better_att(self, atts):
         temp_dict = {}
