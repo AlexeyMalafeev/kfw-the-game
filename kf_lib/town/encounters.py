@@ -146,7 +146,7 @@ def check_feeling_greedy(p):
 
 
 def check_scary_fight(p, ratio):
-    if ratio >= RATIO_LOW_RISK and rnd() <= p.feel_too_scared:
+    if rnd() <= p.feel_too_scared * ratio:
         p.show(f"{p.name} feels too scared to fight!")
         p.log("Feels too scared to fight.")
         p.pak()

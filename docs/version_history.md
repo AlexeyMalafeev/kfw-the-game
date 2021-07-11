@@ -1,5 +1,6 @@
 
 
+feat: probability of feeling too scared to fight is now proportional to risk
 refactor: quotes, exp worth
 refactor: fighter._weapons
 fix: bug when fights didn't happen because fighters started with 0 hp
