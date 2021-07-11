@@ -412,11 +412,11 @@ class Fighter(
         self.change_att(att, 1)
 
     def choose_best_norm_wp(self):
-        # wns = weapons.NORMAL_WEAPONS
-        # best_bonus = 0
         wp_techs = self.get_weapon_techs()
         if wp_techs:
             # todo add choose best normal weapon logic
+            # wns = weapons.NORMAL_WEAPONS
+            # best_bonus = 0
             # if t.wp_type == 'normal' or t.wp_type in wns:
             #     bon = t.wp_bonus[0] + t.wp_bonus[1]
             #     if bon > best_bonus:
@@ -882,6 +882,7 @@ class Fighter(
         self.change_qp(-m.qi_cost)
 
     def prepare_for_fight(self):
+        self.refresh_full_atts()
         self.hp = self.hp_max
         self.qp = round(self.qp_max * self.qp_start)
         self.stamina = self.stamina_max
@@ -1022,8 +1023,16 @@ class Fighter(
     def set_target(self, target):
         self.target = target
         target.target = self
+        raise ValueError
 
     def show_ascii(self):
+        # from pprint import pprint
+        # print('DEBUG INFO FOR SELF')
+        # print(self)
+        # pprint(self.__dict__)
+        # print('DEBUG INFO FOR FIGHT')
+        # print(self.current_fight)
+        # pprint(self.current_fight.__dict__)
         if self in self.current_fight.side_a:
             a = self.ascii_l
             b = self.target.ascii_r

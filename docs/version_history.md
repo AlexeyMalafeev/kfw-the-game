@@ -1,5 +1,8 @@
 
 
+fix: bug when fights didn't happen because fighters started with 0 hp
+feat: debug mode in user input (get_key)
+refactor: tech-based weapon choosing
 feat: a few new quotes, inspired by Lady Bloodfight
 refactor: fighter._constants  
 refactor: fighter module becomes a package  
