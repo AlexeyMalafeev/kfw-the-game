@@ -3,16 +3,17 @@ from ...fighting.fight import fight
 from ...actors import experience, quotes
 from ...ai.fight_ai import DefaultFightAI
 from ...kung_fu import styles, moves, ascii_art
-from ...things import weapons
 from ...utils import exceptions
 from ...utils.utilities import *
 
 from ._constants import *
 from ._techs import TechUser
+from ._weapons import WeaponUser
 
 
 class Fighter(
     TechUser,
+    WeaponUser,
 ):
     is_human = False
     is_player = False
@@ -29,7 +30,6 @@ class Fighter(
     dam_reduc = 0  # todo adjust this and hp_gain in boosts.py
     dfs_mult = 1.0
     dfs_penalty_step = 0.2
-    dfs_wp_bonus = 0  # todo not used; delete?
     environment_chance = 0.0  # todo get rid of this as it is just another critical?
     grab_chance = 0.0  # todo not used yet
     guard_dfs_bonus = 1.0
@@ -52,7 +52,6 @@ class Fighter(
     quotes = 'fighter'
     resist_ko = 0.0
     unblock_chance = 0.0
-    wp_dfs_bonus = 1.0
 
     # strike multipliers todo reimplement as a default dict? a data class?
     claw_strike_mult = 1.0
@@ -87,10 +86,6 @@ class Fighter(
     ):
         self.name = name
         self.level = level
-
-        # weapon
-        self.weapon = None
-        self.weapon_bonus = {}  # {<weapon name OR type>: [atk_bonus, dfs_bonus]}
 
         # AI
         self.fight_ai = None
@@ -181,39 +176,6 @@ class Fighter(
         if status not in self.status:
             self.status[status] = 0
         self.status[status] += dur
-
-    def arm(self, weapon=None):
-        """Arm fighter with weapon (default = random).
-        weapon can also be weapon type"""
-        # disarm fighter to avoid double weapon bonus
-        self.disarm()
-        # make new weapon
-        if weapon is None:
-            wp = random.choice(weapons.ALL_WEAPONS_LIST)
-        elif weapon in weapons.WEAPON_TYPES:
-            wp = weapons.get_rnd_wp_by_type(weapon)
-        elif weapon in weapons.ALL_WEAPONS_SET:
-            wp = weapon
-        else:
-            wp = weapons.get_wp(weapon)
-        self.weapon = wp
-        self.wp_dfs_bonus = wp.dfs_bonus
-
-    def arm_improv(self):
-        """Arm fighter with a random improvised weapon"""
-        self.arm('improvised')
-
-    def arm_normal(self):
-        """Arm fighter with a random normal weapon"""
-        self.arm('normal')
-
-    def arm_police(self):
-        """Arm fighter with a random police weapon"""
-        self.arm('police')
-
-    def arm_robber(self):
-        """Arm fighter with a random robber weapon"""
-        self.arm('robber')
 
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
@@ -411,25 +373,6 @@ class Fighter(
         att = self.choose_better_att(atts)
         self.change_att(att, 1)
 
-    def choose_best_norm_wp(self):
-        wp_techs = self.get_weapon_techs()
-        if wp_techs:
-            # todo add choose best normal weapon logic
-            # wns = weapons.NORMAL_WEAPONS
-            # best_bonus = 0
-            # if t.wp_type == 'normal' or t.wp_type in wns:
-            #     bon = t.wp_bonus[0] + t.wp_bonus[1]
-            #     if bon > best_bonus:
-            #         best_bonus = bon
-            #         chosen_tech = t
-            # # or:
-            # chosen_tech = random.choice(wp_techs)
-            # if chosen_tech:
-            #     self.arm(chosen_tech.wp_type)
-            self.arm_normal()
-        else:
-            self.arm_normal()
-
     def choose_better_att(self, atts):
         temp_dict = {}
         for att in atts:
@@ -488,11 +431,6 @@ class Fighter(
             self.set_ascii(prefix + 'Hit')
         # todo handle the no defense case
         atkr.dam = round(atkr.dam)
-
-    def disarm(self):
-        if self.weapon:
-            self.weapon = None
-            self.wp_dfs_bonus = 1.0
 
     def do_agility_based_dam(self):
         targ = self.target
@@ -1023,7 +961,6 @@ class Fighter(
     def set_target(self, target):
         self.target = target
         target.target = self
-        raise ValueError
 
     def show_ascii(self):
         # from pprint import pprint
