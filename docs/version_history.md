@@ -1,5 +1,6 @@
 
 
+fix: small import bug in encounters
 feat: probability of feeling too scared to fight is now proportional to risk
 refactor: quotes, exp worth
 refactor: fighter._weapons

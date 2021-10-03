@@ -6,6 +6,9 @@ from ..kung_fu import moves
 from ..things import items
 from ..utils.utilities import *
 
+# todo f-strings in encounters.py
+# todo convert encounters.py to a package
+
 # constants
 # encounter chances
 ENC_CH_BOOK_SELLER = 0.02

@@ -21,60 +21,6 @@ class Fighter(
     is_human = False
     is_player = False
 
-    # the following attribute values can be modified by Techs and Styles
-    agility_mult = 1.0
-    atk_mult = 1.0
-    atk_wp_bonus = 0
-    block_disarm = 0.005
-    block_power = 1.0
-    counter_chance_mult = 1.0
-    critical_chance = 0.05
-    critical_mult = 1.5
-    dam_reduc = 0  # todo adjust this and hp_gain in boosts.py
-    dfs_mult = 1.0
-    dfs_penalty_step = 0.2
-    environment_chance = 0.0  # todo get rid of this as it is just another critical?
-    grab_chance = 0.0  # todo not used yet
-    guard_dfs_bonus = 1.0
-    guard_while_attacking = False
-    health_mult = 1.0
-    hit_disarm = 0.005
-    in_fight_impro_wp_chance = 0.0
-    lying_dfs_mult = 0.5
-    num_atts_choose = 3
-    num_moves_choose = 3
-    off_balance_atk_mult = 0.75
-    off_balance_dfs_mult = 0.75
-    speed_mult = 1.0
-    stamina_gain_mult = 1.0
-    stamina_max_mult = 1.0
-    strength_mult = 1.0
-    stun_chance = 0.0
-    qp_gain_mult = 1.0
-    qp_max_mult = 1.0
-    resist_ko = 0.0
-    unblock_chance = 0.0
-
-    # strike multipliers todo reimplement as a default dict? a data class?
-    claw_strike_mult = 1.0
-    dist1_bonus = 1.0
-    dist2_bonus = 1.0
-    dist3_bonus = 1.0
-    elbow_strike_mult = 1.0
-    exotic_strike_mult = 1.0
-    flying_strike_mult = 1.0
-    grappling_strike_mult = 1.0
-    head_strike_mult = 1.0
-    kick_strike_mult = 1.0
-    knee_strike_mult = 1.0
-    palm_strike_mult = 1.0
-    punch_strike_mult = 1.0
-    weapon_strike_mult = 1.0
-
-    # dfs multipliers
-    block_mult = 1.0
-    dodge_mult = 1.0
-
     # the order of arguments should not be changed, or saving will break
     def __init__(
         self,
@@ -151,7 +97,6 @@ class Fighter(
         self.to_block = 0
         self.to_dodge = 0
         self.to_hit = 0
-        self.took_damage = False
 
         # techniques
         self.set_techs(tech_names)
@@ -168,28 +113,10 @@ class Fighter(
     # def add_style_tech(self):
     #     self.add_tech(self.style.tech.name)
 
-    def apply_dfs_penalty(self):
-        self.dfs_penalty_mult -= self.dfs_penalty_step
-        if self.dfs_penalty_mult < 0:
-            self.dfs_penalty_mult = 0
-
     def add_status(self, status, dur):
         if status not in self.status:
             self.status[status] = 0
         self.status[status] += dur
-
-    def attack(self):
-        n1 = self.current_fight.get_f_name_string(self)
-        n2 = self.current_fight.get_f_name_string(self.target)
-        s = f'{n1}: {self.action.name} @ {n2}'
-        self.current_fight.display(s)
-        if self.guard_while_attacking:
-            self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus += self.guard_dfs_bonus * self.guard_while_attacking
-        self.current_fight.display('=' * len(s))
-        # print(n2, 'dfs_bonus', self.target.dfs_bonus)
-        self.try_strike()
-        self.target.try_counter()
 
     def boost(self, **kwargs):
         """Boost fighter's attribute(s); k = att_name, v = quantity"""
@@ -197,108 +124,6 @@ class Fighter(
             curr_v = getattr(self, k)
             setattr(self, k, curr_v + v)
         self.refresh_full_atts()
-
-    def calc_atk(self, action):
-        """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
-        strike_mult = 1.0
-        strike_mult *= getattr(self, f'dist{action.distance}_bonus', 1.0)
-        for feature in action.features:
-            # low-prio todo reimplement computing strike_mult without getattr, use dict
-            strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
-        self.atk_bonus = self.atk_mult * strike_mult
-        if self.check_status('off-balance'):
-            self.atk_bonus *= self.off_balance_atk_mult
-        self.atk_pwr = (
-            self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
-        )
-        self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
-
-    # todo how is it used? why not relative to attacker?
-    def calc_dfs(self):
-        """Calculate defense numbers."""
-        if self.check_status('shocked'):
-            self.to_dodge = 0
-            self.to_block = 0
-        else:
-            attacker = self.target
-            atk_action = attacker.action
-            rep_actions_factor = attacker.get_rep_actions_factor(atk_action)
-            # todo recalc as a value in (0.0, 1.0)?
-            # * 10 because of new system:
-            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
-            x *= self.stamina_factor * rep_actions_factor
-            x *= self.dfs_bonus
-            # print('x after dfs_bonus', x)
-            if self.check_status('off-balance'):
-                x *= self.off_balance_dfs_mult
-            if self.check_status('lying'):
-                x *= self.lying_dfs_mult
-            self.to_dodge = x / DODGE_DIVISOR
-            self.to_block = x / BLOCK_DIVISOR
-            self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
-            # print('to dodge, to block', self.to_dodge, self.to_block)
-            self.dfs_pwr = self.dfs_penalty_mult * self.block_power * self.strength_full
-            self.dfs_pwr *= self.stamina_factor * self.wp_dfs_bonus  # todo divide by sth?
-
-    def calc_stamina_factor(self):
-        # todo docstring calc_stamina_factor
-        self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
-
-    def cause_fall(self):
-        lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
-        self.add_status('lying', lying_dur)
-        self.add_status('skip', lying_dur)
-        fall_dam = rndint(*FALL_DAMAGE)
-        self.change_hp(-fall_dam)
-        self.set_ascii('Falling')
-        self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
-        # print('$$$', self.status)
-
-    def cause_knockback(self, dist):
-        opp = self.target
-        self.change_distance(dist, opp)
-        s = 's' if dist > 1 else ''
-        self.set_ascii('Knockback')
-        # self.current_fight.display('{} is knocked back {} step{}!'.format(self.name, dist, s))
-        self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
-
-    def cause_off_balance(self):
-        ob_dur = rndint_2d(DUR_OFF_BAL_MIN, DUR_OFF_BAL_MAX) // self.speed_full
-        self.add_status('off-balance', ob_dur)
-        # self.current_fight.display('{} is off-balance!'.format(self.name))
-        self.current_fight.display(' off-balance!', align=False)
-        # print('$$$', self.status)
-
-    def cause_shock(self):
-        """Shock is worse than stun."""
-        shock_dur = rndint_2d(DUR_SHOCK_MIN, DUR_SHOCK_MAX) // self.speed_full
-        self.add_status('shocked', shock_dur)
-        self.add_status('skip', shock_dur)
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
-        self.set_ascii(prefix + 'Hit Effect')
-        # self.current_fight.display('{} is shocked!'.format(self.name))
-        self.current_fight.display(' shocked!', align=False)
-        # print('$$$', self.status)
-
-    def cause_slow_down(self):
-        slow_dur = rndint_2d(DUR_SLOW_MIN, DUR_SLOW_MAX) // self.speed_full
-        self.add_status('slowed down', slow_dur)
-        # todo do not repeat this line in all functions, use helper
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
-        self.set_ascii(prefix + 'Hit Effect')
-        # self.current_fight.display('{} is slowed down!'.format(self.name))
-        self.current_fight.display(' slowed down!', align=False)
-
-    def cause_stun(self):
-        """Stun is not as bad as shock."""
-        stun_dur = rndint_2d(DUR_STUN_MIN, DUR_STUN_MAX) // self.speed_full
-        self.add_status('stunned', stun_dur)
-        self.add_status('skip', stun_dur)
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
-        self.set_ascii(prefix + 'Hit Effect')
-        # self.current_fight.display('{} is stunned!'.format(self.name))
-        self.current_fight.display(' stunned!', align=False)
-        # print('$$$', self.status)
 
     def change_att(self, att, amount):
         setattr(self, att, getattr(self, att) + amount)
@@ -386,147 +211,12 @@ class Fighter(
         att = random.choice(temp_dict[weights[-1]])  # several atts might have the same weight
         return att
 
-    def choose_move(self):
-        self.av_moves = self.get_av_moves()  # this depends on target
-        self.action = self.fight_ai.choose_move()
-
     def choose_new_move(self, sample):
         self.learn_move(random.choice(sample).name)
-
-    def choose_target(self):
-        if len(self.act_targets) == 1:
-            self.set_target(self.act_targets[0])
-        else:
-            self.set_target(self.fight_ai.choose_target())
 
     def cls(self):
         """Empty method for convenience"""
         pass
-
-    def defend(self):
-        atkr = self.target
-        atkr.dam = atkr.atk_pwr
-        dodge_chance = self.to_dodge / atkr.to_hit
-        block_chance = self.to_block / atkr.to_hit
-        roll = rnd()
-        prefix = 'Lying ' if self.check_status('lying') else ''
-        self.defended = False
-        if roll <= dodge_chance:
-            atkr.dam = 0
-            self.change_qp(self.qp_gain)
-            self.current_fight.display(
-                '{} {}dodges!'.format(self.name, get_adverb(dodge_chance, 'barely', 'easily'))
-            )
-            self.set_ascii(prefix + 'Dodge')
-            self.defended = True
-        elif roll <= block_chance:
-            atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
-            self.change_qp(self.qp_gain // 2)
-            self.current_fight.display(
-                '{} {}blocks!'.format(self.name, get_adverb(block_chance, 'barely', 'easily'))
-            )
-            self.set_ascii(prefix + 'Block')
-            self.try_block_disarm()
-            self.defended = True
-        else:
-            self.set_ascii(prefix + 'Hit')
-        # todo handle the no defense case
-        atkr.dam = round(atkr.dam)
-
-    def do_agility_based_dam(self):
-        targ = self.target
-        dam = rndint_2d(1, self.agility_full * STAT_BASED_DAM_UPPER_MULT)
-        targ.take_damage(dam)
-        self.current_fight.display(f' agility-based -{dam} HP ({targ.hp})', align=False)
-
-    def do_counter(self):
-        cand_moves = self.get_av_moves(attack_moves_only=True)
-        if cand_moves:
-            self.current_fight.display('COUNTER!')
-            new_action = random.choice(cand_moves)
-            self.action = new_action
-            s = f'{self.name}: {self.action.name} @ {self.target.name}'
-            self.current_fight.display(s)
-            self.do_strike()
-
-    def do_knockback(self):
-        dist = random.choice(KNOCKBACK_DIST_FORCED)
-        self.target.cause_knockback(dist)
-
-    def do_level_based_dam(self):
-        targ = self.target
-        dam = rndint_2d(1, self.level * LEVEL_BASED_DAM_UPPER_MULT)
-        targ.take_damage(dam)
-        self.current_fight.display(f' level-based -{dam} HP ({targ.hp})', align=False)
-
-    def do_mob_dam(self):
-        self.target.cause_slow_down()
-
-    def do_move_functions(self, m):
-        if m.functions:
-            for fun_s in m.functions:
-                fun = getattr(self, fun_s)
-                fun()
-
-    def do_qi_based_dam(self):
-        targ = self.target
-        dam = rndint_2d(self.qp, self.qp * QI_BASED_DAM_UPPER_MULT)
-        targ.take_damage(dam)
-        self.current_fight.display(f' qi-based -{dam} HP ({targ.hp})', align=False)
-
-    def do_shock_move(self):
-        self.target.cause_shock()
-
-    def do_speed_based_dam(self):
-        targ = self.target
-        dam = rndint_2d(1, self.speed_full * STAT_BASED_DAM_UPPER_MULT)
-        targ.take_damage(dam)
-        self.current_fight.display(f' speed-based -{dam} HP ({targ.hp})', align=False)
-
-    def do_stam_dam(self):
-        targ = self.target
-        dam = round(targ.stamina_max * STAMINA_DAMAGE)
-        targ.change_stamina(-dam)
-        prefix = 'lying ' if targ.check_status('lying') else ''
-        targ.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display(' gasps for breath!', align=False)
-
-    def do_strength_based_dam(self):
-        targ = self.target
-        dam = rndint_2d(1, self.strength_full * STAT_BASED_DAM_UPPER_MULT)
-        targ.take_damage(dam)
-        self.current_fight.display(f' strength-based -{dam} HP ({targ.hp})', align=False)
-
-    def do_strike(self):
-        m = self.action
-        self.calc_atk(m)
-        self.try_environment('attack')
-        self.try_critical()
-        self.target.calc_dfs()
-        self.try_unblockable()
-        self.target.try_environment('defense')
-        self.target.defend()
-        self.hit_or_miss()
-        self.target.apply_dfs_penalty()
-        if m.dist_change:
-            self.change_distance(m.dist_change, self.target)
-        self.previous_actions = self.previous_actions[1:] + [m.name]
-        self.change_stamina(-m.stam_cost)
-        self.change_qp(-m.qi_cost)
-
-    def do_takedown(self):
-        targ = self.target
-        targ.cause_fall()
-
-    def exec_move(self):
-        m = self.action
-        self.current_fight.cls()
-        if m.power:
-            self.attack()  # changing distance is included
-        else:
-            self.maneuver()
-        self.current_fight.show(self.visualize_fight_state())
-        self.show_ascii()
 
     def fight(self, en, allies=None, en_allies=None, *args, **kwargs):
         return fight(self, en, allies, en_allies, *args, **kwargs)
@@ -555,47 +245,11 @@ class Fighter(
     def get_atts_to_choose(self):
         return random.sample(self.att_names, self.num_atts_choose)
 
-    def get_av_moves(self, attack_moves_only=False):
-        av_moves = []
-        lying_op = self.target.check_status('lying')
-        for m in self.moves + (self.weapon.moves if self.weapon else []):
-            enough_stamina = self.stamina >= m.stam_cost
-            enough_qi = self.qp >= m.qi_cost
-            if enough_stamina and enough_qi:
-                if m.distance:
-                    right_distance = m.distance == self.distances[self.target]
-                    if right_distance:
-                        anti_ground = (
-                            'antiground only' in m.features or 'also antiground' in m.features
-                        ) and lying_op
-                        anti_standing = 'antiground only' not in m.features and not lying_op
-                        if anti_ground or anti_standing:
-                            av_moves.append(m)
-                else:
-                    av_moves.append(m)
-        if attack_moves_only:
-            av_moves = [m for m in av_moves if m.power]
-        return av_moves
-
     def get_base_att_value(self, att):
         return getattr(self, att)
 
     def get_base_atts_tup(self):
         return self.strength, self.agility, self.speed, self.health
-
-    def get_f_info(self, short=False, show_st_emph=False):
-        s = self
-        if s.weapon:
-            w_info = f', {s.weapon.name}'
-        else:
-            w_info = ''
-        if short:
-            info = f'{s.name}, lv.{s.level} {s.style.name}{w_info}'
-        else:
-            info = '{}, lv.{} {}{}\n{}'.format(
-                s.name, s.level, s.get_style_string(show_st_emph), w_info, s.get_all_atts_str()
-            )
-        return info
 
     def get_full_att_value(self, att):
         return getattr(self, att + '_full')
@@ -641,46 +295,6 @@ class Fighter(
         # todo make this metric weighted, as hp is more important than stamina / qp
         return mean((self.hp / self.hp_max, self.stamina / self.stamina_max, self.qp / self.qp_max))
 
-    def get_prefight_info(self, side_a, side_b=None, hide_enemy_stats=False, basic_info_only=False):
-        fs = side_a[:]
-        if side_b:
-            fs.extend(side_b)
-        s = ''
-        size1 = max([len(s) for s in ['NAME '] + [f.name + '  ' for f in fs]])
-        size2 = max([len(s) for s in ['LEV '] + [str(f.level) + ' ' for f in fs]])
-        size3 = max([len(s) for s in ['STYLE '] + [f.style.name + ' ' for f in fs]])
-        att_names = ' '.join(self.att_names_short) if not basic_info_only else ''
-        s += 'NAME'.ljust(size1) + 'LEV'.ljust(size2) + 'STYLE'.ljust(size3) + att_names
-        if any([f.weapon for f in fs]) and not basic_info_only:
-            s += ' WEAPON'
-        for f in fs:
-            if side_b and f == side_b[0]:
-                s += '\n-vs-'
-            s += '\n{:<{}}{:<{}}{:<{}}'.format(
-                f.name,
-                size1,
-                f.level,
-                size2,
-                f.style.name,
-                size3,
-            )
-            if basic_info_only:
-                continue
-            if (
-                (not hide_enemy_stats)
-                or f.is_human
-                or (f in side_a and any([ff.is_human for ff in side_a]))
-                or (side_b and f in side_b and any([ff.is_human for ff in side_b]))
-            ):
-                atts_wb = (f.get_att_str_prefight(att) for att in self.att_names)
-            else:
-                atts_wb = (f.get_att_str_prefight(att, hide=True) for att in self.att_names)
-            s += '{:<4}{:<4}{:<4}{:<4}'.format(*atts_wb)
-            if f.weapon:
-                s += f'{f.weapon.name} {f.weapon.descr_short}'
-            s += f"\n{' ' * (size1 + size2)}{f.style.descr_short}"
-        return s
-
     def get_rep_actions_factor(self, move):
         n = self.previous_actions.count(move.name)  # 0-3
         return 1.0 + n * 0.33  # up to 1.99
@@ -709,26 +323,6 @@ class Fighter(
     @staticmethod
     def get_vis_distance(dist):
         return DISTANCES_VISUALIZATION[dist]
-
-    # todo reimplement this as a multiplier, not an addition of guard_dfs_bonus to dfs_bonus,
-    #  but careful with wp_dfs_bonus
-    def guard(self):
-        """This is called with eval as a function of the Guard move."""
-        # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
-        self.dfs_bonus += self.guard_dfs_bonus
-
-    def hit_or_miss(self):
-        tgt = self.target
-        if self.dam > 0:
-            self.dam = max(self.dam - tgt.dam_reduc, 0)
-            tgt.take_damage(self.dam)
-            self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
-            self.try_hit_disarm()
-            self.do_move_functions(self.action)
-            self.try_stun()
-            self.try_knockback()
-            self.try_knockdown()
-            self.try_ko()
 
     def learn_move(self, move, silent=False):
         """move can be a Move object or a move name string"""
@@ -776,40 +370,6 @@ class Fighter(
             # no need to refresh full atts here since they are refreshed when upgrading atts and
             # learning techs
 
-    def maneuver(self):
-        m = self.action
-        n = self.current_fight.get_f_name_string(self)
-        s = f'{n}: {m.name}'
-        self.current_fight.display(s)
-        self.current_fight.display('=' * len(s))
-        if m.dist_change:
-            self.change_distance(m.dist_change, self.target)
-            self.check_move_failed()
-        self.do_move_functions(m)
-        self.change_stamina(-m.stam_cost)
-        self.change_qp(-m.qi_cost)
-
-    def prepare_for_fight(self):
-        self.refresh_full_atts()
-        self.hp = self.hp_max
-        self.qp = round(self.qp_max * self.qp_start)
-        self.stamina = self.stamina_max
-        self.previous_actions = ['', '', '']
-        self.is_auto_fighting = True
-        self.distances = d = {}
-        # todo optimize not to walk over the same pair of fighters twice
-        for f2 in self.current_fight.all_fighters:
-            if self is f2:
-                d[f2] = 0
-            else:
-                dist = random.choice(VALID_DISTANCES)
-                d[f2] = dist
-                f2.distances[self] = dist
-        self.status = {}
-        self.exp_yield = self.get_exp_worth()
-        self.took_damage = False
-        self.kos_this_fight = 0
-
     def refresh_ascii(self):
         self.ascii_l, self.ascii_r = self.action.ascii_l, self.action.ascii_r
         targ = self.target
@@ -843,9 +403,6 @@ class Fighter(
             move_list.remove(mv_a)
             move_list.insert(i, mv_b)
         _rep_in_list(rep_mv, rep_with, self.moves)
-
-    def see_fight_info(self, *args, **kwargs):
-        pass
 
     def set_ascii(self, ascii_name):
         self.ascii_l, self.ascii_r = ascii_art.get_ascii(ascii_name)
@@ -916,26 +473,6 @@ class Fighter(
         self.target = target
         target.target = self
 
-    def show_ascii(self):
-        # from pprint import pprint
-        # print('DEBUG INFO FOR SELF')
-        # print(self)
-        # pprint(self.__dict__)
-        # print('DEBUG INFO FOR FIGHT')
-        # print(self.current_fight)
-        # pprint(self.current_fight.__dict__)
-        if self in self.current_fight.side_a:
-            a = self.ascii_l
-            b = self.target.ascii_r
-        else:
-            b = self.ascii_r
-            a = self.target.ascii_l
-        pic = ascii_art.concat(a, b)
-        self.current_fight.show(pic, align=False)
-        # prev = self.current_fight.cartoon[-1]
-        # if pic != prev:
-        self.current_fight.cartoon.append(pic)
-
     def spar(
         self,
         en,
@@ -952,140 +489,6 @@ class Fighter(
             self, en, allies, en_allies, auto_fight, af_option, hide_stats, environment_allowed
         )
 
-    def start_fight_turn(self):
-        cur_fight = self.current_fight
-        self.act_targets = (
-            cur_fight.active_side_b if self in cur_fight.active_side_a else cur_fight.active_side_a
-        )
-        self.act_allies = (
-            cur_fight.active_side_b if self in cur_fight.active_side_b else cur_fight.active_side_a
-        )
-        self.action = None
-        self.dfs_bonus = 1.0
-        self.dfs_penalty_mult = 1.0
-        self.target = None
-        # breathing techs and other automatic actions
-        self.change_hp(self.hp_gain)
-        self.change_qp(self.qp_gain)
-        self.change_stamina(self.stamina_gain)
-        self.try_in_fight_impro_wp()  # before get_av_atk_actions! or won't get weapon moves
-        self.calc_stamina_factor()
-
-    def take_damage(self, dam):
-        self.change_hp(-dam)
-        self.took_damage = True
-
-    def try_block_disarm(self):
-        atkr = self.target
-        if atkr.weapon and self.block_disarm and rnd() <= self.block_disarm:
-            atkr.disarm()
-            self.current_fight.display(f'{self.name} disarms {atkr.name} while blocking')
-
-    def try_counter(self):
-        if self.defended and self.hp > 0 and rnd() <= self.counter_chance:
-            self.do_counter()
-
-    def try_critical(self):
-        if rnd() <= self.critical_chance:
-            self.atk_pwr *= self.critical_mult
-            self.current_fight.display('CRITICAL!')
-
-    def try_environment(self, mode):
-        if (
-            self.environment_chance
-            and self.current_fight.environment_allowed
-            and rnd() <= self.environment_chance
-        ):
-            if mode == 'attack':
-                self.atk_pwr *= self.current_fight.environment_bonus
-                self.to_hit *= self.current_fight.environment_bonus
-            elif mode == 'defense':
-                self.dfs_pwr *= self.current_fight.environment_bonus
-                self.to_block *= self.current_fight.environment_bonus
-                self.to_dodge *= self.current_fight.environment_bonus
-            self.current_fight.display(f'{self.name} uses the environment!')
-
-    def try_hit_disarm(self):
-        tgt = self.target
-        if tgt.weapon and self.hit_disarm and rnd() <= self.hit_disarm:
-            tgt.disarm()
-            self.current_fight.display(f'{self.name} disarms {tgt.name} while attacking')
-
-    def try_in_fight_impro_wp(self):
-        if (
-            self.in_fight_impro_wp_chance
-            and not self.weapon
-            and self.current_fight.environment_allowed
-            and rnd() <= self.in_fight_impro_wp_chance
-        ):
-            self.arm_improv()
-            s = self.current_fight.get_f_name_string(self)
-            self.current_fight.display(f'{s} grabs an improvised weapon!')
-            self.current_fight.pak()
-
-    def try_insta_ko(self):
-        targ = self.target
-        if rnd() <= INSTA_KO_CHANCE:
-            dam = targ.hp
-            self.current_fight.display('INSTANT KNOCK-OUT!!!')
-            targ.take_damage(dam)
-
-    def try_knockback(self):
-        targ = self.target
-        kb = 0
-        if not targ.check_status('lying'):
-            dam_ratio = self.dam / targ.hp_max
-            for thresh in KNOCKBACK_HP_THRESHOLDS:
-                if dam_ratio > thresh:
-                    kb += 1
-        if kb > 0:
-            targ.cause_knockback(kb)
-
-    def try_knockdown(self):
-        targ = self.target
-        if not targ.check_status('lying'):
-            if self.dam >= targ.hp_max / KNOCKDOWN_HP_DIVISOR:
-                targ.cause_fall()
-            elif self.dam >= targ.hp_max / OFF_BALANCE_HP_DIVISOR:
-                targ.cause_off_balance()
-
-    def try_ko(self):
-        tgt = self.target
-        if not tgt.hp:
-            if tgt.resist_ko and rnd() <= tgt.resist_ko:
-                tgt.hp = 1
-                self.log(f'{tgt.name} resists being knocked out.')
-                tgt.log('Resists being knocked out.')
-                self.current_fight.display(f'{tgt.name} resists being knocked out!')
-            else:
-                self.kos_this_fight += 1
-                self.log(f'Knocks out {tgt.name}.')
-                tgt.log(f'Knocked out by {self.name}.')
-                if not tgt.ascii_name.startswith('lying'):
-                    tgt.set_ascii('Falling')
-                self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
-
-    def try_shock_move(self):
-        targ = self.target
-        if rnd() <= SHOCK_CHANCE:
-            targ.cause_shock()
-
-    def try_strike(self):
-        if not self.check_move_failed():
-            self.do_strike()
-
-    def try_stun(self):
-        targ = self.target
-        if (self.dam >= targ.hp_max / STUN_HP_DIVISOR) or (
-            self.stun_chance and rnd() <= self.stun_chance
-        ):
-            targ.cause_stun()
-
-    def try_unblockable(self):
-        if self.unblock_chance and rnd() <= self.unblock_chance:
-            self.target.to_block = 0
-            self.current_fight.display('UNBLOCKABLE!')
-
     def unboost(self, **kwargs):
         """'Unboost' fighter's attributes."""
         kwargs_copy = {}
@@ -1093,27 +496,6 @@ class Fighter(
             kwargs_copy[k] = -v
         self.boost(**kwargs_copy)
         self.refresh_full_atts()
-
-    def visualize_fight_state(self):
-        try:
-            ft = self.current_fight
-            side_a, side_b = ft.active_side_a, ft.active_side_b
-            n_a, n_b = len(side_a), len(side_b)
-            hp_a, hp_b = sum((f.hp for f in side_a)), sum((f.hp for f in side_b))
-            bar = get_bar(hp_a, hp_a + hp_b, '/', '\\', 20)
-            s = f'\n{n_a} {bar} {n_b}\n'
-            return s
-        except ZeroDivisionError:
-            from pprint import pprint
-            import traceback
-            traceback.print_exc()
-            pprint(vars())
-            pprint(vars(self))
-            pprint(self.current_fight.timeline)
-            pak()
-
-    def write(self, *args, **kwargs):
-        pass
 
 
 class Challenger(Fighter):
