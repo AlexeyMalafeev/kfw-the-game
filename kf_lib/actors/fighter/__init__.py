@@ -1,7 +1,7 @@
 from ...fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
 from ...fighting.fight import fight
 from ...ai.fight_ai import DefaultFightAI
-from ...kung_fu import styles, moves, ascii_art
+from ...kung_fu import styles, moves
 from ...utils import exceptions
 from ...utils.utilities import *
 
@@ -34,25 +34,8 @@ class Fighter(
     ):
         self.name = name
         self.level = level
-
-        # AI
-        self.fight_ai = None
         self.set_fight_ai(DefaultFightAI)
-
-        # attributes
         self.rand_atts_mode = rand_atts_mode
-        self.att_names = ('strength', 'agility', 'speed', 'health')
-        self.att_names_short = ('Str', 'Agi', 'Spd', 'Hlt')
-        self.strength = 0
-        self.strength_full = 0
-        self.agility = 0
-        self.agility_full = 0
-        self.speed = 0
-        self.speed_full = 0
-        self.health = 0
-        self.health_full = 0
-
-        self.att_weights = {}
         self.set_att_weights()
         self.set_atts(atts_tuple)
 
@@ -64,13 +47,9 @@ class Fighter(
         self.act_allies = []
         self.act_targets = []
         self.action = None
-        self.ascii_l = ''
-        self.ascii_r = ''
-        self.ascii_name = ''
         self.atk_pwr = 0
         self.atk_bonus = 0
         self.av_moves = []
-        self.counter_chance = 0.0
         self.current_fight = None  # ...Fight object
         self.dam = 0
         self.defended = False
@@ -78,19 +57,9 @@ class Fighter(
         self.dfs_penalty_mult = 1.0
         self.dfs_pwr = 0
         self.distances = {}  # fighter_obj: int
-        self.hp = 0
-        self.hp_max = 0
-        self.hp_gain = 0
         self.is_auto_fighting = True
-        self.kos_this_fight = 0
-        self.qp = 0
-        self.qp_gain = 0
-        self.qp_max = 0
         self.qp_start = 0.0  # portion of total
         self.previous_actions = ['', '', '']
-        self.stamina_gain = 0
-        self.stamina_max = 0
-        self.stamina = 0
         self.stamina_factor = 1.0
         self.status = {}  # {'status_name': status_dur}
         self.target = None  # both for attacker and defender
@@ -117,17 +86,6 @@ class Fighter(
         if status not in self.status:
             self.status[status] = 0
         self.status[status] += dur
-
-    def boost(self, **kwargs):
-        """Boost fighter's attribute(s); k = att_name, v = quantity"""
-        for k, v in kwargs.items():
-            curr_v = getattr(self, k)
-            setattr(self, k, curr_v + v)
-        self.refresh_full_atts()
-
-    def change_att(self, att, amount):
-        setattr(self, att, getattr(self, att) + amount)
-        self.refresh_full_atts()
 
     def change_distance(self, dist, targ):
         dist = self.distances[targ] + dist
@@ -194,23 +152,6 @@ class Fighter(
     def check_status(self, status):
         return self.status.get(status, False)
 
-    def choose_att_to_upgrade(self):
-        atts = self.get_atts_to_choose()
-        att = self.choose_better_att(atts)
-        self.change_att(att, 1)
-
-    def choose_better_att(self, atts):
-        temp_dict = {}
-        for att in atts:
-            weight = self.att_weights[att]
-            if weight in temp_dict:
-                temp_dict[weight].append(att)
-            else:
-                temp_dict[weight] = [att]
-        weights = sorted([w for w in temp_dict.keys()])
-        att = random.choice(temp_dict[weights[-1]])  # several atts might have the same weight
-        return att
-
     def choose_new_move(self, sample):
         self.learn_move(random.choice(sample).name)
 
@@ -220,39 +161,6 @@ class Fighter(
 
     def fight(self, en, allies=None, en_allies=None, *args, **kwargs):
         return fight(self, en, allies, en_allies, *args, **kwargs)
-
-    def get_all_atts_str(self):
-        atts_info = []
-        for i, att in enumerate(self.att_names):
-            short = self.att_names_short[i]
-            v = self.get_att_str(att)
-            atts_info.append(f'{short}:{v}')
-        return ' '.join(atts_info)
-
-    def get_att_str(self, att):
-        base, full = self.get_base_att_value(att), self.get_full_att_value(att)
-        return f'{full}({base})' if full > base else str(base)
-
-    def get_att_str_prefight(self, att, hide=False):
-        base, full = self.get_base_att_value(att), self.get_full_att_value(att)
-        s = str(full) if not hide else '?'
-        aster = '*' if full > base else ''
-        return s + aster
-
-    def get_att_values_full(self):
-        return tuple(self.get_full_att_value(att) for att in self.att_names)
-
-    def get_atts_to_choose(self):
-        return random.sample(self.att_names, self.num_atts_choose)
-
-    def get_base_att_value(self, att):
-        return getattr(self, att)
-
-    def get_base_atts_tup(self):
-        return self.strength, self.agility, self.speed, self.health
-
-    def get_full_att_value(self, att):
-        return getattr(self, att + '_full')
 
     def get_init_atts(self):
         """Return tuple of attributes used by __init__"""
@@ -267,9 +175,6 @@ class Fighter(
 
     def get_init_string(self):
         return f'{self.__class__.__name__}{self.get_init_atts()!r}'
-
-    def get_max_att_value(self):
-        return max(self.get_base_atts_tup())
 
     def get_move_fail_chance(self, move_obj):
         return move_obj.complexity ** 2 / self.agility_full ** 2
@@ -370,33 +275,6 @@ class Fighter(
             # no need to refresh full atts here since they are refreshed when upgrading atts and
             # learning techs
 
-    def refresh_ascii(self):
-        self.ascii_l, self.ascii_r = self.action.ascii_l, self.action.ascii_r
-        targ = self.target
-        if targ.check_status('lying'):
-            targ.set_ascii('Lying')
-        else:
-            targ.set_ascii('Stance')
-
-    def refresh_full_atts(self):
-        for att in self.att_names:
-            base = getattr(self, att)
-            mult = getattr(self, att + '_mult')
-            setattr(self, att + '_full', round(base * mult))
-        self.hp_max = self.health_full * HP_PER_HEALTH_LV
-        self.stamina_max = round(
-            (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
-        )
-        self.stamina_gain = round(self.stamina_max / 10 * self.stamina_gain_mult)
-        self.qp_max = round(
-            (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
-        )
-        self.qp_gain = round(self.qp_max / 5 * self.qp_gain_mult)
-        self.counter_chance = (
-            (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
-            self.counter_chance_mult
-        )
-
     def replace_move(self, rep_mv, rep_with):
         def _rep_in_list(mv_a, mv_b, move_list):
             i = move_list.index(mv_a)
@@ -404,49 +282,12 @@ class Fighter(
             move_list.insert(i, mv_b)
         _rep_in_list(rep_mv, rep_with, self.moves)
 
-    def set_ascii(self, ascii_name):
-        self.ascii_l, self.ascii_r = ascii_art.get_ascii(ascii_name)
-        self.ascii_name = ascii_name
-
-    def set_att_weights(self):
-        """This is used for choosing better atts when upgrading / randomly generating fighters"""
-        for att in self.att_names:
-            setattr(self, att, 3)
-            self.att_weights[att] = 0  # default weights
-
-        # default, 'old' method
-        if self.rand_atts_mode == 0:
-            pass
-        # random weights
-        elif self.rand_atts_mode in {1, 2}:
-            for att in self.att_names:
-                # self.att_weights[att] = random.randint(1, 2)
-                self.att_weights[att] = 1
-        # TODO: more intelligent att selection depending on the style perks
-
-    def set_atts(self, atts):
-        if not atts:
-            self.set_rand_atts()
-        else:
-            for i, att in enumerate(self.att_names):
-                setattr(self, att, atts[i])
-
-    def set_fight_ai(self, ai_class, write_log=False):
-        self.fight_ai = ai_class(self, write_log)
-
     def set_moves(self, move_names):
         if not move_names:
             self.set_rand_moves()
         else:
             for mn in move_names:
                 self.learn_move(mn, silent=True)
-
-    def set_rand_atts(self):
-        for i in range(self.level + 2):
-            atts = self.get_atts_to_choose()
-            att = self.choose_better_att(atts)
-            value = getattr(self, att)
-            setattr(self, att, value + 1)
 
     def set_rand_moves(self):
         for lv in LVS_GET_NEW_ADVANCED_MOVE:
@@ -488,14 +329,6 @@ class Fighter(
         return f_spar(
             self, en, allies, en_allies, auto_fight, af_option, hide_stats, environment_allowed
         )
-
-    def unboost(self, **kwargs):
-        """'Unboost' fighter's attributes."""
-        kwargs_copy = {}
-        for k, v in kwargs.items():
-            kwargs_copy[k] = -v
-        self.boost(**kwargs_copy)
-        self.refresh_full_atts()
 
 
 class Challenger(Fighter):

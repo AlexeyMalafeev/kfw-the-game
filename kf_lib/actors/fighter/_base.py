@@ -1,4 +1,7 @@
-class FighterBase:
-    level: int = 0
-    name: str = ''
-    style = None  # object
+from ._attributes import Attributes
+
+
+class BaseFighter(
+    Attributes,
+):
+    pass
