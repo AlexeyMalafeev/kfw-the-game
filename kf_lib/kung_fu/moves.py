@@ -1,6 +1,5 @@
 from ..kung_fu.ascii_art import get_ascii
 from ..fighting.distances import DISTANCE_FEATURES
-from ..utils import exceptions
 from ..utils.utilities import *
 
 
@@ -155,7 +154,7 @@ for mv in ALL_MOVES_LIST:
 
 def get_move_obj(move_name):
     if move_name not in ALL_MOVES_DICT:
-        raise exceptions.MoveNotFoundError(f'"{move_name}" is not a known move')
+        raise MoveNotFoundError(f'"{move_name}" is not a known move')
     return ALL_MOVES_DICT[move_name]
 
 
@@ -180,7 +179,7 @@ def get_rand_moves(f, n, tier, moves_to_exclude=None):
     known_moves = set(f.moves) | moves_to_exclude
     pool = [m for m in MOVES_BY_TIERS[tier] if m not in known_moves]
     if not pool:
-        raise exceptions.MoveNotFoundError(
+        raise MoveNotFoundError(
             f'Cannot find any moves to learn at tier {tier} for {f}'
         )
     weights = [m.freq for m in pool]  # can never get style moves like this as their freq is 0
@@ -244,3 +243,8 @@ def resolve_style_move(move_s, f):
             f'Cannot choose new move for {pool=}, {move_s}, {features=}, {tier=} {f=}'
         )
         input('...')
+
+
+class MoveNotFoundError(Exception):
+    """Raised when move is not found in known moves."""
+    pass

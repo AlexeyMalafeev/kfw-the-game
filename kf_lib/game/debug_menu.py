@@ -1,6 +1,5 @@
 from ..actors import fighter_factory
 from ..things import items
-from ..utils import exceptions
 from ..utils.utilities import *
 
 

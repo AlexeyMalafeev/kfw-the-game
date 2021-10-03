@@ -12,6 +12,10 @@ class FighterOutput:
     def show(self, text, align=False):
         pass
 
+    def cls(self):
+        """Empty method for convenience"""
+        pass
+
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
         if s.weapon:

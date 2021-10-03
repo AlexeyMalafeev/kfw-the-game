@@ -63,6 +63,25 @@ class FightActionsUser:
         # todo docstring calc_stamina_factor
         self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
+    def check_move_failed(self):
+        compl = self.action.complexity
+        f_ch = self.get_move_fail_chance(self.action)
+        if rnd() <= f_ch:
+            if self.action.power:
+                self.to_hit = 0
+                if compl >= 1:
+                    self.current_fight.display('Miss!')
+                    self.cause_off_balance()
+            if self.action.dist_change:
+                self.current_fight.display('Fail!')
+                if compl >= 3:
+                    self.cause_fall()
+                else:
+                    self.cause_off_balance()
+            return True
+        else:
+            return False
+
     def choose_move(self):
         self.av_moves = self.get_av_moves()  # this depends on target
         self.action = self.fight_ai.choose_move()

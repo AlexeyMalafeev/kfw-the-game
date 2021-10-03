@@ -55,6 +55,38 @@ class Attributes:
         setattr(self, att, getattr(self, att) + amount)
         self.refresh_full_atts()
 
+    def change_hp(self, amount):
+        self.hp += amount
+        if self.hp > self.hp_max:
+            self.hp = self.hp_max
+        elif self.hp < 0:
+            self.hp = 0
+            # set qp to zero too
+            self.qp = 0
+
+    def change_qp(self, amount):
+        self.qp += amount
+        if self.qp > self.qp_max:
+            self.qp = self.qp_max
+        elif self.qp < 0:
+            self.qp = 0
+
+    def change_stamina(self, amount):
+        self.stamina += amount
+        if self.stamina > self.stamina_max:
+            self.stamina = self.stamina_max
+        elif self.stamina < 0:
+            self.stamina = 0
+
+    def check_lv(self, minlv, maxlv=None):
+        if maxlv is None:
+            return self.level >= minlv
+        else:
+            return minlv <= self.level <= maxlv
+
+    def check_stamina(self, amount):
+        return self.stamina >= amount
+
     def choose_att_to_upgrade(self):
         atts = self.get_atts_to_choose()
         att = self.choose_better_att(atts)
