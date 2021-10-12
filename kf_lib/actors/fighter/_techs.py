@@ -1,7 +1,7 @@
 import random
 
 
-from ._base import FighterBase
+from ._base_fighter import FighterBase
 from ...kung_fu import techniques
 
 

@@ -1,7 +1,8 @@
+from ._base_fighter import BaseFighter
 from ...kung_fu import ascii_art
 
 
-class ASCIIMethods:
+class ASCIIMethods(BaseFighter):
     ascii_l = ''
     ascii_r = ''
     ascii_name = ''

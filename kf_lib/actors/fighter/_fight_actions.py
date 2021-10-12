@@ -181,6 +181,10 @@ class FightActionsUser:
             av_moves = [m for m in av_moves if m.power]
         return av_moves
 
+    def get_rep_actions_factor(self, move):
+        n = self.previous_actions.count(move.name)  # 0-3
+        return 1.0 + n * 0.33  # up to 1.99
+
     # todo reimplement this as a multiplier, not an addition of guard_dfs_bonus to dfs_bonus,
     #  but careful with wp_dfs_bonus
     def guard(self):
@@ -200,6 +204,10 @@ class FightActionsUser:
             self.try_knockback()
             self.try_knockdown()
             self.try_ko()
+
+    def set_target(self, target):
+        self.target = target
+        target.target = self
 
     def start_fight_turn(self):
         cur_fight = self.current_fight

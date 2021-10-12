@@ -1,16 +1,20 @@
+from ._basic_attributes import BasicAttributes
+from ._fight_attributes import FightAttributes
 from ...kung_fu import moves
 
 
-from ._attributes import Attributes
-
-
 class BaseFighter(
-    Attributes,
+    BasicAttributes,
+    FightAttributes,
 ):
     name = ''
     style = None
+    target = None
     techs = []
     moves = []
+
+    def __repr__(self):
+        return self.get_init_string()
 
     def get_init_atts(self):
         """Return tuple of attributes used by __init__"""

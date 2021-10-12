@@ -10,7 +10,7 @@ STAMINA_BASE = 50  # for all fighter levels
 STAMINA_INCR_PER_LV = 10
 
 
-class Attributes:
+class BasicAttributes:
     att_names = ('strength', 'agility', 'speed', 'health')
     att_names_short = ('Str', 'Agi', 'Spd', 'Hlt')
     att_weights = {}
