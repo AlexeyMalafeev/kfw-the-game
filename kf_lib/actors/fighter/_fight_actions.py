@@ -1,4 +1,7 @@
-class FightActionsUser:
+from ._base_fighter import BaseFighter
+
+
+class FightActionsUser(BaseFighter):
     def apply_dfs_penalty(self):
         self.dfs_penalty_mult -= self.dfs_penalty_step
         if self.dfs_penalty_mult < 0:

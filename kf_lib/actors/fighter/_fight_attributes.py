@@ -8,19 +8,66 @@ class FightAttributes:
     current_fight = None  # ...Fight object
     dam = 0
     defended = False
-    dfs_bonus = 1.0  # for moves like Guard
-    dfs_penalty_mult = 1.0
     dfs_pwr = 0
     distances = {}  # fighter_obj: int
     is_auto_fighting = True
     previous_actions = ['', '', '']
     qp_start = 0.0  # portion of total
-    stamina_factor = 1.0
     status = {}  # {'status_name': status_dur}
     target = None  # used both for attacker and defender
     to_block = 0
     to_dodge = 0
     to_hit = 0
+
+    # modified by level, techs and styles:
+    agility_mult = 1.0
+    atk_mult = 1.0
+    atk_wp_bonus = 0
+    block_disarm = 0.005
+    block_mult = 1.0
+    block_power = 1.0  # todo give boost to block_power
+    critical_chance = 0.05
+    critical_mult = 1.5
+    dam_reduc = 0  # todo adjust this and hp_gain in boosts.py
+    dfs_bonus = 1.0  # for moves like Guard
+    dfs_mult = 1.0
+    dfs_penalty_mult = 1.0
+    dfs_penalty_step = 0.2
+    dodge_mult = 1.0
+    environment_chance = 0.0  # todo get rid of this as it is just another critical?
+    grab_chance = 0.0  # todo not used yet
+    guard_dfs_bonus = 1.0
+    guard_while_attacking = False
+    health_mult = 1.0
+    hit_disarm = 0.005
+    in_fight_impro_wp_chance = 0.0
+    lying_dfs_mult = 0.5
+    num_moves_choose = 3
+    off_balance_atk_mult = 0.75
+    off_balance_dfs_mult = 0.75
+    speed_mult = 1.0
+    stamina_factor = 1.0
+    strength_mult = 1.0
+    stun_chance = 0.0
+    resist_ko = 0.0
+    unblock_chance = 0.0
+
+    # strike multipliers
+    # todo reimplement strike multipliers as a default dict? a data class?
+    claw_strike_mult = 1.0
+    dist1_bonus = 1.0
+    dist2_bonus = 1.0
+    dist3_bonus = 1.0
+    elbow_strike_mult = 1.0
+    exotic_strike_mult = 1.0
+    flying_strike_mult = 1.0
+    grappling_strike_mult = 1.0
+    head_strike_mult = 1.0
+    kick_strike_mult = 1.0
+    knee_strike_mult = 1.0
+    palm_strike_mult = 1.0
+    punch_strike_mult = 1.0
+    weapon_strike_mult = 1.0
 
     def add_status(self, status, dur):
         if status not in self.status:

@@ -3,6 +3,29 @@ from ...kung_fu import moves
 
 
 LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
+# todo use NEW_MOVE_TIERS
+NEW_MOVE_TIERS = {
+    1: 1,
+    2: 1,
+    3: 2,
+    4: 2,
+    5: 3,
+    6: 3,
+    7: 4,
+    8: 4,
+    9: 5,
+    10: 5,
+    11: 6,
+    12: 6,
+    13: 7,
+    14: 7,
+    15: 8,
+    16: 8,
+    17: 9,
+    18: 9,
+    19: 10,
+    20: 10,
+}
 
 
 class MoveUser:

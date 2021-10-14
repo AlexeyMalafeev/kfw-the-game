@@ -1,7 +1,43 @@
-from ...utils.utilities import rnd
+from ._base_fighter import BaseFighter
+from ...utils.utilities import rnd, rndint, rndint_2d
 
 
-class StrikeEffectUser:
+import random
+
+
+BLOCK_DIVISOR = 2
+DAM_DIVISOR = 2
+DODGE_DIVISOR = 3
+DUR_LYING_MIN = 100
+DUR_LYING_MAX = 200
+DUR_OFF_BAL_MIN = 30
+DUR_OFF_BAL_MAX = 60
+DUR_SHOCK_MIN = 50
+DUR_SHOCK_MAX = 100
+DUR_SLOW_MIN = 300
+DUR_SLOW_MAX = 600
+DUR_STUN_MIN = 50
+DUR_STUN_MAX = 150
+FALL_DAMAGE = (25, 50)
+INSTA_KO_CHANCE = 0.25
+KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
+KNOCKBACK_HP_THRESHOLDS = (0.3, 0.35, 0.4)  # correspond to levels of knockback: 1, 2, 3
+KNOCKDOWN_HP_DIVISOR = 2     # todo make 0.5 like above thresholds
+LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
+MOB_DAM_PENALTY = 0.3
+OFF_BALANCE_HP_DIVISOR = 4  # todo make 0.25 like above thresholds
+QI_BASED_DAM_UPPER_MULT = 3
+SHOCK_CHANCE = 0.5  # for moves
+STAMINA_DAMAGE = 0.2  # for moves
+STAMINA_FACTOR_BIAS = 0.5
+STAT_BASED_DAM_UPPER_MULT = 5
+STUN_HP_DIVISOR = 2.8
+TIME_UNIT_MULTIPLIER = 20
+
+
+class StrikeMechanics(BaseFighter):
+    took_damage = False
+    
     def cause_fall(self):
         lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
@@ -115,6 +151,10 @@ class StrikeEffectUser:
     def do_takedown(self):
         targ = self.target
         targ.cause_fall()
+
+    def take_damage(self, dam):
+        self.change_hp(-dam)
+        self.took_damage = True
 
     def try_critical(self):
         if rnd() <= self.critical_chance:

@@ -1,5 +1,9 @@
-from .fighter import Fighter, INDENT, ALIGN
+from .fighter import Fighter
 from ..utils.utilities import menu, roman, pretty_table, cls, pak, get_bar, align_text
+
+
+ALIGN = 60
+INDENT = 0
 
 
 class HumanControlledFighter(Fighter):
