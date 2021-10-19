@@ -1,5 +1,5 @@
 from . import boosts as b
-from .styles import TechStyle
+from .styles import Style
 from .techniques import StyleTech
 from kf_lib.utils.utilities import *
 
@@ -145,7 +145,6 @@ W3 = {
 
 
 def generate_new_styles(n, overlap=False):
-    generated = []
     if overlap:
         words1 = random.choices(list(W1), k=n)
         words2 = random.choices(list(W2), k=n)
@@ -171,7 +170,7 @@ def get_style_from_str(s):
     t1 = W1[w1]
     t2 = W2[w2]
     t3 = W3[w3]
-    return TechStyle(s, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
+    return Style(s, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
 
 
 def get_styles_from_list(style_list):

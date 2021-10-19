@@ -2,20 +2,21 @@ from . import boosts as b
 from .techniques import StyleTech
 from kf_lib.utils.utilities import *
 
-# the following dicts will be filled when styles are instantiated
+
 all_styles = {}
-all_tech_styles = {}
-all_no_tech_styles = {}
+
 
 DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4'}
 
 
-class BaseStyle(object):
-    is_style = True
-
+class Style(object):
     def __init__(self, name, techs_dict, move_str_dict):
         self.name = name
-        self.techs = techs_dict if techs_dict is not None else {}
+        self.techs = techs_dict
+        if self.techs:
+            self.is_tech_style = True
+        else:
+            self.is_tech_style = False
         features = []
         for lv, t in self.techs.items():
             if t.descr_short not in features:
@@ -31,26 +32,9 @@ class BaseStyle(object):
         return f'{self.name} ({self.descr})'
 
 
-class TechStyle(BaseStyle):
-    is_tech_style = True
-
-    def __init__(self, name, techs_dict, move_str_dict):
-        super().__init__(name, techs_dict, move_str_dict)
-        all_tech_styles[self.name] = self
-
-
-# todo get rid of NoTechStyle, just use empty dict of techs
-class NoTechStyle(BaseStyle):
-    is_tech_style = False
-
-    def __init__(self, name, techs_dict=None, move_str_dict=None):
-        super().__init__(name, techs_dict, move_str_dict)
-        all_no_tech_styles[self.name] = self
-
-
 # todo to txt file, then load? less syntax?
 default_styles = [
-    TechStyle(
+    Style(
         'Bagua Zhang',
         {
             3: StyleTech('Bagua Zhang I', dodge_mult=b.EVADE1),
@@ -59,7 +43,7 @@ default_styles = [
         },
         {1: 'Throw', 2: '1,palm', 4: '2,punch', 6: '3,kick', 8: '4,palm'},
     ),
-    TechStyle(
+    Style(
         'Balanced Fist',
         {
             3: StyleTech('Balanced Fist I', dist2_bonus=b.STRIKE_MULT1),
@@ -74,7 +58,7 @@ default_styles = [
             8: '4,mid-range',
         },
     ),
-    TechStyle(
+    Style(
         'Centipede',
         {
             3: StyleTech('Centipede I', agility_mult=b.AGILITY1),
@@ -87,7 +71,7 @@ default_styles = [
         },
         {1: 'Short Palm', 2: '1,punch', 4: '2,palm', 6: '3,punch', 8: '4,palm'},
     ),
-    TechStyle(
+    Style(
         'Choy Li Fut',
         {
             3: StyleTech('Choy Li Fut I', atk_mult=b.ATTACK1),
@@ -96,7 +80,7 @@ default_styles = [
         },
         {1: 'Short Punch', 2: '1,grappling', 4: '2,kick', 6: '3,punch', 8: '4,kick'},
     ),
-    TechStyle(
+    Style(
         'Dragon',
         {
             3: StyleTech('Dragon I', unblock_chance=b.UNBLOCK_CHANCE1),
@@ -105,7 +89,7 @@ default_styles = [
         },
         {2: 'Dragon Claw', 4: '2,kick', 6: '3,punch', 8: '4,energy,kick'},
     ),
-    TechStyle(
+    Style(
         'Drunken Boxing',
         # todo for drunken: no fall damage, falling restores qp, off-balance gives bonus to atk&dfs
         {
@@ -115,7 +99,7 @@ default_styles = [
         },
         {2: '1,grappling', 4: 'Trick Punch', 6: '3,trick', 8: '4,trick'},  # todo 'Drunken Punch'
     ),
-    TechStyle(
+    Style(
         'Eagle Claw',
         # todo jumps cost less stamina; jumps restore qp?; reduced complexity for jumps
         # todo jump feature is called flying and it's hard to change
@@ -132,7 +116,7 @@ default_styles = [
             8: '4,flying',
         },
     ),
-    TechStyle(
+    Style(
         'Eight Extremities Fist',
         # todo opens the opponent's arms forcibly? fast movement?
         {
@@ -148,7 +132,7 @@ default_styles = [
             8: '4,close-range',
         },
     ),
-    TechStyle(
+    Style(
         'Gecko',
         # todo an emphasis on speed and gravity? walls? implement 'cornered' status?
         {
@@ -164,7 +148,7 @@ default_styles = [
             8: '4,long-range',
         },
     ),
-    TechStyle(
+    Style(
         'Hung Ga',
         {
             3: StyleTech('Hung Ga I', punch_strike_mult=b.STRIKE_MULT1),
@@ -175,7 +159,7 @@ default_styles = [
         },
         {1: 'Short Punch', 2: '1,punch', 4: '2,punch', 6: '3,punch', 8: 'No-Shadow Kick'},
     ),
-    TechStyle(
+    Style(
         'Leopard',
         # todo counters
         {
@@ -191,7 +175,7 @@ default_styles = [
             8: '4,shocking',
         },
     ),
-    TechStyle(
+    Style(
         'Long Fist',
         # todo acrobatics bonus - more damage with complexity and no penalty
         {
@@ -201,7 +185,7 @@ default_styles = [
         },
         {1: 'Leap Back', 2: 'Long Punch', 4: '2,long,kick', 6: '3,acrobatic', 8: '4,acrobatic'},
     ),
-    TechStyle(
+    Style(
         'Monkey',
         # todo reduce 'flying' stam_cost and complexity; can also give acrobatics bonus
         # todo very good ground defense
@@ -218,7 +202,7 @@ default_styles = [
             8: '4,flying',
         },
     ),
-    TechStyle(
+    Style(
         'Poking Foot',
         # todo a tech: if a strike connects, give a speed boost (combo)
         {
@@ -234,7 +218,7 @@ default_styles = [
             8: '4,shocking,kick',
         },
     ),
-    TechStyle(
+    Style(
         'Praying Mantis',
         # todo claw mult instead of atk?
         {
@@ -244,7 +228,7 @@ default_styles = [
         },
         {1: 'Claw', 2: '1,claw', 4: 'Mantis Hook', 6: '3,fast,kick', 8: '4,shocking,claw'},
     ),
-    TechStyle(
+    Style(
         'Scorpion',
         {
             3: StyleTech('Scorpion I', kick_strike_mult=b.STRIKE_MULT1),
@@ -253,7 +237,7 @@ default_styles = [
         },
         {2: '1,kick', 4: '2,kick', 6: '3,kick,shocking', 8: '4,kick'},
     ),
-    TechStyle(
+    Style(
         'Shaolin Fist',
         {
             3: StyleTech('Shaolin Fist I', hp_gain=b.HP_GAIN1),
@@ -262,7 +246,7 @@ default_styles = [
         },
         {2: '1,palm', 4: '2,palm', 6: '3,palm,surprise', 8: '4,palm'},  # todo 'Buddha Palm'
     ),
-    TechStyle(
+    Style(
         'Snake',
         {
             3: StyleTech('Snake I', dodge_mult=b.EVADE1),
@@ -276,7 +260,7 @@ default_styles = [
             8: '4,claw',
         },  # todo 'Poisonous Snake'
     ),
-    TechStyle(
+    Style(
         'Taiji',
         {
             3: StyleTech('Taiji I', guard_dfs_bonus=b.GUARD_DFS1),
@@ -285,7 +269,7 @@ default_styles = [
         },
         {2: '1,palm', 4: '2,palm', 6: '3,energy', 8: '4,energy'},
     ),
-    TechStyle(
+    Style(
         'Tiger',
         {
             3: StyleTech('Tiger I', atk_mult=b.ATTACK1),
@@ -301,7 +285,7 @@ default_styles = [
             8: '4,kick',
         },  # todo "Tiger's Tail"
     ),
-    TechStyle(
+    Style(
         'Toad',
         {
             3: StyleTech('Toad I', strength_mult=b.STRENGTH1),
@@ -310,7 +294,7 @@ default_styles = [
         },
         {2: '1,palm', 4: '2,heavy,punch', 6: '3,power,palm', 8: '4,punch'},
     ),
-    TechStyle(
+    Style(
         'White Crane',
         {
             3: StyleTech('White Crane I', dfs_mult=b.DEFENSE1),
@@ -319,7 +303,7 @@ default_styles = [
         },
         {2: '1,claw', 4: '2,claw', 6: '3,close-range', 8: '4,kick'},  # todo "Crane's Beak"
     ),
-    TechStyle(
+    Style(
         'Wing Chun',
         {
             3: StyleTech('Wing Chun I', punch_strike_mult=b.STRIKE_MULT1),
@@ -334,7 +318,7 @@ default_styles = [
             8: '4,short,punch',
         },  # todo Chain of Punches
     ),
-    TechStyle(
+    Style(
         'Xing Yi',
         {
             3: StyleTech('Xing Yi I', speed_mult=b.SPEED1),
@@ -352,7 +336,7 @@ default_styles = [
 
 MAX_LEN_STYLE_NAME = max((len(s.name) for s in default_styles))
 
-BEGGAR_STYLE = TechStyle(
+BEGGAR_STYLE = Style(
     'Beggar\'s Fist',
     {
         3: StyleTech('Beggar\'s Fist I', dfs_mult=b.DEFENSE1),
@@ -361,7 +345,7 @@ BEGGAR_STYLE = TechStyle(
     },
     {2: '1,palm', 4: '2,palm', 6: '3,energy', 8: '4,energy'},
 )
-THIEF_STYLE = TechStyle(
+THIEF_STYLE = Style(
     'Thief\'s Shadow',
     {
         3: StyleTech('Thief\'s Shadow I', speed_mult=b.SPEED1),
@@ -370,7 +354,7 @@ THIEF_STYLE = TechStyle(
     },
     {2: '1,fast', 4: '2,surprise', 6: '3,shocking', 8: '4,trick'},
 )
-DRUNKARD_STYLE = TechStyle(
+DRUNKARD_STYLE = Style(
     'Drunken Dragon',
     {
         3: StyleTech('Drunken Dragon I', agility_mult=b.AGILITY1),
@@ -379,7 +363,7 @@ DRUNKARD_STYLE = TechStyle(
     },
     {2: '1,punch', 4: '2,energy', 6: '5,trick', 8: '6,trick'},  # 'Drunken Punch'?
 )
-TURTLE_NUNJUTSU = TechStyle(
+TURTLE_NUNJUTSU = Style(
     'Turtle Ninjutsu',
     {
         3: StyleTech('Cowabunga I', agility_mult=b.AGILITY1),
@@ -389,19 +373,21 @@ TURTLE_NUNJUTSU = TechStyle(
     {2: '1,punch', 4: '2,kick', 6: '3,flying', 8: '4,flying'},
 )
 
-FLOWER_KUNGFU = NoTechStyle('Flower Kung-fu')
-DIRTY_FIGHTING = NoTechStyle(
-    'Dirty Fighting', {2: '1,heavy', 4: '2,power', 6: '3,shocking', 8: '4,surprise'}
+FLOWER_KUNGFU = Style('Flower Kung-fu', {}, {})
+DIRTY_FIGHTING = Style(
+    'Dirty Fighting',
+    {},  # todo techs for dirty fighting?
+    {2: '1,heavy', 4: '2,power', 6: '3,shocking', 8: '4,surprise'},
 )
-POLICE_KUNGFU = NoTechStyle('Police Kung-fu')
-MONSTER_KUNGFU = NoTechStyle('Monster Kung-fu')
-ZENS_STYLE = NoTechStyle('Savant')
-NO_STYLE = NoTechStyle('No Style')
+POLICE_KUNGFU = Style('Police Kung-fu', {}, {})
+MONSTER_KUNGFU = Style('Monster Kung-fu', {}, {})
+ZENS_STYLE = Style('Savant', {}, {})
+NO_STYLE = Style('No Style', {}, {})
 
 # todo add more foreign styles
 # NB! when adding new foreign style, add names to names.py as well!
 FOREIGN_STYLES = {
-    'England': TechStyle(
+    'England': Style(
         'English Boxing',
         {
             3: StyleTech('English Boxing I', punch_strike_mult=b.STRIKE_MULT1),
@@ -410,7 +396,7 @@ FOREIGN_STYLES = {
         },
         {1: ('Long Punch', 'Short Punch'), 2: '1,punch', 4: '2,punch', 6: '3,punch', 8: '4,punch'},
     ),
-    'Germany': TechStyle(
+    'Germany': Style(
         'Wrestling',
         # todo add grabbing to wreslers (a defense move)
         {
@@ -426,7 +412,7 @@ FOREIGN_STYLES = {
             8: '4,grappling',
         },
     ),
-    'Japan': TechStyle(
+    'Japan': Style(
         'Karate',
         {
             3: StyleTech('Karate I', punch_strike_mult=b.STRIKE_MULT1),
@@ -435,7 +421,7 @@ FOREIGN_STYLES = {
         },
         {2: '1,punch', 4: '2,kick', 6: '3,shocking,palm', 8: '4,kick'},
     ),
-    'Korea': TechStyle(
+    'Korea': Style(
         'Taekwondo',
         {
             3: StyleTech('Taekwondo I', kick_strike_mult=b.STRIKE_MULT1),
@@ -444,7 +430,7 @@ FOREIGN_STYLES = {
         },
         {1: 'Short Kick', 2: '1,kick', 4: '2,kick', 6: '3,kick', 8: '4,kick'},
     ),
-    'Thailand': TechStyle(
+    'Thailand': Style(
         'Muai Thai',
         {
             3: StyleTech('Muai Thai I', atk_mult=b.ATTACK1),
@@ -455,7 +441,7 @@ FOREIGN_STYLES = {
         },
         {1: ('Knee', 'Elbow'), 2: '1,kick', 4: '2,elbow', 6: '3,knee', 8: '4,flying,kick'},
     ),
-    'Brazil': TechStyle(
+    'Brazil': Style(
         'Capoeira',
         {
             3: StyleTech('Capoeira I', agility_mult=b.AGILITY1),
