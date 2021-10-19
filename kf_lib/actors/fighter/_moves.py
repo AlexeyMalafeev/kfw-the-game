@@ -1,5 +1,9 @@
-import kf_lib.kung_fu.moves
+import random
+
+
+from ._base_fighter import BaseFighter
 from ...kung_fu import moves
+from ...utils.utilities import roman
 
 
 LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
@@ -28,9 +32,7 @@ NEW_MOVE_TIERS = {
 }
 
 
-class MoveUser:
-    moves = []
-
+class MoveUser(BaseFighter):
     def choose_new_move(self, sample):
         self.learn_move(random.choice(sample).name)
 
@@ -71,7 +73,7 @@ class MoveUser:
     def learn_random_move(self, move_tier, silent=False):
         try:
             move_obj = moves.get_rand_move(self, move_tier)
-        except kf_lib.kung_fu.moves.MoveNotFoundError as e:
+        except moves.MoveNotFoundError as e:
             print(e)
             pak()
             return

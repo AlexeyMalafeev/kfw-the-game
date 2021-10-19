@@ -3,12 +3,8 @@ import random
 from ...actors import quotes
 
 
-class QuoteUser:
+class QuoteMethods:
     quotes = 'fighter'
-
-    # override by child class:
-    current_fight = None
-    name = ''
 
     def say_prefight_quote(self):
         pool = quotes.PREFIGHT_QUOTES.get(self.quotes, None)
@@ -16,7 +12,7 @@ class QuoteUser:
             q = random.choice(pool)
             self.current_fight.show(f'{self.name}: "{q}"')
             return True
-        else:
+        else:  # todo remove this ugliness in say_prefight_quote
             return False
 
     def say_win_quote(self):

@@ -11,6 +11,7 @@ class FightAttributes:
     dfs_pwr = 0
     distances = {}  # fighter_obj: int
     is_auto_fighting = True
+    kos_this_fight = 0
     previous_actions = ['', '', '']
     qp_start = 0.0  # portion of total
     status = {}  # {'status_name': status_dur}
@@ -51,6 +52,11 @@ class FightAttributes:
     stun_chance = 0.0
     resist_ko = 0.0
     unblock_chance = 0.0
+
+    # weapon-related
+    weapon = None  # weapon obj
+    weapon_bonus = {}  # tech-based permanent {<weapon name OR type>: [atk_bonus, dfs_bonus]}
+    wp_dfs_bonus = 1.0  # for current fight only
 
     # strike multipliers
     # todo reimplement strike multipliers as a default dict? a data class?

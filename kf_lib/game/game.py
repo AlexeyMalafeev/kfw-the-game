@@ -18,7 +18,7 @@ from . import game_stats
 from ..kung_fu.moves import BASIC_MOVES
 from ..kung_fu import styles, style_gen
 from ..things import items
-from ..town import events as ev, encounters, story
+from ..happenings import events as ev, encounters, story
 from ..utils.utilities import *
 
 

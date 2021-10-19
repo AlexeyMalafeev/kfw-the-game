@@ -1,7 +1,7 @@
 import random
 
 
-from ._base_fighter import FighterBase
+from ._base_fighter import BaseFighter
 from ...kung_fu import techniques
 
 
@@ -9,7 +9,7 @@ ADVANCED_TECH_AT_LV = 20
 LVS_GET_GENERAL_TECH = {11, 13, 15, 17, 19}
 
 
-class TechUser(FighterBase):
+class TechMethods(BaseFighter):
     adv_tech_at_lv = ADVANCED_TECH_AT_LV
     num_techs_choose = 3
     num_techs_choose_upgrade = 3

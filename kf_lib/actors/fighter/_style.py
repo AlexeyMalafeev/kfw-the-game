@@ -1,6 +1,8 @@
-class StyleUser:
-    style = None  # Style object
+from ._base_fighter import BaseFighter
+from ...kung_fu import styles
 
+
+class StyleMethods(BaseFighter):
     def get_style_string(self, show_emph=False):
         if show_emph:
             emph_info = f'\n {self.style.descr_short}'

@@ -19,16 +19,6 @@ def calc_fight_exp(winners, losers):
     # todo finish calc_fight_exp
 
 
-def fighter_to_exp(f):
-    exp = 10 + (f.strength * f.agility * f.speed * f.health) * 0.01 * 3 + len(f.techs) * 3
-    if f.weapon:
-        w = f.weapon
-        w_mult = w.get_exp_mult()
-        exp *= w_mult
-    exp = round(exp)
-    return exp
-
-
 # todo refactor extract_features
 def extract_features(side_a, side_b):
     # side_a.average_lv, side_b.average_lv, lv_relation
@@ -81,8 +71,6 @@ def extract_features(side_a, side_b):
     return features
 
 
+# todo fighters_to_exp is not used
 def fighters_to_exp(fs):
-    exp = 0
-    for f in fs:
-        exp += fighter_to_exp(f)
-    return exp
+    return sum(f.get_exp_worth() for f in fs)

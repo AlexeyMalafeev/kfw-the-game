@@ -1,5 +1,6 @@
-class FighterStats:
-    kos_this_fight = 0
+from ._base_fighter import BaseFighter
 
+
+class FighterStats(BaseFighter):
     def change_stat(self, *args):
         pass

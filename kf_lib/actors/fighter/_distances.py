@@ -1,7 +1,8 @@
-from ...fighting.distances import VALID_DISTANCES, DISTANCES_VISUALIZATION
+from ._base_fighter import BaseFighter
+from ...fighting.distances import visualize_distance
 
 
-class DistanceMethods:
+class DistanceMethods(BaseFighter):
     def change_distance(self, dist, targ):
         dist = self.distances[targ] + dist
         if dist < 1:
@@ -12,4 +13,4 @@ class DistanceMethods:
 
     @staticmethod
     def get_vis_distance(dist):
-        return DISTANCES_VISUALIZATION[dist]
+        return visualize_distance(dist)

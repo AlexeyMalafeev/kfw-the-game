@@ -6,4 +6,8 @@ DISTANCE_FEATURES = {
     4: 'extra long-range',
 }
 DISTANCES_VISUALIZATION = {1: 'OX', 2: 'O.X', 3: 'O..X', 4: 'O...X'}
-VALID_DISTANCES = list(range(1, 5))
+VALID_DISTANCES = DISTANCES_VISUALIZATION.keys()
+
+
+def visualize_distance(dist: int):
+    return DISTANCES_VISUALIZATION[dist]

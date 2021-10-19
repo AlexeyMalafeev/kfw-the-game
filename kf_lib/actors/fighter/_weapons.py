@@ -1,13 +1,11 @@
 import random
 
+
+from ._base_fighter import BaseFighter
 from ...things import weapons
 
 
-class WeaponUser:
-    weapon = None  # weapon obj
-    weapon_bonus = {}  # tech-based permanent {<weapon name OR type>: [atk_bonus, dfs_bonus]}
-    wp_dfs_bonus = 1.0  # for current fight only
-
+class WeaponMethods(BaseFighter):
     def arm(self, weapon=None):
         """Arm fighter with weapon (default = random).
         weapon can also be weapon type"""

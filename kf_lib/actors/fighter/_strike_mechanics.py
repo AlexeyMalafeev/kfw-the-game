@@ -1,3 +1,4 @@
+from ._ascii import ASCIIMethods
 from ._base_fighter import BaseFighter
 from ...utils.utilities import rnd, rndint, rndint_2d
 
@@ -35,9 +36,58 @@ STUN_HP_DIVISOR = 2.8
 TIME_UNIT_MULTIPLIER = 20
 
 
-class StrikeMechanics(BaseFighter):
+class StrikeMechanics(
+    ASCIIMethods,
+    BaseFighter,
+):
     took_damage = False
-    
+
+    def calc_atk(self, action):
+        """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
+        strike_mult = 1.0
+        strike_mult *= getattr(self, f'dist{action.distance}_bonus', 1.0)
+        for feature in action.features:
+            # low-prio todo reimplement computing strike_mult without getattr, use dict
+            strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
+        self.atk_bonus = self.atk_mult * strike_mult
+        if self.check_status('off-balance'):
+            self.atk_bonus *= self.off_balance_atk_mult
+        self.atk_pwr = (
+            self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
+        )
+        self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
+
+    # todo how is calc_dfs used? why not relative to attacker?
+    def calc_dfs(self):
+        """Calculate defense numbers."""
+        if self.check_status('shocked'):
+            self.to_dodge = 0
+            self.to_block = 0
+        else:
+            attacker = self.target
+            atk_action = attacker.action
+            rep_actions_factor = attacker.get_rep_actions_factor(atk_action)
+            # todo recalc as a value in (0.0, 1.0)?
+            # * 10 because of new system:
+            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
+            x *= self.stamina_factor * rep_actions_factor
+            x *= self.dfs_bonus
+            # print('x after dfs_bonus', x)
+            if self.check_status('off-balance'):
+                x *= self.off_balance_dfs_mult
+            if self.check_status('lying'):
+                x *= self.lying_dfs_mult
+            self.to_dodge = x / DODGE_DIVISOR
+            self.to_block = x / BLOCK_DIVISOR
+            self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
+            # print('to dodge, to block', self.to_dodge, self.to_block)
+            self.dfs_pwr = self.dfs_penalty_mult * self.block_power * self.strength_full
+            self.dfs_pwr *= self.stamina_factor * self.wp_dfs_bonus  # todo divide by sth?
+
+    def calc_stamina_factor(self):
+        # todo docstring calc_stamina_factor
+        self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
+
     def cause_fall(self):
         lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
@@ -46,22 +96,18 @@ class StrikeMechanics(BaseFighter):
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
-        # print('$$$', self.status)
 
     def cause_knockback(self, dist):
         opp = self.target
-        self.change_distance(dist, opp)
+        opp.change_distance(dist, self)
         s = 's' if dist > 1 else ''
         self.set_ascii('Knockback')
-        # self.current_fight.display('{} is knocked back {} step{}!'.format(self.name, dist, s))
         self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
 
     def cause_off_balance(self):
         ob_dur = rndint_2d(DUR_OFF_BAL_MIN, DUR_OFF_BAL_MAX) // self.speed_full
         self.add_status('off-balance', ob_dur)
-        # self.current_fight.display('{} is off-balance!'.format(self.name))
         self.current_fight.display(' off-balance!', align=False)
-        # print('$$$', self.status)
 
     def cause_shock(self):
         """Shock is worse than stun."""
@@ -70,9 +116,7 @@ class StrikeMechanics(BaseFighter):
         self.add_status('skip', shock_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        # self.current_fight.display('{} is shocked!'.format(self.name))
         self.current_fight.display(' shocked!', align=False)
-        # print('$$$', self.status)
 
     def cause_slow_down(self):
         slow_dur = rndint_2d(DUR_SLOW_MIN, DUR_SLOW_MAX) // self.speed_full
@@ -80,7 +124,6 @@ class StrikeMechanics(BaseFighter):
         # todo do not repeat this line in all functions, use helper
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        # self.current_fight.display('{} is slowed down!'.format(self.name))
         self.current_fight.display(' slowed down!', align=False)
 
     def cause_stun(self):
@@ -90,9 +133,7 @@ class StrikeMechanics(BaseFighter):
         self.add_status('skip', stun_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        # self.current_fight.display('{} is stunned!'.format(self.name))
         self.current_fight.display(' stunned!', align=False)
-        # print('$$$', self.status)
 
     def do_agility_based_dam(self):
         targ = self.target
@@ -207,22 +248,6 @@ class StrikeMechanics(BaseFighter):
                 targ.cause_fall()
             elif self.dam >= targ.hp_max / OFF_BALANCE_HP_DIVISOR:
                 targ.cause_off_balance()
-
-    def try_ko(self):
-        tgt = self.target
-        if not tgt.hp:
-            if tgt.resist_ko and rnd() <= tgt.resist_ko:
-                tgt.hp = 1
-                self.log(f'{tgt.name} resists being knocked out.')
-                tgt.log('Resists being knocked out.')
-                self.current_fight.display(f'{tgt.name} resists being knocked out!')
-            else:
-                self.kos_this_fight += 1
-                self.log(f'Knocks out {tgt.name}.')
-                tgt.log(f'Knocked out by {self.name}.')
-                if not tgt.ascii_name.startswith('lying'):
-                    tgt.set_ascii('Falling')
-                self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
 
     def try_shock_move(self):
         targ = self.target

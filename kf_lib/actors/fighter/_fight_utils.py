@@ -1,5 +1,5 @@
 from ._base_fighter import BaseFighter
-from ...fighting.fight import fight
+from ...fighting.fight import fight, spar
 from ...utils.utilities import mean
 
 
@@ -23,8 +23,6 @@ class FightUtils(BaseFighter):
         hide_stats=False,
         environment_allowed=True,
     ):
-        from kf_lib.fighting.fight import spar as f_spar
-
-        return f_spar(
+        return spar(
             self, en, allies, en_allies, auto_fight, af_option, hide_stats, environment_allowed
         )

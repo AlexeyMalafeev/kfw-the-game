@@ -1,4 +1,8 @@
+import random
+
+
 from ._base_fighter import BaseFighter
+from ...utils.utilities import rnd, get_adverb, get_bar
 
 
 class FightActionsUser(BaseFighter):
@@ -19,52 +23,6 @@ class FightActionsUser(BaseFighter):
         # print(n2, 'dfs_bonus', self.target.dfs_bonus)
         self.try_strike()
         self.target.try_counter()
-
-    def calc_atk(self, action):
-        """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
-        strike_mult = 1.0
-        strike_mult *= getattr(self, f'dist{action.distance}_bonus', 1.0)
-        for feature in action.features:
-            # low-prio todo reimplement computing strike_mult without getattr, use dict
-            strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
-        self.atk_bonus = self.atk_mult * strike_mult
-        if self.check_status('off-balance'):
-            self.atk_bonus *= self.off_balance_atk_mult
-        self.atk_pwr = (
-            self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
-        )
-        self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
-
-    # todo how is it used? why not relative to attacker?
-    def calc_dfs(self):
-        """Calculate defense numbers."""
-        if self.check_status('shocked'):
-            self.to_dodge = 0
-            self.to_block = 0
-        else:
-            attacker = self.target
-            atk_action = attacker.action
-            rep_actions_factor = attacker.get_rep_actions_factor(atk_action)
-            # todo recalc as a value in (0.0, 1.0)?
-            # * 10 because of new system:
-            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
-            x *= self.stamina_factor * rep_actions_factor
-            x *= self.dfs_bonus
-            # print('x after dfs_bonus', x)
-            if self.check_status('off-balance'):
-                x *= self.off_balance_dfs_mult
-            if self.check_status('lying'):
-                x *= self.lying_dfs_mult
-            self.to_dodge = x / DODGE_DIVISOR
-            self.to_block = x / BLOCK_DIVISOR
-            self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
-            # print('to dodge, to block', self.to_dodge, self.to_block)
-            self.dfs_pwr = self.dfs_penalty_mult * self.block_power * self.strength_full
-            self.dfs_pwr *= self.stamina_factor * self.wp_dfs_bonus  # todo divide by sth?
-
-    def calc_stamina_factor(self):
-        # todo docstring calc_stamina_factor
-        self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
     def check_move_failed(self):
         compl = self.action.complexity
@@ -208,6 +166,19 @@ class FightActionsUser(BaseFighter):
             self.try_knockdown()
             self.try_ko()
 
+    def maneuver(self):
+        m = self.action
+        n = self.current_fight.get_f_name_string(self)
+        s = f'{n}: {m.name}'
+        self.current_fight.display(s)
+        self.current_fight.display('=' * len(s))
+        if m.dist_change:
+            self.change_distance(m.dist_change, self.target)
+            self.check_move_failed()
+        self.do_move_functions(m)
+        self.change_stamina(-m.stam_cost)
+        self.change_qp(-m.qi_cost)
+
     def set_target(self, target):
         self.target = target
         target.target = self
@@ -256,3 +227,28 @@ class FightActionsUser(BaseFighter):
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} grabs an improvised weapon!')
             self.current_fight.pak()
+
+    def try_ko(self):
+        tgt = self.target
+        if not tgt.hp:
+            if tgt.resist_ko and rnd() <= tgt.resist_ko:
+                tgt.hp = 1
+                # self.log(f'{tgt.name} resists being knocked out.')
+                # tgt.log('Resists being knocked out.')
+                self.current_fight.display(f'{tgt.name} resists being knocked out!')
+            else:
+                self.kos_this_fight += 1
+                self.log(f'Knocks out {tgt.name}.')
+                tgt.log(f'Knocked out by {self.name}.')
+                if not tgt.ascii_name.startswith('lying'):
+                    tgt.set_ascii('Falling')
+                self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
+
+    def visualize_fight_state(self):
+        ft = self.current_fight
+        side_a, side_b = ft.active_side_a, ft.active_side_b
+        n_a, n_b = len(side_a), len(side_b)
+        hp_a, hp_b = sum((f.hp for f in side_a)), sum((f.hp for f in side_b))
+        bar = get_bar(hp_a, hp_a + hp_b, '/', '\\', 20)
+        s = f'\n{n_a} {bar} {n_b}\n'
+        return s

@@ -1,4 +1,4 @@
-from ..town import encounters
+from ..happenings import encounters
 from .fighter import Fighter
 from ..game import game_stats
 from .human_controlled_fighter import HumanControlledFighter

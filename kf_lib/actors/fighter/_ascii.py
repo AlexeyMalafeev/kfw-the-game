@@ -20,13 +20,6 @@ class ASCIIMethods(BaseFighter):
         self.ascii_name = ascii_name
 
     def show_ascii(self):
-        # from pprint import pprint
-        # print('DEBUG INFO FOR SELF')
-        # print(self)
-        # pprint(self.__dict__)
-        # print('DEBUG INFO FOR FIGHT')
-        # print(self.current_fight)
-        # pprint(self.current_fight.__dict__)
         if self in self.current_fight.side_a:
             a = self.ascii_l
             b = self.target.ascii_r
@@ -35,6 +28,4 @@ class ASCIIMethods(BaseFighter):
             a = self.target.ascii_l
         pic = ascii_art.concat(a, b)
         self.current_fight.show(pic, align=False)
-        # prev = self.current_fight.cartoon[-1]
-        # if pic != prev:
         self.current_fight.cartoon.append(pic)

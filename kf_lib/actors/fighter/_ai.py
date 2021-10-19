@@ -1,8 +1,7 @@
-from ...ai.fight_ai import DefaultFightAI
+from ._base_fighter import BaseFighter
 
 
-class FightAIMethods:
-    fight_ai = DefaultFightAI
+class FightAIMethods(BaseFighter):
 
     def set_fight_ai(self, ai_class, write_log=False):
         self.fight_ai = ai_class(self, write_log)
