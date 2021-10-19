@@ -13,36 +13,37 @@ STAMINA_INCR_PER_LV = 10
 class BasicAttributes:
     att_names = ('strength', 'agility', 'speed', 'health')
     att_names_short = ('Str', 'Agi', 'Spd', 'Hlt')
-    att_weights = {}
-    strength = 0
-    strength_full = 0
-    agility = 0
-    agility_full = 0
-    speed = 0
-    speed_full = 0
-    health = 0
-    health_full = 0
 
-    rand_atts_mode = 0  # 0, 1, 2
-    num_atts_choose = 3
+    def __init__(self):
+        self.att_weights = {}
+        self.strength = 0
+        self.strength_full = 0
+        self.agility = 0
+        self.agility_full = 0
+        self.speed = 0
+        self.speed_full = 0
+        self.health = 0
+        self.health_full = 0
 
-    level = 1
+        self.level = 1
+        self.num_atts_choose = 3
+        self.rand_atts_mode = 0  # 0, 1, 2
 
-    counter_chance = 0.0
-    counter_chance_mult = 1.0
-    hp = 0
-    hp_max = 0
-    hp_gain = 0
-    qp = 0
-    qp_gain = 0
-    qp_gain_mult = 1.0
-    qp_max = 0
-    qp_max_mult = 1.0
-    stamina = 0
-    stamina_gain = 0
-    stamina_gain_mult = 1.0
-    stamina_max = 0
-    stamina_max_mult = 1.0
+        self.counter_chance = 0.0
+        self.counter_chance_mult = 1.0
+        self.hp = 0
+        self.hp_max = 0
+        self.hp_gain = 0
+        self.qp = 0
+        self.qp_gain = 0
+        self.qp_gain_mult = 1.0
+        self.qp_max = 0
+        self.qp_max_mult = 1.0
+        self.stamina = 0
+        self.stamina_gain = 0
+        self.stamina_gain_mult = 1.0
+        self.stamina_max = 0
+        self.stamina_max_mult = 1.0
 
     def boost(self, **kwargs):
         """Boost fighter's attribute(s); k = att_name, v = quantity"""

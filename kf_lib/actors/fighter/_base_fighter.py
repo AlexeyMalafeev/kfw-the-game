@@ -1,4 +1,3 @@
-from ...ai.fight_ai import DefaultFightAI
 from ._basic_attributes import BasicAttributes
 from ._blank_ui import BlankFighterUI
 from ._fight_attributes import FightAttributes
@@ -7,15 +6,19 @@ from ...kung_fu import moves
 
 class BaseFighter(
     BasicAttributes,
-    BlankFighterUI,
     FightAttributes,
+    BlankFighterUI,
 ):
-    fight_ai = DefaultFightAI
-    moves = []
-    name = ''
-    style = None
-    target = None
-    techs = []
+    def __init__(self):
+        BasicAttributes.__init__(self)
+        FightAttributes.__init__(self)
+        self.exp_yield = 0
+        self.fight_ai = None
+        self.moves = []
+        self.name = ''
+        self.style = None
+        self.target = None
+        self.techs = []
 
     def __repr__(self):
         return self.get_init_string()
