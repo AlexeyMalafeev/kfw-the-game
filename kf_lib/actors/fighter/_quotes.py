@@ -1,9 +1,11 @@
 import random
 
-from ...actors import quotes
+
+from ._base_fighter import BaseFighter
+from .. import quotes
 
 
-class QuoteMethods:
+class QuoteMethods(BaseFighter):
     quotes = 'fighter'
 
     def say_prefight_quote(self):

@@ -40,6 +40,7 @@ def crime_up(g, rate=CRIME_INCREASE_MONTHLY, mult=1.0):
 #     pass
 
 
+# todo are random changes in kung-fu etc. working?
 def kungfu_down(g):
     g.cls()
     g.kung_fu = max(g.kung_fu - KUNGFU_CHANGE, MIN_KUNGFU)

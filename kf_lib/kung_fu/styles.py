@@ -13,12 +13,19 @@ DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4'}
 class BaseStyle(object):
     is_style = True
 
-    def __init__(self, name):
+    def __init__(self, name, techs_dict, move_str_dict):
         self.name = name
+        self.techs = techs_dict if techs_dict is not None else {}
+        features = []
+        for lv, t in self.techs.items():
+            if t.descr_short not in features:
+                features.append(t.descr_short)
         self.descr = ''
-        self.descr_short = ''
-        # b.set_descr(self)
+        self.descr_short = f"({', '.join(features)})"
         all_styles[self.name] = self
+        self.move_strings = (
+            move_str_dict if move_str_dict is not None else DEFAULT_STYLE_MOVE_DICT.copy()
+        )
 
     def __str__(self):
         return f'{self.name} ({self.descr})'
@@ -28,28 +35,16 @@ class TechStyle(BaseStyle):
     is_tech_style = True
 
     def __init__(self, name, techs_dict, move_str_dict):
-        BaseStyle.__init__(self, name)
-        self.techs = techs_dict if techs_dict is not None else {}
-        self.move_strings = (
-            move_str_dict if move_str_dict is not None else DEFAULT_STYLE_MOVE_DICT.copy()
-        )
-        features = []
-        for lv, t in self.techs.items():
-            if t.descr_short not in features:
-                features.append(t.descr_short)
-        self.descr_short = f"({', '.join(features)})"
+        super().__init__(name, techs_dict, move_str_dict)
         all_tech_styles[self.name] = self
 
 
+# todo get rid of NoTechStyle, just use empty dict of techs
 class NoTechStyle(BaseStyle):
     is_tech_style = False
 
-    def __init__(self, name, move_str_dict=None):
-        BaseStyle.__init__(self, name)
-        # todo move next line to BaseStyle? TechStyle does the same
-        self.move_strings = (
-            move_str_dict if move_str_dict is not None else DEFAULT_STYLE_MOVE_DICT.copy()
-        )
+    def __init__(self, name, techs_dict=None, move_str_dict=None):
+        super().__init__(name, techs_dict, move_str_dict)
         all_no_tech_styles[self.name] = self
 
 

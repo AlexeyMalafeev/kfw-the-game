@@ -1,11 +1,17 @@
 import random
 
 
-from ._base_fighter import BaseFighter
+from ._distances import DistanceMethods
+from ._strike_mechanics import StrikeMechanics
 from ...utils.utilities import rnd, get_adverb, get_bar
+from ._weapons import WeaponMethods
 
 
-class FightActionsUser(BaseFighter):
+class FighterWithActions(
+    DistanceMethods,
+    StrikeMechanics,
+    WeaponMethods,
+):
     def apply_dfs_penalty(self):
         self.dfs_penalty_mult -= self.dfs_penalty_step
         if self.dfs_penalty_mult < 0:
@@ -20,7 +26,6 @@ class FightActionsUser(BaseFighter):
             self.current_fight.display(f' (guarding while attacking)')
             self.dfs_bonus += self.guard_dfs_bonus * self.guard_while_attacking
         self.current_fight.display('=' * len(s))
-        # print(n2, 'dfs_bonus', self.target.dfs_bonus)
         self.try_strike()
         self.target.try_counter()
 
@@ -130,9 +135,8 @@ class FightActionsUser(BaseFighter):
                 if m.distance:
                     right_distance = m.distance == self.distances[self.target]
                     if right_distance:
-                        anti_ground = (
-                                              'antiground only' in m.features or 'also antiground' in m.features
-                                      ) and lying_op
+                        anti_ground = ('antiground only' in m.features
+                                       or 'also antiground' in m.features) and lying_op
                         anti_standing = 'antiground only' not in m.features and not lying_op
                         if anti_ground or anti_standing:
                             av_moves.append(m)
@@ -141,10 +145,6 @@ class FightActionsUser(BaseFighter):
         if attack_moves_only:
             av_moves = [m for m in av_moves if m.power]
         return av_moves
-
-    def get_rep_actions_factor(self, move):
-        n = self.previous_actions.count(move.name)  # 0-3
-        return 1.0 + n * 0.33  # up to 1.99
 
     # todo reimplement this as a multiplier, not an addition of guard_dfs_bonus to dfs_bonus,
     #  but careful with wp_dfs_bonus

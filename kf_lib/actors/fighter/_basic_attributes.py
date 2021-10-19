@@ -87,19 +87,19 @@ class BasicAttributes:
     def check_stamina(self, amount):
         return self.stamina >= amount
 
-    def choose_att_to_upgrade(self):
+    def upgrade_att(self):
         atts = self.get_atts_to_choose()
         att = self.choose_better_att(atts)
         self.change_att(att, 1)
 
+    # todo refactor choose_better_att with random.choices?
     def choose_better_att(self, atts):
         temp_dict = {}
         for att in atts:
             weight = self.att_weights[att]
-            if weight in temp_dict:
-                temp_dict[weight].append(att)
-            else:
-                temp_dict[weight] = [att]
+            if weight not in temp_dict:
+                temp_dict[weight] = []
+            temp_dict[weight].append(att)
         weights = sorted([w for w in temp_dict.keys()])
         att = random.choice(temp_dict[weights[-1]])  # several atts might have the same weight
         return att

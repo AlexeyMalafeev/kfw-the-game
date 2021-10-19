@@ -1,15 +1,25 @@
 from ...kung_fu import styles, moves
 
-# from ._constants import *
+from ._ai import FightAIMethods
 from ._exp_worth import ExpMethods
+from ._fight_actions import FighterWithActions
+from ._fight_utils import FightUtils
+from ._moves import MoveMethods
 from ._quotes import QuoteMethods
+from ._stats import FighterStats
+from ._style import StyleMethods
 from ._techs import TechMethods
 from ._weapons import WeaponMethods
 
 
 class Fighter(
     ExpMethods,
+    FighterStats,
+    FighterWithActions,
+    FightUtils,
+    MoveMethods,
     QuoteMethods,
+    StyleMethods,
     TechMethods,
     WeaponMethods,
 ):
@@ -36,9 +46,6 @@ class Fighter(
         self.set_techs(tech_names)
         self.set_moves(move_names)
 
-    # def add_style_tech(self):
-    #     self.add_tech(self.style.tech.name)
-
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
         if s.weapon:
@@ -53,27 +60,12 @@ class Fighter(
             )
         return info
 
-    # todo use methods from corresponding submodules, don't handle moves, etc. in this method
     def level_up(self, n=1):
-        # print(self.style.move_strings)
         for i in range(n):
             self.level += 1
-
-            # increase a stat
-            self.choose_att_to_upgrade()
-
-            # techs
-            if self.style.is_tech_style:
-                self.resolve_techs_on_level_up()
-
-            # moves
-            # todo wrap move acquisition on level up
-            if self.level in self.style.move_strings:
-                move_s = self.style.move_strings[self.level]
-                moves.resolve_style_move(move_s, self)
-            elif self.level in LVS_GET_NEW_ADVANCED_MOVE:
-                move_s = str(NEW_MOVE_TIERS[self.level])
-                moves.resolve_style_move(move_s, self)
+            self.upgrade_att()
+            self.resolve_techs_on_level_up()
+            self.resolve_moves_on_level_up()
             # NB! no need to refresh full atts here since they are refreshed when upgrading atts and
             # learning techs
 

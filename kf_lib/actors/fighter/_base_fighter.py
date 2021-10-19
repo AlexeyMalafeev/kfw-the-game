@@ -1,11 +1,13 @@
 from ...ai.fight_ai import DefaultFightAI
 from ._basic_attributes import BasicAttributes
+from ._blank_ui import BlankFighterUI
 from ._fight_attributes import FightAttributes
 from ...kung_fu import moves
 
 
 class BaseFighter(
     BasicAttributes,
+    BlankFighterUI,
     FightAttributes,
 ):
     fight_ai = DefaultFightAI
@@ -31,7 +33,3 @@ class BaseFighter(
 
     def get_init_string(self):
         return f'{self.__class__.__name__}{self.get_init_atts()!r}'
-
-    def log(self, text):
-        """Empty method for convenience."""
-        pass

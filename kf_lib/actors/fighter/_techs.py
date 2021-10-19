@@ -34,6 +34,9 @@ class TechMethods(BaseFighter):
             return
         self.upgrade_tech(random.choice(av_techs))
 
+    def get_style_tech_if_any(self):
+        return self.style.techs.get(self.level)
+
     def get_techs_string(self, descr=True, header='Techniques:'):
         if not self.techs:
             return ''
@@ -80,9 +83,10 @@ class TechMethods(BaseFighter):
                 self.pak()
 
     def resolve_techs_on_level_up(self):
+        if not self.style.is_tech_style:
+            return
         # learn new style tech if possible
-        t = self.style.techs.get(self.level)
-        if t:
+        if t := self.get_style_tech_if_any():
             self.learn_tech(t.name)
         # upgrade tech if possible
         if self.level == self.adv_tech_at_lv:

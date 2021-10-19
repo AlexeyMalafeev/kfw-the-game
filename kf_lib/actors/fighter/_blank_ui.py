@@ -1,8 +1,7 @@
-from ._base_fighter import BaseFighter
-from ...utils.utilities import get_bar, pak
+class BlankFighterUI:
+    def log(self, text):
+        pass
 
-
-class FighterUI(BaseFighter):
     def msg(self, *args, **kwargs):
         pass
 
@@ -13,9 +12,6 @@ class FighterUI(BaseFighter):
         pass
 
     def cls(self):
-        pass
-
-    def see_fight_info(self, *args, **kwargs):
         pass
 
     def write(self, *args, **kwargs):

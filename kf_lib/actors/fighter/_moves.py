@@ -32,51 +32,37 @@ NEW_MOVE_TIERS = {
 }
 
 
-class MoveUser(BaseFighter):
+class MoveMethods(BaseFighter):
     def choose_new_move(self, sample):
         self.learn_move(random.choice(sample).name)
 
-    def get_move_fail_chance(self, move_obj):
-        return move_obj.complexity ** 2 / self.agility_full ** 2
-
     def get_moves_to_choose(self, tier):
         return moves.get_rand_moves(self, self.num_moves_choose, tier)
+
+    def get_move_tier_for_lv(self):
+        return NEW_MOVE_TIERS[self.level]
 
     @staticmethod
     def get_move_tier_string(move_obj):
         t = move_obj.tier
         return f' ({roman(t)})' if t else ''
 
-    def get_move_time_cost(self, move_obj):
-        if self.check_status('slowed down'):
-            mob_mod = 1 - MOB_DAM_PENALTY
-        else:
-            mob_mod = 1
-        cost = round(move_obj.time_cost / (self.speed_full * mob_mod))
-        return cost
+    def get_tier_str_for_lv(self):
+        return str(self.get_move_tier_for_lv())
 
     def learn_move(self, move, silent=False):
         """move can be a Move object or a move name string"""
         if isinstance(move, str):
-            try:
-                move = moves.get_move_obj(move)
-            except kf_lib.kung_fu.moves.MoveNotFoundError as e:
-                print(e)
-                pak()
-                return
+            move = moves.get_move_obj(move)
         self.moves.append(move)
         if not silent:
             self.show(f'{self.name} learns {move.name} ({move.descr}).')
             self.log(f'Learns {move.name} ({move.descr})')
             self.pak()
 
+    # todo in learn_random_move, if move_tier is not given, make it relative to current level
     def learn_random_move(self, move_tier, silent=False):
-        try:
-            move_obj = moves.get_rand_move(self, move_tier)
-        except moves.MoveNotFoundError as e:
-            print(e)
-            pak()
-            return
+        move_obj = moves.get_rand_move(self, move_tier)
         self.learn_move(move_obj, silent=silent)
 
     def replace_move(self, rep_mv, rep_with):
@@ -85,6 +71,16 @@ class MoveUser(BaseFighter):
             move_list.remove(mv_a)
             move_list.insert(i, mv_b)
         _rep_in_list(rep_mv, rep_with, self.moves)
+
+    def resolve_moves_on_level_up(self):
+        # style move
+        if self.level in self.style.move_strings:
+            move_s = self.style.move_strings[self.level]
+            moves.resolve_style_move(move_s, self)
+        # advanced move
+        elif self.level in LVS_GET_NEW_ADVANCED_MOVE:
+            move_s = self.get_tier_str_for_lv()
+            moves.resolve_style_move(move_s, self)
 
     def set_moves(self, move_names):
         for m in moves.BASIC_MOVES:
@@ -98,7 +94,7 @@ class MoveUser(BaseFighter):
     def set_rand_moves(self):
         for lv in LVS_GET_NEW_ADVANCED_MOVE:
             if self.level >= lv:
-                tier = NEW_MOVE_TIERS[lv]
+                tier = self.get_move_tier_for_lv()
                 self.learn_move(moves.get_rand_moves(self, 1, tier)[0])
             else:
                 break

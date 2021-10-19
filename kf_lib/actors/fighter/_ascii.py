@@ -2,7 +2,7 @@ from ._base_fighter import BaseFighter
 from ...kung_fu import ascii_art
 
 
-class ASCIIMethods(BaseFighter):
+class FighterWithASCII(BaseFighter):
     ascii_l = ''
     ascii_r = ''
     ascii_name = ''

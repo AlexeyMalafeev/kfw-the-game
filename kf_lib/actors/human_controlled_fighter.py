@@ -6,10 +6,11 @@ ALIGN = 60
 INDENT = 0
 
 
+# todo break HCF into submodules like Fighter
 class HumanControlledFighter(Fighter):
     is_human = True
 
-    def choose_att_to_upgrade(self):
+    def upgrade_att(self):
         self.show('')
         self.show(self.get_f_info(show_st_emph=True))
         options = self.get_atts_to_choose()

@@ -1,5 +1,4 @@
-from ._ascii import ASCIIMethods
-from ._base_fighter import BaseFighter
+from ._ascii import FighterWithASCII
 from ...utils.utilities import rnd, rndint, rndint_2d
 
 
@@ -36,10 +35,7 @@ STUN_HP_DIVISOR = 2.8
 TIME_UNIT_MULTIPLIER = 20
 
 
-class StrikeMechanics(
-    ASCIIMethods,
-    BaseFighter,
-):
+class StrikeMechanics(FighterWithASCII):
     took_damage = False
 
     def calc_atk(self, action):
@@ -192,6 +188,21 @@ class StrikeMechanics(
     def do_takedown(self):
         targ = self.target
         targ.cause_fall()
+
+    def get_move_fail_chance(self, move_obj):
+        return move_obj.complexity ** 2 / self.agility_full ** 2
+
+    def get_move_time_cost(self, move_obj):
+        if self.check_status('slowed down'):
+            mob_mod = 1 - MOB_DAM_PENALTY
+        else:
+            mob_mod = 1
+        cost = round(move_obj.time_cost / (self.speed_full * mob_mod))
+        return cost
+
+    def get_rep_actions_factor(self, move):
+        n = self.previous_actions.count(move.name)  # 0-3
+        return 1.0 + n * 0.33  # up to 1.99
 
     def take_damage(self, dam):
         self.change_hp(-dam)
