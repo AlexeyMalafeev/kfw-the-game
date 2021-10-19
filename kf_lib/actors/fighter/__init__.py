@@ -1,4 +1,4 @@
-from ...kung_fu import styles, moves
+from ...kung_fu import styles
 
 from ._ai import FightAIMethods
 from ._fight_actions import FighterWithActions

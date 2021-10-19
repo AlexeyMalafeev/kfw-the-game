@@ -22,16 +22,16 @@ FALL_DAMAGE = (25, 50)
 INSTA_KO_CHANCE = 0.25
 KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
 KNOCKBACK_HP_THRESHOLDS = (0.3, 0.35, 0.4)  # correspond to levels of knockback: 1, 2, 3
-KNOCKDOWN_HP_DIVISOR = 2     # todo make 0.5 like above thresholds
+KNOCKDOWN_HP_THRESHOLD = 0.5
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 MOB_DAM_PENALTY = 0.3
-OFF_BALANCE_HP_DIVISOR = 4  # todo make 0.25 like above thresholds
+OFF_BALANCE_HP_THRESHOLD = 0.25
 QI_BASED_DAM_UPPER_MULT = 3
 SHOCK_CHANCE = 0.5  # for moves
 STAMINA_DAMAGE = 0.2  # for moves
 STAMINA_FACTOR_BIAS = 0.5
 STAT_BASED_DAM_UPPER_MULT = 5
-STUN_HP_DIVISOR = 2.8
+STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
 TIME_UNIT_MULTIPLIER = 20
 
 
@@ -255,9 +255,10 @@ class StrikeMechanics(FighterWithASCII):
     def try_knockdown(self):
         targ = self.target
         if not targ.check_status('lying'):
-            if self.dam >= targ.hp_max / KNOCKDOWN_HP_DIVISOR:
+            hp_before_dam = targ.hp + self.dam
+            if self.dam >= hp_before_dam * KNOCKDOWN_HP_THRESHOLD:
                 targ.cause_fall()
-            elif self.dam >= targ.hp_max / OFF_BALANCE_HP_DIVISOR:
+            elif self.dam >= hp_before_dam * OFF_BALANCE_HP_THRESHOLD:
                 targ.cause_off_balance()
 
     def try_shock_move(self):
