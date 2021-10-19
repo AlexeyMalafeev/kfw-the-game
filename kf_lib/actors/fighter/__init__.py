@@ -1,7 +1,6 @@
 from ...kung_fu import styles, moves
 
 from ._ai import FightAIMethods
-from ._exp_worth import ExpMethods
 from ._fight_actions import FighterWithActions
 from ._fight_utils import FightUtils
 from ._moves import MoveMethods
@@ -13,7 +12,7 @@ from ._weapons import WeaponMethods
 
 
 class Fighter(
-    ExpMethods,
+    FightAIMethods,
     FighterStats,
     FighterWithActions,
     FightUtils,
@@ -37,6 +36,7 @@ class Fighter(
         move_names=None,
         rand_atts_mode=0,
     ):
+        super().__init__()
         self.name = name
         self.level = level
         self.rand_atts_mode = rand_atts_mode
@@ -45,6 +45,7 @@ class Fighter(
         self.set_style(style_name)
         self.set_techs(tech_names)
         self.set_moves(move_names)
+        self.set_fight_ai()
 
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
