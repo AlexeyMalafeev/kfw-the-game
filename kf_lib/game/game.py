@@ -388,11 +388,11 @@ class Game(DebugMenu):
             self.auto_save_on = yn('Auto save?')
         elif auto_save_on in (True, False):
             self.auto_save_on = auto_save_on
-        assert generated_styles in (
+        assert generated_styles in {
             '?',
             True,
             False,
-        ), 'generated_styles option must be in (True, False, "?")'
+        }, 'generated_styles option must be in (True, False, "?")'
         if generated_styles == '?':
             generated_styles = yn('Randomly generated styles?')
         if generated_styles:
@@ -540,10 +540,7 @@ class Game(DebugMenu):
     def register_fighter(self, f):
         if f.name in self.fighters_dict:
             raise Exception(
-                'Cannot register {} because a fighter with this name is already registered.'.format(
-                    f
-                )
-            )
+                f'Cannot register {f} because a fighter with this name is already registered.')
         self.fighters_list.append(f)
         self.fighters_dict[f.name] = f
         self.used_names.add(f.name)
