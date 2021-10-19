@@ -20,13 +20,6 @@ RISK_DESCR_TABLE = (  # must be sorted high to low
 
 
 class ExpMethods(BaseFighter):
-    exp_yield = 0
-
-    # override by child class:
-    act_allies = None
-    act_targets = None
-    level = 0
-
     def get_allies_power(self):  # todo: use get_allies_power for AI, high-prio
         return sum([f.get_exp_worth() for f in self.act_allies])
 

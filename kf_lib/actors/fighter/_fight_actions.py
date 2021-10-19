@@ -2,6 +2,7 @@ import random
 
 
 from ._distances import DistanceMethods
+from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
 from ...utils.utilities import rnd, get_adverb, get_bar
 from ._weapons import WeaponMethods
@@ -9,6 +10,7 @@ from ._weapons import WeaponMethods
 
 class FighterWithActions(
     DistanceMethods,
+    ExpMethods,
     StrikeMechanics,
     WeaponMethods,
 ):
@@ -178,6 +180,18 @@ class FighterWithActions(
         self.do_move_functions(m)
         self.change_stamina(-m.stam_cost)
         self.change_qp(-m.qi_cost)
+
+    def prepare_for_fight(self):
+        self.hp = self.hp_max
+        self.qp = round(self.qp_max * self.qp_start)
+        self.stamina = self.stamina_max
+        self.previous_actions = ['', '', '']
+        self.is_auto_fighting = True
+        self.set_distances_before_fight()
+        self.status = {}
+        self.exp_yield = self.get_exp_worth()
+        self.took_damage = False
+        self.kos_this_fight = 0
 
     def set_target(self, target):
         self.target = target
