@@ -22,6 +22,9 @@ from ..happenings import events as ev, encounters, story
 from ..utils.utilities import *
 
 
+# todo refactor game.py into submodules
+
+
 # constants
 # AI_NAMES = {LazyAIP: 'Lazy AI', SmartAIP: 'Smart AI', VanillaAIP: 'Vanilla AI',
 # BaselineAIP: 'Baseline AI'}
@@ -41,7 +44,7 @@ KFLEGEND_ACCOMPL = 8
 GT_FIGHTER_FIGHTS = (100, 150)  # fights_won, num_kos
 
 
-class Game(DebugMenu):
+class Game:
     MAX_NUM_STUDENTS = MAX_NUM_STUDENTS
 
     def __init__(self):
@@ -95,11 +98,11 @@ class Game(DebugMenu):
         self.enc_count_dict = {}  # counter for how many times encounters happened
         for e in encounters.ENC_LIST:
             self.enc_count_dict[e.__name__] = 0
+        self.enc = encounters.EncControl(self)
+        self.debug_menu = DebugMenu(self)
 
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
         play_indefinitely fights_total enc_count_dict'''.split()
-
-        self.enc = encounters.EncControl(self)
 
     @staticmethod
     def check_inactive_player(p):

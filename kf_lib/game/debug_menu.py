@@ -4,9 +4,10 @@ from ..utils.utilities import *
 
 
 class DebugMenu:
-    current_player = None
+    def __init__(self, game_obj):
+        self.current_player = game_obj.current_player
 
-    def debug_menu(self):
+    def __call__(self):
         cls()
         choice = menu(
             (
