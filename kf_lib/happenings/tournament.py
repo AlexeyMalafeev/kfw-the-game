@@ -15,7 +15,7 @@ class Tournament(object):
             num_participants: int = 8,
             min_lv: int = 1,
             max_lv: int = 5,
-            tourn_type: str = '?',
+            tourn_type: str = '',
             fee: int = 100,
             prize: str = 'auto',
     ):
@@ -97,8 +97,9 @@ class Tournament(object):
 
     def run(self):
         self.g.cls()
+        tourn_type_str = f'({self.tourn_type} level)' if self.tourn_type else ''
         self.g.msg(
-            f'A kung-fu tournament ({self.tourn_type} level) is organized in {self.g.town_name}. '
+            f'A kung-fu tournament {tourn_type_str} is organized in {self.g.town_name}. '
             f'The participation fee is {self.fee}.'
         )
 

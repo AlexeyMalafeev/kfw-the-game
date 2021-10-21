@@ -1,4 +1,6 @@
 from ..actors import fighter_factory
+from ..happenings import events
+from ..happenings import tournament
 from ..things import items
 from ..utils.utilities import *
 
@@ -6,6 +8,7 @@ from ..utils.utilities import *
 class DebugMenu:
     def __init__(self, game_obj):
         self.current_player = game_obj.current_player
+        self.g = game_obj
 
     def __call__(self):
         cls()
@@ -16,6 +19,7 @@ class DebugMenu:
                 ('Level up', self.debug_level_up),
                 ('Learn Move', self.debug_learn_move),
                 ('Fight Thug(s)', self.debug_fight_thugs),
+                ('Tournament', self.debug_tournament),
             )
         )
         choice()
@@ -52,6 +56,19 @@ class DebugMenu:
         p = self.current_player
         n = get_int_from_user('How many levels up?', 1, 100)
         p.level_up(n)
+
+    def debug_tournament(self):
+        n = get_int_from_user('How many participants?', 8, 20)
+        fee = get_int_from_user('Fee?', 0, 10000)
+        min_lv = get_int_from_user('Min level?', 1, 20)
+        max_lv = get_int_from_user('Max level?', min_lv, 20)
+        tournament.Tournament(
+            game=self.g,
+            num_participants=n,
+            fee=fee,
+            min_lv=min_lv,
+            max_lv=max_lv,
+        )
 
     # t = testing_tools.Tester(self)
     # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
