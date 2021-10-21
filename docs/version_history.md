@@ -1,4 +1,5 @@
 
+feat: ability to start a tournament via the debug menu
 feat: knockdown and off-balance are relative to current hp, not max hp (knockback and stun remain relative to max hp)
 refactor: major refactor of Fighter (split into submodules) as well as some other modules  
 fix: small import bug in encounters  

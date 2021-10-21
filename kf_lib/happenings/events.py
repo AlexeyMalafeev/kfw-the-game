@@ -12,6 +12,12 @@ CH_TOURNAMENT_BEGINS = 0.15
 DEFAULT_TOURN_FEE = 100
 TOURN_FEES = (50, 75, 100, 125, 150)
 TOURN_PRIZE_MULT = 4
+TOURN_TYPES = (
+    'beginner',
+    'intermediate',
+    'expert',
+)
+TOURN_TYPE_BGN, TOURN_TYPE_MED, TOURN_TYPE_ADV = TOURN_TYPES
 
 # happenings
 MAX_CRIME = 0.5
@@ -75,17 +81,17 @@ def new_tournament(g):
         {
             'min_lv': 1,
             'max_lv': 4,
-            'tourn_type': 'beginner',
+            'tourn_type': TOURN_TYPE_BGN,
         },
         {
             'min_lv': 5,
             'max_lv': 8,
-            'tourn_type': 'intermediate',
+            'tourn_type': TOURN_TYPE_MED,
         },
         {
             'min_lv': 9,
             'max_lv': 12,
-            'tourn_type': 'expert',
+            'tourn_type': TOURN_TYPE_ADV,
         },
     ]
     t = random.choice(tournaments)
