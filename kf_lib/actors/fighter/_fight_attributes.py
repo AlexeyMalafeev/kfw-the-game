@@ -3,6 +3,9 @@ class FightAttributes:
         self.act_allies = []
         self.act_targets = []
         self.action = None
+        self.ascii_l = ''
+        self.ascii_r = ''
+        self.ascii_name = ''
         self.atk_bonus = 0
         self.atk_pwr = 0
         self.av_moves = []
@@ -56,7 +59,8 @@ class FightAttributes:
 
         # weapon-related
         self.weapon = None  # weapon obj
-        self.weapon_bonus = {}  # tech-based permanent {<weapon name OR type>: [atk_bonus, dfs_bonus]}
+        # tech-based permanent {<weapon name OR type>: [atk_bonus, dfs_bonus]}
+        self.weapon_bonus = {}
         self.wp_dfs_bonus = 1.0  # for current fight only
 
         # strike multipliers

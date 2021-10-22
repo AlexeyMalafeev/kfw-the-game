@@ -46,6 +46,7 @@ class Fighter(
         self.set_techs(tech_names)
         self.set_moves(move_names)
         self.set_fight_ai()
+        self.refresh_full_atts()
 
     def get_f_info(self, short=False, show_st_emph=False):
         s = self

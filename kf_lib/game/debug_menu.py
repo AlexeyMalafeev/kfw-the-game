@@ -58,7 +58,7 @@ class DebugMenu:
         p.level_up(n)
 
     def debug_tournament(self):
-        n = get_int_from_user('How many participants?', 8, 20)
+        n = get_int_from_user('How many participants?', 2, 20)
         fee = get_int_from_user('Fee?', 0, 10000)
         min_lv = get_int_from_user('Min level?', 1, 20)
         max_lv = get_int_from_user('Max level?', min_lv, 20)

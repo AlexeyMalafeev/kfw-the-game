@@ -31,6 +31,9 @@ class Style(object):
     def __str__(self):
         return f'{self.name} ({self.descr})'
 
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.name}, {self.techs}, {self.move_strings})'
+
 
 # todo to txt file, then load? less syntax?
 default_styles = [

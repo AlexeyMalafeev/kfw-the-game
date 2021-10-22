@@ -701,12 +701,10 @@ One bet is {self.bet} coins."""
             self.won = p.money - money
             p.refresh_screen()
             if self.won <= 0:
-                p.log(f"Loses {-self.won}.")
                 p.msg('Gambler: "Better luck next time!"')
-                p.change_stat("gamb_lost", -self.won)
+                p.record_gamble_lost(-self.won)
             else:
-                p.log(f"Wins {self.won}.")
-                p.change_stat("gamb_won", self.won)
+                p.record_gamble_win(self.won)
                 if self.won >= 100 and rnd() <= CH_GAMBLER_FIGHT:
                     self.do_fight()
         else:

@@ -224,7 +224,7 @@ def resolve_style_move(move_s, f):
         pool = [m for m in get_moves_by_features(features, tier) if m not in f.moves]
         n = len(pool)
         if not n:
-            print(f'warning: couldn\'t find any moves for move string {move_s}')
+            print(f'warning: couldn\'t find any moves for move string {move_s}, fighter {f}')
             pool = get_rand_moves(f, f.num_moves_choose, tier)
         elif n == 1:
             f.learn_move(pool[0])

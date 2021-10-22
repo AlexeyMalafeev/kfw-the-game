@@ -1,11 +1,14 @@
 import random
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 
 from ..actors.fighter import Fighter
 from ..actors.human_controlled_fighter import HumanControlledFighter
 from ..actors.player import Player
 from ..fighting import fight
+
+
+BET_REPUTATION_PENALTY = -3
 
 
 class Tournament(object):
@@ -26,9 +29,9 @@ class Tournament(object):
         self.tourn_type = tourn_type
         self.fee = fee
         self.prize = prize if prize != 'auto' else self._calc_prize()
-        self.participants: Optional[list] = None
+        self.participants: list = []
         self.spectator: Optional[HumanControlledFighter] = None
-        self.last_draw_winner: Optional[Fighter] = None
+        self.bets: Dict[Player, tuple] = {}  # player_obj: (who_will_win, money_bet)
         self.winner: Any[Fighter, Player] = None
         self.current_round = 0
         self.run()
@@ -36,32 +39,38 @@ class Tournament(object):
     def _calc_prize(self):
         return int(round(self.fee * self.num_participants / 2, -1))
 
-    def _do_fight(self, f1, f2):
-        f1.fight(f2, af_option=True, environment_allowed=False, items_allowed=False)
-        if f1.hp <= 0 and f2.hp <= 0:
-            self.last_draw_winner = wnr = random.choice((f1, f2))
-            if f1.is_player or f2.is_player:
-                self.g.msg(f'Draw! The judges rule the winner to be {wnr.name}.')
-
     def _do_rounds(self):
-        participants = self.participants
-        while (remaining_participants := len(participants)) > 1:
+        remaining_participants = self.participants[:]
+        n_remaining_participants = len(remaining_participants)
+        while n_remaining_participants > 1:
             self.current_round += 1
             self.spectator.cls()
             self.spectator.msg(
                 f'Round {self.current_round}\n'
-                f'tournament participants left: {remaining_participants}'
+                f'tournament participants left: {n_remaining_participants}'
             )
-            random.shuffle(participants)
-            for i in range(0, remaining_participants - 1, 2):
-                # if odd, one random fighter is left out, but that's ok
-                f1, f2 = participants[i:i + 2]
-                self._do_fight(f1, f2)
-            participants[:] = [f for f in participants if f.hp > 0]
-        if participants:
-            self.winner = participants[0]
-        else:  # in case of a draw
-            self.winner = self.last_draw_winner
+            random.shuffle(remaining_participants)
+            winners_list = []
+            for i in range(0, n_remaining_participants, 2):
+                # if odd, one random fighter automatically joins next round
+                f1 = remaining_participants[i]
+                try:
+                    f2 = remaining_participants[i + 1]
+                except IndexError:
+                    winners_list.append(f1)
+                    break
+                fight_obj = fight.fight(f1, f2,
+                                        environment_allowed=False,
+                                        items_allowed=False,
+                                        return_fight_obj=True,
+                                        )
+                winners_list.extend(fight_obj.winners)
+            remaining_participants = winners_list
+            n_remaining_participants = len(remaining_participants)
+        if remaining_participants:
+            self.winner = remaining_participants[0]
+        else:
+            raise NotImplementedError('The no-winner case in tournaments is not implemented')
 
     def _gather_participants(self):
         # player participants
@@ -82,9 +91,6 @@ class Tournament(object):
                        f.check_lv(self.min_lv, self.max_lv) and not f.is_player]
         k = self.num_participants - len(participants)
         if k > len(av_fighters) or k < 0:
-            # print('warning: invalid k in Tournament._gather_participants')
-            # print(f'{participants = }, {self.participants = }, {len(av_fighters) = }, {k = }')
-            # input('setting k to len(av_fighters), press Enter to continue')
             k = len(av_fighters)
         add = random.sample(av_fighters, k)
         participants += add
@@ -94,6 +100,29 @@ class Tournament(object):
         self.g.msg(f'{winner.name} wins the tournament!')
         if winner.is_player:
             winner.win_tourn(self.prize)
+
+    def _place_bets(self):
+        for p in self.g.players:
+            if p.bet_on_tourn_or_not():
+                p.gain_rep(BET_REPUTATION_PENALTY)
+                bet_on, bet_amount = p.place_bet_on_tourn(self)
+                self.bets[p] = bet_on, bet_amount
+                self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
+                print(f'DEBUG: {p.name} bets')
+            else:
+                print(f'DEBUG: {p.name} doesn\'t bet')
+
+    def _resolve_bets(self):
+        for p in sorted(self.bets, key=self.g.players.index):
+            bet_on, bet_amount = self.bets[p]
+            if self.winner is bet_on:
+                win_mult = max((self.current_round, 1.5))  # 1.5 is for the 1 round edge case
+                money_won = int(bet_amount * win_mult)
+                p.money += money_won
+                self.g.msg(f'{p.name} wins {money_won} coins with his bet!')
+                p.record_gamble_win(money_won)
+            else:
+                p.record_gamble_lost(bet_amount)
 
     def run(self):
         self.g.cls()
@@ -106,8 +135,10 @@ class Tournament(object):
         self._gather_participants()
         self.spectator = self.participants[0]
         self._show_participants()
+        self._place_bets()
         self._do_rounds()
         self._give_prize()
+        self._resolve_bets()
 
     def _show_participants(self):
         participants = self.participants

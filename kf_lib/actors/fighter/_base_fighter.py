@@ -17,7 +17,6 @@ class BaseFighter(
         self.moves = []
         self.name = ''
         self.style = None
-        self.target = None
         self.techs = []
 
     def __repr__(self):

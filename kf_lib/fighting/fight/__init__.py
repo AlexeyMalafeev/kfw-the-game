@@ -1,3 +1,5 @@
+import pprint
+
 from kf_lib.things import items
 from kf_lib.actors import names
 from kf_lib.utils.utilities import *
@@ -78,6 +80,7 @@ def fight(
     items_allowed=True,
     win_messages=None,
     school_display=False,
+    return_fight_obj=False,
 ):
     """Return True if f1 wins, False otherwise (including draw)."""
     side_a, side_b = get_sides(f1, f2, f1_allies, f2_allies)
@@ -108,6 +111,8 @@ def fight(
         f = NormalFight(
             side_a, side_b, environment_allowed, items_allowed, win_messages, school_display
         )
+    if return_fight_obj:
+        return f
     return f.win
 
 
@@ -508,6 +513,7 @@ class BaseFight(object):
 
     def show_win_message(self):
         self.cls()
+        # pprint.pp(vars(self.side_b[0]))
         self.main_player.show_ascii()
         s = ''
         if self.winners:
@@ -622,7 +628,6 @@ class SpectateFight(NormalFight):
         self.win_messages = win_messages
         self.school_display = school_display
         self.cls()
-        f1 = self.side_a[0]
         self.show(get_prefight_info(side_a, side_b, hide_enemy_stats=False))
         self.pak()
         # cls()

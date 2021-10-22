@@ -1,13 +1,13 @@
-from ..happenings import encounters
-from .fighter import Fighter
-from ..game import game_stats
-from .human_controlled_fighter import HumanControlledFighter
-from ..things import items
-from ..utils import lang_tools
+from ...happenings import encounters
+from ..fighter import Fighter
+from ...game import game_stats
+from ..human_controlled_fighter import HumanControlledFighter
+from ...things import items
+from ...utils import lang_tools
+from .. import traits
+from .. import quotes
+from ...utils.utilities import *
 
-# from . import techniques
-from . import traits, quotes
-from ..utils.utilities import *
 
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 LV_UP_EXP = [
@@ -16,8 +16,12 @@ LV_UP_EXP = [
 # to next?); max lv = 50
 MASTER_GREETING_CHANCE = 0.1
 SCHOOL_TRAINING_EXP = 10
+TOURN_BETS = (10, 25, 50, 100)
 TUITION_FEE = 20
 WAGE = 50
+
+
+# todo Epic Gambler accomplishment
 
 
 class Player(Fighter):
@@ -585,13 +589,21 @@ class Player(Fighter):
             self.pak()
 
     def prepare_for_fight(self):
-        Fighter.prepare_for_fight(self)
+        super().prepare_for_fight()
         self.exp_bonuses = 0
         self.log('Fight:')
         for ff in self.current_fight.side_a + self.current_fight.side_b:
             if ff == self.current_fight.side_b[0]:
                 self.log('vs')
             self.log(ff.get_f_info())
+
+    def record_gamble_lost(self, money):
+        self.log(f"Loses {money}.")
+        self.change_stat("gamb_lost", money)
+
+    def record_gamble_win(self, money):
+        self.log(f"Wins {money}.")
+        self.change_stat("gamb_won", money)
 
     def recover(self):
         self.inactive = 0
@@ -693,6 +705,9 @@ class AIPlayer(Player):
     min_students_to_teach = 5
     non_master_practice_chance = 0.9
 
+    def bet_on_tourn_or_not(self):
+        return rnd() <= self.gamble_chance
+
     def brawl_or_not(self, opp_info):
         return rnd() <= self.brawl_chance and opp_info[0] <= self.acceptable_fight_threshold
 
@@ -770,6 +785,14 @@ class AIPlayer(Player):
     def pak(self):
         pass
 
+    def place_bet_on_tourn(self, tourn_obj):
+        max_lv = max(f.level for f in tourn_obj.participants)
+        choose_from = [f for f in tourn_obj.participants if f.level == max_lv]
+        bet_on = random.choice(choose_from)
+        bet_amount = random.choice(TOURN_BETS)
+        self.pay(bet_amount)
+        return bet_on, bet_amount
+
     def refresh_screen(self):
         pass
 
@@ -829,7 +852,7 @@ class SmartAIP(AIPlayer):
     buy_med_chance = 100
     continue_gambling_chance = 0
     drink_chance = 0
-    gamble_chance = 0
+    gamble_chance = 0.2
     master_practice_chance = 0.5
     min_days_use_med = 3
     min_non_master_money = 175
@@ -871,6 +894,9 @@ class VanillaAIP(AIPlayer):
 
 class HumanPlayer(HumanControlledFighter, Player):
     is_human = True
+
+    def bet_on_tourn_or_not(self):
+        return yn(f'{self.name}: Bet on the tournament?')
 
     def brawl_or_not(self, opp_info):
         return self.menu(
@@ -951,6 +977,13 @@ class HumanPlayer(HumanControlledFighter, Player):
         self.cls()
         self.show('*LEVEL UP*')
         Player.level_up(self, times)
+
+    def place_bet_on_tourn(self, tourn_obj):
+        bet_on = menu([(f.name, f) for f in tourn_obj.participants], title='Who wins?')
+        bet_amount = menu([(str(amount), amount) for amount in TOURN_BETS],
+                          title='How much to bet?')
+        self.pay(bet_amount)
+        return bet_on, bet_amount
 
     @staticmethod
     def p_match_or_not():

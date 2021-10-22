@@ -3,10 +3,6 @@ from ...kung_fu import ascii_art
 
 
 class FighterWithASCII(BaseFighter):
-    ascii_l = ''
-    ascii_r = ''
-    ascii_name = ''
-
     def refresh_ascii(self):
         self.ascii_l, self.ascii_r = self.action.ascii_l, self.action.ascii_r
         targ = self.target
@@ -20,12 +16,24 @@ class FighterWithASCII(BaseFighter):
         self.ascii_name = ascii_name
 
     def show_ascii(self):
-        if self in self.current_fight.side_a:
-            a = self.ascii_l
-            b = self.target.ascii_r
-        else:
-            b = self.ascii_r
-            a = self.target.ascii_l
+        try:
+            if self in self.current_fight.side_a:
+                a = self.ascii_l
+                b = self.target.ascii_r
+            else:
+                b = self.ascii_r
+                a = self.target.ascii_l
+        except AttributeError:
+            import pprint
+            print(self)
+            print('**********\n'*3)
+            pprint.pprint(vars(self))
+            print('**********\n'*3)
+            pprint.pprint(vars(self.current_fight))
+            print('**********\n'*3)
+            pprint.pprint(vars(self.current_fight.side_b[0]))
+            print('**********\n'*3)
+            raise
         pic = ascii_art.concat(a, b)
         self.current_fight.show(pic, align=False)
         self.current_fight.cartoon.append(pic)

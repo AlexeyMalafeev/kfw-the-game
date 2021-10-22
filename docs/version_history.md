@@ -1,17 +1,16 @@
 
-feat: ability to start a tournament via the debug menu
-feat: knockdown and off-balance are relative to current hp, not max hp (knockback and stun remain relative to max hp)
+refactor: Tournament  
+fix: bug in tournaments with odd numbers of fighters  
+feat: ability to bet on tournament outcome  
+feat: ability to start a tournament via the debug menu  
+feat: knockdown and off-balance are relative to current hp, not max hp (knockback and stun remain 
+relative to max hp)  
 refactor: major refactor of Fighter (split into submodules) as well as some other modules  
 fix: small import bug in encounters  
 feat: probability of feeling too scared to fight is now proportional to risk  
-refactor: quotes, exp worth  
-refactor: fighter._weapons  
 fix: bug when fights didn't happen because fighters started with 0 hp  
 feat: debug mode in user input (get_key)  
-refactor: tech-based weapon choosing  
 feat: a few new quotes, inspired by Lady Bloodfight  
-refactor: fighter._constants  
-refactor: fighter module becomes a package  
 refactor: put docs to separate folder, add some todos  
 fix: import bug in turtles reward  
 feat: one of the rewards for protecting street performer from thugs is new move  
