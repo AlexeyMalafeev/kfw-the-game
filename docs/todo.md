@@ -4,9 +4,7 @@ refactor: @property
 
 wtf is STAMINA_FACTOR_BIAS in fighter.py?  
 
-modify qi_when_atk  
-
-FighterAttributes mix-in  
+modify qi_when_atk
 
 every level, critical chance increases  
 

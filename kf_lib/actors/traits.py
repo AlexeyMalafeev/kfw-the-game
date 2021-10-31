@@ -1,7 +1,6 @@
-#! python3
 """
-Traits are activated at Player creation time. If the Player is saved, the traits are saved as well (part of the
-init_atts). So far, there is no way to change the Player's traits in-game. There is no way to deactivate a trait either.
+Traits are activated at Player creation time. If the Player is saved, the traits are saved as well
+(part of the init_atts).
 Traits are represented as strings; their effects are looked up in the TRAIT_EFFECTS dictionary.
 """
 
@@ -12,7 +11,8 @@ import random
 # Add new traits here: (neg, pos, att_dict),
 # where att_dict = {att1: change1, att2: change2, ...}.
 # Note that the effects are defined in terms of _positive_ traits.
-# That is, positive traits should always _add to_ attributes, while negative should _subtract from_ them.
+# That is, positive traits should always _add to_ attributes, while negative should _subtract from_
+# them.
 # So, if the higher an att the better, define the change as x,
 # and if the lower an att the better, define the change as -x.
 _TRAITS_TUP = (

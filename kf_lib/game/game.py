@@ -18,8 +18,11 @@ from . import game_stats
 from ..kung_fu.moves import BASIC_MOVES
 from ..kung_fu import styles, style_gen
 from ..things import items
-from ..town import events as ev, encounters, story
+from ..happenings import events as ev, encounters, story
 from ..utils.utilities import *
+
+
+# todo refactor game.py into submodules
 
 
 # constants
@@ -41,7 +44,7 @@ KFLEGEND_ACCOMPL = 8
 GT_FIGHTER_FIGHTS = (100, 150)  # fights_won, num_kos
 
 
-class Game(DebugMenu):
+class Game:
     MAX_NUM_STUDENTS = MAX_NUM_STUDENTS
 
     def __init__(self):
@@ -95,11 +98,11 @@ class Game(DebugMenu):
         self.enc_count_dict = {}  # counter for how many times encounters happened
         for e in encounters.ENC_LIST:
             self.enc_count_dict[e.__name__] = 0
+        self.enc = encounters.EncControl(self)
+        self.debug_menu = DebugMenu(self)
 
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
         play_indefinitely fights_total enc_count_dict'''.split()
-
-        self.enc = encounters.EncControl(self)
 
     @staticmethod
     def check_inactive_player(p):
@@ -388,11 +391,11 @@ class Game(DebugMenu):
             self.auto_save_on = yn('Auto save?')
         elif auto_save_on in (True, False):
             self.auto_save_on = auto_save_on
-        assert generated_styles in (
+        assert generated_styles in {
             '?',
             True,
             False,
-        ), 'generated_styles option must be in (True, False, "?")'
+        }, 'generated_styles option must be in (True, False, "?")'
         if generated_styles == '?':
             generated_styles = yn('Randomly generated styles?')
         if generated_styles:
@@ -540,10 +543,7 @@ class Game(DebugMenu):
     def register_fighter(self, f):
         if f.name in self.fighters_dict:
             raise Exception(
-                'Cannot register {} because a fighter with this name is already registered.'.format(
-                    f
-                )
-            )
+                f'Cannot register {f} because a fighter with this name is already registered.')
         self.fighters_list.append(f)
         self.fighters_dict[f.name] = f
         self.used_names.add(f.name)

@@ -149,8 +149,6 @@ class NewSystemAI(BaseAI):
             if move.qi_cost < 0:  # move adds qi
                 add_qi_weights[move] = self.weigh_qi(move)
             time_weights[move] = 1 / move.time_cost
-        # print('before normalization:', atk_weights, change_dist_weights, add_stam_weights, add_qi_weights,
-        #       time_weights, sep='\n')
 
         # normalize and/or finalize
         can_attack = True if atk_weights else False

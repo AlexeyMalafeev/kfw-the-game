@@ -8,4 +8,4 @@ try:
 
 except Exception:
     from kf_lib.debug_tools import crash_report
-    crash_report(g)
+    crash_report(g)  # noqa

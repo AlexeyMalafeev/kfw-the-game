@@ -312,7 +312,7 @@ class TreasuresStory(Story):
         t = (
             '{p} sees a pompous official surrounded by his bodyguards. As they walk down {f}\'s main street, '
             'they push walkers-by around and otherwise behave rudely. An old man standing next to {p} says, '
-            '"This is {b}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'.format(
+            '"This is {b}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our happenings!"'.format(
                 p=p.name, f=g.town_name, b=b.name
             )
         )

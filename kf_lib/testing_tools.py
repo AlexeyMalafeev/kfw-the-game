@@ -1,4 +1,4 @@
-from .town import encounters
+from .happenings import encounters
 from .fighting import fight
 from .ai import fight_ai
 from .actors.fighter import Fighter

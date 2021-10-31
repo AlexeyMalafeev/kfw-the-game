@@ -125,8 +125,14 @@ def get_adverb(n, adv_low, adv_high):
         return adv_high + ' '
 
 
-def get_bar(curr_val, max_val, filled_sym, empty_sym, bar_length, mirror=False):
-    ratio = curr_val / max_val
+def get_bar(numerator, denominator, filled_sym, empty_sym, bar_length, mirror=False):
+    if denominator:
+        ratio = numerator / denominator
+    else:
+        if numerator:
+            raise ValueError(
+                f'This is weird, numerator is {numerator}, denominator is {denominator}')
+        ratio = 0
     filled = round(bar_length * ratio)
     empty = bar_length - filled
     if not mirror:
@@ -139,6 +145,9 @@ def get_key():
     """
     If key is pressed, return its string; if no key is pressed, return 0
     """
+    # DEBUG MODE
+    # return input('key:')
+    # NORMAL MODE
     return chr(ord(getch_inst()))
 
 

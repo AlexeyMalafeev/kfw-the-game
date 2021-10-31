@@ -1,10 +1,13 @@
 from . import events
-from ..actors import fighter_factory, experience, traits, quotes, names
-from ..actors.fighter import RATIO_LOW_RISK
+from ..actors import fighter_factory, traits, quotes, names
+from ..mechanics import experience
 from ..utils import lang_tools
-from ..kung_fu import moves, techniques
+from ..kung_fu import moves
 from ..things import items
 from ..utils.utilities import *
+
+# todo f-strings in encounters.py
+# todo convert encounters.py to a package
 
 # constants
 # encounter chances
@@ -145,7 +148,7 @@ def check_feeling_greedy(p):
 
 
 def check_scary_fight(p, ratio):
-    if ratio >= RATIO_LOW_RISK and rnd() <= p.feel_too_scared:
+    if rnd() <= p.feel_too_scared * ratio:
         p.show(f"{p.name} feels too scared to fight!")
         p.log("Feels too scared to fight.")
         p.pak()
@@ -698,12 +701,10 @@ One bet is {self.bet} coins."""
             self.won = p.money - money
             p.refresh_screen()
             if self.won <= 0:
-                p.log(f"Loses {-self.won}.")
                 p.msg('Gambler: "Better luck next time!"')
-                p.change_stat("gamb_lost", -self.won)
+                p.record_gamble_lost(-self.won)
             else:
-                p.log(f"Wins {self.won}.")
-                p.change_stat("gamb_won", self.won)
+                p.record_gamble_win(self.won)
                 if self.won >= 100 and rnd() <= CH_GAMBLER_FIGHT:
                     self.do_fight()
         else:

@@ -1,7 +1,7 @@
 import random
 
 
-from ._base import FighterBase
+from ._base_fighter import BaseFighter
 from ...kung_fu import techniques
 
 
@@ -9,11 +9,11 @@ ADVANCED_TECH_AT_LV = 20
 LVS_GET_GENERAL_TECH = {11, 13, 15, 17, 19}
 
 
-class TechUser(FighterBase):
+class TechMethods(BaseFighter):
     adv_tech_at_lv = ADVANCED_TECH_AT_LV
     num_techs_choose = 3
     num_techs_choose_upgrade = 3
-    techs = None  # set
+    techs = None  # set of tech names
 
     def add_tech(self, tn):
         self.techs.add(tn)
@@ -33,6 +33,9 @@ class TechUser(FighterBase):
         if not av_techs:
             return
         self.upgrade_tech(random.choice(av_techs))
+
+    def get_style_tech_if_any(self):
+        return self.style.techs.get(self.level)
 
     def get_techs_string(self, descr=True, header='Techniques:'):
         if not self.techs:
@@ -64,6 +67,9 @@ class TechUser(FighterBase):
         else:
             return random.sample(av_techs, num)
 
+    def get_weapon_techs(self):
+        return techniques.get_weapon_techs(self)
+
     def learn_tech(self, *techs):
         """techs can be Tech objects or tech name strings (or mixed)"""
         for tn in techs:
@@ -77,9 +83,10 @@ class TechUser(FighterBase):
                 self.pak()
 
     def resolve_techs_on_level_up(self):
+        if not self.style.is_tech_style:
+            return
         # learn new style tech if possible
-        t = self.style.techs.get(self.level)
-        if t:
+        if t := self.get_style_tech_if_any():
             self.learn_tech(t.name)
         # upgrade tech if possible
         if self.level == self.adv_tech_at_lv:

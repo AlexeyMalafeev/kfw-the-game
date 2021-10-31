@@ -1,10 +1,5 @@
-class FighterBase:
-    level: int = 0
-    name: str = ''
-    style = None  # object
-
+class BlankFighterUI:
     def log(self, text):
-        """Empty method for convenience."""
         pass
 
     def msg(self, *args, **kwargs):
@@ -14,4 +9,10 @@ class FighterBase:
         pass
 
     def show(self, text, align=False):
+        pass
+
+    def cls(self):
+        pass
+
+    def write(self, *args, **kwargs):
         pass
