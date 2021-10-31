@@ -1,20 +1,24 @@
 
-refactor: Tournament  
-fix: bug in tournaments with odd numbers of fighters  
+v.0.6.3-beta  
+"Bet on Tournaments"  
+October 31, 2021  
+
 feat: ability to bet on tournament outcome  
 feat: ability to start a tournament via the debug menu  
-feat: knockdown and off-balance are relative to current hp, not max hp (knockback and stun remain 
-relative to max hp)  
-refactor: major refactor of Fighter (split into submodules) as well as some other modules  
-fix: small import bug in encounters  
+feat: knockdown and off-balance are relative to current hp, not max hp 
+      (knockback and stun remain relative to max hp)  
 feat: probability of feeling too scared to fight is now proportional to risk  
-fix: bug when fights didn't happen because fighters started with 0 hp  
 feat: debug mode in user input (get_key)  
 feat: a few new quotes, inspired by Lady Bloodfight  
-refactor: put docs to separate folder, add some todos  
-fix: import bug in turtles reward  
 feat: one of the rewards for protecting street performer from thugs is new move  
 feat: new "Super" fight items  
+refactor: Tournament  
+refactor: major refactor of Fighter (split into submodules) as well as some other modules  
+refactor: put docs to separate folder, add some todos  
+fix: bug in tournaments with odd numbers of fighters  
+fix: small import bug in encounters  
+fix: bug when fights didn't happen because fighters started with 0 hp  
+fix: import bug in turtles reward  
 fix: fight items have relative effect  
 fix: qp-related custom styles  
 fix: qi cost rebalance  
