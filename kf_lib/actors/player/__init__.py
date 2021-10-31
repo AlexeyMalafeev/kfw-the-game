@@ -977,7 +977,10 @@ class HumanPlayer(HumanControlledFighter, Player):
         Player.level_up(self, times)
 
     def place_bet_on_tourn(self, tourn_obj):
-        bet_on = menu([(f.name, f) for f in tourn_obj.participants], title='Who wins?')
+        bet_on = menu(
+            [(f.get_f_info(short=True), f) for f in tourn_obj.participants],
+            title='Who wins?',
+        )
         bet_amount = menu([(str(amount), amount) for amount in TOURN_BETS],
                           title='How much to bet?')
         self.pay(bet_amount)

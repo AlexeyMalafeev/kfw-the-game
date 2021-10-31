@@ -108,9 +108,9 @@ class Tournament(object):
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
                 self.bets[p] = bet_on, bet_amount
                 self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
-                print(f'DEBUG: {p.name} bets')
             else:
-                print(f'DEBUG: {p.name} doesn\'t bet')
+                if not p.is_human:
+                    print(f'DEBUG: {p.name} doesn\'t bet')
 
     def _resolve_bets(self):
         for p in sorted(self.bets, key=self.g.players.index):
