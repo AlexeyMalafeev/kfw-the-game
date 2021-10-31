@@ -102,7 +102,7 @@ class Tournament(object):
             winner.win_tourn(self.prize)
 
     def _place_bets(self):
-        for p in self.g.players:
+        for p in self.g.get_act_players():
             if p.bet_on_tourn_or_not():
                 p.gain_rep(BET_REPUTATION_PENALTY)
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
