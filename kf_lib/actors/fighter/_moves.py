@@ -54,7 +54,11 @@ class MoveMethods(BaseFighter):
         """move can be a Move object or a move name string"""
         if isinstance(move, str):
             move = moves.get_move_obj(move)
-        self.moves.append(move)
+        if move not in self.moves:
+            self.moves.append(move)
+        else:
+            print(f'warning: trying to learn move {move} that is already known by {self}')
+            # pak()
         if not silent:
             self.show(f'{self.name} learns {move.name} ({move.descr}).')
             self.log(f'Learns {move.name} ({move.descr})')

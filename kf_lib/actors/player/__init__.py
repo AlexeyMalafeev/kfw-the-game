@@ -27,32 +27,7 @@ WAGE = 50
 class Player(Fighter):
     savable_atts = '''exp home_training_exp_mult is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
-    challenger_friend_mult = 1.0
-    coop_joins_fight = 0.5
-    coop_joins_training = 0.25
-    drink_with_drunkard = 0.25
-    escape_bonus = 0.0
-    feel_too_greedy = 0.3
-    feel_too_scared = 0.3
-    friend_joins_fight = 0.3
-    friend_joins_training = 0.25
-    gamble_continue = 0.4
-    gamble_with_gambler = 0.3
-    grab_improvised_weapon = 0.5
-    home_training_exp_mult = 1.0
-    is_player = True
-    item_is_found = 0.01
-    item_is_lost = 0.01
-    master_joins_fight = 0.5
-    max_days_to_recover = 7
-    max_num_friends = 8
-    next_lv_exp_mult = 1.0
     quotes = 'hero'
-    school_training_exp_mult = 1.0
-    schoolmates_help = 0.5
-    thief_steals = 0.3
-    training_injury = 0.05
-    wage_mult = 1.0
 
     # the order of arguments should not be changed, or saving will break
     def __init__(
@@ -67,8 +42,7 @@ class Player(Fighter):
         traits_list=None,
     ):
         self.plog = []
-        Fighter.__init__(
-            self,
+        super().__init__(
             name=name,
             style_name=style_name,
             level=level,
@@ -78,8 +52,32 @@ class Player(Fighter):
             rand_atts_mode=rand_atts_mode,
         )
         self.ended_turn = False
-
+        self.challenger_friend_mult = 1.0
+        self.coop_joins_fight = 0.5
+        self.coop_joins_training = 0.25
+        self.drink_with_drunkard = 0.25
+        self.escape_bonus = 0.0
+        self.feel_too_greedy = 0.3
+        self.feel_too_scared = 0.3
+        self.friend_joins_fight = 0.3
+        self.friend_joins_training = 0.25
+        self.gamble_continue = 0.4
+        self.gamble_with_gambler = 0.3
+        self.grab_improvised_weapon = 0.5
+        self.home_training_exp_mult = 1.0
+        self.is_player = True
+        self.item_is_found = 0.01
+        self.item_is_lost = 0.01
+        self.master_joins_fight = 0.5
+        self.max_days_to_recover = 7
+        self.max_num_friends = 8
+        self.next_lv_exp_mult = 1.0
         self.traits = []
+        self.school_training_exp_mult = 1.0
+        self.schoolmates_help = 0.5
+        self.thief_steals = 0.3
+        self.training_injury = 0.05
+        self.wage_mult = 1.0
         if traits_list is None:
             self.set_rand_traits()
         else:
