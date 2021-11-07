@@ -1,3 +1,6 @@
+feat: a few new hero quotes  
+feat: 3x3 co-op mode  
+
 
 v.0.6.3-beta  
 "Bet on Tournaments"  
