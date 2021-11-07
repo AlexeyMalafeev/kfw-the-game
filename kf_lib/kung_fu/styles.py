@@ -109,7 +109,8 @@ default_styles = [
         {
             3: StyleTech('Eagle Claw I', dist3_bonus=b.STRIKE_MULT1),
             5: StyleTech('Eagle Claw II', stun_chance=b.STUN_CH1),
-            7: StyleTech('Eagle Claw III', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+            7: StyleTech('Eagle Claw III', critical_chance_mult=b.CRIT_CH1,
+                         critical_mult=b.CRIT_M1),
         },
         {
             1: ('Leap Forward', 'Leap Back'),
@@ -253,7 +254,7 @@ default_styles = [
         'Snake',
         {
             3: StyleTech('Snake I', dodge_mult=b.EVADE1),
-            5: StyleTech('Snake II', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+            5: StyleTech('Snake II', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
             7: StyleTech('Snake III', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
         },
         {
@@ -325,7 +326,7 @@ default_styles = [
         'Xing Yi',
         {
             3: StyleTech('Xing Yi I', speed_mult=b.SPEED1),
-            5: StyleTech('Xing Yi II', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+            5: StyleTech('Xing Yi II', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
             7: StyleTech('Xing Yi III', qp_gain=b.QP_GAIN1),
         },
         {

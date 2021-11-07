@@ -213,9 +213,11 @@ class StrikeMechanics(FighterWithASCII):
             self.to_hit *= self.epic_to_hit_mult
             self.atk_pwr *= self.epic_atk_pwr_mult
             self.current_fight.display('~*~*~EPIC!!!~*~*~')
+            # print('epic')
         if rnd() <= self.critical_chance:
             self.atk_pwr *= self.critical_mult
             self.current_fight.display('CRITICAL!')
+            # print('critical')
 
     def try_environment(self, mode):
         if (

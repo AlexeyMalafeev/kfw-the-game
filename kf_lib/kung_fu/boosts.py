@@ -83,7 +83,7 @@ PMAP = (
     ('block_disarm', 'disarm', 'disarm chance when defending', [hund, add_sign, add_pcnt]),
     ('block_mult', 'blocks', 'block efficiency', [hund, add_sign, add_pcnt]),
     ('counter_chance_mult', 'counters', 'counterattack chance', [hund, add_sign, add_pcnt]),
-    ('critical_chance', 'criticals', 'critical attack chance', [hund, add_sign, add_pcnt]),
+    ('critical_chance_mult', 'criticals', 'critical attack chance', [hund, add_sign, add_pcnt]),
     ('critical_mult', 'criticals', 'critical attack power', [hund, add_sign, add_pcnt]),
     ('dam_reduc', 'dam.reduc.', 'damage reduction', [add_sign]),
     ('dfs_mult', 'defense', 'defense', [hund, add_sign, add_pcnt]),

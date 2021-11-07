@@ -19,7 +19,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
         'Perseverance', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
     "Shattering": StyleTech(
-        'Shattering Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1
+        'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
     ),
     "Elusive": StyleTech('Elusive Moves', dodge_mult=b.EVADE1),
     "Indestructible": StyleTech('Indestructible Body', block_mult=b.BLOCK1),
@@ -64,7 +64,8 @@ W2 = {
     "Storm": StyleTech(
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
-    "Razor": StyleTech('Razor-Sharp Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+    "Razor": StyleTech('Razor-Sharp Strikes', critical_chance_mult=b.CRIT_CH1,
+                       critical_mult=b.CRIT_M1),
     "Misty": StyleTech('Misty Steps', dodge_mult=b.EVADE1),
     "Stone": StyleTech('Stone Forearms', block_mult=b.BLOCK1),
     "Vengeful": StyleTech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
@@ -98,7 +99,7 @@ W3 = {
     "Ox": StyleTech(
         'Ox\'s Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
-    "Cobra": StyleTech('Attacking Cobra', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+    "Cobra": StyleTech('Attacking Cobra', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
     "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
     "Mantis": StyleTech('Praying Mantis', block_mult=b.BLOCK1),
     "Fox": StyleTech('Fox Strikes Back', counter_chance_mult=b.COUNTER_CH_MULT1),

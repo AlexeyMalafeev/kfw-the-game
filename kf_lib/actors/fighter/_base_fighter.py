@@ -9,7 +9,7 @@ class BaseFighter(
     BlankFighterUI,
 ):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
         self.exp_yield = 0
         self.fight_ai = None
         self.moves = []

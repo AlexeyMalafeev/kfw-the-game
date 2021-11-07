@@ -20,13 +20,6 @@ class BasicAttributes:
         self.num_atts_choose = 3
         self.rand_atts_mode = 0  # 0, 1, 2
 
-    def boost(self, **kwargs):
-        """Boost fighter's attribute(s); k = att_name, v = quantity"""
-        for k, v in kwargs.items():
-            curr_v = getattr(self, k)
-            setattr(self, k, curr_v + v)
-        self.refresh_full_atts()
-
     def change_att(self, att, amount):
         setattr(self, att, getattr(self, att) + amount)
         self.refresh_full_atts()
@@ -125,11 +118,3 @@ class BasicAttributes:
             att = self.choose_better_att(atts)
             value = getattr(self, att)
             setattr(self, att, value + 1)
-
-    def unboost(self, **kwargs):
-        """'Unboost' fighter's attributes."""
-        kwargs_copy = {}
-        for k, v in kwargs.items():
-            kwargs_copy[k] = -v
-        self.boost(**kwargs_copy)
-        self.refresh_full_atts()

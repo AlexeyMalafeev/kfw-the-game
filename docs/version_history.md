@@ -1,4 +1,5 @@
-feat: ~*~*~EPIC!!!~*~*~  
+feat: criticals are level-dependent  
+feat: "~*~*~EPIC!!!~*~*~"  
 refactor: basic and fight attributes  
 feat: a few new hero quotes  
 feat: 3x3 co-op mode  

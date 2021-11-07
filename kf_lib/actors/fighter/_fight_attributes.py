@@ -3,8 +3,10 @@ from ._basic_attributes import BasicAttributes
 
 COUNTER_CHANCE_BASE = 0.1
 COUNTER_CHANCE_INCR_PER_LV = 0.02
+CRITICAL_CHANCE_BASE = 0.1
+CRITICAL_CHANCE_INCR_PER_LV = 0.01
 EPIC_CHANCE_BASE = 0.0
-EPIC_CHANCE_INCR_PER_LV = 0.01
+EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
 QP_BASE = 0
 QP_INCR_PER_LV = 5
@@ -48,7 +50,8 @@ class FightAttributes(BasicAttributes):
         self.block_power = 1.0  # todo give boost to block_power
         self.counter_chance = 0.0  # NB! level-dependent
         self.counter_chance_mult = 1.0
-        self.critical_chance = 0.05  # todo crit level-dependent
+        self.critical_chance = 0.05  # NB! level-dependent
+        self.critical_chance_mult = 1.0  # tech-dependent
         self.critical_mult = 1.5
         self.dam_reduc = 0  # todo adjust this and hp_gain in boosts.py
         self.dfs_bonus = 1.0  # for moves like Guard
@@ -119,6 +122,14 @@ class FightAttributes(BasicAttributes):
             self.status[status] = 0
         self.status[status] += dur
 
+    def boost(self, **kwargs):
+        """Boost fighter's attribute(s); k = att_name, v = quantity"""
+        for k, v in kwargs.items():
+            curr_v = getattr(self, k)
+            setattr(self, k, curr_v + v)
+        self.refresh_full_atts()
+        self.refresh_level_dependent_atts()
+
     def change_hp(self, amount):
         self.hp += amount
         if self.hp > self.hp_max:
@@ -175,6 +186,19 @@ class FightAttributes(BasicAttributes):
             (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
             self.counter_chance_mult
         )
+        self.critical_chance = (
+            (CRITICAL_CHANCE_BASE + CRITICAL_CHANCE_INCR_PER_LV * self.level) *
+            self.critical_chance_mult
+        )
         self.epic_chance = (
             (EPIC_CHANCE_BASE + EPIC_CHANCE_INCR_PER_LV * self.level) * self.epic_chance_mult
         )
+
+    def unboost(self, **kwargs):
+        """'Unboost' fighter's attributes."""
+        kwargs_copy = {}
+        for k, v in kwargs.items():
+            kwargs_copy[k] = -v
+        self.boost(**kwargs_copy)
+        self.refresh_full_atts()
+        self.refresh_level_dependent_atts()

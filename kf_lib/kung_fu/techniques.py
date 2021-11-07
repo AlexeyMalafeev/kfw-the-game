@@ -157,8 +157,8 @@ LINKED_TECHS = [
         ),
     ),
     (
-        UpgradableTech('Fierce Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
-        AdvancedTech('Explosive Strikes', critical_chance=b.CRIT_CH2, critical_mult=b.CRIT_M2),
+        UpgradableTech('Fierce Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+        AdvancedTech('Explosive Strikes', critical_chance_mult=b.CRIT_CH2, critical_mult=b.CRIT_M2),
     ),
     (
         UpgradableTech('Iron Vest', dam_reduc=b.DAM_REDUC1),
@@ -247,6 +247,7 @@ def apply(tn, f):
     t = get_tech_obj(tn)
     t.apply(f)
     f.refresh_full_atts()  # in case techs affects them
+    f.refresh_level_dependent_atts()  # in case techs affects them
 
 
 def get_descr(tech_name):
