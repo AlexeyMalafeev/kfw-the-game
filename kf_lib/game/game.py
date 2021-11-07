@@ -29,7 +29,7 @@ from ..utils.utilities import *
 # AI_NAMES = {LazyAIP: 'Lazy AI', SmartAIP: 'Smart AI', VanillaAIP: 'Vanilla AI',
 # BaselineAIP: 'Baseline AI'}
 CH_STUDENT_LV_UP = 0.1
-MAX_NUM_PLAYERS = 4
+MAX_NUM_PLAYERS = 6
 MAX_NUM_STUDENTS = 8
 MAX_STUDENT_LEVEL = 8
 NUM_CONVICTS = 5
@@ -409,7 +409,7 @@ class Game:
             coop_mode = False
             if num_players > 1 and coop == '?':
                 coop_mode = menu(
-                    (('Full co-op', 'full'), ('2x2', '2x2'), ('No co-op', False)),
+                    (('Full co-op', 'full'), ('2x2', '2x2'), ('3x3', '3x3'), ('No co-op', 'no')),
                     title='Co-op mode?',
                 )
             for i in range(num_players):
@@ -428,17 +428,21 @@ class Game:
                 style = pp.style.name
                 school = self.schools[style]
                 school.append(pp)
+            n_players = len(self.players)
             if coop_mode == 'full':
                 for p1 in self.players:
                     for p2 in self.players:
                         if p1 != p2:
                             p1.add_friend(p2)
-            elif coop_mode == '2x2' and len(self.players) == 4:
-                p1, p2, p3, p4 = self.players
-                p1.add_friend(p2)
-                p2.add_friend(p1)
-                p3.add_friend(p4)
-                p4.add_friend(p3)
+            elif (coop_mode == '2x2' and n_players == 4) or (coop_mode == '3x3' and n_players == 6):
+                def _lets_be_friends(players):
+                    for p in players:
+                        for p2 in players:
+                            if p != p2:
+                                p.add_friend(p2)
+                half = n_players // 2
+                _lets_be_friends(self.players[:half])
+                _lets_be_friends(self.players[half:])
 
         def _init_schools():
             for style in self.style_list:
