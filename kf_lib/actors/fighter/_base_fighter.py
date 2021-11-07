@@ -5,13 +5,11 @@ from ...kung_fu import moves
 
 
 class BaseFighter(
-    BasicAttributes,
     FightAttributes,
     BlankFighterUI,
 ):
     def __init__(self):
-        BasicAttributes.__init__(self)
-        FightAttributes.__init__(self)
+        super().__init__(self)
         self.exp_yield = 0
         self.fight_ai = None
         self.moves = []

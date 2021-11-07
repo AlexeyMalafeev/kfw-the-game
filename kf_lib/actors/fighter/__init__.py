@@ -47,6 +47,7 @@ class Fighter(
         self.set_moves(move_names)
         self.set_fight_ai()
         self.refresh_full_atts()
+        self.refresh_level_dependent_atts()
 
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
@@ -66,6 +67,7 @@ class Fighter(
         for i in range(n):
             self.level += 1
             self.upgrade_att()
+            self.refresh_level_dependent_atts()
             self.resolve_techs_on_level_up()
             self.resolve_moves_on_level_up()
             # NB! no need to refresh full atts here since they are refreshed when upgrading atts and

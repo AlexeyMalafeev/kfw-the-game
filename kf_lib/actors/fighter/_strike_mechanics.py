@@ -209,6 +209,10 @@ class StrikeMechanics(FighterWithASCII):
         self.took_damage = True
 
     def try_critical(self):
+        if self.epic_chance and rnd() <= self.epic_chance:
+            self.to_hit *= self.epic_to_hit_mult
+            self.atk_pwr *= self.epic_atk_pwr_mult
+            self.current_fight.display('~*~*~EPIC!!!~*~*~')
         if rnd() <= self.critical_chance:
             self.atk_pwr *= self.critical_mult
             self.current_fight.display('CRITICAL!')
