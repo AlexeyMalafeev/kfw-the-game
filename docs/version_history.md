@@ -1,3 +1,4 @@
+feat: visualize knockback  
 feat: criticals are level-dependent  
 feat: "~*~*~EPIC!!!~*~*~"  
 refactor: basic and fight attributes  

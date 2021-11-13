@@ -20,6 +20,7 @@ class FightAttributes(BasicAttributes):
         self.act_allies = []
         self.act_targets = []
         self.action = None
+        self.ascii_buffer = 0
         self.ascii_l = ''
         self.ascii_r = ''
         self.ascii_name = ''

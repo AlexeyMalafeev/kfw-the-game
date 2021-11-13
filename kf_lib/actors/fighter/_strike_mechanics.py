@@ -98,6 +98,7 @@ class StrikeMechanics(FighterWithASCII):
         opp.change_distance(dist, self)
         s = 's' if dist > 1 else ''
         self.set_ascii('Knockback')
+        self.ascii_buffer += dist
         self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
 
     def cause_off_balance(self):

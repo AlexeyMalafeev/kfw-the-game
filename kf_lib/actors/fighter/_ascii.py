@@ -6,6 +6,7 @@ class FighterWithASCII(BaseFighter):
     def refresh_ascii(self):
         self.ascii_l, self.ascii_r = self.action.ascii_l, self.action.ascii_r
         targ = self.target
+        self.ascii_buffer = targ.ascii_buffer = 0
         if targ.check_status('lying'):
             targ.set_ascii('Lying')
         else:
@@ -34,6 +35,7 @@ class FighterWithASCII(BaseFighter):
             pprint.pprint(vars(self.current_fight.side_b[0]))
             print('**********\n'*3)
             raise
-        pic = ascii_art.concat(a, b)
+        buffer = max((self.ascii_buffer, self.target.ascii_buffer))
+        pic = ascii_art.concat(a, b, buffer)
         self.current_fight.show(pic, align=False)
         self.current_fight.cartoon.append(pic)
