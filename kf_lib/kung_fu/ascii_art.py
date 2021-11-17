@@ -1,5 +1,11 @@
 import os
 
+
+BUFFER_WIDTH = 1  # todo if you set buffer width to >=2, there is a bug in display
+BUFFER_UNIT_AIR = ' ' * BUFFER_WIDTH
+BUFFER_UNIT_FLOOR = '_' * BUFFER_WIDTH
+
+
 r"""
    (}    {)
   /_\|  |/ |
@@ -16,10 +22,10 @@ def concat(a, b, buffer=0):
     new_lines = []
     total_lines = len(lines_a)
     last_line = total_lines - 1
-    buffer_char = ' '
+    buffer_char = BUFFER_UNIT_AIR
     for i in range(total_lines):
         if i == last_line:
-            buffer_char = '_'
+            buffer_char = BUFFER_UNIT_FLOOR
         cur_len = len(lines_a[i]) + len(lines_b[i])
         pad = max_len - cur_len
         new_lines.append(lines_a[i] + buffer_char * (pad + buffer) + lines_b[i])
