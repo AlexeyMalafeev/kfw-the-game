@@ -21,7 +21,7 @@ DUR_STUN_MAX = 150
 FALL_DAMAGE = (25, 50)
 INSTA_KO_CHANCE = 0.25
 KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
-KNOCKBACK_HP_THRESHOLDS = (0.3, 0.35, 0.4)  # correspond to levels of knockback: 1, 2, 3
+KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp
 KNOCKDOWN_HP_THRESHOLD = 0.5
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 MOB_DAM_PENALTY = 0.3
@@ -253,9 +253,7 @@ class StrikeMechanics(FighterWithASCII):
         kb = 0
         if not targ.check_status('lying'):
             dam_ratio = self.dam / targ.hp_max
-            for thresh in KNOCKBACK_HP_THRESHOLDS:
-                if dam_ratio > thresh:
-                    kb += 1
+            kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM)
         if kb > 0:
             targ.cause_knockback(kb)
 

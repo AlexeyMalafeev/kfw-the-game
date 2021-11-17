@@ -1,3 +1,4 @@
+feat: new formula for knockback caused by damage  
 feat: visualize knockback  
 feat: criticals are level-dependent  
 feat: "~*~*~EPIC!!!~*~*~"  
