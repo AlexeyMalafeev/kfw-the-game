@@ -27,7 +27,6 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Palm-Striking": StyleTech(
         'Palm Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
-    # "Clawing": StyleTech('Claw Training', claw_strike_mult=b.STRIKE_MULT1),
     "Kicking": StyleTech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
     "Exotic": StyleTech(
         'Exotic Strikes Training',
