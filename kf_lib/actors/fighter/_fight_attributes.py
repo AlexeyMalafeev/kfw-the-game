@@ -1,17 +1,21 @@
 from ._basic_attributes import BasicAttributes
 
 
-COUNTER_CHANCE_BASE = 0.1
+COUNTER_CHANCE_BASE = 0.5
 COUNTER_CHANCE_INCR_PER_LV = 0.02
 CRITICAL_CHANCE_BASE = 0.1
 CRITICAL_CHANCE_INCR_PER_LV = 0.01
 EPIC_CHANCE_BASE = 0.0
 EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
+PREEMPTIVE_CHANCE_BASE = 0.0
+PREEMPTIVE_CHANCE_INCR_PER_LV = 0.01
 QP_BASE = 0
 QP_INCR_PER_LV = 5
+QP_PORTION_RESTORED_PER_TURN = 0.2
 STAMINA_BASE = 50  # for all fighter levels
 STAMINA_INCR_PER_LV = 10
+STAMINA_PORTION_RESTORED_PER_TURN = 0.1
 
 
 class FightAttributes(BasicAttributes):
@@ -50,7 +54,7 @@ class FightAttributes(BasicAttributes):
         self.block_mult = 1.0
         self.block_power = 1.0  # todo give boost to block_power
         self.counter_chance = 0.0  # NB! level-dependent
-        self.counter_chance_mult = 1.0
+        self.counter_chance_mult = 1.0  # tech-dependent
         self.critical_chance = 0.05  # NB! level-dependent
         self.critical_chance_mult = 1.0  # tech-dependent
         self.critical_mult = 1.5
@@ -62,7 +66,7 @@ class FightAttributes(BasicAttributes):
         self.dodge_mult = 1.0
         self.environment_chance = 0.0  # todo get rid of this as it is just another critical?
         self.epic_chance = 0.0  # NB! level-dependent
-        self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet
+        self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_to_hit_mult = 2.0
         self.epic_atk_pwr_mult = 2.0
         self.grab_chance = 0.0  # todo not used yet
@@ -78,6 +82,8 @@ class FightAttributes(BasicAttributes):
         self.num_moves_choose = 3
         self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
+        self.preemptive_chance = 0.0  # NB! level-dependent
+        self.preemptive_chance_mult = 1.0  # tech-dependent, todo not used yet
         self.qp = 0
         self.qp_gain = 0  # NB! level-dependent
         self.qp_gain_mult = 1.0
@@ -178,14 +184,19 @@ class FightAttributes(BasicAttributes):
         self.stamina_max = round(
             (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
         )
-        self.stamina_gain = round(self.stamina_max / 10 * self.stamina_gain_mult)
+        self.stamina_gain = round(self.stamina_max * STAMINA_PORTION_RESTORED_PER_TURN *
+                                  self.stamina_gain_mult)
         self.qp_max = round(
             (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
         )
-        self.qp_gain = round(self.qp_max / 5 * self.qp_gain_mult)
+        self.qp_gain = round(self.qp_max * QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult)
         self.counter_chance = (
             (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
             self.counter_chance_mult
+        )
+        self.preemptive_chance = (
+            (PREEMPTIVE_CHANCE_BASE + PREEMPTIVE_CHANCE_INCR_PER_LV * self.level) *
+            self.preemptive_chance_mult
         )
         self.critical_chance = (
             (CRITICAL_CHANCE_BASE + CRITICAL_CHANCE_INCR_PER_LV * self.level) *
