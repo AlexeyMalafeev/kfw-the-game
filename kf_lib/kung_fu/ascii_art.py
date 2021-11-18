@@ -1,7 +1,7 @@
 import os
 
 
-BUFFER_WIDTH = 1  # todo if you set buffer width to >=2, there is a bug in display
+BUFFER_WIDTH = 1  # todo if you set buffer width to >=2, there is a bug in concat
 BUFFER_UNIT_AIR = ' ' * BUFFER_WIDTH
 BUFFER_UNIT_FLOOR = '_' * BUFFER_WIDTH
 

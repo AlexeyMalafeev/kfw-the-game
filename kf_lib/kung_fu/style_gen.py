@@ -4,7 +4,6 @@ from .techniques import StyleTech
 from kf_lib.utils.utilities import *
 
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
-    # + distance
     # + stats
     # + elbow & knee & headbutt (rare!)
     # + palm & claw

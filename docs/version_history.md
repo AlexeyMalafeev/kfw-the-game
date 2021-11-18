@@ -1,3 +1,4 @@
+feat: ASCII additions and improvements  
 fix: bug in debug menu (current player was assigned only once)  
 feat: new formula for knockback caused by damage  
 feat: visualize knockback  

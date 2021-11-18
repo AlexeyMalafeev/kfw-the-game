@@ -1,3 +1,5 @@
+bug: wrong improvised weapon 
+
 catch breath & others restore stam relatively ?  
 
 refactor: @property  
@@ -17,10 +19,6 @@ y no close-range @ lv up ?
 evil weapons  
 
 remove wp atk bonus  
-
-y Robber had 205 hp at beginning ?  
-
-bet on individual fights and tournaments (but minus reputation)  
 
 enc: sect members, atk or ignore, sects fighting each other  
 

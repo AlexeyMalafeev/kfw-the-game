@@ -194,21 +194,14 @@ __/___|___.
     |    .
    / \   .
 __/__|___.
-# Backfist
-        .
-    (}_/.
-   /_   .
-    |   .
-   / \  .
-__/__|__.
-# Hammer Fist - legacy
+# Surprise Punch, Trick Punch
      \\ .
     (}_/.
    /_   .
     |   .
    / \  .
 __/__|__.
-# Beak - legacy
+# Debilitating Claw, Nerve Claw
          .
     (}_/`.
    /_    .
@@ -229,21 +222,21 @@ __/_/____.
     |   .
    / \  .
 __/___|_.
-# Hook - legacy
+# Ferocious Punch
         .
    _(}_/.
     |   .
     |   .
    / \  .
 __/__|__.
-# Power Hook - legacy
+# Lethal Punch
         .
    _(}_/.
     |   .
     /   .
    / \  .
 __/__|__.
-# Uppercut - legacy
+# Advanced Punch, Expert Punch, Ultimate Punch
         .
     (}  .
    /| \/.
@@ -257,6 +250,48 @@ __/__|__.
     |   .
    / \  .
 __/__|__.
+# Energy Claw, Shocking Claw
+        .
+    (} ~.
+   /|\/`.
+    |  ~.
+   / \  .
+__/__|__.
+# Heavy Claw, Power Claw
+         .
+     (}  .
+    /_\/`.
+    /    .
+   / \   .
+__/__|___.
+# Charging Claw
+           .
+ ~~   (}_/".
+ ~~  /_    .
+ ~~  /     .
+    / \    .
+___/__/____.
+# Onslaught Claw
+            .
+ ~~~   (}_/".
+ ~~~  /_    .
+ ~~~  /     .
+     / \    .
+____/__/____.
+# Pushing Claw
+          .
+     (}__ .
+    /_   ".
+    |     .
+   / \    .
+__/__/____.
+# Long Claw
+           .
+      (}__ .
+     /_   ".
+    /      .
+   / \     .
+__/__|_____.
 # Tiger Claw
         .
     (} ,.
@@ -323,7 +358,7 @@ ____________.
 # Flying Claw
             .
        (}__ .
-      |/   `.
+      |/   ".
  __ / \     .
      /      .
 ____________.
@@ -334,7 +369,7 @@ ____________.
  __ / \     .
      /      .
 ____________.
-# Low Punch - legacy
+# Debilitating Punch, Nerve Punch, Solar Palm
          .
          .
     (}___.
@@ -348,7 +383,7 @@ _/___|___.
    |/ \_.
   | \   .
 _/___|__.
-# Low Palm - legacy
+# Debilitating Palm, Nerve Palm, Solar Palm
          .
          .
     (}__,.
@@ -369,14 +404,14 @@ _/___|__.
    \/   .
    |    .
 __/_____.
-# Low Kick - legacy
+# Debilitating Kick, Nerve Kick
         .
  (}_\   .
  /_     .
    \ ___.
    |    .
 ___|____.
-# Knee Kick
+# Surprise Kick, Trick Kick
        .
  (}_\  .
  /_    .
@@ -404,7 +439,7 @@ __/_____.
  \ \/   .
  _| ___ .
 _\_____\.
-# Roundhouse Kick - legacy
+# Advanced Kick, Expert Kick, Ultimate Kick
         .
   (}_\ /.
   /_  / .
@@ -418,7 +453,7 @@ ___/____.
     \ /  .
     /    .
 ___/_____.
-# Spin Kick to Body - legacy
+# Acrobatic Kick
         .
  /_(}_  .
    |  / .
@@ -432,14 +467,14 @@ ___/____.
     \   .
     |   .
 ____|___.
-# High Kick - legacy
+# Skillful Kick, Superior Kick
         .
   (}_| /.
  /_\  / .
     \/  .
     |   .
 ____|___.
-# Side Kick - legacy
+# Solar Kick
          .
   (}_|   .
  /_\  ___.
@@ -488,7 +523,7 @@ ___________.
           ~.
            .
 ___________.
-# Flying Spin Kick - legacy
+# Acrobatic Kick
  /_(}    .
    | /   .
     \ __/.
@@ -579,13 +614,6 @@ ________/__.
     / \  .
  __/ \   .
 _____/___.
-# Flying Headbutt - legacy
-         .
-      _(}.
-     /\\ .
-  __/\   .
-     /   .
-_________.
 # Flying Headbutt
           .
      ___(}.
