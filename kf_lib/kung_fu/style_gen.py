@@ -29,6 +29,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     ),
     "Invulnerable": StyleTech('Invulnerable', dam_reduc=b.DAM_REDUC1),
     "Kicking": StyleTech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
+    'Light-Footed': StyleTech('Light Feet', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
     "Long-Range": StyleTech('Long-Range Fighting', dist3_bonus=b.STRIKE_MULT1),
     "Mid-Range": StyleTech('Mid-Range Fighting', dist2_bonus=b.STRIKE_MULT1),
     "Mystic": StyleTech('Mystic Power', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
@@ -47,6 +48,9 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Sharp": StyleTech('Long-Range Strikes', dist3_bonus=b.STRIKE_MULT1),
     "Shattering": StyleTech(
         'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
+    ),
+    'Swift-Striking': StyleTech(
+        'Swift Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
     "Tough": StyleTech('Toughness', health_mult=b.HEALTH1),
     "Unstoppable": StyleTech('Unstoppable Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
@@ -77,10 +81,14 @@ W2 = {
     'Moon': StyleTech('Moon\'s Orbit', dist2_bonus=b.STRIKE_MULT1),
     'Northern': StyleTech('Northern Style Kung-fu', strength_mult=b.STRENGTH1),
     'Obsidian': StyleTech('Obsidian Guard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
+    'Rainbow': StyleTech('Rainbow Steps', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
     "Razor": StyleTech(
         'Razor-Sharp Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
     ),
     'Red': StyleTech('Red Energy', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    'Snow': StyleTech(
+        'Snowfall', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
+    ),
     "Stone": StyleTech('Stone Forearms', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1),
     "Storm": StyleTech(
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
@@ -92,7 +100,7 @@ W2 = {
     'White': StyleTech('White Energy', health_mult=b.HEALTH1),
     "Wind": StyleTech('Wind Form', speed_mult=b.SPEED1),
     "Wooden": StyleTech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
-    # crystal, colors, colorless, snow, mountain, river, rainbow
+    # crystal, colors, colorless, snow, mountain, river,
     # imperial, golden, southern, northern, silver, bronze, lotus, avalanche, sky,
     # diamond, pearl, hellish, hard, soft, deadly, lightning
 }
@@ -100,6 +108,9 @@ W2 = {
 W3 = {
     "Bear": StyleTech('Bear\'s Strength', strength_mult=b.STRENGTH1),
     "Boar": StyleTech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
+    'Butterfly': StyleTech(
+        'Fluttering Butterfly', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1
+    ),
     "Centipede": StyleTech(
         'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
@@ -122,6 +133,9 @@ W3 = {
     ),
     "Panther": StyleTech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Phoenix": StyleTech('Rising Phoenix', resist_ko=b.RESIST_KO1),
+    'Shark': StyleTech(
+        'Shark Bites', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
+    ),
     "Scorpion": StyleTech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
     "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
     "Tiger": StyleTech('Tiger\'s Rage', atk_mult=b.ATTACK1),
