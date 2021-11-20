@@ -1,3 +1,4 @@
+feat: ability to inspect current player's attributes in the debug menu  
 feat: ability to set any player attribute in the debug menu   
 feat: faster strike / maneuver mechanics (28594 possible unique styles)  
 feat: utility for counting the number of possible generated styles  

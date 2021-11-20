@@ -1,3 +1,5 @@
+import pprint
+
 from ..actors import fighter_factory
 from ..happenings import events
 from ..happenings import tournament
@@ -20,7 +22,7 @@ class DebugMenu:
                 ('Set Attribute', self.debug_set_att),
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
-                ('Inspect player', self.debug_inspect_player),
+                ('Inspect Player', self.debug_inspect_player),
             )
         )
         choice()
@@ -45,6 +47,18 @@ class DebugMenu:
         amount = get_int_from_user('How much money?', 1, 1000000000)
         p.earn_money(amount)
 
+    def debug_inspect_player(self):
+        p = self.g.current_player
+        att = get_str_from_user('Input att (type "all" to see all atts)')
+        if att == 'all':
+            pprint.pprint(vars(p))
+        else:
+            if not hasattr(p, att):
+                print('No such attribute!')
+            else:
+                pprint.pprint(getattr(p, att))
+        pak()
+
     def debug_learn_move(self):
         p = self.g.current_player
         move_name = get_str_from_user('Enter move name or tier:')
@@ -63,6 +77,7 @@ class DebugMenu:
         att = get_str_from_user('Enter attribute:')
         if not hasattr(p, att):
             print('No such attribute!')
+            pak()
         else:
             val = input('Enter value:\n > ')
             setattr(p, att, eval(val))
