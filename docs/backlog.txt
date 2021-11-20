@@ -11,9 +11,6 @@ On dodge / block / hit / fall - techniques
 grappling state, then grabs will also work (like preemptive, but different)
 grappling is dependent on relative strength / agility
 
-Move speed boost
-Strike speed boost
-
 fury (when low on hp, increase atk or str or crit)
 
 Some opponents enter fury spontaneously

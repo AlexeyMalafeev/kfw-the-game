@@ -262,6 +262,10 @@ def apply(tn, f):
     f.refresh_level_dependent_atts()  # in case techs affects them
 
 
+def get_all_techs():
+    return all_techs
+
+
 def get_descr(tech_name):
     """Return description of tech."""
     return get_tech_obj(tech_name).descr

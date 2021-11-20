@@ -1,8 +1,8 @@
 import pprint
 
 from ..actors import fighter_factory
-from ..happenings import events
 from ..happenings import tournament
+from ..kung_fu import techniques
 from ..things import items
 from ..utils.utilities import *
 
@@ -19,6 +19,7 @@ class DebugMenu:
                 ('Get Item', self.debug_get_item),
                 ('Level up', self.debug_level_up),
                 ('Learn Move', self.debug_learn_move),
+                ('Learn Tech', self.debug_learn_tech),
                 ('Set Attribute', self.debug_set_att),
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
@@ -56,7 +57,9 @@ class DebugMenu:
             if not hasattr(p, att):
                 print('No such attribute!')
             else:
-                pprint.pprint(getattr(p, att))
+                val = getattr(p, att)
+                pprint.pprint(val)
+                print(type(val))
         pak()
 
     def debug_learn_move(self):
@@ -66,6 +69,11 @@ class DebugMenu:
             p.learn_random_move(move_tier)
         else:
             p.learn_move(move_name)
+
+    def debug_learn_tech(self):
+        p = self.g.current_player
+        tech = menu(sorted(techniques.get_all_techs()), title='Choose a tech:')
+        p.learn_tech(tech)
 
     def debug_level_up(self):
         p = self.g.current_player
