@@ -1,3 +1,4 @@
+feat: new styles for generation (including preemptive strikes)  
 feat: preemptive strikes!  
 feat: ASCII additions and improvements  
 fix: bug in debug menu (current player was assigned only once)  
