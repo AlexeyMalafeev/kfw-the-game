@@ -1,3 +1,4 @@
+feat: utility for counting the number of possible generated styles (23328 as of now)  
 feat: new styles for generation (including preemptive strikes)  
 feat: preemptive strikes!  
 feat: ASCII additions and improvements  

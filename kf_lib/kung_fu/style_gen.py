@@ -160,6 +160,10 @@ def generate_new_styles(n, overlap=False):
     return get_styles_from_list(results)
 
 
+def get_n_possible_styles():
+    return len(W1) * len(W2) * len(W3)
+
+
 def get_style_from_str(s):
     w1, w2, w3 = s.split()
     t1 = W1[w1]

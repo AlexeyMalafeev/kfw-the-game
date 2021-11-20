@@ -1,3 +1,7 @@
+style-specific AI retraining pipeline
+
+evolutionary algorithm for balancing boosts
+
 bug: wrong improvised weapon 
 
 catch breath & others restore stam relatively ?  
