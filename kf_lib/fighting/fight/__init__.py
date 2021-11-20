@@ -1,8 +1,6 @@
-import pprint
-
-from kf_lib.things import items
-from kf_lib.actors import names
-from kf_lib.utils.utilities import *
+from ...things import items
+from ...actors import names
+from ...utils.utilities import *
 
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
 

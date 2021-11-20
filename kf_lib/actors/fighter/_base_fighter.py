@@ -1,12 +1,12 @@
 from ._basic_attributes import BasicAttributes
-from ._blank_ui import BlankFighterUI
+from ._blank_io import BlankFighterIO
 from ._fight_attributes import FightAttributes
 from ...kung_fu import moves
 
 
 class BaseFighter(
     FightAttributes,
-    BlankFighterUI,
+    BlankFighterIO,
 ):
     def __init__(self):
         super().__init__()

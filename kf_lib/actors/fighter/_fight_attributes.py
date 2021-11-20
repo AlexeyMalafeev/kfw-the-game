@@ -38,6 +38,7 @@ class FightAttributes(BasicAttributes):
         self.distances = {}  # fighter_obj: int
         self.is_auto_fighting = True
         self.kos_this_fight = 0
+        self.momentum = 0  # (-3, 3)
         self.previous_actions = ['', '', '']
         self.qp_start = 0.0  # portion of total
         self.status = {}  # {'status_name': status_dur}
@@ -168,7 +169,7 @@ class FightAttributes(BasicAttributes):
     def check_status(self, status):
         return self.status.get(status, False)
 
-    def get_status_marks(self):
+    def get_status_marks(self, right=False):
         slowed_down = ',' if self.check_status('slowed down') else ''
         off_bal = '\'' if self.check_status('off-balance') else ''
         lying = '...' if self.check_status('lying') else ''
@@ -179,7 +180,22 @@ class FightAttributes(BasicAttributes):
             excl = 1
         inact = '!' * excl
         padding = ' ' if lying or inact else ''
-        return f'{padding}{slowed_down}{off_bal}{lying}{inact}'
+        if self.momentum:
+            if right:
+                if self.momentum > 0:
+                    mom_s = '<'
+                else:
+                    mom_s = '>'
+            else:
+                if self.momentum > 0:
+                    mom_s = '>'
+                else:
+                    mom_s = '<'
+            mom_s *= abs(self.momentum)
+            mom_s = f' {mom_s}'
+        else:
+            mom_s = ''
+        return f'{padding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
     def refresh_level_dependent_atts(self):
         self.hp_max = self.health_full * HP_PER_HEALTH_LV

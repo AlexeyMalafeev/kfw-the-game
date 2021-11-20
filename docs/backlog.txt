@@ -1,10 +1,10 @@
-debug menu: set attribute
-
 boost reducing move complexity (add to 'Air' style tech etc.)
+
+boost reduce fall damage
 
 qi shouldn't increase by default? Maybe it should even decrease unless you focus. It could increase when you successfully defend or attack.
 
-implement 'momentum' - a bonus to attack after Step Forward ('+') and Rush Forward ('++'), or make it a tech
+momentum style / techs
 
 On dodge / block / hit / fall - techniques
 

@@ -25,6 +25,7 @@ KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp
 KNOCKDOWN_HP_THRESHOLD = 0.5
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 MOB_DAM_PENALTY = 0.3
+MOMENTUM_EFFECT_SIZE = 0.1
 OFF_BALANCE_HP_THRESHOLD = 0.25
 QI_BASED_DAM_UPPER_MULT = 3
 SHOCK_CHANCE = 0.5  # for moves
@@ -52,6 +53,10 @@ class StrikeMechanics(FighterWithASCII):
             self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
         )
         self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
+        # take into account momentum
+        momentum_effect = 1.0 + MOMENTUM_EFFECT_SIZE * self.momentum
+        self.atk_pwr *= momentum_effect
+        self.to_hit *= momentum_effect
 
     # todo how is calc_dfs used? why not relative to attacker?
     def calc_dfs(self):
@@ -92,10 +97,11 @@ class StrikeMechanics(FighterWithASCII):
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
+        self.momentum = 0
 
     def cause_knockback(self, dist):
         opp = self.target
-        opp.change_distance(dist, self)
+        self.change_distance(dist, opp)
         s = 's' if dist > 1 else ''
         self.set_ascii('Knockback')
         self.ascii_buffer += dist
@@ -257,7 +263,7 @@ class StrikeMechanics(FighterWithASCII):
         kb = 0
         if not targ.check_status('lying'):
             dam_ratio = self.dam / targ.hp_max
-            kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM)
+            kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
         if kb > 0:
             targ.cause_knockback(kb)
 

@@ -102,7 +102,7 @@ class HumanControlledFighter(Fighter):
                         wp_info = f' {f.weapon.name}'
                     else:
                         wp_info = ''
-                    marks = f.get_status_marks()
+                    marks = f.get_status_marks(right=True)
                     options.append(
                         (
                             f'{dist}',
@@ -234,7 +234,7 @@ class HumanControlledFighter(Fighter):
 
         def fill_lines(lines_to_be_filled, f, right=False):
             lines_f = lines_to_be_filled
-            marks = f.get_status_marks()
+            marks = f.get_status_marks(right=right)
             lines_f[0].append(f.name + marks)
 
             health_bar = get_bar(f.hp, f.hp_max, '%', '.', 10, mirror=right)
