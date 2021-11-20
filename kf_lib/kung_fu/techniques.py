@@ -231,6 +231,10 @@ LINKED_TECHS = [
         UpgradableTech('Retaliative Blows', counter_chance_mult=b.COUNTER_CH_MULT1),
         AdvancedTech('Vengeful Fox', counter_chance_mult=b.COUNTER_CH_MULT2),
     ),
+    (
+        UpgradableTech('Preemptive Strikes', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+        AdvancedTech('Enranged Mantis', preemptive_chance_mult=b.PREEMPTIVE_CH2),
+    ),
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]
