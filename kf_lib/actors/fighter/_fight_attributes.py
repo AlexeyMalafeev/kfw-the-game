@@ -79,6 +79,7 @@ class FightAttributes(BasicAttributes):
         self.hp_gain = 0
         self.in_fight_impro_wp_chance = 0.0
         self.lying_dfs_mult = 0.5
+        self.maneuver_time_cost_mult = 1.0  # lower is better
         self.num_moves_choose = 3
         self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
@@ -97,6 +98,7 @@ class FightAttributes(BasicAttributes):
         self.stamina_max = 0  # NB! level-dependent
         self.stamina_max_mult = 1.0
         self.strength_mult = 1.0
+        self.strike_time_cost_mult = 1.0  # lower is better
         self.stun_chance = 0.0
         self.resist_ko = 0.0
         self.unblock_chance = 0.0

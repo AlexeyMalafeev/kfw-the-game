@@ -198,8 +198,12 @@ class StrikeMechanics(FighterWithASCII):
             mob_mod = 1 - MOB_DAM_PENALTY
         else:
             mob_mod = 1
-        cost = round(move_obj.time_cost / (self.speed_full * mob_mod))
-        return cost
+        cost = move_obj.time_cost / (self.speed_full * mob_mod)
+        if move_obj.power:
+            cost *= self.strike_time_cost_mult
+        elif move_obj.dist_change:
+            cost *= self.maneuver_time_cost_mult
+        return round(cost)
 
     def get_rep_actions_factor(self, move):
         n = self.previous_actions.count(move.name)  # 0-3

@@ -1,3 +1,5 @@
+debug menu: set attribute
+
 boost reducing move complexity (add to 'Air' style tech etc.)
 
 qi shouldn't increase by default? Maybe it should even decrease unless you focus. It could increase when you successfully defend or attack.
@@ -9,7 +11,8 @@ On dodge / block / hit / fall - techniques
 grappling state, then grabs will also work (like preemptive, but different)
 grappling is dependent on relative strength / agility
 
-Move speed tech
+Move speed boost
+Strike speed boost
 
 fury (when low on hp, increase atk or str or crit)
 

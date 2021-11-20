@@ -51,7 +51,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Tough": StyleTech('Toughness', health_mult=b.HEALTH1),
     "Unstoppable": StyleTech('Unstoppable Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Vigorous": StyleTech('Vigor', hp_gain=b.HP_GAIN1),
-}  # drunken, light-footed, furious, enraged
+}  # drunken: trick, acrobatic, surprise backflip; light-footed, furious, enraged
 
 # exclude resist_ko=b.RESIST_KO1
 W2 = {
