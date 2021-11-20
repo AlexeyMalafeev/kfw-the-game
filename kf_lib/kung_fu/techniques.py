@@ -235,6 +235,14 @@ LINKED_TECHS = [
         UpgradableTech('Preemptive Strikes', preemptive_chance_mult=b.PREEMPTIVE_CH1),
         AdvancedTech('Enranged Mantis', preemptive_chance_mult=b.PREEMPTIVE_CH2),
     ),
+    (
+        UpgradableTech('Fast Movement', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
+        AdvancedTech('Lightning-Fast Movement', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT2),
+    ),
+    (
+        UpgradableTech('Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+        AdvancedTech('Lightning-Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+    )
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]

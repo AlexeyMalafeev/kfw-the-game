@@ -94,7 +94,7 @@ W2 = {
     "Wooden": StyleTech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
     # crystal, colors, colorless, snow, mountain, river, rainbow
     # imperial, golden, southern, northern, silver, bronze, lotus, avalanche, sky,
-    # diamond, pearl, hellish, hard, soft, deadly
+    # diamond, pearl, hellish, hard, soft, deadly, lightning
 }
 
 W3 = {
