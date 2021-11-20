@@ -1,4 +1,6 @@
-feat: utility for counting the number of possible generated styles (23328 as of now)  
+feat: ability to set any player attribute in the debug menu   
+feat: faster strike / maneuver mechanics (28594 possible unique styles)  
+feat: utility for counting the number of possible generated styles  
 feat: new styles for generation (including preemptive strikes)  
 feat: preemptive strikes!  
 feat: ASCII additions and improvements  

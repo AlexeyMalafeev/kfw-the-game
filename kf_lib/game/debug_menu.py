@@ -17,8 +17,10 @@ class DebugMenu:
                 ('Get Item', self.debug_get_item),
                 ('Level up', self.debug_level_up),
                 ('Learn Move', self.debug_learn_move),
+                ('Set Attribute', self.debug_set_att),
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
+                ('Inspect player', self.debug_inspect_player),
             )
         )
         choice()
@@ -45,7 +47,7 @@ class DebugMenu:
 
     def debug_learn_move(self):
         p = self.g.current_player
-        move_name = input('Enter move name or tier: ')
+        move_name = get_str_from_user('Enter move name or tier:')
         if move_name.isdigit() and 1 <= (move_tier := int(move_name)) <= 10:
             p.learn_random_move(move_tier)
         else:
@@ -55,6 +57,15 @@ class DebugMenu:
         p = self.g.current_player
         n = get_int_from_user('How many levels up?', 1, 100)
         p.level_up(n)
+
+    def debug_set_att(self):
+        p = self.g.current_player
+        att = get_str_from_user('Enter attribute:')
+        if not hasattr(p, att):
+            print('No such attribute!')
+        else:
+            val = input('Enter value:\n > ')
+            setattr(p, att, eval(val))
 
     def debug_tournament(self):
         n = get_int_from_user('How many participants?', 2, 20)
