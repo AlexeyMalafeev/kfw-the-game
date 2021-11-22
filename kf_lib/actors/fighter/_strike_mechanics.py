@@ -225,7 +225,7 @@ class StrikeMechanics(FighterWithASCII):
             self.atk_pwr *= self.epic_atk_pwr_mult
             self.current_fight.display('~*~*~EPIC!!!~*~*~')
             # print('epic')
-        if rnd() <= self.critical_chance:
+        elif rnd() <= self.critical_chance:
             self.atk_pwr *= self.critical_mult
             self.current_fight.display('CRITICAL!')
             # print('critical')
