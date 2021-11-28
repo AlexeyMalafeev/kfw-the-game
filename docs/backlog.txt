@@ -1,3 +1,7 @@
+make tournaments with various non-kung-fu styles and bet (as a separate mini-game)
+
+spectate tournaments
+
 boost reducing move complexity (add to 'Air' style tech etc.)
 
 boost reduce fall damage

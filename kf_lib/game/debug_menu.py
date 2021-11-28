@@ -24,6 +24,7 @@ class DebugMenu:
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
                 ('Inspect Player', self.debug_inspect_player),
+                ('PvP', self.debug_pvp),
             )
         )
         choice()
@@ -79,6 +80,11 @@ class DebugMenu:
         p = self.g.current_player
         n = get_int_from_user('How many levels up?', 1, 100)
         p.level_up(n)
+
+    def debug_pvp(self):
+        p = self.g.current_player
+        opp = menu([pp for pp in self.g.players if not (pp is p)])
+        p.spar(opp)
 
     def debug_set_att(self):
         p = self.g.current_player

@@ -1,3 +1,4 @@
+feat: PvP in debug menu  
 fix: turn off items in ninja turtles fight  
 feat: momentum!  
 feat: ability to learn any existing tech via the debug menu  
