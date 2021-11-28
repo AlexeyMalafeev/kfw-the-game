@@ -1,3 +1,4 @@
+fix: turn off items in ninja turtles fight  
 feat: momentum!  
 feat: ability to learn any existing tech via the debug menu  
 feat: ability to inspect current player's attributes in the debug menu  

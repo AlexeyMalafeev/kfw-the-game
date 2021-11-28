@@ -1,3 +1,9 @@
+fix double knockback!  
+
+rage and fury:  
+rage - fixed chance, higher for thugs, taunts can increase, keep only step/rush forward and strikes  
+fury – when hp low, increase atk_pwr & to_hit  
+
 style-specific AI retraining pipeline
 
 evolutionary algorithm for balancing boosts

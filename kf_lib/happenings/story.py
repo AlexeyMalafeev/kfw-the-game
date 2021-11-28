@@ -189,7 +189,7 @@ class NinjaTurtlesStory(Story):
         p.pak()
         # p.choose_best_norm_wp()
         ens = fighter_factory.new_ninja_turtles()
-        if p.fight(ens[0], en_allies=ens[1:]):
+        if p.fight(ens[0], en_allies=ens[1:], items_allowed=False):
             self.reward()
 
         # end of the story
