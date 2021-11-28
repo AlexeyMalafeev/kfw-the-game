@@ -1,10 +1,12 @@
 make tournaments with various non-kung-fu styles and bet (as a separate mini-game)
 
-spectate tournaments
+spectate tournaments option
 
 boost reducing move complexity (add to 'Air' style tech etc.)
 
 boost reduce fall damage
+
+master day action: do street performance to earn money, unique encounters (challenges, robbers)
 
 qi shouldn't increase by default? Maybe it should even decrease unless you focus. It could increase when you successfully defend or attack.
 
@@ -12,24 +14,42 @@ momentum style / techs
 
 On dodge / block / hit / fall - techniques
 
-grappling state, then grabs will also work (like preemptive, but different)
-grappling is dependent on relative strength / agility
-
 fury (when low on hp, increase atk or str or crit)
 
 Some opponents enter fury spontaneously
 
 item bundles
 
-Stances: change tactics, always a trade-off except for the hidden ones (speed vs stamina, speed vs dfs, dfs vs atk, dfs vs mobility, preemptive vs dfs)
-
 Observe opponent: see atts and moves, but selectively, with ??
+
+refactor: 
+* @property
+
+story:
+* righteous sect, evil sect, triads?
+
+encounters:
+* enc: sect members, atk or ignore, sects fighting each other
+
+wtf is STAMINA_FACTOR_BIAS in fighter.py?  
+
+modify qi_when_atk
+
+repair tests; make balance and test suites
+
+y no close-range @ lv up ?  
+
+evil weapons  
+
+remove wp atk bonus
+
+fight players from past games (legendary, story?)
 
 generate new maneuvers (fast charging step etc.), a fixed chance at getting maneuvers when choosing new move
 
 more complex genetic fight AI that learns not only probabilies to execute moves, but also some thresholds (e.g. do focus when qp < threshold etc.; also consider group advantage
 
-train style-specific AIs
+specific encs: test of strength, speed, agility, health
 
 ! use | in style move_s (e.g. short-range,punch|kick)
 
@@ -40,8 +60,6 @@ free-for-all fights
 grab enemy's weapon
 
 now we can actually create own styles (with 27 boosts -> 2925 combinations without repetition [n! / (r!(n-r)!)]
-
-spectate tournaments option
 
 Iron Gauntlet/Fist weapon; Iron Claws
 
@@ -56,10 +74,6 @@ AI: compute distance change differently (efficiency of strikes rather than the s
 all levels are 100 exp, calc win exp relative to winner's level (how difficult was the fight? + bonuses)
 
 tavern trouble, losers pay for the breakages
-
-master day action: do street performance
-
-Choose a move to learn: as a table
 
 more ASCII and a better matching function for name of move and art
 
@@ -81,21 +95,15 @@ tech: predict opponent's actions
 
 move: Rakshasa Palm
 
-change stances/fighting modes?
+series of strikes as one move?
 
-series of strikes as one move
-
-berserk-like state (gradually decrease HP, get attack bonus)
+berserk-like state (gradually decrease HP, get attack bonus); different from rage and fury  
 
 preset fighters in development in text file, which move/tech at which level
 
 new game settings in separate text file
 
 mine more quotes
-
-
-
-
 
 collect 'most damage dealt in one blow' stat
 
@@ -111,8 +119,6 @@ turn numbers - another tactical dimension
 (wtf is this??)
 
 rich boy - monthly allowance; prodigy - starting level?
-
-improved items
 
 day action: go to tavern
 
@@ -140,11 +146,6 @@ Focus (with dfs penalty?)
 
 foreign styles
 
-mobility tech: move faster? (speed boost already there!)
-
-strikes that gain bonus depending on strength (e.g. hammer fist?), speed (e.g. backfist), agility (acrobatic), maybe
-health
-
 always get reward for helping people?
 
 enc: market troublemakers, items as reward (as many as the troublemakers)
@@ -152,8 +153,6 @@ enc: market troublemakers, items as reward (as many as the troublemakers)
 foreign devils, moral standards
 
 penalize repeated actions more for more interesting fights
-
-epic strikes
 
 waves (ASCII)
 
@@ -288,17 +287,11 @@ new system:
 	reward for beating school challenges? a style move, unavailable otherwise?
 
 AI Players should buy Magic Healers more
-	
-Chocolate minigame
 
 players can learn moves used against them (traits affect this too) a special attribute that allows learning other
 fighters' moves and techs (a small chance by default, but add traits)?
 
 on defeating your master, become head of your school instead of opening a new one? a choice?
-
-specific encs: test of strength, speed, agility, health
-
-fight players from past games (legendary, story?)
 
 ambush - never feel too scared? run away on feel too scared?
 
