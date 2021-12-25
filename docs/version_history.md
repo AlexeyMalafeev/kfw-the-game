@@ -1,25 +1,30 @@
-feat: PvP in debug menu  
-fix: turn off items in ninja turtles fight  
-feat: momentum!  
-feat: ability to learn any existing tech via the debug menu  
-feat: ability to inspect current player's attributes in the debug menu  
-feat: ability to set any player attribute in the debug menu   
-feat: faster strike / maneuver mechanics (28594 possible unique styles)  
-feat: utility for counting the number of possible generated styles  
-feat: new styles for generation (including preemptive strikes)  
-feat: preemptive strikes!  
-feat: ASCII additions and improvements  
-fix: bug in debug menu (current player was assigned only once)  
-feat: new formula for knockback caused by damage  
-feat: visualize knockback  
-feat: criticals are level-dependent  
-feat: "~*~*~EPIC!!!~*~*~"  
-refactor: basic and fight attributes  
-feat: a few new hero quotes  
-feat: 3x3 co-op mode  
+### v.0.6.4-beta
+"Flashy Fights"  
+December 25, 2021  
 
+* feat: PvP in debug menu  
+* fix: turn off items in ninja turtles fight  
+* feat: momentum!  
+* feat: ability to learn any existing tech via the debug menu  
+* feat: ability to inspect current player's attributes in the debug menu  
+* feat: ability to set any player attribute in the debug menu   
+* feat: faster strike / maneuver mechanics (28594 possible unique styles)  
+* feat: utility for counting the number of possible generated styles  
+* feat: new styles for generation (including preemptive strikes)  
+* feat: preemptive strikes!  
+* feat: ASCII additions and improvements  
+* fix: bug in debug menu (current player was assigned only once)  
+* feat: new formula for knockback caused by damage  
+* feat: visualize knockback  
+* feat: criticals are level-dependent  
+* feat: "~*~*~EPIC!!!~*~*~"  
+* refactor: basic and fight attributes  
+* feat: a few new hero quotes  
+* feat: 3x3 co-op mode  
 
-v.0.6.3-beta  
+---
+
+### v.0.6.3-beta  
 "Bet on Tournaments"  
 October 31, 2021  
 
@@ -45,7 +50,7 @@ fix: qi cost rebalance
 
 ---
 
-v.0.6.2  
+### v.0.6.2  
 "Debug Menu"  
 June 17, 2021  
 
@@ -61,7 +66,7 @@ feat: ability to fight thugs via debug menu
 
 ---
 
-v.0.6.1  
+### v.0.6.1  
 "Fist of Vengeance"  
 June 16, 2021  
 
