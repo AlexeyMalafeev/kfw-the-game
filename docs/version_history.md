@@ -2,6 +2,7 @@
 "Flashy Fights"  
 December 25, 2021  
 
+* docs: add a (more or less) proper README
 * feat: PvP in debug menu  
 * fix: turn off items in ninja turtles fight  
 * feat: momentum!  
