@@ -1,5 +1,11 @@
 import os
 
+
+BUFFER_WIDTH = 1  # todo if you set buffer width to >=2, there is a bug in concat
+BUFFER_UNIT_AIR = ' ' * BUFFER_WIDTH
+BUFFER_UNIT_FLOOR = '_' * BUFFER_WIDTH
+
+
 r"""
    (}    {)
   /_\|  |/ |
@@ -9,15 +15,20 @@ r"""
 """
 
 
-def concat(a, b):
+def concat(a, b, buffer=0):
     lines_a = a.split('\n')
     lines_b = b.split('\n')
     max_len = max([len(lines_a[i]) + len(lines_b[i]) for i in range(len(lines_a))])
     new_lines = []
-    for i in range(len(lines_a)):
+    total_lines = len(lines_a)
+    last_line = total_lines - 1
+    buffer_char = BUFFER_UNIT_AIR
+    for i in range(total_lines):
+        if i == last_line:
+            buffer_char = BUFFER_UNIT_FLOOR
         cur_len = len(lines_a[i]) + len(lines_b[i])
         pad = max_len - cur_len
-        new_lines.append(lines_a[i] + ' ' * pad + lines_b[i])
+        new_lines.append(lines_a[i] + buffer_char * (pad + buffer) + lines_b[i])
     return '\n'.join(new_lines)
 
 

@@ -4,6 +4,7 @@ from ...fighting import distances
 
 class DistanceMethods(BaseFighter):
     def change_distance(self, dist, targ):
+        self.momentum = -dist
         dist = self.distances[targ] + dist
         if dist < distances.VALID_DISTANCES_MIN:
             dist = distances.VALID_DISTANCES_MIN

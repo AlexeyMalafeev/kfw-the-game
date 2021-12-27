@@ -157,8 +157,8 @@ LINKED_TECHS = [
         ),
     ),
     (
-        UpgradableTech('Fierce Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
-        AdvancedTech('Explosive Strikes', critical_chance=b.CRIT_CH2, critical_mult=b.CRIT_M2),
+        UpgradableTech('Fierce Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+        AdvancedTech('Explosive Strikes', critical_chance_mult=b.CRIT_CH2, critical_mult=b.CRIT_M2),
     ),
     (
         UpgradableTech('Iron Vest', dam_reduc=b.DAM_REDUC1),
@@ -231,6 +231,18 @@ LINKED_TECHS = [
         UpgradableTech('Retaliative Blows', counter_chance_mult=b.COUNTER_CH_MULT1),
         AdvancedTech('Vengeful Fox', counter_chance_mult=b.COUNTER_CH_MULT2),
     ),
+    (
+        UpgradableTech('Preemptive Strikes', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+        AdvancedTech('Enranged Mantis', preemptive_chance_mult=b.PREEMPTIVE_CH2),
+    ),
+    (
+        UpgradableTech('Fast Movement', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
+        AdvancedTech('Lightning-Fast Movement', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT2),
+    ),
+    (
+        UpgradableTech('Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+        AdvancedTech('Lightning-Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+    )
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]
@@ -247,6 +259,11 @@ def apply(tn, f):
     t = get_tech_obj(tn)
     t.apply(f)
     f.refresh_full_atts()  # in case techs affects them
+    f.refresh_level_dependent_atts()  # in case techs affects them
+
+
+def get_all_techs():
+    return all_techs
 
 
 def get_descr(tech_name):

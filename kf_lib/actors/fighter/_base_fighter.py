@@ -1,17 +1,15 @@
 from ._basic_attributes import BasicAttributes
-from ._blank_ui import BlankFighterUI
+from ._blank_io import BlankFighterIO
 from ._fight_attributes import FightAttributes
 from ...kung_fu import moves
 
 
 class BaseFighter(
-    BasicAttributes,
     FightAttributes,
-    BlankFighterUI,
+    BlankFighterIO,
 ):
     def __init__(self):
-        BasicAttributes.__init__(self)
-        FightAttributes.__init__(self)
+        super().__init__()
         self.exp_yield = 0
         self.fight_ai = None
         self.moves = []

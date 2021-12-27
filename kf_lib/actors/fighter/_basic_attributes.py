@@ -1,15 +1,6 @@
 import random
 
 
-COUNTER_CHANCE_BASE = 0.1
-COUNTER_CHANCE_INCR_PER_LV = 0.02
-HP_PER_HEALTH_LV = 50
-QP_BASE = 0
-QP_INCR_PER_LV = 5
-STAMINA_BASE = 50  # for all fighter levels
-STAMINA_INCR_PER_LV = 10
-
-
 class BasicAttributes:
     att_names = ('strength', 'agility', 'speed', 'health')
     att_names_short = ('Str', 'Agi', 'Spd', 'Hlt')
@@ -29,64 +20,15 @@ class BasicAttributes:
         self.num_atts_choose = 3
         self.rand_atts_mode = 0  # 0, 1, 2
 
-        self.counter_chance = 0.0
-        self.counter_chance_mult = 1.0
-        self.hp = 0
-        self.hp_max = 0
-        self.hp_gain = 0
-        self.qp = 0
-        self.qp_gain = 0
-        self.qp_gain_mult = 1.0
-        self.qp_max = 0
-        self.qp_max_mult = 1.0
-        self.stamina = 0
-        self.stamina_gain = 0
-        self.stamina_gain_mult = 1.0
-        self.stamina_max = 0
-        self.stamina_max_mult = 1.0
-
-    def boost(self, **kwargs):
-        """Boost fighter's attribute(s); k = att_name, v = quantity"""
-        for k, v in kwargs.items():
-            curr_v = getattr(self, k)
-            setattr(self, k, curr_v + v)
-        self.refresh_full_atts()
-
     def change_att(self, att, amount):
         setattr(self, att, getattr(self, att) + amount)
         self.refresh_full_atts()
-
-    def change_hp(self, amount):
-        self.hp += amount
-        if self.hp > self.hp_max:
-            self.hp = self.hp_max
-        elif self.hp < 0:
-            self.hp = 0
-            # set qp to zero too
-            self.qp = 0
-
-    def change_qp(self, amount):
-        self.qp += amount
-        if self.qp > self.qp_max:
-            self.qp = self.qp_max
-        elif self.qp < 0:
-            self.qp = 0
-
-    def change_stamina(self, amount):
-        self.stamina += amount
-        if self.stamina > self.stamina_max:
-            self.stamina = self.stamina_max
-        elif self.stamina < 0:
-            self.stamina = 0
 
     def check_lv(self, minlv, maxlv=None):
         if maxlv is None:
             return self.level >= minlv
         else:
             return minlv <= self.level <= maxlv
-
-    def check_stamina(self, amount):
-        return self.stamina >= amount
 
     def upgrade_att(self):
         atts = self.get_atts_to_choose()
@@ -146,19 +88,6 @@ class BasicAttributes:
             base = getattr(self, att)
             mult = getattr(self, att + '_mult')
             setattr(self, att + '_full', round(base * mult))
-        self.hp_max = self.health_full * HP_PER_HEALTH_LV
-        self.stamina_max = round(
-            (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
-        )
-        self.stamina_gain = round(self.stamina_max / 10 * self.stamina_gain_mult)
-        self.qp_max = round(
-            (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
-        )
-        self.qp_gain = round(self.qp_max / 5 * self.qp_gain_mult)
-        self.counter_chance = (
-            (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
-            self.counter_chance_mult
-        )
 
     def set_att_weights(self):
         """This is used for choosing better atts when upgrading / randomly generating fighters"""
@@ -189,11 +118,3 @@ class BasicAttributes:
             att = self.choose_better_att(atts)
             value = getattr(self, att)
             setattr(self, att, value + 1)
-
-    def unboost(self, **kwargs):
-        """'Unboost' fighter's attributes."""
-        kwargs_copy = {}
-        for k, v in kwargs.items():
-            kwargs_copy[k] = -v
-        self.boost(**kwargs_copy)
-        self.refresh_full_atts()

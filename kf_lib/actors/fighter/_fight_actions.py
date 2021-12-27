@@ -28,8 +28,11 @@ class FighterWithActions(
             self.current_fight.display(f' (guarding while attacking)')
             self.dfs_bonus += self.guard_dfs_bonus * self.guard_while_attacking
         self.current_fight.display('=' * len(s))
-        self.try_strike()
-        self.target.try_counter()
+        if self.target.check_preemptive():
+            self.target.do_preemptive()
+        else:
+            self.try_strike()
+            self.target.try_counter()
 
     def check_move_failed(self):
         compl = self.action.complexity
@@ -49,6 +52,9 @@ class FighterWithActions(
             return True
         else:
             return False
+
+    def check_preemptive(self):
+        return self.preemptive_chance and rnd() <= self.preemptive_chance
 
     def choose_move(self):
         self.av_moves = self.get_av_moves()  # this depends on target
@@ -93,9 +99,20 @@ class FighterWithActions(
     def do_counter(self):
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
-            self.current_fight.display('COUNTER!')
+            self.current_fight.display('+COUNTER!+')
             new_action = random.choice(cand_moves)
             self.action = new_action
+            s = f'{self.name}: {self.action.name} @ {self.target.name}'
+            self.current_fight.display(s)
+            self.do_strike()
+
+    def do_preemptive(self):
+        cand_moves = self.get_av_moves(attack_moves_only=True)
+        if cand_moves:
+            self.current_fight.display('<-PREEMPTIVE!-<')
+            new_action = random.choice(cand_moves)
+            self.action = new_action
+            self.refresh_ascii()
             s = f'{self.name}: {self.action.name} @ {self.target.name}'
             self.current_fight.display(s)
             self.do_strike()
@@ -113,6 +130,8 @@ class FighterWithActions(
         self.target.apply_dfs_penalty()
         if m.dist_change:
             self.change_distance(m.dist_change, self.target)
+        else:
+            self.momentum = 0
         self.previous_actions = self.previous_actions[1:] + [m.name]
         self.change_stamina(-m.stam_cost)
         self.change_qp(-m.qi_cost)
@@ -160,6 +179,8 @@ class FighterWithActions(
         if self.dam > 0:
             self.dam = max(self.dam - tgt.dam_reduc, 0)
             tgt.take_damage(self.dam)
+            if tgt.momentum > 0:
+                tgt.momentum = 0
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_hit_disarm()
             self.do_move_functions(self.action)
@@ -177,6 +198,8 @@ class FighterWithActions(
         if m.dist_change:
             self.change_distance(m.dist_change, self.target)
             self.check_move_failed()
+        else:
+            self.momentum = 0
         self.do_move_functions(m)
         self.change_stamina(-m.stam_cost)
         self.change_qp(-m.qi_cost)
@@ -192,6 +215,7 @@ class FighterWithActions(
         self.exp_yield = self.get_exp_worth()
         self.took_damage = False
         self.kos_this_fight = 0
+        self.momentum = 0
 
     def set_target(self, target):
         self.target = target

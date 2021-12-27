@@ -4,142 +4,151 @@ from .techniques import StyleTech
 from kf_lib.utils.utilities import *
 
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
-    # + distance
     # + stats
-    # + elbow & knee & headbutt (rare!)
-    # + palm & claw
-    "Mystic": StyleTech('Mystic Power', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
-    "Vigorous": StyleTech('Vigor', hp_gain=b.HP_GAIN1),
     "Attacking": StyleTech('Attack Method', atk_mult=b.ATTACK1),
+    'Averting': StyleTech('Avert Attacks', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    "Balanced": StyleTech('Mid-Range Strikes', dist2_bonus=b.STRIKE_MULT1),
+    "Cautious": StyleTech('Cautious Attacks', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
+    "Clinging": StyleTech('Short Strikes', dist1_bonus=b.STRIKE_MULT1),
+    "Close-Range": StyleTech('Close-Range Fighting', dist1_bonus=b.STRIKE_MULT1),
+    "Dancing": StyleTech('Dance-Like Form', agility_mult=b.AGILITY1),
     "Defending": StyleTech('Defense Stance', dfs_mult=b.DEFENSE1),
-    "Invulnerable": StyleTech('Invulnerable', dam_reduc=b.DAM_REDUC1),
-    "Rising": StyleTech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
-    "Guarding": StyleTech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
-    "Persevering": StyleTech(
-        'Perseverance', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
-    ),
-    "Shattering": StyleTech(
-        'Shattering Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1
-    ),
     "Elusive": StyleTech('Elusive Moves', dodge_mult=b.EVADE1),
-    "Indestructible": StyleTech('Indestructible Body', block_mult=b.BLOCK1),
-    "Retaliating": StyleTech('Retaliation', counter_chance_mult=b.COUNTER_CH_MULT1),
-    "Punching": StyleTech('Fist Training', punch_strike_mult=b.STRIKE_MULT1),
-    "Palm-Striking": StyleTech(
-        'Palm Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
-    ),
-    # "Clawing": StyleTech('Claw Training', claw_strike_mult=b.STRIKE_MULT1),
-    "Kicking": StyleTech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
     "Exotic": StyleTech(
         'Exotic Strikes Training',
         knee_strike_mult=b.STRIKE_MULT1,
         elbow_strike_mult=b.STRIKE_MULT1,
-        head_strike_mult=b.STRIKE_MULT1,
-    ),
-    "Grappling": StyleTech('Grappling Training', grappling_strike_mult=b.STRIKE_MULT1),
+        head_strike_mult=b.STRIKE_MULT1,),
     "Flying": StyleTech('Jump Technique', flying_strike_mult=b.STRIKE_MULT1),
-    "Close-Range": StyleTech('Close-Range Fighting', dist1_bonus=b.STRIKE_MULT1),
-    "Mid-Range": StyleTech('Mid-Range Fighting', dist2_bonus=b.STRIKE_MULT1),
+    "Grappling": StyleTech('Grappling Training', grappling_strike_mult=b.STRIKE_MULT1),
+    "Guarding": StyleTech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
+    "Indestructible": StyleTech(
+        'Indestructible Body',
+        block_mult=b.BLOCK1,
+        block_disarm=b.BLOCK_DISARM1
+    ),
+    "Invulnerable": StyleTech('Invulnerable', dam_reduc=b.DAM_REDUC1),
+    "Kicking": StyleTech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
+    'Light-Footed': StyleTech('Light Feet', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
     "Long-Range": StyleTech('Long-Range Fighting', dist3_bonus=b.STRIKE_MULT1),
-    "Cautious": StyleTech('Cautious Attacks', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-    "Clinging": StyleTech('Short Strikes', dist1_bonus=b.STRIKE_MULT1),
-    "Balanced": StyleTech('Mid-Range Strikes', dist2_bonus=b.STRIKE_MULT1),
-    "Sharp": StyleTech('Long-Range Strikes', dist3_bonus=b.STRIKE_MULT1),
-    "Dancing": StyleTech('Dance-Like Form', agility_mult=b.AGILITY1),
-    "Quick": StyleTech('Emphasis on Speed', speed_mult=b.SPEED1),
+    "Mid-Range": StyleTech('Mid-Range Fighting', dist2_bonus=b.STRIKE_MULT1),
+    "Mystic": StyleTech('Mystic Power', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
+    "Open-Handed": StyleTech(
+        'Palm and Claw Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
+    ),
+    "Paralyzing": StyleTech('Paralyzing Strikes', stun_chance=b.STUN_CH1),
+    "Persevering": StyleTech(
+        'Perseverance', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+    ),
     "Powerful": StyleTech('Strength Training', strength_mult=b.STRENGTH1),
+    "Punching": StyleTech('Fist Training', punch_strike_mult=b.STRIKE_MULT1),
+    "Quick": StyleTech('Emphasis on Speed', speed_mult=b.SPEED1),
+    "Retaliating": StyleTech('Retaliation', counter_chance_mult=b.COUNTER_CH_MULT1),
+    "Rising": StyleTech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
+    "Sharp": StyleTech('Long-Range Strikes', dist3_bonus=b.STRIKE_MULT1),
+    "Shattering": StyleTech(
+        'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
+    ),
+    'Swift-Striking': StyleTech(
+        'Swift Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
+    ),
     "Tough": StyleTech('Toughness', health_mult=b.HEALTH1),
     "Unstoppable": StyleTech('Unstoppable Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
-    "Paralyzing": StyleTech('Paralyzing Strikes', stun_chance=b.STUN_CH1),
-}
+    "Vigorous": StyleTech('Vigor', hp_gain=b.HP_GAIN1),
+}  # drunken: trick, acrobatic, surprise backflip; light-footed, furious, enraged
 
 # exclude resist_ko=b.RESIST_KO1
 W2 = {
+    'Adamant': StyleTech('Adamant Strikes', unblock_chance=b.UNBLOCK_CHANCE1),
+    "Air": StyleTech('Air Attacks', flying_strike_mult=b.STRIKE_MULT1),
+    "Astral": StyleTech('Astral Footwork', kick_strike_mult=b.STRIKE_MULT1),
+    "Bizarre": StyleTech(
+        'Bizarre Forms',
+        knee_strike_mult=b.STRIKE_MULT1,
+        elbow_strike_mult=b.STRIKE_MULT1,
+        head_strike_mult=b.STRIKE_MULT1,),
+    "Earth": StyleTech('Earth\'s Orbit', dist1_bonus=b.STRIKE_MULT1),
     "Emerald": StyleTech('Emerald Flow', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
-    "Water": StyleTech('Healing Water', hp_gain=b.HP_GAIN1),
     "Fire": StyleTech('Inferno', atk_mult=b.ATTACK1),
+    "Formless": StyleTech('Formless Form', agility_mult=b.AGILITY1),
+    'Heavenly': StyleTech(
+        'Heavenly Hands', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
+    ),
     "Ice": StyleTech('Hard like Ice', dfs_mult=b.DEFENSE1),
     "Iron": StyleTech('Iron Skin', dam_reduc=b.DAM_REDUC1),
-    "Wooden": StyleTech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
+    'Meteor': StyleTech('Meteor Punches', punch_strike_mult=b.STRIKE_MULT1),
+    "Misty": StyleTech('Misty Steps', dodge_mult=b.EVADE1),
+    'Moon': StyleTech('Moon\'s Orbit', dist2_bonus=b.STRIKE_MULT1),
+    'Northern': StyleTech('Northern Style Kung-fu', strength_mult=b.STRENGTH1),
+    'Obsidian': StyleTech('Obsidian Guard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
+    'Rainbow': StyleTech('Rainbow Steps', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
+    "Razor": StyleTech(
+        'Razor-Sharp Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
+    ),
+    'Red': StyleTech('Red Energy', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    'Snow': StyleTech(
+        'Snowfall', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
+    ),
+    "Stone": StyleTech('Stone Forearms', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1),
     "Storm": StyleTech(
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
-    "Razor": StyleTech('Razor-Sharp Strikes', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
-    "Misty": StyleTech('Misty Steps', dodge_mult=b.EVADE1),
-    "Stone": StyleTech('Stone Forearms', block_mult=b.BLOCK1),
+    'Sun': StyleTech('Sun\'s Orbit', dist3_bonus=b.STRIKE_MULT1),
     "Vengeful": StyleTech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
-    # "": StyleTech('', punch_strike_mult=b.STRIKE_MULT1),
-    # "": StyleTech('', palm_strike_mult=b.STRIKE_MULT_HALF),
-    # "": StyleTech('', kick_strike_mult=b.STRIKE_MULT1),
-    # "": StyleTech('', exotic_strike_mult=b.RARE_STRIKE_MULT1),
-    "Air": StyleTech('Air Attacks', flying_strike_mult=b.RARE_STRIKE_MULT1),
-    # "": StyleTech('', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-    # "": StyleTech('', dist1_bonus=b.STRIKE_MULT1),
-    # "": StyleTech('', dist2_bonus=b.STRIKE_MULT1),
-    # "": StyleTech('', dist3_bonus=b.STRIKE_MULT1),
-    "Formless": StyleTech('Formless Form', agility_mult=b.AGILITY1),
+    'Venom': StyleTech('Deadly Venom', stun_chance=b.STUN_CH1),
+    "Water": StyleTech('Healing Water', hp_gain=b.HP_GAIN1),
+    'White': StyleTech('White Energy', health_mult=b.HEALTH1),
     "Wind": StyleTech('Wind Form', speed_mult=b.SPEED1),
-    # "": StyleTech('', strength_mult=b.STRENGTH1),
-    # "": StyleTech('', health_mult=b.HEALTH1),
-    # "": StyleTech('', unblock_chance=b.UNBLOCK_CHANCE1),
-    # "": StyleTech('', stun_chance=b.STUN_CH1),
-    # obsidian, adamant, crystal, colors, colorless, moon, solar, snow, mountain, river, rainbow
-    # meteor, astral, imperial, golden, southern, northern
+    "Wooden": StyleTech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
+    # crystal, colors, colorless, snow, mountain, river,
+    # imperial, golden, southern, northern, silver, bronze, lotus, avalanche, sky,
+    # diamond, pearl, hellish, hard, soft, deadly, lightning
 }
 
 W3 = {
-    "Dragon": StyleTech('Dragon\'s Energy', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
-    "Lizard": StyleTech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
-    "Tiger": StyleTech('Tiger\'s Rage', atk_mult=b.ATTACK1),
-    "Crane": StyleTech('Crane Flapping Wings', dfs_mult=b.DEFENSE1),
-    "Toad": StyleTech('Toad\'s Toughness', dam_reduc=b.DAM_REDUC1),
-    "Phoenix": StyleTech('Rising Phoenix', resist_ko=b.RESIST_KO1),
-    "Crab": StyleTech('Defending Crab', guard_dfs_bonus=b.GUARD_DFS1),
-    "Ox": StyleTech(
-        'Ox\'s Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+    "Bear": StyleTech('Bear\'s Strength', strength_mult=b.STRENGTH1),
+    "Boar": StyleTech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
+    'Butterfly': StyleTech(
+        'Fluttering Butterfly', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1
     ),
-    "Cobra": StyleTech('Attacking Cobra', critical_chance=b.CRIT_CH1, critical_mult=b.CRIT_M1),
-    "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
-    "Mantis": StyleTech('Praying Mantis', block_mult=b.BLOCK1),
-    "Fox": StyleTech('Fox Strikes Back', counter_chance_mult=b.COUNTER_CH_MULT1),
-    "Lion": StyleTech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
     "Centipede": StyleTech(
         'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
-    "Scorpion": StyleTech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
+    "Cobra": StyleTech('Attacking Cobra', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+    "Crab": StyleTech('Defending Crab', guard_dfs_bonus=b.GUARD_DFS1),
+    "Crane": StyleTech('Crane Flapping Wings', dfs_mult=b.DEFENSE1),
+    "Dragon": StyleTech('Dragon\'s Energy', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Eagle": StyleTech('Flying Eagle', flying_strike_mult=b.STRIKE_MULT1),
-    "Leopard": StyleTech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-    "Boar": StyleTech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
-    "Wolf": StyleTech('Wolf\'s Attacking Distance', dist2_bonus=b.STRIKE_MULT1),
-    "Hawk": StyleTech('Hunting Hawk', dist3_bonus=b.STRIKE_MULT1),
-    "Monkey": StyleTech('Playing Monkey', agility_mult=b.AGILITY1),
-    "Falcon": StyleTech('Hunting Falcon', speed_mult=b.SPEED1),
-    "Bear": StyleTech('Bear\'s Strength', strength_mult=b.STRENGTH1),
     "Elephant": StyleTech('Elephant\'s Health', health_mult=b.HEALTH1),
+    "Falcon": StyleTech('Hunting Falcon', speed_mult=b.SPEED1),
+    "Fox": StyleTech('Fox Strikes Back', counter_chance_mult=b.COUNTER_CH_MULT1),
+    "Hawk": StyleTech('Hunting Hawk', dist3_bonus=b.STRIKE_MULT1),
+    "Leopard": StyleTech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
+    "Lion": StyleTech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
+    "Lizard": StyleTech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
+    "Mantis": StyleTech('Praying Mantis', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    "Monkey": StyleTech('Playing Monkey', agility_mult=b.AGILITY1),
+    "Ox": StyleTech(
+        'Ox\'s Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
+    ),
     "Panther": StyleTech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
-    # "Rat": StyleTech('Cornered Rat', gain bonus when low on hp)
+    "Phoenix": StyleTech('Rising Phoenix', resist_ko=b.RESIST_KO1),
+    'Shark': StyleTech(
+        'Shark Bites', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
+    ),
+    "Scorpion": StyleTech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
+    "Snake": StyleTech('Twisting Snake', dodge_mult=b.EVADE1),
+    "Tiger": StyleTech('Tiger\'s Rage', atk_mult=b.ATTACK1),
+    "Toad": StyleTech('Toad\'s Toughness', dam_reduc=b.DAM_REDUC1),
+    'Turtle': StyleTech(
+        'Turtle\'s Shell', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1
+    ),
     "Viper": StyleTech('Stinging Viper', stun_chance=b.STUN_CH1),
-    # turtle, crow, horse, spider, shark, dog, rat, bull
+    "Wolf": StyleTech('Wolf\'s Attacking Distance', dist2_bonus=b.STRIKE_MULT1),
+    # "Rat": StyleTech('Cornered Rat', gain bonus when low on hp)
+    # crow, horse, spider - grabs?, shark, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }
-'''
-
-
-                (Tech('Elbow Boxing', elbow_strike_mult=b.RARE_STRIKE_MULT1),
-                 Tech('Mighty Elbows', elbow_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (Tech('Knee Boxing', knee_strike_mult=b.RARE_STRIKE_MULT1),
-                 Tech('Mighty Knees', knee_strike_mult=b.RARE_STRIKE_MULT2)),
-
-                (Tech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
-                 Tech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2)),
-
-                (Tech('Environment Fighting', environment_chance=b.ENVIRONMENT_CH1),
-                 Tech('Environment Domination', environment_chance=b.ENVIRONMENT_CH2)),
-
-                (Tech('Unlikely Weapons', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH1),
-                 Tech('Anything Is a Weapon', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH2)),
-'''
 
 # todo strikes for new styles
 
@@ -163,6 +172,10 @@ def generate_new_styles(n, overlap=False):
     if overlap:
         results = list(set(results))  # remove possible duplicates
     return get_styles_from_list(results)
+
+
+def get_n_possible_styles():
+    return len(W1) * len(W2) * len(W3)
 
 
 def get_style_from_str(s):

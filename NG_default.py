@@ -10,6 +10,6 @@ try:
     g.new_game(forced_aip_class=DefaultAI)
     g.play()
 
-except Exception:
+except Exception:  # noqa
     from kf_lib.debug_tools import crash_report
-    crash_report(g)
+    crash_report(g)  # noqa

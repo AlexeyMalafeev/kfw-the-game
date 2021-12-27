@@ -21,10 +21,11 @@ DUR_STUN_MAX = 150
 FALL_DAMAGE = (25, 50)
 INSTA_KO_CHANCE = 0.25
 KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
-KNOCKBACK_HP_THRESHOLDS = (0.3, 0.35, 0.4)  # correspond to levels of knockback: 1, 2, 3
+KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp
 KNOCKDOWN_HP_THRESHOLD = 0.5
 LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 MOB_DAM_PENALTY = 0.3
+MOMENTUM_EFFECT_SIZE = 0.1
 OFF_BALANCE_HP_THRESHOLD = 0.25
 QI_BASED_DAM_UPPER_MULT = 3
 SHOCK_CHANCE = 0.5  # for moves
@@ -52,6 +53,10 @@ class StrikeMechanics(FighterWithASCII):
             self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
         )
         self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
+        # take into account momentum
+        momentum_effect = 1.0 + MOMENTUM_EFFECT_SIZE * self.momentum
+        self.atk_pwr *= momentum_effect
+        self.to_hit *= momentum_effect
 
     # todo how is calc_dfs used? why not relative to attacker?
     def calc_dfs(self):
@@ -92,12 +97,14 @@ class StrikeMechanics(FighterWithASCII):
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
+        self.momentum = 0
 
     def cause_knockback(self, dist):
         opp = self.target
-        opp.change_distance(dist, self)
+        self.change_distance(dist, opp)
         s = 's' if dist > 1 else ''
         self.set_ascii('Knockback')
+        self.ascii_buffer += dist
         self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
 
     def cause_off_balance(self):
@@ -197,8 +204,12 @@ class StrikeMechanics(FighterWithASCII):
             mob_mod = 1 - MOB_DAM_PENALTY
         else:
             mob_mod = 1
-        cost = round(move_obj.time_cost / (self.speed_full * mob_mod))
-        return cost
+        cost = move_obj.time_cost / (self.speed_full * mob_mod)
+        if move_obj.power:
+            cost *= self.strike_time_cost_mult
+        elif move_obj.dist_change:
+            cost *= self.maneuver_time_cost_mult
+        return round(cost)
 
     def get_rep_actions_factor(self, move):
         n = self.previous_actions.count(move.name)  # 0-3
@@ -209,9 +220,15 @@ class StrikeMechanics(FighterWithASCII):
         self.took_damage = True
 
     def try_critical(self):
-        if rnd() <= self.critical_chance:
+        if self.epic_chance and rnd() <= self.epic_chance:
+            self.to_hit *= self.epic_to_hit_mult
+            self.atk_pwr *= self.epic_atk_pwr_mult
+            self.current_fight.display('~*~*~EPIC!!!~*~*~')
+            # print('epic')
+        elif rnd() <= self.critical_chance:
             self.atk_pwr *= self.critical_mult
             self.current_fight.display('CRITICAL!')
+            # print('critical')
 
     def try_environment(self, mode):
         if (
@@ -246,9 +263,7 @@ class StrikeMechanics(FighterWithASCII):
         kb = 0
         if not targ.check_status('lying'):
             dam_ratio = self.dam / targ.hp_max
-            for thresh in KNOCKBACK_HP_THRESHOLDS:
-                if dam_ratio > thresh:
-                    kb += 1
+            kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
         if kb > 0:
             targ.cause_knockback(kb)
 

@@ -1,4 +1,4 @@
-class BlankFighterUI:
+class BlankFighterIO:
     def log(self, text):
         pass
 
