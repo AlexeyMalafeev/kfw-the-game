@@ -12,10 +12,11 @@ KFW, short for Kung-Fu World, is a turn-based hot-seat role-playing game. It has
 * Machine learning-based fight outcome prediction
 
 ## Installing and running the game
-To play the game, you only need Python 3.8 or greater (install from python.org).  
+
+Grab the latest release (I don't recommend just cloning master, as it has a lot of extra files that are used in development, but not necessary for playing the game). To play, you only need Python 3.8 or greater (install from python.org).  
 To start a new game, run `NG_default.py`. To load a previously saved game, run `load_game.py`.  
 
-Note: some ML-related modules do require such external dependencies as `pandas`, `numpy` and `sklearn`, but these are not needed to just play the game.
+Note: some ML-related modules do require such external dependencies as `pandas`, `numpy` and `sklearn`, but these are not needed to just play the game. 
 
 ## How to play
 
