@@ -14,6 +14,7 @@ ENC_CH_CHALLENGER = 0.07
 class Challenger(BaseEncounter):
     def __init__(self, player, check_if_happens=True):
         self.c = None
+        self.c_master = None
         super().__init__(player, check_if_happens)
 
     def check_if_happens(self):
@@ -32,6 +33,8 @@ class Challenger(BaseEncounter):
         ))
         school_name, school_members = p.get_random_other_school()
         c = self.c = random.choice(school_members)
+        self.c_master = p.game.masters[school_name]
+
         rank = school_members.index(c) + 1
         t = f'{c.name}, number {rank} in the {school_name} school, stops {p.name} in the street ' \
             f'and yells: "My kung-fu is {color}better than yours!!"'
@@ -52,10 +55,16 @@ class Challenger(BaseEncounter):
             p.show('{}: "That was a good fight!\nLet\'s be friends!"'.format(c.name))
             p.add_friend(self.c)
             p.pak()
-        if p.check_luck() == 1:  # silent because no move might be learned
+        luck = p.check_luck()
+        if luck == 1:
             p.show(f'{p.name}: "I can learn something from this fight.')
-            print('it works')
             p.learn_move_from(c)
+        elif luck == -1:
+            master = self.c_master
+            p.show(f'Suddenly, {c.name}\'s master appears!')
+            p.show(f'{master.name}: "How dare you belittle the kung-fu I teach? '
+                   'You will pay for this!"')
+            p.fight(master, items_allowed=False)
 
 
 class GChallenger(Guaranteed, Challenger):

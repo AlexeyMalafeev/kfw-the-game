@@ -762,6 +762,7 @@ class MasterTrial(BaseEncounter):
                     a_player.refresh_school_rank()  # in case there are other players in the same school
                 school_name = p.choose_school_name()
                 p.game.schools[school_name] = []
+                p.game.masters[school_name] = p
                 p.new_school_name = school_name
             else:
                 p.show(f'{m.name}: "No, you are not ready yet. Practice some more."')
