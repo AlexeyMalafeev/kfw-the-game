@@ -5,11 +5,15 @@ from ..human_controlled_fighter import HumanControlledFighter
 from ...things import items
 from ...utils import lang_tools
 from .. import traits
+from ..traits import get_rand_traits  # have to import separately or .set_rand_traits doesn't work
 from .. import quotes
 from ...utils.utilities import *
 
 
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
+EXTREMELY_GOOD_LUCK = 100
+EXTREMELY_BAD_LUCK = 1
+LUCK_ACCOMPLISHMENT_THRESHOLD = 100
 LV_UP_EXP = [
     25 * x ** 2 + 75 * x for x in range(0, 51)
 ]  # ignore value at index 0; index = current lv (how many exp
@@ -118,6 +122,7 @@ class Player(Fighter):
             setattr(self, att, new_val)
 
     def add_accompl(self, label):
+        # todo refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
         if label not in self.accompl:
             self.accompl.append(label)
             self.accompl_dates.append(self.game.get_date())
@@ -263,6 +268,25 @@ class Player(Fighter):
 
     def check_item(self, item_name):
         return self.inventory.get(item_name, 0)
+
+    def check_luck(self, silent=False):
+        outcome = random.randint(EXTREMELY_BAD_LUCK, EXTREMELY_GOOD_LUCK)
+        if outcome == EXTREMELY_BAD_LUCK:
+            if not silent:
+                self.show('BAD LUCK!')
+            self.change_stat('bad_luck', 1)
+            if self.get_stat('bad_luck') >= LUCK_ACCOMPLISHMENT_THRESHOLD:
+                self.add_accompl('Unlucky Devil')
+            return -1
+        elif outcome == EXTREMELY_GOOD_LUCK:
+            if not silent:
+                self.show('LUCKY!')
+            self.change_stat('good_luck', 1)
+            if self.get_stat('good_luck') >= LUCK_ACCOMPLISHMENT_THRESHOLD:
+                self.add_accompl('Lucky Devil')
+            return 1
+        else:
+            return 0
 
     def check_money(self, amount):
         """Return True if player has at least _amount_ money."""
@@ -636,12 +660,10 @@ class Player(Fighter):
         return True  # to end turn
 
     def set_rand_traits(self):
-        from . import traits
-
         self.traits = [
-            traits.get_rand_traits(1, player=self, positive=False)
+            get_rand_traits(1, player=self, positive=False)
         ]  # have to add traits one by one
-        self.traits += [traits.get_rand_traits(1, player=self, negative=False)]  # to avoid clashes
+        self.traits += [get_rand_traits(1, player=self, negative=False)]  # to avoid clashes
 
     def set_stat(self, stat_name, value):
         self.stats_dict[stat_name] = value
