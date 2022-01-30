@@ -1,8 +1,9 @@
-### v.0.6.4-beta
-""
-date
+### v.0.6.5-beta
+""  
+date  
 
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
+* feat: learn other fighters' moves
 
 
 ### v.0.6.4-beta

@@ -12,6 +12,7 @@ class BaseFighter(
         super().__init__()
         self.exp_yield = 0
         self.fight_ai = None
+        # todo refactor moves as a set
         self.moves = []
         self.name = ''
         self.style = None

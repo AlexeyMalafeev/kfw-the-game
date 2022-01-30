@@ -10,10 +10,13 @@ from .. import quotes
 from ...utils.utilities import *
 
 
+# todo compute accompl exp dynamically
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
-EXTREMELY_GOOD_LUCK = 100
+# todo all luck-related to a separate sub-module (mix-in)
+EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
 LUCK_ACCOMPLISHMENT_THRESHOLD = 100
+# todo compute level up exp dynamically
 LV_UP_EXP = [
     25 * x ** 2 + 75 * x for x in range(0, 51)
 ]  # ignore value at index 0; index = current lv (how many exp
