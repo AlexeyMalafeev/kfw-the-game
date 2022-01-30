@@ -14,9 +14,10 @@ KFW, short for Kung-Fu World, is a turn-based hot-seat role-playing game. It has
 ## Installing and running the game
 
 Grab the latest release (I don't recommend just cloning master, as it has a lot of extra files that are used in development, but not necessary for playing the game). To play, you only need Python 3.8 or greater (install from python.org).  
-To start a new game, run `NG_default.py`. To load a previously saved game, run `load_game.py`.  
 
 Note: some ML-related modules do require such external dependencies as `pandas`, `numpy` and `sklearn`, but these are not needed to just play the game. 
+
+To start a new game, run `NG_default.py`. To load a previously saved game, run `load_game.py`.  Note that it won't work correctly if you run either of the scripts in an IDE like PyCharm. Instead, run these scripts from the command line.
 
 ## How to play
 
@@ -32,6 +33,6 @@ There are four ways to win in this game:
 
 Should you want to take a peek at the code, since we're on GitHub and all, be warned that it is messy. The bulk of it was written back when my Python kung-fu was still weak, and I don't have much time these days to clean up accrued technical debt. That said, the code base in its present state is not completely terrible; it is somewhat readable and hopefully free of major bugs. I hope that one day I'll get around to refactoring everything. :P
 
-## Final words
+## Final remarks
 
-I hope you enjoy playing KFW as much as I did creating and testing it. 
+Thank you for reading this and for your interest in this game! If you decide to give KFW a try, I hope you enjoy playing the game as much as I did creating and play-testing it. 
