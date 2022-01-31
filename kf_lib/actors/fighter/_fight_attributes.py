@@ -1,15 +1,21 @@
 from ._basic_attributes import BasicAttributes
 
 
-COUNTER_CHANCE_BASE = 0.0
-COUNTER_CHANCE_INCR_PER_LV = 0.02
-CRITICAL_CHANCE_BASE = 0.0
-CRITICAL_CHANCE_INCR_PER_LV = 0.01
+# COUNTER_CHANCE_BASE = 0.0
+# COUNTER_CHANCE_INCR_PER_LV = 0.02
+# CRITICAL_CHANCE_BASE = 0.0
+# CRITICAL_CHANCE_INCR_PER_LV = 0.01
+COUNTER_AGILITY_ADJUST = 3  # this will get subtracted from agility_full
+COUNTER_PER_AGILITY_POINT = 0.4
+CRITICAL_AGILITY_ADJUST = 3
+CRITICAL_PER_AGILITY_POINT = 0.25
 EPIC_CHANCE_BASE = 0.0
 EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
-PREEMPTIVE_CHANCE_BASE = 0.0
-PREEMPTIVE_CHANCE_INCR_PER_LV = 0.005
+# PREEMPTIVE_CHANCE_BASE = 0.0
+# PREEMPTIVE_CHANCE_INCR_PER_LV = 0.005
+PREEMPTIVE_AGILITY_ADJUST = 5
+PREEMPTIVE_PER_AGILITY_POINT = 0.25
 QP_BASE = 0
 QP_INCR_PER_LV = 5
 QP_PORTION_RESTORED_PER_TURN = 0.2
@@ -209,16 +215,16 @@ class FightAttributes(BasicAttributes):
         )
         self.qp_gain = round(self.qp_max * QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult)
         self.counter_chance = (
-            (COUNTER_CHANCE_BASE + COUNTER_CHANCE_INCR_PER_LV * self.level) *
-            self.counter_chance_mult
+            (self.agility_full - COUNTER_AGILITY_ADJUST) * COUNTER_PER_AGILITY_POINT
+            * self.counter_chance_mult
         )
         self.preemptive_chance = (
-            (PREEMPTIVE_CHANCE_BASE + PREEMPTIVE_CHANCE_INCR_PER_LV * self.level) *
-            self.preemptive_chance_mult
+            (self.agility_full - PREEMPTIVE_AGILITY_ADJUST) * PREEMPTIVE_PER_AGILITY_POINT
+            * self.preemptive_chance_mult
         )
         self.critical_chance = (
-            (CRITICAL_CHANCE_BASE + CRITICAL_CHANCE_INCR_PER_LV * self.level) *
-            self.critical_chance_mult
+            (self.agility_full - CRITICAL_AGILITY_ADJUST) * CRITICAL_PER_AGILITY_POINT
+            * self.critical_chance_mult
         )
         self.epic_chance = (
             (EPIC_CHANCE_BASE + EPIC_CHANCE_INCR_PER_LV * self.level) * self.epic_chance_mult
