@@ -58,12 +58,14 @@ class Challenger(BaseEncounter):
         luck = p.check_luck()
         if luck == 1:
             p.show(f'{p.name}: "I can learn something from this fight.')
+            p.pak()
             p.learn_move_from(c)
         elif luck == -1:
             master = self.c_master
             p.show(f'Suddenly, {c.name}\'s master appears!')
             p.show(f'{master.name}: "How dare you belittle the kung-fu I teach? '
                    'You will pay for this!"')
+            p.pak()
             p.fight(master, items_allowed=False)
 
 
