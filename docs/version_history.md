@@ -5,6 +5,8 @@ date
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
 * feat: learn other fighters' moves
 * refactor: encounters.py
+* feat: counters, preemptive strikes and criticals are now agility-based
+* fix: test fight balance
 
 
 ### v.0.6.4-beta

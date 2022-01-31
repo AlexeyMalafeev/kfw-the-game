@@ -156,7 +156,7 @@ class Tester(object):
                         t_obj = techniques.get_tech_obj(t)
                         if t_obj.is_upgradable:
                             add_to_dict(d1, t, 1)
-                        elif t_obj.is_upgraded:
+                        elif t_obj.is_advanced:
                             add_to_dict(d2, t, 1)
                 # moves
                 for f, d in ((wnr, moves_wnr), (lsr, moves_lsr)):
