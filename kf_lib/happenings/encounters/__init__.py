@@ -1,3 +1,4 @@
+from ._ambush import Ambush
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_enemy, try_escape
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._base_encounter import BaseEncounter
@@ -12,8 +13,7 @@ from ...kung_fu import moves
 from ...things import items
 from ...utils.utilities import *
 
-# todo f-strings in encounters.py
-# todo convert encounters.py to a package
+# todo f-strings in encounters
 
 # constants
 # encounter chances
@@ -47,7 +47,7 @@ CH_CHANGE_TRAIT = 0.15
 CH_CONVICT_ARMED = 0.35
 CH_DRUNKARD_FIGHT_STRONG = 0.1
 CH_DRUNKARD_FIGHT_WEAK = 0.1
-CH_ENEMY_REPENTS = 0.5
+
 CH_GAMBLER_ARMED = 0.3
 CH_GAMBLER_ENEMY = 0.5
 CH_GAMBLER_FIGHT = 0.25
@@ -72,13 +72,6 @@ REQ_LV_DRUNKARD_FIGHT_WEAK = (1, 5)
 REQ_LV_MASTER_TRIAL = fighter_factory.MASTER_LV[0]
 
 # lines
-LINES_ENEMY = (
-    "Does it hurt? I'll KILL you next time!",
-    "That'll teach ya!",
-    "What's wrong? Can't get up, huh?",
-    "This is what happens if you mess with me!",
-    "You are much weaker than I thought!",
-)
 LINES_ROBBER = (
     "Hey, I really need {} coins. Do you think you can help me out?",
     "If you don't give me {} coins, you'll need a doctor, and a good one!",
@@ -113,7 +106,6 @@ PERFORMER_LOSE_MOVE_TIERS = (2, 4)
 # PERFORMER_WIN_MOVE_TIERS = (4, 6)  # decided not to implement
 
 # numbers
-NUM_AMBUSH_THUGS = (2, 4)
 NUM_EXTORTERS = (2, 6)
 NUM_PERFORMER_THUGS = (2, 5)
 NUM_POLICE_VS_THUGS = (2, 4)
@@ -129,55 +121,10 @@ REP_PEN_DRINK = -3
 REP_PEN_GAMBLE = -3
 REP_PEN_PRIZE_FIGHTING = -5
 REP_NOT_BRAWL = 1
-REP_REFORM_ENEMY = 10
 
 # misc
 FAILED_ESCAPE_BEATING = (3, 5)
 PERFORMER_EXP_REWARD = 50
-
-
-class Ambush(BaseEncounter):
-    def __init__(self, player, check_if_happens=True):
-        self.e = None
-        self.thugs = []
-        BaseEncounter.__init__(self, player, check_if_happens)
-
-    def check_if_happens(self):
-        return self.p.enemies and rnd() <= len(self.p.enemies) * 0.02
-
-    def run(self):
-        p = self.player
-        self.e = random.choice(p.enemies)
-        num_thugs = rndint(NUM_AMBUSH_THUGS[0], NUM_AMBUSH_THUGS[1])
-        self.thugs = fighter_factory.new_thug(weak=True, n=num_thugs)
-        p.show(
-            f"{p.name} is ambushed by his enemy {self.e.name} with {num_thugs} thugs!!"
-        )
-        p.log(f"Is ambushed by {self.e.name} with {num_thugs} thugs.")
-        opp = [self.e] + self.thugs
-        opp_strength = p.get_rel_strength(*opp)
-        esc_chance = get_escape_chance(p)
-        if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(p, opp_strength[0]):
-            self.do_fight()
-        else:
-            try_escape(p, esc_chance)
-
-    def do_fight(self):
-        p = self.player
-        p.check_help()
-        if p.fight(self.e, p.allies, self.thugs):
-            events.crime_down(p.game)
-            if rnd() <= CH_ENEMY_REPENTS:
-                p.msg(
-                    '{}: "Please forgive me! I swear you\'ll never see me again!"'.format(
-                        self.e.name
-                    )
-                )
-                p.remove_enemy(self.e)
-                p.gain_rep(REP_REFORM_ENEMY)
-                p.add_accompl("Enemy Reformed")
-        else:
-            p.msg(f'{self.e.name}: "{random.choice(LINES_ENEMY)}"')
 
 
 class Beggar(BaseEncounter):

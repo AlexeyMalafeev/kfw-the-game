@@ -22,5 +22,5 @@ class BaseEncounter(object):
 
 class Guaranteed(object):
     @staticmethod
-    def test():
+    def check_if_happens():
         return True

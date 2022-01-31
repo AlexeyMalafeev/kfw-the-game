@@ -1,4 +1,4 @@
-from .happenings import encounters
+from .happenings.encounters import Ambush
 from .fighting import fight
 from .ai import fight_ai
 from .actors.fighter import Fighter
@@ -7,6 +7,7 @@ from .kung_fu import styles, techniques
 from .things import weapons
 from . import tech_test
 from .utils.utilities import *
+
 
 TESTS_FOLDER = 'tests'
 
@@ -50,7 +51,7 @@ class Tester(object):
         e = ff.new_thug()
         if not p.enemies:
             p.add_enemy(e)
-        encounters.Ambush(p, False)
+        Ambush(p, False)
 
     def test_exp(self, lv_max=20, n=100):
         results = []

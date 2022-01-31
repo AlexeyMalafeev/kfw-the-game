@@ -4,6 +4,7 @@ date
 
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
 * feat: learn other fighters' moves
+* refactor: encounters.py
 
 
 ### v.0.6.4-beta
