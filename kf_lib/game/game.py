@@ -683,7 +683,6 @@ class Game:
         def _save_stories():
             f.write(f'\n\ng.stories = {self.stories!r}')
 
-
         with open(os.path.join(SAVE_FOLDER, file_name), 'w') as f:
             _save_all()
 

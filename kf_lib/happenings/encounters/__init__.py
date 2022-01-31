@@ -156,6 +156,9 @@ Beggar: "In thanks for your kindness, young man, let me teach you some special k
             p.show(f'{b.name}: "Your skill is very impressive! Let\'s practice again some time."')
             p.add_friend(b)
             p.add_accompl("Beggar's Friend")
+            p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
+            p.pak()
+            p.learn_move_from(b)
             p.game.beggar = None
         else:
             p.show(f'{b.name}: "Still got a lot to learn, huh..."')
@@ -163,8 +166,8 @@ Beggar: "In thanks for your kindness, young man, let me teach you some special k
                 f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
                 'has improved."'
             )
+            p.pak()
             p.learn_move_from(b)
-        p.pak()
 
 
 class BookSeller(BaseEncounter):
@@ -358,16 +361,17 @@ class Drunkard(BaseEncounter):
                 p.show(t)
                 p.add_friend(d)
                 p.add_accompl("Drunkard's Friend")
-                p.game.drunkard = None
-            else:
-                p.show(
-                    f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
-                    f'technique has improved"'
-                )
+                p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
+                p.pak()
                 p.learn_move_from(d)
-                return
+                p.game.drunkard = None
         else:
             p.show(f'{d.name}: "You should have just shown me some respect!.."')
+            if strong:
+                p.show('{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
+                       'technique has improved"')
+                p.pak()
+                p.learn_move_from(d)
 
 
 class Extorters(BaseEncounter):
@@ -1102,10 +1106,12 @@ class StreetPerformer(BaseEncounter):
                 p.show('{}: "I didn\'t think I could lose..."'.format(c.name))
             else:
                 p.show(f'{c.name}: "Hmph! No one can beat me."')
+                # todo only if lucky
                 p.show(
                     f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                     'technique has improved"'
                 )
+                p.pak()
                 p.learn_move_from(c)
             p.pak()
         else:
@@ -1129,6 +1135,7 @@ class StreetPerformer(BaseEncounter):
                 'Your kung-fu is very good; however, I can help you improve it."'
                 "\n{} teaches {} some of his moves.".format(c.name, p.name)
             )
+            p.pak()
             p.learn_move_from(c)
 
     def sell(self):
