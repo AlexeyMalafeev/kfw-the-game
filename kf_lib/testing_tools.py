@@ -1,3 +1,6 @@
+from tqdm import trange
+
+
 from .happenings.encounters import Ambush
 from .fighting import fight
 from .ai import fight_ai
@@ -119,9 +122,9 @@ class Tester(object):
         moves_wnr = {}
         moves_lsr = {}
         # fight!
-        for i in range(n):
-            if not i % (n / 20):
-                print(f'fight {i + 1} / {n}')
+        for i in trange(n):
+            # if not i % (n / 20):
+            #     print(f'fight {i + 1} / {n}')
             lv = random.randint(1, 20)
             f1 = ff.new_fighter(lv=lv)
             f1.name = 'Dummy A'

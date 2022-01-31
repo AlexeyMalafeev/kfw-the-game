@@ -7,7 +7,7 @@ try:
     g = game.Game()
     t = testing_tools.Tester(g)
     print('Random actions = False')
-    t.test_fight_balance(rand_actions=False, n=5000)
+    t.test_fight_balance(rand_actions=False, n=1000)
 
 
 except Exception:
