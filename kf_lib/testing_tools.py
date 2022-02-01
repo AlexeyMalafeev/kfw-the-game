@@ -1,4 +1,7 @@
-from .happenings import encounters
+from tqdm import trange
+
+
+from .happenings.encounters import Ambush
 from .fighting import fight
 from .ai import fight_ai
 from .actors.fighter import Fighter
@@ -7,6 +10,7 @@ from .kung_fu import styles, techniques
 from .things import weapons
 from . import tech_test
 from .utils.utilities import *
+
 
 TESTS_FOLDER = 'tests'
 
@@ -50,7 +54,7 @@ class Tester(object):
         e = ff.new_thug()
         if not p.enemies:
             p.add_enemy(e)
-        encounters.Ambush(p, False)
+        Ambush(p, False)
 
     def test_exp(self, lv_max=20, n=100):
         results = []
@@ -118,9 +122,9 @@ class Tester(object):
         moves_wnr = {}
         moves_lsr = {}
         # fight!
-        for i in range(n):
-            if not i % (n / 20):
-                print(f'fight {i + 1} / {n}')
+        for i in trange(n):
+            # if not i % (n / 20):
+            #     print(f'fight {i + 1} / {n}')
             lv = random.randint(1, 20)
             f1 = ff.new_fighter(lv=lv)
             f1.name = 'Dummy A'
@@ -155,7 +159,7 @@ class Tester(object):
                         t_obj = techniques.get_tech_obj(t)
                         if t_obj.is_upgradable:
                             add_to_dict(d1, t, 1)
-                        elif t_obj.is_upgraded:
+                        elif t_obj.is_advanced:
                             add_to_dict(d2, t, 1)
                 # moves
                 for f, d in ((wnr, moves_wnr), (lsr, moves_lsr)):

@@ -6,6 +6,8 @@ g.new_game() OR g.load_game('save.txt')
 g.play()
 
 """
+from pathlib import Path
+
 
 from .. import testing_tools  # noqa
 from ..actors import fighter_factory, names
@@ -36,6 +38,9 @@ NUM_CONVICTS = 5
 SAVE_FOLDER = 'save'
 TOWN_STAT_VALUES = [0.05, 0.1, 0.15, 0.2]
 WALK_EXTRA_ENC = 2
+
+# ensure save folder
+Path(SAVE_FOLDER).mkdir(exist_ok=True)
 
 # victory conditions
 GRANDMASTER_LV = 20

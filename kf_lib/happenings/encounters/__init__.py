@@ -1,19 +1,25 @@
-from . import events
-from ..actors import fighter_factory, traits, quotes, names
-from ..mechanics import experience
-from ..utils import lang_tools
-from ..kung_fu import moves
-from ..things import items
-from ..utils.utilities import *
+from ._ambush import Ambush
+from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_enemy, try_escape
+from ._base_encounter import BaseEncounter, Guaranteed
+from ._base_encounter import BaseEncounter
+from ._challenger import Challenger, GChallenger
+from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, set_up_weapon_fight, \
+    try_enemy, try_escape
+from .. import events
+from ...actors import fighter_factory, traits, quotes
+from ...mechanics import experience
+from ...utils import lang_tools
+from ...kung_fu import moves
+from ...things import items
+from ...utils.utilities import *
 
-# todo f-strings in encounters.py
-# todo convert encounters.py to a package
+# todo f-strings in encounters
 
 # constants
 # encounter chances
 ENC_CH_BOOK_SELLER = 0.02
 ENC_CH_BRAWLER = 0.03
-ENC_CH_CHALLENGER = 0.07
+
 ENC_CH_CRAFTSMAN = 0.01
 ENC_CH_CRIMINAL = 0.03
 ENC_CH_DRUNKARD = 0.05
@@ -37,21 +43,20 @@ CH_BEGGAR_FIGHT = 0.1
 CH_BOOK_RUBBISH = 0.3
 CH_BOOK_MOVE = 0.3  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
 CH_BRAWLER_ATTACKS = 0.2
-CH_CHALLENGER_ARMED = 0.3
-CH_CHALLENGER_FRIEND = 0.1
 CH_CHANGE_TRAIT = 0.15
 CH_CONVICT_ARMED = 0.35
 CH_DRUNKARD_FIGHT_STRONG = 0.1
 CH_DRUNKARD_FIGHT_WEAK = 0.1
-CH_ENEMY_REPENTS = 0.5
-CH_ESCAPE_CHANCES = (0.3, 0.4, 0.5, 0.6, 0.7)
+
 CH_GAMBLER_ARMED = 0.3
 CH_GAMBLER_ENEMY = 0.5
 CH_GAMBLER_FIGHT = 0.25
 CH_PERFORMER_SELLS_GOOD_ITEM = 0.5
 CH_ROBBER_ARMED = 0.35
 CH_ROBBER_ENEMY = 0.1
+CH_SCHOOL_CHALLENGER_ARMED = 0.3
 CH_STORY_DEVELOPS = 0.07
+CH_STREET_PERFORMER_ARMED = 0.3
 CH_STUDENT_CHALLENGE = 0.25
 CH_THIEF_ARMED = 0.3
 CH_THIEF_ESCAPES = 0.3
@@ -67,13 +72,6 @@ REQ_LV_DRUNKARD_FIGHT_WEAK = (1, 5)
 REQ_LV_MASTER_TRIAL = fighter_factory.MASTER_LV[0]
 
 # lines
-LINES_ENEMY = (
-    "Does it hurt? I'll KILL you next time!",
-    "That'll teach ya!",
-    "What's wrong? Can't get up, huh?",
-    "This is what happens if you mess with me!",
-    "You are much weaker than I thought!",
-)
 LINES_ROBBER = (
     "Hey, I really need {} coins. Do you think you can help me out?",
     "If you don't give me {} coins, you'll need a doctor, and a good one!",
@@ -108,7 +106,6 @@ PERFORMER_LOSE_MOVE_TIERS = (2, 4)
 # PERFORMER_WIN_MOVE_TIERS = (4, 6)  # decided not to implement
 
 # numbers
-NUM_AMBUSH_THUGS = (2, 4)
 NUM_EXTORTERS = (2, 6)
 NUM_PERFORMER_THUGS = (2, 5)
 NUM_POLICE_VS_THUGS = (2, 4)
@@ -124,149 +121,14 @@ REP_PEN_DRINK = -3
 REP_PEN_GAMBLE = -3
 REP_PEN_PRIZE_FIGHTING = -5
 REP_NOT_BRAWL = 1
-REP_REFORM_ENEMY = 10
 
 # misc
 FAILED_ESCAPE_BEATING = (3, 5)
 PERFORMER_EXP_REWARD = 50
 
 
-# functions
-def beating(p):
-    p.show(f"{p.name} fails to escape and gets a beating.")
-    p.log("Fails to escape.")
-    p.injure()
-    p.pak()
-
-
-def check_feeling_greedy(p):
-    if rnd() <= p.feel_too_greedy:
-        p.show(f"{p.name} feels too greedy!")
-        p.log("Feels too greedy.")
-        p.pak()
-        return True
-
-
-def check_scary_fight(p, ratio):
-    if rnd() <= p.feel_too_scared * ratio:
-        p.show(f"{p.name} feels too scared to fight!")
-        p.log("Feels too scared to fight.")
-        p.pak()
-        return True
-
-
-def escape(p):
-    p.show(f"{p.name} manages to get away.")
-    p.log("Gets away.")
-    p.pak()
-
-
-def get_escape_chance(p):
-    return random.choice(CH_ESCAPE_CHANCES) + p.escape_bonus
-
-
-def set_up_weapon_fight(p, c):
-    p.show('{}: "A fist fight carries no weight. Let\'s duel with blades."'.format(c.name))
-    p.pak()
-    c.choose_best_norm_wp()
-    p.choose_best_norm_wp()
-
-
-def try_enemy(p, en, chance):
-    if rnd() <= chance:
-        old_name = en.name.split()[0]
-        en.name = p.game.get_new_name(random.choice(names.ROBBER_NICKNAMES))
-        t = (
-            f"{old_name}: \"You'll regret messing with {en.name}! "
-            "From now on, you'd better watch your back!\""
-        )
-        p.show(t)
-        p.add_enemy(en)
-        p.pak()
-
-
-def try_escape(p, esc_chance):
-    p.log("Attempts to escape.")
-    if rnd() <= esc_chance:
-        escape(p)
-    else:
-        beating(p)
-
-
-class BaseEncounter(object):
-    """Base encounter class."""
-
-    def __init__(self, player, test=True):
-        self.p = self.player = player
-        if (test and self.test()) or not test:
-            enc_name = self.__class__.__name__
-            enc_dict = self.p.game.enc_count_dict
-            if enc_name in enc_dict:
-                enc_dict[enc_name] += 1
-            else:
-                enc_dict[enc_name] = 1
-            self.p.refresh_screen()
-            self.run()
-
-    def test(self):
-        return True
-
-    def run(self):
-        pass
-
-
-class Guaranteed(object):
-    @staticmethod
-    def test():
-        return True
-
-
-class Ambush(BaseEncounter):
-    def __init__(self, player, test=True):
-        self.e = None
-        self.thugs = []
-        BaseEncounter.__init__(self, player, test)
-
-    def test(self):
-        return self.p.enemies and rnd() <= len(self.p.enemies) * 0.02
-
-    def run(self):
-        p = self.player
-        self.e = random.choice(p.enemies)
-        num_thugs = rndint(NUM_AMBUSH_THUGS[0], NUM_AMBUSH_THUGS[1])
-        self.thugs = fighter_factory.new_thug(weak=True, n=num_thugs)
-        p.show(
-            f"{p.name} is ambushed by his enemy {self.e.name} with {num_thugs} thugs!!"
-        )
-        p.log(f"Is ambushed by {self.e.name} with {num_thugs} thugs.")
-        opp = [self.e] + self.thugs
-        opp_strength = p.get_rel_strength(*opp)
-        esc_chance = get_escape_chance(p)
-        if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(p, opp_strength[0]):
-            self.do_fight()
-        else:
-            try_escape(p, esc_chance)
-
-    def do_fight(self):
-        p = self.player
-        p.check_help()
-        if p.fight(self.e, p.allies, self.thugs):
-            events.crime_down(p.game)
-            if rnd() <= CH_ENEMY_REPENTS:
-                p.msg(
-                    '{}: "Please forgive me! I swear you\'ll never see me again!"'.format(
-                        self.e.name
-                    )
-                )
-                p.remove_enemy(self.e)
-                p.gain_rep(REP_REFORM_ENEMY)
-                p.add_accompl("Enemy Reformed")
-        else:
-            p.msg(f'{self.e.name}: "{random.choice(LINES_ENEMY)}"')
-
-
 class Beggar(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= self.p.game.poverty / 2
 
     def run(self):
@@ -294,6 +156,9 @@ Beggar: "In thanks for your kindness, young man, let me teach you some special k
             p.show(f'{b.name}: "Your skill is very impressive! Let\'s practice again some time."')
             p.add_friend(b)
             p.add_accompl("Beggar's Friend")
+            p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
+            p.pak()
+            p.learn_move_from(b)
             p.game.beggar = None
         else:
             p.show(f'{b.name}: "Still got a lot to learn, huh..."')
@@ -301,14 +166,12 @@ Beggar: "In thanks for your kindness, young man, let me teach you some special k
                 f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
                 'has improved."'
             )
-            tier = rndint(*BEGGAR_LOSE_MOVE_TIERS)
-            move = moves.get_rand_move(f=p, tier=tier)
-            p.learn_move(move)
-        p.pak()
+            p.pak()
+            p.learn_move_from(b)
 
 
 class BookSeller(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_BOOK_SELLER
 
     def run(self):
@@ -340,7 +203,7 @@ Buy it?"""
 
 
 class Brawler(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return not self.player.is_master and rnd() <= ENC_CH_BRAWLER
 
     def run(self):
@@ -367,45 +230,8 @@ Man: "Hey you! Apologize or I'll beat you up!\"'''
                 p.fight(b)
 
 
-class Challenger(BaseEncounter):
-    def __init__(self, player, test=True):
-        self.c = None
-        BaseEncounter.__init__(self, player, test)
-
-    def test(self):
-        return not self.p.is_master and rnd() <= ENC_CH_CHALLENGER
-
-    def run(self):
-        p = self.player
-        color = random.choice(("", "way ", "much ", "simply ", "a lot "))
-        school_name, school_members = p.get_random_other_school()
-        c = self.c = random.choice(school_members)
-        rank = school_members.index(c) + 1
-        t = '{}, number {} in the {} school, stops {} in the street and yells: "My kung-fu is {}better than \
-        yours!!"'.format(
-            c.name, rank, school_name, p.name, color
-        )
-        p.show(t)
-        p.log(f"Challenged by {c.name}, number {rank} in the {c.style.name} school.")
-        opp_strength = p.get_rel_strength(c)
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
-            if rnd() <= CH_CHALLENGER_ARMED:
-                set_up_weapon_fight(p, c)
-            self.do_fight()
-        else:
-            p.log("Chooses to ignore the challenge.")
-
-    def do_fight(self):
-        p, c = self.p, self.c
-        p.fight(c, items_allowed=False)
-        if rnd() <= CH_CHALLENGER_FRIEND * p.challenger_friend_mult and c not in p.friends:
-            p.show('{}: "That was a good fight!\nLet\'s be friends!"'.format(c.name))
-            p.add_friend(self.c)
-            p.pak()
-
-
 class ContinueStory(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         p = self.player
         s = p.current_story
         return s and rnd() <= CH_STORY_DEVELOPS
@@ -416,7 +242,7 @@ class ContinueStory(BaseEncounter):
 
 
 class Craftsman(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_CRAFTSMAN and not self.p.check_item(items.MANNEQUIN)
 
     def run(self):
@@ -437,12 +263,12 @@ Buy it?""".format(
 
 
 class Criminal(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.c = None
         self.allies = None
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_CRIMINAL and self.p.game.criminals
 
     def run(self):
@@ -486,7 +312,7 @@ class Criminal(BaseEncounter):
 
 
 class Drunkard(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_DRUNKARD
 
     def run(self):
@@ -535,22 +361,21 @@ class Drunkard(BaseEncounter):
                 p.show(t)
                 p.add_friend(d)
                 p.add_accompl("Drunkard's Friend")
+                p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
+                p.pak()
+                p.learn_move_from(d)
                 p.game.drunkard = None
-            else:
-                p.show(
-                    f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
-                    f'technique has improved"'
-                )
-                tier = rndint(*DRUNKARD_LOSE_MOVE_TIERS)
-                move = moves.get_rand_move(f=p, tier=tier)
-                p.learn_move(move)
-                return
         else:
             p.show(f'{d.name}: "You should have just shown me some respect!.."')
+            if strong:
+                p.show('{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
+                       'technique has improved"')
+                p.pak()
+                p.learn_move_from(d)
 
 
 class Extorters(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= self.p.game.crime / 4
 
     def run(self):
@@ -598,11 +423,11 @@ class Extorters(BaseEncounter):
 
 
 class FatGirl(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.g = player.game.fat_girl
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         p = self.p
         return p.game.fat_girl is not None and not p.is_master and rnd() <= ENC_CH_FAT_GIRL
 
@@ -636,7 +461,7 @@ class FatGirl(BaseEncounter):
 
 
 class FindItem(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         p = self.player
         return rnd() <= p.item_is_found
 
@@ -651,11 +476,11 @@ class FindItem(BaseEncounter):
 
 
 class FriendMatch(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.av_fr = []
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         self.av_fr = self.player.get_nonhuman_friends()
         return rnd() <= len(self.av_fr) * 0.01
 
@@ -676,12 +501,12 @@ class FriendMatch(BaseEncounter):
 
 
 class Gambler(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.bet = 0
         self.won = 0
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_GAMBLER
 
     def run(self):
@@ -783,7 +608,7 @@ One bet is {self.bet} coins."""
 
 
 class Gossip(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_GOSSIP
 
     def run(self):
@@ -801,7 +626,7 @@ class Gossip(BaseEncounter):
 
 
 class HelpPolice(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= self.player.game.crime / 4
 
     def run(self):
@@ -830,7 +655,7 @@ class HelpPolice(BaseEncounter):
 
 
 class LoseItem(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         p = self.player
         return rnd() <= p.item_is_lost and p.get_items(incl_healer=True)
 
@@ -846,7 +671,7 @@ class LoseItem(BaseEncounter):
 
 
 class MasterTrial(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         p = self.player
         return (
             not p.is_master
@@ -888,6 +713,7 @@ class MasterTrial(BaseEncounter):
                     a_player.refresh_school_rank()  # in case there are other players in the same school
                 school_name = p.choose_school_name()
                 p.game.schools[school_name] = []
+                p.game.masters[school_name] = p
                 p.new_school_name = school_name
             else:
                 p.show(f'{m.name}: "No, you are not ready yet. Practice some more."')
@@ -895,7 +721,7 @@ class MasterTrial(BaseEncounter):
 
 
 class Merchant(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_MERCHANT
 
     def run(self):
@@ -923,9 +749,9 @@ Buy it for {price} coins?"""
 class OverhearConversation(BaseEncounter):
     """Hear interesting facts about players."""
 
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.facts = []
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
     def collect_facts(self):
         g = self.player.game
@@ -935,7 +761,7 @@ class OverhearConversation(BaseEncounter):
                 if result is not None:
                     self.facts.append((p, stat, result))
 
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_OVERHEAR_CONVERSATION
 
     def run(self):
@@ -982,15 +808,15 @@ victory!"'''.format(
 class PlayerMatch(BaseEncounter):
     """Works with computer players as opponents only (for both human and computer players)."""
 
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.av_p = []
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
     def set_available_players(self):
         p, g = self.player, self.player.game
         self.av_p = [pp for pp in g.get_act_players() if not pp.is_human and not pp == p]
 
-    def test(self):
+    def check_if_happens(self):
         self.set_available_players()
         return self.av_p and rnd() <= ENC_CH_PLAYER_MATCH
 
@@ -1012,7 +838,7 @@ class PlayerMatch(BaseEncounter):
 
 
 class PrizeFighting(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_PRIZE_FIGHTING
 
     def run(self):
@@ -1059,7 +885,7 @@ class PrizeFighting(BaseEncounter):
 
 
 class Robbers(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.num_r = 0
         self.r = None
         self.rs = []
@@ -1067,9 +893,9 @@ class Robbers(BaseEncounter):
         self.sv = ""
         self.escape_chance = 0
         self.money = random.choice(MONEY_GIVE_ROBBERS)
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= self.player.game.crime / 2
 
     def run(self):
@@ -1141,7 +967,7 @@ class Robbers(BaseEncounter):
 
 
 class RobbingSomeone(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= self.player.game.crime / 4
 
     def run(self):
@@ -1165,7 +991,7 @@ class RobbingSomeone(BaseEncounter):
 
 
 class SchoolBullying(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         p = self.p
         return not p.is_master and p.school_rank > 1 and rnd() <= ENC_CH_SCHOOL_BULLYING
 
@@ -1188,7 +1014,7 @@ class SchoolBullying(BaseEncounter):
 
 
 class SchoolChallenge(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         p = self.p
         return not p.is_master and p.school_rank > 1 and rnd() <= ((len(p.get_school()) - 1) / 100)
 
@@ -1205,7 +1031,7 @@ class SchoolChallenge(BaseEncounter):
         opp = school[p.school_rank - 2]  # adjusts for Python indexing and skips self
         opp_strength = p.get_rel_strength(opp)
         if p.fight_or_not(opp_strength):
-            if rnd() < CH_CHALLENGER_ARMED:
+            if rnd() < CH_SCHOOL_CHALLENGER_ARMED:
                 p.arm_normal()
                 opp.arm_normal()
             if p.spar(opp, hide_stats=False):
@@ -1235,11 +1061,11 @@ class SchoolChallenge(BaseEncounter):
 
 
 class StreetPerformer(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.performer = None
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_STREET_PERFORMER
 
     def run(self):
@@ -1272,7 +1098,7 @@ class StreetPerformer(BaseEncounter):
             and not check_scary_fight(p, ratio=opp_strength[0])
         ):
             p.pay(cost)
-            if rnd() <= CH_CHALLENGER_ARMED:
+            if rnd() <= CH_STREET_PERFORMER_ARMED:
                 set_up_weapon_fight(p, c)
             win = p.fight(c, items_allowed=False)
             if win:
@@ -1280,13 +1106,13 @@ class StreetPerformer(BaseEncounter):
                 p.show('{}: "I didn\'t think I could lose..."'.format(c.name))
             else:
                 p.show(f'{c.name}: "Hmph! No one can beat me."')
+                # todo only if lucky
                 p.show(
                     f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                     'technique has improved"'
                 )
-                tier = rndint(*PERFORMER_LOSE_MOVE_TIERS)
-                move = moves.get_rand_move(f=p, tier=tier)
-                p.learn_move(move)
+                p.pak()
+                p.learn_move_from(c)
             p.pak()
         else:
             # disarm player!!!
@@ -1309,9 +1135,8 @@ class StreetPerformer(BaseEncounter):
                 'Your kung-fu is very good; however, I can help you improve it."'
                 "\n{} teaches {} some of his moves.".format(c.name, p.name)
             )
-            tier = rndint(*PERFORMER_LOSE_MOVE_TIERS)
-            move = moves.get_rand_move(f=p, tier=tier)
-            p.learn_move(move)
+            p.pak()
+            p.learn_move_from(c)
 
     def sell(self):
         p = self.player
@@ -1361,7 +1186,7 @@ class StreetPerformer(BaseEncounter):
 
 
 class Students(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return (
             self.p.is_master
             and self.p.students < self.p.game.MAX_NUM_STUDENTS
@@ -1406,11 +1231,11 @@ class Students(BaseEncounter):
 
 
 class Thief(BaseEncounter):
-    def __init__(self, player, test=True):
+    def __init__(self, player, check_if_happens=True):
         self.players_items = None
-        BaseEncounter.__init__(self, player, test)
+        BaseEncounter.__init__(self, player, check_if_happens)
 
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= self.player.game.crime / 3
 
     def run(self):
@@ -1494,7 +1319,7 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
 
 
 class Weirdo(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_WEIRDO
 
     def run(self):
@@ -1525,7 +1350,7 @@ class Weirdo(BaseEncounter):
 
 
 class WiseMan(BaseEncounter):
-    def test(self):
+    def check_if_happens(self):
         return rnd() <= ENC_CH_WISE_MAN
 
     def run(self):
@@ -1562,10 +1387,6 @@ class WiseMan(BaseEncounter):
 
 
 class GBeggar(Guaranteed, Beggar):
-    pass
-
-
-class GChallenger(Guaranteed, Challenger):
     pass
 
 
@@ -1632,7 +1453,7 @@ FIGHT_CRIME_ENCS = (
 )
 HELP_POOR_ENCS = [GBeggar] * 3 + [Beggar] * 10 + [WiseMan] * 5
 PICK_FIGHTS_ENCS = (
-    [Brawler] * 3 + [GChallenger] + [Challenger] * 3 + [FriendMatch] * 3 + [PlayerMatch] * 3
+        [Brawler] * 3 + [GChallenger] + [Challenger] * 3 + [FriendMatch] * 3 + [PlayerMatch] * 3
 )
 PRACTICE_SCHOOL_ENCS = [MasterTrial] * 3 + [SchoolChallenge] * 3 + [SchoolBullying]
 SEEDY_PLACES_ENCS = (

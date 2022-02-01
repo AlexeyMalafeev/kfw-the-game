@@ -317,7 +317,7 @@ def rnd():
 
 
 def rndint(a, b):
-    """Return a random number between a and b."""
+    """Return a random integer between a and b."""
     return random.randint(a, b)
 
 
@@ -326,7 +326,7 @@ def rndint_2d(a, b):
     E.g., running rndint_2d(2, 12) a thousand times and collecting the results in a Counter might
     yield:
     Counter({7: 161, 6: 153, 8: 128, 5: 112, 9: 110, 10: 91, 4: 67, 11: 61, 3: 55, 12: 32, 2: 30})
-    Alternatively, Counter([rndint_norm(5, 7) for _ in range(1000)]) might result in:
+    Alternatively, Counter([rndint_2d(5, 7) for _ in range(1000)]) might result in:
     Counter({6: 484, 7: 270, 5: 246}) or Counter({6: 519, 5: 244, 7: 237})
     """
     if not a % 2:

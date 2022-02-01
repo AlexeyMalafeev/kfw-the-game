@@ -64,6 +64,14 @@ class MoveMethods(BaseFighter):
             self.log(f'Learns {move.name} ({move.descr})')
             self.pak()
 
+    def learn_move_from(self, other):
+        known = set(self.moves)
+        pool = [mv for mv in other.moves if mv not in known]
+        if pool:
+            mv = random.choice(pool)
+            self.learn_move(mv)
+            # print(f'{self} learns {mv}')
+
     # todo in learn_random_move, if move_tier is not given, make it relative to current level
     def learn_random_move(self, move_tier, silent=False):
         move_obj = moves.get_rand_move(self, move_tier)
