@@ -465,7 +465,9 @@ def get_rand_std_style():
 
 def get_style_obj(sname):
     if sname not in all_styles:
-        from .style_gen import get_style_from_str
-
-        get_style_from_str(sname)  # this should register the style in all_styles
+        # from .style_gen import get_style_from_str
+        # get_style_from_str(sname)  # this should register the style in all_styles
+        style = FLOWER_KUNGFU
+        print(f'warning: unknown style name {sname}, replacing with {style}')
+        return style
     return all_styles[sname]

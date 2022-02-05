@@ -15,7 +15,7 @@ ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 # todo all luck-related to a separate sub-module (mix-in)
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
-LUCK_ACCOMPLISHMENT_THRESHOLD = 100
+LUCK_ACCOMPLISHMENT_THRESHOLD = 10
 # todo compute level up exp dynamically
 LV_UP_EXP = [
     25 * x ** 2 + 75 * x for x in range(0, 51)
@@ -40,7 +40,7 @@ class Player(Fighter):
     def __init__(
         self,
         name='',
-        style_name=None,
+        style=None,
         level=1,
         atts_tuple=None,
         tech_names=None,
@@ -51,7 +51,7 @@ class Player(Fighter):
         self.plog = []
         super().__init__(
             name=name,
-            style_name=style_name,
+            style=style,
             level=level,
             atts_tuple=atts_tuple,
             tech_names=tech_names,
@@ -377,7 +377,7 @@ class Player(Fighter):
         return True  # to end turn
 
     def fight_dummy(self):
-        dummy = Fighter('Dummy', style_name='No Style', atts_tuple=(1, 1, 1, 5))
+        dummy = Fighter('Dummy', style='No Style', atts_tuple=(1, 1, 1, 5))
         dummy.moves = []
         dummy.learn_move('Do Nothing')
         self.spar(dummy, hide_stats=True)

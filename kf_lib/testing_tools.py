@@ -247,9 +247,9 @@ class Tester(object):
             group_2 = []
             # for s in styles.default_styles:
             for s in [styles.BEGGAR_STYLE, styles.THIEF_STYLE, styles.DRUNKARD_STYLE]:
-                group_0.append(Fighter(name='0', style_name=s.name, level=k, rand_atts_mode=0))
-                group_1.append(Fighter(name='1', style_name=s.name, level=k, rand_atts_mode=1))
-                group_2.append(Fighter(name='2', style_name=s.name, level=k, rand_atts_mode=2))
+                group_0.append(Fighter(name='0', style=s.name, level=k, rand_atts_mode=0))
+                group_1.append(Fighter(name='1', style=s.name, level=k, rand_atts_mode=1))
+                group_2.append(Fighter(name='2', style=s.name, level=k, rand_atts_mode=2))
             for i in range(len(group_0)):
                 print(i + 1)
                 print(group_0[i])

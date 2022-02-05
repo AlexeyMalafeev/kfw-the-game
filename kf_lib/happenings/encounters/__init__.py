@@ -1,8 +1,10 @@
 from ._ambush import Ambush
+from ._craftsman import Craftsman
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_enemy, try_escape
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._base_encounter import BaseEncounter
 from ._challenger import Challenger, GChallenger
+# todo refactor imports in encounters
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, set_up_weapon_fight, \
     try_enemy, try_escape
 from .. import events
@@ -19,8 +21,6 @@ from ...utils.utilities import *
 # encounter chances
 ENC_CH_BOOK_SELLER = 0.02
 ENC_CH_BRAWLER = 0.03
-
-ENC_CH_CRAFTSMAN = 0.01
 ENC_CH_CRIMINAL = 0.03
 ENC_CH_DRUNKARD = 0.05
 ENC_CH_FAT_GIRL = 0.02
@@ -47,7 +47,6 @@ CH_CHANGE_TRAIT = 0.15
 CH_CONVICT_ARMED = 0.35
 CH_DRUNKARD_FIGHT_STRONG = 0.1
 CH_DRUNKARD_FIGHT_WEAK = 0.1
-
 CH_GAMBLER_ARMED = 0.3
 CH_GAMBLER_ENEMY = 0.5
 CH_GAMBLER_FIGHT = 0.25
@@ -87,7 +86,6 @@ MONEY_GAMBLING_BETS = (20, 25, 30, 40, 50)
 MONEY_GIVE_BEGGAR = 10
 MONEY_GOSSIP_COST = (15, 20, 25, 30, 35)
 MONEY_GIVE_ROBBERS = (40, 50, 60, 80, 100, 120, 130, 150, 180)
-MONEY_MANNEQUIN = 500
 MONEY_OPEN_SCHOOL = 1000
 MONEY_PERFORMER = (40, 50, 60)
 MONEY_PRIZE_FIGHTING_FEE = 50
@@ -239,27 +237,6 @@ class ContinueStory(BaseEncounter):
     def run(self):
         s = self.player.current_story
         s.advance()
-
-
-class Craftsman(BaseEncounter):
-    def check_if_happens(self):
-        return rnd() <= ENC_CH_CRAFTSMAN and not self.p.check_item(items.MANNEQUIN)
-
-    def run(self):
-        p = self.player
-        item = items.MANNEQUIN
-        price = MONEY_MANNEQUIN
-        t = """{0} meets a craftsman.
-Craftsman: "Ah, a martial artist! You're lucky! I'm selling this excellent {1} ({3}). It's only {2} coins! Don't \
-worry, if you don't have enough money right now, you can pay the rest later."
-Buy it?""".format(
-            p.name, item, price, items.get_item_descr(item)
-        )
-        p.show(t)
-        p.log("Meets a craftsman.")
-        if p.buy_item_or_not() and not check_feeling_greedy(p):
-            p.buy_item(item, price)
-            items.use_item(item, p)
 
 
 class Criminal(BaseEncounter):
@@ -1446,7 +1423,7 @@ ENC_LIST = [
 
 # extra chance of getting these encounters when choosing the corresponding day actions
 BUY_ITEMS_ENCS = (
-    [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
+        [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
 )
 FIGHT_CRIME_ENCS = (
     [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [HelpPolice] * 7 + [RobbingSomeone] * 7

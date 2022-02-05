@@ -8,6 +8,7 @@ date
 * feat: counters, preemptive strikes and criticals are now agility-based
 * fix: test fight balance
 * feat: improved fight balance (agility is no longer weak)
+* feat: quotes from Chinese classic "The Outlaws of the Marsh"
 
 
 ### v.0.6.4-beta

@@ -8,13 +8,6 @@ from ...utils.utilities import rnd, rndint
 
 
 CH_ENEMY_REPENTS = 0.5
-LINES_ENEMY = (
-    "Does it hurt? I'll KILL you next time!",
-    "That'll teach ya!",
-    "What's wrong? Can't get up, huh?",
-    "This is what happens if you mess with me!",
-    "You are much weaker than I thought!",
-)
 NUM_AMBUSH_THUGS = (2, 4)
 REP_REFORM_ENEMY = 10
 
@@ -48,17 +41,12 @@ class Ambush(BaseEncounter):
 
     def do_fight(self):
         p = self.player
+        e = self.e
         p.check_help()
-        if p.fight(self.e, p.allies, self.thugs):
+        if p.fight(e, p.allies, self.thugs):
             events.crime_down(p.game)
             if rnd() <= CH_ENEMY_REPENTS:
-                p.msg(
-                    '{}: "Please forgive me! I swear you\'ll never see me again!"'.format(
-                        self.e.name
-                    )
-                )
-                p.remove_enemy(self.e)
+                p.msg(f'{e.name}: "Please forgive me! I swear you\'ll never see me again!"')
+                p.remove_enemy(e)
                 p.gain_rep(REP_REFORM_ENEMY)
                 p.add_accompl("Enemy Reformed")
-        else:
-            p.msg(f'{self.e.name}: "{random.choice(LINES_ENEMY)}"')

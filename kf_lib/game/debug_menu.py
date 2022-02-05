@@ -110,8 +110,8 @@ class DebugMenu:
         )
 
     # t = testing_tools.Tester(self)
-    # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
-    # f2 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
+    # f1 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
+    # f2 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
     # from kf_lib.fight import spectate
     # spectate(f1, f2)
 

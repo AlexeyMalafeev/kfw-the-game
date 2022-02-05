@@ -1,7 +1,10 @@
+import random
+from typing import List
+
 from . import boosts as b
 from .styles import Style
 from .techniques import StyleTech
-from kf_lib.utils.utilities import *
+# from kf_lib.utils.utilities import *
 
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
@@ -174,17 +177,34 @@ def generate_new_styles(n, overlap=False):
     return get_styles_from_list(results)
 
 
+def get_new_randomly_generated_style():
+    words = []
+    for w_list in (
+        list(W1),
+        list(W2),
+        list(W3)
+    ):
+        words.append(random.choice(w_list))
+    return get_style_from_words(*words)
+
+
 def get_n_possible_styles():
     return len(W1) * len(W2) * len(W3)
 
 
 def get_style_from_str(s):
     w1, w2, w3 = s.split()
+    return get_style_from_words(w1, w2, w3, s)
+
+
+def get_style_from_words(w1, w2, w3, style_name=''):
     t1 = W1[w1]
     t2 = W2[w2]
     t3 = W3[w3]
-    return Style(s, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
+    if not style_name:
+        style_name = ' '.join((w1, w2, w3))
+    return Style(style_name, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
 
 
-def get_styles_from_list(style_list):
+def get_styles_from_list(style_list: List[str]):
     return [get_style_from_str(s) for s in style_list]

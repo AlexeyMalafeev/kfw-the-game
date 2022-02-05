@@ -293,7 +293,7 @@ class Game:
         style = styles.get_rand_std_style()
         if klass is None:
             klass = random.choice(ALL_AI_PLAYERS)
-        return klass(name=self.get_new_name(), style_name=style.name)
+        return klass(name=self.get_new_name(), style=style)
 
     def get_new_human_player(self):
         while True:
@@ -739,8 +739,8 @@ class Game:
         # p.fight(f1)
 
         # t = testing_tools.Tester(self)
-        # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
-        # f2 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
+        # f1 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
+        # f2 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
         # from kf_lib.fight import spectate
         # spectate(f1, f2)
 
