@@ -25,8 +25,9 @@ class FighterWithActions(
 
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
+        fury = ' *FURY*' if self.check_status('fury') else ''
         n2 = self.current_fight.get_f_name_string(self.target)
-        s = f'{n1}: {self.action.name} @ {n2}'
+        s = f'{n1}{fury}: {self.action.name} @ {n2}'
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
@@ -264,7 +265,7 @@ class FighterWithActions(
     def try_fury(self):
         if (
             not self.check_status('fury')
-            and rnd() <= (1 - self.hp / self.hp_max * self.fury_chance)
+            and rnd() <= ((1 - self.hp / self.hp_max) * self.fury_chance)
         ):
             fury_dur = rndint_2d(DUR_FURY_MIN, DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
