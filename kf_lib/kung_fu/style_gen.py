@@ -23,6 +23,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
         elbow_strike_mult=b.STRIKE_MULT1,
         head_strike_mult=b.STRIKE_MULT1,),
     "Flying": StyleTech('Jump Technique', flying_strike_mult=b.STRIKE_MULT1),
+    'Furious': StyleTech('Kung-Fu Fury', fury_chance=b.FURY_CH1),
     "Grappling": StyleTech('Grappling Training', grappling_strike_mult=b.STRIKE_MULT1),
     "Guarding": StyleTech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
     "Indestructible": StyleTech(
@@ -70,6 +71,7 @@ W2 = {
         knee_strike_mult=b.STRIKE_MULT1,
         elbow_strike_mult=b.STRIKE_MULT1,
         head_strike_mult=b.STRIKE_MULT1,),
+    'Burning': StyleTech('Burning Fury', fury_chance=b.FURY_CH1),
     "Earth": StyleTech('Earth\'s Orbit', dist1_bonus=b.STRIKE_MULT1),
     "Emerald": StyleTech('Emerald Flow', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Fire": StyleTech('Inferno', atk_mult=b.ATTACK1),
@@ -136,6 +138,7 @@ W3 = {  # todo add grappling stike multiplier
     ),
     "Panther": StyleTech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Phoenix": StyleTech('Rising Phoenix', resist_ko=b.RESIST_KO1),
+    'Rat': StyleTech('Cornered Rat', fury_chance=b.FURY_CH1),
     'Shark': StyleTech(
         'Shark Bites', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
@@ -148,7 +151,6 @@ W3 = {  # todo add grappling stike multiplier
     ),
     "Viper": StyleTech('Stinging Viper', stun_chance=b.STUN_CH1),
     "Wolf": StyleTech('Wolf\'s Attacking Distance', dist2_bonus=b.STRIKE_MULT1),
-    # "Rat": StyleTech('Cornered Rat', gain bonus when low on hp)
     # crow, horse, spider - grabs?, shark, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }

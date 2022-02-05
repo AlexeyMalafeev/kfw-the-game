@@ -27,6 +27,8 @@ ENVIRONMENT_CH1 = 0.15
 ENVIRONMENT_CH2 = 0.3
 EVADE1 = 0.5
 EVADE2 = 1
+FURY_CH1 = 0.2
+FURY_CH2 = 0.4
 GRAB_CH1 = 0.2  # todo this is not used
 GRAB_CH2 = 0.4
 GUARD_DFS1 = 0.5
@@ -110,6 +112,7 @@ PMAP = (
         'grab chance',
         HUND_ADD_SIGN_ADD_PCNT,
     ),  # todo use grab_chance boost
+    ('fury_chance', 'fury', 'fury chance', HUND_ADD_SIGN_ADD_PCNT),
     ('guard_dfs_bonus', 'guard', 'guard efficiency', HUND_ADD_SIGN_ADD_PCNT),
     (
         'guard_while_attacking',
