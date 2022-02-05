@@ -30,11 +30,12 @@ class Ambush(BaseEncounter):
 
     def run(self):
         p = self.player
-        self.e = random.choice(p.enemies)
+        e = self.e = random.choice(p.enemies)
         num_thugs = rndint(NUM_AMBUSH_THUGS[0], NUM_AMBUSH_THUGS[1])
         self.thugs = fighter_factory.new_thug(weak=True, n=num_thugs)
         p.show(
-            f"{p.name} is ambushed by his enemy {self.e.name} with {num_thugs} thugs!!"
+            f"{p.name} is ambushed by his enemy {self.e.name} with {num_thugs} thugs!!\n"
+            f'{e.name}: "Seize this fellow and give him a good beating!"'
         )
         p.log(f"Is ambushed by {self.e.name} with {num_thugs} thugs.")
         opp = [self.e] + self.thugs

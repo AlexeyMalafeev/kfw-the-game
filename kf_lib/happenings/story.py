@@ -2,10 +2,10 @@ from ..actors import fighter_factory
 from ..kung_fu import styles
 from ..utils.utilities import *
 
-
+# todo refactor story into a package
 # constants
 # required levels
-# don't forget that the last element in range is not included!
+# the last element in range is not included; todo refactor REQ_LV
 REQ_LV = {
     'ForeignerStory': range(10, 13),
     'NinjaTurtlesStory': range(13, 16),
@@ -232,7 +232,7 @@ class RenownedMaster(Story):
         g.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
             t = (
-                '{}: "Yes... As expected of {}. Your skills are remarkable... I thank you for showing me that I '
+                '{}: "Indeed remarkable! What excellent skill. I thank you for showing me that I '
                 'still have something to learn."'.format(b.name, p.name)
             )
             g.show(t)
@@ -310,11 +310,11 @@ class TreasuresStory(Story):
     def scene1(self):
         g, p, b = self.game, self.player, self.boss
         t = (
-            '{p} sees a pompous official surrounded by his bodyguards. As they walk down {f}\'s main street, '
-            'they push walkers-by around and otherwise behave rudely. An old man standing next to {p} says, '
-            '"This is {b}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our happenings!"'.format(
-                p=p.name, f=g.town_name, b=b.name
-            )
+            f'{p.name} sees a pompous official surrounded by his bodyguards. As they walk down '
+            f'{g.town_name}\'s main street, they push walkers-by around and otherwise behave '
+            'rudely.\n'
+            'Some old man: "Fear not officials, except those who officiate over you! This is '
+            f'{b.name}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'
         )
         g.msg(t)
 

@@ -1,5 +1,6 @@
 ...
 1, 2, 3... kick!
+A real man never goes back on his word.
 A strong man sheds blood before he sheds tears.
 Again...
 Again?
@@ -11,25 +12,33 @@ Aren't you ashamed of your evil deeds?
 Attack!
 Be careful.
 But killing me, you won't find that so easy.
+Come at me, if you have the nerve!
 Come on, then!
+Come out and settle this once and for all!
 Conquer the unyielding with the yielding!
+Death doesn't scare me.
 Don't be so sure of that...
+Don't push me too far. You'll force me to retaliate!
+Enough of idle chatter!
 Enough.
+Even if surrounded by an army of thousands, I could hack my way out. What do you amount to!
 Fate has brought us together in this barren land.
 For the Iron Way!
 For the martial arts spirit!
 For training, I'm willing to endure anything.
 Fortunately, I came in the nick of time!
 Go ahead!
+Go back where you came from, quickly, if you want to save yourself a beating.
 Go to hell!
 Good! Fight!
 Have a few strokes!
+Haven't you heard of me? Where do you get the gall to come and tweak the tiger's whiskers?
 He's huge and fierce...
 He's quite big...
 He's small! Should be easy!
+Here comes an earthquake!
 Here I come!
 Here I come! Winds sweep the plum flowers!
-Here comes an earthquake!
 Here, bite this.
 Here, eat this.
 Here, just taste that.
@@ -37,6 +46,7 @@ Hit all you want!
 Hmm?
 Honestly, I'm not that weak!
 How about a little kiss?
+How could you slander an honest man?
 Hurry, I'm a very busy man.
 I am here to win. That's all.
 I bet you this will tickle.
@@ -50,6 +60,7 @@ I hate evil!
 I have no intention of killing you...
 I hop, I step and I jump!
 I must get my second wind...
+I must save Mikasa and Armin! Wait... Whose memories are these?
 I see that you come from Japan.
 I want to try something...
 I won't run!
@@ -60,20 +71,23 @@ I'll show you once!
 I'll strike the vital points!
 I'll try out my new technique.
 I'm a killer of pigs!
-I'm Chief Fox. You're under arrest.
 I'm afraid you are making a mistake.
 I'm as good as dead!
 I'm bullying you if I fight.
+I'm Chief Fox. You're under arrest.
 I'm here.
 I'm not scared!
 I'm now going to demonstrate.
 I'm only scared of my Grandpa!
 I'm real scared!
+I've come to dig your grave.
+I've no time to lose.
+If I break your hand or foot you'll have brought it on yourself.
 If this goes on, I'll make a fool of myself.
 If you don't behave, I'll hit you!
 If you don't behave, I'll really hit you!
+If you wish to learn, your humble servant can give you a few pointers.
 Impossible!
-I must save Mikasa and Armin! Wait... Whose memories are these?
 Iron Monkey!
 Is it ethical?
 Is that it?
@@ -82,12 +96,12 @@ Isn't that disgraceful?
 It sure has brightened the day I met you.
 It's easy!
 It's not that simple!
-I've come to dig your grave.
 Joy, sadness, melancholy, happiness!
 Just watch...
 Just you wait and see!
 Left, right, the fairy strews the flowers!
 Let me see if you're still vicious!
+Let me see what this is all about.
 Let me show you...
 Let me teach this low life a lesson!
 Let's get started.
@@ -101,17 +115,19 @@ Looks like a sure win to me.
 Mind your head!
 No holding back!
 No way!
+None of you is my equal.
 Not that easy!
 Nothing's been going right today, so you caught me in a bad mood.
 Now you hit me. I promise I won't fight back. ...Just kidding!
-OK, I'll see what mischief you're up to!
-OK, a little force may help...
 Oh, boy!
 Oh, dear.
 Oh, no, you don't!
 Oh, now we'll really have fun.
+OK, a little force may help...
+OK, I'll see what mischief you're up to!
 One at a time.
 Patience!
+People might very well call me Lord of the West.
 Place your bets!
 Play on the opponent's emotions...
 Ready or not, here I come!
@@ -119,11 +135,13 @@ Ready?
 Repent!
 Right. Come on!
 So what?
+So you want to beat me? I'll smash you!
 So, I'm unlucky today.
 Stop that. Stop that...
 Stop!
 Strike all the way!
 Test your eyes against my hands...
+That scabby thief is no good.
 That won't be easy...
 That won't be necessary. You'll see.
 The crocodile hits the boat!
@@ -136,16 +154,16 @@ There's nothing I can do to clear up this misunderstanding...
 This is as far you'll go.
 This is preposterous!
 This seems like fun.
-This time it's for real!
 This time I won't hold back.
+This time it's for real!
 Try this!
 Twist and turn!
 Unbelievable...
 Wait!
 Wait, what?
 Watch carefully!
-Watch this.
 Watch this!
+Watch this.
 Watch. This.
 Well, I'll show you what a tiger's about.
 Well, it leaves me no alternative then.
@@ -159,6 +177,7 @@ What rotten luck!
 What's going on?
 What's this?
 What's up?
+When enemies meet, their eyes blaze.
 Where there's a will, there's a way!
 Who are you? I haven't met you before. Why do you want to kill me?
 Why are you so sad?
