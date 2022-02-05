@@ -14,6 +14,7 @@ date
 * feat: use completely new randomly generated styles in many encounters
 * refactor: use type hints in Fighter, accept both strings and objects as style
 * feat: reimplement takedown generation, hence more moves: 15805 -> 17699
+* fix: bug in prefight quotes not being said by second participant
 
 
 ### v.0.6.4-beta
