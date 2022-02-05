@@ -16,6 +16,7 @@ date
 * feat: reimplement takedown generation, hence more moves: 15805 -> 17699
 * fix: bug in prefight quotes not being said by second participant
 * feat: fury, another (hopefully) fun game mechanic
+* feat: fury-related techniques and styles
 
 
 ### v.0.6.4-beta

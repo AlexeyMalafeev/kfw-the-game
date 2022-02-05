@@ -25,4 +25,9 @@ PREFIGHT_QUOTES = {
     'thug': THUG_PREFIGHT,
     'master': WISDOM,
 }
-WIN_QUOTES = {'challenger': CHALLENGER_WIN, 'hero': HERO_WIN, 'thug': THUG_WIN, 'master': WISDOM}
+WIN_QUOTES = {
+    'challenger': CHALLENGER_WIN,
+    'hero': HERO_WIN,
+    'thug': THUG_WIN,
+    'master': WISDOM
+}
