@@ -29,7 +29,6 @@ class Craftsman(BaseEncounter):
         is_fake_mannequin = False
         luck = p.check_luck()
         if luck == 1:
-            print('good')
             t = (
                 'Craftsman: "A spark from the soul is worth more than a thousand pieces of gold. '
                 'I see that you are fated to become one of the greats. Let us spar and then you '
@@ -44,7 +43,6 @@ class Craftsman(BaseEncounter):
             items.use_item(item, p)
             return
         elif luck == -1:
-            print('bad')
             is_fake_mannequin = True
         if p.buy_item_or_not() and not check_feeling_greedy(p):
             p.buy_item(item, price)

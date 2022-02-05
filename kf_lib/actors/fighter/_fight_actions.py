@@ -4,8 +4,12 @@ import random
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...utils.utilities import rnd, get_adverb, get_bar
+from ...utils.utilities import rnd, get_adverb, get_bar, rndint_2d
 from ._weapons import WeaponMethods
+
+
+DUR_FURY_MIN = 500
+DUR_FURY_MAX = 1000
 
 
 class FighterWithActions(
@@ -238,6 +242,7 @@ class FighterWithActions(
         self.change_qp(self.qp_gain)
         self.change_stamina(self.stamina_gain)
         self.try_in_fight_impro_wp()  # before get_av_atk_actions! or won't get weapon moves
+        self.try_fury()
         self.calc_stamina_factor()
 
     def try_strike(self):
@@ -253,6 +258,11 @@ class FighterWithActions(
     def try_counter(self):
         if self.defended and self.hp > 0 and rnd() <= self.counter_chance:
             self.do_counter()
+
+    def try_fury(self):
+        if rnd() <= (1 - self.hp / self.hp_max * self.fury_chance):
+            fury_dur = rndint_2d(DUR_FURY_MIN, DUR_FURY_MAX) // self.speed_full
+            self.add_status('fury', fury_dur)
 
     def try_in_fight_impro_wp(self):
         if (

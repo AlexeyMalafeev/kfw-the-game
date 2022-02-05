@@ -76,6 +76,7 @@ class FightAttributes(BasicAttributes):
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_to_hit_mult = 2.0
         self.epic_atk_pwr_mult = 2.0
+        self.fury_chance = 0.05  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0
         self.guard_while_attacking = False
@@ -176,6 +177,7 @@ class FightAttributes(BasicAttributes):
         return self.status.get(status, False)
 
     def get_status_marks(self, right=False):
+        fury = '#' if self.check_status('fury') else ''
         slowed_down = ',' if self.check_status('slowed down') else ''
         off_bal = '\'' if self.check_status('off-balance') else ''
         lying = '...' if self.check_status('lying') else ''
@@ -201,7 +203,7 @@ class FightAttributes(BasicAttributes):
             mom_s = f' {mom_s}'
         else:
             mom_s = ''
-        return f'{padding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
+        return f'{padding}{fury}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
     def refresh_level_dependent_atts(self):
         self.hp_max = self.health_full * HP_PER_HEALTH_LV

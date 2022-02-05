@@ -275,7 +275,7 @@ class BaseFight(object):
             if len(fs) > 1:
                 random.shuffle(fs)
             for f in fs:
-                if f.hp <= 0:  # for newly ko'ed fighters; todo last desperate attack? tech?
+                if f.hp <= 0:  # for newly ko'ed fighters
                     continue
                 if self.check_fight_over():  # for winner allies
                     return
