@@ -5,10 +5,15 @@ date
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
 * feat: learn other fighters' moves
 * refactor: encounters.py
+* feat: lucky and unlucky scenarios in Challenger encounter
 * feat: counters, preemptive strikes and criticals are now agility-based
 * fix: test fight balance
 * feat: improved fight balance (agility is no longer weak)
 * feat: quotes from Chinese classic "The Outlaws of the Marsh"
+* feat: lucky and unlucky scenarios in Craftsman encounter
+* feat: use completely new randomly generated styles in many encounters
+* refactor: use type hints in Fighter, accept both strings and objects as style
+* feat: reimplement takedown generation, hence more moves: 15805 -> 17699
 
 
 ### v.0.6.4-beta

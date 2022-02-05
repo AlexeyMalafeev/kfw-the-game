@@ -76,6 +76,8 @@ def add_fun(m, n):
 
 
 def light(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     mult(m, 'power', 0.8)
     mult(m, 'accuracy', 1.1)
@@ -87,6 +89,8 @@ def light(m):
 
 
 def heavy(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     mult(m, 'power', 1.2)
     mult(m, 'accuracy', 0.9)
@@ -198,7 +202,7 @@ def backflip(m):
 
 
 def pushing(m):
-    if m['distance'] >= 4:
+    if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
     m = m.copy()
     up_tier(m)
@@ -230,6 +234,8 @@ def fast(m):
 
 
 def strong(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     mult(m, 'power', 1.2)
     mult(m, 'stam_cost', 1.1)
@@ -240,6 +246,8 @@ def strong(m):
 
 
 def precise(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     mult(m, 'time_cost', 1.1)
     mult(m, 'accuracy', 1.2)
@@ -250,7 +258,7 @@ def precise(m):
 
 
 def flying(m):
-    if m['distance'] >= 4:
+    if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
     m = m.copy()
     mult(m, 'power', 1.2)
@@ -268,6 +276,8 @@ def flying(m):
 def acrobatic(m):
     """More power and accuracy at the cost of increased complexity; can stun"""
     if 'do_agility_based_dam' in m['functions'] or 'do_strength_based_dam' in m['functions']:
+        return None
+    if 'takedown' in m['features']:
         return None
     m = m.copy()
     mult(m, 'stam_cost', 1.25)
@@ -339,6 +349,8 @@ def ferocious(m):
 
 
 def piercing(m):
+    if 'takedown' in m['features']:
+        return None
     if 'do_agility_based_dam' in m['functions'] or 'do_speed_based_dam' in m['functions']:
         return None
     m = m.copy()
@@ -363,6 +375,8 @@ def shocking(m):
 
 
 def solar(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     up_tier(m, 2)
     add(m, 'qi_cost', TIER2_QI_COST)
@@ -372,6 +386,8 @@ def solar(m):
 
 
 def nerve(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     up_tier(m, 2)
     add(m, 'qi_cost', TIER2_QI_COST)
@@ -395,6 +411,8 @@ def debilitating(m):
 
 
 def lethal(m):
+    if 'takedown' in m['features']:
+        return None
     m = m.copy()
     add(m, 'qi_cost', TIER5_QI_COST)
     up_tier(m, 5)
@@ -852,32 +870,6 @@ def gen_moves(moves):
     return moves + new_moves
 
 
-def gen_throws(moves):
-    new_moves = []
-    for m in moves:
-        # todo generate more throws (function x function like other moves)
-        for f, others in (
-            (long, ()),
-            (charging, ()),
-            (fast, ()),
-            (power, ()),
-            (trick, ()),
-            (lightning, ()),
-            (energy, ()),
-            (lethal, ()),
-            (skillful, ()),
-            (superior, ()),
-            (advanced, ()),
-            (expert, ()),
-            (ultimate, ()),
-        ):
-            new = f(m)
-            if new is not None:
-                new_moves.append(new)
-
-    return new_moves
-
-
 def main():
     from kf_lib.kung_fu.moves import read_moves
 
@@ -887,11 +879,9 @@ def main():
     save_moves(extra_moves, keys, os.path.join('move files', 'extra_moves.txt'))
     style_moves, keys = read_moves(os.path.join('move files', 'style_moves.txt'))
     save_moves(style_moves, keys, os.path.join('move files', 'style_moves.txt'))
-    moves = gen_moves(base_moves)  # generated moves also include base_moves
+    takedown_moves = [m for m in extra_moves if 'takedown' in m['features']]
+    moves = gen_moves(base_moves + takedown_moves)  # generated moves also include base_moves
     moves += extra_moves + style_moves
-    throw = [m for m in extra_moves if m['name'] == 'Throw']  # this is awkward, but oh well
-    throws = gen_throws(throw)  # generated moves DO NOT include source move(s) in this case
-    moves += throws
     save_moves(moves, keys, os.path.join('move files', 'all_moves.txt'), sort_alph=True)
 
     input('Press Enter to exit')
