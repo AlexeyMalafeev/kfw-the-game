@@ -263,6 +263,9 @@ class FighterWithActions(
         if rnd() <= (1 - self.hp / self.hp_max * self.fury_chance):
             fury_dur = rndint_2d(DUR_FURY_MIN, DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
+            s = self.current_fight.get_f_name_string(self)
+            self.current_fight.display(f'{s} is in FURY!')
+            self.current_fight.pak()
 
     def try_in_fight_impro_wp(self):
         if (

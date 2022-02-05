@@ -108,7 +108,7 @@ W2 = {
     # diamond, pearl, hellish, hard, soft, deadly, lightning
 }
 
-W3 = {
+W3 = {  # todo add grappling stike multiplier
     "Bear": StyleTech('Bear\'s Strength', strength_mult=b.STRENGTH1),
     "Boar": StyleTech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
     'Butterfly': StyleTech(
