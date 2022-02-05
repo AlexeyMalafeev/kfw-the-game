@@ -1,12 +1,13 @@
 import numpy as np
 import pandas as pd
-
+import sklearn
 
 from kf_lib.mechanics.experience import extract_features
 from kf_lib.actors.fighter_factory import new_fighter, new_prize_fighter
 from kf_lib.fighting.fight import AutoFight
 from kf_lib.utils.utilities import *
-#from .experience import extract_features
+
+# from .experience import extract_features
 # from .fighter_factory import new_fighter, new_prize_fighter
 # from .fight import AutoFight
 # from .utilities import *
@@ -21,8 +22,10 @@ feature_labels = feature_labels_str.split(',')
 # todo refactor generate_data
 def generate_data(examples=1000, min_lv=1, max_lv=20, max_n=8, group_fight_chance=0.5,
                   one_vs_many_subchance=0.5, tech_style_chance=0.75, wp_chance=0.1):
-    data_file = open(os.path.join('ml', f'ML_fight_data m={examples}, lv={min_lv}-{max_lv}, max_crowd={max_n}.csv'),
-                     'w', encoding='utf-8')
+    data_file = open(
+        os.path.join(
+            'ml', f'ML_fight_data m={examples}, lv={min_lv}-{max_lv}, max_crowd={max_n}.csv'),
+        'w', encoding='utf-8')
     data_file.write(feature_labels_str)
     for i in range(examples):
         if not i % 100:
@@ -68,35 +71,36 @@ def generate_data(examples=1000, min_lv=1, max_lv=20, max_n=8, group_fight_chanc
     data_file.close()
 
 
-# todo refactor learn_LR
-def learn_LR(data_file, feature_list=None):
+# todo refactor learn_logreg
+def learn_logreg(data_file, feature_list=None):
     from sklearn.linear_model import LogisticRegression
     if feature_list is None:
         features = feature_labels[:-1]
     else:
         features = feature_list
     df = pd.read_csv(data_file)
-    X = df[features]
+    x = df[features]
     y = df[feature_labels[-1]]
 
     from sklearn.model_selection import train_test_split
-    train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=1)
+    train_x, test_x, train_y, test_y = train_test_split(x, y, random_state=1)
 
     print('initializing the LR model')
     print(features)
     model = LogisticRegression(solver='lbfgs', random_state=0, max_iter=1000)
-    print(f'training on {len(train_X)} samples')
-    model.fit(train_X, train_y)
+    print(f'training on {len(train_x)} samples')
+    model.fit(train_x, train_y)
 
     print('predicting')
-    h = model.predict(test_X)
+    h = model.predict(test_x)
 
     from sklearn.metrics import classification_report
     print(classification_report(test_y, h))
     clf = 'LR'
     m = len(df)
     feats = len(features)
-    report_file = open(os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w', encoding='utf-8')
+    report_file = open(
+        os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print(classification_report(test_y, h), file=report_file)
 
     # REFERENCE, DO NOT DELETE!
@@ -129,45 +133,47 @@ def learn_LR(data_file, feature_list=None):
     # REFERENCE, DO NOT DELETE!
 
     # save model
-    coef_file = open(os.path.join('ml', f'ML LR model coef m={m} n={feats}.txt'), 'w', encoding='utf-8')
+    coef_file = open(
+        os.path.join('ml', f'ML LR model coef m={m} n={feats}.txt'), 'w', encoding='utf-8')
     print(features, file=coef_file)
     print('intercept:', model.intercept_, 'coefficients:', model.coef_, file=coef_file)
     coef_file.close()
 
 
-# todo refactor learn_RFC
-def learn_RFC(data_file, feature_list=None):
+# todo refactor learn_rfc
+def learn_rfc(data_file, feature_list=None):
     from sklearn.ensemble import RandomForestClassifier
     if feature_list is None:
         features = feature_labels[:-1]
     else:
         features = feature_list
     df = pd.read_csv(data_file)
-    X = df[features]
+    x = df[features]
     y = df[feature_labels[-1]]
 
     from sklearn.model_selection import train_test_split
-    train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=1)
+    train_x, test_x, train_y, test_y = train_test_split(x, y, random_state=1)
 
     print('initializing the RFC model')
     print(features)
     model = RandomForestClassifier(n_jobs=2, random_state=0)
-    print(f'training on {len(train_X)} samples')
-    model.fit(train_X, train_y)
+    print(f'training on {len(train_x)} samples')
+    model.fit(train_x, train_y)
 
     print('predicting')
-    h = model.predict(test_X)
+    h = model.predict(test_x)
 
     # View a list of the features and their importance scores
     print('feature importance scores:')
-    print(list(zip(train_X, model.feature_importances_)))
+    print(list(zip(train_x, model.feature_importances_)))
 
     from sklearn.metrics import classification_report
     print(classification_report(test_y, h))
     clf = 'RFC'
     m = len(df)
     feats = len(features)
-    report_file = open(os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w', encoding='utf-8')
+    report_file = open(os.path.join('ml', f'ML report {clf} m={m} n={feats}.txt'), 'w',
+                       encoding='utf-8')
     print(classification_report(test_y, h), file=report_file)
 
-    #print(model.coef_)
+    # print(model.coef_)
