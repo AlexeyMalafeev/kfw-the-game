@@ -96,6 +96,7 @@ class FighterWithActions(
             self.try_block_disarm()
             self.defended = True
         else:
+            self.try_critical()
             self.set_ascii(prefix + 'Hit')
         # todo handle the no defense case
         atkr.dam = round(atkr.dam)
@@ -125,7 +126,8 @@ class FighterWithActions(
         m = self.action
         self.calc_atk(m)
         self.try_environment('attack')
-        self.try_critical()
+        # self.try_critical()
+        self.try_epic()
         self.target.calc_dfs()
         self.try_unblockable()
         self.target.try_environment('defense')

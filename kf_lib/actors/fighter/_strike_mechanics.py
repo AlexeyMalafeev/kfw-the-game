@@ -219,14 +219,16 @@ class StrikeMechanics(FighterWithASCII):
         self.change_hp(-dam)
         self.took_damage = True
 
-    def try_critical(self):
+    def try_epic(self):
         if self.epic_chance and rnd() <= self.epic_chance:
             self.to_hit *= self.epic_to_hit_mult
             self.atk_pwr *= self.epic_atk_pwr_mult
             self.current_fight.display('~*~*~EPIC!!!~*~*~')
             # print('epic')
-        elif rnd() <= self.critical_chance:
-            self.atk_pwr *= self.critical_mult
+
+    def try_critical(self):
+        if rnd() <= self.critical_chance:
+            self.dam *= self.critical_mult
             self.current_fight.display('CRITICAL!')
             # print('critical')
 

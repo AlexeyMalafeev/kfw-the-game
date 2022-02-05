@@ -6,7 +6,7 @@ from .. import quotes
 
 
 class QuoteMethods(BaseFighter):
-    quotes = 'fighter'
+    # quotes = 'fighter'
 
     def say_prefight_quote(self):
         pool = quotes.PREFIGHT_QUOTES.get(self.quotes, None)
