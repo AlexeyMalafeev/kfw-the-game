@@ -18,6 +18,7 @@ class Style(object):
         else:
             self.is_tech_style = False
         features = []
+        self.features = features
         for lv, t in self.techs.items():
             if t.descr_short not in features:
                 features.append(t.descr_short)

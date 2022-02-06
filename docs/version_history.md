@@ -18,6 +18,7 @@ date
 * feat: fury, another (hopefully) fun game mechanic
 * feat: fury-related techniques and styles
 * feat: new fight AI that rushes when fights against 4-distance moves or when has a bigger crowd
+* feat: improved testing of fight balance and AI 
 
 
 ### v.0.6.4-beta

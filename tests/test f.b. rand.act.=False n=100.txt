@@ -1,0 +1,344 @@
+Sun Feb  6 18:09:01 2022
+
+
+#  Key       D1   D2   Diff%  Sum 
+1  speed     607  597  0.83   1204
+2  strength  583  578  0.43   1161
+3  health    600  603  -0.25  1203
+4  agility   611  623  -0.97  1234
+
+Min: 583, Max: 611, Range: 28, Median: 603.5, Mean: 600.25
+
+
+
+#  Key       D1   D2   Diff%  Sum 
+1  speed     619  607  0.98   1226
+2  strength  596  585  0.93   1181
+3  health    611  608  0.25   1219
+4  agility   632  629  0.24   1261
+
+Min: 596, Max: 632, Range: 36, Median: 615.0, Mean: 614.5
+
+
+
+#   Key  D1  D2  Diff%   Sum
+1   8    1   0   100.0   1  
+2   10   1   0   100.0   1  
+3   6    7   3   40.0    10 
+4   1    10  8   11.11   18 
+5   3    30  30  0.0     60 
+6   7    2   2   0.0     4  
+7   2    20  21  -2.44   41 
+8   4    19  20  -2.56   39 
+9   5    9   13  -18.18  22 
+10  0    1   2   -33.33  3  
+11  9    0   1   -100.0  1  
+
+Min: 0, Max: 30, Range: 30, Median: 7, Mean: 9.09
+
+
+
+#    Key                             D1  D2  Diff%   Sum
+1    Swift-Striking Northern Crab    1   0   100.0   1  
+2    Vigorous Snow Viper             1   0   100.0   1  
+3    Persevering Meteor Cobra        1   0   100.0   1  
+4    Flying Ice Rat                  1   0   100.0   1  
+5    Vigorous Snow Fox               1   0   100.0   1  
+6    Indestructible Adamant Crane    1   0   100.0   1  
+7    Cautious Obsidian Elephant      1   0   100.0   1  
+8    Quick Adamant Falcon            1   0   100.0   1  
+9    Paralyzing Vengeful Turtle      1   0   100.0   1  
+10   Vigorous Misty Bear             1   0   100.0   1  
+11   Averting Meteor Elephant        1   0   100.0   1  
+12   Vigorous Meteor Snake           1   0   100.0   1  
+13   Unstoppable Rainbow Leopard     1   0   100.0   1  
+14   Invulnerable Moon Wolf          1   0   100.0   1  
+15   Invulnerable Emerald Mantis     1   0   100.0   1  
+16   Dancing Misty Viper             1   0   100.0   1  
+17   Clinging Air Tiger              1   0   100.0   1  
+18   Swift-Striking Moon Rat         1   0   100.0   1  
+19   Invulnerable Wind Mantis        1   0   100.0   1  
+20   Quick Stone Toad                1   0   100.0   1  
+21   Long-Range Burning Rat          1   0   100.0   1  
+22   Clinging Water Boar             1   0   100.0   1  
+23   Clinging Moon Shark             1   0   100.0   1  
+24   Balanced Astral Dragon          1   0   100.0   1  
+25   Mystic Snow Dragon              1   0   100.0   1  
+26   Kicking Moon Leopard            1   0   100.0   1  
+27   Elusive Wooden Crab             1   0   100.0   1  
+28   Flying Rainbow Snake            1   0   100.0   1  
+29   Indestructible Snow Leopard     1   0   100.0   1  
+30   Paralyzing Rainbow Lion         1   0   100.0   1  
+31   Light-Footed Adamant Mantis     1   0   100.0   1  
+32   Powerful Vengeful Phoenix       1   0   100.0   1  
+33   Guarding Astral Mantis          1   0   100.0   1  
+34   Punching Formless Viper         1   0   100.0   1  
+35   Elusive Formless Shark          1   0   100.0   1  
+36   Tough Emerald Tiger             1   0   100.0   1  
+37   Rising Stone Phoenix            1   0   100.0   1  
+38   Exotic Misty Turtle             1   0   100.0   1  
+39   Defending Burning Wolf          1   0   100.0   1  
+40   Attacking Red Elephant          1   0   100.0   1  
+41   Rising White Butterfly          1   0   100.0   1  
+42   Flying Snow Dragon              1   0   100.0   1  
+43   Grappling Obsidian Snake        1   0   100.0   1  
+44   Sharp Iron Crane                1   0   100.0   1  
+45   Persevering Water Boar          1   0   100.0   1  
+46   Rising Stone Dragon             1   0   100.0   1  
+47   Unstoppable Moon Ox             1   0   100.0   1  
+48   Mid-Range Sun Tiger             1   0   100.0   1  
+49   Tough Fire Wolf                 1   0   100.0   1  
+50   Attacking Heavenly Eagle        1   0   100.0   1  
+51   Exotic Red Eagle                1   0   100.0   1  
+52   Invulnerable Sun Viper          1   0   100.0   1  
+53   Powerful Venom Dragon           1   0   100.0   1  
+54   Flying Earth Turtle             1   0   100.0   1  
+55   Paralyzing Rainbow Rat          1   0   100.0   1  
+56   Vigorous Obsidian Fox           1   0   100.0   1  
+57   Rising Adamant Panther          1   0   100.0   1  
+58   Retaliating Sun Rat             1   0   100.0   1  
+59   Guarding Storm Bear             1   0   100.0   1  
+60   Averting White Snake            1   0   100.0   1  
+61   Dancing Emerald Elephant        1   0   100.0   1  
+62   Light-Footed Vengeful Rat       1   0   100.0   1  
+63   Balanced Vengeful Ox            1   0   100.0   1  
+64   Exotic Snow Shark               1   0   100.0   1  
+65   Kicking Misty Centipede         1   0   100.0   1  
+66   Kicking Fire Leopard            1   0   100.0   1  
+67   Sharp Earth Monkey              1   0   100.0   1  
+68   Furious Vengeful Wolf           1   0   100.0   1  
+69   Kicking Heavenly Monkey         1   0   100.0   1  
+70   Guarding Burning Crab           1   0   100.0   1  
+71   Mid-Range Formless Mantis       1   0   100.0   1  
+72   Clinging Heavenly Tiger         1   0   100.0   1  
+73   Clinging Water Turtle           1   0   100.0   1  
+74   Indestructible Misty Butterfly  1   0   100.0   1  
+75   Indestructible Misty Tiger      1   0   100.0   1  
+76   Sharp Formless Ox               1   0   100.0   1  
+77   Open-Handed Northern Cobra      1   0   100.0   1  
+78   Averting Fire Tiger             1   0   100.0   1  
+79   Flying Stone Cobra              1   0   100.0   1  
+80   Clinging Earth Shark            1   0   100.0   1  
+81   Flying Adamant Hawk             1   0   100.0   1  
+82   Dancing Storm Lion              1   0   100.0   1  
+83   Furious Obsidian Eagle          1   0   100.0   1  
+84   Paralyzing Misty Viper          1   0   100.0   1  
+85   Mid-Range Heavenly Cobra        1   0   100.0   1  
+86   Indestructible Northern Monkey  1   0   100.0   1  
+87   Dancing Storm Mantis            1   0   100.0   1  
+88   Grappling Astral Butterfly      1   0   100.0   1  
+89   Exotic Sun Boar                 1   0   100.0   1  
+90   Long-Range Rainbow Lion         1   0   100.0   1  
+91   Clinging Air Scorpion           1   0   100.0   1  
+92   Powerful Wind Monkey            1   0   100.0   1  
+93   Swift-Striking Heavenly Wolf    1   0   100.0   1  
+94   Retaliating Northern Turtle     1   0   100.0   1  
+95   Rising Fire Eagle               1   0   100.0   1  
+96   Open-Handed Formless Scorpion   1   0   100.0   1  
+97   Persevering Moon Turtle         1   0   100.0   1  
+98   Tough Sun Crane                 1   0   100.0   1  
+99   Elusive Earth Falcon            1   0   100.0   1  
+100  Flying Meteor Panther           1   0   100.0   1  
+101  Powerful Formless Crab          0   1   -100.0  1  
+102  Mystic Obsidian Centipede       0   1   -100.0  1  
+103  Mystic Stone Eagle              0   1   -100.0  1  
+104  Unstoppable Bizarre Butterfly   0   1   -100.0  1  
+105  Retaliating Meteor Centipede    0   1   -100.0  1  
+106  Long-Range Earth Fox            0   1   -100.0  1  
+107  Long-Range Rainbow Dragon       0   1   -100.0  1  
+108  Clinging Misty Falcon           0   1   -100.0  1  
+109  Powerful Obsidian Hawk          0   1   -100.0  1  
+110  Balanced Earth Crane            0   1   -100.0  1  
+111  Clinging Emerald Tiger          0   1   -100.0  1  
+112  Open-Handed Moon Ox             0   1   -100.0  1  
+113  Mystic Meteor Panther           0   1   -100.0  1  
+114  Open-Handed Wooden Phoenix      0   1   -100.0  1  
+115  Sharp Earth Bear                0   1   -100.0  1  
+116  Long-Range Bizarre Rat          0   1   -100.0  1  
+117  Retaliating Storm Turtle        0   1   -100.0  1  
+118  Powerful Red Crab               0   1   -100.0  1  
+119  Indestructible Meteor Ox        0   1   -100.0  1  
+120  Swift-Striking Moon Tiger       0   1   -100.0  1  
+121  Cautious Emerald Crane          0   1   -100.0  1  
+122  Unstoppable Red Toad            0   1   -100.0  1  
+123  Clinging Formless Cobra         0   1   -100.0  1  
+124  Sharp Red Centipede             0   1   -100.0  1  
+125  Retaliating Vengeful Phoenix    0   1   -100.0  1  
+126  Light-Footed Heavenly Crab      0   1   -100.0  1  
+127  Punching Red Fox                0   1   -100.0  1  
+128  Mid-Range Stone Wolf            0   1   -100.0  1  
+129  Averting Burning Toad           0   1   -100.0  1  
+130  Punching Storm Boar             0   1   -100.0  1  
+131  Attacking Astral Rat            0   1   -100.0  1  
+132  Unstoppable Iron Toad           0   1   -100.0  1  
+133  Clinging Emerald Fox            0   1   -100.0  1  
+134  Indestructible Earth Phoenix    0   1   -100.0  1  
+135  Persevering Moon Scorpion       0   2   -100.0  2  
+136  Punching Snow Falcon            0   1   -100.0  1  
+137  Clinging Snow Turtle            0   1   -100.0  1  
+138  Indestructible Ice Panther      0   1   -100.0  1  
+139  Tough Misty Boar                0   1   -100.0  1  
+140  Clinging Snow Cobra             0   1   -100.0  1  
+141  Kicking Air Boar                0   1   -100.0  1  
+142  Elusive Iron Crab               0   1   -100.0  1  
+143  Vigorous Adamant Centipede      0   1   -100.0  1  
+144  Close-Range Formless Panther    0   1   -100.0  1  
+145  Rising Ice Falcon               0   1   -100.0  1  
+146  Paralyzing Sun Crab             0   1   -100.0  1  
+147  Guarding Rainbow Falcon         0   1   -100.0  1  
+148  Mid-Range Heavenly Turtle       0   1   -100.0  1  
+149  Punching Iron Butterfly         0   1   -100.0  1  
+150  Indestructible Bizarre Eagle    0   1   -100.0  1  
+151  Defending Sun Dragon            0   1   -100.0  1  
+152  Averting Ice Hawk               0   1   -100.0  1  
+153  Sharp White Ox                  0   1   -100.0  1  
+154  Long-Range Adamant Wolf         0   1   -100.0  1  
+155  Rising Burning Bear             0   1   -100.0  1  
+156  Attacking Burning Boar          0   1   -100.0  1  
+157  Indestructible Misty Scorpion   0   1   -100.0  1  
+158  Attacking Bizarre Boar          0   1   -100.0  1  
+159  Quick Adamant Crane             0   1   -100.0  1  
+160  Dancing Wind Hawk               0   1   -100.0  1  
+161  Shattering Wind Turtle          0   1   -100.0  1  
+162  Mid-Range Wooden Snake          0   1   -100.0  1  
+163  Punching Iron Wolf              0   1   -100.0  1  
+164  Attacking Vengeful Tiger        0   1   -100.0  1  
+165  Averting Iron Elephant          0   1   -100.0  1  
+166  Long-Range Iron Viper           0   1   -100.0  1  
+167  Unstoppable Earth Dragon        0   1   -100.0  1  
+168  Shattering Wooden Crane         0   1   -100.0  1  
+169  Grappling Rainbow Monkey        0   1   -100.0  1  
+170  Open-Handed White Snake         0   1   -100.0  1  
+171  Swift-Striking Venom Monkey     0   1   -100.0  1  
+172  Light-Footed Heavenly Turtle    0   1   -100.0  1  
+173  Open-Handed Bizarre Mantis      0   1   -100.0  1  
+174  Indestructible White Tiger      0   1   -100.0  1  
+175  Vigorous Storm Lion             0   1   -100.0  1  
+176  Indestructible Iron Dragon      0   1   -100.0  1  
+177  Long-Range Red Toad             0   1   -100.0  1  
+178  Punching Venom Wolf             0   1   -100.0  1  
+179  Vigorous Water Lizard           0   1   -100.0  1  
+180  Kicking Emerald Leopard         0   1   -100.0  1  
+181  Clinging Sun Cobra              0   1   -100.0  1  
+182  Elusive Storm Mantis            0   1   -100.0  1  
+183  Furious Bizarre Monkey          0   1   -100.0  1  
+184  Flying Storm Mantis             0   1   -100.0  1  
+185  Open-Handed Adamant Rat         0   1   -100.0  1  
+186  Grappling Sun Dragon            0   1   -100.0  1  
+187  Invulnerable Astral Toad        0   1   -100.0  1  
+188  Retaliating Water Lion          0   1   -100.0  1  
+189  Persevering Misty Centipede     0   1   -100.0  1  
+190  Invulnerable Emerald Phoenix    0   1   -100.0  1  
+191  Mystic Wooden Mantis            0   1   -100.0  1  
+192  Swift-Striking Vengeful Dragon  0   1   -100.0  1  
+193  Attacking Moon Cobra            0   1   -100.0  1  
+194  Close-Range Snow Wolf           0   1   -100.0  1  
+195  Vigorous Sun Bear               0   1   -100.0  1  
+196  Paralyzing Wind Crane           0   1   -100.0  1  
+197  Vigorous Storm Elephant         0   1   -100.0  1  
+198  Unstoppable Iron Fox            0   1   -100.0  1  
+199  Mid-Range Obsidian Wolf         0   1   -100.0  1  
+
+Min: 0, Max: 1, Range: 1, Median: 1, Mean: 0.5
+
+
+
+#   Key                   D1  D2  Diff%   Sum
+1   Brawler's Resilience  8   1   77.78   9  
+2   Guard While Striking  7   1   75.0    8  
+3   Preemptive Strikes    9   4   38.46   13 
+4   Iron Fist             4   2   33.33   6  
+5   Behind You            6   3   33.33   9  
+6   Debilitating Strikes  6   4   20.0    10 
+7   Horse-like Stamina    6   4   20.0    10 
+8   Unlikely Weapons      6   4   20.0    10 
+9   Fast Strikes          3   2   20.0    5  
+10  18 Attack Forms       11  8   15.79   19 
+11  Fierce Strikes        4   3   14.29   7  
+12  Fast Movement         5   4   11.11   9  
+13  Shadow Slips Away     6   5   9.09    11 
+14  Health Breathing      3   3   0.0     6  
+15  Powerful Kicks        4   4   0.0     8  
+16  Advanced Guard        4   4   0.0     8  
+17  Fist of Fury          1   1   0.0     2  
+18  Lotus Stance          3   4   -14.29  7  
+19  Flying Strikes        3   4   -14.29  7  
+20  Environment Fighting  5   7   -16.67  12 
+21  Elbow Boxing          4   6   -20.0   10 
+22  Knee Boxing           4   6   -20.0   10 
+23  Retaliative Blows     3   5   -25.0   8  
+24  Qi Breathing          4   7   -27.27  11 
+25  Monkey and Fox        3   6   -33.33  9  
+26  18 Defense Forms      3   7   -40.0   10 
+27  Wall-like Protection  3   8   -45.45  11 
+28  Iron Vest             3   8   -45.45  11 
+29  Hardened Palms        3   9   -50.0   12 
+
+Min: 1, Max: 11, Range: 10, Median: 4, Mean: 4.62
+
+
+
+#  Key                      D1  D2  Diff%   Sum
+1  Attack Is Defense        1   0   100.0   1  
+2  Hurricane Legs           1   0   100.0   1  
+3  Lightning-Fast Movement  0   1   -100.0  1  
+4  Mighty Elbows            0   1   -100.0  1  
+
+Min: 0, Max: 1, Range: 1, Median: 0.5, Mean: 0.5
+
+
+
+#   Key               D1   D2   Diff%   Sum 
+1   extra long-range  47   15   51.61   62  
+2   flying            77   32   41.28   109 
+3   ferocious         26   12   36.84   38  
+4   superior          27   20   14.89   47  
+5   nerve             34   26   13.33   60  
+6   power             22   17   12.82   39  
+7   fast              87   69   11.54   156 
+8   expert            43   35   10.26   78  
+9   takedown          23   19   9.52    42  
+10  kick              314  281  5.55    595 
+11  energy            29   26   5.45    55  
+12  elbow             58   52   5.45    110 
+13  light             41   37   5.13    78  
+14  debilitating      42   38   5.0     80  
+15  vanishing         20   19   2.56    39  
+16  advanced          28   27   1.82    55  
+17  trick             29   28   1.75    57  
+18  punch             405  394  1.38    799 
+19  long-range        214  209  1.18    423 
+20  skillful          63   62   0.8     125 
+21  solar             28   28   0.0     56  
+22  no range          802  802  0.0     1604
+23  long              45   45   0.0     90  
+24  knockback         100  100  0.0     200 
+25  non-attack        802  802  0.0     1604
+26  backflip          2    2    0.0     4   
+27  antiground only   200  200  0.0     400 
+28  onslaught         25   25   0.0     50  
+29  jump              2    2    0.0     4   
+30  grappling         112  113  -0.44   225 
+31  close-range       452  458  -0.66   910 
+32  short             124  126  -0.8    250 
+33  knee              46   49   -3.16   95  
+34  claw              54   58   -3.57   112 
+35  mid-range         361  392  -4.12   753 
+36  ultimate          43   47   -4.44   90  
+37  piercing          21   23   -4.55   44  
+38  shocking          35   40   -6.67   75  
+39  retreating        33   39   -8.33   72  
+40  head              25   31   -10.71  56  
+41  heavy             28   36   -12.5   64  
+42  lightning         21   27   -12.5   48  
+43  lethal            29   39   -14.71  68  
+44  charging          34   48   -17.07  82  
+45  pushing           37   53   -17.78  90  
+46  precise           20   29   -18.37  49  
+47  strong            22   33   -20.0   55  
+48  surprise          36   57   -22.58  93  
+49  palm              60   96   -23.08  156 
+50  acrobatic         12   20   -25.0   32  
+
+Min: 2, Max: 802, Range: 800, Median: 36.5, Mean: 104.8
+

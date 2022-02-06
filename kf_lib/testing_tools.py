@@ -93,13 +93,11 @@ class Tester(object):
         file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
         file_path = Path(TESTS_FOLDER, file_name)
         print(get_time(), file=open(file_path, 'w', encoding='utf-8'))
-        # with open(file_path, 'w') as f:
-        #     f.write(get_time() + '\n')
         output = '-' * 40 + '\n\n'
         if not rand_actions:
             output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
         output += f'rand_actions={rand_actions}\n\n'
-        # init dicts
+
         dummy = ff.new_dummy_fighter(1)
         att_names = dummy.att_names
         d_atts_wnr = {att: 0 for att in att_names}
@@ -108,18 +106,16 @@ class Tester(object):
         d_full_atts_lsr = {att: 0 for att in att_names}
         att_diffs_wnr = {}
         att_diffs_lsr = {}
-        styles_wnr = {}
-        styles_lsr = {}
+        buffs_wnr = {}
+        buffs_lsr = {}
         techs1_wnr = {}
         techs1_lsr = {}
         techs2_wnr = {}
         techs2_lsr = {}
         moves_wnr = {}
         moves_lsr = {}
-        # fight!
-        for i in trange(n):
-            # if not i % (n / 20):
-            #     print(f'fight {i + 1} / {n}')
+
+        for _ in trange(n):
             lv = random.randint(1, 20)
             f1 = ff.new_fighter(lv=lv)
             f1.name = 'Dummy A'
@@ -145,9 +141,10 @@ class Tester(object):
                     att_vals = [getattr(f, att) for att in att_names]
                     att_diff = max(att_vals) - min(att_vals)
                     add_to_dict(d, att_diff, 1)
-                # styles
-                add_to_dict(styles_wnr, wnr.style.name, 1)
-                add_to_dict(styles_lsr, lsr.style.name, 1)
+                # style buffs
+                for f, d in ((wnr, buffs_wnr), (lsr, buffs_lsr)):
+                    for feature in f.style.features:
+                        add_to_dict(d, feature, 1)
                 # techs
                 for f, d1, d2 in ((wnr, techs1_wnr, techs2_wnr), (lsr, techs1_lsr, techs2_lsr)):
                     for t in f.techs:
@@ -166,7 +163,7 @@ class Tester(object):
             (d_atts_wnr, d_atts_lsr, 'atts:'),
             (d_full_atts_wnr, d_full_atts_lsr, 'full atts:'),
             (att_diffs_wnr, att_diffs_lsr, 'att diffs:'),
-            (styles_wnr, styles_lsr, 'styles:'),
+            (buffs_wnr, buffs_lsr, 'style buffs:'),
             (techs1_wnr, techs1_lsr, 'techs 1:'),
             (techs2_wnr, techs2_lsr, 'techs 2:'),
             (moves_wnr, moves_lsr, 'moves:'),
@@ -175,8 +172,8 @@ class Tester(object):
             tups = dict_comp(d_wnr, d_lsr, sort_col_index=3)
             lines = ['\n', pretty_table(tups), '', summary(d_wnr), '']
             s = '\n'.join(lines)
-            print(s)
-            print(s, file=open(file_path, 'a', encoding='utf-8'))
+            print(legend, s, sep='\n\n')
+            print(legend, s, sep='\n\n', file=open(file_path, 'a', encoding='utf-8'))
         input('Press Enter')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):
