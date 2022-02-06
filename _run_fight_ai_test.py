@@ -17,10 +17,10 @@ try:
         fight_ai.GeneticAIMoreAggroTrainedTop,
         fight_ai.GeneticAIMoreAggroTrainedRecord,
     )
-    if write_log:
-        for AI in AIs:
-            with open(f'{AI.__name__}.txt', 'w') as f:
-                f.write('')
+    # if write_log:
+    #     for AI in AIs:
+    #         with open(f'{AI.__name__}.txt', 'w') as f:
+    #             f.write('')
     # tests = (fight_ai_test.FightAITest, fight_ai_test.CrowdVsCrowd)
     # tests = (fight_ai_test.CrowdVsCrowd, fight_ai_test.CrowdVsCrowdFair)
     tests = (fight_ai_test.CrowdVsCrowdFair, fight_ai_test.FightAITest)

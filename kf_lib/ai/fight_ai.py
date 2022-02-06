@@ -328,7 +328,7 @@ class GeneticAIMoreAggroTrainedRecord(GeneticAIMoreAggro):
 
 
 # DefaultFightAI = GeneticAIAggro
-DefaultFightAI = GeneticAIMoreAggro
+DefaultFightAI = GeneticAIMoreAggroTrainedTop
 DefaultGeneticAIforTraining = GeneticAIMoreAggro
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
 
@@ -344,20 +344,20 @@ params8 = [
 set_gen_ai_params(GeneticAITrainedParams8, params8)
 
 params202202_top = [
-    0.9543835165930256,
-    0.14426817184508778,
-    0.21546881760407965,
-    0.02730274577937364,
-    0.07500520467563832,
+    0.7528246651943808,
+    0.07539565541460513,
+    0.29646096414307554,
+    0.7457290913793531,
+    0.9007165875111384,
 ]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 
 params202202_record = [
-    0.9265512291096116,
-    0.1390143232558788,
-    0.300289180607353,
-    0.19937525325991945,
-    0.6037660409072123
+    0.45695720193252876,
+    0.867175106530849,
+    0.29646096414307554,
+    0.5450658598135111,
+    0.08640262907373342,
 ]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
 

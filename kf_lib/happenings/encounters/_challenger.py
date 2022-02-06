@@ -1,7 +1,7 @@
 import random
 
 
-from . import BaseEncounter, Guaranteed
+from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_scary_fight, set_up_weapon_fight
 from ...utils.utilities import rnd
 

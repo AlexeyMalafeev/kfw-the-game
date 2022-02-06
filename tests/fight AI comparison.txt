@@ -1,7 +1,7 @@
-Sun Feb  6 20:11:39 2022
+Sun Feb  6 20:52:28 2022
 
-GeneticAIAggro                   1122
-GeneticAIMoreAggro               1080
-GeneticAIMoreAggroTrainedRecord  898 
-GeneticAIMoreAggroTrainedTop     845 
-BaseAI                           55  
+GeneticAIMoreAggro               1129
+GeneticAIAggro                   1116
+GeneticAIMoreAggroTrainedTop     1114
+GeneticAIMoreAggroTrainedRecord  584 
+BaseAI                           57  

@@ -1,9 +1,9 @@
 from ._ambush import Ambush
+from ._beggar import Beggar, GBeggar
+from ._challenger import Challenger, GChallenger
 from ._craftsman import Craftsman
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_enemy, try_escape
 from ._base_encounter import BaseEncounter, Guaranteed
-from ._base_encounter import BaseEncounter
-from ._challenger import Challenger, GChallenger
 # todo refactor imports in encounters
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, set_up_weapon_fight, \
     try_enemy, try_escape
@@ -39,7 +39,6 @@ ENC_CH_WEIRDO = 0.02
 ENC_CH_WISE_MAN = 0.02
 
 # misc chances
-CH_BEGGAR_FIGHT = 0.1
 CH_BOOK_RUBBISH = 0.3
 CH_BOOK_MOVE = 0.3  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
 CH_BRAWLER_ATTACKS = 0.2
@@ -65,7 +64,6 @@ CH_THUG_ENEMY = 0.1
 # levels
 LV_STUD_CHALLENGERS = (1, 3)
 LV_PRIZE_FIGHTERS = (2, 4, 7, 10, 15)
-REQ_LV_BEGGAR_FIGHT = (5, 10)
 REQ_LV_DRUNKARD_FIGHT_STRONG = (5, 10)
 REQ_LV_DRUNKARD_FIGHT_WEAK = (1, 5)
 REQ_LV_MASTER_TRIAL = fighter_factory.MASTER_LV[0]
@@ -83,7 +81,6 @@ LINES_ROBBER = (
 MONEY_BOOK = 100
 MONEY_CONVICT_REWARD_MULT = (10, 15, 20, 25, 30, 40)
 MONEY_GAMBLING_BETS = (20, 25, 30, 40, 50)
-MONEY_GIVE_BEGGAR = 10
 MONEY_GOSSIP_COST = (15, 20, 25, 30, 35)
 MONEY_GIVE_ROBBERS = (40, 50, 60, 80, 100, 120, 130, 150, 180)
 MONEY_OPEN_SCHOOL = 1000
@@ -123,49 +120,6 @@ REP_NOT_BRAWL = 1
 # misc
 FAILED_ESCAPE_BEATING = (3, 5)
 PERFORMER_EXP_REWARD = 50
-
-
-class Beggar(BaseEncounter):
-    def check_if_happens(self):
-        return rnd() <= self.p.game.poverty / 2
-
-    def run(self):
-        p = self.player
-        p.show(f"{p.name} meets a beggar.")
-        p.log("Meets a beggar.")
-        amount = p.donate_or_not(MONEY_GIVE_BEGGAR)
-        if amount and not check_feeling_greedy(p):
-            p.donate(amount)
-            if p.check_lv(*REQ_LV_BEGGAR_FIGHT) and rnd() <= CH_BEGGAR_FIGHT:
-                self.do_fight()
-
-    def do_fight(self):
-        p = self.player
-        b = p.game.beggar
-        if b is None:
-            return
-        t = f"""As {p.name} turns to leave however, the beggar stops him.
-Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from \
-{b.name}!\""""
-        p.show(t)
-        p.log(f"{b.name} gives {p.name} a free kung-fu lesson.")
-        p.pak()
-        if p.spar(b):
-            p.show(f'{b.name}: "Your skill is very impressive! Let\'s practice again some time."')
-            p.add_friend(b)
-            p.add_accompl("Beggar's Friend")
-            p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
-            p.pak()
-            p.learn_move_from(b)
-            p.game.beggar = None
-        else:
-            p.show(f'{b.name}: "Still got a lot to learn, huh..."')
-            p.show(
-                f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
-                'has improved."'
-            )
-            p.pak()
-            p.learn_move_from(b)
 
 
 class BookSeller(BaseEncounter):
@@ -1361,10 +1315,6 @@ class WiseMan(BaseEncounter):
                 )
             )
         p.pak()
-
-
-class GBeggar(Guaranteed, Beggar):
-    pass
 
 
 class GDrunkard(Guaranteed, Drunkard):
