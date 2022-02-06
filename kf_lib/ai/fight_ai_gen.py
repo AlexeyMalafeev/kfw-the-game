@@ -12,6 +12,11 @@ from kf_lib.ai import fight_ai, fight_ai_test
 from kf_lib.utils.utilities import rnd
 
 
+# 1 for fighting against current default fight AI; fast
+# 2 for in-fighting; very slow
+TRAINING_MODE: int = 1
+
+
 class GeneticAlgorithm(object):
     def __init__(self, pop_size, n_genes, gene_names, n_top, mut_prob, comment=None):
         self.pop_size = pop_size
@@ -78,7 +83,11 @@ class GeneticAlgorithm(object):
                 setattr(ai, name, individual[i])
             t = fight_ai_test.FightAITest(
                 # ai, fight_ai.GeneticAITrainedParams3, rep=n_rep, write_log=False
-                ai, fight_ai.DefaultFightAI, rep=n_rep, write_log=False
+                ai,
+                fight_ai.DefaultFightAI,
+                rep=n_rep,
+                write_log=False,
+                suppress_output=True,
             )
             self.fit_values.append(t.wins[0])
         #     print('result:', t.wins[0])
@@ -170,8 +179,10 @@ Record holder: {self.record_holder}
         for i in trange(n_generations):
             self.curr_generation = i
             # print('generation', i + 1, '/', n_generations)
-            # self.fitness()
-            self.fitness_infighting()
+            if TRAINING_MODE == 1:
+                self.fitness()
+            else:
+                self.fitness_infighting()
             self.selection()
             self.output()
             self.crossover()

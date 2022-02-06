@@ -319,6 +319,11 @@ class GeneticAIMoreAggro(GeneticAITrainedParams8):
         return self.choice
 
 
+# on par with GeneticAIMoreAggro
+class GeneticAIMoreAggroTrainedInFighting(GeneticAIMoreAggro):
+    pass
+
+
 class GeneticAIMoreAggroTrainedTop(GeneticAIMoreAggro):
     pass
 
@@ -328,7 +333,7 @@ class GeneticAIMoreAggroTrainedRecord(GeneticAIMoreAggro):
 
 
 # DefaultFightAI = GeneticAIAggro
-DefaultFightAI = GeneticAIMoreAggroTrainedTop
+DefaultFightAI = GeneticAIMoreAggro
 DefaultGeneticAIforTraining = GeneticAIMoreAggro
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
 
@@ -343,21 +348,32 @@ params8 = [
 # best so far; trained against GeneticAITrainedParams3
 set_gen_ai_params(GeneticAITrainedParams8, params8)
 
-params202202_top = [
+# on par with GeneticAIMoreAggro
+params202202_infighting_top = [
     0.7528246651943808,
     0.07539565541460513,
     0.29646096414307554,
     0.7457290913793531,
     0.9007165875111384,
 ]
+set_gen_ai_params(GeneticAIMoreAggroTrainedInFighting, params202202_infighting_top)
+
+params202202_top = [
+    0.528317599161703,
+    0.35276959043444756,
+    0.3882407029370295,
+    0.23088333519143067,
+    0.09418133293198594,
+]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 
+# considerably weaker than GeneticAIMoreAggro
 params202202_record = [
-    0.45695720193252876,
-    0.867175106530849,
-    0.29646096414307554,
-    0.5450658598135111,
-    0.08640262907373342,
+    0.06265713151867547,
+    0.9095286633974666,
+    0.8508204283032016,
+    0.06161083941512724,
+    0.9795191748545785,
 ]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
 

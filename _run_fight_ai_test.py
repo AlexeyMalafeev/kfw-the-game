@@ -14,6 +14,7 @@ try:
         fight_ai.BaseAI,
         fight_ai.GeneticAIAggro,
         fight_ai.GeneticAIMoreAggro,
+        fight_ai.GeneticAIMoreAggroTrainedInFighting,
         fight_ai.GeneticAIMoreAggroTrainedTop,
         fight_ai.GeneticAIMoreAggroTrainedRecord,
     )
