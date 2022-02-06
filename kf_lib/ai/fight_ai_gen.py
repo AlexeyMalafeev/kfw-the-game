@@ -1,6 +1,9 @@
+from copy import copy
 from pprint import pprint
 import random
 import time
+
+
 from kf_lib.ai import fight_ai, fight_ai_test
 from kf_lib.utils.utilities import rnd
 
@@ -65,11 +68,13 @@ class GeneticAlgorithm(object):
             print(time.ctime())
             print('evaluating individual:')
             pprint(individual)
-            ai = fight_ai.GeneticAI
+            # ai = fight_ai.GeneticAI
+            ai = copy(fight_ai.DefaultGeneticAIforTraining)
             for i, name in enumerate(self.gene_names):
                 setattr(ai, name, individual[i])
             t = fight_ai_test.FightAITest(
-                ai, fight_ai.GeneticAITrainedParams3, rep=n_rep, write_log=False
+                # ai, fight_ai.GeneticAITrainedParams3, rep=n_rep, write_log=False
+                ai, fight_ai.DefaultFightAI, rep=n_rep, write_log=False
             )
             self.fit_values.append(t.wins[0])
             print('result:', t.wins[0])
@@ -95,7 +100,13 @@ class GeneticAlgorithm(object):
                 ai2 = fight_ai.GeneticAI2
                 for i, name in enumerate(self.gene_names):
                     setattr(ai2, name, individual2[i])
-                t = fight_ai_test.FightAITest(ai, ai2, rep=n_rep, write_log=False)
+                t = fight_ai_test.FightAITest(
+                    ai,
+                    ai2,
+                    rep=n_rep,
+                    write_log=False,
+                    suppress_output=True,
+                )
                 score += t.wins[0]
             self.fit_values.append(score)
             print('result:', score)
@@ -107,15 +118,17 @@ class GeneticAlgorithm(object):
             return
         print(time.ctime())
         print('starting mutation')
-        # only the new children mutate to ensure preserving top fit values from the previous generation
-        for individual in self.population[len(self.fittest) :]:
+        # only the new children mutate to ensure preserving top fit values from the previous
+        # generation
+        for individual in self.population[len(self.fittest):]:
             if rnd() <= self.mut_prob:
                 print('mutation occurs for individual:')
                 pprint(individual)
                 i = random.randint(0, self.n_genes - 1)
                 new_val = rnd()  # random mutation
                 individual[i] = new_val
-                # new_val = individual[i] * random.choice([0.8, 0.9, 1.1, 1.2])  # random increase/decrease
+                # random increase/decrease
+                # new_val = individual[i] * random.choice([0.8, 0.9, 1.1, 1.2])
                 # i2 = i
                 # while i2 == i:
                 #     i2 = random.randint(0, self.n_genes - 1)

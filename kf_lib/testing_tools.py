@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 from tqdm import trange
 
 
@@ -88,18 +91,10 @@ class Tester(object):
 
     def test_fight_balance(self, rand_actions=True, n=1000, file_name_prefix='test f.b.'):
         file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
-        file_path = os.path.join(TESTS_FOLDER, file_name)
-        with open(file_path, 'w') as f:
-            f.write(get_time() + '\n')
-
-        def _output_results(d_wnr, d_lsr, first_line=''):
-            tups = dict_comp(d_wnr, d_lsr, sort_col_index=3)
-            lines = ['\n' + first_line, pretty_table(tups), '', summary(d_wnr), '']
-            s = '\n'.join(lines)
-            print(s)
-            with open(file_name, 'a') as f_out:
-                f_out.write(s)
-
+        file_path = Path(TESTS_FOLDER, file_name)
+        print(get_time(), file=open(file_path, 'w', encoding='utf-8'))
+        # with open(file_path, 'w') as f:
+        #     f.write(get_time() + '\n')
         output = '-' * 40 + '\n\n'
         if not rand_actions:
             output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
@@ -176,8 +171,12 @@ class Tester(object):
             (techs2_wnr, techs2_lsr, 'techs 2:'),
             (moves_wnr, moves_lsr, 'moves:'),
         )
-        for d_w, d_l, legend in tuples:
-            _output_results(d_w, d_l, legend)
+        for d_wnr, d_lsr, legend in tuples:
+            tups = dict_comp(d_wnr, d_lsr, sort_col_index=3)
+            lines = ['\n', pretty_table(tups), '', summary(d_wnr), '']
+            s = '\n'.join(lines)
+            print(s)
+            print(s, file=open(file_path, 'a', encoding='utf-8'))
         input('Press Enter')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):

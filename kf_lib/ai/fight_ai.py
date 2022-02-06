@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 from kf_lib.fighting.distances import VALID_DISTANCES
 from kf_lib.kung_fu import moves
 from kf_lib.utils.utilities import *
@@ -6,6 +9,23 @@ from kf_lib.utils.utilities import *
 catch_breath_move = moves.get_move_obj('Catch Breath')
 guard_move = moves.get_move_obj('Guard')
 focus_move = moves.get_move_obj('Focus')
+
+
+def has_dist4_move(f):
+    return any(m.distance == 4 for m in f.moves)
+
+
+def has_bigger_crowd(f):
+    return len(f.act_allies) > len(f.act_targets)
+
+
+def is_at_dist4(f):
+    return f.distances[f.target] == 4
+
+
+def set_gen_ai_params(gen_ai, params):
+    for i, name in enumerate(GENETIC_AI_PARAM_NAMES):
+        setattr(gen_ai, name, params[i])
 
 
 class BaseAI(object):
@@ -17,7 +37,8 @@ class BaseAI(object):
         self.choice = None
         self.weights = {}
         if write_log:
-            self.file = open(f'{self.__class__.__name__}.txt', 'a')
+            file_path = Path('tests', f'{self.__class__.__name__}.txt')
+            self.file = open(file_path, 'a', encoding='utf-8')
         else:
             self.file = None
 
@@ -480,17 +501,51 @@ class GeneticAIAggro(GeneticAITrainedParams8):
         return self.choice
 
 
+class GeneticAIMoreAggro(GeneticAITrainedParams8):
+    def choose_move(self):
+        owner = self.owner
+        target = owner.target
+        options = self.options = []
+        weights = self.weights = []
+        atk_move = self.get_an_atk_move()
+        if atk_move is not None:
+            options.append(atk_move)
+            weights.append(self.prob_atk)
+        maneuver = self.get_a_maneuver()
+        if maneuver is not None:
+            options.append(maneuver)
+            weights.append(self.prob_move)
+            if is_at_dist4(owner):
+                if (
+                    (has_dist4_move(target) and not has_dist4_move(owner))
+                    or has_bigger_crowd(owner)
+                ):
+                    if self.file:
+                        self.write_log()
+                    return maneuver
+        if not atk_move and owner.qp < owner.qp_max / 2:
+            options.append(focus_move)
+            weights.append(self.prob_focus)
+        if not atk_move:
+            options.append(guard_move)
+            weights.append(self.prob_guard)
+        if not atk_move and owner.stamina < owner.stamina_max / 2:
+            options.append(catch_breath_move)
+            weights.append(self.prob_catch)
+        self.choice = random.choices(options, weights=weights, k=1)[0]
+        if self.file:
+            self.write_log()
+        return self.choice
+
+
 # DefaultFightAI = CarefulManeuvers5
 # DefaultFightAI = WeightedActionsAI
 # DefaultFightAI = GeneticAI
 # DefaultFightAI = GeneticAITrainedParams10  # moves around more, so easier to trick
-DefaultFightAI = GeneticAIAggro
+# DefaultFightAI = GeneticAIAggro
+DefaultFightAI = GeneticAIMoreAggro
+DefaultGeneticAIforTraining = GeneticAIMoreAggro
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
-
-
-def set_gen_ai_params(gen_ai, params):
-    for i, name in enumerate(GENETIC_AI_PARAM_NAMES):
-        setattr(gen_ai, name, params[i])
 
 
 params3 = [

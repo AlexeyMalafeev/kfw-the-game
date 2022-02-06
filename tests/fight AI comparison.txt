@@ -1,9 +1,5 @@
-Sat Apr  4 22:30:25 2020
+Sun Feb  6 19:07:13 2022
 
-GeneticAIAggro           7629
-GeneticAIExtraRules4     6870
-GeneticAIExtraRules7     6852
-GeneticAITrainedParams8  6795
-GeneticAIExtraRules9     6786
-WeightedActionsAI        6206
-BaseAI                   862 
+GeneticAIAggro               2112
+GeneticAIMoreAggro           1991
+GeneticAIMoreAggroCrowdOnly  1897

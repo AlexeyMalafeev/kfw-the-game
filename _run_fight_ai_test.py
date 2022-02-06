@@ -1,4 +1,5 @@
-#! python3
+from pathlib import Path
+
 
 from kf_lib.ai import fight_ai, fight_ai_test
 from kf_lib.utils.utilities import *
@@ -6,11 +7,14 @@ from kf_lib.utils.utilities import *
 try:
     write_log = True
     same_class_fights = False
-    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.CarefulManeuvers5, fight_ai.NewSystemAI)
-    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.CarefulManeuvers5)
-    AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.GeneticAITrainedParams8,
-           fight_ai.GeneticAIExtraRules4, fight_ai.GeneticAIExtraRules7, fight_ai.GeneticAIExtraRules9,
-           fight_ai.GeneticAIAggro)
+    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.GeneticAITrainedParams8,
+    #        fight_ai.GeneticAIExtraRules4, fight_ai.GeneticAIExtraRules7,
+    #        fight_ai.GeneticAIExtraRules9, fight_ai.GeneticAIAggro, fight_ai.GeneticAIMoreAggro)
+    AIs = (
+        fight_ai.GeneticAIAggro,
+        fight_ai.GeneticAIMoreAggro,
+        fight_ai.GeneticAIMoreAggroCrowdOnly,
+    )
     if write_log:
         for AI in AIs:
             with open(f'{AI.__name__}.txt', 'w') as f:
@@ -47,10 +51,13 @@ try:
         print('-' * 80)
         print(legend[i])
         print(pretty_table(tups))
-        print('{}\n\n{}'.format(get_time(), pretty_table(tups)), file=open('fight AI comparison.txt', 'w'))
+        print(
+            '{}\n\n{}'.format(get_time(), pretty_table(tups)),
+            file=open(Path('tests', 'fight AI comparison.txt'), 'w', encoding='utf-8'))
     input('Press Enter to exit')
 
-except Exception:
+
+except Exception:  # noqa
     import traceback
     traceback.print_exc()
     input('Press Enter to exit')
