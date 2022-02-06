@@ -59,11 +59,12 @@ class FightAITest(object):
                     self.wins[ind2] += 1
 
     def output_total(self):
-        s = 'total: {}\n{} wins: {}\n{} wins: {}'.format(
-            self.rep * 2, self.aname, self.wins[0], self.bname, self.wins[1]
-        )
-        print(s)
-        print(s, file=self.output_file)
+        if not self.suppress_output:
+            s = 'total: {}\n{} wins: {}\n{} wins: {}'.format(
+                self.rep * 2, self.aname, self.wins[0], self.bname, self.wins[1]
+            )
+            print(s)
+            print(s, file=self.output_file)
 
 
 class CrowdVsCrowd(FightAITest):

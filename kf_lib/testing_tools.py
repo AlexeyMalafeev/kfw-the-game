@@ -183,7 +183,6 @@ class Tester(object):
             lines = [[''] + [f'n={n}' for n in range(n_crowd_min, n_crowd_max + 1)]]
             print('\t'.join(lines[0]))
             for lv in range(1, lv_max + 1):
-                f1 = ff.new_fighter(lv=lv)
                 s = f'lv.{lv}'
                 lines.append([s])
                 print(s, end='\t')
