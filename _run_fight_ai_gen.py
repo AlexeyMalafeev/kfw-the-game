@@ -7,18 +7,18 @@ try:
     ga = fight_ai_gen.GeneticAlgorithm(
         pop_size=pop_size,
         gene_names=fight_ai.GENETIC_AI_PARAM_NAMES,
-        mut_prob=0.1,
+        mutation_prob=0.1,
         infighting=True,
     )
-    ga.run(100)
+    ga.run(generations)
 
     ga = fight_ai_gen.GeneticAlgorithm(
         pop_size=pop_size,
         gene_names=fight_ai.GENETIC_AI_PARAM_NAMES,
-        mut_prob=0.1,
+        mutation_prob=0.1,
         infighting=False,
     )
-    ga.run(100)
+    ga.run(generations)
 
     input('Press Enter to exit')
 

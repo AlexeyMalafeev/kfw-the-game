@@ -18,21 +18,20 @@ class GeneticAlgorithm(object):
             self,
             pop_size: int,
             gene_names: List[str],
-            mut_prob: float,
+            mutation_prob: float,
             infighting: bool,
     ):
         """mode: if infighting is False, will train against current DefaultFightAI"""
         assert pop_size % 2 == 0, 'pop_size must be divisible by 2'
         self.pop_size = pop_size
         self.gene_names = gene_names
-        self.mut_prob = mut_prob
+        self.mutation_prob = mutation_prob
         self.infighting = infighting
 
         # setup
         self.n_genes: int = len(self.gene_names)
         self.n_top: int = self.pop_size // 2
         self.fitness_function = self.fitness_infighting if self.infighting else self.fitness
-        self.comment: str = None
         self.population = [[rnd() for _ in range(self.n_genes)] for _ in range(pop_size)]
         self.fit_values = []
         self.fit_values_sorted = []
@@ -60,6 +59,11 @@ class GeneticAlgorithm(object):
             child_b = parent_b[:]
             for ii in ind:
                 child_a[ii], child_b[ii] = child_b[ii], child_a[ii]
+            if self.mutation_prob:
+                if rnd() <= self.mutation_prob:
+                    child_a = self.mutation(child_a)
+                if rnd() <= self.mutation_prob:
+                    child_b = self.mutation(child_b)
             new_population.extend([child_a, child_b])
         self.population = new_population
 
@@ -105,15 +109,12 @@ class GeneticAlgorithm(object):
                 score += t.wins[0]
             self.fit_values.append(score)
 
-    def mutation(self):
-        if not self.mut_prob:
-            return
-        for individual in self.population[len(self.fittest):]:
-            if rnd() <= self.mut_prob:
-                i = random.randint(0, self.n_genes - 1)
-                new_val = rnd()  # random mutation
-                individual[i] = new_val
-                self.mutations_occurred += 1
+    def mutation(self, child):
+        gene_index = random.randint(0, self.n_genes - 1)
+        new_val = rnd()  # random mutation
+        child[gene_index] = new_val
+        self.mutations_occurred += 1
+        return child
 
     def output(self):
         time_s = time.ctime()
@@ -123,20 +124,19 @@ class GeneticAlgorithm(object):
         top_res = '\n'.join(top_res_lines)
         out_s = f'''{time_s}
 Generation {self.curr_generation + 1} of {self.n_generations}
-Mutations: {self.mutations_occurred} (prob {self.mut_prob})
+Mutations: {self.mutations_occurred} (prob {self.mutation_prob})
 Top fit values / individuals:
 {top_res}
 Max possible fit value: {self.max_possible_fit_value}
 All-time record: {self.all_time_record} @ generation {self.record_generation}
 Record holder: {self.record_holder}
 '''
-        file_name = f'fight_ai_gen output {self.comment} generation_{self.curr_generation}.txt'
+        file_name = f'pop={self.pop_size} n_gen={self.n_generations} ' \
+                    f'infight={self.infighting} gen={self.curr_generation}.txt'
         file_path = Path('tests', 'genetic', file_name)
         print(out_s, file=open(file_path, 'w', encoding='utf-8'))
 
     def run(self, n_generations=30):
-        self.comment = (f'pop_size={self.pop_size} n_gen={n_generations} '
-                        f'infighting={self.infighting}')
         self.n_generations = n_generations
         for i in trange(n_generations):
             self.curr_generation = i
@@ -144,7 +144,6 @@ Record holder: {self.record_holder}
             self.selection()
             self.output()
             self.crossover()
-            self.mutation()
 
     def selection(self):
         """Set self.fittest"""

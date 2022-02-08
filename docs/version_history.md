@@ -1,5 +1,5 @@
 ### v.0.6.5-beta
-""  
+"Lucky Furious AI Mutants"  
 date  
 
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
@@ -22,6 +22,7 @@ date
 * feat: lucky and unlucky scenarios in strong Beggar encounter
 * refactor: genetic algorithm for fight AI training
 * feat: remove help in Fat Girl encounter
+* feat: in genetic algo, mutation only applies to children
 
 
 ### v.0.6.4-beta
