@@ -31,6 +31,7 @@ try:
             if AI1 is AI2 and not same_class_fights:
                 continue
             for test in tests:
+                # rep is doubled for each run of test
                 t = test(AI1, AI2, rep=500, write_log=write_log)
                 scores[test][AI1] += t.wins[0]
                 scores[test][AI2] += t.wins[1]

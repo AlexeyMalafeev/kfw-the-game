@@ -17,6 +17,8 @@ class GeneticAlgorithm(object):
     def __init__(
             self,
             pop_size: int,
+            n_fights_1on1: int,
+            n_fights_crowd: int,
             gene_names: List[str],
             mutation_prob: float,
             infighting: bool,
@@ -24,6 +26,8 @@ class GeneticAlgorithm(object):
         """mode: if infighting is False, will train against current DefaultFightAI"""
         assert pop_size % 2 == 0, 'pop_size must be divisible by 2'
         self.pop_size = pop_size
+        self.n_fights_1on1 = n_fights_1on1
+        self.n_fights_crowd = n_fights_crowd
         self.gene_names = gene_names
         self.mutation_prob = mutation_prob
         self.infighting = infighting
@@ -31,11 +35,22 @@ class GeneticAlgorithm(object):
         # setup
         self.n_genes: int = len(self.gene_names)
         self.n_top: int = self.pop_size // 2
-        self.fitness_function = self.fitness_infighting if self.infighting else self.fitness
-        self.population = [[rnd() for _ in range(self.n_genes)] for _ in range(pop_size)]
+        self.max_possible_fit_value = (self.n_fights_1on1 + self.n_fights_crowd) * 2
+        if self.infighting:
+            self.fitness_function = self.fitness_infighting
+            self.max_possible_fit_value *= self.pop_size
+        else:
+            self.fitness_function = self.fitness
+        self.tests = (
+            (fight_ai_test.FightAITest, self.n_fights_1on1),
+            (fight_ai_test.CrowdVsCrowdFair, self.n_fights_crowd),
+        )
+        self.population = tuple(
+            tuple(rnd() for _ in range(self.n_genes))
+            for _ in range(self.pop_size)
+        )
         self.fit_values = []
         self.fit_values_sorted = []
-        self.max_possible_fit_value = 0
         self.all_time_record = 0
         self.record_holder = None
         self.record_generation = None
@@ -49,14 +64,15 @@ class GeneticAlgorithm(object):
         new_population = self.fittest[:]
         # to cancel out the effect of sorting when performing selection
         random.shuffle(new_population)
+        parents_set = set(new_population)
         for i in range(0, self.n_top, 2):
             parent_a = new_population[i]
             parent_b = new_population[i + 1]
             ind = list(range(self.n_genes))
             random.shuffle(ind)
             ind = ind[:random.randint(1, len(ind) - 1)]
-            child_a = parent_a[:]
-            child_b = parent_b[:]
+            child_a = list(parent_a[:])
+            child_b = list(parent_b[:])
             for ii in ind:
                 child_a[ii], child_b[ii] = child_b[ii], child_a[ii]
             if self.mutation_prob:
@@ -64,32 +80,34 @@ class GeneticAlgorithm(object):
                     child_a = self.mutation(child_a)
                 if rnd() <= self.mutation_prob:
                     child_b = self.mutation(child_b)
-            new_population.extend([child_a, child_b])
-        self.population = new_population
+            for child in (child_a, child_b):
+                if tuple(child) in parents_set:
+                    child = self.mutation(child)
+                new_population.append(tuple(child))
+        self.population = tuple(new_population)
 
     def fitness(self):
         """Set self.fit_values"""
         self.fit_values = []
-        n_rep = 250
-        self.max_possible_fit_value = n_rep * 2
         for individual in self.population:
+            score = 0
             ai = copy(fight_ai.DefaultGeneticAIforTraining)
             for i, name in enumerate(self.gene_names):
                 setattr(ai, name, individual[i])
-            t = fight_ai_test.FightAITest(
-                ai,
-                fight_ai.DefaultFightAI,
-                rep=n_rep,
-                write_log=False,
-                suppress_output=True,
-            )
-            self.fit_values.append(t.wins[0])
+            for ai_test, n_rep in self.tests:
+                t = ai_test(
+                    ai,
+                    fight_ai.DefaultFightAI,
+                    rep=n_rep,  # rep is effectively doubled for fairness
+                    write_log=False,
+                    suppress_output=True,
+                )
+                score += t.wins[0]
+            self.fit_values.append(score)
 
     def fitness_infighting(self):
         """Set self.fit_values"""
         self.fit_values = []
-        n_rep = 10
-        self.max_possible_fit_value = 2 * n_rep * len(self.population)
         for individual in self.population:
             score = 0
             ai = fight_ai.DefaultGeneticAIforTraining
@@ -99,14 +117,15 @@ class GeneticAlgorithm(object):
                 ai2 = copy(fight_ai.DefaultGeneticAIforTraining)
                 for i, name in enumerate(self.gene_names):
                     setattr(ai2, name, individual2[i])
-                t = fight_ai_test.FightAITest(
-                    ai,
-                    ai2,
-                    rep=n_rep,
-                    write_log=False,
-                    suppress_output=True,
-                )
-                score += t.wins[0]
+                for ai_test, n_rep in self.tests:
+                    t = ai_test(
+                        ai,
+                        ai2,
+                        rep=n_rep,
+                        write_log=False,
+                        suppress_output=True,
+                    )
+                    score += t.wins[0]
             self.fit_values.append(score)
 
     def mutation(self, child):
@@ -127,17 +146,21 @@ Generation {self.curr_generation + 1} of {self.n_generations}
 Mutations: {self.mutations_occurred} (prob {self.mutation_prob})
 Top fit values / individuals:
 {top_res}
-Max possible fit value: {self.max_possible_fit_value}
+Max possible fit value for one individual: {self.max_possible_fit_value}
 All-time record: {self.all_time_record} @ generation {self.record_generation}
 Record holder: {self.record_holder}
 '''
-        file_name = f'pop={self.pop_size} n_gen={self.n_generations} ' \
-                    f'infight={self.infighting} gen={self.curr_generation}.txt'
+        file_name = f'pop={self.pop_size} fights={self.max_possible_fit_value} ' \
+                    f'n_gen={self.n_generations} infight={self.infighting} ' \
+                    f'gen={self.curr_generation}.txt'
         file_path = Path('tests', 'genetic', file_name)
         print(out_s, file=open(file_path, 'w', encoding='utf-8'))
 
     def run(self, n_generations=30):
         self.n_generations = n_generations
+        total_fights_per_generation = self.max_possible_fit_value * self.pop_size
+        total_fights = total_fights_per_generation * n_generations
+        print(f'{total_fights_per_generation=}\n{total_fights=}')
         for i in trange(n_generations):
             self.curr_generation = i
             self.fitness_function()

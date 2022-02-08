@@ -11,7 +11,8 @@ TESTS_FOLDER = 'tests'
 
 class FightAITest(object):
     def __init__(self, ai1, ai2, rep=1000, write_log=False, suppress_output=False):
-        """rep will be effectively doubled"""
+        """rep will be effectively doubled for fairness - each random fighter will use both
+        tested AIs in turn."""
         self.ai1 = ai1
         self.ai2 = ai2
         self.wins = [0, 0]
