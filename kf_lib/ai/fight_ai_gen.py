@@ -20,19 +20,19 @@ class GeneticAlgorithm(object):
             gene_names: List[str],
             mut_prob: float,
             infighting: bool,
-            comment: str = None
     ):
         """mode: if infighting is False, will train against current DefaultFightAI"""
         assert pop_size % 2 == 0, 'pop_size must be divisible by 2'
         self.pop_size = pop_size
         self.gene_names = gene_names
         self.mut_prob = mut_prob
-        self.fitness_function = self.fitness_infighting if infighting else self.fitness
-        self.comment = comment
+        self.infighting = infighting
 
         # setup
         self.n_genes: int = len(self.gene_names)
         self.n_top: int = self.pop_size // 2
+        self.fitness_function = self.fitness_infighting if self.infighting else self.fitness
+        self.comment: str = None
         self.population = [[rnd() for _ in range(self.n_genes)] for _ in range(pop_size)]
         self.fit_values = []
         self.fit_values_sorted = []
@@ -135,8 +135,8 @@ Record holder: {self.record_holder}
         print(out_s, file=open(file_path, 'w', encoding='utf-8'))
 
     def run(self, n_generations=30):
-        if self.comment is None:
-            self.comment = f'pop_size={self.pop_size} n_gen={n_generations}'
+        self.comment = (f'pop_size={self.pop_size} n_gen={n_generations} '
+                        f'infighting={self.infighting}')
         self.n_generations = n_generations
         for i in trange(n_generations):
             self.curr_generation = i
