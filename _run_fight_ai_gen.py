@@ -5,10 +5,10 @@ try:
     #                                    n_top=10, mut_prob=0.1)
     ga = fight_ai_gen.GeneticAlgorithm(
         pop_size=32,
-        n_genes=5,
         gene_names=fight_ai.GENETIC_AI_PARAM_NAMES,
         n_top=16,
         mut_prob=0.1,
+        infighting=True,
         comment='',
     )
     ga.run(30)

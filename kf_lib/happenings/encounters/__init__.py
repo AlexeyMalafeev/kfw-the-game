@@ -297,7 +297,9 @@ class Drunkard(BaseEncounter):
                 p.learn_move_from(d)
                 p.game.drunkard = None
         else:
-            p.show(f'{d.name}: "You should have just shown me some respect!.."')
+            p.show(f'{d.name}: "When I\'m one-tenth drunk I can use only one-tenth of my skill, '
+                   f'but when I\'m ten-tenths drunk I\'m at the top of my form."')
+            p.pak()
             if strong:
                 p.show('{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                        'technique has improved"')

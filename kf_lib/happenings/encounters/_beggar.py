@@ -42,6 +42,18 @@ class Beggar(BaseEncounter):
             p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
             p.pak()
             p.learn_move_from(b)
+            luck = p.check_luck()
+            if luck == 1:
+                p.show(f'{b.name}: "Within the four seas, all men are brothers. '
+                       'Let me also teach you this secret technique..."')
+                p.pak()
+                p.learn_random_new_tech()
+            elif luck == -1:
+                p.show(f'{p.name}: "What great good fortune that I could meet this fine man today. '
+                       'However, I spent too much energy in this friendly sparring. Now I need '
+                       'some good rest."')
+                p.injure()
+                p.pak()
             p.game.beggar = None
         else:
             p.show(f'{b.name}: "Still got a lot to learn, huh..."')

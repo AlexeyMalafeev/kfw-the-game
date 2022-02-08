@@ -57,7 +57,7 @@ class Challenger(BaseEncounter):
             p.pak()
         luck = p.check_luck()
         if luck == 1:
-            p.show(f'{p.name}: "I can learn something from this fight.')
+            p.show(f'{p.name}: "I can learn something from this fight."')
             p.pak()
             p.learn_move_from(c)
         elif luck == -1:

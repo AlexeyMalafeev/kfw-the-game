@@ -3,6 +3,7 @@ from pathlib import Path
 # from pprint import pprint
 import random
 import time
+from typing import List
 
 
 from tqdm import trange
@@ -12,20 +13,28 @@ from kf_lib.ai import fight_ai, fight_ai_test
 from kf_lib.utils.utilities import rnd
 
 
-# 1 for fighting against current default fight AI; fast
-# 2 for in-fighting; very slow
+
 TRAINING_MODE: int = 1
 
 
 class GeneticAlgorithm(object):
-    def __init__(self, pop_size, n_genes, gene_names, n_top, mut_prob, comment=None):
+    def __init__(
+            self,
+            pop_size: int,
+            gene_names: List[str],
+            n_top: int,
+            mut_prob: float,
+            infighting: bool,
+            comment: str = None
+    ):
+        """mode: if infighting is False, will train against current DefaultFightAI"""
         self.pop_size = pop_size
-        self.n_genes = n_genes
+        self.n_genes = len(gene_names)
         self.gene_names = gene_names
         self.n_top = n_top
         self.mut_prob = mut_prob
         self.comment = comment
-        self.population = [[rnd() for _ in range(n_genes)] for _ in range(pop_size)]
+        self.population = [[rnd() for _ in range(self.n_genes)] for _ in range(pop_size)]
         self.fit_values = []
         self.fit_values_sorted = []
         self.max_possible_fit_value = 0
@@ -71,7 +80,7 @@ class GeneticAlgorithm(object):
         # print(time.ctime())
         # print('starting fitness evaluation')
         self.fit_values = []
-        n_rep = 25
+        n_rep = 250
         self.max_possible_fit_value = n_rep * 2
         for individual in self.population:
             # print(time.ctime())
@@ -82,7 +91,6 @@ class GeneticAlgorithm(object):
             for i, name in enumerate(self.gene_names):
                 setattr(ai, name, individual[i])
             t = fight_ai_test.FightAITest(
-                # ai, fight_ai.GeneticAITrainedParams3, rep=n_rep, write_log=False
                 ai,
                 fight_ai.DefaultFightAI,
                 rep=n_rep,

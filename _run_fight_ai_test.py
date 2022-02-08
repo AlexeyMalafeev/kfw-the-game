@@ -31,7 +31,7 @@ try:
             if AI1 is AI2 and not same_class_fights:
                 continue
             for test in tests:
-                t = test(AI1, AI2, rep=100, write_log=write_log)
+                t = test(AI1, AI2, rep=500, write_log=write_log)
                 scores[test][AI1] += t.wins[0]
                 scores[test][AI2] += t.wins[1]
     # fight_ai_test.CrowdVsCrowd(fight_ai.BaseAI, fight_ai.WeightedActionsAI)

@@ -70,6 +70,14 @@ class TechMethods(BaseFighter):
     def get_weapon_techs(self):
         return techniques.get_weapon_techs(self)
 
+    def learn_random_new_tech(self):
+        pool = techniques.get_learnable_techs(self)
+        if pool:
+            t = random.choice(pool)
+            self.learn_tech(t)
+        else:
+            print(f'warning: {self} cannot learn any more techs!')
+
     def learn_tech(self, *techs):
         """techs can be Tech objects or tech name strings (or mixed)"""
         for tn in techs:

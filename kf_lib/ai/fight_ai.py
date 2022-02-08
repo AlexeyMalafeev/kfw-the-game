@@ -358,22 +358,15 @@ params202202_infighting_top = [
 ]
 set_gen_ai_params(GeneticAIMoreAggroTrainedInFighting, params202202_infighting_top)
 
-params202202_top = [
-    0.528317599161703,
-    0.35276959043444756,
-    0.3882407029370295,
-    0.23088333519143067,
-    0.09418133293198594,
-]
+# even weaker than record
+params202202_top = [0.12143835886099252, 0.5036677252444876, 0.7741143420916036,
+                    0.3193798609370172, 0.28154875151262204]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 
-# considerably weaker than GeneticAIMoreAggro
+# weak
 params202202_record = [
-    0.06265713151867547,
-    0.9095286633974666,
-    0.8508204283032016,
-    0.06161083941512724,
-    0.9795191748545785,
+    0.2110522021065323, 0.4426443869936223, 0.710076836997256, 0.9233659913438291,
+    0.39058725975877506,
 ]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
 

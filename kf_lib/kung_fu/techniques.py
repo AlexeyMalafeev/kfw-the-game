@@ -276,6 +276,7 @@ def get_descr(tech_name):
     return get_tech_obj(tech_name).descr
 
 
+# todo optimize techniques.get_learnable_techs
 def get_learnable_techs(fighter=None):
     """Return names of techs fighter can learn."""
     techs = get_upgradable_techs()[:]
