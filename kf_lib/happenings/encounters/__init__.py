@@ -382,15 +382,13 @@ class FatGirl(BaseEncounter):
 
     def do_fight(self):
         p = self.player
-        p.check_help(allies=True, master=False, impr_wp=False, school=False)
         if p.fight(self.g, p.allies):
             p.msg(f"{self.p.name} runs away in fear.")
             p.game.fat_girl = None
             p.add_accompl("Fat Girl Defeated")
         else:
-            p.msg(
-                'Fat Girl: "Now that I think about it, you are too weak to be my husband anyway!"'
-            )
+            p.msg('Fat Girl: "Now that I think about it, you are too weak to be my husband '
+                  'anyway!"')
 
 
 class FindItem(BaseEncounter):
