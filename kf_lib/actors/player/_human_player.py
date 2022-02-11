@@ -29,9 +29,9 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         n = len(options)
         keys = ''.join([str(x) for x in list(range(1, n + 1))])
         options.extend(
-            [('Rest', self.rest), ('State', self.game.state_menu), ('Test', self.game.test)]
+            [('Rest', self.rest), ('State', self.game.state_menu)]
         )
-        keys += 'rst'
+        keys += 'rs'
         # choose what to do; choice is a function
         return self.menu(options, keys=keys, options_per_page=15)
 
