@@ -33,7 +33,7 @@ class Fighter(
         name: str = '',
         style: Union[str, styles.Style] = styles.FLOWER_KUNGFU,
         level: int = 1,
-        atts_tuple: Tuple[int] = None,
+        atts_tuple: Tuple[int, int, int, int] = None,
         tech_names: List[str] = None,
         move_names: List[str] = None,
         rand_atts_mode: int = 0,  # todo give rand_atts_mode interpretable str values

@@ -382,7 +382,7 @@ class FatGirl(BaseEncounter):
 
     def do_fight(self):
         p = self.player
-        if p.fight(self.g, p.allies):
+        if p.fight(self.g):
             p.msg(f"{self.p.name} runs away in fear.")
             p.game.fat_girl = None
             p.add_accompl("Fat Girl Defeated")

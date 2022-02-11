@@ -58,6 +58,7 @@ class Player(Fighter):
             move_names=move_names,
             rand_atts_mode=rand_atts_mode,
         )
+        self.allies = []
         self.ended_turn = False
         self.challenger_friend_mult = 1.0
         self.coop_joins_fight = 0.5
