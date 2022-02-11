@@ -147,6 +147,7 @@ class GeneticAlgorithm(object):
         for i in range(len(self.fittest)):
             top_res_lines.append(f'{self.fit_values_sorted[i]} {self.fittest[i]}')
         top_res = '\n'.join(top_res_lines)
+        pcnt = round(self.all_time_record / self.max_possible_fit_value * 100)
         out_s = f'''{time_s}
 Generation {self.curr_generation + 1} of {self.n_generations}
 Mutations: {self.mutations_occurred} (prob {self.mutation_prob})
@@ -154,7 +155,7 @@ Gene names: {self.gene_names}
 Top fit values / individuals:
 {top_res}
 Max possible fit value for one individual: {self.max_possible_fit_value}
-All-time record: {self.all_time_record} @ generation {self.record_generation}
+All-time record: {self.all_time_record} ({pcnt}%) @ generation {self.record_generation}
 Record holder: {self.record_holder}
 '''
         infight_s = ' infight' if self.infighting else ''
