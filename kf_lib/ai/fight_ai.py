@@ -252,6 +252,9 @@ class GeneticAIExtraRules(GeneticAITrainedParams8):
         return self.choice
 
 
+# weakness: doesn't move in when oppontent has dist4 moves
+# weakness: doesn't move in when has superiority in numbers
+# strong, but boring (doesn't move around often)
 class GeneticAIAggro(GeneticAITrainedParams8):
     def choose_move(self):
         owner = self.owner
@@ -280,6 +283,9 @@ class GeneticAIAggro(GeneticAITrainedParams8):
         return self.choice
 
 
+# moves in when oppontent has dist4 moves
+# moves in when has superiority in numbers
+# strong, more dynamic, but slightly weaker than GeneticAIAggro
 class GeneticAIMoreAggro(GeneticAITrainedParams8):
     def choose_move(self):
         owner = self.owner
@@ -317,7 +323,19 @@ class GeneticAIMoreAggro(GeneticAITrainedParams8):
         return self.choice
 
 
+# todo how to reimplement AI classes to avoid cloning?
+# have to make clones as parameters are shared even if you copy or deepcopy classes dynamically
+class GeneticAIMoreAggroClone(GeneticAIMoreAggro):
+    pass
+
+
+class GeneticAIMoreAggroClone2(GeneticAIMoreAggro):
+    pass
+
+
 # on par with GeneticAIMoreAggro
+# trained with pop_size=32, 30 epochs, infighting=True, n_rep=10, GeneticAI vs GeneticAI2,
+# no crowd fights
 class GeneticAIMoreAggroTrainedInFighting(GeneticAIMoreAggro):
     pass
 
@@ -340,7 +358,8 @@ class GeneticAIMoreAggroTrainedRecordInf(GeneticAIMoreAggro):
 
 # DefaultFightAI = GeneticAIAggro
 DefaultFightAI = GeneticAIMoreAggro
-DefaultGeneticAIforTraining = GeneticAIMoreAggro
+DefaultGeneticAIforTraining = GeneticAIMoreAggroClone
+DefaultGeneticAIforTraining2 = GeneticAIMoreAggroClone2
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
 
 params8 = [
@@ -351,6 +370,7 @@ params8 = [
     0.051144214847717806,
 ]
 # best so far; trained against GeneticAITrainedParams3
+# the problem with it is that
 set_gen_ai_params(GeneticAITrainedParams8, params8)
 
 # on par with GeneticAIMoreAggro

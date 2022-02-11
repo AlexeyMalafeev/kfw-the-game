@@ -1,4 +1,3 @@
-from copy import copy
 from pathlib import Path
 # from pprint import pprint
 import random
@@ -19,7 +18,6 @@ class GeneticAlgorithm(object):
             pop_size: int,
             n_fights_1on1: int,
             n_fights_crowd: int,
-            gene_names: List[str],
             mutation_prob: float,
             infighting: bool,
     ):
@@ -28,17 +26,17 @@ class GeneticAlgorithm(object):
         self.pop_size = pop_size
         self.n_fights_1on1 = n_fights_1on1
         self.n_fights_crowd = n_fights_crowd
-        self.gene_names = gene_names
         self.mutation_prob = mutation_prob
         self.infighting = infighting
 
         # setup
+        self.gene_names: List[str] = fight_ai.GENETIC_AI_PARAM_NAMES
         self.n_genes: int = len(self.gene_names)
         self.n_top: int = self.pop_size // 2
         self.max_possible_fit_value = (self.n_fights_1on1 + self.n_fights_crowd) * 2
         if self.infighting:
             self.fitness_function = self.fitness_infighting
-            self.max_possible_fit_value *= self.pop_size
+            self.max_possible_fit_value *= (self.pop_size - 1)
         else:
             self.fitness_function = self.fitness
         self.tests = (
@@ -74,7 +72,7 @@ class GeneticAlgorithm(object):
             child_a = list(parent_a[:])
             child_b = list(parent_b[:])
             for ii in ind:
-                child_a[ii], child_b[ii] = child_b[ii], child_a[ii]
+                child_a[ii], child_b[ii] = child_b[ii], child_a[ii]  # noqa
             if self.mutation_prob:
                 if rnd() <= self.mutation_prob:
                     child_a = self.mutation(child_a)
@@ -91,9 +89,12 @@ class GeneticAlgorithm(object):
         self.fit_values = []
         for individual in self.population:
             score = 0
-            ai = copy(fight_ai.DefaultGeneticAIforTraining)
+            ai = fight_ai.DefaultGeneticAIforTraining
             for i, name in enumerate(self.gene_names):
                 setattr(ai, name, individual[i])
+            # for param in self.gene_names:
+            #     print(f'{param}, {getattr(ai, param)}, {getattr(fight_ai.DefaultFightAI, param)}')
+            # input('...')
             for ai_test, n_rep in self.tests:
                 t = ai_test(
                     ai,
@@ -114,9 +115,14 @@ class GeneticAlgorithm(object):
             for i, name in enumerate(self.gene_names):
                 setattr(ai, name, individual[i])
             for individual2 in self.population:
-                ai2 = copy(fight_ai.DefaultGeneticAIforTraining)
+                if individual2 == individual:
+                    continue
+                ai2 = fight_ai.DefaultGeneticAIforTraining2
                 for i, name in enumerate(self.gene_names):
                     setattr(ai2, name, individual2[i])
+                # for param in self.gene_names:
+                #     print(f'{param}, {getattr(ai, param)}, {getattr(ai2, param)}')
+                # input('...')
                 for ai_test, n_rep in self.tests:
                     t = ai_test(
                         ai,
@@ -150,8 +156,9 @@ Max possible fit value for one individual: {self.max_possible_fit_value}
 All-time record: {self.all_time_record} @ generation {self.record_generation}
 Record holder: {self.record_holder}
 '''
+        infight_s = ' infight' if self.infighting else ''
         file_name = f'pop={self.pop_size} fights={self.max_possible_fit_value} ' \
-                    f'n_gen={self.n_generations} infight={self.infighting} ' \
+                    f'n_gen={self.n_generations}{infight_s} ' \
                     f'gen={self.curr_generation}.txt'
         file_path = Path('tests', 'genetic', file_name)
         print(out_s, file=open(file_path, 'w', encoding='utf-8'))

@@ -1,8 +1,10 @@
-Tue Feb  8 11:41:54 2022
+Fri Feb 11 11:21:43 2022
 
-GeneticAIAggro                       7381
-GeneticAIMoreAggro                   7337
-GeneticAIMoreAggroTrainedInFighting  7197
-GeneticAIMoreAggroTrainedRecord      4221
-GeneticAIMoreAggroTrainedTop         3486
-BaseAI                               378 
+GeneticAIAggro                       19675
+GeneticAIMoreAggro                   19370
+GeneticAIMoreAggroTrainedInFighting  19168
+GeneticAIMoreAggroTrainedTop         15813
+GeneticAIMoreAggroTrainedRecord      15750
+GeneticAIMoreAggroTrainedRecordInf   12989
+GeneticAIMoreAggroTrainedTopInf      8303 
+BaseAI                               932  
