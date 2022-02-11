@@ -105,7 +105,6 @@ class Tournament(object):
     def _place_bets(self):
         for p in self.g.get_act_players():
             if p.bet_on_tourn_or_not():
-                p.gain_rep(BET_REPUTATION_PENALTY)
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
                 self.bets[p] = bet_on, bet_amount
                 self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
