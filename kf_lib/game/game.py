@@ -9,7 +9,6 @@ g.play()
 from pathlib import Path
 
 
-from .. import testing_tools  # noqa
 from ..actors import fighter_factory, names
 from ..actors.player import (
     HumanPlayer,
@@ -20,7 +19,7 @@ from . import game_stats
 from ..kung_fu.moves import BASIC_MOVES
 from ..kung_fu import styles, style_gen
 from ..things import items
-from ..happenings import events as ev, encounters, story
+from ..happenings import events, encounters, story
 from ..utils.utilities import *
 
 
@@ -28,8 +27,6 @@ from ..utils.utilities import *
 
 
 # constants
-# AI_NAMES = {LazyAIP: 'Lazy AI', SmartAIP: 'Smart AI', VanillaAIP: 'Vanilla AI',
-# BaselineAIP: 'Baseline AI'}
 CH_STUDENT_LV_UP = 0.1
 MAX_NUM_PLAYERS = 6
 MAX_NUM_STUDENTS = 8
@@ -204,6 +201,9 @@ class Game:
     def collect_used_names(self):
         self.used_names = set(self.fighters_dict)
 
+    def crime_down(self):
+        events.crime_down(self)
+
     def do_daily(self):
         """This is guaranteed to execute only once per day"""
         self.cls()
@@ -215,7 +215,7 @@ class Game:
     def do_monthly(self):
         """This is guaranteed to execute only once per month"""
         # increase crime
-        ev.crime_up(self)
+        events.crime_up(self)
         # add new escaped convict
         self.criminals.append(fighter_factory.new_convict())
         c = self.criminals[-1]
@@ -421,10 +421,7 @@ class Game:
                 if not ai_only and yn(f'Player {i + 1} -- human player?'):
                     pp = self.get_new_human_player()
                 else:
-                    if forced_aip_class is None:
-                        pp = self.get_new_ai_player()
-                    else:
-                        pp = self.get_new_ai_player(forced_aip_class)
+                    pp = self.get_new_ai_player(forced_aip_class)
                 # 'bind' player
                 self.register_fighter(pp)
                 self.players.append(pp)
@@ -490,7 +487,7 @@ class Game:
                 s.month = 1
         for p in self.players:
             p.ended_turn = False
-        ev.randevent(self)
+        events.randevent(self)
         if self.auto_save_on:
             self.save_game('auto save.txt')
 
@@ -719,37 +716,6 @@ class Game:
             self.chosen_quit = True
         elif choice == 'Debug Menu':
             self.debug_menu()
-
-    def test(self):
-        p = self.current_player
-        # p.level_up()
-        p.obtain_item('Dragon Herb')
-        p.obtain_item('Ox Herb')
-        from ..kung_fu.moves import get_rand_moves
-        m1 = get_rand_moves(p, 1, 4)[0]
-        m2 = get_rand_moves(p, 1, 5)[0]
-        m3 = get_rand_moves(p, 1, 7)[0]
-        m4 = get_rand_moves(p, 1, 8)[0]
-        m5 = get_rand_moves(p, 1, 10)[0]
-        for move in m1, m2, m3, m4, m5:
-            if move:
-                p.learn_move(move, silent=False)
-        f1 = fighter_factory.new_thug(weak=False)
-        p.fight(f1)
-        # p.fight(f1)
-
-        # t = testing_tools.Tester(self)
-        # f1 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
-        # f2 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
-        # from kf_lib.fight import spectate
-        # spectate(f1, f2)
-
-        # t.test_story(story.ForeignerStory)
-        # t.test_enc('Challenger')
-        # self.current_player.learn_tech('Attack Is Defense')
-        # t.two_players_fight()
-        # self.current_player.learn_move("Shove")
-        # self.current_player.learn_move("Charging Step")
 
     def unregister_fighter(self, f):
         self.fighters_list.remove(f)

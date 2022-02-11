@@ -7,7 +7,6 @@ from ._base_encounter import BaseEncounter, Guaranteed
 # todo refactor imports in encounters
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, set_up_weapon_fight, \
     try_enemy, try_escape
-from .. import events
 from ...actors import fighter_factory, traits, quotes
 from ...mechanics import experience
 from ...utils import lang_tools
@@ -325,7 +324,7 @@ class Extorters(BaseEncounter):
             p.check_help()
             p.gain_rep(num_en * 2)
             if p.fight(en[0], p.allies, en[1:]):
-                events.crime_down(p.game)
+                p.game.crime_down()
                 try_enemy(p, en[0], CH_THUG_ENEMY)
                 if random.choice([True, True, False]):
                     item = items.get_random_item()
@@ -887,7 +886,7 @@ class Robbers(BaseEncounter):
             allies = None
         if p.fight(self.r, allies, self.rs):
             if self.num_r >= NUM_ROBBERS_GROUP[0]:
-                events.crime_down(p.game)
+                p.game.crime_down()
             p.gain_rep(self.num_r)
             try_enemy(p, self.r, CH_ROBBER_ENEMY)
 
@@ -912,7 +911,7 @@ class RobbingSomeone(BaseEncounter):
             p.check_help()
             p.gain_rep(num_en * 2)
             if p.fight(en[0], p.allies, en[1:]):
-                events.crime_down(p.game)
+                p.game.crime_down()
                 try_enemy(p, en[0], CH_ROBBER_ENEMY)
                 victim = random.choice(("Man", "Woman"))
                 p.show(f'{victim}: "Thank you very much!!!"')
@@ -1417,9 +1416,9 @@ class EncControl:
     def __init__(self, game):
         self.g = self.game = game
 
-    def rand_enc(self):
+    def rand_enc(self, encs=None):
         p = self.g.current_player
-        random_encounters(p)
+        random_encounters(p, encs)
 
     def run_enc(self, enc_name_string, test=False):
         p = self.g.current_player

@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 
 from ..actors.fighter import Fighter
 from ..actors.human_controlled_fighter import HumanControlledFighter
-from ..actors.player import Player
+from ..actors.player import AIPlayer, HumanPlayer
 from ..fighting import fight
 
 
@@ -31,8 +31,9 @@ class Tournament(object):
         self.prize = prize if prize != 'auto' else self._calc_prize()
         self.participants: list = []
         self.spectator: Optional[HumanControlledFighter] = None
-        self.bets: Dict[Player, tuple] = {}  # player_obj: (who_will_win, money_bet)
-        self.winner: Any[Fighter, Player] = None
+        # player_obj: (who_will_win, money_bet)
+        self.bets: Dict[Optional[AIPlayer, HumanPlayer], tuple] = {}
+        self.winner: Any[Fighter, Optional[AIPlayer, HumanPlayer]] = None
         self.current_round = 0
         self.run()
 

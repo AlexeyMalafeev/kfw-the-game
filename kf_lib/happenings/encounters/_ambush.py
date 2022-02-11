@@ -1,7 +1,6 @@
 import random
 
 from ...actors import fighter_factory
-from .. import events
 from ._base_encounter import BaseEncounter
 from ._utils import get_escape_chance, check_scary_fight, try_escape
 from ...utils.utilities import rnd, rndint
@@ -44,7 +43,7 @@ class Ambush(BaseEncounter):
         e = self.e
         p.check_help()
         if p.fight(e, p.allies, self.thugs):
-            events.crime_down(p.game)
+            p.game.crime_down()
             if rnd() <= CH_ENEMY_REPENTS:
                 p.msg(f'{e.name}: "Please forgive me! I swear you\'ll never see me again!"')
                 p.remove_enemy(e)

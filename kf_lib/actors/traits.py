@@ -1,5 +1,5 @@
 """
-Traits are activated at Player creation time. If the Player is saved, the traits are saved as well
+Traits are activated at player creation time. If the player is saved, the traits are saved as well
 (part of the init_atts).
 Traits are represented as strings; their effects are looked up in the TRAIT_EFFECTS dictionary.
 """

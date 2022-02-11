@@ -427,7 +427,7 @@ code:
 
     generate important fighters: consider style emphases
 
-    Player.get_name_as_master
+    BasePlayer.get_name_as_master
 
     time AI play (when there are no human players)?
 

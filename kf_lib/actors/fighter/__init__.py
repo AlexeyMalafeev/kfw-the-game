@@ -76,6 +76,7 @@ class Fighter(
             # learning techs
 
 
+# todo refactor: get rid of Challenger, Master, Thug, but set occupation (quotes) instead
 class Challenger(Fighter):
     quotes = 'challenger'
 
