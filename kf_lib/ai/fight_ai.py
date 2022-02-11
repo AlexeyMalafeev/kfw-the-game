@@ -333,13 +333,6 @@ class GeneticAIMoreAggroClone2(GeneticAIMoreAggro):
     pass
 
 
-# on par with GeneticAIMoreAggro
-# trained with pop_size=32, 30 epochs, infighting=True, n_rep=10, GeneticAI vs GeneticAI2,
-# no crowd fights
-class GeneticAIMoreAggroTrainedInFighting(GeneticAIMoreAggro):
-    pass
-
-
 class GeneticAIMoreAggroTrainedTop(GeneticAIMoreAggro):
     pass
 
@@ -356,8 +349,17 @@ class GeneticAIMoreAggroTrainedRecordInf(GeneticAIMoreAggro):
     pass
 
 
+class GeneticAIMoreAggroTrainedTopCrowd(GeneticAIMoreAggro):
+    pass
+
+
+class GeneticAIMoreAggroTrainedRecordCrowd(GeneticAIMoreAggro):
+    pass
+
+
 # DefaultFightAI = GeneticAIAggro
-DefaultFightAI = GeneticAIMoreAggro
+# DefaultFightAI = GeneticAIMoreAggro
+DefaultFightAI = GeneticAIMoreAggroTrainedRecord  # trained Feb 11, 2022
 DefaultGeneticAIforTraining = GeneticAIMoreAggroClone
 DefaultGeneticAIforTraining2 = GeneticAIMoreAggroClone2
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
@@ -373,35 +375,47 @@ params8 = [
 # the problem with it is that
 set_gen_ai_params(GeneticAITrainedParams8, params8)
 
-# on par with GeneticAIMoreAggro
-params202202_infighting_top = [
-    0.7528246651943808,
-    0.07539565541460513,
-    0.29646096414307554,
-    0.7457290913793531,
-    0.9007165875111384,
-]
-set_gen_ai_params(GeneticAIMoreAggroTrainedInFighting, params202202_infighting_top)
-
-#
-params202202_top = [0.8294064545841197, 0.2749651221130748, 0.9927878037878699,
-                    0.4577669910752401, 0.9604335088224809]
+# Feb 11, 2022, pop=32 fights=160 n_gen=128 gen=128; 5th place
+params202202_top = [0.11745140504203222, 0.00777924778884409, 0.21401517744007748,
+                    0.888394617200464, 0.7916523164493331]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 
-#
-params202202_record = [0.9547677335170529, 0.23033788823309187, 0.36940482558856735,
-                       0.5212781433438229, 0.04280568704737797]
+# Feb 11, 2022, pop=32 fights=160 n_gen=128 gen=84; 1st place
+params202202_record = [0.8330525416664358, 0.00777924778884409, 0.7897769161203186,
+                       0.7812461127357897, 0.9131024054734007]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
 
-#
-params202202_top_inf = [0.3347519208084522, 0.9572687574503359, 0.5953565563190012,
-                        0.15046239987173127, 0.1406049317274054]
+# Feb 11, 2022, pop=16 fights=300 n_gen=128 infight gen=128; 5th place
+params202202_top_inf = [0.47562433421266803, 0.009057428537260992, 0.8716937253181152,
+                        0.9475943689024402, 0.9027385729485755]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTopInf, params202202_top_inf)
 
-#
-params202202_record_inf = [0.7721997157553641, 0.5671203118409247, 0.7803399569979264,
-                           0.7285364029205886, 0.7865812079866354]
+# Feb 11, 2022, pop=16 fights=300 n_gen=128 infight gen=2; 6th place
+params202202_record_inf = [0.8019874503863862, 0.03620216104410978, 0.6110961391332028,
+                           0.9475943689024402, 0.5987323606932059]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecordInf, params202202_record_inf)
+
+# Feb 11, 2022, pop=64 fights=64 (crowd only) n_gen=128 gen=128; 3rd place
+params202202_top_crowd = [0.985030334660097, 0.004696383021808415, 0.1223626700730519,
+                          0.2440865205719437, 0.7263327881555984]
+set_gen_ai_params(GeneticAIMoreAggroTrainedTopCrowd, params202202_top_crowd)
+
+# Feb 11, 2022, pop=64 fights=64 (crowd only) n_gen=128 gen=90; 4th place
+params202202_record_crowd = [0.985030334660097, 0.004696383021808415, 0.5251826392446703,
+                             0.19061750461806992, 0.8036603052306912]
+set_gen_ai_params(GeneticAIMoreAggroTrainedRecordCrowd, params202202_record_crowd)
+
+# Total
+# GeneticAIMoreAggroTrainedRecord       21728
+# GeneticAIMoreAggroTrainedTopInf       21435
+# GeneticAIMoreAggroTrainedTopCrowd     21196
+# GeneticAIMoreAggroTrainedRecordCrowd  20955
+# GeneticAIMoreAggroTrainedTop          20795
+# GeneticAIMoreAggroTrainedRecordInf    19205
+# GeneticAIAggro                        18416
+# GeneticAIMoreAggro                    18176
+# GeneticAIMoreAggroTrainedInFighting   17293
+# BaseAI                                801
 
 # todo train against Params3, etc. -> cycle this
 # todo train style-specific AIs

@@ -24,6 +24,7 @@ date
 * feat: remove help in Fat Girl encounter
 * feat: in genetic algo, mutation only applies to children
 * refactor: player as a package
+* feat: train a new powerful genetic fight AI (pop=32 fights=160 n_gen=128 gen=84)
 
 
 ### v.0.6.4-beta

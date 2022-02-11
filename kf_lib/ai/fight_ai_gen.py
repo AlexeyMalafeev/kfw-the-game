@@ -155,7 +155,7 @@ Gene names: {self.gene_names}
 Top fit values / individuals:
 {top_res}
 Max possible fit value for one individual: {self.max_possible_fit_value}
-All-time record: {self.all_time_record} ({pcnt}%) @ generation {self.record_generation}
+All-time record: {self.all_time_record} ({pcnt}%) @ generation {self.record_generation + 1}
 Record holder: {self.record_holder}
 '''
         infight_s = ' infight' if self.infighting else ''

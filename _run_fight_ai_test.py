@@ -14,11 +14,12 @@ try:
         fight_ai.BaseAI,
         fight_ai.GeneticAIAggro,
         fight_ai.GeneticAIMoreAggro,
-        fight_ai.GeneticAIMoreAggroTrainedInFighting,
         fight_ai.GeneticAIMoreAggroTrainedTop,
         fight_ai.GeneticAIMoreAggroTrainedRecord,
         fight_ai.GeneticAIMoreAggroTrainedTopInf,
         fight_ai.GeneticAIMoreAggroTrainedRecordInf,
+        fight_ai.GeneticAIMoreAggroTrainedTopCrowd,
+        fight_ai.GeneticAIMoreAggroTrainedRecordCrowd,
     )
     # if write_log:
     #     for AI in AIs:
