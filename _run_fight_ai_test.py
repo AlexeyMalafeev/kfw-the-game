@@ -17,6 +17,8 @@ try:
         fight_ai.GeneticAIMoreAggroTrainedInFighting,
         fight_ai.GeneticAIMoreAggroTrainedTop,
         fight_ai.GeneticAIMoreAggroTrainedRecord,
+        fight_ai.GeneticAIMoreAggroTrainedTopInf,
+        fight_ai.GeneticAIMoreAggroTrainedRecordInf,
     )
     # if write_log:
     #     for AI in AIs:
@@ -32,7 +34,7 @@ try:
                 continue
             for test in tests:
                 # rep is doubled for each run of test
-                t = test(AI1, AI2, rep=500, write_log=write_log)
+                t = test(AI1, AI2, rep=1000, write_log=write_log)
                 scores[test][AI1] += t.wins[0]
                 scores[test][AI2] += t.wins[1]
     # fight_ai_test.CrowdVsCrowd(fight_ai.BaseAI, fight_ai.WeightedActionsAI)

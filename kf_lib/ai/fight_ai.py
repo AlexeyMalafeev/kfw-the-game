@@ -1,10 +1,8 @@
 from pathlib import Path
 
-
 from kf_lib.fighting.distances import VALID_DISTANCES
 from kf_lib.kung_fu import moves
 from kf_lib.utils.utilities import *
-
 
 catch_breath_move = moves.get_move_obj('Catch Breath')
 guard_move = moves.get_move_obj('Guard')
@@ -109,8 +107,8 @@ class WeightedActionsAI(BaseAI):
     def init_weights(self):
         self.weights = {a: 1 for a in self.owner.av_moves}
         self.weights[catch_breath_move] = (
-            self.owner.stamina / self.owner.stamina_max
-        ) * self.catch_breath_mult
+                                                  self.owner.stamina / self.owner.stamina_max
+                                          ) * self.catch_breath_mult
         self.weights[guard_move] = (self.owner.stamina / self.owner.stamina_max) * self.guard_mult
 
     def weigh_atk_move(self, move):
@@ -234,10 +232,10 @@ class GeneticAIExtraRules(GeneticAITrainedParams8):
             options.append(maneuver)
             weights.append(self.prob_move)
         force_move = (
-            maneuver is not None
-            and (len(owner.act_allies) / len(owner.act_targets)) >= self.group_advantage_thresh
-            and atk_move is None
-            and owner.stamina >= owner.stamina_max / 2
+                maneuver is not None
+                and (len(owner.act_allies) / len(owner.act_targets)) >= self.group_advantage_thresh
+                and atk_move is None
+                and owner.stamina >= owner.stamina_max / 2
         )
         if owner.qp < owner.qp_max and not force_move:
             options.append(focus_move)
@@ -298,8 +296,8 @@ class GeneticAIMoreAggro(GeneticAITrainedParams8):
             weights.append(self.prob_move)
             if is_at_dist4(owner):
                 if (
-                    (has_dist4_move(target) and not has_dist4_move(owner))
-                    or has_bigger_crowd(owner)
+                        (has_dist4_move(target) and not has_dist4_move(owner))
+                        or has_bigger_crowd(owner)
                 ):
                     if self.file:
                         self.write_log()
@@ -332,11 +330,18 @@ class GeneticAIMoreAggroTrainedRecord(GeneticAIMoreAggro):
     pass
 
 
+class GeneticAIMoreAggroTrainedTopInf(GeneticAIMoreAggro):
+    pass
+
+
+class GeneticAIMoreAggroTrainedRecordInf(GeneticAIMoreAggro):
+    pass
+
+
 # DefaultFightAI = GeneticAIAggro
 DefaultFightAI = GeneticAIMoreAggro
 DefaultGeneticAIforTraining = GeneticAIMoreAggro
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
-
 
 params8 = [
     0.9946880510412656,
@@ -358,17 +363,25 @@ params202202_infighting_top = [
 ]
 set_gen_ai_params(GeneticAIMoreAggroTrainedInFighting, params202202_infighting_top)
 
-# even weaker than record
-params202202_top = [0.12143835886099252, 0.5036677252444876, 0.7741143420916036,
-                    0.3193798609370172, 0.28154875151262204]
+#
+params202202_top = [0.8294064545841197, 0.2749651221130748, 0.9927878037878699,
+                    0.4577669910752401, 0.9604335088224809]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 
-# weak
-params202202_record = [
-    0.2110522021065323, 0.4426443869936223, 0.710076836997256, 0.9233659913438291,
-    0.39058725975877506,
-]
+#
+params202202_record = [0.9547677335170529, 0.23033788823309187, 0.36940482558856735,
+                       0.5212781433438229, 0.04280568704737797]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
+
+#
+params202202_top_inf = [0.3347519208084522, 0.9572687574503359, 0.5953565563190012,
+                        0.15046239987173127, 0.1406049317274054]
+set_gen_ai_params(GeneticAIMoreAggroTrainedTopInf, params202202_top_inf)
+
+#
+params202202_record_inf = [0.7721997157553641, 0.5671203118409247, 0.7803399569979264,
+                           0.7285364029205886, 0.7865812079866354]
+set_gen_ai_params(GeneticAIMoreAggroTrainedRecordInf, params202202_record_inf)
 
 # todo train against Params3, etc. -> cycle this
 # todo train style-specific AIs
