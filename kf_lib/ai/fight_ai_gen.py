@@ -150,6 +150,7 @@ class GeneticAlgorithm(object):
         out_s = f'''{time_s}
 Generation {self.curr_generation + 1} of {self.n_generations}
 Mutations: {self.mutations_occurred} (prob {self.mutation_prob})
+Gene names: {self.gene_names}
 Top fit values / individuals:
 {top_res}
 Max possible fit value for one individual: {self.max_possible_fit_value}
@@ -159,7 +160,7 @@ Record holder: {self.record_holder}
         infight_s = ' infight' if self.infighting else ''
         file_name = f'pop={self.pop_size} fights={self.max_possible_fit_value} ' \
                     f'n_gen={self.n_generations}{infight_s} ' \
-                    f'gen={self.curr_generation}.txt'
+                    f'gen={self.curr_generation + 1}.txt'
         file_path = Path('tests', 'genetic', file_name)
         print(out_s, file=open(file_path, 'w', encoding='utf-8'))
 
