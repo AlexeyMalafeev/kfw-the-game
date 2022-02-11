@@ -4,8 +4,12 @@ import random
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...utils.utilities import rnd, get_adverb, get_bar
+from ...utils.utilities import rnd, get_adverb, get_bar, rndint_2d
 from ._weapons import WeaponMethods
+
+
+DUR_FURY_MIN = 500
+DUR_FURY_MAX = 1000
 
 
 class FighterWithActions(
@@ -21,8 +25,9 @@ class FighterWithActions(
 
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
+        fury = ' *FURY*' if self.check_status('fury') else ''
         n2 = self.current_fight.get_f_name_string(self.target)
-        s = f'{n1}: {self.action.name} @ {n2}'
+        s = f'{n1}{fury}: {self.action.name} @ {n2}'
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
@@ -92,6 +97,7 @@ class FighterWithActions(
             self.try_block_disarm()
             self.defended = True
         else:
+            self.try_critical()
             self.set_ascii(prefix + 'Hit')
         # todo handle the no defense case
         atkr.dam = round(atkr.dam)
@@ -121,7 +127,8 @@ class FighterWithActions(
         m = self.action
         self.calc_atk(m)
         self.try_environment('attack')
-        self.try_critical()
+        # self.try_critical()
+        self.try_epic()
         self.target.calc_dfs()
         self.try_unblockable()
         self.target.try_environment('defense')
@@ -238,6 +245,7 @@ class FighterWithActions(
         self.change_qp(self.qp_gain)
         self.change_stamina(self.stamina_gain)
         self.try_in_fight_impro_wp()  # before get_av_atk_actions! or won't get weapon moves
+        self.try_fury()
         self.calc_stamina_factor()
 
     def try_strike(self):
@@ -253,6 +261,17 @@ class FighterWithActions(
     def try_counter(self):
         if self.defended and self.hp > 0 and rnd() <= self.counter_chance:
             self.do_counter()
+
+    def try_fury(self):
+        if (
+            not self.check_status('fury')
+            and rnd() <= ((1 - self.hp / self.hp_max) * self.fury_chance)
+        ):
+            fury_dur = rndint_2d(DUR_FURY_MIN, DUR_FURY_MAX) // self.speed_full
+            self.add_status('fury', fury_dur)
+            s = self.current_fight.get_f_name_string(self)
+            self.current_fight.display(f'{s} is in FURY!')
+            self.current_fight.pak()
 
     def try_in_fight_impro_wp(self):
         if (

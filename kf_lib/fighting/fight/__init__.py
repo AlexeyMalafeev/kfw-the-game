@@ -275,7 +275,7 @@ class BaseFight(object):
             if len(fs) > 1:
                 random.shuffle(fs)
             for f in fs:
-                if f.hp <= 0:  # for newly ko'ed fighters; todo last desperate attack? tech?
+                if f.hp <= 0:  # for newly ko'ed fighters
                     continue
                 if self.check_fight_over():  # for winner allies
                     return
@@ -444,8 +444,8 @@ class BaseFight(object):
     def handle_prefight_quote(self):
         f1 = self.side_a[0]
         f2 = self.side_b[0]
-        make_pause = f1.say_prefight_quote() or f2.say_prefight_quote()
-        if make_pause:
+        make_pause = f1.say_prefight_quote() + f2.say_prefight_quote()
+        if make_pause > 0:
             self.pak()
 
     def handle_win_quote(self):

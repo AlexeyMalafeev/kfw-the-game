@@ -1,4 +1,5 @@
-#! python3
+from pathlib import Path
+
 
 from kf_lib.ai import fight_ai, fight_ai_test
 from kf_lib.utils.utilities import *
@@ -6,15 +7,21 @@ from kf_lib.utils.utilities import *
 try:
     write_log = True
     same_class_fights = False
-    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.CarefulManeuvers5, fight_ai.NewSystemAI)
-    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.CarefulManeuvers5)
-    AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.GeneticAITrainedParams8,
-           fight_ai.GeneticAIExtraRules4, fight_ai.GeneticAIExtraRules7, fight_ai.GeneticAIExtraRules9,
-           fight_ai.GeneticAIAggro)
-    if write_log:
-        for AI in AIs:
-            with open(f'{AI.__name__}.txt', 'w') as f:
-                f.write('')
+    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.GeneticAITrainedParams8,
+    #        fight_ai.GeneticAIExtraRules4, fight_ai.GeneticAIExtraRules7,
+    #        fight_ai.GeneticAIExtraRules9, fight_ai.GeneticAIAggro, fight_ai.GeneticAIMoreAggro)
+    AIs = (
+        fight_ai.BaseAI,
+        fight_ai.GeneticAIAggro,
+        fight_ai.GeneticAIMoreAggro,
+        fight_ai.GeneticAIMoreAggroTrainedInFighting,
+        fight_ai.GeneticAIMoreAggroTrainedTop,
+        fight_ai.GeneticAIMoreAggroTrainedRecord,
+    )
+    # if write_log:
+    #     for AI in AIs:
+    #         with open(f'{AI.__name__}.txt', 'w') as f:
+    #             f.write('')
     # tests = (fight_ai_test.FightAITest, fight_ai_test.CrowdVsCrowd)
     # tests = (fight_ai_test.CrowdVsCrowd, fight_ai_test.CrowdVsCrowdFair)
     tests = (fight_ai_test.CrowdVsCrowdFair, fight_ai_test.FightAITest)
@@ -24,6 +31,7 @@ try:
             if AI1 is AI2 and not same_class_fights:
                 continue
             for test in tests:
+                # rep is doubled for each run of test
                 t = test(AI1, AI2, rep=500, write_log=write_log)
                 scores[test][AI1] += t.wins[0]
                 scores[test][AI2] += t.wins[1]
@@ -47,10 +55,13 @@ try:
         print('-' * 80)
         print(legend[i])
         print(pretty_table(tups))
-        print('{}\n\n{}'.format(get_time(), pretty_table(tups)), file=open('fight AI comparison.txt', 'w'))
+        print(
+            '{}\n\n{}'.format(get_time(), pretty_table(tups)),
+            file=open(Path('tests', 'fight AI comparison.txt'), 'w', encoding='utf-8'))
     input('Press Enter to exit')
 
-except Exception:
+
+except Exception:  # noqa
     import traceback
     traceback.print_exc()
     input('Press Enter to exit')

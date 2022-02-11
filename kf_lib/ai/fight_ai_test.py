@@ -1,3 +1,6 @@
+from tqdm import trange
+
+
 from kf_lib.fighting.fight import AutoFight
 from kf_lib.actors import fighter_factory as ff
 from kf_lib.utils.utilities import *
@@ -7,8 +10,9 @@ TESTS_FOLDER = 'tests'
 
 
 class FightAITest(object):
-    def __init__(self, ai1, ai2, rep=1000, write_log=False):
-        """rep will be effectively doubled"""
+    def __init__(self, ai1, ai2, rep=1000, write_log=False, suppress_output=False):
+        """rep will be effectively doubled for fairness - each random fighter will use both
+        tested AIs in turn."""
         self.ai1 = ai1
         self.ai2 = ai2
         self.wins = [0, 0]
@@ -16,6 +20,7 @@ class FightAITest(object):
         self.bname = self.ai2.__name__
         self.rep = rep
         self.write_log = write_log
+        self.suppress_output = suppress_output
         self.output_file = open(os.path.join(TESTS_FOLDER, 'fight ai test.txt'), 'a')
         self.run_test()
         self.output_total()
@@ -29,10 +34,14 @@ class FightAITest(object):
         return lv, lv
 
     def run_test(self):
-        s = f'\n{self.__class__.__name__}\n{self.aname} vs {self.bname}'
-        print(s)
-        print(s, file=self.output_file)
-        for i in range(self.rep):
+        if not self.suppress_output:
+            s = f'\n{self.__class__.__name__}\n{self.aname} vs {self.bname}'
+            print(s)
+            print(s, file=self.output_file)
+            range_fun = trange
+        else:
+            range_fun = range
+        for _ in range_fun(self.rep):
             lv1, lv2 = self.get_levels()
             f1 = ff.new_opponent(lv=lv1)
             f2 = ff.new_opponent(lv=lv2)
@@ -51,11 +60,12 @@ class FightAITest(object):
                     self.wins[ind2] += 1
 
     def output_total(self):
-        s = 'total: {}\n{} wins: {}\n{} wins: {}'.format(
-            self.rep * 2, self.aname, self.wins[0], self.bname, self.wins[1]
-        )
-        print(s)
-        print(s, file=self.output_file)
+        if not self.suppress_output:
+            s = 'total: {}\n{} wins: {}\n{} wins: {}'.format(
+                self.rep * 2, self.aname, self.wins[0], self.bname, self.wins[1]
+            )
+            print(s)
+            print(s, file=self.output_file)
 
 
 class CrowdVsCrowd(FightAITest):

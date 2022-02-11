@@ -1,3 +1,5 @@
+from typing import List, Tuple, Union
+
 from ...kung_fu import styles
 
 from ._ai import FightAIMethods
@@ -28,13 +30,13 @@ class Fighter(
     # the order of arguments should not be changed, or saving will break
     def __init__(
         self,
-        name='',
-        style_name=styles.FLOWER_KUNGFU.name,
-        level=1,
-        atts_tuple=None,
-        tech_names=None,
-        move_names=None,
-        rand_atts_mode=0,
+        name: str = '',
+        style: Union[str, styles.Style] = styles.FLOWER_KUNGFU,
+        level: int = 1,
+        atts_tuple: Tuple[int, int, int, int] = None,
+        tech_names: List[str] = None,
+        move_names: List[str] = None,
+        rand_atts_mode: int = 0,  # todo give rand_atts_mode interpretable str values
     ):
         super().__init__()
         self.name = name
@@ -42,7 +44,7 @@ class Fighter(
         self.rand_atts_mode = rand_atts_mode
         self.set_att_weights()
         self.set_atts(atts_tuple)
-        self.set_style(style_name)
+        self.set_style(style)
         self.set_techs(tech_names)
         self.set_moves(move_names)
         self.set_fight_ai()
@@ -74,6 +76,7 @@ class Fighter(
             # learning techs
 
 
+# todo refactor: get rid of Challenger, Master, Thug, but set occupation (quotes) instead
 class Challenger(Fighter):
     quotes = 'challenger'
 

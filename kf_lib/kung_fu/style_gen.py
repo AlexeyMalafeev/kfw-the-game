@@ -1,7 +1,10 @@
+import random
+from typing import List
+
 from . import boosts as b
 from .styles import Style
 from .techniques import StyleTech
-from kf_lib.utils.utilities import *
+# from kf_lib.utils.utilities import *
 
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
@@ -20,6 +23,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
         elbow_strike_mult=b.STRIKE_MULT1,
         head_strike_mult=b.STRIKE_MULT1,),
     "Flying": StyleTech('Jump Technique', flying_strike_mult=b.STRIKE_MULT1),
+    'Furious': StyleTech('Kung-Fu Fury', fury_chance=b.FURY_CH1),
     "Grappling": StyleTech('Grappling Training', grappling_strike_mult=b.STRIKE_MULT1),
     "Guarding": StyleTech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
     "Indestructible": StyleTech(
@@ -67,6 +71,7 @@ W2 = {
         knee_strike_mult=b.STRIKE_MULT1,
         elbow_strike_mult=b.STRIKE_MULT1,
         head_strike_mult=b.STRIKE_MULT1,),
+    'Burning': StyleTech('Burning Fury', fury_chance=b.FURY_CH1),
     "Earth": StyleTech('Earth\'s Orbit', dist1_bonus=b.STRIKE_MULT1),
     "Emerald": StyleTech('Emerald Flow', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Fire": StyleTech('Inferno', atk_mult=b.ATTACK1),
@@ -105,7 +110,7 @@ W2 = {
     # diamond, pearl, hellish, hard, soft, deadly, lightning
 }
 
-W3 = {
+W3 = {  # todo add grappling stike multiplier
     "Bear": StyleTech('Bear\'s Strength', strength_mult=b.STRENGTH1),
     "Boar": StyleTech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
     'Butterfly': StyleTech(
@@ -133,6 +138,7 @@ W3 = {
     ),
     "Panther": StyleTech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Phoenix": StyleTech('Rising Phoenix', resist_ko=b.RESIST_KO1),
+    'Rat': StyleTech('Cornered Rat', fury_chance=b.FURY_CH1),
     'Shark': StyleTech(
         'Shark Bites', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
@@ -145,7 +151,6 @@ W3 = {
     ),
     "Viper": StyleTech('Stinging Viper', stun_chance=b.STUN_CH1),
     "Wolf": StyleTech('Wolf\'s Attacking Distance', dist2_bonus=b.STRIKE_MULT1),
-    # "Rat": StyleTech('Cornered Rat', gain bonus when low on hp)
     # crow, horse, spider - grabs?, shark, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }
@@ -174,17 +179,34 @@ def generate_new_styles(n, overlap=False):
     return get_styles_from_list(results)
 
 
+def get_new_randomly_generated_style():
+    words = []
+    for w_list in (
+        list(W1),
+        list(W2),
+        list(W3)
+    ):
+        words.append(random.choice(w_list))
+    return get_style_from_words(*words)
+
+
 def get_n_possible_styles():
     return len(W1) * len(W2) * len(W3)
 
 
 def get_style_from_str(s):
     w1, w2, w3 = s.split()
+    return get_style_from_words(w1, w2, w3, s)
+
+
+def get_style_from_words(w1, w2, w3, style_name=''):
     t1 = W1[w1]
     t2 = W2[w2]
     t3 = W3[w3]
-    return Style(s, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
+    if not style_name:
+        style_name = ' '.join((w1, w2, w3))
+    return Style(style_name, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
 
 
-def get_styles_from_list(style_list):
+def get_styles_from_list(style_list: List[str]):
     return [get_style_from_str(s) for s in style_list]

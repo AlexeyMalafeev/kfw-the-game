@@ -10,7 +10,7 @@ try:
                      ['lvrel', 'attrel', 'techrel', 'nrel', 'wprel'],
                      ['lv1', 'lv2', 'att1', 'att2', 'tech1', 'tech2', 'n1', 'n2', 'wp1', 'wp2']
                      ]
-    for method in (ml_fighter_pwr.learn_RFC, ml_fighter_pwr.learn_LR):
+    for method in (ml_fighter_pwr.learn_rfc, ml_fighter_pwr.learn_logreg):
         for feat_list in feature_lists:
             method(file_name, feat_list)
     input('Press Enter to exit')

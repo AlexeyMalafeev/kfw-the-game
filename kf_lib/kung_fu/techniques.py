@@ -203,10 +203,11 @@ LINKED_TECHS = [
     # todo fix this
     # (UpgradableTech('Uncanny Strikes', exotic_strike_mult=b.RARE_STRIKE_MULT1),
     #  AdvancedTech('Whole Body Weapon', exotic_strike_mult=b.RARE_STRIKE_MULT2)),
-    (
-        UpgradableTech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
-        AdvancedTech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2),
-    ),
+    # todo implement Weapon Competence tech
+    # (
+    #     UpgradableTech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
+    #     AdvancedTech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2),
+    # ),
     (
         UpgradableTech('Environment Fighting', environment_chance=b.ENVIRONMENT_CH1),
         AdvancedTech('Environment Domination', environment_chance=b.ENVIRONMENT_CH2),
@@ -242,6 +243,10 @@ LINKED_TECHS = [
     (
         UpgradableTech('Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
         AdvancedTech('Lightning-Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+    ),
+    (
+        UpgradableTech('Fist of Fury', fury_chance=b.FURY_CH1),
+        AdvancedTech('Fist of Fury II', fury_chance=b.FURY_CH2),
     )
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
@@ -271,6 +276,7 @@ def get_descr(tech_name):
     return get_tech_obj(tech_name).descr
 
 
+# todo optimize techniques.get_learnable_techs
 def get_learnable_techs(fighter=None):
     """Return names of techs fighter can learn."""
     techs = get_upgradable_techs()[:]

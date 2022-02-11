@@ -1,12 +1,28 @@
 ### v.0.6.5-beta
-""  
+"Lucky Furious AI Mutants"  
 date  
 
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
 * feat: learn other fighters' moves
 * refactor: encounters.py
+* feat: lucky and unlucky scenarios in Challenger encounter
 * feat: counters, preemptive strikes and criticals are now agility-based
 * fix: test fight balance
+* feat: improved fight balance (agility is no longer weak)
+* feat: quotes from Chinese classic "The Outlaws of the Marsh"
+* feat: lucky and unlucky scenarios in Craftsman encounter
+* feat: use completely new randomly generated styles in many encounters
+* refactor: use type hints in Fighter, accept both strings and objects as style
+* feat: reimplement takedown generation, hence more moves: 15805 -> 17699
+* fix: bug in prefight quotes not being said by second participant
+* feat: fury, another (hopefully) fun game mechanic
+* feat: fury-related techniques and styles
+* feat: new fight AI that rushes when fights against 4-distance moves or when has a bigger crowd
+* feat: improved testing of fight balance and AI
+* feat: lucky and unlucky scenarios in strong Beggar encounter
+* refactor: genetic algorithm for fight AI training
+* feat: remove help in Fat Girl encounter
+* feat: in genetic algo, mutation only applies to children
 
 
 ### v.0.6.4-beta

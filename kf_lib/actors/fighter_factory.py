@@ -1,8 +1,8 @@
 from .fighter import Fighter, Challenger, Master, Thug
 from .human_controlled_fighter import HumanControlledFighter
 from . import names
-from kf_lib.kung_fu import styles
-from kf_lib.utils.utilities import *
+from ..kung_fu import styles, style_gen
+from ..utils.utilities import *
 
 
 # levels
@@ -11,6 +11,7 @@ BODYGUARD_LV = (6, 8)
 BRAWLER_LV = (3, 6)
 CHALLENGER_LV = (3, 10)
 CONVICT_LV = (3, 10)
+CRAFTSMAN_LV = (5, 20)
 DRUNKARD_STRONG_LV = (8, 12)
 DRUNKARD_WEAK_LV = (1, 3)
 FAT_GIRL_LV = (5, 7)
@@ -76,7 +77,7 @@ def new_bodyguard(weak=False, n=1):
         else:
             lv = 1
             rand_atts_mode = 0
-        style = styles.get_rand_std_style().name
+        style = style_gen.get_new_randomly_generated_style()
         f = Challenger('Bodyguard', style, lv, rand_atts_mode=rand_atts_mode)
         fs.append(f)
     if len(fs) == 1:
@@ -88,19 +89,25 @@ def new_bodyguard(weak=False, n=1):
 
 def new_brawler():
     lv = rndint(*BRAWLER_LV)
-    return Thug('Brawler', style_name=styles.DIRTY_FIGHTING.name, level=lv)
+    return Thug('Brawler', style=styles.DIRTY_FIGHTING, level=lv)
 
 
 def new_challenger():
     lv = rndint(*CHALLENGER_LV)
-    style = styles.get_rand_std_style().name
+    style = style_gen.get_new_randomly_generated_style()
     f = Challenger('Unknown', style, lv)
     return f
 
 
 def new_convict():
     lv = rndint(*CONVICT_LV)
-    return Thug('Criminal', style_name=styles.DIRTY_FIGHTING.name, level=lv)
+    return Thug('Criminal', style=styles.DIRTY_FIGHTING, level=lv)
+
+
+def new_craftsman():
+    lv = rndint(*CRAFTSMAN_LV)
+    style = style_gen.get_new_randomly_generated_style()
+    return Master('Craftsman', level=lv, style=style)
 
 
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
@@ -113,7 +120,7 @@ def new_custom_hcf():
     # todo select starting atts
     style = menu(legend, 'Choose a style:')
     level = get_int_from_user('Level:', 1, 20)
-    f = HumanControlledFighter(name=name, style_name=style.name)
+    f = HumanControlledFighter(name=name, style=style)
     if level > 1:
         f.level_up(level - 1)  # fixme level-up doesn't work (e.g. level=10), only works once
     return f
@@ -132,9 +139,8 @@ def new_drunkard(strong=False):
         return Master('Drunkard', style, lv, rand_atts_mode=rand_atts_mode)
     else:
         lv = rndint(*DRUNKARD_WEAK_LV)
-        style = None
         rand_atts_mode = 0
-        return Thug('Drunkard', style, lv, rand_atts_mode=rand_atts_mode)
+        return Thug('Drunkard', level=lv, rand_atts_mode=rand_atts_mode)
 
 
 def new_f(name, style, lv, weapon=None, n=1):
@@ -153,7 +159,7 @@ def new_f(name, style, lv, weapon=None, n=1):
 
 def new_fat_girl():
     lv = rndint(*FAT_GIRL_LV)
-    style = styles.get_rand_std_style().name
+    style = style_gen.get_new_randomly_generated_style()
     f = Fighter('Fat Girl', style, lv)
     return f
 
@@ -161,7 +167,7 @@ def new_fat_girl():
 def new_fighter(lv=0, n=1):
     fs = []
     for i in range(n):
-        style = styles.get_rand_std_style().name
+        style = style_gen.get_new_randomly_generated_style()
         if not lv:
             lv = rndint(1, 20)
         f = Fighter('Fighter', style, lv)
@@ -173,16 +179,16 @@ def new_fighter(lv=0, n=1):
         return fs
 
 
-def new_foreigner(lv=0, country=None, name=None, style_name=None):
+def new_foreigner(lv=0, country=None, name=None, style=None):
     if not lv:
         lv = rndint(*FOREIGNER_LV)
     if country is None:
         country = random.choice(names.FOREIGN_COUNTRIES)
     if name is None:
         name = random.choice(names.FOREIGN_NAMES[country])
-    if style_name is None:
-        style_name = styles.FOREIGN_STYLES[country].name
-    f = Fighter(name, style_name, lv)
+    if style is None:
+        style = styles.FOREIGN_STYLES[country]
+    f = Fighter(name, style, lv)
     f.country = country  # used in story module
     return f
 
@@ -193,8 +199,8 @@ def new_gambler():
 
 
 def new_hcf(name='Player', lv=1):
-    style = styles.get_rand_std_style()
-    f = HumanControlledFighter(name=name, style_name=style.name, level=lv)
+    style = style_gen.get_new_randomly_generated_style()
+    f = HumanControlledFighter(name=name, style=style, level=lv)
     return f
 
 
@@ -206,7 +212,7 @@ def new_master(name, style):
 
 def new_master_challenger(p_lv, name):
     lv = rndint(p_lv, p_lv + 2)
-    style = styles.get_rand_std_style().name
+    style = style_gen.get_new_randomly_generated_style()
     f = Master(name, style, lv)
     return f
 
@@ -233,10 +239,10 @@ def new_official(name):
     return Fighter(name, level=3)
 
 
-def new_opponent(style_name=styles.FLOWER_KUNGFU.name, lv=1, n=1, rand_atts_mode=0):
+def new_opponent(style=styles.FLOWER_KUNGFU, lv=1, n=1, rand_atts_mode=0):
     fs = []
     for i in range(n):
-        f = Fighter('Opponent', style_name, lv, rand_atts_mode=rand_atts_mode)
+        f = Fighter('Opponent', style, lv, rand_atts_mode=rand_atts_mode)
         fs.append(f)
     if len(fs) == 1:
         return fs[0]
@@ -247,7 +253,7 @@ def new_opponent(style_name=styles.FLOWER_KUNGFU.name, lv=1, n=1, rand_atts_mode
 
 def new_performer():
     lv = rndint(*PERFORMER_LV)
-    style = styles.get_rand_std_style().name
+    style = style_gen.get_new_randomly_generated_style()
     return Master('Kung-fu Master', style, lv)
 
 
@@ -311,7 +317,7 @@ def new_tourn_part(n=1):
     fs = []
     for i in range(n):
         lv = rndint(*TOURN_PART_LV)
-        style = styles.get_rand_std_style().name
+        style = style_gen.get_new_randomly_generated_style()
         f = Fighter(names.DFLT_TOURN_PART_NAME, style, lv)
         fs.append(f)
     if len(fs) == 1:

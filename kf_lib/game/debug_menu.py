@@ -20,10 +20,10 @@ class DebugMenu:
                 ('Level up', self.debug_level_up),
                 ('Learn Move', self.debug_learn_move),
                 ('Learn Tech', self.debug_learn_tech),
-                ('Set Attribute', self.debug_set_att),
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
-                ('Inspect Player', self.debug_inspect_player),
+                ('Inspect BasePlayer', self.debug_inspect_player),
+                ('Set Attribute', self.debug_set_att),
                 ('PvP', self.debug_pvp),
             )
         )
@@ -110,8 +110,8 @@ class DebugMenu:
         )
 
     # t = testing_tools.Tester(self)
-    # f1 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
-    # f2 = fighter_factory.new_foreigner(8, style_name='Muai Thai', country='Thailand')
+    # f1 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
+    # f2 = fighter_factory.new_foreigner(8, style='Muai Thai', country='Thailand')
     # from kf_lib.fight import spectate
     # spectate(f1, f2)
 

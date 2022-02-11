@@ -1,11 +1,12 @@
 from ._ambush import Ambush
+from ._beggar import Beggar, GBeggar
+from ._challenger import Challenger, GChallenger
+from ._craftsman import Craftsman
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_enemy, try_escape
 from ._base_encounter import BaseEncounter, Guaranteed
-from ._base_encounter import BaseEncounter
-from ._challenger import Challenger, GChallenger
+# todo refactor imports in encounters
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, set_up_weapon_fight, \
     try_enemy, try_escape
-from .. import events
 from ...actors import fighter_factory, traits, quotes
 from ...mechanics import experience
 from ...utils import lang_tools
@@ -19,8 +20,6 @@ from ...utils.utilities import *
 # encounter chances
 ENC_CH_BOOK_SELLER = 0.02
 ENC_CH_BRAWLER = 0.03
-
-ENC_CH_CRAFTSMAN = 0.01
 ENC_CH_CRIMINAL = 0.03
 ENC_CH_DRUNKARD = 0.05
 ENC_CH_FAT_GIRL = 0.02
@@ -39,7 +38,6 @@ ENC_CH_WEIRDO = 0.02
 ENC_CH_WISE_MAN = 0.02
 
 # misc chances
-CH_BEGGAR_FIGHT = 0.1
 CH_BOOK_RUBBISH = 0.3
 CH_BOOK_MOVE = 0.3  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
 CH_BRAWLER_ATTACKS = 0.2
@@ -47,7 +45,6 @@ CH_CHANGE_TRAIT = 0.15
 CH_CONVICT_ARMED = 0.35
 CH_DRUNKARD_FIGHT_STRONG = 0.1
 CH_DRUNKARD_FIGHT_WEAK = 0.1
-
 CH_GAMBLER_ARMED = 0.3
 CH_GAMBLER_ENEMY = 0.5
 CH_GAMBLER_FIGHT = 0.25
@@ -66,7 +63,6 @@ CH_THUG_ENEMY = 0.1
 # levels
 LV_STUD_CHALLENGERS = (1, 3)
 LV_PRIZE_FIGHTERS = (2, 4, 7, 10, 15)
-REQ_LV_BEGGAR_FIGHT = (5, 10)
 REQ_LV_DRUNKARD_FIGHT_STRONG = (5, 10)
 REQ_LV_DRUNKARD_FIGHT_WEAK = (1, 5)
 REQ_LV_MASTER_TRIAL = fighter_factory.MASTER_LV[0]
@@ -84,10 +80,8 @@ LINES_ROBBER = (
 MONEY_BOOK = 100
 MONEY_CONVICT_REWARD_MULT = (10, 15, 20, 25, 30, 40)
 MONEY_GAMBLING_BETS = (20, 25, 30, 40, 50)
-MONEY_GIVE_BEGGAR = 10
 MONEY_GOSSIP_COST = (15, 20, 25, 30, 35)
 MONEY_GIVE_ROBBERS = (40, 50, 60, 80, 100, 120, 130, 150, 180)
-MONEY_MANNEQUIN = 500
 MONEY_OPEN_SCHOOL = 1000
 MONEY_PERFORMER = (40, 50, 60)
 MONEY_PRIZE_FIGHTING_FEE = 50
@@ -125,49 +119,6 @@ REP_NOT_BRAWL = 1
 # misc
 FAILED_ESCAPE_BEATING = (3, 5)
 PERFORMER_EXP_REWARD = 50
-
-
-class Beggar(BaseEncounter):
-    def check_if_happens(self):
-        return rnd() <= self.p.game.poverty / 2
-
-    def run(self):
-        p = self.player
-        p.show(f"{p.name} meets a beggar.")
-        p.log("Meets a beggar.")
-        amount = p.donate_or_not(MONEY_GIVE_BEGGAR)
-        if amount and not check_feeling_greedy(p):
-            p.donate(amount)
-            if p.check_lv(*REQ_LV_BEGGAR_FIGHT) and rnd() <= CH_BEGGAR_FIGHT:
-                self.do_fight()
-
-    def do_fight(self):
-        p = self.player
-        b = p.game.beggar
-        if b is None:
-            return
-        t = f"""As {p.name} turns to leave however, the beggar stops him.
-Beggar: "In thanks for your kindness, young man, let me teach you some special kung-fu from \
-{b.name}!\""""
-        p.show(t)
-        p.log(f"{b.name} gives {p.name} a free kung-fu lesson.")
-        p.pak()
-        if p.spar(b):
-            p.show(f'{b.name}: "Your skill is very impressive! Let\'s practice again some time."')
-            p.add_friend(b)
-            p.add_accompl("Beggar's Friend")
-            p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
-            p.pak()
-            p.learn_move_from(b)
-            p.game.beggar = None
-        else:
-            p.show(f'{b.name}: "Still got a lot to learn, huh..."')
-            p.show(
-                f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
-                'has improved."'
-            )
-            p.pak()
-            p.learn_move_from(b)
 
 
 class BookSeller(BaseEncounter):
@@ -239,27 +190,6 @@ class ContinueStory(BaseEncounter):
     def run(self):
         s = self.player.current_story
         s.advance()
-
-
-class Craftsman(BaseEncounter):
-    def check_if_happens(self):
-        return rnd() <= ENC_CH_CRAFTSMAN and not self.p.check_item(items.MANNEQUIN)
-
-    def run(self):
-        p = self.player
-        item = items.MANNEQUIN
-        price = MONEY_MANNEQUIN
-        t = """{0} meets a craftsman.
-Craftsman: "Ah, a martial artist! You're lucky! I'm selling this excellent {1} ({3}). It's only {2} coins! Don't \
-worry, if you don't have enough money right now, you can pay the rest later."
-Buy it?""".format(
-            p.name, item, price, items.get_item_descr(item)
-        )
-        p.show(t)
-        p.log("Meets a craftsman.")
-        if p.buy_item_or_not() and not check_feeling_greedy(p):
-            p.buy_item(item, price)
-            items.use_item(item, p)
 
 
 class Criminal(BaseEncounter):
@@ -366,7 +296,9 @@ class Drunkard(BaseEncounter):
                 p.learn_move_from(d)
                 p.game.drunkard = None
         else:
-            p.show(f'{d.name}: "You should have just shown me some respect!.."')
+            p.show(f'{d.name}: "When I\'m one-tenth drunk I can use only one-tenth of my skill, '
+                   f'but when I\'m ten-tenths drunk I\'m at the top of my form."')
+            p.pak()
             if strong:
                 p.show('{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                        'technique has improved"')
@@ -392,7 +324,7 @@ class Extorters(BaseEncounter):
             p.check_help()
             p.gain_rep(num_en * 2)
             if p.fight(en[0], p.allies, en[1:]):
-                events.crime_down(p.game)
+                p.game.crime_down()
                 try_enemy(p, en[0], CH_THUG_ENEMY)
                 if random.choice([True, True, False]):
                     item = items.get_random_item()
@@ -449,15 +381,13 @@ class FatGirl(BaseEncounter):
 
     def do_fight(self):
         p = self.player
-        p.check_help(allies=True, master=False, impr_wp=False, school=False)
-        if p.fight(self.g, p.allies):
+        if p.fight(self.g):
             p.msg(f"{self.p.name} runs away in fear.")
             p.game.fat_girl = None
             p.add_accompl("Fat Girl Defeated")
         else:
-            p.msg(
-                'Fat Girl: "Now that I think about it, you are too weak to be my husband anyway!"'
-            )
+            p.msg('Fat Girl: "Now that I think about it, you are too weak to be my husband '
+                  'anyway!"')
 
 
 class FindItem(BaseEncounter):
@@ -956,7 +886,7 @@ class Robbers(BaseEncounter):
             allies = None
         if p.fight(self.r, allies, self.rs):
             if self.num_r >= NUM_ROBBERS_GROUP[0]:
-                events.crime_down(p.game)
+                p.game.crime_down()
             p.gain_rep(self.num_r)
             try_enemy(p, self.r, CH_ROBBER_ENEMY)
 
@@ -981,7 +911,7 @@ class RobbingSomeone(BaseEncounter):
             p.check_help()
             p.gain_rep(num_en * 2)
             if p.fight(en[0], p.allies, en[1:]):
-                events.crime_down(p.game)
+                p.game.crime_down()
                 try_enemy(p, en[0], CH_ROBBER_ENEMY)
                 victim = random.choice(("Man", "Woman"))
                 p.show(f'{victim}: "Thank you very much!!!"')
@@ -1386,10 +1316,6 @@ class WiseMan(BaseEncounter):
         p.pak()
 
 
-class GBeggar(Guaranteed, Beggar):
-    pass
-
-
 class GDrunkard(Guaranteed, Drunkard):
     pass
 
@@ -1446,7 +1372,7 @@ ENC_LIST = [
 
 # extra chance of getting these encounters when choosing the corresponding day actions
 BUY_ITEMS_ENCS = (
-    [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
+        [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
 )
 FIGHT_CRIME_ENCS = (
     [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [HelpPolice] * 7 + [RobbingSomeone] * 7
@@ -1490,9 +1416,9 @@ class EncControl:
     def __init__(self, game):
         self.g = self.game = game
 
-    def rand_enc(self):
+    def rand_enc(self, encs=None):
         p = self.g.current_player
-        random_encounters(p)
+        random_encounters(p, encs)
 
     def run_enc(self, enc_name_string, test=False):
         p = self.g.current_player

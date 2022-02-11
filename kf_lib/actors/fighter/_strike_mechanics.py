@@ -57,6 +57,9 @@ class StrikeMechanics(FighterWithASCII):
         momentum_effect = 1.0 + MOMENTUM_EFFECT_SIZE * self.momentum
         self.atk_pwr *= momentum_effect
         self.to_hit *= momentum_effect
+        if self.check_status('fury'):
+            self.atk_pwr *= self.fury_to_all_mult
+            self.to_hit *= self.fury_to_all_mult
 
     # todo how is calc_dfs used? why not relative to attacker?
     def calc_dfs(self):
@@ -84,6 +87,8 @@ class StrikeMechanics(FighterWithASCII):
             # print('to dodge, to block', self.to_dodge, self.to_block)
             self.dfs_pwr = self.dfs_penalty_mult * self.block_power * self.strength_full
             self.dfs_pwr *= self.stamina_factor * self.wp_dfs_bonus  # todo divide by sth?
+            if self.check_status('fury'):
+                self.dfs_pwr *= self.fury_to_all_mult
 
     def calc_stamina_factor(self):
         # todo docstring calc_stamina_factor
@@ -219,14 +224,16 @@ class StrikeMechanics(FighterWithASCII):
         self.change_hp(-dam)
         self.took_damage = True
 
-    def try_critical(self):
+    def try_epic(self):
         if self.epic_chance and rnd() <= self.epic_chance:
             self.to_hit *= self.epic_to_hit_mult
             self.atk_pwr *= self.epic_atk_pwr_mult
             self.current_fight.display('~*~*~EPIC!!!~*~*~')
             # print('epic')
-        elif rnd() <= self.critical_chance:
-            self.atk_pwr *= self.critical_mult
+
+    def try_critical(self):
+        if rnd() <= self.critical_chance:
+            self.dam *= self.critical_mult
             self.current_fight.display('CRITICAL!')
             # print('critical')
 

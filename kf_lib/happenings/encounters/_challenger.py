@@ -1,7 +1,7 @@
 import random
 
 
-from . import BaseEncounter, Guaranteed
+from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_scary_fight, set_up_weapon_fight
 from ...utils.utilities import rnd
 
@@ -57,7 +57,7 @@ class Challenger(BaseEncounter):
             p.pak()
         luck = p.check_luck()
         if luck == 1:
-            p.show(f'{p.name}: "I can learn something from this fight.')
+            p.show(f'{p.name}: "I can learn something from this fight."')
             p.pak()
             p.learn_move_from(c)
         elif luck == -1:

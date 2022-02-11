@@ -38,7 +38,7 @@ def main():
     print(' ***Welcome to Chocolate***')
     pak()
     g = game.Game()
-    p = Zen(name="Zen", style_name=styles.ZENS_STYLE.name, level=12, atts_tuple=(5, 10, 7, 5))
+    p = Zen(name="Zen", style=styles.ZENS_STYLE, level=12, atts_tuple=(5, 10, 7, 5))
     # Scene 1 Teen Gang - 4 opp, kicks and evade
     # Scene 2 Ice - Bruce Lee 'Explosive Strikes', 'Hurricane Legs', boss armed with an axe, roundhouse and spin
     # Scene 3 Warehouse - Jackie Chan 'Behind You', environment, some enemies with sticks

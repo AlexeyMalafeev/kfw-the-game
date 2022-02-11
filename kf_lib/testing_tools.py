@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 from tqdm import trange
 
 
@@ -88,23 +91,13 @@ class Tester(object):
 
     def test_fight_balance(self, rand_actions=True, n=1000, file_name_prefix='test f.b.'):
         file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
-        file_path = os.path.join(TESTS_FOLDER, file_name)
-        with open(file_path, 'w') as f:
-            f.write(get_time() + '\n')
-
-        def _output_results(d_wnr, d_lsr, first_line=''):
-            tups = dict_comp(d_wnr, d_lsr, sort_col_index=3)
-            lines = ['\n' + first_line, pretty_table(tups), '', summary(d_wnr), '']
-            s = '\n'.join(lines)
-            print(s)
-            with open(file_name, 'a') as f_out:
-                f_out.write(s)
-
+        file_path = Path(TESTS_FOLDER, file_name)
+        print(get_time(), file=open(file_path, 'w', encoding='utf-8'))
         output = '-' * 40 + '\n\n'
         if not rand_actions:
             output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
         output += f'rand_actions={rand_actions}\n\n'
-        # init dicts
+
         dummy = ff.new_dummy_fighter(1)
         att_names = dummy.att_names
         d_atts_wnr = {att: 0 for att in att_names}
@@ -113,18 +106,16 @@ class Tester(object):
         d_full_atts_lsr = {att: 0 for att in att_names}
         att_diffs_wnr = {}
         att_diffs_lsr = {}
-        styles_wnr = {}
-        styles_lsr = {}
+        buffs_wnr = {}
+        buffs_lsr = {}
         techs1_wnr = {}
         techs1_lsr = {}
         techs2_wnr = {}
         techs2_lsr = {}
         moves_wnr = {}
         moves_lsr = {}
-        # fight!
-        for i in trange(n):
-            # if not i % (n / 20):
-            #     print(f'fight {i + 1} / {n}')
+
+        for _ in trange(n):
             lv = random.randint(1, 20)
             f1 = ff.new_fighter(lv=lv)
             f1.name = 'Dummy A'
@@ -150,9 +141,10 @@ class Tester(object):
                     att_vals = [getattr(f, att) for att in att_names]
                     att_diff = max(att_vals) - min(att_vals)
                     add_to_dict(d, att_diff, 1)
-                # styles
-                add_to_dict(styles_wnr, wnr.style.name, 1)
-                add_to_dict(styles_lsr, lsr.style.name, 1)
+                # style buffs
+                for f, d in ((wnr, buffs_wnr), (lsr, buffs_lsr)):
+                    for feature in f.style.features:
+                        add_to_dict(d, feature, 1)
                 # techs
                 for f, d1, d2 in ((wnr, techs1_wnr, techs2_wnr), (lsr, techs1_lsr, techs2_lsr)):
                     for t in f.techs:
@@ -171,13 +163,17 @@ class Tester(object):
             (d_atts_wnr, d_atts_lsr, 'atts:'),
             (d_full_atts_wnr, d_full_atts_lsr, 'full atts:'),
             (att_diffs_wnr, att_diffs_lsr, 'att diffs:'),
-            (styles_wnr, styles_lsr, 'styles:'),
+            (buffs_wnr, buffs_lsr, 'style buffs:'),
             (techs1_wnr, techs1_lsr, 'techs 1:'),
             (techs2_wnr, techs2_lsr, 'techs 2:'),
             (moves_wnr, moves_lsr, 'moves:'),
         )
-        for d_w, d_l, legend in tuples:
-            _output_results(d_w, d_l, legend)
+        for d_wnr, d_lsr, legend in tuples:
+            tups = dict_comp(d_wnr, d_lsr, sort_col_index=3)
+            lines = ['\n', pretty_table(tups), '', summary(d_wnr), '']
+            s = '\n'.join(lines)
+            print(legend, s, sep='\n\n')
+            print(legend, s, sep='\n\n', file=open(file_path, 'a', encoding='utf-8'))
         input('Press Enter')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):
@@ -187,7 +183,6 @@ class Tester(object):
             lines = [[''] + [f'n={n}' for n in range(n_crowd_min, n_crowd_max + 1)]]
             print('\t'.join(lines[0]))
             for lv in range(1, lv_max + 1):
-                f1 = ff.new_fighter(lv=lv)
                 s = f'lv.{lv}'
                 lines.append([s])
                 print(s, end='\t')
@@ -247,9 +242,9 @@ class Tester(object):
             group_2 = []
             # for s in styles.default_styles:
             for s in [styles.BEGGAR_STYLE, styles.THIEF_STYLE, styles.DRUNKARD_STYLE]:
-                group_0.append(Fighter(name='0', style_name=s.name, level=k, rand_atts_mode=0))
-                group_1.append(Fighter(name='1', style_name=s.name, level=k, rand_atts_mode=1))
-                group_2.append(Fighter(name='2', style_name=s.name, level=k, rand_atts_mode=2))
+                group_0.append(Fighter(name='0', style=s.name, level=k, rand_atts_mode=0))
+                group_1.append(Fighter(name='1', style=s.name, level=k, rand_atts_mode=1))
+                group_2.append(Fighter(name='2', style=s.name, level=k, rand_atts_mode=2))
             for i in range(len(group_0)):
                 print(i + 1)
                 print(group_0[i])

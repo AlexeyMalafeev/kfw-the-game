@@ -6,16 +6,16 @@ from ._basic_attributes import BasicAttributes
 # CRITICAL_CHANCE_BASE = 0.0
 # CRITICAL_CHANCE_INCR_PER_LV = 0.01
 COUNTER_AGILITY_ADJUST = 3  # this will get subtracted from agility_full
-COUNTER_PER_AGILITY_POINT = 0.5
+COUNTER_PER_AGILITY_POINT = 0.05
 CRITICAL_AGILITY_ADJUST = 3
-CRITICAL_PER_AGILITY_POINT = 0.25
+CRITICAL_PER_AGILITY_POINT = 0.05
 EPIC_CHANCE_BASE = 0.0
 EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
 # PREEMPTIVE_CHANCE_BASE = 0.0
 # PREEMPTIVE_CHANCE_INCR_PER_LV = 0.005
-PREEMPTIVE_SPEED_ADJUST = 3
-PREEMPTIVE_PER_SPEED_POINT = 0.05
+PREEMPTIVE_AGILITY_ADJUST = 5
+PREEMPTIVE_PER_AGILITY_POINT = 0.025
 QP_BASE = 0
 QP_INCR_PER_LV = 5
 QP_PORTION_RESTORED_PER_TURN = 0.2
@@ -76,6 +76,8 @@ class FightAttributes(BasicAttributes):
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_to_hit_mult = 2.0
         self.epic_atk_pwr_mult = 2.0
+        self.fury_to_all_mult = 1.5
+        self.fury_chance = 0.05  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0
         self.guard_while_attacking = False
@@ -176,6 +178,7 @@ class FightAttributes(BasicAttributes):
         return self.status.get(status, False)
 
     def get_status_marks(self, right=False):
+        fury = '#' if self.check_status('fury') else ''
         slowed_down = ',' if self.check_status('slowed down') else ''
         off_bal = '\'' if self.check_status('off-balance') else ''
         lying = '...' if self.check_status('lying') else ''
@@ -201,7 +204,7 @@ class FightAttributes(BasicAttributes):
             mom_s = f' {mom_s}'
         else:
             mom_s = ''
-        return f'{padding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
+        return f'{padding}{fury}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
     def refresh_level_dependent_atts(self):
         self.hp_max = self.health_full * HP_PER_HEALTH_LV
@@ -219,7 +222,7 @@ class FightAttributes(BasicAttributes):
             * self.counter_chance_mult
         )
         self.preemptive_chance = (
-                (self.speed_full - PREEMPTIVE_SPEED_ADJUST) * PREEMPTIVE_PER_SPEED_POINT
+                (self.agility_full - PREEMPTIVE_AGILITY_ADJUST) * PREEMPTIVE_PER_AGILITY_POINT
                 * self.preemptive_chance_mult
         )
         self.critical_chance = (
