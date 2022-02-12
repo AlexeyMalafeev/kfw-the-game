@@ -1,10 +1,8 @@
 from pathlib import Path
 
-
 from kf_lib.fighting.distances import VALID_DISTANCES
 from kf_lib.kung_fu import moves
 from kf_lib.utils.utilities import *
-
 
 catch_breath_move = moves.get_move_obj('Catch Breath')
 guard_move = moves.get_move_obj('Guard')
@@ -109,8 +107,8 @@ class WeightedActionsAI(BaseAI):
     def init_weights(self):
         self.weights = {a: 1 for a in self.owner.av_moves}
         self.weights[catch_breath_move] = (
-            self.owner.stamina / self.owner.stamina_max
-        ) * self.catch_breath_mult
+                                                  self.owner.stamina / self.owner.stamina_max
+                                          ) * self.catch_breath_mult
         self.weights[guard_move] = (self.owner.stamina / self.owner.stamina_max) * self.guard_mult
 
     def weigh_atk_move(self, move):
@@ -234,10 +232,10 @@ class GeneticAIExtraRules(GeneticAITrainedParams8):
             options.append(maneuver)
             weights.append(self.prob_move)
         force_move = (
-            maneuver is not None
-            and (len(owner.act_allies) / len(owner.act_targets)) >= self.group_advantage_thresh
-            and atk_move is None
-            and owner.stamina >= owner.stamina_max / 2
+                maneuver is not None
+                and (len(owner.act_allies) / len(owner.act_targets)) >= self.group_advantage_thresh
+                and atk_move is None
+                and owner.stamina >= owner.stamina_max / 2
         )
         if owner.qp < owner.qp_max and not force_move:
             options.append(focus_move)
@@ -254,6 +252,9 @@ class GeneticAIExtraRules(GeneticAITrainedParams8):
         return self.choice
 
 
+# weakness: doesn't move in when oppontent has dist4 moves
+# weakness: doesn't move in when has superiority in numbers
+# strong, but boring (doesn't move around often)
 class GeneticAIAggro(GeneticAITrainedParams8):
     def choose_move(self):
         owner = self.owner
@@ -282,6 +283,9 @@ class GeneticAIAggro(GeneticAITrainedParams8):
         return self.choice
 
 
+# moves in when oppontent has dist4 moves
+# moves in when has superiority in numbers
+# strong, more dynamic, but slightly weaker than GeneticAIAggro
 class GeneticAIMoreAggro(GeneticAITrainedParams8):
     def choose_move(self):
         owner = self.owner
@@ -298,8 +302,8 @@ class GeneticAIMoreAggro(GeneticAITrainedParams8):
             weights.append(self.prob_move)
             if is_at_dist4(owner):
                 if (
-                    (has_dist4_move(target) and not has_dist4_move(owner))
-                    or has_bigger_crowd(owner)
+                        (has_dist4_move(target) and not has_dist4_move(owner))
+                        or has_bigger_crowd(owner)
                 ):
                     if self.file:
                         self.write_log()
@@ -319,8 +323,13 @@ class GeneticAIMoreAggro(GeneticAITrainedParams8):
         return self.choice
 
 
-# on par with GeneticAIMoreAggro
-class GeneticAIMoreAggroTrainedInFighting(GeneticAIMoreAggro):
+# todo how to reimplement AI classes to avoid cloning?
+# have to make clones as parameters are shared even if you copy or deepcopy classes dynamically
+class GeneticAIMoreAggroClone(GeneticAIMoreAggro):
+    pass
+
+
+class GeneticAIMoreAggroClone2(GeneticAIMoreAggro):
     pass
 
 
@@ -332,11 +341,28 @@ class GeneticAIMoreAggroTrainedRecord(GeneticAIMoreAggro):
     pass
 
 
-# DefaultFightAI = GeneticAIAggro
-DefaultFightAI = GeneticAIMoreAggro
-DefaultGeneticAIforTraining = GeneticAIMoreAggro
-GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
+class GeneticAIMoreAggroTrainedTopInf(GeneticAIMoreAggro):
+    pass
 
+
+class GeneticAIMoreAggroTrainedRecordInf(GeneticAIMoreAggro):
+    pass
+
+
+class GeneticAIMoreAggroTrainedTopCrowd(GeneticAIMoreAggro):
+    pass
+
+
+class GeneticAIMoreAggroTrainedRecordCrowd(GeneticAIMoreAggro):
+    pass
+
+
+# DefaultFightAI = GeneticAIAggro
+# DefaultFightAI = GeneticAIMoreAggro
+DefaultFightAI = GeneticAIMoreAggroTrainedRecord  # trained Feb 11, 2022
+DefaultGeneticAIforTraining = GeneticAIMoreAggroClone
+DefaultGeneticAIforTraining2 = GeneticAIMoreAggroClone2
+GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
 
 params8 = [
     0.9946880510412656,
@@ -346,29 +372,50 @@ params8 = [
     0.051144214847717806,
 ]
 # best so far; trained against GeneticAITrainedParams3
+# the problem with it is that
 set_gen_ai_params(GeneticAITrainedParams8, params8)
 
-# on par with GeneticAIMoreAggro
-params202202_infighting_top = [
-    0.7528246651943808,
-    0.07539565541460513,
-    0.29646096414307554,
-    0.7457290913793531,
-    0.9007165875111384,
-]
-set_gen_ai_params(GeneticAIMoreAggroTrainedInFighting, params202202_infighting_top)
-
-# even weaker than record
-params202202_top = [0.12143835886099252, 0.5036677252444876, 0.7741143420916036,
-                    0.3193798609370172, 0.28154875151262204]
+# Feb 11, 2022, pop=32 fights=160 n_gen=128 gen=128; 5th place
+params202202_top = [0.11745140504203222, 0.00777924778884409, 0.21401517744007748,
+                    0.888394617200464, 0.7916523164493331]
 set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 
-# weak
-params202202_record = [
-    0.2110522021065323, 0.4426443869936223, 0.710076836997256, 0.9233659913438291,
-    0.39058725975877506,
-]
+# Feb 11, 2022, pop=32 fights=160 n_gen=128 gen=84; 1st place
+params202202_record = [0.8330525416664358, 0.00777924778884409, 0.7897769161203186,
+                       0.7812461127357897, 0.9131024054734007]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
+
+# Feb 11, 2022, pop=16 fights=300 n_gen=128 infight gen=128; 5th place
+params202202_top_inf = [0.47562433421266803, 0.009057428537260992, 0.8716937253181152,
+                        0.9475943689024402, 0.9027385729485755]
+set_gen_ai_params(GeneticAIMoreAggroTrainedTopInf, params202202_top_inf)
+
+# Feb 11, 2022, pop=16 fights=300 n_gen=128 infight gen=2; 6th place
+params202202_record_inf = [0.8019874503863862, 0.03620216104410978, 0.6110961391332028,
+                           0.9475943689024402, 0.5987323606932059]
+set_gen_ai_params(GeneticAIMoreAggroTrainedRecordInf, params202202_record_inf)
+
+# Feb 11, 2022, pop=64 fights=64 (crowd only) n_gen=128 gen=128; 3rd place
+params202202_top_crowd = [0.985030334660097, 0.004696383021808415, 0.1223626700730519,
+                          0.2440865205719437, 0.7263327881555984]
+set_gen_ai_params(GeneticAIMoreAggroTrainedTopCrowd, params202202_top_crowd)
+
+# Feb 11, 2022, pop=64 fights=64 (crowd only) n_gen=128 gen=90; 4th place
+params202202_record_crowd = [0.985030334660097, 0.004696383021808415, 0.5251826392446703,
+                             0.19061750461806992, 0.8036603052306912]
+set_gen_ai_params(GeneticAIMoreAggroTrainedRecordCrowd, params202202_record_crowd)
+
+# Total
+# GeneticAIMoreAggroTrainedRecord       21728
+# GeneticAIMoreAggroTrainedTopInf       21435
+# GeneticAIMoreAggroTrainedTopCrowd     21196
+# GeneticAIMoreAggroTrainedRecordCrowd  20955
+# GeneticAIMoreAggroTrainedTop          20795
+# GeneticAIMoreAggroTrainedRecordInf    19205
+# GeneticAIAggro                        18416
+# GeneticAIMoreAggro                    18176
+# GeneticAIMoreAggroTrainedInFighting   17293
+# BaseAI                                801
 
 # todo train against Params3, etc. -> cycle this
 # todo train style-specific AIs
