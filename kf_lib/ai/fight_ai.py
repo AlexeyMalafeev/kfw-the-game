@@ -62,64 +62,6 @@ class BaseAI(object):
         self.file.write('d = ' + str(dist) + ': ' + repr(self.choice) + '\n')
 
 
-class WeightedActionsAI(BaseAI):
-    """Choose a random opponent and an action based on action weights
-    (weighted random choice).
-    Considers only atk_pwr * to_hit."""
-
-    force_integer_weights = True
-    catch_breath_mult = 50
-    change_dist_mult = 40
-    guard_mult = 50
-
-    def calc_weights(self):
-        self.init_weights()
-        for move in self.weights:
-            if move.power:
-                self.weights[move] = self.weigh_atk_move(move)
-            elif move.dist_change:
-                self.factor_in_distance(move)
-
-    def choose_move(self):
-        self.calc_weights()
-        # self.file.write('\nweights before normalization: {}\n'.format(self.weights))
-        self.choice = self.wtd_rnd_choice()
-        if self.file:
-            self.write_log()
-        return self.choice
-
-    def factor_in_distance(self, move):
-        owner = self.owner
-        target = owner.target
-        actual_dist = owner.distances[target]
-        n_moves0 = len(owner.get_av_moves())
-        owner.change_distance(move.dist_change, target)
-        new_dist = owner.distances[target]
-        if new_dist != actual_dist:
-            n_moves = len(owner.get_av_moves())
-            self.weights[move] = n_moves / n_moves0 * self.change_dist_mult
-        else:
-            self.weights[move] = 0
-        # self.file.write('weight:{} '.format(self.weights[move]))
-        owner.distances[target] = actual_dist
-        target.distances[owner] = actual_dist
-
-    def init_weights(self):
-        self.weights = {a: 1 for a in self.owner.av_moves}
-        self.weights[catch_breath_move] = (
-                                                  self.owner.stamina / self.owner.stamina_max
-                                          ) * self.catch_breath_mult
-        self.weights[guard_move] = (self.owner.stamina / self.owner.stamina_max) * self.guard_mult
-
-    def weigh_atk_move(self, move):
-        owner = self.owner
-        owner.calc_atk(move)
-        return owner.atk_pwr * owner.to_hit
-
-    def wtd_rnd_choice(self):
-        return weighted_rand_choice(self.weights, self.force_integer_weights)
-
-
 class GeneticAI(BaseAI):
     """Choose a random opponent and an action based on action weights (weighted random choice).
     Considers only atk_pwr * to_hit."""

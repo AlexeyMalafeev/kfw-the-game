@@ -7,7 +7,7 @@ from . import getch
 
 getch_inst = getch.Getch()
 
-# todo split into separate modules: ui, random, etc.
+# todo split into separate modules: ui, numbers, etc.
 
 
 def add_pcnt(value):
@@ -32,6 +32,7 @@ def add_to_dict(d, k, v):
     d[k] += v
 
 
+# todo consider replacing this with textwrap
 def align_text(text, indent, align):
     """This function ignores \n and \t."""
     # split text into lines
@@ -455,20 +456,6 @@ def summary(data):
     return 'Min: {}, Max: {}, Range: {}, Median: {}, Mean: {}'.format(
         mn, mx, mx - mn, median(data), mean(data)
     )
-
-
-def weighted_rand_choice(wts_dict, force_integers=True):
-    if force_integers:
-        if all((v < 1 for v in wts_dict.values())):
-            for k, v in wts_dict.items():
-                wts_dict[k] = round(v * 10)
-        else:
-            for k, v in wts_dict.items():
-                wts_dict[k] = round(v)
-    if any((v > 0 for v in wts_dict.values())):
-        return random.choice([k for k in wts_dict for _ in range(wts_dict[k])])
-    else:
-        return random.choice(list(wts_dict))  # as a result of rounding, all weights might be 0
 
 
 def yn(message):

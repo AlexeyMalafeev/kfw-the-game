@@ -7,9 +7,6 @@ from kf_lib.utils.utilities import *
 try:
     write_log = True
     same_class_fights = False
-    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.GeneticAITrainedParams8,
-    #        fight_ai.GeneticAIExtraRules4, fight_ai.GeneticAIExtraRules7,
-    #        fight_ai.GeneticAIExtraRules9, fight_ai.GeneticAIAggro, fight_ai.GeneticAIMoreAggro)
     AIs = (
         fight_ai.BaseAI,
         fight_ai.GeneticAIAggro,
