@@ -3,8 +3,7 @@ import random
 from ...actors import fighter_factory
 from ._base_encounter import BaseEncounter
 from ._utils import get_escape_chance, check_scary_fight, try_escape
-from ...utils.utilities import rnd, rndint
-
+from ...utils._random import rnd, rndint
 
 CH_ENEMY_REPENTS = 0.5
 NUM_AMBUSH_THUGS = (2, 4)

@@ -2,6 +2,8 @@ from .fighter import Fighter, Challenger, Master, Thug
 from .human_controlled_fighter import HumanControlledFighter
 from . import names
 from ..kung_fu import styles, style_gen
+from ..ui._menu import menu
+from ..utils._random import rnd, rndint
 from ..utils.utilities import *
 
 

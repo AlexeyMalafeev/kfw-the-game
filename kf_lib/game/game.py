@@ -8,7 +8,8 @@ g.play()
 """
 from pathlib import Path
 
-
+import kf_lib.ui
+import kf_lib.ui._menu
 from ..actors import fighter_factory, names
 from ..actors.player import (
     HumanPlayer,
@@ -20,6 +21,9 @@ from ..kung_fu.moves import BASIC_MOVES
 from ..kung_fu import styles, style_gen
 from ..things import items
 from ..happenings import events, encounters, story
+from ..ui._menu import menu, yn
+from ..ui import cls
+from ..utils._random import rnd, rndint
 from ..utils.utilities import *
 
 
@@ -118,7 +122,7 @@ class Game:
                 if p.use_med_or_not():
                     p.use_med()
                     # self.pak()
-                    p.cls()
+                    kf_lib.ui.cls()
                     p.see_day_info()
                     return False
                 else:

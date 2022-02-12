@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
-import sklearn
 
 from kf_lib.mechanics.experience import extract_features
 from kf_lib.actors.fighter_factory import new_fighter, new_prize_fighter
 from kf_lib.fighting.fight import AutoFight
+from kf_lib.utils._random import rnd, rndint
 from kf_lib.utils.utilities import *
 
 # from .experience import extract_features

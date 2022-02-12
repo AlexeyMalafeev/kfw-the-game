@@ -12,6 +12,9 @@ from .actors import fighter_factory as ff
 from .kung_fu import styles, techniques
 from .things import weapons
 from . import tech_test
+from .ui._menu import menu
+from .ui import cls
+from .utils._data import compare_dicts
 from .utils.utilities import *
 
 

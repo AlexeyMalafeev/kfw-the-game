@@ -1,10 +1,12 @@
 import random
 
-
+import kf_lib.ui
+import kf_lib.ui._menu
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...utils.utilities import rnd, get_bar, rndint_2d
+from ...utils.utilities import get_bar
+from ...utils._random import rnd, rndint_2d
 from ...utils import choose_adverb
 from ._weapons import WeaponMethods
 
@@ -146,7 +148,7 @@ class FighterWithActions(
 
     def exec_move(self):
         m = self.action
-        self.current_fight.cls()
+        kf_lib.ui.cls()
         if m.power:
             self.attack()  # changing distance is included
         else:

@@ -1,6 +1,5 @@
 from ._ascii import FighterWithASCII
-from ...utils.utilities import rnd, rndint, rndint_2d
-
+from ...utils._random import rnd, rndint, rndint_2d
 
 import random
 

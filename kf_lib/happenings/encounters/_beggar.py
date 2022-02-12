@@ -1,7 +1,6 @@
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_feeling_greedy
-from ...utils.utilities import rnd
-
+from ...utils._random import rnd
 
 CH_BEGGAR_FIGHT = 0.1
 MONEY_GIVE_BEGGAR = 10

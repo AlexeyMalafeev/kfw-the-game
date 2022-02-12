@@ -1,6 +1,7 @@
 from .fighter import Fighter
-from ..utils.utilities import menu, roman, pretty_table, cls, pak, get_bar, align_text
-
+from ..utils.utilities import roman, pretty_table, pak, get_bar, align_text
+from ..ui._menu import menu
+from ..ui import cls
 
 ALIGN = 60
 INDENT = 0

@@ -2,8 +2,7 @@ from ._base_encounter import BaseEncounter
 from ._utils import check_feeling_greedy
 from ...actors.fighter_factory import new_craftsman
 from ...things import items
-from ...utils.utilities import rnd
-
+from ...utils._random import rnd
 
 ENC_CH_CRAFTSMAN = 0.01
 MONEY_MANNEQUIN = 500

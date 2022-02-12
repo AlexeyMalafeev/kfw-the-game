@@ -1,7 +1,8 @@
 from ._base_player import BasePlayer
 from ..human_controlled_fighter import HumanControlledFighter
 from ...things.items import get_item_descr, MEDICINE
-from ...utils.utilities import cls, menu, yn
+from ...ui._menu import menu, yn
+from ...ui import cls
 from kf_lib.utils import float_to_pcnt
 
 

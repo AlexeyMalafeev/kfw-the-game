@@ -1,5 +1,6 @@
 from ..kung_fu.ascii_art import get_ascii
 from ..fighting.distances import DISTANCE_FEATURES
+from ..utils._random import rndint_2d
 from ..utils.utilities import *
 
 

@@ -3,8 +3,7 @@ import random
 
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_scary_fight, set_up_weapon_fight
-from ...utils.utilities import rnd
-
+from ...utils._random import rnd
 
 CH_CHALLENGER_ARMED = 0.3
 CH_CHALLENGER_FRIEND = 0.1

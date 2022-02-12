@@ -1,5 +1,9 @@
+import kf_lib.ui
+import kf_lib.ui._menu
 from ...things import items
 from ...actors import names
+from ...ui._menu import menu, yn
+from ...ui import cls
 from ...utils.utilities import *
 
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
@@ -597,7 +601,7 @@ class NormalFight(AutoFight):
     """Does not only have fight mechanics, but also outputs what happens during the fight."""
 
     def cls(self):
-        self.main_player.cls()
+        kf_lib.ui.cls()
 
     def display(self, text, **kwargs):
         BaseFight.display(self, text, **kwargs)

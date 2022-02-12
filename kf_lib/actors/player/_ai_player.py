@@ -2,7 +2,9 @@ import random
 
 
 from ._base_player import BasePlayer
-from ...utils.utilities import cls, pak, rnd
+from ...utils.utilities import pak
+from ...ui import cls
+from ...utils._random import rnd
 
 
 class AIPlayer(BasePlayer):

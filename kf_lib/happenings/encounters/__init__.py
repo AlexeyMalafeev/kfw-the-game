@@ -1,3 +1,5 @@
+import kf_lib.ui
+import kf_lib.ui._menu
 from ._ambush import Ambush
 from ._beggar import Beggar, GBeggar
 from ._challenger import Challenger, GChallenger
@@ -12,7 +14,8 @@ from ...mechanics import experience
 from kf_lib.utils import add_article, enum_words
 from ...kung_fu import moves
 from ...things import items
-from ...utils.utilities import *
+from ...ui._menu import yn
+from ...utils._random import rnd, rndint
 
 # todo f-strings in encounters
 
@@ -796,7 +799,7 @@ class PrizeFighting(BaseEncounter):
         p = self.p
         prize = 0
         for i, lv in enumerate(LV_PRIZE_FIGHTERS):
-            p.cls()
+            kf_lib.ui.cls()
             p.show(f"Stage {i + 1}")
             c = fighter_factory.new_prize_fighter(lv)
             opp_strength = p.get_rel_strength(c)

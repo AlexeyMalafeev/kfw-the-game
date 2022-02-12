@@ -9,7 +9,7 @@ from tqdm import trange
 
 
 from kf_lib.ai import fight_ai, fight_ai_test
-from kf_lib.utils.utilities import rnd
+from kf_lib.utils._random import rnd
 
 
 class GeneticAlgorithm(object):

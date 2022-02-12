@@ -1,6 +1,8 @@
+import kf_lib.ui
+import kf_lib.ui._menu
 from ..actors import fighter_factory
 from ..kung_fu import styles
-from ..utils.utilities import *
+from ..utils._random import rnd, rndint
 
 # todo refactor story into a package
 # constants
@@ -47,7 +49,7 @@ class Story(object):
         self.state += 1
         g = self.game
         p = self.player
-        g.cls()
+        kf_lib.ui.cls()
         g.show(p.get_p_info(), align=False)
         exec(f'self.scene{self.state}()')
 
@@ -95,7 +97,7 @@ class Story(object):
 class ForeignerStory(Story):
     def intro(self):
         g = self.game
-        g.cls()
+        kf_lib.ui.cls()
         b = self.boss = fighter_factory.new_foreigner()
         g.register_fighter(b)
         t = 'Rumor has it that {}, a renowned martial artist from {}, has arrived in {} to defeat local masters and \
@@ -148,7 +150,7 @@ class ForeignerStory(Story):
             p.name, b.name, f_st
         )
         g.show(t)
-        if not p.is_human or g.yn(f'Challenge {b.name}?'):
+        if not p.is_human or kf_lib.ui._menu.yn(f'Challenge {b.name}?'):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
                 g.show(
                     '{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(
@@ -167,7 +169,7 @@ class ForeignerStory(Story):
 class NinjaTurtlesStory(Story):
     def intro(self):
         g = self.game
-        g.cls()
+        kf_lib.ui.cls()
         t = (
             'A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
             'human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed '
@@ -200,7 +202,7 @@ class NinjaTurtlesStory(Story):
 class RenownedMaster(Story):
     def intro(self):
         g, p = self.game, self.player
-        g.cls()
+        kf_lib.ui.cls()
         name = g.get_new_name(prefix='Master')
         b = self.boss = fighter_factory.new_master_challenger(p.level, name)
         g.register_fighter(b)
@@ -246,7 +248,7 @@ class RenownedMaster(Story):
 class StrangeDreamsStory(Story):
     def intro(self):
         g = self.game
-        g.cls()
+        kf_lib.ui.cls()
         g.show('Every so often one has some really unusual dreams...')
         g.pak()
 
@@ -293,7 +295,7 @@ class StrangeDreamsStory(Story):
 class TreasuresStory(Story):
     def intro(self):
         g = self.game
-        g.cls()
+        kf_lib.ui.cls()
         t = (
             'Everybody in {} talks about national treasures being stolen and sold to foreign buyers. Who could be '
             'responsible for such horrible crimes?'.format(g.town_name)
@@ -326,7 +328,7 @@ class TreasuresStory(Story):
             'for insulting an official?"'.format(p.name, b.name, BRIBE)
         )
         g.show(t)
-        if (not p.is_human or g.yn('Pay the bribe?')) and p.check_money(BRIBE):
+        if (not p.is_human or kf_lib.ui._menu.yn('Pay the bribe?')) and p.check_money(BRIBE):
             if rnd() <= p.feel_too_greedy:
                 p.show(
                     '{} feels too greedy to pay this ridiculous "fine": "You are no better than a '

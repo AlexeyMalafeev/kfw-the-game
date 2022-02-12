@@ -1,7 +1,8 @@
 import random
 from typing import Any, Dict, Optional
 
-
+import kf_lib.ui
+import kf_lib.ui._menu
 from ..actors.fighter import Fighter
 from ..actors.human_controlled_fighter import HumanControlledFighter
 from ..actors.player import AIPlayer, HumanPlayer
@@ -126,7 +127,7 @@ class Tournament(object):
                 p.record_gamble_lost(bet_amount)
 
     def run(self):
-        self.g.cls()
+        kf_lib.ui.cls()
         tourn_type_str = f'({self.tourn_type} level)' if self.tourn_type else ''
         self.g.msg(
             f'A kung-fu tournament {tourn_type_str} is organized in {self.g.town_name}. '
@@ -143,7 +144,7 @@ class Tournament(object):
 
     def _show_participants(self):
         participants = self.participants
-        self.g.cls()
+        kf_lib.ui.cls()
         self.g.show('The participants are:\n')
         self.g.show(fight.get_prefight_info(participants, basic_info_only=True))
         self.g.pak()

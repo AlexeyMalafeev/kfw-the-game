@@ -10,8 +10,7 @@ from .. import quotes
 from ..traits import get_rand_traits  # have to import separately or .set_rand_traits doesn't work
 from .. import traits
 from kf_lib.utils import add_sign, enum_words
-from ...utils.utilities import rnd, rndint
-
+from ...utils._random import rnd, rndint
 
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 EXTREMELY_GOOD_LUCK = 20

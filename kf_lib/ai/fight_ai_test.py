@@ -3,6 +3,7 @@ from tqdm import trange
 
 from kf_lib.fighting.fight import AutoFight
 from kf_lib.actors import fighter_factory as ff
+from kf_lib.utils._random import rndint
 from kf_lib.utils.utilities import *
 
 
