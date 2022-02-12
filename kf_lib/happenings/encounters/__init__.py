@@ -300,7 +300,7 @@ class Drunkard(BaseEncounter):
                    f'but when I\'m ten-tenths drunk I\'m at the top of my form."')
             p.pak()
             if strong:
-                p.show('{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
+                p.show(f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                        'technique has improved"')
                 p.pak()
                 p.learn_move_from(d)

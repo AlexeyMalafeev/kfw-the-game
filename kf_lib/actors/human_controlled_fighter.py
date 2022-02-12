@@ -275,6 +275,7 @@ class HumanControlledFighter(Fighter):
 
     def show(self, text, align=True):
         """Print aligned text in paragraphs."""
+        from rich import print
         if align:
             pars = [align_text(t, INDENT, ALIGN) for t in text.split('\n')]
             for p in pars:

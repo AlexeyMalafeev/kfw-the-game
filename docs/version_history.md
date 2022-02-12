@@ -1,7 +1,7 @@
 ### v.0.6.6-beta
 ""  
 date  
-* 
+* feat: start using rich module for colorful text 
 
 
 ### v.0.6.5-beta

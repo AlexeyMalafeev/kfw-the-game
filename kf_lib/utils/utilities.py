@@ -3,6 +3,8 @@ import os
 import random
 import time
 
+from rich import print
+
 from . import getch
 
 getch_inst = getch.Getch()

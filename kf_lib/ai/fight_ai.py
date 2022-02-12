@@ -1,8 +1,9 @@
 from pathlib import Path
+import random
 
 from kf_lib.fighting.distances import VALID_DISTANCES
 from kf_lib.kung_fu import moves
-from kf_lib.utils.utilities import *
+
 
 catch_breath_move = moves.get_move_obj('Catch Breath')
 guard_move = moves.get_move_obj('Guard')
