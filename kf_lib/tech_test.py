@@ -1,9 +1,8 @@
-#! python3
+import random
 
-from .actors import fighter_factory
-from .kung_fu import techniques
-from kf_lib.utils.utilities import *
-from .utils._numbers import mean, percentage
+from kf_lib.actors import fighter_factory
+from kf_lib.kung_fu import techniques
+from kf_lib.utils import mean, percentage
 
 
 class TechTester(object):

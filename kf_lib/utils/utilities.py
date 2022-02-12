@@ -5,10 +5,9 @@ import time
 
 from rich import print
 
-from . import _getch
+from kf_lib.ui import getch
 from ._numbers import mean, median, pcnt
 
-getch_inst = _getch.Getch()
 
 # todo split into separate modules: ui, numbers, etc.
 
@@ -120,7 +119,7 @@ def get_key():
     # DEBUG MODE
     # return input('key:')
     # NORMAL MODE
-    return chr(ord(getch_inst()))
+    return chr(ord(getch()))
 
 
 def get_linear_bar(v, maxv, syma='#', symb='-'):
