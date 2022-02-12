@@ -169,7 +169,7 @@ class Tester(object):
             (moves_wnr, moves_lsr, 'moves:'),
         )
         for d_wnr, d_lsr, legend in tuples:
-            tups = dict_comp(d_wnr, d_lsr, sort_col_index=3)
+            tups = compare_dicts(d_wnr, d_lsr, sort_col_index=3)
             lines = ['\n', pretty_table(tups), '', summary(d_wnr), '']
             s = '\n'.join(lines)
             print(legend, s, sep='\n\n')

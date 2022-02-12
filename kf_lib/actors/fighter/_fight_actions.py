@@ -4,7 +4,8 @@ import random
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...utils.utilities import rnd, get_adverb, get_bar, rndint_2d
+from ...utils.utilities import rnd, get_bar, rndint_2d
+from ...utils import choose_adverb
 from ._weapons import WeaponMethods
 
 
@@ -83,7 +84,7 @@ class FighterWithActions(
             atkr.dam = 0
             self.change_qp(self.qp_gain)
             self.current_fight.display(
-                '{} {}dodges!'.format(self.name, get_adverb(dodge_chance, 'barely', 'easily'))
+                '{} {}dodges!'.format(self.name, choose_adverb(dodge_chance, 'barely', 'easily'))
             )
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
@@ -91,7 +92,7 @@ class FighterWithActions(
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
             self.current_fight.display(
-                '{} {}blocks!'.format(self.name, get_adverb(block_chance, 'barely', 'easily'))
+                '{} {}blocks!'.format(self.name, choose_adverb(block_chance, 'barely', 'easily'))
             )
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()

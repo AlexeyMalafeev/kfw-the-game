@@ -1,7 +1,6 @@
 from kf_lib.kung_fu import boosts as b
 from kf_lib.things import weapons
-from kf_lib.utils.utilities import *
-
+from kf_lib.utils._numbers import add_sign
 
 # tech containers (for easy retrieval)
 # tech_name: tech_obj

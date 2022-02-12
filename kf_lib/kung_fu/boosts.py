@@ -1,5 +1,4 @@
-from ..utils.utilities import *
-
+from ..utils._numbers import add_pcnt, add_sign, hund
 
 AGILITY1 = 0.3
 AGILITY2 = 0.6

@@ -5,34 +5,16 @@ import time
 
 from rich import print
 
-from kf_lib.utils import getch
+from . import _getch
+from ._numbers import mean, median, pcnt
 
-
-getch_inst = getch.Getch()
+getch_inst = _getch.Getch()
 
 # todo split into separate modules: ui, numbers, etc.
 
 
-def add_pcnt(value):
-    return f'{value}%'
-
-
-def add_sign(number):
-    """Return signed string:
-    x -> '+x'
-    -x -> '-x'
-    0 -> '0'
-    """
-    if number > 0:
-        return f'+{number}'
-    else:
-        return str(number)
-
-
-def add_to_dict(d, k, v):
-    if k not in d:
-        d[k] = 0
-    d[k] += v
+def add_to_dict(d: dict, k: str, v: int, start_val: int = 0) -> None:
+    d[k] = d.get(k, start_val) + v
 
 
 # todo consider replacing this with textwrap
@@ -82,7 +64,7 @@ def cls():
     os.system("cls")  # todo look into Unix compatibility
 
 
-def dict_comp(d1, d2, sort_col_index=0, descending=True):
+def compare_dicts(d1, d2, sort_col_index=0, descending=True):
     """Return a list of tuples"""
     tups = []
     keys = set(d1.keys()) | set(d2.keys())
@@ -113,20 +95,6 @@ def dict_diff(d1, d2):
             d2[k] = 0
         d[k] = d1[k] - d2[k]
     return d
-
-
-def float_to_pcnt(x):
-    """Convert a float to a percentage string, e.g. 0.4 -> '40%'."""
-    return '{}%'.format(round(x * 100))
-
-
-def get_adverb(n, adv_low, adv_high):
-    if n <= 0.3:
-        return adv_low + ' '
-    elif n <= 0.7:
-        return ''
-    else:
-        return adv_high + ' '
 
 
 def get_bar(numerator, denominator, filled_sym, empty_sym, bar_length, mirror=False):
@@ -199,40 +167,6 @@ def get_prop_bar(value, max_value):
 
 def get_time():
     return time.ctime()
-
-
-def hund(value):
-    return round(value * 100)
-
-
-def main():
-    import sys
-
-    print("Please press a key to see its value")
-    input_key = getch.Getch()
-    while 1:
-        key = input_key()
-        print("the key is")
-        print(key)
-        if ord(key) == 27:  # key nr 27 is escape
-            sys.exit()
-
-
-def mean(values):
-    return round(sum(values) / len(values), 2)
-
-
-def median(values):
-    values = list(values)
-    values.sort()
-    n = len(values)
-    if not n % 2:
-        i = int(n / 2) - 1
-        j = i + 1
-        return mean((values[i], values[j]))
-    else:
-        i = int((n - 1) / 2)
-        return values[i]
 
 
 def menu(
@@ -356,24 +290,8 @@ def pak(silent=True):
     get_key()
 
 
-def pcnt(v, max_v, n=2, as_string=False):
-    if n:
-        p = round((v / max_v) * 100, n)
-    else:
-        p = round((v / max_v) * 100)
-    if as_string:
-        return str(p) + '%'
-    else:
-        return p
-
-
 def pe():
     input('Press Enter')
-
-
-def percentage(v, max_v):
-    """Calculate and output percentage in the following format: '20/40 (50%)'."""
-    return '{}/{} ({}%)'.format(v, max_v, pcnt(v, max_v))
 
 
 def pretty_table(table, sep='  ', as_list=False):
@@ -432,25 +350,6 @@ def roman(x):
     return 'X' * tens + repl[rem]
 
 
-def sigmoid_old(z):
-    import math
-
-    ans = 1.0 / (1.0 + math.exp(-z))
-    return ans
-
-
-def sigmoid(x):
-    """Numerically-stable sigmoid function."""
-    import math
-
-    if x >= 0:
-        z = math.exp(-x)
-        return 1 / (1 + z)
-    else:
-        z = math.exp(x)
-        return z / (1 + z)
-
-
 def summary(data):
     """Supports lists and dict values"""
     if isinstance(data, dict):
@@ -463,7 +362,3 @@ def summary(data):
 
 def yn(message):
     return menu((('yes', True), ('no', False)), message)
-
-
-if __name__ == '__main__':
-    main()

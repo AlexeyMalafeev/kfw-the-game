@@ -40,3 +40,12 @@ def sg_or_pl(number):
         return 's'
     elif number == 1:
         return ''
+
+
+def choose_adverb(n, adv_low, adv_high):
+    if n <= 0.3:
+        return adv_low + ' '
+    elif n <= 0.7:
+        return ''
+    else:
+        return adv_high + ' '

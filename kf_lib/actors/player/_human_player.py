@@ -1,7 +1,8 @@
 from ._base_player import BasePlayer
 from ..human_controlled_fighter import HumanControlledFighter
 from ...things.items import get_item_descr, MEDICINE
-from ...utils.utilities import cls, float_to_pcnt, menu, yn
+from ...utils.utilities import cls, menu, yn
+from ...utils._numbers import float_to_pcnt
 
 
 class HumanPlayer(HumanControlledFighter, BasePlayer):

@@ -1,6 +1,6 @@
 from ._base_fighter import BaseFighter
 from ...fighting.fight import fight, spar
-from ...utils.utilities import mean
+from ...utils._numbers import mean
 
 
 class FightUtils(BaseFighter):

@@ -3,6 +3,7 @@
 from .actors import fighter_factory
 from .kung_fu import techniques
 from kf_lib.utils.utilities import *
+from .utils._numbers import mean, percentage
 
 
 class TechTester(object):
