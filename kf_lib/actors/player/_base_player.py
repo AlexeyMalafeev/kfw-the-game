@@ -9,7 +9,7 @@ from .. import quotes
 # todo refactor importing get_rand_traits
 from ..traits import get_rand_traits  # have to import separately or .set_rand_traits doesn't work
 from .. import traits
-from ...utils import lang_tools
+from kf_lib.utils import enum_words
 from ...utils.utilities import add_sign, rnd, rndint
 
 
@@ -218,7 +218,7 @@ class BasePlayer(Fighter):
                     s = ''
                 else:
                     s = 's'
-                a_str = lang_tools.enum_words([a.name for a in allies])
+                a_str = enum_words([a.name for a in allies])
                 self.msg('{} join{} the fight on {}\'s side.'.format(a_str, s, self.name))
             return allies
 
@@ -261,7 +261,7 @@ class BasePlayer(Fighter):
                 n = random.choice((2, 3))
                 av_mates = [f for f in self.get_school() if not f.is_player]
                 mates = random.sample(av_mates, n)
-                a_str = lang_tools.enum_words([f.name for f in mates])
+                a_str = enum_words([f.name for f in mates])
                 p.allies = mates
                 self.msg(
                     '{}, who were passing by, join the fight on {}\'s side.'.format(
@@ -313,7 +313,7 @@ class BasePlayer(Fighter):
                     s = ''
                 else:
                     s = 's'
-                p_str = lang_tools.enum_words([p.name for p in partners])
+                p_str = enum_words([p.name for p in partners])
                 self.write('{} join{} {}\'s training session.'.format(p_str, s, self.name))
             return partners
 
@@ -481,7 +481,7 @@ class BasePlayer(Fighter):
         lines = [
             self.get_f_info(),
             f'exp:{self.exp}/{self.next_level} money:{self.money}',
-            f'traits: {lang_tools.enum_words(self.traits)}',
+            f'traits: {enum_words(self.traits)}',
             f'rank in school: {self.school_rank}/{self.max_school_rank}',
         ]
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''

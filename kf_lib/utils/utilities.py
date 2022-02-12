@@ -5,7 +5,8 @@ import time
 
 from rich import print
 
-from . import getch
+from kf_lib.utils import getch
+
 
 getch_inst = getch.Getch()
 

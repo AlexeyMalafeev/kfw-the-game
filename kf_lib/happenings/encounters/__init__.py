@@ -9,7 +9,7 @@ from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, 
     try_enemy, try_escape
 from ...actors import fighter_factory, traits, quotes
 from ...mechanics import experience
-from ...utils import lang_tools
+from kf_lib.utils import add_article, enum_words
 from ...kung_fu import moves
 from ...things import items
 from ...utils.utilities import *
@@ -717,7 +717,7 @@ class OverhearConversation(BaseEncounter):
             if n_opp == 1:
                 opp_str = opps[0]
             else:
-                opp_str = lang_tools.enum_words(opps)
+                opp_str = enum_words(opps)
             if fact == "humil_defeat":
                 t = '''One of them says: "Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to \
 kung-fu!"'''.format(
@@ -848,7 +848,7 @@ class Robbers(BaseEncounter):
         self.p.log("Encounters a robber.")
         if rnd() <= CH_ROBBER_ARMED:
             self.r.arm_robber()
-            self.p.show(f"He is armed with {lang_tools.add_article(self.r.weapon.name)}.")
+            self.p.show(f"He is armed with {add_article(self.r.weapon.name)}.")
         self.rs = []
 
     def start_many(self):
