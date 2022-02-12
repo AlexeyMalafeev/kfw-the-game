@@ -1,6 +1,6 @@
 ### v.0.6.5-beta
-"Lucky Furious AI Mutants"  
-date  
+"Fist of Fury"  
+February 12, 2022  
 
 * feat: luck (extremely good/bad, corresponding stats and accomplishments)
 * feat: learn other fighters' moves
