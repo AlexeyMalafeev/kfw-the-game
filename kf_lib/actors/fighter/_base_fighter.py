@@ -1,7 +1,5 @@
-from ._basic_attributes import BasicAttributes
 from ._blank_io import BlankFighterIO
 from ._fight_attributes import FightAttributes
-from ...kung_fu import moves
 
 
 class BaseFighter(
@@ -29,7 +27,7 @@ class BaseFighter(
             self.level,
             self.get_base_atts_tup(),
             self.techs,
-            [m.name for m in self.moves if m not in moves.BASIC_MOVES],
+            [m.name for m in self.moves if not m.is_basic],
         )
 
     def get_init_string(self):

@@ -1,16 +1,10 @@
 import numpy as np
 import pandas as pd
 
-from kf_lib.mechanics.experience import extract_features
 from kf_lib.actors.fighter_factory import new_fighter, new_prize_fighter
 from kf_lib.fighting.fight import AutoFight
-from kf_lib.utils._random import rnd, rndint
-
-# from .experience import extract_features
-# from .fighter_factory import new_fighter, new_prize_fighter
-# from .fight import AutoFight
-# from .utilities import *
-
+from kf_lib.mechanics.experience import extract_features
+from kf_lib.utils import rnd, rndint
 
 np.random.seed(0)
 

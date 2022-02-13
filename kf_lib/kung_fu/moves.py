@@ -1,3 +1,5 @@
+import os
+
 from ..kung_fu.ascii_art import get_ascii
 from ..fighting.distances import DISTANCE_FEATURES
 from ..utils import roman
@@ -14,19 +16,20 @@ class Move(object):
     functions are names of Fighter methods."""
 
     def __init__(self, **kwargs):
-        self.name = ''
-        self.distance = 0
-        self.dist_change = 0
-        self.power = 0
         self.accuracy = 0
         self.complexity = 0
-        self.stam_cost = 0
-        self.time_cost = 0
-        self.qi_cost = 0
+        self.dist_change = 0
+        self.distance = 0
         self.features = set()
-        self.functions = []
-        self.tier = 0
         self.freq = 0
+        self.functions = []
+        self.is_basic = False  # default; will set True for a handful of moves below
+        self.name = ''
+        self.power = 0
+        self.qi_cost = 0
+        self.stam_cost = 0
+        self.tier = 0
+        self.time_cost = 0
         for k, v in kwargs.items():
             setattr(self, k, v)
         self.descr = ''
@@ -140,6 +143,8 @@ BASIC_MOVES = [
         'Finishing Kick',
     )
 ]
+for m in BASIC_MOVES:
+    m.is_basic = True
 
 
 ALL_MOVES_LIST = list(ALL_MOVES_DICT.values())

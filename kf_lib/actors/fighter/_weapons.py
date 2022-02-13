@@ -1,8 +1,7 @@
 import random
 
-
+from kf_lib.things import weapons
 from ._base_fighter import BaseFighter
-from ...things import weapons
 
 
 class WeaponMethods(BaseFighter):

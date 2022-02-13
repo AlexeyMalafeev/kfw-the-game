@@ -1,17 +1,10 @@
+from kf_lib.fighting.fight import fight, spar
 from ._base_fighter import BaseFighter
-from ...fighting.fight import fight, spar
-from ...utils._numbers import mean
 
 
 class FightUtils(BaseFighter):
     def fight(self, en, allies=None, en_allies=None, *args, **kwargs):
         return fight(self, en, allies, en_allies, *args, **kwargs)
-
-    # todo get_wellness is not used
-    def get_wellness(self):
-        """This can be used as a simple metric for how 'well' the fighter is."""
-        # todo make this metric weighted, as hp is more important than stamina / qp
-        return mean((self.hp / self.hp_max, self.stamina / self.stamina_max, self.qp / self.qp_max))
 
     def spar(
         self,

@@ -1,5 +1,5 @@
+from kf_lib.kung_fu import styles
 from ._base_fighter import BaseFighter
-from ...kung_fu import styles
 
 
 class StyleMethods(BaseFighter):

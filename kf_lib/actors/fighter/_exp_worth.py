@@ -1,5 +1,6 @@
 from ._base_fighter import BaseFighter
 
+
 RATIO_NO_RISK = 0
 RATIO_VERY_LOW_RISK = 0.5
 RATIO_LOW_RISK = 0.8

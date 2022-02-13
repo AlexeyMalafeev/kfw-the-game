@@ -695,7 +695,7 @@ class Game:
         p.show(p.get_techs_string())
         print()
         p.show('Moves:')
-        print(', '.join([str(m) for m in p.moves if m not in BASIC_MOVES]))
+        print(', '.join([str(m) for m in p.moves if not m.is_basic]))
         print()
         # add move screen with more detailed descriptions
         choice = menu(

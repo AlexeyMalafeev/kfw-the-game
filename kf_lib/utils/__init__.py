@@ -1,7 +1,9 @@
 import time
 
+from ._data import *
 from ._lang_tools import *
 from ._numbers import *
+from ._random import *
 
 
 def get_time():

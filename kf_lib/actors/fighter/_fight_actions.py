@@ -1,16 +1,11 @@
 import random
 
-import kf_lib.ui
-import kf_lib.ui._interactive
-import kf_lib.ui._menu
+from kf_lib.ui import get_bar
+from kf_lib.utils import choose_adverb, rnd, rndint_2d
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...ui._visualize import get_bar
-from ...utils._random import rnd, rndint_2d
-from ...utils import choose_adverb
 from ._weapons import WeaponMethods
-
 
 DUR_FURY_MIN = 500
 DUR_FURY_MAX = 1000
@@ -149,7 +144,7 @@ class FighterWithActions(
 
     def exec_move(self):
         m = self.action
-        kf_lib.ui.cls()
+        self.cls()
         if m.power:
             self.attack()  # changing distance is included
         else:
@@ -275,7 +270,7 @@ class FighterWithActions(
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} is in FURY!')
-            kf_lib.ui._interactive.pak()
+            self.pak()
 
     def try_in_fight_impro_wp(self):
         if (
@@ -287,7 +282,7 @@ class FighterWithActions(
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} grabs an improvised weapon!')
-            kf_lib.ui._interactive.pak()
+            self.pak()
 
     def try_ko(self):
         tgt = self.target

@@ -1,5 +1,5 @@
+from kf_lib.fighting import distances
 from ._base_fighter import BaseFighter
-from ...fighting import distances
 
 
 class DistanceMethods(BaseFighter):
