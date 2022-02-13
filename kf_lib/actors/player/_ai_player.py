@@ -2,7 +2,7 @@ import random
 
 
 from ._base_player import BasePlayer
-from ...utils.utilities import pak
+from ...ui._interactive import pak
 from ...ui import cls
 from ...utils._random import rnd
 

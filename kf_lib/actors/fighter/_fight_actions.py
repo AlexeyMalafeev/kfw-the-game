@@ -1,6 +1,7 @@
 import random
 
 import kf_lib.ui
+import kf_lib.ui._interactive
 import kf_lib.ui._menu
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
@@ -274,7 +275,7 @@ class FighterWithActions(
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} is in FURY!')
-            self.current_fight.pak()
+            kf_lib.ui._interactive.pak()
 
     def try_in_fight_impro_wp(self):
         if (
@@ -286,7 +287,7 @@ class FighterWithActions(
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} grabs an improvised weapon!')
-            self.current_fight.pak()
+            kf_lib.ui._interactive.pak()
 
     def try_ko(self):
         tgt = self.target

@@ -1,4 +1,5 @@
 import kf_lib.ui
+import kf_lib.ui._interactive
 import kf_lib.ui._menu
 from ._ambush import Ambush
 from ._beggar import Beggar, GBeggar
@@ -153,7 +154,7 @@ Buy it?"""
                     else:
                         exp = random.randint(*experience.BOOK_EXP)
                         p.gain_exp(exp)
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
 
 class Brawler(BaseEncounter):
@@ -173,14 +174,14 @@ Man: "Hey you! Apologize or I'll beat you up!\"'''
             p.gain_rep(REP_PEN_BRAWL)
             p.fight(b)
             p.show('{}: "I shouldn\'t have been provoked so easily..."'.format(p.name))
-            p.pak()
+            kf_lib.ui._interactive.pak()
         else:
             p.log("Apologizes.")
             p.gain_rep(REP_NOT_BRAWL)
             if rnd() <= CH_BRAWLER_ATTACKS:
                 p.log("The brawler won't let go.")
                 p.show('Brawler: "That\'s not good enough!"')
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.fight(b)
 
 
@@ -215,7 +216,7 @@ class Criminal(BaseEncounter):
                 self.allies = p.check_allies(1)
             if rnd() <= CH_CONVICT_ARMED:
                 c.arm_robber()
-                p.msg("The criminal pulls out a weapon!")
+                kf_lib.ui._interactive.msg("The criminal pulls out a weapon!")
             win = p.fight(c, self.allies)
             if win:
                 self.reward()
@@ -241,7 +242,7 @@ class Criminal(BaseEncounter):
                 ally.earn_reward(reward)
         p.gain_rep(c.level)
         p.earn_reward(reward)
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
 
 class Drunkard(BaseEncounter):
@@ -269,7 +270,7 @@ class Drunkard(BaseEncounter):
                 self.do_fight(strong=True)
             elif not p.is_master and roll <= CH_DRUNKARD_FIGHT_WEAK:
                 self.do_fight()
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
     def do_fight(self, strong=False):
         p = self.player
@@ -284,7 +285,7 @@ class Drunkard(BaseEncounter):
             d = fighter_factory.new_drunkard(strong=False)
         p.show(t)
         p.log(f"The drunkard attacks {p.name}.")
-        p.pak()
+        kf_lib.ui._interactive.pak()
         if p.fight(d, items_allowed=False):
             if strong:
                 t = '''{}: "Whoa, you are good! I was just as good and just as arrogant in my day... \
@@ -295,17 +296,17 @@ class Drunkard(BaseEncounter):
                 p.add_friend(d)
                 p.add_accompl("Drunkard's Friend")
                 p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.learn_move_from(d)
                 p.game.drunkard = None
         else:
             p.show(f'{d.name}: "When I\'m one-tenth drunk I can use only one-tenth of my skill, '
                    f'but when I\'m ten-tenths drunk I\'m at the top of my form."')
-            p.pak()
+            kf_lib.ui._interactive.pak()
             if strong:
                 p.show(f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                        'technique has improved"')
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.learn_move_from(d)
 
 
@@ -352,7 +353,7 @@ class Extorters(BaseEncounter):
                         p.gain_rep(REP_PEN_BREAK_NOT_PAY)
             else:
                 p.show('Shop owner: "Are you hurt? I\'ll find a doctor..."')
-            p.pak()
+            kf_lib.ui._interactive.pak()
         else:
             p.log("Looks the other way.")
 
@@ -385,11 +386,11 @@ class FatGirl(BaseEncounter):
     def do_fight(self):
         p = self.player
         if p.fight(self.g):
-            p.msg(f"{self.p.name} runs away in fear.")
+            kf_lib.ui._interactive.msg(f"{self.p.name} runs away in fear.")
             p.game.fat_girl = None
             p.add_accompl("Fat Girl Defeated")
         else:
-            p.msg('Fat Girl: "Now that I think about it, you are too weak to be my husband '
+            kf_lib.ui._interactive.msg('Fat Girl: "Now that I think about it, you are too weak to be my husband '
                   'anyway!"')
 
 
@@ -405,7 +406,7 @@ class FindItem(BaseEncounter):
         p.log(f"Accidentally finds an item: {it}.")
         p.obtain_item(it)
         p.change_stat("items_found", 1)
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
 
 class FriendMatch(BaseEncounter):
@@ -428,7 +429,7 @@ class FriendMatch(BaseEncounter):
         if p.p_match_or_not():
             p.spar(opp)
             p.show('{}: "That was a good match! Let\'s do it again some time."'.format(opp.name))
-            p.pak()
+            kf_lib.ui._interactive.pak()
         else:
             p.log("Refuses.")
 
@@ -454,12 +455,12 @@ One bet is {self.bet} coins."""
             p.log("Gambles.")
             p.gain_rep(REP_PEN_GAMBLE)
             money = p.money
-            p.pak()
+            kf_lib.ui._interactive.pak()
             self.play()
             self.won = p.money - money
             p.refresh_screen()
             if self.won <= 0:
-                p.msg('Gambler: "Better luck next time!"')
+                kf_lib.ui._interactive.msg('Gambler: "Better luck next time!"')
                 p.record_gamble_lost(-self.won)
             else:
                 p.record_gamble_win(self.won)
@@ -468,7 +469,7 @@ One bet is {self.bet} coins."""
         else:
             p.show(f"{p.name} refuses to gamble.")
             p.log("Refuses to gamble.")
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
     def play(self):
         p = self.player
@@ -493,7 +494,7 @@ One bet is {self.bet} coins."""
                         p.show(f"{p.name}: {yc}\nGambler: {gc}")
                         if yc == gc:
                             p.show("Tie!")
-                            p.pak()
+                            kf_lib.ui._interactive.pak()
                             continue
                         if (
                             (yc == "Rock" and gc == "Scissors")
@@ -502,17 +503,17 @@ One bet is {self.bet} coins."""
                         ):
                             p.money += self.bet * 2
                             p.show(f"{p.name} wins!")
-                            p.pak()
+                            kf_lib.ui._interactive.pak()
                             break
                         else:
                             p.show("Gambler wins!")
-                            p.pak()
+                            kf_lib.ui._interactive.pak()
                             break
                     p.refresh_screen()
                 else:
                     if not rnd() < p.gamble_continue:
                         p.show(f"{p.name} decides to stop gambling.")
-                        p.pak()
+                        kf_lib.ui._interactive.pak()
                         return
                     else:
                         i = 0
@@ -527,17 +528,17 @@ One bet is {self.bet} coins."""
             g.arm_improv()
         p.show('Gambler: "You think you can get away with that?"')
         p.log(f"The gambler attacks {p.name}.")
-        p.pak()
+        kf_lib.ui._interactive.pak()
         if p.fight(g):
             if rnd() <= CH_GAMBLER_ENEMY:
                 p.show('Gambler: "I\'m telling you, this is not over yet!"')
                 p.add_enemy(g)
-                p.pak()
+                kf_lib.ui._interactive.pak()
             p.add_accompl("Gambler Beaten")
         else:
             p.money -= self.won
             p.show("Gambler: I'm just taking back what's mine!")
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
 
 class Gossip(BaseEncounter):
@@ -582,7 +583,7 @@ class HelpPolice(BaseEncounter):
             p.check_help(allies=False, master=False, school=False)
             if p.fight(en[0], al, en[1:]):
                 p.show('Police Officer: "Thank you very much for your help!"')
-                p.pak()
+                kf_lib.ui._interactive.pak()
         else:
             p.log("Does not help the police.")
 
@@ -600,7 +601,7 @@ class LoseItem(BaseEncounter):
         p.log(f"Accidentally loses his {it}.")
         p.lose_item(it)
         p.change_stat("items_lost", 1)
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
 
 class MasterTrial(BaseEncounter):
@@ -650,7 +651,7 @@ class MasterTrial(BaseEncounter):
                 p.new_school_name = school_name
             else:
                 p.show(f'{m.name}: "No, you are not ready yet. Practice some more."')
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
 
 class Merchant(BaseEncounter):
@@ -674,7 +675,7 @@ Buy it for {price} coins?"""
         p.log("Meets a street merchant.")
         if not p.check_money(price):
             p.show(f"{p.name} doesn't have enough money.")
-            p.pak()
+            kf_lib.ui._interactive.pak()
         elif p.buy_item_or_not() and not check_feeling_greedy(p):
             p.buy_item(item, price)
 
@@ -735,7 +736,7 @@ victory!"'''.format(
                 )
                 p.show(t)
                 p.log(f"Something about {person.name}'s humiliating defeat.")
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
 
 class PlayerMatch(BaseEncounter):
@@ -765,7 +766,7 @@ class PlayerMatch(BaseEncounter):
         if p.p_match_or_not():
             p.spar(opp)
             p.show('{}: "That was a good match! Let\'s do it again some time."'.format(opp.name))
-            p.pak()
+            kf_lib.ui._interactive.pak()
         else:
             p.log("Refuses.")
 
@@ -787,7 +788,7 @@ class PrizeFighting(BaseEncounter):
         p.log("Offered to take part in an underground prize fighting contest.")
         if not p.check_money(MONEY_PRIZE_FIGHTING_FEE):
             p.show(f"{p.name} doesn't have enough money.")
-            p.pak()
+            kf_lib.ui._interactive.pak()
         elif p.tourn_or_not():
             p.gain_rep(REP_PEN_PRIZE_FIGHTING)
             p.pay(MONEY_PRIZE_FIGHTING_FEE)
@@ -814,7 +815,7 @@ class PrizeFighting(BaseEncounter):
                 break
         if prize:
             p.earn_prize(prize)
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
 
 class Robbers(BaseEncounter):
@@ -896,7 +897,7 @@ class Robbers(BaseEncounter):
     def pay(self):
         self.p.pay(self.money)
         self.p.change_stat("money_robbed", self.money)
-        self.p.msg(f"The robber{self.sn} decide{self.sv} to let {self.p.name} go.")
+        kf_lib.ui._interactive.msg(f"The robber{self.sn} decide{self.sv} to let {self.p.name} go.")
 
 
 class RobbingSomeone(BaseEncounter):
@@ -918,7 +919,7 @@ class RobbingSomeone(BaseEncounter):
                 try_enemy(p, en[0], CH_ROBBER_ENEMY)
                 victim = random.choice(("Man", "Woman"))
                 p.show(f'{victim}: "Thank you very much!!!"')
-                p.pak()
+                kf_lib.ui._interactive.pak()
         else:
             p.log("Looks the other way.")
 
@@ -990,7 +991,7 @@ class SchoolChallenge(BaseEncounter):
             else:
                 react = random.choice(quotes.MASTER_CRITICISM)
                 p.show(f"{m.name}: {react}")
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
 
 class StreetPerformer(BaseEncounter):
@@ -1044,9 +1045,9 @@ class StreetPerformer(BaseEncounter):
                     f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
                     'technique has improved"'
                 )
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.learn_move_from(c)
-            p.pak()
+            kf_lib.ui._interactive.pak()
         else:
             # disarm player!!!
             p.disarm()
@@ -1062,13 +1063,13 @@ class StreetPerformer(BaseEncounter):
             item = items.get_random_item()
             p.show(f'Please accept this {item} as a token of my gratitude."')
             p.obtain_item(item)
-            p.pak()
+            kf_lib.ui._interactive.pak()
         elif reward == "t":
             p.show(
                 'Your kung-fu is very good; however, I can help you improve it."'
                 "\n{} teaches {} some of his moves.".format(c.name, p.name)
             )
-            p.pak()
+            kf_lib.ui._interactive.pak()
             p.learn_move_from(c)
 
     def sell(self):
@@ -1083,7 +1084,7 @@ class StreetPerformer(BaseEncounter):
         p.log("The master offers to buy Golden Magnificent Elixir.")
         if not p.check_money(price):
             p.show(f"{p.name} doesn't have enough money.")
-            p.pak()
+            kf_lib.ui._interactive.pak()
         elif p.buy_item_or_not() and not check_feeling_greedy(p):
             if rnd() <= CH_PERFORMER_SELLS_GOOD_ITEM:
                 item = items.get_random_item()
@@ -1098,7 +1099,7 @@ class StreetPerformer(BaseEncounter):
             )
             p.log(f"The Elixir turns out to be a {item}.")
             p.buy_item(item, price)
-            p.pak()
+            kf_lib.ui._interactive.pak()
 
     def thugs(self):
         p = self.player
@@ -1136,7 +1137,7 @@ class Students(BaseEncounter):
             )
             p.show(t)
             p.log("Is approached by a group of potential students.")
-            p.pak()
+            kf_lib.ui._interactive.pak()
             students = fighter_factory.new_opponent(
                 lv=rndint(*LV_STUD_CHALLENGERS), n=num_st, rand_atts_mode=0
             )
@@ -1147,7 +1148,7 @@ class Students(BaseEncounter):
                 p.add_students(num_st)
             else:
                 p.show('Young men: "Sorry, Master, we\'ll learn kung-fu elsewhere."')
-            p.pak()
+            kf_lib.ui._interactive.pak()
         else:
             p.show(
                 'Young man: "Master {}! Please accept me as your student!"'.format(
@@ -1181,7 +1182,7 @@ class Thief(BaseEncounter):
                 self.steal()
             else:
                 self.fail()
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
     def nothing_to_steal(self):
         p = self.p
@@ -1191,7 +1192,7 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
         )
         p.show(t)
         p.log(f"A thief fails to find anything to steal from {p.name}.")
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
     def steal(self):
         p = self.player
@@ -1238,7 +1239,7 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
         else:
             tough_thief = False
             thief = fighter_factory.new_thief(tough=False)
-        p.pak()
+        kf_lib.ui._interactive.pak()
         if rnd() <= CH_THIEF_ARMED:
             thief.arm("knife")
         if self.p.fight(thief):
@@ -1279,7 +1280,7 @@ class Weirdo(BaseEncounter):
         else:
             t = f"{p.name}: \"Sorry, I can't help you."
             p.show(t)
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
 
 class WiseMan(BaseEncounter):
@@ -1316,7 +1317,7 @@ class WiseMan(BaseEncounter):
                     p.name
                 )
             )
-        p.pak()
+        kf_lib.ui._interactive.pak()
 
 
 class GDrunkard(Guaranteed, Drunkard):

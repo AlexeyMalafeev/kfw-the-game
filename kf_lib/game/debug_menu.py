@@ -4,9 +4,9 @@ from ..actors import fighter_factory
 from ..happenings import tournament
 from ..kung_fu import techniques
 from ..things import items
+from ..ui._interactive import get_int_from_user, get_str_from_user, pak
 from ..ui._menu import menu
 from ..ui import cls
-from ..utils.utilities import *
 
 
 class DebugMenu:

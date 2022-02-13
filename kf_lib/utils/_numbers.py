@@ -66,3 +66,22 @@ def sigmoid(x):
     else:
         z = math.exp(x)
         return z / (1 + z)
+
+
+def roman(x):
+    """Incomplete."""
+    tens = x // 10
+    rem = x % 10
+    repl = {
+        1: "I",
+        2: "II",
+        3: "III",
+        4: "IV",
+        5: "V",
+        6: "VI",
+        7: "VII",
+        8: "VIII",
+        9: "IX",
+        0: "",
+    }
+    return 'X' * tens + repl[rem]

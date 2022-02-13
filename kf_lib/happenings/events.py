@@ -1,4 +1,5 @@
 import kf_lib.ui
+import kf_lib.ui._interactive
 import kf_lib.ui._menu
 from ..fighting import fight
 from .tournament import Tournament
@@ -51,13 +52,13 @@ def crime_up(g, rate=CRIME_INCREASE_MONTHLY, mult=1.0):
 def kungfu_down(g):
     kf_lib.ui.cls()
     g.kung_fu = max(g.kung_fu - KUNGFU_CHANGE, MIN_KUNGFU)
-    g.msg(f'Old man: The people of {g.town_name} are losing their interest in kung-fu...')
+    kf_lib.ui._interactive.msg(f'Old man: The people of {g.town_name} are losing their interest in kung-fu...')
 
 
 def kungfu_up(g):
     kf_lib.ui.cls()
     g.kung_fu = min(g.kung_fu + KUNGFU_CHANGE, MAX_KUNGFU)
-    g.msg(
+    kf_lib.ui._interactive.msg(
         'Old man: It seems everybody in {} wants \
 to practice kung-fu nowadays...'.format(
             g.town_name
@@ -106,7 +107,7 @@ def new_tournament(g):
 def poverty_down(g):
     kf_lib.ui.cls()
     g.poverty = max(g.poverty - POVERTY_CHANGE, MIN_POVERTY)
-    g.msg(
+    kf_lib.ui._interactive.msg(
         'Old woman: There are not as many poor and homeless people in {} as before...'.format(
             g.town_name
         )
@@ -116,7 +117,7 @@ def poverty_down(g):
 def poverty_up(g):
     kf_lib.ui.cls()
     g.poverty = min(g.poverty + POVERTY_CHANGE, MAX_POVERTY)
-    g.msg('Old woman: Many people in {} now don\'t have enough to eat...'.format(g.town_name))
+    kf_lib.ui._interactive.msg('Old woman: Many people in {} now don\'t have enough to eat...'.format(g.town_name))
 
 
 def randevent(g):
@@ -140,7 +141,7 @@ def school_vs_school(g):
     style_a = a[0].style.name
     style_b = b[0].style.name
     s = f'A fight breaks out between students of {style_a} and {style_b}!'
-    g.msg(s)
+    kf_lib.ui._interactive.msg(s)
     for f in a + b:
         f.log(s)
     win_messages = tuple(f'{st} school wins!' for st in (style_a, style_b))

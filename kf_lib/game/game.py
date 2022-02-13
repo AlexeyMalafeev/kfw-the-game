@@ -9,6 +9,7 @@ g.play()
 from pathlib import Path
 
 import kf_lib.ui
+import kf_lib.ui._interactive
 import kf_lib.ui._menu
 from ..actors import fighter_factory, names
 from ..actors.player import (
@@ -21,11 +22,10 @@ from ..kung_fu.moves import BASIC_MOVES
 from ..kung_fu import styles, style_gen
 from ..things import items
 from ..happenings import events, encounters, story
+from ..ui._interactive import get_int_from_user, pak
 from ..ui._menu import menu, yn
 from ..ui import cls
 from ..utils._random import rnd, rndint
-from ..utils.utilities import *
-
 
 # todo refactor game.py into submodules
 
@@ -130,7 +130,7 @@ class Game:
                     return True  # to skip turn
             else:
                 skip_day()
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 return True  # to skip turn
         else:
             p.inact_status = ''
@@ -377,7 +377,7 @@ class Game:
     def msg(self, text, align=True):
         if self.spectator:
             self.spectator.show(text, align=align)
-            self.spectator.pak()
+            kf_lib.ui._interactive.pak()
 
     def new_game(
         self,
@@ -497,7 +497,7 @@ class Game:
 
     def pak(self):
         if self.spectator:
-            self.spectator.pak()
+            kf_lib.ui._interactive.pak()
 
     def play(self):
         """Play the (previously initialized or loaded) game."""
@@ -565,7 +565,7 @@ class Game:
                 if p in school:
                     new_rank = school.index(p) + 1
                     if p.school_rank != new_rank:
-                        p.msg(f'{p.name} is now number {new_rank} at his school.')
+                        kf_lib.ui._interactive.msg(f'{p.name} is now number {new_rank} at his school.')
                         p.school_rank = new_rank
 
     def show(self, text, align=True):

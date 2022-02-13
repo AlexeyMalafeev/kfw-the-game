@@ -2,6 +2,7 @@ import random
 from typing import Any, Dict, Optional
 
 import kf_lib.ui
+import kf_lib.ui._interactive
 import kf_lib.ui._menu
 from ..actors.fighter import Fighter
 from ..actors.human_controlled_fighter import HumanControlledFighter
@@ -99,7 +100,7 @@ class Tournament(object):
 
     def _give_prize(self):
         winner = self.winner
-        self.g.msg(f'{winner.name} wins the tournament!')
+        kf_lib.ui._interactive.msg(f'{winner.name} wins the tournament!')
         if winner.is_player:
             winner.win_tourn(self.prize)
 
@@ -108,7 +109,7 @@ class Tournament(object):
             if p.bet_on_tourn_or_not():
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
                 self.bets[p] = bet_on, bet_amount
-                self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
+                kf_lib.ui._interactive.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
             else:
                 pass
                 # if not p.is_human:
@@ -121,7 +122,7 @@ class Tournament(object):
                 win_mult = max((self.current_round, 1.5))  # 1.5 is for the 1 round edge case
                 money_won = int(bet_amount * win_mult)
                 p.money += money_won
-                self.g.msg(f'{p.name} wins {money_won} coins with his bet!')
+                kf_lib.ui._interactive.msg(f'{p.name} wins {money_won} coins with his bet!')
                 p.record_gamble_win(money_won)
             else:
                 p.record_gamble_lost(bet_amount)
@@ -129,7 +130,7 @@ class Tournament(object):
     def run(self):
         kf_lib.ui.cls()
         tourn_type_str = f'({self.tourn_type} level)' if self.tourn_type else ''
-        self.g.msg(
+        kf_lib.ui._interactive.msg(
             f'A kung-fu tournament {tourn_type_str} is organized in {self.g.town_name}. '
             f'The participation fee is {self.fee}.'
         )
@@ -147,4 +148,4 @@ class Tournament(object):
         kf_lib.ui.cls()
         self.g.show('The participants are:\n')
         self.g.show(fight.get_prefight_info(participants, basic_info_only=True))
-        self.g.pak()
+        kf_lib.ui._interactive.pak()

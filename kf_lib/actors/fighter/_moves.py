@@ -3,8 +3,7 @@ import random
 
 from ._base_fighter import BaseFighter
 from ...kung_fu import moves
-from ...utils.utilities import roman
-
+from ...utils import roman
 
 LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
 # todo use NEW_MOVE_TIERS

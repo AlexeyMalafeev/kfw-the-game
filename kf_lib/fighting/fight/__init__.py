@@ -1,10 +1,11 @@
 import kf_lib.ui
+import kf_lib.ui._interactive
 import kf_lib.ui._menu
 from ...things import items
 from ...actors import names
+from ...ui._interactive import pak
 from ...ui._menu import menu, yn
 from ...ui import cls
-from ...utils.utilities import *
 
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
 
@@ -608,7 +609,7 @@ class NormalFight(AutoFight):
         self.show(text, **kwargs)
 
     def pak(self):
-        self.main_player.pak()
+        kf_lib.ui._interactive.pak()
 
     def prepare_fighters(self):
         AutoFight.prepare_fighters(self)

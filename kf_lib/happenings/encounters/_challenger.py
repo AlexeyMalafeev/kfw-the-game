@@ -1,6 +1,6 @@
 import random
 
-
+import kf_lib.ui._interactive
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_scary_fight, set_up_weapon_fight
 from ...utils._random import rnd
@@ -53,19 +53,19 @@ class Challenger(BaseEncounter):
         if rnd() <= CH_CHALLENGER_FRIEND * p.challenger_friend_mult and c not in p.friends:
             p.show('{}: "That was a good fight!\nLet\'s be friends!"'.format(c.name))
             p.add_friend(self.c)
-            p.pak()
+            kf_lib.ui._interactive.pak()
         if win:
             luck = p.check_luck()
             if luck == 1:
                 p.show(f'{p.name}: "I can learn something from this fight."')
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.learn_move_from(c)
             elif luck == -1:
                 master = self.c_master
                 p.show(f'Suddenly, {c.name}\'s master appears!')
                 p.show(f'{master.name}: "How dare you belittle the kung-fu I teach? '
                        'You will pay for this!"')
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.fight(master, items_allowed=False)
 
 

@@ -1,3 +1,4 @@
+import kf_lib.ui._interactive
 from ._base_encounter import BaseEncounter
 from ._utils import check_feeling_greedy
 from ...actors.fighter_factory import new_craftsman
@@ -34,14 +35,14 @@ class Craftsman(BaseEncounter):
                 f'can have my {item} for free!"'
             )
             p.show(t)
-            p.pak()
+            kf_lib.ui._interactive.pak()
             c = new_craftsman()
             p.spar(c)
             p.show('Craftsman: "What a good sparring session!"')
             price = 0
             p.buy_item(item, price)
             items.use_item(item, p)
-            p.pak()
+            kf_lib.ui._interactive.pak()
             return
         elif luck == -1:
             is_fake_mannequin = True
@@ -51,7 +52,7 @@ class Craftsman(BaseEncounter):
                 p.show(f'However, the {item} turns out to be of very shoddy quality. '
                        f'It breaks immediately as {p.name} tries a few of his moves on it. '
                        'Too bad the craftsman has vanished in thin air!')
-                p.pak()
+                kf_lib.ui._interactive.pak()
                 p.lose_item(item)
             else:
                 items.use_item(item, p)

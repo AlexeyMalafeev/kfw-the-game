@@ -4,7 +4,7 @@ from kf_lib import game
 from kf_lib.actors import fighter_factory as ff
 from kf_lib import human_player
 from kf_lib.kung_fu import styles, moves
-from kf_lib.utils.utilities import *
+from kf_lib.ui._interactive import pak
 
 
 class Zen(human_player.HumanPlayer):
