@@ -1,9 +1,8 @@
-from ._base_player import BasePlayer
-from ..human_controlled_fighter import HumanControlledFighter
-from ...things.items import get_item_descr, MEDICINE
-from ...ui._menu import menu, yn
-from ...ui import cls
+from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
+from kf_lib.things.items import get_item_descr, MEDICINE
+from kf_lib.ui import cls, menu, yn
 from kf_lib.utils import float_to_pcnt
+from ._base_player import BasePlayer
 
 
 class HumanPlayer(HumanControlledFighter, BasePlayer):

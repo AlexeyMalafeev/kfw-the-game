@@ -1,10 +1,12 @@
+import random
+
+from kf_lib.kung_fu import styles, style_gen
+from kf_lib.ui import get_int_from_user, menu
+from kf_lib.utils import rnd, rndint
+from . import names
 from .fighter import Fighter, Challenger, Master, Thug
 from .human_controlled_fighter import HumanControlledFighter
-from . import names
-from ..kung_fu import styles, style_gen
-from ..ui._interactive import get_int_from_user
-from ..ui._menu import menu
-from ..utils._random import rnd, rndint
+
 
 # levels
 BEGGAR_LV = (8, 12)

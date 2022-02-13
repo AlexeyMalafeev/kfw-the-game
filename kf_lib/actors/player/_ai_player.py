@@ -1,10 +1,8 @@
 import random
 
-
+from kf_lib.ui import cls, pak
+from kf_lib.utils import rnd
 from ._base_player import BasePlayer
-from ...ui._interactive import pak
-from ...ui import cls
-from ...utils._random import rnd
 
 
 class AIPlayer(BasePlayer):

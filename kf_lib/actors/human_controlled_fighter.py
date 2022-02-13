@@ -1,10 +1,6 @@
+from kf_lib.ui import align_text, cls, get_bar, menu, pak, pretty_table
+from kf_lib.utils import roman
 from .fighter import Fighter
-from ..ui._visualize import get_bar
-from ..ui._align import align_text, pretty_table
-from ..ui._interactive import pak
-from ..utils import roman
-from ..ui._menu import menu
-from ..ui import cls
 
 ALIGN = 60
 INDENT = 0

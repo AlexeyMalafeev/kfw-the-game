@@ -1,4 +1,4 @@
-from ...happenings import encounters
+from kf_lib.happenings import encounters
 
 
 def buy_items(p):

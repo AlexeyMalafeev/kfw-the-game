@@ -1,17 +1,19 @@
 import random
 
-
-from ..fighter import Fighter
-from ...game import game_stats
-from ...happenings import encounters
-from ...things import items
-from .. import quotes
+from kf_lib.actors import quotes
+from kf_lib.actors import traits
+from kf_lib.actors.fighter import Fighter
 # todo refactor importing get_rand_traits
-from ..traits import get_rand_traits  # have to import separately or .set_rand_traits doesn't work
-from .. import traits
-from kf_lib.utils import add_sign, enum_words
-from ...utils._random import rnd, rndint
+# have to import separately or .set_rand_traits doesn't work
+from kf_lib.actors.traits import get_rand_traits
+from kf_lib.game import game_stats
+from kf_lib.happenings import encounters
+from kf_lib.things import items
+from kf_lib.utils import add_sign, enum_words, rnd, rndint
 
+# todo refactor _base_player into specific modules
+
+# todo compute accompl exp dynamically
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
