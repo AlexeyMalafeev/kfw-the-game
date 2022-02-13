@@ -1,5 +1,6 @@
 from .fighter import Fighter
-from ..utils.utilities import pretty_table, get_bar, align_text
+from ..ui._visualize import get_bar
+from ..ui._align import align_text, pretty_table
 from ..ui._interactive import pak
 from ..utils import roman
 from ..ui._menu import menu

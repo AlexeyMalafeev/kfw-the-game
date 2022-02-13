@@ -1,6 +1,5 @@
 from . import boosts as b
 from .techniques import StyleTech
-from kf_lib.utils.utilities import *
 
 
 all_styles = {}

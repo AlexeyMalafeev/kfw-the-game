@@ -12,12 +12,12 @@ from .actors import fighter_factory as ff
 from .kung_fu import styles, techniques
 from .things import weapons
 from . import tech_test
+from .ui._align import pretty_table
 from .ui._interactive import pak, pe
 from .ui._menu import menu
 from .ui import cls
+from .utils import get_time, add_to_dict
 from .utils._data import compare_dicts, summary
-from .utils.utilities import *
-
 
 TESTS_FOLDER = 'tests'
 

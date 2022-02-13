@@ -1,5 +1,5 @@
 from kf_lib.utils import mean, pcnt, median
-from kf_lib.utils.utilities import pretty_table
+from kf_lib.ui._align import pretty_table
 
 
 def compare_dicts(d1, d2, sort_col_index=0, descending=True):

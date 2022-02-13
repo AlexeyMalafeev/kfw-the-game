@@ -6,7 +6,7 @@ import kf_lib.ui._menu
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...utils.utilities import get_bar
+from ...ui._visualize import get_bar
 from ...utils._random import rnd, rndint_2d
 from ...utils import choose_adverb
 from ._weapons import WeaponMethods

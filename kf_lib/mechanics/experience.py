@@ -1,5 +1,4 @@
-from kf_lib.utils.utilities import *
-
+from kf_lib.utils import multiply
 
 BOOK_EXP = (10, 50)
 FIGHT_EXP_BASE = 20

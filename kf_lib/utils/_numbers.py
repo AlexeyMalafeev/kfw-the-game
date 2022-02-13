@@ -85,3 +85,9 @@ def roman(x):
         0: "",
     }
     return 'X' * tens + repl[rem]
+
+
+def multiply(numbers):
+    from functools import reduce
+
+    return reduce(lambda x, y: x * y, numbers)
