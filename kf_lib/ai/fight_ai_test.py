@@ -1,8 +1,9 @@
+import os
+
 from tqdm import trange
 
-
-from kf_lib.fighting.fight import AutoFight
 from kf_lib.actors import fighter_factory as ff
+from kf_lib.fighting.fight import AutoFight
 from kf_lib.utils import rndint
 
 
@@ -84,7 +85,7 @@ class CrowdVsCrowdFair(FightAITest):
     def get_allies(self):
         al1, al2 = [], []
         n1 = n2 = rndint(4, 9)
-        al_lv = lv = rndint(1, 5)
+        al_lv = rndint(1, 5)
         for i in range(n1):
             al1.append(ff.new_opponent(lv=al_lv))
         for i in range(n2):

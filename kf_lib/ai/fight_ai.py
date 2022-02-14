@@ -1,5 +1,5 @@
-from pathlib import Path
 import random
+from pathlib import Path
 
 from kf_lib.fighting.distances import VALID_DISTANCES
 from kf_lib.kung_fu import moves

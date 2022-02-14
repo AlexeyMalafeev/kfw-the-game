@@ -1,31 +1,20 @@
-"""
-To play:
-
-g = Game()
-g.new_game() OR g.load_game('save.txt')
-g.play()
-
-"""
+import os
+import random
 from pathlib import Path
 
-import kf_lib.ui
-import kf_lib.ui._interactive
-import kf_lib.ui._menu
-from ..actors import fighter_factory, names
-from ..actors.player import (
+from kf_lib.actors import fighter_factory, names
+from kf_lib.actors.player import (
     HumanPlayer,
     ALL_AI_PLAYERS,  # used in load/new_game
 )
-from .debug_menu import DebugMenu
+from kf_lib.happenings import events, encounters, story
+from kf_lib.kung_fu import styles, style_gen
+from kf_lib.things import items
+from kf_lib.ui import cls, get_int_from_user, menu, pak, yn
+from kf_lib.utils import rnd, rndint
 from . import game_stats
-from ..kung_fu.moves import BASIC_MOVES
-from ..kung_fu import styles, style_gen
-from ..things import items
-from ..happenings import events, encounters, story
-from ..ui._interactive import get_int_from_user, pak
-from ..ui._menu import menu, yn
-from ..ui import cls
-from ..utils._random import rnd, rndint
+from .debug_menu import DebugMenu
+
 
 # todo refactor game.py into submodules
 
@@ -110,8 +99,7 @@ class Game:
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
         play_indefinitely fights_total enc_count_dict'''.split()
 
-    @staticmethod
-    def check_inactive_player(p):
+    def check_inactive_player(self, p):
         def skip_day():
             p.change_stat('days_inactive', 1)
             p.inactive -= 1
@@ -121,8 +109,7 @@ class Game:
             if p.check_item(items.MEDICINE) and p.check_injured():
                 if p.use_med_or_not():
                     p.use_med()
-                    # self.pak()
-                    kf_lib.ui.cls()
+                    self.cls()
                     p.see_day_info()
                     return False
                 else:
@@ -130,7 +117,7 @@ class Game:
                     return True  # to skip turn
             else:
                 skip_day()
-                kf_lib.ui._interactive.pak()
+                self.pak()
                 return True  # to skip turn
         else:
             p.inact_status = ''
@@ -377,7 +364,7 @@ class Game:
     def msg(self, text, align=True):
         if self.spectator:
             self.spectator.show(text, align=align)
-            kf_lib.ui._interactive.pak()
+            self.pak()
 
     def new_game(
         self,
@@ -497,7 +484,7 @@ class Game:
 
     def pak(self):
         if self.spectator:
-            kf_lib.ui._interactive.pak()
+            self.pak()
 
     def play(self):
         """Play the (previously initialized or loaded) game."""
@@ -565,7 +552,7 @@ class Game:
                 if p in school:
                     new_rank = school.index(p) + 1
                     if p.school_rank != new_rank:
-                        kf_lib.ui._interactive.msg(f'{p.name} is now number {new_rank} at his school.')
+                        self.msg(f'{p.name} is now number {new_rank} at his school.')
                         p.school_rank = new_rank
 
     def show(self, text, align=True):
