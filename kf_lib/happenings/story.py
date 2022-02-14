@@ -1,9 +1,9 @@
-import kf_lib.ui
-import kf_lib.ui._interactive
-import kf_lib.ui._menu
-from ..actors import fighter_factory
-from ..kung_fu import styles
-from ..utils._random import rnd, rndint
+import random
+
+from kf_lib.actors import fighter_factory
+from kf_lib.kung_fu import styles
+from kf_lib.utils import rnd, rndint
+
 
 # todo refactor story into a package
 # constants
@@ -50,7 +50,7 @@ class Story(object):
         self.state += 1
         g = self.game
         p = self.player
-        kf_lib.ui.cls()
+        p.cls()
         g.show(p.get_p_info(), align=False)
         exec(f'self.scene{self.state}()')
 
@@ -98,14 +98,15 @@ class Story(object):
 class ForeignerStory(Story):
     def intro(self):
         g = self.game
-        kf_lib.ui.cls()
+        p = self.player
+        p.cls()
         b = self.boss = fighter_factory.new_foreigner()
         g.register_fighter(b)
         t = 'Rumor has it that {}, a renowned martial artist from {}, has arrived in {} to defeat local masters and \
              prove the superiority of his own fighting style, {}.'.format(
             b.name, b.country, g.town_name, b.style.name
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
 
     def reward(self):
         g, p, b = self.game, self.player, self.boss
@@ -113,12 +114,12 @@ class ForeignerStory(Story):
         p.add_accompl('Foreign Challenger')
 
     def scene1(self):
-        g, b = self.game, self.boss
+        g, p, b = self.game, self.player, self.boss
         t = (
             'The people of {} keep talking about the foreigner, {}. He has already defeated some good '
             'fighters.'.format(g.town_name, b.name)
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -133,7 +134,7 @@ class ForeignerStory(Story):
         g.show(t)
         base_exp = 10
         p.gain_exp(rndint(base_exp, base_exp * 3))
-        kf_lib.ui._interactive.pak()
+        p.pak()
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
@@ -151,17 +152,17 @@ class ForeignerStory(Story):
             p.name, b.name, f_st
         )
         g.show(t)
-        if not p.is_human or kf_lib.ui._menu.yn(f'Challenge {b.name}?'):
+        if not p.is_human or p.yn(f'Challenge {b.name}?'):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
                 g.show(
                     '{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(
                         p.name
                     )
                 )
-                kf_lib.ui._interactive.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
+                p.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
                 self.reward()
             else:
-                kf_lib.ui._interactive.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
+                p.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
                 # get depressed?
         # end of the story
         self.end()
@@ -170,14 +171,15 @@ class ForeignerStory(Story):
 class NinjaTurtlesStory(Story):
     def intro(self):
         g = self.game
-        kf_lib.ui.cls()
+        p = self.player
+        p.cls()
         t = (
             'A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
             'human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed '
             'tones, clearly deciding what to do next...'
         )
         g.show(t)
-        kf_lib.ui._interactive.pak()
+        p.pak()
 
     def reward(self):
         p = self.player
@@ -189,7 +191,7 @@ class NinjaTurtlesStory(Story):
         p.write(
             f'{p.name} encounters the four teenage mutant ninja turtles travelling in time.'
         )
-        kf_lib.ui._interactive.pak()
+        p.pak()
         # p.choose_best_norm_wp()
         ens = fighter_factory.new_ninja_turtles()
         if p.fight(ens[0], en_allies=ens[1:], items_allowed=False):
@@ -203,7 +205,7 @@ class NinjaTurtlesStory(Story):
 class RenownedMaster(Story):
     def intro(self):
         g, p = self.game, self.player
-        kf_lib.ui.cls()
+        p.cls()
         name = g.get_new_name(prefix='Master')
         b = self.boss = fighter_factory.new_master_challenger(p.level, name)
         g.register_fighter(b)
@@ -211,7 +213,7 @@ class RenownedMaster(Story):
             '{}, a renowned master of {} kung-fu from a remote province, comes to {} and stays at a local '
             'tavern.'.format(b.name, b.style.name, g.town_name)
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
 
     def reward(self):
         p = self.player
@@ -232,7 +234,7 @@ class RenownedMaster(Story):
         )
         g.show(t)
         p.log(f'Challenged by {b.name}.')
-        kf_lib.ui._interactive.pak()
+        p.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
             t = (
                 '{}: "Indeed remarkable! What excellent skill. I thank you for showing me that I '
@@ -243,21 +245,22 @@ class RenownedMaster(Story):
         else:
             g.show(f'{b.name}: "I am disappointed - yet again."')
         self.end()
-        kf_lib.ui._interactive.pak()
+        p.pak()
 
 
 class StrangeDreamsStory(Story):
     def intro(self):
         g = self.game
-        kf_lib.ui.cls()
+        p = self.player
+        p.cls()
         g.show('Every so often one has some really unusual dreams...')
-        kf_lib.ui._interactive.pak()
+        p.pak()
 
     def reward(self):
         p = self.player
         p.add_accompl('Beat Self')
         p.gain_exp(DREAM3_EXP)
-        kf_lib.ui._interactive.pak()
+        p.pak()
 
     def scene1(self):
         p = self.player
@@ -268,22 +271,22 @@ class StrangeDreamsStory(Story):
             en.arm('chopsticks')
         if p.spar(ens[0], en_allies=ens[1:]):
             p.gain_exp(DREAM1_EXP)
-            kf_lib.ui._interactive.pak()
+            p.pak()
 
     def scene2(self):
         p = self.player
         p.write(f'{p.name} has a strange dream...')
-        kf_lib.ui._interactive.pak()
+        p.pak()
         en = fighter_factory.new_monster(lv=p.level)
         en.name = 'Weird ' + en.name
         if p.spar(en):
             p.gain_exp(DREAM2_EXP)
-            kf_lib.ui._interactive.pak()
+            p.pak()
 
     def scene3(self):
         p = self.player
         p.write(f'{p.name} has a strange dream...')
-        kf_lib.ui._interactive.pak()
+        p.pak()
         en = fighter_factory.copy_fighter(p)
         en.__class__ = fighter_factory.Fighter
         if p.spar(en):
@@ -296,12 +299,13 @@ class StrangeDreamsStory(Story):
 class TreasuresStory(Story):
     def intro(self):
         g = self.game
-        kf_lib.ui.cls()
+        p = self.player
+        p.cls()
         t = (
             'Everybody in {} talks about national treasures being stolen and sold to foreign buyers. Who could be '
             'responsible for such horrible crimes?'.format(g.town_name)
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
         self.boss = b = fighter_factory.new_official(g.get_new_name('Official'))
         g.register_fighter(b)
 
@@ -319,7 +323,7 @@ class TreasuresStory(Story):
             'Some old man: "Fear not officials, except those who officiate over you! This is '
             f'{b.name}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -329,7 +333,7 @@ class TreasuresStory(Story):
             'for insulting an official?"'.format(p.name, b.name, BRIBE)
         )
         g.show(t)
-        if (not p.is_human or kf_lib.ui._menu.yn('Pay the bribe?')) and p.check_money(BRIBE):
+        if (not p.is_human or p.yn('Pay the bribe?')) and p.check_money(BRIBE):
             if rnd() <= p.feel_too_greedy:
                 p.show(
                     '{} feels too greedy to pay this ridiculous "fine": "You are no better than a '
@@ -337,13 +341,13 @@ class TreasuresStory(Story):
                 )
                 p.show(f'{b.name}: You...')
                 p.log('Feels too greedy to pay the bribe.')
-                kf_lib.ui._interactive.pak()
+                p.pak()
             else:
                 p.pay(BRIBE)
                 g.show(f'{b.name}: "Good. Now get out of my sight!"')
                 p.log(f'Pays a bribe to {b.name}.')
                 p.gain_rep(BRIBERY_REP_PENALTY)
-                kf_lib.ui._interactive.pak()
+                p.pak()
                 return
         num_en = rndint(*OFFICIALS_BODYGUARDS)
         enemies = [fighter_factory.new_bodyguard(weak=True) for i in range(num_en)]
@@ -356,7 +360,7 @@ class TreasuresStory(Story):
             g.show(t)
         else:
             g.show(f'{b.name}: "That will teach you! Next time just pay.')
-        kf_lib.ui._interactive.pak()
+        p.pak()
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
@@ -367,7 +371,7 @@ class TreasuresStory(Story):
                 p=p.name, b=b.name
             )
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
 
     def scene4(self):
         g, p, b = self.game, self.player, self.boss
@@ -380,12 +384,12 @@ class TreasuresStory(Story):
                 p=p.name, b=b.name
             )
         )
-        kf_lib.ui._interactive.msg(t)
+        p.msg(t)
         # first fight
         enemies = fighter_factory.new_bodyguard(n=2)
         if p.fight(enemies[0], en_allies=enemies[1:], af_option=True):
             g.show('{}: "This can\'t be... They were supposed to..."'.format(b.name))
-            kf_lib.ui._interactive.pak()
+            p.pak()
             if p.fight(b):
                 t = 'The police arrested {}... The people of {} are proud of {}!'.format(
                     b.name, g.town_name, p.name
@@ -405,7 +409,7 @@ Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t 
                 'too. But frankly, {p} is lucky to be alive...'.format(p=p.name, b=b.name)
             )
             g.show(t)
-        kf_lib.ui._interactive.pak()
+        p.pak()
         # end of the story
         self.end()
 

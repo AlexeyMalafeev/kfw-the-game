@@ -1,9 +1,9 @@
-import kf_lib.ui
-import kf_lib.ui._interactive
-import kf_lib.ui._menu
-from ..fighting import fight
+import random
+
+from kf_lib.fighting import fight
+from kf_lib.utils import rnd
 from .tournament import Tournament
-from ..utils._random import rnd
+
 
 # chances
 CH_SCHOOL_VS_SCHOOL = 0.04
@@ -50,15 +50,15 @@ def crime_up(g, rate=CRIME_INCREASE_MONTHLY, mult=1.0):
 
 # todo are random changes in kung-fu etc. working?
 def kungfu_down(g):
-    kf_lib.ui.cls()
+    g.cls()
     g.kung_fu = max(g.kung_fu - KUNGFU_CHANGE, MIN_KUNGFU)
-    kf_lib.ui._interactive.msg(f'Old man: The people of {g.town_name} are losing their interest in kung-fu...')
+    g.msg(f'Old man: The people of {g.town_name} are losing their interest in kung-fu...')
 
 
 def kungfu_up(g):
-    kf_lib.ui.cls()
+    g.cls()
     g.kung_fu = min(g.kung_fu + KUNGFU_CHANGE, MAX_KUNGFU)
-    kf_lib.ui._interactive.msg(
+    g.msg(
         'Old man: It seems everybody in {} wants \
 to practice kung-fu nowadays...'.format(
             g.town_name
@@ -105,9 +105,9 @@ def new_tournament(g):
 
 
 def poverty_down(g):
-    kf_lib.ui.cls()
+    g.cls()
     g.poverty = max(g.poverty - POVERTY_CHANGE, MIN_POVERTY)
-    kf_lib.ui._interactive.msg(
+    g.msg(
         'Old woman: There are not as many poor and homeless people in {} as before...'.format(
             g.town_name
         )
@@ -115,9 +115,9 @@ def poverty_down(g):
 
 
 def poverty_up(g):
-    kf_lib.ui.cls()
+    g.cls()
     g.poverty = min(g.poverty + POVERTY_CHANGE, MAX_POVERTY)
-    kf_lib.ui._interactive.msg('Old woman: Many people in {} now don\'t have enough to eat...'.format(g.town_name))
+    g.msg('Old woman: Many people in {} now don\'t have enough to eat...'.format(g.town_name))
 
 
 def randevent(g):
@@ -141,7 +141,7 @@ def school_vs_school(g):
     style_a = a[0].style.name
     style_b = b[0].style.name
     s = f'A fight breaks out between students of {style_a} and {style_b}!'
-    kf_lib.ui._interactive.msg(s)
+    g.msg(s)
     for f in a + b:
         f.log(s)
     win_messages = tuple(f'{st} school wins!' for st in (style_a, style_b))
