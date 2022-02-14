@@ -1,5 +1,9 @@
+import pprint
+import time
+import traceback
+
+
 def crash_report(game_inst):
-    import traceback, time, pprint
     print(time.ctime(), file=open('errors.txt', 'w'))
     traceback.print_exc()
     traceback.print_exc(file=open('errors.txt', 'a'))
@@ -8,6 +12,6 @@ def crash_report(game_inst):
     print('debugging info saved to "debug.txt"')
     try:
         game_inst.save_game('emergency_save.txt')
-    except:
+    except:  # noqa
         input('-FAILED TO SAVE GAME-')
     input('Press Enter to exit')

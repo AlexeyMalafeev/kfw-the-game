@@ -1,4 +1,4 @@
-from kf_lib.utils import multiply
+from kf_lib.utils import mean, multiply
 
 BOOK_EXP = (10, 50)
 FIGHT_EXP_BASE = 20

@@ -1,6 +1,5 @@
 import random
 
-
 from kf_lib.kung_fu import moves
 from kf_lib.utils import float_to_pcnt, mean
 

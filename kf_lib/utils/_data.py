@@ -1,5 +1,5 @@
+from kf_lib.ui import pretty_table
 from kf_lib.utils import mean, pcnt, median
-from kf_lib.ui._align import pretty_table
 
 
 def compare_dicts(d1, d2, sort_col_index=0, descending=True):
@@ -35,16 +35,6 @@ def dict_diff(d1, d2):
     return d
 
 
-def summary(data):
-    """Supports lists and dict values"""
-    if isinstance(data, dict):
-        data = list(data.values())
-    mx, mn = max(data), min(data)
-    return 'Min: {}, Max: {}, Range: {}, Median: {}, Mean: {}'.format(
-        mn, mx, mx - mn, median(data), mean(data)
-    )
-
-
 def ranked(d, as_string=True, descending=True, diff_from_mean=True):
     """Sort d by values"""
     tups = [(k, v) for k, v in d.items()]
@@ -62,3 +52,13 @@ def ranked(d, as_string=True, descending=True, diff_from_mean=True):
             return pretty_table(tups)
     else:
         return tups
+
+
+def summary(data):
+    """Supports lists and dict values"""
+    if isinstance(data, dict):
+        data = list(data.values())
+    mx, mn = max(data), min(data)
+    return 'Min: {}, Max: {}, Range: {}, Median: {}, Mean: {}'.format(
+        mn, mx, mx - mn, median(data), mean(data)
+    )

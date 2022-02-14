@@ -2,6 +2,7 @@
 ""  
 date  
 * feat: start using rich module for colorful text 
+* refactor: significant overhaul of utils, ui and testing tools
 
 
 ### v.0.6.5-beta

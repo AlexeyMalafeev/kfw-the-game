@@ -1,5 +1,6 @@
 from kf_lib.utils import add_pcnt, add_sign, hund
 
+
 AGILITY1 = 0.3
 AGILITY2 = 0.6
 ATTACK1 = 0.1

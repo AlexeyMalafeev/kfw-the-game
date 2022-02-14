@@ -40,6 +40,12 @@ def median(values):
         return values[i]
 
 
+def multiply(numbers):
+    from functools import reduce
+
+    return reduce(lambda x, y: x * y, numbers)
+
+
 def percentage(v, max_v):
     """Calculate and output percentage in the following format: '20/40 (50%)'."""
     return '{}/{} ({}%)'.format(v, max_v, pcnt(v, max_v))
@@ -54,18 +60,6 @@ def pcnt(v, max_v, n=2, as_string=False):
         return str(p) + '%'
     else:
         return p
-
-
-def sigmoid(x):
-    """Numerically-stable sigmoid function."""
-    import math
-
-    if x >= 0:
-        z = math.exp(-x)
-        return 1 / (1 + z)
-    else:
-        z = math.exp(x)
-        return z / (1 + z)
 
 
 def roman(x):
@@ -87,7 +81,13 @@ def roman(x):
     return 'X' * tens + repl[rem]
 
 
-def multiply(numbers):
-    from functools import reduce
+def sigmoid(x):
+    """Numerically-stable sigmoid function."""
+    import math
 
-    return reduce(lambda x, y: x * y, numbers)
+    if x >= 0:
+        z = math.exp(-x)
+        return 1 / (1 + z)
+    else:
+        z = math.exp(x)
+        return z / (1 + z)

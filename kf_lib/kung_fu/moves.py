@@ -1,9 +1,10 @@
 import os
+import random
 
-from ..kung_fu.ascii_art import get_ascii
-from ..fighting.distances import DISTANCE_FEATURES
-from ..utils import roman
-from ..utils._random import rndint_2d
+from kf_lib.fighting.distances import DISTANCE_FEATURES
+from kf_lib.utils import rndint_2d, roman
+from .ascii_art import get_ascii
+
 
 # RARE_FEATURE = 'exotic'
 

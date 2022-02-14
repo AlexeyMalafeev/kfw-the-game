@@ -1,5 +1,5 @@
 from kf_lib import game
-from kf_lib import testing_tools as tt
+from kf_lib.testing import testing_tools as tt
 from kf_lib.ui._interactive import pe
 
 try:
