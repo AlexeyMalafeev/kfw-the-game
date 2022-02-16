@@ -1,6 +1,7 @@
 import string
 
-from kf_lib.ui import cls, get_key
+from ._keyboard import get_key
+from ._screen import cls
 
 
 def menu(

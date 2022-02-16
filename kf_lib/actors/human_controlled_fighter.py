@@ -213,7 +213,7 @@ class HumanControlledFighter(Fighter):
         pak()
 
     def refresh_screen(self):
-        cls()
+        self.cls()
         self.show(self.get_f_info())
 
     def see_fight_info(self, show_opp=True):

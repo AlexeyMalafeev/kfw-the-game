@@ -1,19 +1,12 @@
+from typing import Dict, List
+
+
 from kf_lib.kung_fu import boosts as b
 from kf_lib.things import weapons
 from kf_lib.utils import add_sign
 
-# tech containers (for easy retrieval)
-# tech_name: tech_obj
-all_techs = {}
 
-# tech names (for convenient random choosing)
-upgradable_techs = []
-advanced_techs = []
-style_techs = []
-weapon_techs = []
-
-
-class Tech(object):
+class Tech:
     def __init__(
             self,
             name,
@@ -29,13 +22,13 @@ class Tech(object):
             self.fav_moves = fav_moves
         self.is_upgradable = is_upgradable
         if self.is_upgradable:
-            upgradable_techs.append(self)
+            upgradable_tech_names.append(self.name)
         self.is_advanced = is_advanced
         if self.is_advanced:
-            advanced_techs.append(self)
+            advanced_tech_names.append(self.name)
         self.is_weapon_tech = is_weapon_tech
         if self.is_weapon_tech:
-            weapon_techs.append(self)
+            weapon_tech_names.append(self.name)
         for k in kwargs:
             setattr(self, k, kwargs[k])
         self.params = kwargs
@@ -43,6 +36,11 @@ class Tech(object):
         self.descr_short = ''
         b.set_descr(self)
         all_techs[self.name] = self
+
+    def __repr__(self):
+        return (f'Tech({self.name!r}, fav_moves={self.fav_moves!r}, '
+                f'is_upgradable={self.is_upgradable!r}, is_advanced={self.is_advanced!r}, '
+                f'is_weapon_tech={self.is_weapon_tech!r}, {self.params!r})')
 
     def apply(self, f):
         for p in self.params:
@@ -61,7 +59,7 @@ class WeaponTech(Tech):
         self.wp_type = ''
         self.wp_bonus = (0, 0)
         super().__init__(name, is_weapon_tech=True, **kwargs)
-        weapon_techs.append(self.name)
+        weapon_tech_names.append(self.name)
 
     def apply(self, f):
         if self.wp_type in f.weapon_bonus:
@@ -84,6 +82,17 @@ class WeaponTech(Tech):
         bonus = f.weapon_bonus[self.wp_type]  # list of 2
         bonus[0] -= self.wp_bonus[0]
         bonus[1] -= self.wp_bonus[1]
+
+
+# tech containers (for easy retrieval)
+# tech_name: tech_obj
+all_techs: Dict[str, Tech] = {}
+
+# tech names (for convenient random choosing)
+upgradable_tech_names: List[str] = []
+advanced_tech_names: List[str] = []
+style_tech_names: List[str] = []
+weapon_tech_names: List[str] = []
 
 
 # todo weapon techniques do nothing; implement
@@ -272,7 +281,8 @@ def get_descr(tech_name):
     return get_tech_obj(tech_name).descr
 
 
-# todo optimize techniques.get_learnable_techs
+# todo refactor and optimize the functions in techniques.py, they are a mess
+
 def get_learnable_techs(fighter=None):
     """Return names of techs fighter can learn."""
     techs = get_upgradable_techs()[:]
@@ -280,19 +290,22 @@ def get_learnable_techs(fighter=None):
         for t in fighter.techs:
             if t in techs:
                 techs.remove(t)
-            elif t in advanced_techs:
+            elif t in advanced_tech_names:
                 techs.remove(adv_to_reg(t))
     return techs
 
 
 def get_style_techs(fighter=None):
     if fighter is None:
-        return style_techs
+        return style_tech_names
     else:
-        return [t for t in fighter.techs if t in style_techs]
+        return [t for t in fighter.techs if t in style_tech_names]
 
 
 def get_tech_obj(tech_name):
+    if tech_name not in all_techs:
+        raise ValueError(f'unable to find tech name "{tech_name!r}" in all_techs (keys are tech '
+                         f'names)')
     return all_techs[tech_name]
 
 
@@ -300,7 +313,7 @@ def get_upgradable_techs(fighter=None):
     """If fighter is None, return list of all upgradable techs.
     If fighter is given, return names of techs fighter can upgrade."""
     if fighter is None:
-        return upgradable_techs
+        return upgradable_tech_names
     else:
         return [t for t in fighter.techs if get_tech_obj(t).is_upgradable]
 
@@ -309,16 +322,16 @@ def get_upgraded_techs(fighter=None):
     """If fighter is None, return list of all upgraded techs.
     If fighter is given, return names of upgraded techs fighter doesn't have."""
     if fighter is None:
-        return advanced_techs
+        return advanced_tech_names
     else:
-        return [t for t in advanced_techs if t not in fighter.techs]
+        return [t for t in advanced_tech_names if t not in fighter.techs]
 
 
 def get_weapon_techs(fighter=None):
     """If fighter is None, return list of all weapon techs.
     If fighter is given, return list of weapon techs fighter has."""
     if fighter is None:
-        return weapon_techs
+        return weapon_tech_names
     else:
         return [t for t in fighter.techs if get_tech_obj(t).is_weapon_tech]
 

@@ -3,6 +3,7 @@
 date  
 * feat: start using rich module for colorful text 
 * refactor: significant overhaul of utils, ui and testing tools
+* refactor: remove unnecessary tech classes, reimplement their functionality as attributes
 
 
 preemptive is tech-only

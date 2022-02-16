@@ -50,7 +50,7 @@ class Story(object):
         self.state += 1
         g = self.game
         p = self.player
-        p.cls()
+        g.cls()
         g.show(p.get_p_info(), align=False)
         exec(f'self.scene{self.state}()')
 
@@ -99,7 +99,7 @@ class ForeignerStory(Story):
     def intro(self):
         g = self.game
         p = self.player
-        p.cls()
+        g.cls()
         b = self.boss = fighter_factory.new_foreigner()
         g.register_fighter(b)
         t = 'Rumor has it that {}, a renowned martial artist from {}, has arrived in {} to defeat local masters and \
@@ -172,7 +172,7 @@ class NinjaTurtlesStory(Story):
     def intro(self):
         g = self.game
         p = self.player
-        p.cls()
+        g.cls()
         t = (
             'A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
             'human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed '
@@ -205,7 +205,7 @@ class NinjaTurtlesStory(Story):
 class RenownedMaster(Story):
     def intro(self):
         g, p = self.game, self.player
-        p.cls()
+        g.cls()
         name = g.get_new_name(prefix='Master')
         b = self.boss = fighter_factory.new_master_challenger(p.level, name)
         g.register_fighter(b)
@@ -252,7 +252,7 @@ class StrangeDreamsStory(Story):
     def intro(self):
         g = self.game
         p = self.player
-        p.cls()
+        g.cls()
         g.show('Every so often one has some really unusual dreams...')
         p.pak()
 
@@ -300,7 +300,7 @@ class TreasuresStory(Story):
     def intro(self):
         g = self.game
         p = self.player
-        p.cls()
+        g.cls()
         t = (
             'Everybody in {} talks about national treasures being stolen and sold to foreign buyers. Who could be '
             'responsible for such horrible crimes?'.format(g.town_name)

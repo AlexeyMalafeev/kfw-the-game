@@ -1,4 +1,4 @@
-from kf_lib.ui import get_key
+from ._keyboard import get_key
 
 
 def get_int_from_user(message, min_, max_) -> int:

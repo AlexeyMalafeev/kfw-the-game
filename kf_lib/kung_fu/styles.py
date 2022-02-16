@@ -1,9 +1,9 @@
+import random
+
 from . import boosts as b
 from .techniques import Tech
 
-
 all_styles = {}
-
 
 DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4'}
 
@@ -110,7 +110,7 @@ default_styles = [
             3: Tech('Eagle Claw I', dist3_bonus=b.STRIKE_MULT1),
             5: Tech('Eagle Claw II', stun_chance=b.STUN_CH1),
             7: Tech('Eagle Claw III', critical_chance_mult=b.CRIT_CH1,
-                         critical_mult=b.CRIT_M1),
+                    critical_mult=b.CRIT_M1),
         },
         {
             1: ('Leap Forward', 'Leap Back'),
