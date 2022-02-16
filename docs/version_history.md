@@ -5,6 +5,10 @@ date
 * refactor: significant overhaul of utils, ui and testing tools
 
 
+preemptive is tech-only
+fury is tech-only
+
+
 ### v.0.6.5-beta
 "Fist of Fury"  
 February 12, 2022  
