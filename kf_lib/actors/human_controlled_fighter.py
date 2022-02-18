@@ -14,7 +14,7 @@ class HumanControlledFighter(Fighter):
         self.show('')
         self.show(self.get_f_info(show_st_emph=True))
         options = self.get_atts_to_choose()
-        att = self.menu(options, 'Improve:')
+        att = menu(options, 'Improve:')
         self.change_att(att, 1)
 
     # def choose_best_norm_wp(self):
@@ -82,7 +82,7 @@ class HumanControlledFighter(Fighter):
         sample = self.get_techs_to_choose(annotated=True)
         if not sample:
             return
-        choice = self.menu(sample, 'Choose a technique to learn:')
+        choice = menu(sample, 'Choose a technique to learn:')
         self.learn_tech(choice)
 
     def choose_target(self):
@@ -115,14 +115,14 @@ class HumanControlledFighter(Fighter):
                     )
                 options = pretty_table(options, sep='  ', as_list=True)
                 options = list(zip(options, self.act_targets))
-                tgt = self.menu(options, title='Choose target:')
+                tgt = menu(options, title='Choose target:')
                 self.set_target(tgt)
 
     def choose_tech_to_upgrade(self):
         av_techs = self.get_techs_to_choose(annotated=True, for_upgrade=True)
         if not av_techs:
             return
-        t = self.menu(av_techs, 'Choose a technique to improve:')
+        t = menu(av_techs, 'Choose a technique to improve:')
         self.upgrade_tech(t)
 
     def cls(self):
@@ -207,7 +207,7 @@ class HumanControlledFighter(Fighter):
 
     def msg(self, text, align=True):
         self.write(text, align=align)
-        self.pak()
+        pak()
 
     def pak(self):
         pak()

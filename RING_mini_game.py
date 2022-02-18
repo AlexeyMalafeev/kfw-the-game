@@ -1,6 +1,5 @@
 from kf_lib.actors import fighter_factory
-from kf_lib.ui._interactive import pak
-from kf_lib.ui._menu import menu
+from kf_lib.ui import menu, pak
 
 
 def main():
