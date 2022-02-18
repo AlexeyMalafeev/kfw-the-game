@@ -4,10 +4,13 @@ date
 * feat: start using rich module for colorful text 
 * refactor: significant overhaul of utils, ui and testing tools
 * refactor: remove unnecessary tech classes, reimplement their functionality as attributes
+* feat: preemptive is tech-only
 
 
-preemptive is tech-only
+
 fury is tech-only
+fav_strikes in techs
+profile
 
 
 ### v.0.6.5-beta

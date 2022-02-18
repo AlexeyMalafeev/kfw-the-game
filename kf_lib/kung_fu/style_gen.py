@@ -9,7 +9,7 @@ from .techniques import Tech
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
     "Attacking": Tech('Attack Method', atk_mult=b.ATTACK1),
-    'Averting': Tech('Avert Attacks', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    'Averting': Tech('Avert Attacks', preemptive_chance=b.PREEMPTIVE_CH1),
     "Balanced": Tech('Mid-Range Strikes', dist2_bonus=b.STRIKE_MULT1),
     "Cautious": Tech('Cautious Attacks', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     "Clinging": Tech('Short Strikes', dist1_bonus=b.STRIKE_MULT1),
@@ -90,7 +90,7 @@ W2 = {
     "Razor": Tech(
         'Razor-Sharp Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
     ),
-    'Red': Tech('Red Energy', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    'Red': Tech('Red Energy', preemptive_chance=b.PREEMPTIVE_CH1),
     'Snow': Tech(
         'Snowfall', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
@@ -131,7 +131,7 @@ W3 = {  # todo add grappling stike multiplier
     "Leopard": Tech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     "Lion": Tech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
     "Lizard": Tech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
-    "Mantis": Tech('Praying Mantis', preemptive_chance_mult=b.PREEMPTIVE_CH1),
+    "Mantis": Tech('Praying Mantis', preemptive_chance=b.PREEMPTIVE_CH1),
     "Monkey": Tech('Playing Monkey', agility_mult=b.AGILITY1),
     "Ox": Tech(
         'Ox\'s Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
