@@ -11,9 +11,9 @@ date
 
 
 
-fav_strikes in techs
-increase epic min lv 
-reflexes
+fav_strikes in techs  
+increase epic min lv; epic should be used against a strong opponent only? movie-like  
+reflexes  
 
 
 ### v.0.6.5-beta
