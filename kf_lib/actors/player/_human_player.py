@@ -90,7 +90,7 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         cls()
         self.show('*LEVEL UP*')
         # do not change BasePlayer to super(), will cause bugs; todo investigate this
-        BasePlayer.level_up(times)
+        BasePlayer.level_up(self, times)
 
     def place_bet_on_tourn(self, tourn_obj):
         bet_on = menu(
