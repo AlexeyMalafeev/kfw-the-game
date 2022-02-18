@@ -544,6 +544,7 @@ class BasePlayer(Fighter):
         self.log('Is injured.')
 
     def level_up(self, times=1):
+        # do not replace with super() for now; can cause bugs; todo investigate this
         Fighter.level_up(self, times)
         self.log(f'Reaches level {self.level}.')
         self.next_level = self.get_next_lv_exp()
