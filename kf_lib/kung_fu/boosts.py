@@ -132,7 +132,7 @@ PMAP = (
     ),
     ('maneuver_time_cost_mult', 'maneuv.time', 'maneuver time cost', HUND_ADD_SIGN_ADD_PCNT),
     (
-        'preemptive_chance_mult',
+        'preemptive_chance',
         'preemptive',
         'preemptive strike chance',
         HUND_ADD_SIGN_ADD_PCNT,

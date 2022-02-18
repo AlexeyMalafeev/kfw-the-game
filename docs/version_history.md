@@ -7,13 +7,19 @@ date
 * feat: preemptive strikes are tech-only
 * feat: fury is tech-only
 * feat: new flexible profiling script
+* feat: new fight AI that is more fun (rushes in from distance 4 when hp and stamina are full)
+* fix: ASCII art errors in weapon strikes
+* fix: old bug with umbrella turning into a pole
+* fix: old bug with standard moves
 
 
 
 
-fav_strikes in techs
-increase epic min lv 
-reflexes
+fav_strikes in techs  
+increase epic min lv; epic should be used against a strong opponent only? movie-like
+reflexes  
+strong against stronger, strong against weaker - techs  
+regen styles at start of game; make more styles?
 
 
 ### v.0.6.5-beta

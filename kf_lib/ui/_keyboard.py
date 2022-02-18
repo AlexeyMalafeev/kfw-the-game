@@ -1,21 +1,22 @@
-try:
-    import msvcrt  # noqa
-
-    getch = msvcrt.getch
-except ImportError:
-    import sys
-    import tty
-    import termios
-
-    def getch():
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
+# try:
+#     import msvcrt  # noqa
+#
+#     getch = msvcrt.getch
+# except ImportError:
+#     import sys
+#     import tty
+#     import termios
+#
+#     def getch():
+#         fd = sys.stdin.fileno()
+#         old_settings = termios.tcgetattr(fd)
+#         try:
+#             tty.setraw(sys.stdin.fileno())
+#             ch = sys.stdin.read(1)
+#         finally:
+#             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+#         return ch
+import msvcrt
 
 
 def get_key():
@@ -25,4 +26,5 @@ def get_key():
     # DEBUG MODE
     # return input('key:')
     # NORMAL MODE
-    return chr(ord(getch()))
+    # return chr(ord(msvcrt.getche()))
+    return chr(ord(msvcrt.getch()))

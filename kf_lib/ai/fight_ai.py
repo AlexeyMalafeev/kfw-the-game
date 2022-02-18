@@ -266,6 +266,43 @@ class GeneticAIMoreAggro(GeneticAITrainedParams8):
         return self.choice
 
 
+class GeneticAIAttackWhenReady(GeneticAITrainedParams8):
+    def choose_move(self):
+        owner = self.owner
+        target = owner.target
+        options = self.options = []
+        weights = self.weights = []
+        atk_move = self.get_an_atk_move()
+        if atk_move is not None:
+            options.append(atk_move)
+            weights.append(self.prob_atk)
+        maneuver = self.get_a_maneuver()
+        if maneuver is not None:
+            options.append(maneuver)
+            weights.append(self.prob_move)
+            if is_at_dist4(owner):
+                if (
+                        (has_dist4_move(target) and not has_dist4_move(owner))
+                        or has_bigger_crowd(owner)
+                ) or (owner.qp == owner.qp_max and owner.stamina == owner.stamina_max):
+                    if self.file:
+                        self.write_log()
+                    return maneuver
+        if not atk_move and owner.qp < owner.qp_max / 2:
+            options.append(focus_move)
+            weights.append(self.prob_focus)
+        if not atk_move:
+            options.append(guard_move)
+            weights.append(self.prob_guard)
+        if not atk_move and owner.stamina < owner.stamina_max / 2:
+            options.append(catch_breath_move)
+            weights.append(self.prob_catch)
+        self.choice = random.choices(options, weights=weights, k=1)[0]
+        if self.file:
+            self.write_log()
+        return self.choice
+
+
 # todo how to reimplement AI classes to avoid cloning?
 # have to make clones as parameters are shared even if you copy or deepcopy classes dynamically
 class GeneticAIMoreAggroClone(GeneticAIMoreAggro):
@@ -302,7 +339,9 @@ class GeneticAIMoreAggroTrainedRecordCrowd(GeneticAIMoreAggro):
 
 # DefaultFightAI = GeneticAIAggro
 # DefaultFightAI = GeneticAIMoreAggro
-DefaultFightAI = GeneticAIMoreAggroTrainedRecord  # trained Feb 11, 2022
+DefaultFightAI = GeneticAIAttackWhenReady
+# this AI is the strongest, yet it is too defensive and boring; todo fix fight AI defensiveness
+# DefaultFightAI = GeneticAIMoreAggroTrainedRecord  # trained Feb 11, 2022
 DefaultGeneticAIforTraining = GeneticAIMoreAggroClone
 DefaultGeneticAIforTraining2 = GeneticAIMoreAggroClone2
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
@@ -327,6 +366,7 @@ set_gen_ai_params(GeneticAIMoreAggroTrainedTop, params202202_top)
 params202202_record = [0.8330525416664358, 0.00777924778884409, 0.7897769161203186,
                        0.7812461127357897, 0.9131024054734007]
 set_gen_ai_params(GeneticAIMoreAggroTrainedRecord, params202202_record)
+set_gen_ai_params(GeneticAIAttackWhenReady, params202202_record)
 
 # Feb 11, 2022, pop=16 fights=300 n_gen=128 infight gen=128; 5th place
 params202202_top_inf = [0.47562433421266803, 0.009057428537260992, 0.8716937253181152,

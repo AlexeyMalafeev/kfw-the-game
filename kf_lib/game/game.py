@@ -108,7 +108,7 @@ class Game:
             if p.check_item(items.MEDICINE) and p.check_injured():
                 if p.use_med_or_not():
                     p.use_med()
-                    self.cls()
+                    p.cls()
                     p.see_day_info()
                     return False
                 else:
@@ -116,7 +116,7 @@ class Game:
                     return True  # to skip turn
             else:
                 skip_day()
-                self.pak()
+                p.pak()
                 return True  # to skip turn
         else:
             p.inact_status = ''
@@ -301,7 +301,7 @@ class Game:
 
         style = menu(legend, 'Choose a style')
         p.set_style(style.name)
-        p.set_moves(None)  # to properly add lv1 style moves
+        # p.set_moves(None)  # to properly add lv1 style moves
         return p
 
     def get_new_name(self, prefix=''):
@@ -364,7 +364,7 @@ class Game:
     def msg(self, text, align=True):
         if self.spectator:
             self.spectator.show(text, align=align)
-            self.pak()
+            self.spectator.pak()
 
     # todo integrate Game.new_game into __init__?
     def new_game(
@@ -551,7 +551,7 @@ class Game:
                 if p in school:
                     new_rank = school.index(p) + 1
                     if p.school_rank != new_rank:
-                        self.msg(f'{p.name} is now number {new_rank} at his school.')
+                        p.msg(f'{p.name} is now number {new_rank} at his school.')
                         p.school_rank = new_rank
 
     def show(self, text, align=True):

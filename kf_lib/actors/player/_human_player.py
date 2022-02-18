@@ -1,6 +1,6 @@
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
 from kf_lib.things.items import get_item_descr, MEDICINE
-from kf_lib.ui import menu, yn
+from kf_lib.ui import cls, menu, yn
 from kf_lib.utils import float_to_pcnt
 from ._base_player import BasePlayer
 
@@ -87,9 +87,10 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
 
     def level_up(self, times=1):
         self.msg(f'{self.name}: *LEVEL UP*')
-        self.cls()
+        cls()
         self.show('*LEVEL UP*')
-        super().level_up(times)
+        # do not change BasePlayer to super(), will cause bugs; todo investigate this
+        BasePlayer.level_up(self, times)
 
     def place_bet_on_tourn(self, tourn_obj):
         bet_on = menu(
@@ -106,14 +107,14 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         return yn('')
 
     def refresh_screen(self):
-        self.cls()
+        cls()
         self.show(self.get_p_info())
 
     def rock_paper_or_scissors(self):
         return self.menu(('Rock', 'Paper', 'Scissors'))
 
     def see_day_info(self):
-        self.cls()
+        cls()
         self.show(self.game.get_date())
         self.show(self.get_p_info())
 

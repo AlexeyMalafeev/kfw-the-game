@@ -103,8 +103,8 @@ IMPROVISED_WEAPONS = (
         'umbrella',
         0.35,
         (
-            'Pole Strike',
-            'Pole Thrust',
+            'Umbrella Strike',
+            'Umbrella Thrust',
         ),
     ),
     _IW('bench', 0.25, ('Bench Smash',)),
