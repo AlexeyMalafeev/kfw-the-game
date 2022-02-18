@@ -26,4 +26,5 @@ def get_key():
     # DEBUG MODE
     # return input('key:')
     # NORMAL MODE
-    return chr(ord(msvcrt.getche()))
+    # return chr(ord(msvcrt.getche()))
+    return chr(ord(msvcrt.getch()))
