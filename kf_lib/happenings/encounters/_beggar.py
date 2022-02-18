@@ -1,6 +1,6 @@
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_feeling_greedy
-from ...utils.utilities import rnd
+from kf_lib.utils import rnd
 
 
 CH_BEGGAR_FIGHT = 0.1

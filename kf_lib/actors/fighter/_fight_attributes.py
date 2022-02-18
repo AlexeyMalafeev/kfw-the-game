@@ -12,10 +12,6 @@ CRITICAL_PER_AGILITY_POINT = 0.05
 EPIC_CHANCE_BASE = 0.0
 EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
-# PREEMPTIVE_CHANCE_BASE = 0.0
-# PREEMPTIVE_CHANCE_INCR_PER_LV = 0.005
-PREEMPTIVE_AGILITY_ADJUST = 5
-PREEMPTIVE_PER_AGILITY_POINT = 0.025
 QP_BASE = 0
 QP_INCR_PER_LV = 5
 QP_PORTION_RESTORED_PER_TURN = 0.2
@@ -77,7 +73,7 @@ class FightAttributes(BasicAttributes):
         self.epic_to_hit_mult = 2.0
         self.epic_atk_pwr_mult = 2.0
         self.fury_to_all_mult = 1.5
-        self.fury_chance = 0.05  # this gets multiplied by ratio of hp to max hp
+        self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0
         self.guard_while_attacking = False
@@ -92,8 +88,7 @@ class FightAttributes(BasicAttributes):
         self.num_moves_choose = 3
         self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
-        self.preemptive_chance = 0.0  # NB! level-dependent
-        self.preemptive_chance_mult = 1.0  # tech-dependent, todo not used yet
+        self.preemptive_chance = 0.0  # tech-dependent
         self.qp = 0
         self.qp_gain = 0  # NB! level-dependent
         self.qp_gain_mult = 1.0
@@ -220,10 +215,6 @@ class FightAttributes(BasicAttributes):
         self.counter_chance = (
             (self.agility_full - COUNTER_AGILITY_ADJUST) * COUNTER_PER_AGILITY_POINT
             * self.counter_chance_mult
-        )
-        self.preemptive_chance = (
-                (self.agility_full - PREEMPTIVE_AGILITY_ADJUST) * PREEMPTIVE_PER_AGILITY_POINT
-                * self.preemptive_chance_mult
         )
         self.critical_chance = (
             (self.agility_full - CRITICAL_AGILITY_ADJUST) * CRITICAL_PER_AGILITY_POINT

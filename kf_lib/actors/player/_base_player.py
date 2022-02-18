@@ -1,18 +1,19 @@
 import random
 
-
-from ..fighter import Fighter
-from ...game import game_stats
-from ...happenings import encounters
-from ...things import items
-from .. import quotes
+from kf_lib.actors import quotes
+from kf_lib.actors import traits
+from kf_lib.actors.fighter import Fighter
 # todo refactor importing get_rand_traits
-from ..traits import get_rand_traits  # have to import separately or .set_rand_traits doesn't work
-from .. import traits
-from ...utils import lang_tools
-from ...utils.utilities import add_sign, rnd, rndint
+# have to import separately or .set_rand_traits doesn't work
+from kf_lib.actors.traits import get_rand_traits
+from kf_lib.game import game_stats
+from kf_lib.happenings import encounters
+from kf_lib.things import items
+from kf_lib.utils import add_sign, enum_words, rnd, rndint
 
+# todo refactor _base_player into specific modules
 
+# todo compute accompl exp dynamically
 ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
@@ -218,7 +219,7 @@ class BasePlayer(Fighter):
                     s = ''
                 else:
                     s = 's'
-                a_str = lang_tools.enum_words([a.name for a in allies])
+                a_str = enum_words([a.name for a in allies])
                 self.msg('{} join{} the fight on {}\'s side.'.format(a_str, s, self.name))
             return allies
 
@@ -261,7 +262,7 @@ class BasePlayer(Fighter):
                 n = random.choice((2, 3))
                 av_mates = [f for f in self.get_school() if not f.is_player]
                 mates = random.sample(av_mates, n)
-                a_str = lang_tools.enum_words([f.name for f in mates])
+                a_str = enum_words([f.name for f in mates])
                 p.allies = mates
                 self.msg(
                     '{}, who were passing by, join the fight on {}\'s side.'.format(
@@ -313,7 +314,7 @@ class BasePlayer(Fighter):
                     s = ''
                 else:
                     s = 's'
-                p_str = lang_tools.enum_words([p.name for p in partners])
+                p_str = enum_words([p.name for p in partners])
                 self.write('{} join{} {}\'s training session.'.format(p_str, s, self.name))
             return partners
 
@@ -481,7 +482,7 @@ class BasePlayer(Fighter):
         lines = [
             self.get_f_info(),
             f'exp:{self.exp}/{self.next_level} money:{self.money}',
-            f'traits: {lang_tools.enum_words(self.traits)}',
+            f'traits: {enum_words(self.traits)}',
             f'rank in school: {self.school_rank}/{self.max_school_rank}',
         ]
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''

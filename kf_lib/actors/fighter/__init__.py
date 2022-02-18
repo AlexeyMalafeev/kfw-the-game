@@ -1,7 +1,6 @@
 from typing import List, Tuple, Union
 
-from ...kung_fu import styles
-
+from kf_lib.kung_fu import styles
 from ._ai import FightAIMethods
 from ._fight_actions import FighterWithActions
 from ._fight_utils import FightUtils

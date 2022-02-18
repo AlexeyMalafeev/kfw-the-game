@@ -1,12 +1,22 @@
-AN_EXCEPTIONS = ''
+AN_EXCEPTIONS = set()
+ARTICLE_VARIANTS = {'a', 'an', 'A', 'An'}
 
 
 def add_article(word):
-    if word[0].lower() in 'a e i o u'.split() and not word in AN_EXCEPTIONS:
+    if word[0].lower() in 'a e i o u'.split() and word not in AN_EXCEPTIONS:
         word = 'an ' + word
     else:
         word = 'a ' + word
     return word
+
+
+def choose_adverb(n, adv_low, adv_high):
+    if n <= 0.3:
+        return adv_low + ' '
+    elif n <= 0.7:
+        return ''
+    else:
+        return adv_high + ' '
 
 
 def enum_words(words_iterable):
@@ -30,10 +40,7 @@ def enum_words(words_iterable):
 def remove_article(word):
     """Remove article at the beginning of word if any."""
     ww = word.split()
-    if ww[0] in 'a an A An'.split():
-        return ' '.join(ww[1:])
-    else:
-        return word
+    return ' '.join(ww[1:]) if ww[0] in ARTICLE_VARIANTS else word
 
 
 def sg_or_pl(number):
@@ -42,7 +49,3 @@ def sg_or_pl(number):
         return 's'
     elif number == 1:
         return ''
-
-
-def sign_number(number):
-    pass

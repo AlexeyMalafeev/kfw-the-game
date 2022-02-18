@@ -1,8 +1,8 @@
+from kf_lib.actors.fighter_factory import new_craftsman
+from kf_lib.things import items
+from kf_lib.utils import rnd
 from ._base_encounter import BaseEncounter
 from ._utils import check_feeling_greedy
-from ...actors.fighter_factory import new_craftsman
-from ...things import items
-from ...utils.utilities import rnd
 
 
 ENC_CH_CRAFTSMAN = 0.01

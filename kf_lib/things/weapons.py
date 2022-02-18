@@ -1,8 +1,7 @@
-#! python3
-
+import random
 
 from kf_lib.kung_fu import moves
-from kf_lib.utils.utilities import *
+from kf_lib.utils import float_to_pcnt, mean
 
 
 all_weapons = {}

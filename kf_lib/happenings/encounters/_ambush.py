@@ -1,9 +1,9 @@
 import random
 
-from ...actors import fighter_factory
+from kf_lib.actors import fighter_factory
+from kf_lib.utils import rnd, rndint
 from ._base_encounter import BaseEncounter
 from ._utils import get_escape_chance, check_scary_fight, try_escape
-from ...utils.utilities import rnd, rndint
 
 
 CH_ENEMY_REPENTS = 0.5

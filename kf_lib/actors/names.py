@@ -1,5 +1,3 @@
-#! python3
-
 DFLT_TOURN_PART_NAME = 'Unknown'
 GANG_LEADER = 'Gang Leader'
 

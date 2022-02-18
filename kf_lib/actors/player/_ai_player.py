@@ -1,8 +1,9 @@
 import random
 
-
+from kf_lib.ui import pak
+from ...ui._screen import cls
+from kf_lib.utils import rnd
 from ._base_player import BasePlayer
-from ...utils.utilities import cls, pak, rnd
 
 
 class AIPlayer(BasePlayer):

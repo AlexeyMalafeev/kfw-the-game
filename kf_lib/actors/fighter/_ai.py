@@ -1,4 +1,4 @@
-from ...ai.fight_ai import DefaultFightAI
+from kf_lib.ai.fight_ai import DefaultFightAI
 from ._base_fighter import BaseFighter
 
 

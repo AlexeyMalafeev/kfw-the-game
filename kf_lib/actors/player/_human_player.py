@@ -1,7 +1,8 @@
+from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
+from kf_lib.things.items import get_item_descr, MEDICINE
+from kf_lib.ui import menu, yn
+from kf_lib.utils import float_to_pcnt
 from ._base_player import BasePlayer
-from ..human_controlled_fighter import HumanControlledFighter
-from ...things.items import get_item_descr, MEDICINE
-from ...utils.utilities import cls, float_to_pcnt, menu, yn
 
 
 class HumanPlayer(HumanControlledFighter, BasePlayer):
@@ -105,14 +106,14 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         return yn('')
 
     def refresh_screen(self):
-        cls()
+        self.cls()
         self.show(self.get_p_info())
 
     def rock_paper_or_scissors(self):
         return self.menu(('Rock', 'Paper', 'Scissors'))
 
     def see_day_info(self):
-        cls()
+        self.cls()
         self.show(self.game.get_date())
         self.show(self.get_p_info())
 

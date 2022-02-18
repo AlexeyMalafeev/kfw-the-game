@@ -1,10 +1,10 @@
 import pprint
 
-from ..actors import fighter_factory
-from ..happenings import tournament
-from ..kung_fu import techniques
-from ..things import items
-from ..utils.utilities import *
+from kf_lib.actors import fighter_factory
+from kf_lib.happenings import tournament
+from kf_lib.kung_fu import techniques
+from kf_lib.things import items
+from kf_lib.ui import cls, get_int_from_user, get_str_from_user, menu, pak
 
 
 class DebugMenu:

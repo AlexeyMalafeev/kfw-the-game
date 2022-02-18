@@ -7,5 +7,5 @@ try:
     g.play()
 
 except Exception:
-    from kf_lib.debug_tools import crash_report
+    from kf_lib.testing.debug_tools import crash_report
     crash_report(g)  # noqa

@@ -6,15 +6,6 @@ BUFFER_UNIT_AIR = ' ' * BUFFER_WIDTH
 BUFFER_UNIT_FLOOR = '_' * BUFFER_WIDTH
 
 
-r"""
-   (}    {)
-  /_\|  |/ |
-   |      |
-   | \  /  \
-   / |  |   \
-"""
-
-
 def concat(a, b, buffer=0):
     lines_a = a.split('\n')
     lines_b = b.split('\n')

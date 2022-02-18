@@ -1,15 +1,13 @@
-from pathlib import Path
 # from pprint import pprint
 import random
 import time
+from pathlib import Path
 from typing import List
-
 
 from tqdm import trange
 
-
 from kf_lib.ai import fight_ai, fight_ai_test
-from kf_lib.utils.utilities import rnd
+from kf_lib.utils import rnd
 
 
 class GeneticAlgorithm(object):

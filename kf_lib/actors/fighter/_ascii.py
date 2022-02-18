@@ -1,5 +1,5 @@
 from ._base_fighter import BaseFighter
-from ...kung_fu import ascii_art
+from kf_lib.kung_fu import ascii_art
 
 
 class FighterWithASCII(BaseFighter):

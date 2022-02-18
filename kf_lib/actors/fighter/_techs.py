@@ -1,8 +1,7 @@
 import random
 
-
+from kf_lib.kung_fu import techniques
 from ._base_fighter import BaseFighter
-from ...kung_fu import techniques
 
 
 ADVANCED_TECH_AT_LV = 20

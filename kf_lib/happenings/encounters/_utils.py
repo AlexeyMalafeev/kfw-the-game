@@ -1,7 +1,7 @@
 import random
 
-from ...actors import names
-from ...utils.utilities import rnd
+from kf_lib.actors import names
+from kf_lib.utils import rnd
 
 
 CH_ESCAPE_CHANCES = (0.3, 0.4, 0.5, 0.6, 0.7)

@@ -1,6 +1,7 @@
 import random
 
-from ..kung_fu import boosts
+from kf_lib.kung_fu import boosts
+
 
 # constants
 ATT_BOOST1 = 3

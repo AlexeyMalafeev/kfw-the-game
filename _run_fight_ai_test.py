@@ -2,14 +2,12 @@ from pathlib import Path
 
 
 from kf_lib.ai import fight_ai, fight_ai_test
-from kf_lib.utils.utilities import *
+from kf_lib.ui._align import pretty_table
+from kf_lib.utils import get_time
 
 try:
     write_log = True
     same_class_fights = False
-    # AIs = (fight_ai.BaseAI, fight_ai.WeightedActionsAI, fight_ai.GeneticAITrainedParams8,
-    #        fight_ai.GeneticAIExtraRules4, fight_ai.GeneticAIExtraRules7,
-    #        fight_ai.GeneticAIExtraRules9, fight_ai.GeneticAIAggro, fight_ai.GeneticAIMoreAggro)
     AIs = (
         fight_ai.BaseAI,
         fight_ai.GeneticAIAggro,

@@ -1,9 +1,7 @@
-from ._ascii import FighterWithASCII
-from ...utils.utilities import rnd, rndint, rndint_2d
-
-
 import random
 
+from kf_lib.utils import rnd, rndint, rndint_2d
+from ._ascii import FighterWithASCII
 
 BLOCK_DIVISOR = 2
 DAM_DIVISOR = 2

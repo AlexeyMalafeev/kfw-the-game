@@ -1,3 +1,21 @@
+### v.0.6.6-beta
+""  
+date  
+* feat: start using rich module for colorful text 
+* refactor: significant overhaul of utils, ui and testing tools
+* refactor: remove unnecessary tech classes, reimplement their functionality as attributes
+* feat: preemptive strikes are tech-only
+* feat: fury is tech-only
+* feat: new flexible profiling script
+
+
+
+
+fav_strikes in techs
+increase epic min lv 
+reflexes
+
+
 ### v.0.6.5-beta
 "Fist of Fury"  
 February 12, 2022  

@@ -1,6 +1,6 @@
+from kf_lib.ui import align_text, cls, get_bar, menu, pak, pretty_table
+from kf_lib.utils import roman
 from .fighter import Fighter
-from ..utils.utilities import menu, roman, pretty_table, cls, pak, get_bar, align_text
-
 
 ALIGN = 60
 INDENT = 0
@@ -213,7 +213,7 @@ class HumanControlledFighter(Fighter):
         pak()
 
     def refresh_screen(self):
-        cls()
+        self.cls()
         self.show(self.get_f_info())
 
     def see_fight_info(self, show_opp=True):
@@ -275,6 +275,7 @@ class HumanControlledFighter(Fighter):
 
     def show(self, text, align=True):
         """Print aligned text in paragraphs."""
+        from rich import print
         if align:
             pars = [align_text(t, INDENT, ALIGN) for t in text.split('\n')]
             for p in pars:

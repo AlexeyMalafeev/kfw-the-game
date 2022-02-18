@@ -1,6 +1,9 @@
-from ..actors import fighter_factory
-from ..kung_fu import styles
-from ..utils.utilities import *
+import random
+
+from kf_lib.actors import fighter_factory
+from kf_lib.kung_fu import styles
+from kf_lib.utils import rnd, rndint
+
 
 # todo refactor story into a package
 # constants
@@ -95,6 +98,7 @@ class Story(object):
 class ForeignerStory(Story):
     def intro(self):
         g = self.game
+        p = self.player
         g.cls()
         b = self.boss = fighter_factory.new_foreigner()
         g.register_fighter(b)
@@ -102,7 +106,7 @@ class ForeignerStory(Story):
              prove the superiority of his own fighting style, {}.'.format(
             b.name, b.country, g.town_name, b.style.name
         )
-        g.msg(t)
+        p.msg(t)
 
     def reward(self):
         g, p, b = self.game, self.player, self.boss
@@ -110,12 +114,12 @@ class ForeignerStory(Story):
         p.add_accompl('Foreign Challenger')
 
     def scene1(self):
-        g, b = self.game, self.boss
+        g, p, b = self.game, self.player, self.boss
         t = (
             'The people of {} keep talking about the foreigner, {}. He has already defeated some good '
             'fighters.'.format(g.town_name, b.name)
         )
-        g.msg(t)
+        p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -130,7 +134,7 @@ class ForeignerStory(Story):
         g.show(t)
         base_exp = 10
         p.gain_exp(rndint(base_exp, base_exp * 3))
-        g.pak()
+        p.pak()
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
@@ -148,17 +152,17 @@ class ForeignerStory(Story):
             p.name, b.name, f_st
         )
         g.show(t)
-        if not p.is_human or g.yn(f'Challenge {b.name}?'):
+        if not p.is_human or p.yn(f'Challenge {b.name}?'):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
                 g.show(
                     '{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(
                         p.name
                     )
                 )
-                g.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
+                p.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
                 self.reward()
             else:
-                g.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
+                p.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
                 # get depressed?
         # end of the story
         self.end()
@@ -167,6 +171,7 @@ class ForeignerStory(Story):
 class NinjaTurtlesStory(Story):
     def intro(self):
         g = self.game
+        p = self.player
         g.cls()
         t = (
             'A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
@@ -174,7 +179,7 @@ class NinjaTurtlesStory(Story):
             'tones, clearly deciding what to do next...'
         )
         g.show(t)
-        g.pak()
+        p.pak()
 
     def reward(self):
         p = self.player
@@ -208,7 +213,7 @@ class RenownedMaster(Story):
             '{}, a renowned master of {} kung-fu from a remote province, comes to {} and stays at a local '
             'tavern.'.format(b.name, b.style.name, g.town_name)
         )
-        g.msg(t)
+        p.msg(t)
 
     def reward(self):
         p = self.player
@@ -229,7 +234,7 @@ class RenownedMaster(Story):
         )
         g.show(t)
         p.log(f'Challenged by {b.name}.')
-        g.pak()
+        p.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
             t = (
                 '{}: "Indeed remarkable! What excellent skill. I thank you for showing me that I '
@@ -240,15 +245,16 @@ class RenownedMaster(Story):
         else:
             g.show(f'{b.name}: "I am disappointed - yet again."')
         self.end()
-        g.pak()
+        p.pak()
 
 
 class StrangeDreamsStory(Story):
     def intro(self):
         g = self.game
+        p = self.player
         g.cls()
         g.show('Every so often one has some really unusual dreams...')
-        g.pak()
+        p.pak()
 
     def reward(self):
         p = self.player
@@ -293,12 +299,13 @@ class StrangeDreamsStory(Story):
 class TreasuresStory(Story):
     def intro(self):
         g = self.game
+        p = self.player
         g.cls()
         t = (
             'Everybody in {} talks about national treasures being stolen and sold to foreign buyers. Who could be '
             'responsible for such horrible crimes?'.format(g.town_name)
         )
-        g.msg(t)
+        p.msg(t)
         self.boss = b = fighter_factory.new_official(g.get_new_name('Official'))
         g.register_fighter(b)
 
@@ -316,7 +323,7 @@ class TreasuresStory(Story):
             'Some old man: "Fear not officials, except those who officiate over you! This is '
             f'{b.name}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'
         )
-        g.msg(t)
+        p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -326,7 +333,7 @@ class TreasuresStory(Story):
             'for insulting an official?"'.format(p.name, b.name, BRIBE)
         )
         g.show(t)
-        if (not p.is_human or g.yn('Pay the bribe?')) and p.check_money(BRIBE):
+        if (not p.is_human or p.yn('Pay the bribe?')) and p.check_money(BRIBE):
             if rnd() <= p.feel_too_greedy:
                 p.show(
                     '{} feels too greedy to pay this ridiculous "fine": "You are no better than a '
@@ -353,7 +360,7 @@ class TreasuresStory(Story):
             g.show(t)
         else:
             g.show(f'{b.name}: "That will teach you! Next time just pay.')
-        g.pak()
+        p.pak()
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
@@ -364,7 +371,7 @@ class TreasuresStory(Story):
                 p=p.name, b=b.name
             )
         )
-        g.msg(t)
+        p.msg(t)
 
     def scene4(self):
         g, p, b = self.game, self.player, self.boss
@@ -377,12 +384,12 @@ class TreasuresStory(Story):
                 p=p.name, b=b.name
             )
         )
-        g.msg(t)
+        p.msg(t)
         # first fight
         enemies = fighter_factory.new_bodyguard(n=2)
         if p.fight(enemies[0], en_allies=enemies[1:], af_option=True):
             g.show('{}: "This can\'t be... They were supposed to..."'.format(b.name))
-            g.pak()
+            p.pak()
             if p.fight(b):
                 t = 'The police arrested {}... The people of {} are proud of {}!'.format(
                     b.name, g.town_name, p.name
@@ -402,7 +409,7 @@ Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t 
                 'too. But frankly, {p} is lucky to be alive...'.format(p=p.name, b=b.name)
             )
             g.show(t)
-        g.pak()
+        p.pak()
         # end of the story
         self.end()
 

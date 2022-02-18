@@ -2,7 +2,7 @@ import random
 
 
 from ._base_fighter import BaseFighter
-from .. import quotes
+from kf_lib.actors import quotes
 
 
 class QuoteMethods(BaseFighter):

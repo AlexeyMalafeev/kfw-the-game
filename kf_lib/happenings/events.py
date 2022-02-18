@@ -1,6 +1,8 @@
-from ..fighting import fight
+import random
+
+from kf_lib.fighting import fight
+from kf_lib.utils import rnd
 from .tournament import Tournament
-from ..utils.utilities import *
 
 
 # chances

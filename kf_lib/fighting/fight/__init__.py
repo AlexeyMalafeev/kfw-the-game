@@ -1,6 +1,13 @@
-from ...things import items
-from ...actors import names
-from ...utils.utilities import *
+import random
+
+
+from kf_lib.ui import cls, menu, pak, yn
+from kf_lib.things import items
+from kf_lib.actors import names
+
+
+# todo separate fight.__init__.py into submodules
+
 
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
 
@@ -597,14 +604,14 @@ class NormalFight(AutoFight):
     """Does not only have fight mechanics, but also outputs what happens during the fight."""
 
     def cls(self):
-        self.main_player.cls()
+        cls()
 
     def display(self, text, **kwargs):
         BaseFight.display(self, text, **kwargs)
         self.show(text, **kwargs)
 
     def pak(self):
-        self.main_player.pak()
+        pak()
 
     def prepare_fighters(self):
         AutoFight.prepare_fighters(self)

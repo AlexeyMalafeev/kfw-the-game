@@ -1,26 +1,19 @@
-"""
-To play:
-
-g = Game()
-g.new_game() OR g.load_game('save.txt')
-g.play()
-
-"""
+import os
+import random
 from pathlib import Path
 
-
-from ..actors import fighter_factory, names
-from ..actors.player import (
+from kf_lib.actors import fighter_factory, names
+from kf_lib.actors.player import (
     HumanPlayer,
     ALL_AI_PLAYERS,  # used in load/new_game
 )
-from .debug_menu import DebugMenu
+from kf_lib.happenings import events, encounters, story
+from kf_lib.kung_fu import styles, style_gen
+from kf_lib.things import items
+from kf_lib.ui import cls, get_int_from_user, menu, pak, yn
+from kf_lib.utils import rnd, rndint
 from . import game_stats
-from ..kung_fu.moves import BASIC_MOVES
-from ..kung_fu import styles, style_gen
-from ..things import items
-from ..happenings import events, encounters, story
-from ..utils.utilities import *
+from .debug_menu import DebugMenu
 
 
 # todo refactor game.py into submodules
@@ -92,10 +85,9 @@ class Game:
         self.fights_total = 0
         self.chosen_quit = False
         self.chosen_load = False
-        self.output_stats = True
-        self.write_win_data = False
-        self.n_days_to_win = 'n/a'
+        self.n_days_to_win = None
         self.play_indefinitely = False
+        self.silent_ending = False
 
         self.enc_count_dict = {}  # counter for how many times encounters happened
         for e in encounters.ENC_LIST:
@@ -106,8 +98,7 @@ class Game:
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
         play_indefinitely fights_total enc_count_dict'''.split()
 
-    @staticmethod
-    def check_inactive_player(p):
+    def check_inactive_player(self, p):
         def skip_day():
             p.change_stat('days_inactive', 1)
             p.inactive -= 1
@@ -117,8 +108,7 @@ class Game:
             if p.check_item(items.MEDICINE) and p.check_injured():
                 if p.use_med_or_not():
                     p.use_med()
-                    # self.pak()
-                    p.cls()
+                    self.cls()
                     p.see_day_info()
                     return False
                 else:
@@ -126,7 +116,7 @@ class Game:
                     return True  # to skip turn
             else:
                 skip_day()
-                p.pak()
+                self.pak()
                 return True  # to skip turn
         else:
             p.inact_status = ''
@@ -155,7 +145,11 @@ class Game:
                     winners.append(p)
                     victory_types.append(k)
         if wins:
-            if self.output_stats:
+            days, months, years = [int(x) for x in self.get_date().split('/')]
+            n_days = (years - 1) * 360 + (months - 1) * 30 + days
+            self.n_days_to_win = n_days
+
+            if not self.silent_ending:
                 print('\n'.join(wins))
                 input('Press Enter to see stats.')
                 self.save_game('game over.txt')
@@ -165,33 +159,30 @@ class Game:
                 stats = sg.get_full_report_string()
                 print(stats)
                 print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
+
+                # todo decide what to do about win_data
+                # this is not used anywhere
+                # with open('win_data.tab', 'a') as f:
+                #     for i, p in enumerate(winners):
+                #         data = '\t'.join(
+                #             str(x)
+                #             for x in (
+                #                 p.__class__.__name__,
+                #                 p.style.name,
+                #                 p.level,
+                #                 p.get_base_atts_tup(),
+                #                 p.techs,
+                #                 p.traits,
+                #                 self.crime,
+                #                 self.poverty,
+                #                 self.kung_fu,
+                #                 victory_types[i],
+                #                 n_days,
+                #             )
+                #         )
+                #         f.write(f'\n{data}')
+                #         print(data)
                 self.play_indefinitely = yn('Keep playing indefinitely?')
-                # input('Press Enter to exit game.')
-                # self.quit()
-            days, months, years = [int(x) for x in self.get_date().split('/')]
-            n_days = (years - 1) * 360 + months * 30 + days
-            if self.write_win_data:
-                with open('win_data.tab', 'a') as f:
-                    for i, p in enumerate(winners):
-                        data = '\t'.join(
-                            str(x)
-                            for x in (
-                                p.__class__.__name__,
-                                p.style.name,
-                                p.level,
-                                p.get_base_atts_tup(),
-                                p.techs,
-                                p.traits,
-                                self.crime,
-                                self.poverty,
-                                self.kung_fu,
-                                victory_types[i],
-                                n_days,
-                            )
-                        )
-                        f.write(f'\n{data}')
-                        print(data)
-            self.n_days_to_win = n_days
             return True
 
     def cls(self):
@@ -373,8 +364,9 @@ class Game:
     def msg(self, text, align=True):
         if self.spectator:
             self.spectator.show(text, align=align)
-            self.spectator.pak()
+            self.pak()
 
+    # todo integrate Game.new_game into __init__?
     def new_game(
         self,
         num_players=0,
@@ -382,13 +374,11 @@ class Game:
         ai_only=False,
         auto_save_on='?',
         forced_aip_class=None,
-        output_stats=True,
-        write_win_data=False,
         generated_styles='?',
+        silent_ending=False,
     ):
         """Initialize a new game."""
-        self.output_stats = output_stats
-        self.write_win_data = write_win_data
+        self.silent_ending = silent_ending
         # options
         if not num_players:
             num_players = get_int_from_user('Number of players?', 1, MAX_NUM_PLAYERS)
@@ -493,7 +483,7 @@ class Game:
 
     def pak(self):
         if self.spectator:
-            self.spectator.pak()
+            pak()
 
     def play(self):
         """Play the (previously initialized or loaded) game."""
@@ -561,7 +551,7 @@ class Game:
                 if p in school:
                     new_rank = school.index(p) + 1
                     if p.school_rank != new_rank:
-                        p.msg(f'{p.name} is now number {new_rank} at his school.')
+                        self.msg(f'{p.name} is now number {new_rank} at his school.')
                         p.school_rank = new_rank
 
     def show(self, text, align=True):
@@ -691,7 +681,7 @@ class Game:
         p.show(p.get_techs_string())
         print()
         p.show('Moves:')
-        print(', '.join([str(m) for m in p.moves if m not in BASIC_MOVES]))
+        print(', '.join([str(m) for m in p.moves if not m.is_basic]))
         print()
         # add move screen with more detailed descriptions
         choice = menu(

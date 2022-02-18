@@ -1,12 +1,11 @@
 import random
 
-
+from kf_lib.ui import get_bar
+from kf_lib.utils import choose_adverb, rnd, rndint_2d
 from ._distances import DistanceMethods
 from ._exp_worth import ExpMethods
 from ._strike_mechanics import StrikeMechanics
-from ...utils.utilities import rnd, get_adverb, get_bar, rndint_2d
 from ._weapons import WeaponMethods
-
 
 DUR_FURY_MIN = 500
 DUR_FURY_MAX = 1000
@@ -83,7 +82,7 @@ class FighterWithActions(
             atkr.dam = 0
             self.change_qp(self.qp_gain)
             self.current_fight.display(
-                '{} {}dodges!'.format(self.name, get_adverb(dodge_chance, 'barely', 'easily'))
+                '{} {}dodges!'.format(self.name, choose_adverb(dodge_chance, 'barely', 'easily'))
             )
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
@@ -91,7 +90,7 @@ class FighterWithActions(
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
             self.current_fight.display(
-                '{} {}blocks!'.format(self.name, get_adverb(block_chance, 'barely', 'easily'))
+                '{} {}blocks!'.format(self.name, choose_adverb(block_chance, 'barely', 'easily'))
             )
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()
@@ -265,13 +264,14 @@ class FighterWithActions(
     def try_fury(self):
         if (
             not self.check_status('fury')
+            # todo possibly change how fury prob is computed
             and rnd() <= ((1 - self.hp / self.hp_max) * self.fury_chance)
         ):
             fury_dur = rndint_2d(DUR_FURY_MIN, DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} is in FURY!')
-            self.current_fight.pak()
+            self.pak()
 
     def try_in_fight_impro_wp(self):
         if (
@@ -283,7 +283,7 @@ class FighterWithActions(
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} grabs an improvised weapon!')
-            self.current_fight.pak()
+            self.pak()
 
     def try_ko(self):
         tgt = self.target
