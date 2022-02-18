@@ -373,7 +373,7 @@ class Game:
         auto_save_on='?',
         forced_aip_class=None,
         generated_styles='?',
-        silent_ending=True,
+        silent_ending=False,
     ):
         """Initialize a new game."""
         self.silent_ending = silent_ending
