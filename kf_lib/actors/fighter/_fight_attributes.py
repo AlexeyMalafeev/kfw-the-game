@@ -73,7 +73,7 @@ class FightAttributes(BasicAttributes):
         self.epic_to_hit_mult = 2.0
         self.epic_atk_pwr_mult = 2.0
         self.fury_to_all_mult = 1.5
-        self.fury_chance = 0.05  # this gets multiplied by ratio of hp to max hp
+        self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0
         self.guard_while_attacking = False
