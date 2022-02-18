@@ -301,7 +301,7 @@ class Game:
 
         style = menu(legend, 'Choose a style')
         p.set_style(style.name)
-        p.set_moves(None)  # to properly add lv1 style moves
+        # p.set_moves(None)  # to properly add lv1 style moves
         return p
 
     def get_new_name(self, prefix=''):
