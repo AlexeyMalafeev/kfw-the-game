@@ -12,6 +12,7 @@ date
 
 
 fav_strikes in techs
+increase epic min lv 
 reflexes
 
 

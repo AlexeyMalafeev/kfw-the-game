@@ -144,7 +144,7 @@ class FighterWithActions(
 
     def exec_move(self):
         m = self.action
-        self.cls()
+        self.current_fight.cls()
         if m.power:
             self.attack()  # changing distance is included
         else:

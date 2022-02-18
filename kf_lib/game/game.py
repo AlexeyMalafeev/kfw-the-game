@@ -160,26 +160,28 @@ class Game:
                 print(stats)
                 print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
 
-                with open('win_data.tab', 'a') as f:
-                    for i, p in enumerate(winners):
-                        data = '\t'.join(
-                            str(x)
-                            for x in (
-                                p.__class__.__name__,
-                                p.style.name,
-                                p.level,
-                                p.get_base_atts_tup(),
-                                p.techs,
-                                p.traits,
-                                self.crime,
-                                self.poverty,
-                                self.kung_fu,
-                                victory_types[i],
-                                n_days,
-                            )
-                        )
-                        f.write(f'\n{data}')
-                        print(data)
+                # todo decide what to do about win_data
+                # this is not used anywhere
+                # with open('win_data.tab', 'a') as f:
+                #     for i, p in enumerate(winners):
+                #         data = '\t'.join(
+                #             str(x)
+                #             for x in (
+                #                 p.__class__.__name__,
+                #                 p.style.name,
+                #                 p.level,
+                #                 p.get_base_atts_tup(),
+                #                 p.techs,
+                #                 p.traits,
+                #                 self.crime,
+                #                 self.poverty,
+                #                 self.kung_fu,
+                #                 victory_types[i],
+                #                 n_days,
+                #             )
+                #         )
+                #         f.write(f'\n{data}')
+                #         print(data)
                 self.play_indefinitely = yn('Keep playing indefinitely?')
             return True
 
