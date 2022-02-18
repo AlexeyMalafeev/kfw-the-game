@@ -1,6 +1,6 @@
 from kf_lib import game
 from kf_lib.actors.player import SmartAIP, SmartAIPVisible
-from kf_lib.ui._menu import yn
+from kf_lib.ui import yn
 
 try:
     g = game.Game()
