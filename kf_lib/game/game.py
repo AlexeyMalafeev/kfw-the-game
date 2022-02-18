@@ -481,7 +481,7 @@ class Game:
 
     def pak(self):
         if self.spectator:
-            self.pak()
+            pak()
 
     def play(self):
         """Play the (previously initialized or loaded) game."""
