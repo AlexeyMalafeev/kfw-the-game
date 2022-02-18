@@ -6,12 +6,12 @@ date
 * refactor: remove unnecessary tech classes, reimplement their functionality as attributes
 * feat: preemptive strikes are tech-only
 * feat: fury is tech-only
+* feat: new flexible profiling script
 
 
 
 
 fav_strikes in techs
-profile
 reflexes
 
 

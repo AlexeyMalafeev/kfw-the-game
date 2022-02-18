@@ -8,10 +8,14 @@ try:
     for i in range(n_games):
         print(i + 1, '/', n_games)
         g = game.Game()
-        # g.new_game(num_players=1, coop=False, ai_only=True, auto_save_on=False, forced_AIP_class=game.BaselineAIP,
-        #            output_stats=False, write_win_data=True)
-        g.new_game(num_players=1, coop=False, ai_only=True, auto_save_on=False, forced_aip_class=None,
-                   output_stats=False, write_win_data=True)
+        g.new_game(
+            num_players=1,
+            coop=False,
+            ai_only=True,
+            auto_save_on=False,
+            forced_aip_class=None,
+            silent_ending=True,
+        )
         g.play()
 
 

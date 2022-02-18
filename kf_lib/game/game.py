@@ -85,10 +85,9 @@ class Game:
         self.fights_total = 0
         self.chosen_quit = False
         self.chosen_load = False
-        self.output_stats = True
-        self.write_win_data = False
-        self.n_days_to_win = 'n/a'
+        self.n_days_to_win = None
         self.play_indefinitely = False
+        self.silent_ending = False
 
         self.enc_count_dict = {}  # counter for how many times encounters happened
         for e in encounters.ENC_LIST:
@@ -146,7 +145,11 @@ class Game:
                     winners.append(p)
                     victory_types.append(k)
         if wins:
-            if self.output_stats:
+            days, months, years = [int(x) for x in self.get_date().split('/')]
+            n_days = (years - 1) * 360 + (months - 1) * 30 + days
+            self.n_days_to_win = n_days
+
+            if not self.silent_ending:
                 print('\n'.join(wins))
                 input('Press Enter to see stats.')
                 self.save_game('game over.txt')
@@ -156,12 +159,7 @@ class Game:
                 stats = sg.get_full_report_string()
                 print(stats)
                 print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
-                self.play_indefinitely = yn('Keep playing indefinitely?')
-                # input('Press Enter to exit game.')
-                # self.quit()
-            days, months, years = [int(x) for x in self.get_date().split('/')]
-            n_days = (years - 1) * 360 + months * 30 + days
-            if self.write_win_data:
+
                 with open('win_data.tab', 'a') as f:
                     for i, p in enumerate(winners):
                         data = '\t'.join(
@@ -182,7 +180,7 @@ class Game:
                         )
                         f.write(f'\n{data}')
                         print(data)
-            self.n_days_to_win = n_days
+                self.play_indefinitely = yn('Keep playing indefinitely?')
             return True
 
     def cls(self):
@@ -366,6 +364,7 @@ class Game:
             self.spectator.show(text, align=align)
             self.pak()
 
+    # todo integrate Game.new_game into __init__?
     def new_game(
         self,
         num_players=0,
@@ -373,13 +372,11 @@ class Game:
         ai_only=False,
         auto_save_on='?',
         forced_aip_class=None,
-        output_stats=True,
-        write_win_data=False,
         generated_styles='?',
+        silent_ending=True,
     ):
         """Initialize a new game."""
-        self.output_stats = output_stats
-        self.write_win_data = write_win_data
+        self.silent_ending = silent_ending
         # options
         if not num_players:
             num_players = get_int_from_user('Number of players?', 1, MAX_NUM_PLAYERS)
