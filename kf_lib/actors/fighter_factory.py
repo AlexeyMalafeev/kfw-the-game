@@ -116,8 +116,9 @@ def new_craftsman():
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
 def new_custom_hcf():
     name = input('Name: ')
+    max_len = max((len(s.name) for s in styles.default_styles))
     legend = [
-        ('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
+        ('{:<{}} {}'.format(s.name, max_len, s.descr_short), s)
         for s in styles.default_styles
     ]
     # todo select starting atts
