@@ -30,7 +30,8 @@ class FighterWithActions(
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus += self.guard_dfs_bonus * self.guard_while_attacking
+            self.dfs_bonus *= (self.guard_dfs_bonus * self.guard_dfs_mult
+                               * (1.0 + self.guard_while_attacking))
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()
@@ -173,12 +174,10 @@ class FighterWithActions(
             av_moves = [m for m in av_moves if m.power]
         return av_moves
 
-    # todo reimplement this as a multiplier, not an addition of guard_dfs_bonus to dfs_bonus,
-    #  but careful with wp_dfs_bonus
     def guard(self):
         """This is called with eval as a function of the Guard move."""
         # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
-        self.dfs_bonus += self.guard_dfs_bonus
+        self.dfs_bonus *= self.guard_dfs_bonus * self.guard_dfs_mult
 
     def hit_or_miss(self):
         tgt = self.target

@@ -108,8 +108,8 @@ _WEAPON_TECHS = [
 
 LINKED_TECHS = [
     (
-        Tech('Qi Breathing', qp_gain=b.QP_GAIN1, is_upgradable=True),
-        Tech('Energy Breathing', qp_gain=b.QP_GAIN2, is_advanced=True),
+        Tech('Qi Breathing', qp_gain_mult=b.QP_GAIN1, is_upgradable=True),
+        Tech('Energy Breathing', qp_gain_mult=b.QP_GAIN2, is_advanced=True),
     ),
     (
         Tech('Health Breathing', hp_gain=b.HP_GAIN1, is_upgradable=True),
