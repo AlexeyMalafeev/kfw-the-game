@@ -25,6 +25,7 @@ MAX_NUM_PLAYERS = 6
 MAX_NUM_STUDENTS = 8
 MAX_STUDENT_LEVEL = 8
 NUM_CONVICTS = 5
+NUM_STYLES = 10
 SAVE_FOLDER = 'save'
 TOWN_STAT_VALUES = [0.05, 0.1, 0.15, 0.2]
 WALK_EXTRA_ENC = 2
@@ -98,7 +99,8 @@ class Game:
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
         play_indefinitely fights_total enc_count_dict'''.split()
 
-    def check_inactive_player(self, p):
+    @staticmethod
+    def check_inactive_player(p):
         def skip_day():
             p.change_stat('days_inactive', 1)
             p.inactive -= 1
@@ -294,8 +296,9 @@ class Game:
             if yn('Is this character ok?'):
                 break
 
+        max_len = max((len(s.name) for s in self.style_list))
         legend = [
-            ('{:<{}} {}'.format(s.name, styles.MAX_LEN_STYLE_NAME, s.descr_short), s)
+            ('{:<{}} {}'.format(s.name, max_len, s.descr_short), s)
             for s in self.style_list
         ]
 
@@ -375,6 +378,7 @@ class Game:
         auto_save_on='?',
         forced_aip_class=None,
         generated_styles='?',
+        confirm_styles_with_player=False,
         silent_ending=False,
     ):
         """Initialize a new game."""
@@ -394,11 +398,22 @@ class Game:
         if generated_styles == '?':
             generated_styles = yn('Randomly generated styles?')
         if generated_styles:
-            self.style_list = style_gen.generate_new_styles(10)  # todo this is a magic number
-            styles.default_styles = self.style_list  # todo boy is this ugly
-            styles.MAX_LEN_STYLE_NAME = max(
-                (len(s.name) for s in styles.default_styles)
-            )  # todo oh wow...
+            style_list = style_gen.generate_new_styles(NUM_STYLES)
+            max_len = max((len(s.name) for s in style_list))
+            if confirm_styles_with_player:
+                while True:
+                    pretty_styles = [f'{s.name:<{max_len}} {s.descr_short}'
+                                     for s in style_list]
+                    cls()
+                    print('\n'.join(pretty_styles))
+                    if yn('Are these styles ok?'):
+                        break
+                    else:
+                        style_list = style_gen.generate_new_styles(NUM_STYLES)
+                        max_len = max((len(s.name) for s in style_list))
+            self.style_list = style_list
+            # todo styles.py attributes shouldn't be modified from inside Game
+            styles.default_styles = self.style_list
 
         def _init_players():
             coop_mode = False

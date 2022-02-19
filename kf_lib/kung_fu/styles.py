@@ -338,8 +338,6 @@ default_styles = [
     ),
 ]
 
-MAX_LEN_STYLE_NAME = max((len(s.name) for s in default_styles))
-
 BEGGAR_STYLE = Style(
     'Beggar\'s Fist',
     {

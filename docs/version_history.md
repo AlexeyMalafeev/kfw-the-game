@@ -11,10 +11,12 @@ date
 * fix: ASCII art errors in weapon strikes
 * fix: old bug with umbrella turning into a pole
 * fix: old bug with standard moves
+* feat: confirm randomly generated styles with the player, regenerate if not ok
 
 
-
-
+config (not to choose every time, time-consuming)  
+style regen  
+buff guard  
 fav_strikes in techs  
 increase epic min lv; epic should be used against a strong opponent only? movie-like
 reflexes  
