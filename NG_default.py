@@ -6,7 +6,7 @@ try:
     g = game.Game()
     visible_ai = yn("Do you want to see what AI players do?")
     DefaultAI = SmartAIPVisible if visible_ai else SmartAIP
-    g.new_game(forced_aip_class=DefaultAI)
+    g.new_game(forced_aip_class=DefaultAI, confirm_styles_with_player=True)
     g.play()
 
 except Exception:  # noqa
