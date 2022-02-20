@@ -22,6 +22,11 @@ class FighterWithActions(
         if self.dfs_penalty_mult < 0:
             self.dfs_penalty_mult = 0
 
+    def apply_move_cost(self):
+        m = self.action
+        self.change_stamina(-m.stam_cost)
+        self.change_qp(-m.qi_cost)
+
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
         fury = ' *FURY*' if self.check_status('fury') else ''
@@ -110,7 +115,7 @@ class FighterWithActions(
             self.action = new_action
             s = f'{self.name}: {self.action.name} @ {self.target.name}'
             self.current_fight.display(s)
-            self.do_strike()
+            self.try_strike()
 
     def do_preemptive(self):
         cand_moves = self.get_av_moves(attack_moves_only=True)
@@ -121,7 +126,9 @@ class FighterWithActions(
             self.refresh_ascii()
             s = f'{self.name}: {self.action.name} @ {self.target.name}'
             self.current_fight.display(s)
-            self.do_strike()
+            self.try_strike()
+            # this is by design separate from actually performing the strike
+            self.apply_move_cost()
 
     def do_strike(self):
         m = self.action
@@ -140,8 +147,6 @@ class FighterWithActions(
         else:
             self.momentum = 0
         self.previous_actions = self.previous_actions[1:] + [m.name]
-        self.change_stamina(-m.stam_cost)
-        self.change_qp(-m.qi_cost)
 
     def exec_move(self):
         m = self.action
@@ -150,6 +155,7 @@ class FighterWithActions(
             self.attack()  # changing distance is included
         else:
             self.maneuver()
+        self.apply_move_cost()
         self.current_fight.show(self.visualize_fight_state())
         self.show_ascii()
 
@@ -206,8 +212,6 @@ class FighterWithActions(
         else:
             self.momentum = 0
         self.do_move_functions(m)
-        self.change_stamina(-m.stam_cost)
-        self.change_qp(-m.qi_cost)
 
     def prepare_for_fight(self):
         self.hp = self.hp_max

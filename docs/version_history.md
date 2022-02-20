@@ -14,11 +14,12 @@ date
 * feat: confirm randomly generated styles with the player, regenerate if not ok
 * fix: guard and guard while attacking now work properly
 * fix: qi gain techs now work properly
+* fix: stamina and qp are now properly spent when missing
+* fix: counters and preemptives can now miss, too
 
 
-
-stamina не уменьш при промахах?
-winner of tournament not shown
+блоки проверить  
+stamina не уменьш при промахах?  
 preemptive is OP; rebalance techs based on test fight balance  
 config (not to choose every time, time-consuming)  
 buff guard  
