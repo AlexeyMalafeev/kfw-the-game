@@ -177,6 +177,7 @@ class Tester(object):
             s = '\n'.join(lines)
             print(legend, s, sep='\n\n')
             print(legend, s, sep='\n\n', file=open(file_path, 'a', encoding='utf-8'))
+        print(f'\nSaved results to "{file_path}"')
         input('Press Enter')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):

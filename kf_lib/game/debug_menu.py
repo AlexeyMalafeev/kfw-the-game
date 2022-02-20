@@ -22,7 +22,7 @@ class DebugMenu:
                 ('Learn Tech', self.debug_learn_tech),
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
-                ('Inspect BasePlayer', self.debug_inspect_player),
+                ('Inspect Player', self.debug_inspect_player),
                 ('Set Attribute', self.debug_set_att),
                 ('PvP', self.debug_pvp),
             )

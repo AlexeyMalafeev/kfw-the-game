@@ -60,7 +60,7 @@ class FightAttributes(BasicAttributes):
         self.counter_chance_mult = 1.0  # tech-dependent
         self.critical_chance = 0.05  # NB! level-dependent
         self.critical_chance_mult = 1.0  # tech-dependent
-        self.critical_mult = 1.5
+        self.critical_dam_mult = 1.5
         self.dam_reduc = 0  # todo adjust this and hp_gain in boosts.py
         self.dfs_bonus = 1.0  # for moves like Guard
         self.dfs_mult = 1.0
@@ -70,8 +70,7 @@ class FightAttributes(BasicAttributes):
         self.environment_chance = 0.0  # todo get rid of this as it is just another critical?
         self.epic_chance = 0.0  # NB! level-dependent
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
-        self.epic_to_hit_mult = 2.0
-        self.epic_atk_pwr_mult = 2.0
+        self.epic_dam_mult = 2.0
         self.fury_to_all_mult = 1.5
         self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet

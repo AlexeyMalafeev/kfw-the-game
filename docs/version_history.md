@@ -16,10 +16,10 @@ date
 * fix: qi gain techs now work properly
 * fix: stamina and qp are now properly spent when missing
 * fix: counters and preemptives can now miss, too
+* fix: criticals are now working properly
 
 
 блоки проверить  
-stamina не уменьш при промахах?  
 preemptive is OP; rebalance techs based on test fight balance  
 config (not to choose every time, time-consuming)  
 buff guard  

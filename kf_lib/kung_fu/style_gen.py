@@ -51,7 +51,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Rising": Tech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
     "Sharp": Tech('Long-Range Strikes', dist3_bonus=b.STRIKE_MULT1),
     "Shattering": Tech(
-        'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
+        'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1
     ),
     'Swift-Striking': Tech(
         'Swift Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
@@ -88,7 +88,7 @@ W2 = {
     'Obsidian': Tech('Obsidian Guard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     'Rainbow': Tech('Rainbow Steps', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
     "Razor": Tech(
-        'Razor-Sharp Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1
+        'Razor-Sharp Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1
     ),
     'Red': Tech('Red Energy', preemptive_chance=b.PREEMPTIVE_CH1),
     'Snow': Tech(
@@ -119,7 +119,7 @@ W3 = {  # todo add grappling stike multiplier
     "Centipede": Tech(
         'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
-    "Cobra": Tech('Attacking Cobra', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+    "Cobra": Tech('Attacking Cobra', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1),
     "Crab": Tech('Defending Crab', guard_dfs_bonus=b.GUARD_DFS1),
     "Crane": Tech('Crane Flapping Wings', dfs_mult=b.DEFENSE1),
     "Dragon": Tech('Dragon\'s Energy', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),

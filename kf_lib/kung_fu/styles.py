@@ -254,7 +254,7 @@ default_styles = [
         'Snake',
         {
             3: Tech('Snake I', dodge_mult=b.EVADE1),
-            5: Tech('Snake II', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+            5: Tech('Snake II', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1),
             7: Tech('Snake III', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
         },
         {
@@ -326,7 +326,7 @@ default_styles = [
         'Xing Yi',
         {
             3: Tech('Xing Yi I', speed_mult=b.SPEED1),
-            5: Tech('Xing Yi II', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+            5: Tech('Xing Yi II', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1),
             7: Tech('Xing Yi III', qp_gain_mult=b.QP_GAIN1),
         },
         {
