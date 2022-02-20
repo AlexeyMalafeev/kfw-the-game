@@ -93,18 +93,19 @@ class FighterWithActions(
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
         elif roll <= block_chance:
+            self.dfs_pwr = round(self.dfs_pwr)
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
-            self.current_fight.display(
-                '{} {}blocks!'.format(self.name, choose_adverb(block_chance, 'barely', 'easily'))
-            )
+            adv = choose_adverb(block_chance, 'barely', 'easily')
+            self.current_fight.display(f'{self.name} {adv}blocks! ({self.dfs_pwr})')
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()
             self.defended = True
         else:
             self.set_ascii(prefix + 'Hit')
-        # todo handle the no defense case
+        # this is necessary here, do not remove, otherwise dam will be a float on hit / block
         atkr.dam = round(atkr.dam)
+        # todo handle the no defense case
 
     def do_counter(self):
         cand_moves = self.get_av_moves(attack_moves_only=True)

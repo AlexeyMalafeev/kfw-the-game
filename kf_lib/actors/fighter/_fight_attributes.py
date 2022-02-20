@@ -54,8 +54,8 @@ class FightAttributes(BasicAttributes):
         self.atk_mult = 1.0
         self.atk_wp_bonus = 0
         self.block_disarm = 0.005
-        self.block_mult = 1.0
-        self.block_power = 1.0  # todo give boost to block_power
+        self.block_mult = 1.0  # tech-based
+        self.block_default_power = 1.0  # this is common between all fighters; non-tech-based
         self.counter_chance = 0.0  # NB! level-dependent
         self.counter_chance_mult = 1.0  # tech-dependent
         self.critical_chance = 0.05  # NB! level-dependent

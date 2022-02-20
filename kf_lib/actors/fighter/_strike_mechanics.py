@@ -5,6 +5,7 @@ from ._ascii import FighterWithASCII
 
 BLOCK_DIVISOR = 2
 DAM_DIVISOR = 2
+BLOCK_POWER = 25  # approx. equal to Punch power
 DODGE_DIVISOR = 3
 DUR_LYING_MIN = 100
 DUR_LYING_MAX = 200
@@ -83,8 +84,10 @@ class StrikeMechanics(FighterWithASCII):
             self.to_block = x / BLOCK_DIVISOR
             self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
             # print('to dodge, to block', self.to_dodge, self.to_block)
-            self.dfs_pwr = self.dfs_penalty_mult * self.block_power * self.strength_full
-            self.dfs_pwr *= self.stamina_factor * self.wp_dfs_bonus  # todo divide by sth?
+            # todo divide dfs_pwr by sth?
+            self.dfs_pwr = (self.dfs_penalty_mult
+                            * self.block_default_power * self.block_mult * BLOCK_POWER
+                            * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
 

@@ -22,6 +22,7 @@ date
 блоки проверить  
 preemptive is OP; rebalance techs based on test fight balance  
 config (not to choose every time, time-consuming)  
+separate guard while striking mult and guard mult (first is always on, OP)  
 buff guard  
 fav_strikes in techs    
 increase epic min lv; epic should be used against a strong opponent only? movie-like
