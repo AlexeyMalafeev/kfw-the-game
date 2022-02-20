@@ -41,7 +41,7 @@ default_styles = [
         'Bagua Zhang',
         {
             3: Tech('Bagua Zhang I', dodge_mult=b.EVADE1),
-            5: Tech('Bagua Zhang II', qp_gain=b.QP_GAIN1),  # todo replace this
+            5: Tech('Bagua Zhang II', qp_gain_mult=b.QP_GAIN1),  # todo replace this
             7: Tech('Bagua Zhang III', in_fight_impro_wp_chance=b.IN_FIGHT_IMPRO_WP_CH1),
         },
         {1: 'Throw', 2: '1,palm', 4: '2,punch', 6: '3,kick', 8: '4,palm'},
@@ -254,7 +254,7 @@ default_styles = [
         'Snake',
         {
             3: Tech('Snake I', dodge_mult=b.EVADE1),
-            5: Tech('Snake II', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
+            5: Tech('Snake II', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1),
             7: Tech('Snake III', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
         },
         {
@@ -268,7 +268,7 @@ default_styles = [
         'Taiji',
         {
             3: Tech('Taiji I', guard_dfs_bonus=b.GUARD_DFS1),
-            5: Tech('Taiji II', qp_gain=b.QP_GAIN1),
+            5: Tech('Taiji II', qp_gain_mult=b.QP_GAIN1),
             7: Tech('Taiji III', health_mult=b.HEALTH1),
         },
         {2: '1,palm', 4: '2,palm', 6: '3,energy', 8: '4,energy'},
@@ -326,8 +326,8 @@ default_styles = [
         'Xing Yi',
         {
             3: Tech('Xing Yi I', speed_mult=b.SPEED1),
-            5: Tech('Xing Yi II', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1),
-            7: Tech('Xing Yi III', qp_gain=b.QP_GAIN1),
+            5: Tech('Xing Yi II', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1),
+            7: Tech('Xing Yi III', qp_gain_mult=b.QP_GAIN1),
         },
         {
             2: '1,fast,mid-range',
@@ -343,7 +343,7 @@ BEGGAR_STYLE = Style(
     {
         3: Tech('Beggar\'s Fist I', dfs_mult=b.DEFENSE1),
         5: Tech('Beggar\'s Fist II', palm_strike_mult=b.RARE_STRIKE_MULT1),
-        7: Tech('Beggar\'s Fist III', qp_gain=b.QP_GAIN1, hp_gain=b.HP_GAIN1),
+        7: Tech('Beggar\'s Fist III', qp_gain_mult=b.QP_GAIN1, hp_gain=b.HP_GAIN1),
     },
     {2: '1,palm', 4: '2,palm', 6: '3,energy', 8: '4,energy'},
 )

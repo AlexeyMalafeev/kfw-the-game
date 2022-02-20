@@ -108,8 +108,8 @@ _WEAPON_TECHS = [
 
 LINKED_TECHS = [
     (
-        Tech('Qi Breathing', qp_gain=b.QP_GAIN1, is_upgradable=True),
-        Tech('Energy Breathing', qp_gain=b.QP_GAIN2, is_advanced=True),
+        Tech('Qi Breathing', qp_gain_mult=b.QP_GAIN1, is_upgradable=True),
+        Tech('Energy Breathing', qp_gain_mult=b.QP_GAIN2, is_advanced=True),
     ),
     (
         Tech('Health Breathing', hp_gain=b.HP_GAIN1, is_upgradable=True),
@@ -150,9 +150,9 @@ LINKED_TECHS = [
         ),
     ),
     (
-        Tech('Fierce Strikes', critical_chance_mult=b.CRIT_CH1, critical_mult=b.CRIT_M1,
+        Tech('Fierce Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1,
              is_upgradable=True),
-        Tech('Explosive Strikes', critical_chance_mult=b.CRIT_CH2, critical_mult=b.CRIT_M2,
+        Tech('Explosive Strikes', critical_chance_mult=b.CRIT_CH2, critical_dam_mult=b.CRIT_M2,
              is_advanced=True),
     ),
     (

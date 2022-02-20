@@ -12,16 +12,21 @@ date
 * fix: old bug with umbrella turning into a pole
 * fix: old bug with standard moves
 * feat: confirm randomly generated styles with the player, regenerate if not ok
+* fix: guard and guard while attacking now work properly
+* fix: qi gain techs now work properly
+* fix: stamina and qp are now properly spent when missing
+* fix: counters and preemptives can now miss, too
+* fix: criticals are now working properly
 
 
+блоки проверить  
+preemptive is OP; rebalance techs based on test fight balance  
 config (not to choose every time, time-consuming)  
-style regen  
 buff guard  
-fav_strikes in techs  
+fav_strikes in techs    
 increase epic min lv; epic should be used against a strong opponent only? movie-like
 reflexes  
-strong against stronger, strong against weaker - techs  
-regen styles at start of game; make more styles?
+strong against stronger, strong against weaker - techs (intimidating, fearless)  
 
 
 ### v.0.6.5-beta

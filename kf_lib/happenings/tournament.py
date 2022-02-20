@@ -97,7 +97,7 @@ class Tournament(object):
 
     def _give_prize(self):
         winner = self.winner
-        winner.msg(f'{winner.name} wins the tournament!')
+        self.g.msg(f'{winner.name} wins the tournament!')
         if winner.is_player:
             winner.win_tourn(self.prize)
 
@@ -106,7 +106,7 @@ class Tournament(object):
             if p.bet_on_tourn_or_not():
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
                 self.bets[p] = bet_on, bet_amount
-                p.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
+                self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
             else:
                 pass
                 # if not p.is_human:
@@ -119,7 +119,7 @@ class Tournament(object):
                 win_mult = max((self.current_round, 1.5))  # 1.5 is for the 1 round edge case
                 money_won = int(bet_amount * win_mult)
                 p.money += money_won
-                p.msg(f'{p.name} wins {money_won} coins with his bet!')
+                self.g.msg(f'{p.name} wins {money_won} coins with his bet!')
                 p.record_gamble_win(money_won)
             else:
                 p.record_gamble_lost(bet_amount)

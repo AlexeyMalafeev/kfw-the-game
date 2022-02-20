@@ -95,7 +95,7 @@ PMAP = (
     ('block_mult', 'blocks', 'block efficiency', HUND_ADD_SIGN_ADD_PCNT),
     ('counter_chance_mult', 'counters', 'counterattack chance', HUND_ADD_SIGN_ADD_PCNT),
     ('critical_chance_mult', 'criticals', 'critical attack chance', HUND_ADD_SIGN_ADD_PCNT),
-    ('critical_mult', 'criticals', 'critical attack power', HUND_ADD_SIGN_ADD_PCNT),
+    ('critical_dam_mult', 'criticals', 'critical attack power', HUND_ADD_SIGN_ADD_PCNT),
     ('dam_reduc', 'dam.reduc.', 'damage reduction', (add_sign, )),
     ('dfs_mult', 'defense', 'defense', HUND_ADD_SIGN_ADD_PCNT),
     (

@@ -22,6 +22,11 @@ class FighterWithActions(
         if self.dfs_penalty_mult < 0:
             self.dfs_penalty_mult = 0
 
+    def apply_move_cost(self):
+        m = self.action
+        self.change_stamina(-m.stam_cost)
+        self.change_qp(-m.qi_cost)
+
     def attack(self):
         n1 = self.current_fight.get_f_name_string(self)
         fury = ' *FURY*' if self.check_status('fury') else ''
@@ -30,7 +35,8 @@ class FighterWithActions(
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus += self.guard_dfs_bonus * self.guard_while_attacking
+            self.dfs_bonus *= (self.guard_dfs_bonus * self.guard_dfs_mult
+                               * (1.0 + self.guard_while_attacking))
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()
@@ -96,7 +102,6 @@ class FighterWithActions(
             self.try_block_disarm()
             self.defended = True
         else:
-            self.try_critical()
             self.set_ascii(prefix + 'Hit')
         # todo handle the no defense case
         atkr.dam = round(atkr.dam)
@@ -109,7 +114,7 @@ class FighterWithActions(
             self.action = new_action
             s = f'{self.name}: {self.action.name} @ {self.target.name}'
             self.current_fight.display(s)
-            self.do_strike()
+            self.try_strike()
 
     def do_preemptive(self):
         cand_moves = self.get_av_moves(attack_moves_only=True)
@@ -120,14 +125,14 @@ class FighterWithActions(
             self.refresh_ascii()
             s = f'{self.name}: {self.action.name} @ {self.target.name}'
             self.current_fight.display(s)
-            self.do_strike()
+            self.try_strike()
+            # this is by design separate from actually performing the strike
+            self.apply_move_cost()
 
     def do_strike(self):
         m = self.action
         self.calc_atk(m)
         self.try_environment('attack')
-        # self.try_critical()
-        self.try_epic()
         self.target.calc_dfs()
         self.try_unblockable()
         self.target.try_environment('defense')
@@ -139,8 +144,6 @@ class FighterWithActions(
         else:
             self.momentum = 0
         self.previous_actions = self.previous_actions[1:] + [m.name]
-        self.change_stamina(-m.stam_cost)
-        self.change_qp(-m.qi_cost)
 
     def exec_move(self):
         m = self.action
@@ -149,6 +152,7 @@ class FighterWithActions(
             self.attack()  # changing distance is included
         else:
             self.maneuver()
+        self.apply_move_cost()
         self.current_fight.show(self.visualize_fight_state())
         self.show_ascii()
 
@@ -173,16 +177,16 @@ class FighterWithActions(
             av_moves = [m for m in av_moves if m.power]
         return av_moves
 
-    # todo reimplement this as a multiplier, not an addition of guard_dfs_bonus to dfs_bonus,
-    #  but careful with wp_dfs_bonus
     def guard(self):
         """This is called with eval as a function of the Guard move."""
         # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
-        self.dfs_bonus += self.guard_dfs_bonus
+        self.dfs_bonus *= self.guard_dfs_bonus * self.guard_dfs_mult
 
     def hit_or_miss(self):
         tgt = self.target
         if self.dam > 0:
+            self.try_critical()
+            self.try_epic()
             self.dam = max(self.dam - tgt.dam_reduc, 0)
             tgt.take_damage(self.dam)
             if tgt.momentum > 0:
@@ -207,8 +211,6 @@ class FighterWithActions(
         else:
             self.momentum = 0
         self.do_move_functions(m)
-        self.change_stamina(-m.stam_cost)
-        self.change_qp(-m.qi_cost)
 
     def prepare_for_fight(self):
         self.hp = self.hp_max
@@ -283,7 +285,7 @@ class FighterWithActions(
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} grabs an improvised weapon!')
-            self.pak()
+            self.current_fight.pak()
 
     def try_ko(self):
         tgt = self.target

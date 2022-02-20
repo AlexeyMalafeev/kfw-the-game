@@ -604,14 +604,14 @@ class NormalFight(AutoFight):
     """Does not only have fight mechanics, but also outputs what happens during the fight."""
 
     def cls(self):
-        cls()
+        self.main_player.cls()
 
     def display(self, text, **kwargs):
         BaseFight.display(self, text, **kwargs)
         self.show(text, **kwargs)
 
     def pak(self):
-        pak()
+        self.main_player.pak()
 
     def prepare_fighters(self):
         AutoFight.prepare_fighters(self)

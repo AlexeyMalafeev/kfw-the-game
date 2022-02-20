@@ -1,203 +1,220 @@
-Sun Feb  6 19:52:12 2022
-
-
-#  Key       D1    D2    Diff%  Sum  
-1  speed     6127  6037  0.74   12164
-2  strength  6157  6074  0.68   12231
-3  health    6087  6155  -0.56  12242
-4  agility   6088  6193  -0.85  12281
-
-Min: 6087, Max: 6157, Range: 70, Median: 6107.5, Mean: 6114.75
+Sat Feb 19 19:17:34 2022
+atts:
 
 
 
 #  Key       D1    D2    Diff%  Sum  
-1  speed     6303  6128  1.41   12431
-2  strength  6299  6223  0.61   12522
-3  health    6267  6280  -0.1   12547
-4  agility   6260  6313  -0.42  12573
+1  speed     6086  5937  1.24   12023
+2  health    6138  6018  0.99   12156
+3  strength  6038  6038  0.0    12076
+4  agility   5867  6136  -2.24  12003
 
-Min: 6260, Max: 6303, Range: 43, Median: 6283.0, Mean: 6282.25
+Min: 5867, Max: 6138, Range: 271, Median: 6062.0, Mean: 6032.25
+
+full atts:
+
+
+
+#  Key       D1    D2    Diff%  Sum  
+1  speed     6249  6044  1.67   12293
+2  health    6289  6139  1.21   12428
+3  strength  6203  6161  0.34   12364
+4  agility   6013  6253  -1.96  12266
+
+Min: 6013, Max: 6289, Range: 276, Median: 6226.0, Mean: 6188.5
+
+att diffs:
 
 
 
 #   Key  D1   D2   Diff%   Sum
-1   11   2    0    100.0   2  
-2   0    12   9    14.29   21 
-3   1    102  78   13.33   180
-4   2    263  245  3.54    508
-5   4    173  174  -0.29   347
-6   3    222  226  -0.89   448
-7   6    51   57   -5.56   108
-8   5    116  131  -6.07   247
-9   8    13   15   -7.14   28 
-10  9    6    8    -14.29  14 
-11  7    38   53   -16.48  91 
-12  10   2    3    -20.0   5  
+1   10   1    0    100.0   1  
+2   0    11   6    29.41   17 
+3   1    113  82   15.9    195
+4   2    245  232  2.73    477
+5   3    240  229  2.35    469
+6   6    72   72   0.0     144
+7   9    4    4    0.0     8  
+8   11   1    1    0.0     2  
+9   4    176  183  -1.95   359
+10  8    16   17   -3.03   33 
+11  5    94   129  -15.7   223
+12  7    27   44   -23.94  71 
 13  12   0    1    -100.0  1  
 
-Min: 0, Max: 263, Range: 263, Median: 38, Mean: 76.92
+Min: 0, Max: 245, Range: 245, Median: 27, Mean: 76.92
+
+style buffs:
 
 
 
 #   Key              D1   D2   Diff%   Sum
-1   health           123  81   20.59   204
-2   speed            105  71   19.32   176
-3   agility          102  79   12.71   181
-4   strike time      104  82   11.83   186
-5   mid-range        120  99   9.59    219
-6   kicks            116  96   9.43    212
-7   long-range       125  104  9.17    229
-8   jumps            114  95   9.09    209
-9   counters         92   88   2.22    180
-10  palm str.        93   91   1.09    184
-11  strength         86   85   0.58    171
-12  close-range      127  126  0.4     253
-13  preemptive       93   94   -0.53   187
-14  guard            84   85   -0.59   169
-15  qi               92   94   -1.08   186
-16  criticals        94   97   -1.57   191
-17  HP gain          94   101  -3.59   195
-18  defense          78   84   -3.7    162
-19  fury             90   97   -3.74   187
-20  stun             87   94   -3.87   181
-21  maneuv.time      85   92   -3.95   177
-22  dam.reduc.       81   88   -4.14   169
-23  punches          85   95   -5.56   180
-24  blocks, disarm   78   89   -6.59   167
-25  resist KO        56   64   -6.67   120
-26  stamina          93   107  -7.0    200
-27  attack           94   111  -8.29   205
-28  dodge            86   103  -8.99   189
-29  guard while atk  77   94   -9.94   171
-30  grappling        27   33   -10.0   60 
-31  elbows, knees    56   73   -13.18  129
-32  unblock.         70   107  -20.9   177
+1   preemptive       145  93   21.85   238
+2   speed            88   60   18.92   148
+3   strength         85   61   16.44   146
+4   grappling        32   24   14.29   56 
+5   jumps            145  113  12.4    258
+6   agility          80   63   11.89   143
+7   health           87   69   11.54   156
+8   kicks            150  125  9.09    275
+9   strike time      114  101  6.05    215
+10  environment      48   43   5.49    91 
+11  attack           137  126  4.18    263
+12  palm str.        120  115  2.13    235
+13  maneuv.time      118  116  0.85    234
+14  punches          114  113  0.44    227
+15  dodge            131  132  -0.38   263
+16  guard while atk  129  130  -0.39   259
+17  qi               141  144  -1.05   285
+18  close-range      93   96   -1.59   189
+19  HP gain          113  118  -2.16   231
+20  resist KO        99   104  -2.46   203
+21  counters         125  132  -2.72   257
+22  dam.reduc.       114  121  -2.98   235
+23  vs crowd         45   48   -3.23   93 
+24  blocks           119  128  -3.64   247
+25  criticals        110  119  -3.93   229
+26  long-range       101  110  -4.27   211
+27  elbows           97   106  -4.43   203
+28  fury             121  134  -5.1    255
+29  stamina          119  133  -5.56   252
+30  unblock.         61   69   -6.15   130
+31  defense          123  140  -6.46   263
+32  weapons          42   49   -7.69   91 
+33  knees            88   104  -8.33   192
+34  mid-range        99   120  -9.59   219
+35  guard            107  131  -10.08  238
+36  stun             117  145  -10.69  262
+37  disarm           103  150  -18.58  253
 
-Min: 27, Max: 127, Range: 100, Median: 92.0, Mean: 90.84
+Min: 32, Max: 150, Range: 118, Median: 113, Mean: 104.32
+
+techs 1:
 
 
 
 #   Key                   D1  D2  Diff%   Sum
-1   Brawler's Resilience  64  47  15.32   111
-2   Fast Strikes          56  43  13.13   99 
-3   Horse-like Stamina    52  42  10.64   94 
-4   18 Attack Forms       57  47  9.62    104
-5   Environment Fighting  52  43  9.47    95 
-6   18 Defense Forms      56  48  7.69    104
-7   Fierce Strikes        50  43  7.53    93 
-8   Flying Strikes        48  42  6.67    90 
-9   Powerful Kicks        50  44  6.38    94 
-10  Hardened Palms        46  41  5.75    87 
-11  Health Breathing      46  41  5.75    87 
-12  Shadow Slips Away     46  42  4.55    88 
-13  Iron Fist             59  55  3.51    114
-14  Lotus Stance          50  48  2.04    98 
-15  Unlikely Weapons      46  45  1.1     91 
-16  Elbow Boxing          51  51  0.0     102
-17  Preemptive Strikes    50  51  -0.99   101
-18  Behind You            48  50  -2.04   98 
-19  Monkey and Fox        47  50  -3.09   97 
-20  Wall-like Protection  42  45  -3.45   87 
-21  Guard While Striking  48  52  -4.0    100
-22  Qi Breathing          51  57  -5.56   108
-23  Knee Boxing           48  54  -5.88   102
-24  Debilitating Strikes  51  59  -7.27   110
-25  Fast Movement         49  57  -7.55   106
-26  Fist of Fury          50  60  -9.09   110
-27  Iron Vest             36  47  -13.25  83 
-28  Advanced Guard        43  62  -18.1   105
-29  Retaliative Blows     43  69  -23.21  112
+1   Flying Strikes        59  28  35.63   87 
+2   Qi Breathing          53  36  19.1    89 
+3   Fast Strikes          55  39  17.02   94 
+4   Preemptive Strikes    49  39  11.36   88 
+5   Health Breathing      46  37  10.84   83 
+6   Iron Fist             47  39  9.3     86 
+7   Wall-like Protection  48  41  7.87    89 
+8   Fast Movement         44  38  7.32    82 
+9   Environment Fighting  45  40  5.88    85 
+10  Elbow Boxing          46  42  4.55    88 
+11  Advanced Guard        42  40  2.44    82 
+12  Debilitating Strikes  43  42  1.18    85 
+13  Retaliative Blows     47  46  1.08    93 
+14  Fierce Strikes        45  45  0.0     90 
+15  Powerful Kicks        51  51  0.0     102
+16  Iron Vest             41  42  -1.2    83 
+17  Hardened Palms        46  48  -2.13   94 
+18  18 Attack Forms       44  46  -2.22   90 
+19  Lotus Stance          37  39  -2.63   76 
+20  Shadow Slips Away     51  54  -2.86   105
+21  Behind You            44  47  -3.3    91 
+22  Knee Boxing           38  43  -6.17   81 
+23  Guard While Striking  42  48  -6.67   90 
+24  18 Defense Forms      46  53  -7.07   99 
+25  Unlikely Weapons      39  46  -8.24   85 
+26  Horse-like Stamina    43  58  -14.85  101
+27  Fist of Fury          42  60  -17.65  102
+28  Brawler's Resilience  36  53  -19.1   89 
+29  Monkey and Fox        34  63  -29.9   97 
 
-Min: 36, Max: 64, Range: 28, Median: 50, Mean: 49.48
+Min: 34, Max: 59, Range: 25, Median: 45, Mean: 44.93
+
+techs 2:
 
 
 
 #   Key                           D1  D2  Diff%   Sum
-1   Anything Is a Weapon          2   0   100.0   2  
-2   Shadow of a Shadow            1   0   100.0   1  
-3   Explosive Strikes             4   1   60.0    5  
-4   36 Attack Forms               6   2   50.0    8  
-5   Lightning-Fast Movement       2   1   33.33   3  
-6   Emperor's Fortress            2   1   33.33   3  
-7   Lightning-Fast Strikes        2   1   33.33   3  
-8   Behind You All                2   1   33.33   3  
-9   Superior Iron Vest            2   1   33.33   3  
-10  Palms of Justice              3   2   20.0    5  
-11  Cannon Fist                   3   2   20.0    5  
-12  36 Defense Forms              3   2   20.0    5  
-13  Energy Breathing              4   3   14.29   7  
-14  Hero's Resilience             2   2   0.0     4  
-15  Vitality Breathing            2   2   0.0     4  
-16  Crippling Strikes             4   4   0.0     8  
-17  Environment Domination        4   4   0.0     8  
-18  Dragon Guards a Treasure      1   1   0.0     2  
-19  Mighty Knees                  1   1   0.0     2  
-20  Sky Dragon                    1   1   0.0     2  
-21  Vengeful Fox                  1   2   -33.33  3  
-22  Attack Is Defense             2   5   -42.86  7  
-23  Enranged Mantis               1   3   -50.0   4  
-24  Golden Lotus Stance           1   4   -60.0   5  
-25  Strong as an Ox               1   4   -60.0   5  
-26  Hurricane Legs                1   5   -66.67  6  
-27  Fist of Fury II               0   2   -100.0  2  
-28  Flying Monkey and Golden Fox  0   1   -100.0  1  
+1   Superior Iron Vest            1   0   100.0   1  
+2   Cannon Fist                   5   1   66.67   6  
+3   Vitality Breathing            5   1   66.67   6  
+4   Hero's Resilience             7   2   55.56   9  
+5   Vengeful Fox                  4   2   33.33   6  
+6   Fist of Fury II               2   1   33.33   3  
+7   Crippling Strikes             2   1   33.33   3  
+8   Lightning-Fast Movement       2   1   33.33   3  
+9   Hurricane Legs                3   2   20.0    5  
+10  Strong as an Ox               2   2   0.0     4  
+11  Lightning-Fast Strikes        1   1   0.0     2  
+12  Anything Is a Weapon          3   3   0.0     6  
+13  Explosive Strikes             2   2   0.0     4  
+14  Golden Lotus Stance           2   2   0.0     4  
+15  Behind You All                1   1   0.0     2  
+16  Environment Domination        3   3   0.0     6  
+17  Emperor's Fortress            3   4   -14.29  7  
+18  Shadow of a Shadow            2   3   -20.0   5  
+19  Palms of Justice              1   2   -33.33  3  
+20  36 Attack Forms               2   4   -33.33  6  
+21  Mighty Knees                  1   2   -33.33  3  
+22  Mighty Elbows                 2   5   -42.86  7  
+23  Attack Is Defense             1   3   -50.0   4  
+24  Flying Monkey and Golden Fox  1   4   -60.0   5  
+25  36 Defense Forms              0   3   -100.0  3  
+26  Sky Dragon                    0   3   -100.0  3  
 
-Min: 0, Max: 6, Range: 6, Median: 2.0, Mean: 2.07
+Min: 0, Max: 7, Range: 7, Median: 2.0, Mean: 2.23
+
+moves:
 
 
 
 #   Key               D1    D2    Diff%   Sum  
-1   extra long-range  389   312   10.98   701  
-2   flying            694   620   5.63    1314 
-3   ferocious         220   197   5.52    417  
-4   long              460   426   3.84    886  
-5   strong            309   288   3.52    597  
-6   piercing          306   286   3.38    592  
-7   skillful          652   613   3.08    1265 
-8   charging          424   399   3.04    823  
-9   energy            255   240   3.03    495  
-10  solar             322   304   2.88    626  
-11  claw              518   491   2.68    1009 
-12  advanced          272   258   2.64    530  
-13  palm              808   771   2.34    1579 
-14  onslaught         265   255   1.92    520  
-15  long-range        2310  2223  1.92    4533 
-16  kick              3242  3139  1.61    6381 
-17  debilitating      385   373   1.58    758  
-18  lightning         293   288   0.86    581  
-19  fast              733   724   0.62    1457 
-20  power             225   223   0.45    448  
-21  precise           307   305   0.33    612  
-22  antiground only   2000  2000  0.0     4000 
+1   extra long-range  401   286   16.74   687  
+2   jump              18    13    16.13   31   
+3   flying            727   595   9.98    1322 
+4   skillful          664   595   5.48    1259 
+5   long              460   418   4.78    878  
+6   lightning         271   247   4.63    518  
+7   takedown          272   250   4.21    522  
+8   expert            379   352   3.69    731  
+9   debilitating      380   355   3.4     735  
+10  elbow             552   516   3.37    1068 
+11  nerve             301   283   3.08    584  
+12  power             214   202   2.88    416  
+13  strong            282   268   2.55    550  
+14  kick              3233  3086  2.33    6319 
+15  trick             269   261   1.51    530  
+16  charging          412   400   1.48    812  
+17  grappling         1185  1165  0.85    2350 
+18  ferocious         185   182   0.82    367  
+19  shocking          337   333   0.6     670  
+20  precise           284   281   0.53    565  
+21  non-attack        8018  8013  0.03    16031
+22  no range          8018  8014  0.02    16032
 23  knockback         1000  1000  0.0     2000 
-24  non-attack        8020  8030  -0.06   16050
-25  no range          8021  8037  -0.1    16058
-26  superior          251   253   -0.4    504  
-27  short             1267  1279  -0.47   2546 
-28  mid-range         3888  3932  -0.56   7820 
-29  punch             4070  4117  -0.57   8187 
-30  grappling         1162  1176  -0.6    2338 
-31  ultimate          682   691   -0.66   1373 
-32  heavy             312   317   -0.79   629  
-33  lethal            418   427   -1.07   845  
-34  close-range       4375  4479  -1.17   8854 
-35  knee              422   435   -1.52   857  
-36  light             430   444   -1.6    874  
-37  nerve             307   318   -1.76   625  
-38  takedown          272   284   -2.16   556  
-39  trick             259   274   -2.81   533  
-40  retreating        375   398   -2.98   773  
-41  elbow             529   563   -3.11   1092 
-42  expert            364   388   -3.19   752  
-43  surprise          441   484   -4.65   925  
-44  vanishing         169   186   -4.79   355  
-45  shocking          351   388   -5.01   739  
-46  acrobatic         177   196   -5.09   373  
-47  pushing           335   372   -5.23   707  
-48  head              212   261   -10.36  473  
-49  jump              20    30    -20.0   50   
-50  backflip          20    31    -21.57  51   
+24  antiground only   2000  2000  0.0     4000 
+25  short             1278  1279  -0.04   2557 
+26  surprise          467   469   -0.21   936  
+27  lethal            385   387   -0.26   772  
+28  mid-range         3817  3842  -0.33   7659 
+29  long-range        2242  2259  -0.38   4501 
+30  superior          242   244   -0.41   486  
+31  piercing          289   292   -0.52   581  
+32  claw              474   480   -0.63   954  
+33  advanced          243   247   -0.82   490  
+34  close-range       4338  4415  -0.88   8753 
+35  punch             4013  4085  -0.89   8098 
+36  ultimate          618   633   -1.2    1251 
+37  heavy             346   355   -1.28   701  
+38  light             434   455   -2.36   889  
+39  knee              387   408   -2.64   795  
+40  vanishing         159   170   -3.34   329  
+41  retreating        343   372   -4.06   715  
+42  palm              725   795   -4.61   1520 
+43  acrobatic         156   172   -4.88   328  
+44  fast              656   727   -5.13   1383 
+45  pushing           324   362   -5.54   686  
+46  onslaught         233   263   -6.05   496  
+47  head              229   268   -7.85   497  
+48  energy            206   252   -10.04  458  
+49  solar             237   297   -11.24  534  
+50  backflip          20    28    -16.67  48   
 
-Min: 20, Max: 8021, Range: 8001, Median: 387.0, Mean: 1070.76
+Min: 18, Max: 8018, Range: 8000, Median: 382.5, Mean: 1054.46
 

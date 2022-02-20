@@ -141,18 +141,21 @@ class Tester(object):
                     att_vals = [getattr(f, att) for att in att_names]
                     att_diff = max(att_vals) - min(att_vals)
                     add_to_dict(d, att_diff, 1)
-                # style buffs
-                for f, d in ((wnr, buffs_wnr), (lsr, buffs_lsr)):
-                    for feature in f.style.features:
-                        add_to_dict(d, feature, 1)
                 # techs
-                for f, d1, d2 in ((wnr, techs1_wnr, techs2_wnr), (lsr, techs1_lsr, techs2_lsr)):
+                for f, d0, d1, d2 in (
+                        (wnr, buffs_wnr, techs1_wnr, techs2_wnr),
+                        (lsr, buffs_lsr, techs1_lsr, techs2_lsr)):
                     for t in f.techs:
                         t_obj = techniques.get_tech_obj(t)
                         if t_obj.is_upgradable:
                             add_to_dict(d1, t, 1)
                         elif t_obj.is_advanced:
                             add_to_dict(d2, t, 1)
+                        for feature in t_obj.descr_short.split(', '):
+                            add_to_dict(d0, feature, 1)
+                            if not feature.strip():
+                                raise ValueError(
+                                    f'Missing descr feature in the following tech: {t_obj}')
                 # moves
                 for f, d in ((wnr, moves_wnr), (lsr, moves_lsr)):
                     for m in f.moves:
@@ -174,6 +177,7 @@ class Tester(object):
             s = '\n'.join(lines)
             print(legend, s, sep='\n\n')
             print(legend, s, sep='\n\n', file=open(file_path, 'a', encoding='utf-8'))
+        print(f'\nSaved results to "{file_path}"')
         input('Press Enter')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):
