@@ -261,7 +261,8 @@ class FighterWithActions(
             self.current_fight.display(f'{self.name} disarms {atkr.name} while blocking')
 
     def try_counter(self):
-        if self.defended and self.hp > 0 and rnd() <= self.counter_chance:
+        # print(f'{self.name}: {self.counter_chance=}')
+        if not self.target.dam and self.hp > 0 and rnd() <= self.counter_chance:
             self.do_counter()
 
     def try_fury(self):

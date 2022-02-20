@@ -17,16 +17,16 @@ date
 * fix: stamina and qp are now properly spent when missing
 * fix: counters and preemptives can now miss, too
 * fix: criticals are now working properly
+* fix: blocks are now working properly
+* fix: counter techniques
 
 
-блоки проверить  
 preemptive is OP; rebalance techs based on test fight balance  
 config (not to choose every time, time-consuming)  
-separate guard while striking mult and guard mult (first is always on, OP)  
-buff guard  
+separate guard while striking mult and guard mult (first is always on, OP)   
 fav_strikes in techs    
-increase epic min lv; epic should be used against a strong opponent only? movie-like
-reflexes  
+increase epic min lv; epic should be used against a strong opponent only? movie-like  
+reflexes; compute to_block and to_dodge differently    
 strong against stronger, strong against weaker - techs (intimidating, fearless)  
 
 
