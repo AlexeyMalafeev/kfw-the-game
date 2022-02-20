@@ -282,7 +282,7 @@ class FighterWithActions(
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} grabs an improvised weapon!')
-            self.pak()
+            self.current_fight.pak()
 
     def try_ko(self):
         tgt = self.target

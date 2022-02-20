@@ -17,6 +17,8 @@ date
 
 
 
+stamina не уменьш при промахах?
+winner of tournament not shown
 preemptive is OP; rebalance techs based on test fight balance  
 config (not to choose every time, time-consuming)  
 buff guard  
