@@ -3,8 +3,8 @@ from kf_lib.utils import add_pcnt, add_sign, hund
 
 AGILITY1 = 0.2
 AGILITY2 = 0.4
-ATTACK1 = 0.1
-ATTACK2 = 0.2
+ATTACK1 = 0.2
+ATTACK2 = 0.4
 ATTACK_HALF = round(ATTACK1 / 2, 2)
 BLOCK_DISARM1 = 0.5
 BLOCK_DISARM2 = 1.0
