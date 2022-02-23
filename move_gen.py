@@ -108,7 +108,11 @@ def long(m):
     add(m, 'distance', 1)
     up_tier(m)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER1_QI_COST)
+    if m['distance'] == 4:
+        up_tier(m)
+        add(m, 'qi_cost', TIER2_QI_COST)
+    else:
+        add(m, 'qi_cost', TIER1_QI_COST)
     prefix(m, 'Long')
     return m
 
@@ -192,10 +196,11 @@ def backflip(m):
     add(m, 'freq', -1, mn=1)
     add(m, 'qi_cost', TIER2_QI_COST)
     mult(m, 'stam_cost', 1.25)
-    mult(m, 'time_cost', 1.45)
-    add(m, 'complexity', 2)
+    mult(m, 'time_cost', 1.25)
+    add(m, 'complexity', 1)
     add(m, 'dist_change', 2)
     add_fun(m, 'do_agility_based_dam')
+    add_fun(m, 'try_shock_move')
     prefix(m, 'Backflip')
     add_feat(m, 'acrobatic')
     return m
