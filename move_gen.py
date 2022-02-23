@@ -261,7 +261,7 @@ def flying(m):
     if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
     m = m.copy()
-    mult(m, 'power', 1.2)
+    mult(m, 'power', 1.05)
     mult(m, 'stam_cost', 1.2)
     add(m, 'distance', 1)
     add(m, 'dist_change', -1)
