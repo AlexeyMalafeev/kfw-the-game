@@ -20,9 +20,10 @@ date
 17. fix: blocks are now working properly
 18. fix: counter techniques
 19. **feat: complete rebalance of techniques, boosts and strikes**
+20. fix: moves with distance bonus are now properly suggested on level up
 
 
-preemptive is OP; rebalance techs based on test fight balance  
+move filtering  
 config (not to choose every time, time-consuming)  
 separate guard while striking mult and guard mult (first is always on, OP)   
 fav_strikes in techs    

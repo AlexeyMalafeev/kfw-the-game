@@ -1,5 +1,6 @@
 import os
 import random
+import re
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import rndint_2d, roman
@@ -12,7 +13,7 @@ from .ascii_art import get_ascii
 ALL_MOVES_DICT = {}  # list derives later
 
 
-class Move(object):
+class Move:
     """
     functions are names of Fighter methods."""
 
@@ -197,10 +198,8 @@ def resolve_style_move(move_s, f):
     features = None
     tier = None
     # a special case with tier-only move_s
-    if len(move_s) == 1 and move_s.isdigit():
-        # print('we are here')
-        # input('...')
-        # todo reimplement
+    if move_s.isdigit():
+        # todo reimplement: make .techs store tech objects, not names; convert on save/load only
         from .techniques import get_tech_obj
 
         features = []
@@ -210,6 +209,11 @@ def resolve_style_move(move_s, f):
                 if par.endswith('_strike_mult'):
                     par = par.replace('_strike_mult', '')
                     features.append(par)
+                # todo reimplement adding distance feature to style move
+                elif par.startswith('dist') and par.endswith('_bonus'):
+                    from kf_lib.fighting.distances import DISTANCE_FEATURES
+                    tier = int(re.findall(r'dist(\d)_bonus', par)[0])
+                    features.append(DISTANCE_FEATURES[tier])  # this matches move features
         if features:
             feat = random.choice(features)
             move_s += f',{feat}'
