@@ -5,10 +5,10 @@ try:
     g = game.Game()
     t = testing_tools.Tester(g)
     print('Random actions = False')
-    t.test_fight_balance(rand_actions=False, n=2000)
+    t.test_fight_balance(rand_actions=False, n=5000)
 
 
-except Exception:
+except Exception:  # noqa
     import traceback
     traceback.print_exc()
     input('Press Enter to exit')

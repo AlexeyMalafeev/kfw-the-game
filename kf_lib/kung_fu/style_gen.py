@@ -10,10 +10,9 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
     "Attacking": Tech('Attack Method', atk_mult=b.ATTACK1),
     'Averting': Tech('Avert Attacks', preemptive_chance=b.PREEMPTIVE_CH1),
-    "Balanced": Tech('Mid-Range Strikes', dist2_bonus=b.STRIKE_MULT1),
+    "Balanced": Tech('Mid-Range Strikes', dist2_bonus=b.DIST2_MULT1),
     "Cautious": Tech('Cautious Attacks', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-    "Clinging": Tech('Short Strikes', dist1_bonus=b.STRIKE_MULT1),
-    "Close-Range": Tech('Close-Range Fighting', dist1_bonus=b.STRIKE_MULT1),
+    "Clinging": Tech('Short Strikes', dist1_bonus=b.DIST1_MULT1),
     "Dancing": Tech('Dance-Like Form', agility_mult=b.AGILITY1),
     "Defending": Tech('Defense Stance', dfs_mult=b.DEFENSE1),
     "Elusive": Tech('Elusive Moves', dodge_mult=b.EVADE1),
@@ -34,8 +33,8 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Invulnerable": Tech('Invulnerable', dam_reduc=b.DAM_REDUC1),
     "Kicking": Tech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
     'Light-Footed': Tech('Light Feet', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
-    "Long-Range": Tech('Long-Range Fighting', dist3_bonus=b.STRIKE_MULT1),
-    "Mid-Range": Tech('Mid-Range Fighting', dist2_bonus=b.STRIKE_MULT1),
+    "Long-Range": Tech('Long-Range Fighting', dist3_bonus=b.DIST3_MULT1),
+    "Mid-Range": Tech('Mid-Range Fighting', dist2_bonus=b.DIST2_MULT1),
     "Mystic": Tech('Mystic Power', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Open-Handed": Tech(
         'Palm and Claw Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
@@ -49,7 +48,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Quick": Tech('Emphasis on Speed', speed_mult=b.SPEED1),
     "Retaliating": Tech('Retaliation', counter_chance_mult=b.COUNTER_CH_MULT1),
     "Rising": Tech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
-    "Sharp": Tech('Long-Range Strikes', dist3_bonus=b.STRIKE_MULT1),
+    "Sharp": Tech('Long-Range Strikes', dist3_bonus=b.DIST3_MULT1),
     "Shattering": Tech(
         'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1
     ),
@@ -72,7 +71,7 @@ W2 = {
         elbow_strike_mult=b.STRIKE_MULT1,
         head_strike_mult=b.STRIKE_MULT1,),
     'Burning': Tech('Burning Fury', fury_chance=b.FURY_CH1),
-    "Earth": Tech('Earth\'s Orbit', dist1_bonus=b.STRIKE_MULT1),
+    "Earth": Tech('Earth\'s Orbit', dist1_bonus=b.DIST1_MULT1),
     "Emerald": Tech('Emerald Flow', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Fire": Tech('Inferno', atk_mult=b.ATTACK1),
     "Formless": Tech('Formless Form', agility_mult=b.AGILITY1),
@@ -83,7 +82,7 @@ W2 = {
     "Iron": Tech('Iron Skin', dam_reduc=b.DAM_REDUC1),
     'Meteor': Tech('Meteor Punches', punch_strike_mult=b.STRIKE_MULT1),
     "Misty": Tech('Misty Steps', dodge_mult=b.EVADE1),
-    'Moon': Tech('Moon\'s Orbit', dist2_bonus=b.STRIKE_MULT1),
+    'Moon': Tech('Moon\'s Orbit', dist2_bonus=b.DIST2_MULT1),
     'Northern': Tech('Northern Style Kung-fu', strength_mult=b.STRENGTH1),
     'Obsidian': Tech('Obsidian Guard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     'Rainbow': Tech('Rainbow Steps', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
@@ -98,7 +97,7 @@ W2 = {
     "Storm": Tech(
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
-    'Sun': Tech('Sun\'s Orbit', dist3_bonus=b.STRIKE_MULT1),
+    'Sun': Tech('Sun\'s Orbit', dist3_bonus=b.DIST3_MULT1),
     "Vengeful": Tech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
     'Venom': Tech('Deadly Venom', stun_chance=b.STUN_CH1),
     "Water": Tech('Healing Water', hp_gain=b.HP_GAIN1),
@@ -112,7 +111,7 @@ W2 = {
 
 W3 = {  # todo add grappling stike multiplier
     "Bear": Tech('Bear\'s Strength', strength_mult=b.STRENGTH1),
-    "Boar": Tech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
+    "Boar": Tech('Rusher Boar', dist1_bonus=b.DIST1_MULT1),
     'Butterfly': Tech(
         'Fluttering Butterfly', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1
     ),
@@ -127,7 +126,7 @@ W3 = {  # todo add grappling stike multiplier
     "Elephant": Tech('Elephant\'s Health', health_mult=b.HEALTH1),
     "Falcon": Tech('Hunting Falcon', speed_mult=b.SPEED1),
     "Fox": Tech('Fox Strikes Back', counter_chance_mult=b.COUNTER_CH_MULT1),
-    "Hawk": Tech('Hunting Hawk', dist3_bonus=b.STRIKE_MULT1),
+    "Hawk": Tech('Hunting Hawk', dist3_bonus=b.DIST3_MULT1),
     "Leopard": Tech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     "Lion": Tech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
     "Lizard": Tech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
@@ -150,7 +149,7 @@ W3 = {  # todo add grappling stike multiplier
         'Turtle\'s Shell', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1
     ),
     "Viper": Tech('Stinging Viper', stun_chance=b.STUN_CH1),
-    "Wolf": Tech('Wolf\'s Attacking Distance', dist2_bonus=b.STRIKE_MULT1),
+    "Wolf": Tech('Wolf\'s Attacking Distance', dist2_bonus=b.DIST2_MULT1),
     # crow, horse, spider - grabs?, shark, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }
