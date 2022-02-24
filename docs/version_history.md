@@ -1,13 +1,13 @@
 ### v.0.6.6-beta
-""  
-date  
+"Rebalance, Fixes and Fun"  
+February 24, 2022    
 1. feat: start using rich module for colorful text 
 2. refactor: significant overhaul of utils, ui and testing tools
 3. refactor: remove unnecessary tech classes, reimplement their functionality as attributes
 4. feat: preemptive strikes are tech-only
 5. feat: fury is tech-only
 6. feat: new flexible profiling script
-7. feat: new fight AI that is more fun (rushes in from distance 4 when hp and stamina are full)
+7. **feat: new fight AI that is more fun (rushes in from distance 4 when hp and stamina are full)**
 8. fix: ASCII art errors in weapon strikes
 9. fix: old bug with umbrella turning into a pole
 10. fix: old bug with standard moves
@@ -23,23 +23,25 @@ date
 20. fix: moves with distance bonus are now properly suggested on level up
 
 
-reduce feel too scared  
-try nerfing default block power a little
-some fights last infinitely:  
-    all participants:  
-[Fighter('Dummy A', 'Indestructible Air Leopard', 20, (10, 9, 10, 5), {'Air Attacks', 'Hunting Leopard', 'Indestructible Body', 'Shadow of a Shadow', 'Fierce Strikes', 'Iron Fist', 'Fast Movement', 'Iron Vest'}, ['Onslaught Piercing Lethal Headbutt', 'Expert Strong Lethal Kick', 'Superior Ferocious Lethal Punch', 'Advanced Piercing Debilitating Elbow', 'Ultimate Ferocious Debilitating Punch', 'Ultimate Piercing Nerve Punch', 'Flying Punch', 'Skillful Flying Claw', 'Surprise Fast Flying Punch', 'Skillful Precise Flying Elbow'])]   
-vs  
- [Fighter('Dummy B', 'Rising Razor Panther', 20, (7, 10, 7, 10), {'Panther Attacks', 'Monkey and Fox', 'Fast Strikes', 'Razor-Sharp Strikes', 'Rising from the Ashes', 'Shadow Slips Away', "Hero's Resilience", 'Iron Vest'}, ['Expert Onslaught Lethal Claw', 'Ultimate Vanishing Piercing Punch', 'Ultimate Charging Lethal Palm', 'Ultimate Ferocious Nerve Kick', 'Advanced Trick Lethal Kick', 'Ultimate Strong Debilitating Punch', 'Heavy Headbutt', 'Lightning Kick', 'Short Strong Palm', 'Surprise Light Nerve Claw'])]  
-orgainize move list, remove unused moves  
-learn moves only if lucky  
-move filtering (TBD)  
-config (not to choose every time, time-consuming)  
-separate guard while striking mult and guard mult (first is always on, OP)   
-fav_strikes in techs    
-increase epic min lv; epic should be used against a strong opponent only? movie-like  
-reflexes; compute to_block and to_dodge differently    
-strong against stronger, strong against weaker - techs (intimidating, fearless)  
+### Coming soon:  
+* reduce feel too scared  
+* try nerfing default block power a little  
 
+* some fights last infinitely:  
+** [Fighter('Dummy A', 'Indestructible Air Leopard', 20, (10, 9, 10, 5), {'Air Attacks', 'Hunting Leopard', 'Indestructible Body', 'Shadow of a Shadow', 'Fierce Strikes', 'Iron Fist', 'Fast Movement', 'Iron Vest'}, ['Onslaught Piercing Lethal Headbutt', 'Expert Strong Lethal Kick', 'Superior Ferocious Lethal Punch', 'Advanced Piercing Debilitating Elbow', 'Ultimate Ferocious Debilitating Punch', 'Ultimate Piercing Nerve Punch', 'Flying Punch', 'Skillful Flying Claw', 'Surprise Fast Flying Punch', 'Skillful Precise Flying Elbow'])]   
+** vs  
+** [Fighter('Dummy B', 'Rising Razor Panther', 20, (7, 10, 7, 10), {'Panther Attacks', 'Monkey and Fox', 'Fast Strikes', 'Razor-Sharp Strikes', 'Rising from the Ashes', 'Shadow Slips Away', "Hero's Resilience", 'Iron Vest'}, ['Expert Onslaught Lethal Claw', 'Ultimate Vanishing Piercing Punch', 'Ultimate Charging Lethal Palm', 'Ultimate Ferocious Nerve Kick', 'Advanced Trick Lethal Kick', 'Ultimate Strong Debilitating Punch', 'Heavy Headbutt', 'Lightning Kick', 'Short Strong Palm', 'Surprise Light Nerve Claw'])]
+* orgainize move list, remove unused moves  
+* learn moves only if lucky  
+* move filtering (TBD)  
+* config (not to choose every time, time-consuming)  
+* separate guard while striking mult and guard mult (first is always on, OP)   
+* fav_strikes in techs    
+* increase epic min lv; epic should be used against a strong opponent only? movie-like  
+* reflexes; compute to_block and to_dodge differently    
+* strong against stronger, strong against weaker - techs (intimidating, fearless)  
+
+---
 
 ### v.0.6.5-beta
 "Fist of Fury"  
@@ -69,6 +71,7 @@ February 12, 2022
 22. refactor: player as a package
 23. feat: train a new powerful genetic fight AI (pop=32 fights=160 n_gen=128 gen=84)
 
+---
 
 ### v.0.6.4-beta
 "Flashy Fights"  
