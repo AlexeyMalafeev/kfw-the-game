@@ -3,16 +3,11 @@
 Date  
 
 1. fix: nerf default block power, agility goes down in significance, balance improves
+2. fix: remove depth-3 move generation for sharper moves with shorter names (17699 -> 3095 moves) 
 
 
 ### Coming soon:  
-* reduce feel too scared  
-* try nerfing default block power a little  
-
-* some fights last infinitely:  
-** [Fighter('Dummy A', 'Indestructible Air Leopard', 20, (10, 9, 10, 5), {'Air Attacks', 'Hunting Leopard', 'Indestructible Body', 'Shadow of a Shadow', 'Fierce Strikes', 'Iron Fist', 'Fast Movement', 'Iron Vest'}, ['Onslaught Piercing Lethal Headbutt', 'Expert Strong Lethal Kick', 'Superior Ferocious Lethal Punch', 'Advanced Piercing Debilitating Elbow', 'Ultimate Ferocious Debilitating Punch', 'Ultimate Piercing Nerve Punch', 'Flying Punch', 'Skillful Flying Claw', 'Surprise Fast Flying Punch', 'Skillful Precise Flying Elbow'])]   
-** vs  
-** [Fighter('Dummy B', 'Rising Razor Panther', 20, (7, 10, 7, 10), {'Panther Attacks', 'Monkey and Fox', 'Fast Strikes', 'Razor-Sharp Strikes', 'Rising from the Ashes', 'Shadow Slips Away', "Hero's Resilience", 'Iron Vest'}, ['Expert Onslaught Lethal Claw', 'Ultimate Vanishing Piercing Punch', 'Ultimate Charging Lethal Palm', 'Ultimate Ferocious Nerve Kick', 'Advanced Trick Lethal Kick', 'Ultimate Strong Debilitating Punch', 'Heavy Headbutt', 'Lightning Kick', 'Short Strong Palm', 'Surprise Light Nerve Claw'])]
+* reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
 * move filtering (TBD)  

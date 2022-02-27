@@ -856,8 +856,8 @@ def gen_moves(moves):
             chains.append((fun1,))
             for fun2 in funs2:
                 chains.append((fun1, fun2))
-                for fun3 in gen_dict[fun2]:
-                    chains.append((fun1, fun2, fun3))
+                # for fun3 in gen_dict[fun2]:
+                #     chains.append((fun1, fun2, fun3))
         # apply the chains whenever possible
         for chain in chains:
             chain = reversed(chain)
@@ -888,8 +888,7 @@ def main():
     moves = gen_moves(base_moves + takedown_moves)  # generated moves also include base_moves
     moves += extra_moves + style_moves
     save_moves(moves, keys, os.path.join('move files', 'all_moves.txt'), sort_alph=True)
-
-    input('Press Enter to exit')
+    print(f'generated {len(moves)} moves')
 
 
 if __name__ == '__main__':
