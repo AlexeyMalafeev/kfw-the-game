@@ -159,18 +159,6 @@ for mv in ALL_MOVES_LIST:
         MOVES_BY_TIERS[m_tier] = [mv]
 
 
-# todo decide about _choose_moves_with_shorter_names
-def _choose_moves_with_shorter_names(pool, k):
-    def _move_weight(m):
-        # return m.freq / len(m.name.split())
-        return 1 / 10 ** max(1, len(m.name.split()) - 1)
-    # 4, 9, 16, 25, 36
-    # 4, 8, 16, 32, 64
-    #
-    weights = [_move_weight(m) for m in pool]  # use move frequency
-    return random.choices(pool, weights=weights, k=k)
-
-
 def get_move_obj(move_name):
     if move_name not in ALL_MOVES_DICT:
         raise MoveNotFoundError(f'"{move_name}" is not a known move')
@@ -254,20 +242,6 @@ def resolve_style_move(move_s, f):
         elif n > f.num_moves_choose:
             weights = [m.freq for m in pool]  # use move frequency
             pool = random.choices(pool, weights=weights, k=f.num_moves_choose)
-            # if tier >= 4:
-            #     print(move_s)
-            #     print(len(pool))
-            #     from collections import defaultdict
-            #     d = defaultdict(lambda: 0)
-            #     for m in pool:
-            #         d[len(m.name.split())] += 1
-            #     from pprint import pprint
-            #     pprint(d)
-            #     print(pool[:10])
-            # pool = _choose_moves_with_shorter_names(pool, f.num_moves_choose)
-            # if tier >= 4:
-            #     print(pool[:10])
-            #     input('...')
     # todo if move_s == '', make moves that have strike_mult > 1.0 more likely
     else:
         # print('warning: move {} not found'.format(move_s))

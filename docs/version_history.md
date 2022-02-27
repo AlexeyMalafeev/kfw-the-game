@@ -11,7 +11,7 @@ Date
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
-* move filtering (TBD)  
+* move filtering with pandas  
 * config (not to choose every time, time-consuming)  
 * separate guard while striking mult and guard mult (first is always on, OP)   
 * fav_strikes in techs    
