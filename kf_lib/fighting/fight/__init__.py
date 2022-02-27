@@ -467,6 +467,7 @@ class BaseFight(object):
                     del f.status[status]
 
     def handle_time_limit_exceeded(self):
+        # todo add fight log dump here
         print('TIME LIMIT EXCEEDED!')
         print('all participants:')
         print(self.side_a, '\nvs\n', self.side_b)

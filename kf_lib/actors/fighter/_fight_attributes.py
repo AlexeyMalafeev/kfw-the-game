@@ -12,6 +12,7 @@ CRITICAL_PER_AGILITY_POINT = 0.05
 EPIC_CHANCE_BASE = 0.0
 EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
+MAX_RESIST_KO = 0.5
 QP_BASE = 0
 QP_INCR_PER_LV = 5
 QP_PORTION_RESTORED_PER_TURN = 0.2
@@ -104,7 +105,7 @@ class FightAttributes(BasicAttributes):
         self.strength_mult = 1.0
         self.strike_time_cost_mult = 1.0  # lower is better
         self.stun_chance = 0.0
-        self.resist_ko = 0.0
+        self._resist_ko = 0.0
         self.unblock_chance = 0.0
 
         # weapon-related
@@ -129,6 +130,15 @@ class FightAttributes(BasicAttributes):
         self.palm_strike_mult = 1.0
         self.punch_strike_mult = 1.0
         self.weapon_strike_mult = 1.0
+
+    @property
+    def resist_ko(self):
+        return self._resist_ko
+
+    @resist_ko.setter
+    def resist_ko(self, value):
+        self._resist_ko = value
+        self._resist_ko = min(self._resist_ko, MAX_RESIST_KO)
 
     def add_status(self, status, dur):
         if status not in self.status:
