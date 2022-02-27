@@ -5,7 +5,7 @@ from ._ascii import FighterWithASCII
 
 BLOCK_DIVISOR = 2
 DAM_DIVISOR = 2
-BLOCK_POWER = 25  # approx. equal to Punch power
+BLOCK_POWER = 20  # Punch power = 26
 DODGE_DIVISOR = 3
 DUR_LYING_MIN = 100
 DUR_LYING_MAX = 200
