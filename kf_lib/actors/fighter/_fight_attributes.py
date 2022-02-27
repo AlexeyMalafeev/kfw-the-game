@@ -76,7 +76,7 @@ class FightAttributes(BasicAttributes):
         self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0  # this is the tech-dependent bonus to Guard
-        self.guard_dfs_mult = 1.3  # this is the default effect of Guard
+        self.guard_dfs_mult = 1.5  # this is the default effect of Guard
         self.guard_while_attacking = 0.0
         self.health_mult = 1.0
         self.hit_disarm = 0.005
