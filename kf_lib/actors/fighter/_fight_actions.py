@@ -35,8 +35,7 @@ class FighterWithActions(
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus *= (self.guard_dfs_bonus * self.guard_dfs_mult
-                               * (1.0 + self.guard_while_attacking))
+            self.dfs_bonus *= self.guard_dfs_mult * (1.0 + self.guard_while_attacking)
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()

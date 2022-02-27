@@ -5,13 +5,14 @@ Date
 1. fix: nerf default block power, agility goes down in significance, balance improves
 2. fix: remove depth-3 move generation for sharper moves with shorter names (17699 -> 3095 moves)
 3. fix: using @property, fix the upper bound of chance to resist KO to avoid endless / too long fights
+4. fix: separate bonuses for Guard (as a move) and "guard while attacking"
 
 
 ### Coming soon:  
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
-* move filtering with pandas  
+* move filtering with pandas, save as csv, collect useful stats  
 * config (not to choose every time, time-consuming)  
 * separate guard while striking mult and guard mult (first is always on, OP)   
 * fav_strikes in techs    
