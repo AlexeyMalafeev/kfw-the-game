@@ -11,11 +11,8 @@ from kf_lib.happenings.encounters import Ambush
 from kf_lib.kung_fu import styles, techniques
 from kf_lib.things import weapons
 from kf_lib.ui import cls, menu, pak, pe, pretty_table
-from kf_lib.utils import add_to_dict, compare_dicts, get_time, mean, pcnt, summary
+from kf_lib.utils import add_to_dict, compare_dicts, get_time, mean, pcnt, summary, TESTS_FOLDER
 from . import tech_test
-
-
-TESTS_FOLDER = 'tests'
 
 
 class Tester(object):

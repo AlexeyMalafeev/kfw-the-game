@@ -1,10 +1,11 @@
-import os
+from pathlib import Path
 import random
 import re
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import rndint_2d, roman
 from .ascii_art import get_ascii
+from kf_lib.utils import MOVES_FOLDER
 
 
 # RARE_FEATURE = 'exotic'
@@ -120,7 +121,7 @@ def read_moves(file_name):
     return moves, keys
 
 
-move_list = read_moves(os.path.join('move files', 'all_moves.txt'))[0]
+move_list = read_moves(Path(MOVES_FOLDER, 'all_moves.txt'))[0]
 
 for mv in move_list:
     m_obj = Move(**mv)

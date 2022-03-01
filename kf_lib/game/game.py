@@ -1,4 +1,3 @@
-import os
 import random
 from pathlib import Path
 
@@ -11,7 +10,7 @@ from kf_lib.happenings import events, encounters, story
 from kf_lib.kung_fu import styles, style_gen
 from kf_lib.things import items
 from kf_lib.ui import cls, get_int_from_user, menu, pak, yn
-from kf_lib.utils import rnd, rndint
+from kf_lib.utils import rnd, rndint, SAVE_FOLDER
 from . import game_stats
 from .debug_menu import DebugMenu
 
@@ -26,12 +25,9 @@ MAX_NUM_STUDENTS = 8
 MAX_STUDENT_LEVEL = 8
 NUM_CONVICTS = 5
 NUM_STYLES = 10
-SAVE_FOLDER = 'save'
 TOWN_STAT_VALUES = [0.05, 0.1, 0.15, 0.2]
 WALK_EXTRA_ENC = 2
 
-# ensure save folder
-Path(SAVE_FOLDER).mkdir(exist_ok=True)
 
 # victory conditions
 GRANDMASTER_LV = 20
@@ -160,7 +156,7 @@ class Game:
                 sg = game_stats.StatGen(self)
                 stats = sg.get_full_report_string()
                 print(stats)
-                print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
+                print(stats, file=open(Path(SAVE_FOLDER, 'stats.txt'), 'w'))
 
                 # todo decide what to do about win_data
                 # this is not used anywhere
@@ -338,7 +334,7 @@ class Game:
         # todo reimplement game loading to avoid using exec
         # do not delete the below line; needed for loading
         g = self  # noqa
-        with open(os.path.join(SAVE_FOLDER, file_name), 'r') as f:
+        with open(Path(SAVE_FOLDER, file_name), 'r') as f:
             from ..actors.fighter import (
                 Fighter,
                 Challenger,
@@ -578,7 +574,7 @@ class Game:
         stats = sg.get_full_report_string()
         cls()
         print(stats)
-        print(stats, file=open(os.path.join(SAVE_FOLDER, 'stats.txt'), 'w'))
+        print(stats, file=open(Path(SAVE_FOLDER, 'stats.txt'), 'w'))
         pak()
 
     def save_game(self, file_name):
@@ -646,7 +642,7 @@ class Game:
                 f.write(f'\np.best_student = {best}')
 
                 # dump log
-                path = os.path.join(SAVE_FOLDER, '{}\'s log.txt'.format(p.name))
+                path = Path(SAVE_FOLDER, f'{p.name}\'s log.txt')
                 with open(path, 'a') as log_file:
                     log_file.write('\n'.join(p.plog))
                     p.plog = []
@@ -685,7 +681,7 @@ class Game:
         def _save_stories():
             f.write(f'\n\ng.stories = {self.stories!r}')
 
-        with open(os.path.join(SAVE_FOLDER, file_name), 'w') as f:
+        with open(Path(SAVE_FOLDER, file_name), 'w') as f:
             _save_all()
 
     def state_menu(self):

@@ -1,13 +1,10 @@
-import os
+from pathlib import Path
 
 from tqdm import trange
 
 from kf_lib.actors import fighter_factory as ff
 from kf_lib.fighting.fight import AutoFight
-from kf_lib.utils import rndint
-
-
-TESTS_FOLDER = 'tests'
+from kf_lib.utils import rndint, TESTS_FOLDER
 
 
 class FightAITest(object):
@@ -22,7 +19,7 @@ class FightAITest(object):
         self.rep = rep
         self.write_log = write_log
         self.suppress_output = suppress_output
-        self.output_file = open(os.path.join(TESTS_FOLDER, 'fight ai test.txt'), 'a')
+        self.output_file = open(Path(TESTS_FOLDER, 'fight ai test.txt'), 'a')
         self.run_test()
         self.output_total()
         self.output_file.close()

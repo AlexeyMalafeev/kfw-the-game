@@ -15,13 +15,13 @@ Date
 * learn moves only if lucky  
 * move filtering with pandas, save as csv, collect useful stats  
 * config (not to choose every time, time-consuming)  
-* separate guard while striking mult and guard mult (first is always on, OP)   
 * fav_strikes in techs    
 * increase epic min lv; epic should be used against a strong opponent only? movie-like  
-* reflexes; compute to_block and to_dodge differently  
+* reflexes; compute to_block and to_dodge differently?  
 * strong against stronger, strong against weaker - techs (intimidating, fearless)  
 * continue refactoring encounters while adding lucky/unlucky developments
 * refactor game.py
+* bleeding / slashing
 
 ---
 

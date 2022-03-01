@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 
 BUFFER_WIDTH = 1  # todo if you set buffer width to >=2, there is a bug in concat
@@ -64,7 +64,9 @@ FIGHTER_ART_R = {}
 
 
 def set_ascii_art():
-    with open(os.path.join('move files', 'ascii mapping.txt')) as f:
+    # import here avoids circular import
+    from kf_lib.utils import MOVES_FOLDER
+    with open(Path(MOVES_FOLDER, 'ascii_mapping.txt')) as f:
         blocks = f.read().split('# ')[1:]
         for b in blocks:
             b = b.rstrip()  # remove \n

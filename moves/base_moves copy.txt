@@ -1,0 +1,60 @@
+# name            |distance |dist_change |power |accuracy |complexity |stam_cost |time_cost |qi_cost |features                                            |functions          |tier |freq 
+'Claw'            |1        |0           |20    |30       |1          |20        |50        |0       |{'claw'}                                            |[]                 |0    |3    
+'Elbow'           |1        |0           |30    |25       |1          |30        |60        |0       |{'elbow'}                                           |[]                 |0    |3    
+'Headbutt'        |1        |0           |40    |15       |1          |20        |60        |0       |{'head'}                                            |[]                 |0    |1    
+'Kick'            |3        |0           |30    |30       |2          |30        |70        |0       |{'kick'}                                            |[]                 |0    |5    
+'Knee'            |1        |0           |30    |30       |2          |30        |70        |0       |{'knee'}                                            |[]                 |0    |2    
+'Palm'            |2        |0           |23    |26       |1          |20        |50        |0       |{'palm'}                                            |[]                 |0    |4    
+'Punch'           |2        |0           |26    |23       |1          |20        |50        |0       |{'punch'}                                           |[]                 |0    |5    
+'Step Forward'    |0        |-1          |0     |0        |1          |5         |50        |0       |{'non-attack'}                                      |[]                 |0    |5    
+'Step Back'       |0        |1           |0     |0        |1          |5         |60        |0       |{'non-attack'}                                      |[]                 |0    |5    
+'Guard'           |0        |0           |0     |0        |0          |-10       |60        |5       |{'non-attack'}                                      |['give_dfs_bonus'] |0    |5    
+'Focus'           |0        |0           |0     |0        |0          |0         |60        |-20     |{'non-attack'}                                      |[]                 |0    |5    
+'Catch Breath'    |0        |0           |0     |0        |0          |-20       |80        |0       |{'non-attack'}                                      |[]                 |0    |5    
+'Shove'           |1        |0           |10    |30       |1          |20        |50        |0       |{'knockback', 'grappling'}                          |['do_knockback']   |0    |5    
+'Sweep'           |2        |0           |20    |20       |2          |30        |80        |5       |{'takedown', 'kick'}                                |['do_takedown']    |1    |5    
+'Throw'           |1        |0           |10    |30       |3          |30        |90        |5       |{'grappling', 'takedown'}                           |['do_takedown']    |1    |4    
+'Trip'            |1        |0           |10    |20       |1          |20        |70        |5       |{'grappling', 'takedown'}                           |['do_takedown']    |1    |4    
+'Finishing Punch' |1        |0           |28    |32       |1          |20        |70        |0       |{'punch', 'antiground only'}                        |[]                 |0    |5    
+'Finishing Kick'  |2        |0           |32    |28       |1          |20        |70        |0       |{'kick', 'antiground only'}                         |[]                 |0    |5    
+'Axe Chop'        |2        |0           |52    |38       |1          |27        |60        |0       |{'also antiground', 'chop', 'axe', 'weapon'}        |[]                 |0    |5    
+'Axe Slash'       |2        |0           |45    |32       |1          |25        |60        |0       |{'slash', 'axe', 'weapon'}                          |[]                 |0    |5    
+'Baton Smash'     |2        |0           |50    |35       |1          |30        |70        |0       |{'smash', 'baton', 'weapon'}                        |[]                 |0    |5    
+'Baton Strike'    |2        |0           |50    |45       |1          |25        |50        |0       |{'also antiground', 'baton', 'strike', 'weapon'}    |[]                 |0    |5    
+'Bench Smash'     |2        |0           |44    |32       |1          |33        |77        |0       |{'also antiground', 'smash', 'bench', 'weapon'}     |[]                 |0    |5    
+'Bludgeon Smash'  |2        |0           |61    |35       |1          |30        |70        |0       |{'smash', 'bludgeon', 'weapon'}                     |[]                 |0    |5    
+'Bludgeon Strike' |2        |0           |40    |40       |1          |25        |50        |0       |{'also antiground', 'bludgeon', 'strike', 'weapon'} |[]                 |0    |5    
+
+# name              |distance |dist_change |power |accuracy |complexity |stam_cost |time_cost |qi_cost |features                                              |functions |tier |freq 
+'Broom Strike'      |2        |0           |38    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'broom', 'weapon'}      |[]        |0    |5    
+'Broom Thrust'      |3        |0           |40    |40       |1          |25        |60        |0       |{'thrust', 'also antiground', 'broom', 'weapon'}      |[]        |0    |5    
+'Chain Whip'        |3        |0           |36    |45       |1          |25        |77        |0       |{'also antiground', 'chain', 'whip', 'weapon'}        |[]        |0    |5    
+'Chair Smash'       |2        |0           |38    |32       |1          |30        |77        |0       |{'also antiground', 'smash', 'chair', 'weapon'}       |[]        |0    |5    
+'Chopstics Thrust'  |2        |0           |30    |36       |1          |22        |54        |0       |{'thrust', 'also antiground', 'chopsticks', 'weapon'} |[]        |0    |5    
+'Cloth Whip'        |3        |0           |24    |45       |1          |23        |70        |0       |{'also antiground', 'whip', 'cloth', 'weapon'}        |[]        |0    |5    
+'Fan Strike'        |2        |0           |27    |40       |1          |22        |45        |0       |{'also antiground', 'fan', 'strike', 'weapon'}        |[]        |0    |5    
+'Guqin Smash'       |2        |0           |33    |35       |1          |30        |70        |0       |{'guqin', 'smash', 'also antiground', 'weapon'}       |[]        |0    |5    
+'Hammer Smash'      |2        |0           |50    |28       |1          |33        |77        |0       |{'smash', 'hammer', 'weapon'}                         |[]        |0    |5    
+'Hammer Strike'     |2        |0           |36    |40       |1          |28        |55        |0       |{'also antiground', 'strike', 'hammer', 'weapon'}     |[]        |0    |5    
+'Knife Slash'       |2        |0           |45    |36       |1          |25        |60        |0       |{'also antiground', 'knife', 'slash', 'weapon'}       |[]        |0    |5    
+'Knife Stab'        |1        |0           |45    |40       |1          |20        |50        |0       |{'also antiground', 'knife', 'stab', 'weapon'}        |[]        |0    |5    
+'Pole Strike'       |3        |0           |40    |45       |1          |28        |55        |0       |{'also antiground', 'strike', 'pole', 'weapon'}       |[]        |0    |5    
+'Pole Thrust'       |4        |0           |48    |40       |1          |28        |66        |0       |{'thrust', 'also antiground', 'pole', 'weapon'}       |[]        |0    |5    
+'Rope Whip'         |3        |0           |28    |45       |1          |23        |70        |0       |{'also antiground', 'rope', 'whip', 'weapon'}         |[]        |0    |5    
+'Saber Slash'       |2        |0           |55    |40       |1          |25        |60        |0       |{'saber', 'also antiground', 'slash', 'weapon'}       |[]        |0    |5    
+'Saber Thrust'      |3        |0           |45    |40       |1          |25        |60        |0       |{'saber', 'also antiground', 'thrust', 'weapon'}      |[]        |0    |5    
+'Long Spear Thrust' |4        |0           |50    |40       |1          |25        |60        |0       |{'spear', 'also antiground', 'thrust', 'weapon'}      |[]        |0    |5    
+'Spear Thrust'      |3        |0           |55    |40       |1          |25        |60        |0       |{'spear', 'also antiground', 'thrust', 'weapon'}      |[]        |0    |5    
+'Staff Strike'      |2        |0           |45    |45       |1          |25        |50        |0       |{'also antiground', 'staff', 'strike', 'weapon'}      |[]        |0    |5    
+'Stick Strike'      |2        |0           |40    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'stick', 'weapon'}      |[]        |0    |5    
+'Stick Thrust'      |3        |0           |42    |40       |1          |25        |60        |0       |{'thrust', 'also antiground', 'stick', 'weapon'}      |[]        |0    |5    
+'Sword Slash'       |2        |0           |45    |40       |1          |25        |60        |0       |{'also antiground', 'sword', 'slash', 'weapon'}       |[]        |0    |5    
+'Sword Thrust'      |3        |0           |55    |40       |1          |25        |60        |0       |{'thrust', 'also antiground', 'sword', 'weapon'}      |[]        |0    |5    
+'Two Swords Slash'  |2        |0           |45    |40       |1          |22        |54        |0       |{'also antiground', 'two swords', 'slash', 'weapon'}  |[]        |0    |5    
+
+# name            |distance |dist_change |power |accuracy |complexity |stam_cost |time_cost |qi_cost |features                                            |functions |tier |freq 
+'Two Swords Stab' |1        |0           |50    |40       |1          |20        |50        |0       |{'also antiground', 'stab', 'two swords', 'weapon'} |[]        |0    |5    
+'Umbrella Strike' |2        |0           |36    |45       |1          |25        |50        |0       |{'also antiground', 'strike', 'umbrella', 'weapon'} |[]        |0    |5    
+'Umbrella Thrust' |3        |0           |38    |40       |1          |25        |60        |0       |{'thrust', 'also antiground', 'umbrella', 'weapon'} |[]        |0    |5    
+
+# 53 moves
