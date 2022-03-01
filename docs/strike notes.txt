@@ -48,7 +48,7 @@ unbalancing
 Overhand? unblockable?
 .All-Rounder? strength + speed + agility based damage
 . drain qi; damage qi
-. cause wound (hp decrease over time)
+. cause wound (hp decrease over time) - bleeding!
 . weaken enemy? vital points, pressure point or nerve-blocking?
 . Tackle as a special move & derivatives; also derivatives for Throw, Trip and Sweep
 . Grab, lock, hold wrestling moves (wrestle = strength & agility)

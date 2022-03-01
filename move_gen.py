@@ -1,4 +1,7 @@
 import os
+from pathlib import Path
+
+import pandas as pd
 
 
 TIER1_QI_COST = 6
@@ -877,17 +880,20 @@ def gen_moves(moves):
 
 def main():
     from kf_lib.kung_fu.moves import read_moves
+    from kf_lib.utils import MOVES_FOLDER
 
-    base_moves, keys = read_moves(os.path.join('move files', 'base_moves.txt'))
-    save_moves(base_moves, keys, os.path.join('move files', 'base_moves.txt'))
-    extra_moves, keys = read_moves(os.path.join('move files', 'extra_moves.txt'))
-    save_moves(extra_moves, keys, os.path.join('move files', 'extra_moves.txt'))
-    style_moves, keys = read_moves(os.path.join('move files', 'style_moves.txt'))
-    save_moves(style_moves, keys, os.path.join('move files', 'style_moves.txt'))
+    base_moves, keys = read_moves(Path(MOVES_FOLDER, 'base_moves.txt'))
+    save_moves(base_moves, keys, Path(MOVES_FOLDER, 'base_moves.txt'))
+    extra_moves, keys = read_moves(Path(MOVES_FOLDER, 'extra_moves.txt'))
+    save_moves(extra_moves, keys, Path(MOVES_FOLDER, 'extra_moves.txt'))
+    style_moves, keys = read_moves(Path(MOVES_FOLDER, 'style_moves.txt'))
+    save_moves(style_moves, keys, Path(MOVES_FOLDER, 'style_moves.txt'))
     takedown_moves = [m for m in extra_moves if 'takedown' in m['features']]
     moves = gen_moves(base_moves + takedown_moves)  # generated moves also include base_moves
     moves += extra_moves + style_moves
-    save_moves(moves, keys, os.path.join('move files', 'all_moves.txt'), sort_alph=True)
+    save_moves(moves, keys, Path(MOVES_FOLDER, 'all_moves.txt'), sort_alph=True)
+    df = pd.DataFrame(moves, columns=keys)
+    df.to_csv(Path(MOVES_FOLDER, 'all_moves.csv'), sep=';')
     print(f'generated {len(moves)} moves')
 
 
