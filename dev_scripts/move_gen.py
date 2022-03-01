@@ -1,5 +1,11 @@
 import os
+import sys
 from pathlib import Path
+# this has to be before imports from kf_lib
+lib_path = Path('..').resolve()
+os.chdir(lib_path)
+if lib_path not in sys.path:
+    sys.path.append(str(lib_path))
 
 import pandas as pd
 
@@ -895,6 +901,7 @@ def main():
     df = pd.DataFrame(moves, columns=keys)
     df.to_csv(Path(MOVES_FOLDER, 'all_moves.csv'), sep=';')
     print(f'generated {len(moves)} moves')
+    input('Press Enter to exit')
 
 
 if __name__ == '__main__':

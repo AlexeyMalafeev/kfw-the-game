@@ -1,8 +1,14 @@
 import os
-
+import sys
+from pathlib import Path
+# this has to be before imports from kf_lib
+lib_path = Path('..').resolve()
+os.chdir(lib_path)
+if lib_path not in sys.path:
+    sys.path.append(str(lib_path))
+print(os.getcwd())
 
 files = os.listdir('.')
-files.remove('count_lines.py')
 count = 0
 n_files = 0
 while files:
