@@ -9,6 +9,7 @@ Date
 5. fix: increase guard bonus for all
 6. refactor: factor folder name constants and ensuring folders exist to a separate module
 7. feat: also save moves as a Pandas DataFrame (for development purposes only)
+8. refactor: separate fight.__init__.py into submodules
 
 
 ### Coming soon:  
