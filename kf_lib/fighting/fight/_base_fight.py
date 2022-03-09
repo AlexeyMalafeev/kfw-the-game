@@ -136,6 +136,7 @@ class BaseFight(object):
             if len(fs) > 1:
                 random.shuffle(fs)
             for f in fs:
+                f.apply_bleeding()
                 if f.hp <= 0:  # for newly ko'ed fighters
                     continue
                 if self.check_fight_over():  # for winner allies

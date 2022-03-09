@@ -3,9 +3,10 @@ import random
 from kf_lib.utils import rnd, rndint, rndint_2d
 from ._ascii import FighterWithASCII
 
+BLEEDING_PART_OF_DAM = 0.1
 BLOCK_DIVISOR = 2
-DAM_DIVISOR = 2
 BLOCK_POWER = 20  # Punch power = 26
+DAM_DIVISOR = 2
 DODGE_DIVISOR = 3
 DUR_LYING_MIN = 100
 DUR_LYING_MAX = 200
@@ -225,12 +226,10 @@ class StrikeMechanics(FighterWithASCII):
         self.change_hp(-dam)
         self.took_damage = True
 
-    def try_epic(self):
-        if self.epic_chance and rnd() <= self.epic_chance:
-            self.dam *= self.epic_dam_mult
-            self.dam = round(self.dam)
-            self.current_fight.display('~*~*~EPIC!!!~*~*~')
-            # print('epic')
+    def try_cause_bleeding(self):
+        if self.chance_cause_bleeding and rnd() <= self.chance_cause_bleeding:
+            self.current_fight.display(f'{self.target.name} is bleeding!')
+            self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
 
     def try_critical(self):
         if rnd() <= self.critical_chance:
@@ -253,6 +252,13 @@ class StrikeMechanics(FighterWithASCII):
                 self.to_block *= self.current_fight.environment_bonus
                 self.to_dodge *= self.current_fight.environment_bonus
             self.current_fight.display(f'{self.name} uses the environment!')
+
+    def try_epic(self):
+        if self.epic_chance and rnd() <= self.epic_chance:
+            self.dam *= self.epic_dam_mult
+            self.dam = round(self.dam)
+            self.current_fight.display('~*~*~EPIC!!!~*~*~')
+            # print('epic')
 
     def try_hit_disarm(self):
         tgt = self.target

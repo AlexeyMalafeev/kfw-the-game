@@ -17,6 +17,13 @@ class FighterWithActions(
     StrikeMechanics,
     WeaponMethods,
 ):
+    def apply_bleeding(self):
+        if self.bleeding:
+            self.change_hp(-self.bleeding)
+            if self.hp <= 0:
+                self.current_fight.display(f'{self.name} passes out because of bleeding!')
+                self.current_fight.pak()
+
     def apply_dfs_penalty(self):
         self.dfs_penalty_mult -= self.dfs_penalty_step
         if self.dfs_penalty_mult < 0:
@@ -183,6 +190,8 @@ class FighterWithActions(
         self.dfs_bonus *= self.guard_dfs_bonus * self.guard_dfs_mult
 
     def hit_or_miss(self):
+        # todo use skip list here for functions not to be applied twice
+        # todo let try_* functions return True or False to determine skip
         tgt = self.target
         if self.dam > 0:
             self.try_critical()
@@ -192,6 +201,7 @@ class FighterWithActions(
             if tgt.momentum > 0:
                 tgt.momentum = 0
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
+            self.try_cause_bleeding()
             self.try_hit_disarm()
             self.do_move_functions(self.action)
             self.try_stun()
@@ -216,6 +226,7 @@ class FighterWithActions(
         self.hp = self.hp_max
         self.qp = round(self.qp_max * self.qp_start)
         self.stamina = self.stamina_max
+        self.bleeding = 0
         self.previous_actions = ['', '', '']
         self.is_auto_fighting = True
         self.set_distances_before_fight()
@@ -274,7 +285,7 @@ class FighterWithActions(
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} is in FURY!')
-            self.pak()
+            self.current_fight.pak()
 
     def try_in_fight_impro_wp(self):
         if (

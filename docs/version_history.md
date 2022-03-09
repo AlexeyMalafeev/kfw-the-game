@@ -10,9 +10,11 @@ Date
 6. refactor: factor folder name constants and ensuring folders exist to a separate module
 7. feat: also save moves as a Pandas DataFrame (for development purposes only)
 8. refactor: separate fight.__init__.py into submodules
+9. **feat: bleeding mechanic**
 
 
 ### Coming soon:  
+* maybe move school creation and challenging your master to lv 10?
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
