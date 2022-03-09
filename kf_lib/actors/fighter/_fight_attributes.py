@@ -58,7 +58,7 @@ class FightAttributes(BasicAttributes):
         self.block_disarm = 0.005
         self.block_mult = 1.0  # tech-based
         self.block_default_power = 1.0  # this is common between all fighters; non-tech-based
-        self.chance_cause_bleeding = 0.0  # tech-dependent
+        self.chance_cause_bleeding = 0.3  # tech-dependent
         self.counter_chance = 0.0  # NB! level-dependent
         self.counter_chance_mult = 1.0  # tech-dependent
         self.critical_chance = 0.05  # NB! level-dependent

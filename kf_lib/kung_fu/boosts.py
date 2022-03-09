@@ -6,6 +6,8 @@ AGILITY2 = 0.4
 ATTACK1 = 0.15
 ATTACK2 = 0.3
 ATTACK_HALF = round(ATTACK1 / 2, 2)
+BLEEDING_CH1 = 0.3
+BLEEDING_CH2 = 0.6
 BLOCK1 = 0.5
 BLOCK2 = 1.0
 BLOCK_DISARM1 = 0.5
@@ -94,6 +96,7 @@ HUND_ADD_SIGN_ADD_PCNT = (hund, add_sign, add_pcnt)
 PMAP = (
     ('agility_mult', 'agility', 'agility', HUND_ADD_SIGN_ADD_PCNT),
     ('atk_mult', 'attack', 'attack', HUND_ADD_SIGN_ADD_PCNT),
+    ('chance_cause_bleeding', 'bleeding', 'cause bleeding', HUND_ADD_SIGN_ADD_PCNT),
     ('block_disarm', 'disarm', 'disarm chance when defending', HUND_ADD_SIGN_ADD_PCNT),
     ('block_mult', 'blocks', 'block efficiency', HUND_ADD_SIGN_ADD_PCNT),
     ('counter_chance_mult', 'counters', 'counterattack chance', HUND_ADD_SIGN_ADD_PCNT),

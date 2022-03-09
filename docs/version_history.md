@@ -4,13 +4,14 @@ Date
 
 1. fix: nerf default block power, agility goes down in significance, balance improves
 2. fix: remove depth-3 move generation for sharper moves with shorter names (17699 -> 3095 moves)
-3. fix: using @property, fix the upper bound of chance to resist KO to avoid endless / too long fights
+3. fix: using @property, fix the upper bound of chance to resist KO to avoid endless / very long fights
 4. fix: separate bonuses for Guard (as a move) and "guard while attacking"
 5. fix: increase guard bonus for all
 6. refactor: factor folder name constants and ensuring folders exist to a separate module
 7. feat: also save moves as a Pandas DataFrame (for development purposes only)
 8. refactor: separate fight.__init__.py into submodules
 9. **feat: bleeding mechanic**
+10. feat: techniques (and styles) related to bleeding
 
 
 ### Coming soon:  

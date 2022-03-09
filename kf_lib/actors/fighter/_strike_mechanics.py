@@ -3,7 +3,7 @@ import random
 from kf_lib.utils import rnd, rndint, rndint_2d
 from ._ascii import FighterWithASCII
 
-BLEEDING_PART_OF_DAM = 0.1
+BLEEDING_PART_OF_DAM = 0.25
 BLOCK_DIVISOR = 2
 BLOCK_POWER = 20  # Punch power = 26
 DAM_DIVISOR = 2

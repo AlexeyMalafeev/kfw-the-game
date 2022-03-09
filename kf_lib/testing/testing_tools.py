@@ -36,15 +36,15 @@ class Tester(object):
             print(f'wins: {wins}')
         pe()
 
-    def test_disarm(self):
-        fs = ff.new_fighter(5, n=2)
-        for f in fs:
-            f.add_tech('Leaping Monkey')
-            f.add_tech('Crouching Monkey')
-            f.arm()
-        # f1, f2 = fs
-        fight.spectate(*fs)
-        pak()
+    # def test_disarm(self):
+    #     fs = ff.new_fighter(5, n=2)
+    #     for f in fs:
+    #         f.add_tech('Leaping Monkey')
+    #         f.add_tech('Crouching Monkey')
+    #         f.arm()
+    #     # f1, f2 = fs
+    #     fight.spectate(*fs)
+    #     pak()
 
     def test_enc(self, enc_class_string, test=False):
         self.g.enc.run_enc(enc_class_string, test)

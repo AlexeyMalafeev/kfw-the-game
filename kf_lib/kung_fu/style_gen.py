@@ -52,6 +52,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Shattering": Tech(
         'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1
     ),
+    'Slashing': Tech('Slashing Strikes', chance_cause_bleeding=b.BLEEDING_CH1),
     'Swift-Striking': Tech(
         'Swift Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
@@ -93,6 +94,7 @@ W2 = {
     'Snow': Tech(
         'Snowfall', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
+    'Spiky': Tech('Spiky Attacks', chance_cause_bleeding=b.BLEEDING_CH1),
     "Stone": Tech('Stone Forearms', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1),
     "Storm": Tech(
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
@@ -115,6 +117,7 @@ W3 = {  # todo add grappling stike multiplier
     'Butterfly': Tech(
         'Fluttering Butterfly', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1
     ),
+    "Cat": Tech('Cat\'s Attacking Distance', dist2_bonus=b.DIST2_MULT1),
     "Centipede": Tech(
         'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
@@ -138,9 +141,7 @@ W3 = {  # todo add grappling stike multiplier
     "Panther": Tech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Phoenix": Tech('Rising Phoenix', resist_ko=b.RESIST_KO1),
     'Rat': Tech('Cornered Rat', fury_chance=b.FURY_CH1),
-    'Shark': Tech(
-        'Shark Bites', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
-    ),
+    'Shark': Tech('Shark Pursues Its Prey', chance_cause_bleeding=b.BLEEDING_CH1),
     "Scorpion": Tech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
     "Snake": Tech('Twisting Snake', dodge_mult=b.EVADE1),
     "Tiger": Tech('Tiger\'s Rage', atk_mult=b.ATTACK1),
@@ -149,8 +150,8 @@ W3 = {  # todo add grappling stike multiplier
         'Turtle\'s Shell', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1
     ),
     "Viper": Tech('Stinging Viper', stun_chance=b.STUN_CH1),
-    "Wolf": Tech('Wolf\'s Attacking Distance', dist2_bonus=b.DIST2_MULT1),
-    # crow, horse, spider - grabs?, shark, dog, bull
+    "Wolf": Tech('Attacking Wolf', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+    # crow, horse, spider - grabs?, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }
 
