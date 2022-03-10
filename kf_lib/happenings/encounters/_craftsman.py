@@ -20,8 +20,8 @@ class Craftsman(BaseEncounter):
         price = MONEY_MANNEQUIN
         t = (
             f'{p.name} meets a craftsman.\n'
-            'Craftsman: "Ah, a martial artist! You\'re in luck! I\'m selling this excellent' 
-            f'{item} ({descr}). It\'s only {price} coins! Don\'t worry, if you don\'t have enough' 
+            'Craftsman: "Ah, a martial artist! You\'re in luck! I\'m selling this excellent ' 
+            f'{item} ({descr}). It\'s only {price} coins! Don\'t worry, if you don\'t have enough ' 
             'money right now, you can pay the rest later. Will you buy it?"'
         )
         p.show(t)
