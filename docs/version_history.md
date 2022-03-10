@@ -3,7 +3,7 @@
 Date  
 
 1. fix: nerf default block power, agility goes down in significance, balance improves
-2. fix: remove depth-3 move generation for sharper moves with shorter names (17699 -> 3095 moves)
+2. fix: remove depth-3 move generation for cleaner moves with shorter names (17699 -> 3095 moves)
 3. fix: using @property, fix the upper bound of chance to resist KO to avoid endless / very long fights
 4. fix: separate bonuses for Guard (as a move) and "guard while attacking"
 5. fix: increase guard bonus for all
@@ -15,7 +15,8 @@ Date
 
 
 ### Coming soon:  
-* maybe move school creation and challenging your master to lv 10?
+* maybe move school creation and challenging your master to lv 10? increase master levels then, and upper fighters' too
+* hp gain is relative to max hp
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
@@ -27,7 +28,6 @@ Date
 * strong against stronger, strong against weaker - techs (intimidating, fearless)  
 * continue refactoring encounters while adding lucky/unlucky developments
 * refactor game.py
-* bleeding / slashing
 
 ---
 
