@@ -50,6 +50,11 @@ class Playing(BaseGame):
                 return
             self.next_day()
 
+    def hook_up_players(self):
+        for p in self.players:
+            p.game = self
+            p.refresh_school_rank()
+
     def play(self):
         """Play the (previously initialized or loaded) game."""
         self.prepare_for_playing()

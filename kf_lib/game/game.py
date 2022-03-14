@@ -162,16 +162,6 @@ class Game:
     def get_fighter_ref(fighter):
         return f'g.fighters_dict[{fighter.name!r}]'
 
-    def get_new_student(self, style_name):
-        name = self.get_new_name()
-        lv = rndint(1, 7)
-        return fighter_factory.new_student(name, style_name, lv)
-
-    def hook_up_players(self):
-        for p in self.players:
-            p.game = self
-            p.refresh_school_rank()
-
     # noinspection PyUnresolvedReferences
     def load_game(self, file_name):
         """Read and execute the save file."""
@@ -250,20 +240,6 @@ class Game:
                 if fr not in self.fighters_list:
                     self.fighters_list.append(fr)
         self.fighters_dict = {f.name: f for f in self.fighters_list}
-
-    def rerank_schools(self):
-        for school in self.schools.values():
-            school.sort(key=lambda s: -s.get_exp_worth())
-            for p in self.players:
-                if p in school:
-                    new_rank = school.index(p) + 1
-                    if p.school_rank != new_rank:
-                        p.msg(f'{p.name} is now number {new_rank} at his school.')
-                        p.school_rank = new_rank
-
-    def show(self, text, align=True):
-        if self.spectator:
-            self.spectator.show(text, align)
 
     def show_stats(self):
         sg = game_stats.StatGen(self)

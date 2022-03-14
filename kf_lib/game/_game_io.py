@@ -16,6 +16,10 @@ class GameIO(BaseGame):
         if self.spectator:
             self.spectator.pak()
 
+    def show(self, text, align=True):
+        if self.spectator:
+            self.spectator.show(text, align)
+
     def yn(self, text):
         if self.spectator:
             return yn(text)

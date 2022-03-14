@@ -95,3 +95,13 @@ class BaseGame:
         self.fighters_list.append(f)
         self.fighters_dict[f.name] = f
         self.used_names.add(f.name)
+
+    def rerank_schools(self):
+        for school in self.schools.values():
+            school.sort(key=lambda s: -s.get_exp_worth())
+            for p in self.players:
+                if p in school:
+                    new_rank = school.index(p) + 1
+                    if p.school_rank != new_rank:
+                        p.msg(f'{p.name} is now number {new_rank} at his school.')
+                        p.school_rank = new_rank
