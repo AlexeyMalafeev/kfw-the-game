@@ -1,1 +1,5 @@
-from .game import Game
+from ._new_game import NewGameCreation
+
+
+class Game(NewGameCreation):
+    pass

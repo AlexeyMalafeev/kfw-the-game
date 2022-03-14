@@ -158,7 +158,7 @@ W3 = {  # todo add grappling stike multiplier
 # todo strikes for new styles
 
 
-def generate_new_styles(n, overlap=False):
+def generate_new_styles(n, overlap=False) -> List[Style]:
     if overlap:
         words1 = random.choices(list(W1), k=n)
         words2 = random.choices(list(W2), k=n)
@@ -179,7 +179,7 @@ def generate_new_styles(n, overlap=False):
     return get_styles_from_list(results)
 
 
-def get_new_randomly_generated_style():
+def get_new_randomly_generated_style() -> Style:
     words = []
     for w_list in (
         list(W1),
@@ -190,16 +190,16 @@ def get_new_randomly_generated_style():
     return get_style_from_words(*words)
 
 
-def get_n_possible_styles():
+def get_n_possible_styles() -> int:
     return len(W1) * len(W2) * len(W3)
 
 
-def get_style_from_str(s):
+def get_style_from_str(s) -> Style:
     w1, w2, w3 = s.split()
     return get_style_from_words(w1, w2, w3, s)
 
 
-def get_style_from_words(w1, w2, w3, style_name=''):
+def get_style_from_words(w1, w2, w3, style_name='') -> Style:
     t1 = W1[w1]
     t2 = W2[w2]
     t3 = W3[w3]
@@ -208,5 +208,5 @@ def get_style_from_words(w1, w2, w3, style_name=''):
     return Style(style_name, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
 
 
-def get_styles_from_list(style_list: List[str]):
+def get_styles_from_list(style_list: List[str]) -> List[Style]:
     return [get_style_from_str(s) for s in style_list]
