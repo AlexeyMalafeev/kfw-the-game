@@ -27,6 +27,7 @@ Solar      do_stam_dam
 Nerve      do_mob_dam
 Debilitating do_shock_move do_stam_dam do_mob_dam
 Lethal     try_insta_ko
+Slashing   cause_bleeding
 Skillful   +power +accuracy -time +stamina
 Superior   +power +accuracy -time +stamina
 Advanced   +power +accuracy -time +stamina
@@ -48,7 +49,6 @@ unbalancing
 Overhand? unblockable?
 .All-Rounder? strength + speed + agility based damage
 . drain qi; damage qi
-. cause wound (hp decrease over time) - bleeding!
 . weaken enemy? vital points, pressure point or nerve-blocking?
 . Tackle as a special move & derivatives; also derivatives for Throw, Trip and Sweep
 . Grab, lock, hold wrestling moves (wrestle = strength & agility)

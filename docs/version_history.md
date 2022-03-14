@@ -12,6 +12,7 @@ Date
 8. refactor: separate fight.__init__.py into submodules
 9. **feat: bleeding mechanic**
 10. feat: techniques (and styles) related to bleeding
+11. feat: "Slashing" moves (3095 -> 3313) and Claw is slashing by default
 
 
 ### Coming soon:  
@@ -19,7 +20,6 @@ Date
 * hp gain is relative to max hp
 * dam reduc is relative to max hp
 * toughness: level-dependent dam reduction for all
-* slashing moves
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
@@ -31,6 +31,7 @@ Date
 * strong against stronger, strong against weaker - techs (intimidating, fearless)  
 * continue refactoring encounters while adding lucky/unlucky developments
 * refactor game.py
+* more strike types (see strike notes)
 
 ---
 

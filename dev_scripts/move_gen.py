@@ -436,6 +436,18 @@ def lethal(m):
     return m
 
 
+def slashing(m):
+    if 'cause_bleeding' in m['functions']:
+        return None
+    m = m.copy()
+    add(m, 'qi_cost', TIER2_QI_COST)
+    up_tier(m, 2)
+    add_fun(m, 'cause_bleeding')
+    add(m, 'freq', -2, mn=1)
+    prefix(m, 'Slashing')
+    return m
+
+
 def skillful(m):
     m = m.copy()
     add(m, 'qi_cost', TIER1_QI_COST)
@@ -501,8 +513,8 @@ def gen_moves(moves):
     new_moves = []  # move dicts
     move_names = set()  # strings
     gen_dict = {
-        light: (shocking, solar, nerve),
-        heavy: (shocking, solar, nerve),
+        light: (shocking, solar, nerve, slashing),
+        heavy: (shocking, solar, nerve, slashing),
         long: (
             light,
             heavy,
@@ -526,6 +538,7 @@ def gen_moves(moves):
             energy,
             ferocious,
             piercing,
+            slashing,
         ),
         short: (
             light,
@@ -548,6 +561,7 @@ def gen_moves(moves):
             energy,
             ferocious,
             piercing,
+            slashing,
         ),
         charging: (
             light,
@@ -567,6 +581,7 @@ def gen_moves(moves):
             energy,
             ferocious,
             piercing,
+            slashing,
         ),
         retreating: (
             light,
@@ -585,6 +600,7 @@ def gen_moves(moves):
             lightning,
             energy,
             piercing,
+            slashing,
         ),
         onslaught: (
             light,
@@ -604,6 +620,7 @@ def gen_moves(moves):
             energy,
             ferocious,
             piercing,
+            slashing,
         ),
         vanishing: (
             light,
@@ -622,10 +639,11 @@ def gen_moves(moves):
             lightning,
             energy,
             piercing,
+            slashing,
         ),
-        backflip: (solar, nerve),
+        backflip: (solar, nerve, slashing),
         pushing: (heavy, surprise, shocking, solar, nerve, fast, strong, precise),
-        surprise: (light, backflip, fast, trick, lightning, piercing),
+        surprise: (light, backflip, fast, trick, lightning, piercing, slashing),
         fast: (
             light,
             backflip,
@@ -641,6 +659,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         strong: (
             backflip,
@@ -655,6 +674,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         precise: (
             light,
@@ -670,6 +690,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         flying: (
             light,
@@ -685,6 +706,7 @@ def gen_moves(moves):
             piercing,
             debilitating,
             lethal,
+            slashing,
         ),
         acrobatic: (
             charging,
@@ -700,18 +722,20 @@ def gen_moves(moves):
             piercing,
             debilitating,
             lethal,
+            slashing,
         ),
-        power: (solar, nerve, debilitating, lethal),
-        trick: (solar, nerve, debilitating, lethal),
-        lightning: (solar, nerve, debilitating, lethal),
-        energy: (solar, nerve, debilitating, lethal),
-        ferocious: (solar, nerve, debilitating, lethal),
-        piercing: (solar, nerve, debilitating, lethal),
-        shocking: (solar, nerve, power, trick, lightning, energy, ferocious, piercing),
+        power: (solar, nerve, debilitating, lethal, slashing),
+        trick: (solar, nerve, debilitating, lethal, slashing),
+        lightning: (solar, nerve, debilitating, lethal, slashing),
+        energy: (solar, nerve, debilitating, lethal, slashing),
+        ferocious: (solar, nerve, debilitating, lethal, slashing),
+        piercing: (solar, nerve, debilitating, lethal, slashing),
+        shocking: (solar, nerve, power, trick, lightning, energy, ferocious, piercing, slashing),
         solar: (),
         nerve: (),
         debilitating: (),
         lethal: (),
+        slashing: (),
         skillful: (
             light,
             heavy,
@@ -740,6 +764,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         superior: (
             light,
@@ -769,6 +794,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         advanced: (
             light,
@@ -798,6 +824,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         expert: (
             light,
@@ -827,6 +854,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
         ultimate: (
             light,
@@ -856,6 +884,7 @@ def gen_moves(moves):
             nerve,
             debilitating,
             lethal,
+            slashing,
         ),
     }
     for base_m in moves:

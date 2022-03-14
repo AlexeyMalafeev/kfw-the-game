@@ -96,6 +96,10 @@ class StrikeMechanics(FighterWithASCII):
         # todo docstring calc_stamina_factor
         self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
+    def cause_bleeding(self):
+        self.current_fight.display(f'{self.target.name} is bleeding!')
+        self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
+
     def cause_fall(self):
         lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
@@ -228,8 +232,7 @@ class StrikeMechanics(FighterWithASCII):
 
     def try_cause_bleeding(self):
         if self.chance_cause_bleeding and rnd() <= self.chance_cause_bleeding:
-            self.current_fight.display(f'{self.target.name} is bleeding!')
-            self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
+            self.cause_bleeding()
 
     def try_critical(self):
         if rnd() <= self.critical_chance:
