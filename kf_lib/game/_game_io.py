@@ -1,8 +1,10 @@
 from kf_lib.ui import cls, yn
-from ._base_game import BaseGame
 
 
-class GameIO(BaseGame):
+class GameIO:
+    def __init__(self):
+        self.spectator = None
+
     def cls(self):
         if self.spectator:
             cls()

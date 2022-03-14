@@ -5,6 +5,7 @@ from kf_lib.happenings import encounters
 from kf_lib.kung_fu import styles, style_gen
 from kf_lib.utils import rndint
 from .debug_menu import DebugMenu
+from ._game_io import GameIO
 
 
 NUM_CONVICTS = 5
@@ -12,12 +13,12 @@ NUM_STYLES = 10
 TOWN_STAT_VALUES = (0.05, 0.1, 0.15, 0.2)
 
 
-class BaseGame:
+class BaseGame(GameIO):
     def __init__(self):
+        super().__init__()
         # players
         self.players = []
         self.current_player = None
-        self.spectator = None
         # NPCs
         self.used_names = set()
         self.masters = {}
@@ -68,6 +69,13 @@ class BaseGame:
 
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
             play_indefinitely fights_total enc_count_dict'''.split()
+
+    def get_date(self):
+        return f'{self.day}/{self.month}/{self.year}'
+
+    @staticmethod
+    def get_fighter_ref(fighter):
+        return f'g.fighters_dict[{fighter.name!r}]'
 
     def get_new_name(self, prefix=''):
         while True:
