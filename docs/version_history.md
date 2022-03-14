@@ -17,6 +17,9 @@ Date
 ### Coming soon:  
 * maybe move school creation and challenging your master to lv 10? increase master levels then, and upper fighters' too
 * hp gain is relative to max hp
+* dam reduc is relative to max hp
+* toughness: level-dependent dam reduction for all
+* slashing moves
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
