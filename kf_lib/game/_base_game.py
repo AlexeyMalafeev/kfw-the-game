@@ -1,7 +1,8 @@
 import random
+import sys
 
 from kf_lib.actors import fighter_factory, names
-from kf_lib.happenings import encounters
+from kf_lib.happenings import encounters, events
 from kf_lib.kung_fu import styles, style_gen
 from kf_lib.utils import rndint
 from .debug_menu import DebugMenu
@@ -70,6 +71,12 @@ class BaseGame(GameIO):
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
             play_indefinitely fights_total enc_count_dict'''.split()
 
+    def crime_down(self):
+        events.crime_down(self)
+
+    def get_act_players(self):
+        return [p for p in self.players if not p.inactive]
+
     def get_date(self):
         return f'{self.day}/{self.month}/{self.year}'
 
@@ -96,6 +103,10 @@ class BaseGame(GameIO):
     def get_new_random_styles():
         return style_gen.generate_new_styles(NUM_STYLES)
 
+    @staticmethod
+    def quit():
+        sys.exit()
+
     def register_fighter(self, f):
         if f.name in self.fighters_dict:
             raise Exception(
@@ -113,3 +124,7 @@ class BaseGame(GameIO):
                     if p.school_rank != new_rank:
                         p.msg(f'{p.name} is now number {new_rank} at his school.')
                         p.school_rank = new_rank
+
+    def unregister_fighter(self, f):
+        self.fighters_list.remove(f)
+        del self.fighters_dict[f.name]

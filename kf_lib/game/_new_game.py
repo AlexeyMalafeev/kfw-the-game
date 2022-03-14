@@ -16,7 +16,7 @@ MAX_NUM_PLAYERS = 6
 MAX_NUM_STUDENTS = 8
 
 
-class NewGameCreation(BaseGame):
+class NewGame(BaseGame):
     # todo reimplement g.MAX_NUM_STUDENTS
     MAX_NUM_STUDENTS = MAX_NUM_STUDENTS
 
