@@ -10,10 +10,9 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
     "Attacking": Tech('Attack Method', atk_mult=b.ATTACK1),
     'Averting': Tech('Avert Attacks', preemptive_chance=b.PREEMPTIVE_CH1),
-    "Balanced": Tech('Mid-Range Strikes', dist2_bonus=b.STRIKE_MULT1),
+    "Balanced": Tech('Mid-Range Strikes', dist2_bonus=b.DIST2_MULT1),
     "Cautious": Tech('Cautious Attacks', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-    "Clinging": Tech('Short Strikes', dist1_bonus=b.STRIKE_MULT1),
-    "Close-Range": Tech('Close-Range Fighting', dist1_bonus=b.STRIKE_MULT1),
+    "Clinging": Tech('Short Strikes', dist1_bonus=b.DIST1_MULT1),
     "Dancing": Tech('Dance-Like Form', agility_mult=b.AGILITY1),
     "Defending": Tech('Defense Stance', dfs_mult=b.DEFENSE1),
     "Elusive": Tech('Elusive Moves', dodge_mult=b.EVADE1),
@@ -34,8 +33,8 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Invulnerable": Tech('Invulnerable', dam_reduc=b.DAM_REDUC1),
     "Kicking": Tech('Kick Training', kick_strike_mult=b.STRIKE_MULT1),
     'Light-Footed': Tech('Light Feet', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
-    "Long-Range": Tech('Long-Range Fighting', dist3_bonus=b.STRIKE_MULT1),
-    "Mid-Range": Tech('Mid-Range Fighting', dist2_bonus=b.STRIKE_MULT1),
+    "Long-Range": Tech('Long-Range Fighting', dist3_bonus=b.DIST3_MULT1),
+    "Mid-Range": Tech('Mid-Range Fighting', dist2_bonus=b.DIST2_MULT1),
     "Mystic": Tech('Mystic Power', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Open-Handed": Tech(
         'Palm and Claw Training', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
@@ -49,10 +48,11 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     "Quick": Tech('Emphasis on Speed', speed_mult=b.SPEED1),
     "Retaliating": Tech('Retaliation', counter_chance_mult=b.COUNTER_CH_MULT1),
     "Rising": Tech('Rising from the Ashes', resist_ko=b.RESIST_KO1),
-    "Sharp": Tech('Long-Range Strikes', dist3_bonus=b.STRIKE_MULT1),
+    "Sharp": Tech('Long-Range Strikes', dist3_bonus=b.DIST3_MULT1),
     "Shattering": Tech(
         'Shattering Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1
     ),
+    'Slashing': Tech('Slashing Strikes', chance_cause_bleeding=b.BLEEDING_CH1),
     'Swift-Striking': Tech(
         'Swift Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
@@ -72,7 +72,7 @@ W2 = {
         elbow_strike_mult=b.STRIKE_MULT1,
         head_strike_mult=b.STRIKE_MULT1,),
     'Burning': Tech('Burning Fury', fury_chance=b.FURY_CH1),
-    "Earth": Tech('Earth\'s Orbit', dist1_bonus=b.STRIKE_MULT1),
+    "Earth": Tech('Earth\'s Orbit', dist1_bonus=b.DIST1_MULT1),
     "Emerald": Tech('Emerald Flow', qp_gain_mult=b.QP_GAIN1, qp_max_mult=b.QP_MAX1),
     "Fire": Tech('Inferno', atk_mult=b.ATTACK1),
     "Formless": Tech('Formless Form', agility_mult=b.AGILITY1),
@@ -83,7 +83,7 @@ W2 = {
     "Iron": Tech('Iron Skin', dam_reduc=b.DAM_REDUC1),
     'Meteor': Tech('Meteor Punches', punch_strike_mult=b.STRIKE_MULT1),
     "Misty": Tech('Misty Steps', dodge_mult=b.EVADE1),
-    'Moon': Tech('Moon\'s Orbit', dist2_bonus=b.STRIKE_MULT1),
+    'Moon': Tech('Moon\'s Orbit', dist2_bonus=b.DIST2_MULT1),
     'Northern': Tech('Northern Style Kung-fu', strength_mult=b.STRENGTH1),
     'Obsidian': Tech('Obsidian Guard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     'Rainbow': Tech('Rainbow Steps', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
@@ -94,11 +94,12 @@ W2 = {
     'Snow': Tech(
         'Snowfall', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
     ),
+    'Spiky': Tech('Spiky Attacks', chance_cause_bleeding=b.BLEEDING_CH1),
     "Stone": Tech('Stone Forearms', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1),
     "Storm": Tech(
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
-    'Sun': Tech('Sun\'s Orbit', dist3_bonus=b.STRIKE_MULT1),
+    'Sun': Tech('Sun\'s Orbit', dist3_bonus=b.DIST3_MULT1),
     "Vengeful": Tech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
     'Venom': Tech('Deadly Venom', stun_chance=b.STUN_CH1),
     "Water": Tech('Healing Water', hp_gain=b.HP_GAIN1),
@@ -112,10 +113,11 @@ W2 = {
 
 W3 = {  # todo add grappling stike multiplier
     "Bear": Tech('Bear\'s Strength', strength_mult=b.STRENGTH1),
-    "Boar": Tech('Rusher Boar', dist1_bonus=b.STRIKE_MULT1),
+    "Boar": Tech('Rusher Boar', dist1_bonus=b.DIST1_MULT1),
     'Butterfly': Tech(
         'Fluttering Butterfly', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1
     ),
+    "Cat": Tech('Cat\'s Attacking Distance', dist2_bonus=b.DIST2_MULT1),
     "Centipede": Tech(
         'Countless Palms', palm_strike_mult=b.STRIKE_MULT1, claw_strike_mult=b.STRIKE_MULT1
     ),
@@ -127,7 +129,7 @@ W3 = {  # todo add grappling stike multiplier
     "Elephant": Tech('Elephant\'s Health', health_mult=b.HEALTH1),
     "Falcon": Tech('Hunting Falcon', speed_mult=b.SPEED1),
     "Fox": Tech('Fox Strikes Back', counter_chance_mult=b.COUNTER_CH_MULT1),
-    "Hawk": Tech('Hunting Hawk', dist3_bonus=b.STRIKE_MULT1),
+    "Hawk": Tech('Hunting Hawk', dist3_bonus=b.DIST3_MULT1),
     "Leopard": Tech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     "Lion": Tech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
     "Lizard": Tech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
@@ -139,9 +141,7 @@ W3 = {  # todo add grappling stike multiplier
     "Panther": Tech('Panther Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     "Phoenix": Tech('Rising Phoenix', resist_ko=b.RESIST_KO1),
     'Rat': Tech('Cornered Rat', fury_chance=b.FURY_CH1),
-    'Shark': Tech(
-        'Shark Bites', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1
-    ),
+    'Shark': Tech('Shark Pursues Its Prey', chance_cause_bleeding=b.BLEEDING_CH1),
     "Scorpion": Tech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
     "Snake": Tech('Twisting Snake', dodge_mult=b.EVADE1),
     "Tiger": Tech('Tiger\'s Rage', atk_mult=b.ATTACK1),
@@ -150,15 +150,15 @@ W3 = {  # todo add grappling stike multiplier
         'Turtle\'s Shell', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1
     ),
     "Viper": Tech('Stinging Viper', stun_chance=b.STUN_CH1),
-    "Wolf": Tech('Wolf\'s Attacking Distance', dist2_bonus=b.STRIKE_MULT1),
-    # crow, horse, spider - grabs?, shark, dog, bull
+    "Wolf": Tech('Attacking Wolf', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
+    # crow, horse, spider - grabs?, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html
 }
 
 # todo strikes for new styles
 
 
-def generate_new_styles(n, overlap=False):
+def generate_new_styles(n, overlap=False) -> List[Style]:
     if overlap:
         words1 = random.choices(list(W1), k=n)
         words2 = random.choices(list(W2), k=n)
@@ -179,7 +179,7 @@ def generate_new_styles(n, overlap=False):
     return get_styles_from_list(results)
 
 
-def get_new_randomly_generated_style():
+def get_new_randomly_generated_style() -> Style:
     words = []
     for w_list in (
         list(W1),
@@ -190,16 +190,16 @@ def get_new_randomly_generated_style():
     return get_style_from_words(*words)
 
 
-def get_n_possible_styles():
+def get_n_possible_styles() -> int:
     return len(W1) * len(W2) * len(W3)
 
 
-def get_style_from_str(s):
+def get_style_from_str(s) -> Style:
     w1, w2, w3 = s.split()
     return get_style_from_words(w1, w2, w3, s)
 
 
-def get_style_from_words(w1, w2, w3, style_name=''):
+def get_style_from_words(w1, w2, w3, style_name='') -> Style:
     t1 = W1[w1]
     t2 = W2[w2]
     t3 = W3[w3]
@@ -208,5 +208,5 @@ def get_style_from_words(w1, w2, w3, style_name=''):
     return Style(style_name, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
 
 
-def get_styles_from_list(style_list: List[str]):
+def get_styles_from_list(style_list: List[str]) -> List[Style]:
     return [get_style_from_str(s) for s in style_list]

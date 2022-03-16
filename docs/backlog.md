@@ -1,3 +1,5 @@
+pain resistance technique: immune to shock/stun and other debilitating strikes
+
 make tournaments with various non-kung-fu styles and bet (as a separate mini-game)
 
 spectate tournaments option

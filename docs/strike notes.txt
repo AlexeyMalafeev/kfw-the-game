@@ -1,0 +1,79 @@
+Done:
+
+Light      -power +accuracy -stamina
+Heavy      +power -accuracy +stamina
+Long       +dist
+Short      -dist
+Charging   -dist_change +stamina +time
+Retreating +dist_change +stamina +time
+Onslaught  -dist_change +stamina +time
+Vanishing  +dist_change +stamina +time
+Backflip   +dist_change +compl +stamina +time do_agility_based_dam acrobatic
+Pushing    +do_knockback
+Surprise   try_shock_move
+Fast       -time +stamina
+Strong     +power +stamina
+Precise    +accuracy +time  # todo increased crit chance?
+Flying     +power +stamina +dist -dist_change +compl
+Acrobatic  +stamina +compl do_agility_based_dam do_strength_based_dam
+Power      do_strength_based_dam
+Trick      do_agility_based_dam
+Lightning  do_speed_based_dam
+Energy     do_qi_based_dam
+Ferocious  +stamina do_strength_based_dam do_speed_based_dam
+Piercing   +stamina do_agility_based_dam do_speed_based_dam
+Shocking   do_shock_move
+Solar      do_stam_dam
+Nerve      do_mob_dam
+Debilitating do_shock_move do_stam_dam do_mob_dam
+Lethal     try_insta_ko
+Slashing   cause_bleeding
+Skillful   +power +accuracy -time +stamina
+Superior   +power +accuracy -time +stamina
+Advanced   +power +accuracy -time +stamina
+Expert     +power +accuracy -time +stamina
+Ultimate   +power +accuracy -time +stamina
+
+
+
+unused effects/ideas:
+
+Bull (the more hp, the more damage) a tech?
+Rage the less hp, the more damage - a tech?
+Sacrifice (spend own hp)
+Reckless (lower own defense? simply lower accuracy? dist_change - 2?)
+. Takedown/Tackle do_takedown?
+increased critical chance
+. do_level_based_dam
+unbalancing
+Overhand? unblockable?
+.All-Rounder? strength + speed + agility based damage
+. drain qi; damage qi
+. weaken enemy? vital points, pressure point or nerve-blocking?
+. Tackle as a special move & derivatives; also derivatives for Throw, Trip and Sweep
+. Grab, lock, hold wrestling moves (wrestle = strength & agility)
+
+unused names:
+
+Aggressive
+Astral  
+Brutal
+Crashing, Crushing
+Crazy, Insane, Crappy, Weak, etc.
+Deceptive
+Diamond
+Dirty
+Divine  
+Explosive
+Extravagant
+Fierce
+Gold
+Hard
+Heavenly
+Piercing
+Platinum
+Shadow
+Silver
+Sudden
+Uncanny
+Weird

@@ -11,11 +11,8 @@ from kf_lib.happenings.encounters import Ambush
 from kf_lib.kung_fu import styles, techniques
 from kf_lib.things import weapons
 from kf_lib.ui import cls, menu, pak, pe, pretty_table
-from kf_lib.utils import add_to_dict, compare_dicts, get_time, mean, pcnt, summary
+from kf_lib.utils import add_to_dict, compare_dicts, get_time, mean, pcnt, summary, TESTS_FOLDER
 from . import tech_test
-
-
-TESTS_FOLDER = 'tests'
 
 
 class Tester(object):
@@ -39,15 +36,15 @@ class Tester(object):
             print(f'wins: {wins}')
         pe()
 
-    def test_disarm(self):
-        fs = ff.new_fighter(5, n=2)
-        for f in fs:
-            f.add_tech('Leaping Monkey')
-            f.add_tech('Crouching Monkey')
-            f.arm()
-        # f1, f2 = fs
-        fight.spectate(*fs)
-        pak()
+    # def test_disarm(self):
+    #     fs = ff.new_fighter(5, n=2)
+    #     for f in fs:
+    #         f.add_tech('Leaping Monkey')
+    #         f.add_tech('Crouching Monkey')
+    #         f.arm()
+    #     # f1, f2 = fs
+    #     fight.spectate(*fs)
+    #     pak()
 
     def test_enc(self, enc_class_string, test=False):
         self.g.enc.run_enc(enc_class_string, test)
@@ -178,7 +175,6 @@ class Tester(object):
             print(legend, s, sep='\n\n')
             print(legend, s, sep='\n\n', file=open(file_path, 'a', encoding='utf-8'))
         print(f'\nSaved results to "{file_path}"')
-        input('Press Enter')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):
         for lv_in_crowd in range(1, 6):

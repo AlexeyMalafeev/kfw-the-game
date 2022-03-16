@@ -12,6 +12,7 @@ CRITICAL_PER_AGILITY_POINT = 0.05
 EPIC_CHANCE_BASE = 0.0
 EPIC_CHANCE_INCR_PER_LV = 0.005
 HP_PER_HEALTH_LV = 50
+MAX_RESIST_KO = 0.5
 QP_BASE = 0
 QP_INCR_PER_LV = 5
 QP_PORTION_RESTORED_PER_TURN = 0.2
@@ -33,6 +34,7 @@ class FightAttributes(BasicAttributes):
         self.atk_bonus = 0
         self.atk_pwr = 0
         self.av_moves = []
+        self.bleeding = 0  # refreshed every fight
         self.current_fight = None  # ...Fight object
         self.dam = 0
         self.defended = False
@@ -54,8 +56,9 @@ class FightAttributes(BasicAttributes):
         self.atk_mult = 1.0
         self.atk_wp_bonus = 0
         self.block_disarm = 0.005
-        self.block_mult = 1.0
-        self.block_power = 1.0  # todo give boost to block_power
+        self.block_mult = 1.0  # tech-based
+        self.block_default_power = 1.0  # this is common between all fighters; non-tech-based
+        self.chance_cause_bleeding = 0.03  # tech-dependent
         self.counter_chance = 0.0  # NB! level-dependent
         self.counter_chance_mult = 1.0  # tech-dependent
         self.critical_chance = 0.05  # NB! level-dependent
@@ -71,11 +74,11 @@ class FightAttributes(BasicAttributes):
         self.epic_chance = 0.0  # NB! level-dependent
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_dam_mult = 2.0
-        self.fury_to_all_mult = 1.5
+        self.fury_to_all_mult = 1.6
         self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0  # this is the tech-dependent bonus to Guard
-        self.guard_dfs_mult = 1.3  # this is the default effect of Guard
+        self.guard_dfs_mult = 1.5  # this is the default effect of Guard
         self.guard_while_attacking = 0.0
         self.health_mult = 1.0
         self.hit_disarm = 0.005
@@ -104,7 +107,7 @@ class FightAttributes(BasicAttributes):
         self.strength_mult = 1.0
         self.strike_time_cost_mult = 1.0  # lower is better
         self.stun_chance = 0.0
-        self.resist_ko = 0.0
+        self._resist_ko = 0.0
         self.unblock_chance = 0.0
 
         # weapon-related
@@ -129,6 +132,15 @@ class FightAttributes(BasicAttributes):
         self.palm_strike_mult = 1.0
         self.punch_strike_mult = 1.0
         self.weapon_strike_mult = 1.0
+
+    @property
+    def resist_ko(self):
+        return self._resist_ko
+
+    @resist_ko.setter
+    def resist_ko(self, value):
+        self._resist_ko = value
+        self._resist_ko = min(self._resist_ko, MAX_RESIST_KO)
 
     def add_status(self, status, dur):
         if status not in self.status:
@@ -173,6 +185,7 @@ class FightAttributes(BasicAttributes):
         return self.status.get(status, False)
 
     def get_status_marks(self, right=False):
+        bleeding = ';' if self.bleeding else ''
         fury = '#' if self.check_status('fury') else ''
         slowed_down = ',' if self.check_status('slowed down') else ''
         off_bal = '\'' if self.check_status('off-balance') else ''
@@ -183,7 +196,7 @@ class FightAttributes(BasicAttributes):
         elif self.check_status('stunned'):
             excl = 1
         inact = '!' * excl
-        padding = ' ' if lying or inact else ''
+        # padding = ' ' if lying or inact else ''
         if self.momentum:
             if right:
                 if self.momentum > 0:
@@ -199,7 +212,8 @@ class FightAttributes(BasicAttributes):
             mom_s = f' {mom_s}'
         else:
             mom_s = ''
-        return f'{padding}{fury}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
+        # return f'{padding}{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
+        return f'{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
     def refresh_level_dependent_atts(self):
         self.hp_max = self.health_full * HP_PER_HEALTH_LV

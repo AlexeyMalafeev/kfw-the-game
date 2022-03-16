@@ -1,0 +1,67 @@
+King of Robbers
+---------------
+- news about the gang, crime goes up
+- raid(s)
+- big crowd of robbers, fight with allies
+- final showdown (kidnapping?)
+rewards: money, rep
+
+
+Chief of Police
+---------------
+- rumors about corrupt police officers
+- witness of extorting, fight police, chief appears
+- police letting criminals go
+- a set up, possible arrest of the hero?
+- meeting, tries to be friendly, large bribe
+rewards: rep
+
+
+Out-of-towners
+--------------
+- new hostile school
+- challenge other schools (open-ended?)
+- resort to criminal methods, intimidate students
+- hero's students fight out-of-towners
+- masters' showdown
+rewards: rep, tech
+
+
+Evil sect
+---------
+- new sect appears, aims not known
+- attacks
+- leader is mad (large dam. reduction)
+rewards: rep, tech
+
+
+Spirit of Wushu
+---------------
+- train alone
+- fight the spirit (a few times?)
+rewards: techs, moves, adv. tech
+
+
+Daughter of the Tavern Owner
+----------------------------
+- meet at the tavern, spend money
+- girl vs thugs, help out
+- friendly match with the girl
+- thugs kidnap father, help, get married
+rewards: money, exp
+
+
+Wandering Master
+----------------
+
+
+Shaolin
+-------
+
+
+Secret Scroll
+-------------
+
+
+Honest Cop
+----------

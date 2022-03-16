@@ -249,7 +249,11 @@ LINKED_TECHS = [
     (
         Tech('Fist of Fury', fury_chance=b.FURY_CH1, is_upgradable=True),
         Tech('Fist of Fury II', fury_chance=b.FURY_CH2, is_advanced=True),
-    )
+    ),
+    (
+        Tech('Blood Strikes', chance_cause_bleeding=b.BLEEDING_CH1, is_upgradable=True),
+        Tech('Advanced Blood Strikes', chance_cause_bleeding=b.BLEEDING_CH2, is_advanced=True),
+    ),
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]

@@ -190,6 +190,10 @@ class BasePlayer(Fighter):
         _day_actions.buy_items(self)
         return True  # to end turn
 
+    def cancel_item(self, item):
+        """Convenience wrapper"""
+        items.cancel_item(item, self)
+
     def change_att(self, att, amount):
         Fighter.change_att(self, att, amount)
         self.msg('{}: {}'.format(att, add_sign(amount)))

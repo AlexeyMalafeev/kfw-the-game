@@ -17,6 +17,13 @@ class FighterWithActions(
     StrikeMechanics,
     WeaponMethods,
 ):
+    def apply_bleeding(self):
+        if self.bleeding:
+            self.change_hp(-self.bleeding)
+            if self.hp <= 0:
+                self.current_fight.display(f'{self.name} passes out because of bleeding!')
+                self.current_fight.pak()
+
     def apply_dfs_penalty(self):
         self.dfs_penalty_mult -= self.dfs_penalty_step
         if self.dfs_penalty_mult < 0:
@@ -35,8 +42,7 @@ class FighterWithActions(
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus *= (self.guard_dfs_bonus * self.guard_dfs_mult
-                               * (1.0 + self.guard_while_attacking))
+            self.dfs_bonus *= self.guard_dfs_mult * (1.0 + self.guard_while_attacking)
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()
@@ -93,18 +99,19 @@ class FighterWithActions(
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
         elif roll <= block_chance:
+            self.dfs_pwr = round(self.dfs_pwr)
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
-            self.current_fight.display(
-                '{} {}blocks!'.format(self.name, choose_adverb(block_chance, 'barely', 'easily'))
-            )
+            adv = choose_adverb(block_chance, 'barely', 'easily')
+            self.current_fight.display(f'{self.name} {adv}blocks! ({self.dfs_pwr})')
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()
             self.defended = True
         else:
             self.set_ascii(prefix + 'Hit')
-        # todo handle the no defense case
+        # this is necessary here, do not remove, otherwise dam will be a float on hit / block
         atkr.dam = round(atkr.dam)
+        # todo handle the no defense case
 
     def do_counter(self):
         cand_moves = self.get_av_moves(attack_moves_only=True)
@@ -183,6 +190,8 @@ class FighterWithActions(
         self.dfs_bonus *= self.guard_dfs_bonus * self.guard_dfs_mult
 
     def hit_or_miss(self):
+        # todo use skip list here for functions not to be applied twice
+        # todo let try_* functions return True or False to determine skip
         tgt = self.target
         if self.dam > 0:
             self.try_critical()
@@ -192,6 +201,7 @@ class FighterWithActions(
             if tgt.momentum > 0:
                 tgt.momentum = 0
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
+            self.try_cause_bleeding()
             self.try_hit_disarm()
             self.do_move_functions(self.action)
             self.try_stun()
@@ -216,6 +226,7 @@ class FighterWithActions(
         self.hp = self.hp_max
         self.qp = round(self.qp_max * self.qp_start)
         self.stamina = self.stamina_max
+        self.bleeding = 0
         self.previous_actions = ['', '', '']
         self.is_auto_fighting = True
         self.set_distances_before_fight()
@@ -260,7 +271,8 @@ class FighterWithActions(
             self.current_fight.display(f'{self.name} disarms {atkr.name} while blocking')
 
     def try_counter(self):
-        if self.defended and self.hp > 0 and rnd() <= self.counter_chance:
+        # print(f'{self.name}: {self.counter_chance=}')
+        if not self.target.dam and self.hp > 0 and rnd() <= self.counter_chance:
             self.do_counter()
 
     def try_fury(self):
@@ -273,7 +285,7 @@ class FighterWithActions(
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} is in FURY!')
-            self.pak()
+            self.current_fight.pak()
 
     def try_in_fight_impro_wp(self):
         if (
