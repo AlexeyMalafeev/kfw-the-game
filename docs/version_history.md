@@ -14,8 +14,9 @@ Date
 10. feat: techniques (and styles) related to bleeding
 11. feat: "Slashing" moves (3095 -> 3313) and Claw is slashing by default
 12. refactor: game.py is now a package
-13. fix: school students are now level 1-10
+13. feat: school students are now levels 1-10, masters levels 11-14
 14. fix: bug in saving game (duplicated players)
+15. feat: change tournament levels: 1-3 "beginner", 4-6 "intermediate", 7-10 "advanced", 11-14 "master"
 
 
 ### Coming soon:  
