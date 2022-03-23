@@ -15,6 +15,7 @@ Date
 11. feat: "Slashing" moves (3095 -> 3313) and Claw is slashing by default
 12. refactor: game.py is now a package
 13. fix: school students are now level 1-10
+14. fix: bug in saving game (duplicated players)
 
 
 ### Coming soon:  

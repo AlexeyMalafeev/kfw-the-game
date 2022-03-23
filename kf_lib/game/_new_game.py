@@ -14,8 +14,6 @@ from ._base_game import BaseGame
 
 MAX_NUM_PLAYERS = 6
 MAX_NUM_STUDENTS = 8
-MIN_LV_STUDENT = 1
-MAX_LV_STUDENT = 10
 
 
 class NewGame(BaseGame):
@@ -51,8 +49,7 @@ class NewGame(BaseGame):
     # This method is actually used outside this module, so it is not protected
     def get_new_student(self, style_name):
         name = self.get_new_name()
-        lv = rndint(MIN_LV_STUDENT, MAX_LV_STUDENT)
-        return fighter_factory.new_student(name, style_name, lv)
+        return fighter_factory.new_student(name, style_name)
 
     def new_game(
         self,
