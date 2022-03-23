@@ -17,7 +17,7 @@ class SaveGame(BaseGame):
         ]
         self.fighters_list = (
             self.players
-            + list(self.masters.values())
+            + [m for m in self.masters.values() if not m.is_player]  # to avoid duplicating players
             + bosses
             + students
             + special_npcs

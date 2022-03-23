@@ -1,33 +1,11 @@
+from math import ceil
 import random
 
 from kf_lib.kung_fu import moves
 from kf_lib.utils import roman
 from ._base_fighter import BaseFighter
 
-LVS_GET_NEW_ADVANCED_MOVE = {10, 12, 14, 16, 18, 20}  # should be ordered, ascending
-# todo use NEW_MOVE_TIERS
-NEW_MOVE_TIERS = {
-    1: 1,
-    2: 1,
-    3: 2,
-    4: 2,
-    5: 3,
-    6: 3,
-    7: 4,
-    8: 4,
-    9: 5,
-    10: 5,
-    11: 6,
-    12: 6,
-    13: 7,
-    14: 7,
-    15: 8,
-    16: 8,
-    17: 9,
-    18: 9,
-    19: 10,
-    20: 10,
-}
+LVS_GET_NEW_ADVANCED_MOVE = {12, 14, 16, 18, 20}
 
 
 class MoveMethods(BaseFighter):
@@ -38,7 +16,7 @@ class MoveMethods(BaseFighter):
         return moves.get_rand_moves(self, self.num_moves_choose, tier)
 
     def get_move_tier_for_lv(self):
-        return NEW_MOVE_TIERS[self.level]
+        return ceil(self.level / 2)
 
     @staticmethod
     def get_move_tier_string(move_obj):
@@ -106,8 +84,6 @@ class MoveMethods(BaseFighter):
             if self.level >= lv:
                 tier = self.get_move_tier_for_lv()
                 self.learn_move(moves.get_rand_moves(self, 1, tier)[0])
-            else:
-                break
         for lv, moves_to_learn in self.style.move_strings.items():
             if self.level >= lv:
                 if isinstance(moves_to_learn, str):  # can be a tuple, can be a string
