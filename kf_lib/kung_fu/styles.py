@@ -5,7 +5,7 @@ from .techniques import Tech
 
 all_styles = {}
 
-DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4'}
+DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4', 10: '5'}
 
 
 class Style(object):

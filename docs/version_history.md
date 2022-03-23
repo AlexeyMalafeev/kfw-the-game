@@ -14,6 +14,7 @@ Date
 10. feat: techniques (and styles) related to bleeding
 11. feat: "Slashing" moves (3095 -> 3313) and Claw is slashing by default
 12. refactor: game.py is now a package
+13. fix: school students are now level 1-10
 
 
 ### Coming soon:  
