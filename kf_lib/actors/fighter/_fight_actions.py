@@ -253,7 +253,8 @@ class FighterWithActions(
         self.dfs_penalty_mult = 1.0
         self.target = None
         # breathing techs and other automatic actions
-        self.change_hp(self.hp_gain)
+        if self.hp_gain:
+            self.change_hp(self.hp_gain)
         self.change_qp(self.qp_gain)
         self.change_stamina(self.stamina_gain)
         self.try_in_fight_impro_wp()  # before get_av_atk_actions! or won't get weapon moves

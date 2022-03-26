@@ -244,7 +244,7 @@ default_styles = [
     Style(
         'Shaolin Fist',
         {
-            3: Tech('Shaolin Fist I', hp_gain=b.HP_GAIN1),
+            3: Tech('Shaolin Fist I', hp_gain_mult=b.HP_GAIN1),
             5: Tech('Shaolin Fist II', palm_strike_mult=b.STRIKE_MULT1),
             7: Tech('Shaolin Fist III', palm_strike_mult=b.STRIKE_MULT1),
         },
@@ -343,7 +343,7 @@ BEGGAR_STYLE = Style(
     {
         3: Tech('Beggar\'s Fist I', dfs_mult=b.DEFENSE1),
         5: Tech('Beggar\'s Fist II', palm_strike_mult=b.RARE_STRIKE_MULT1),
-        7: Tech('Beggar\'s Fist III', qp_gain_mult=b.QP_GAIN1, hp_gain=b.HP_GAIN1),
+        7: Tech('Beggar\'s Fist III', qp_gain_mult=b.QP_GAIN1, hp_gain_mult=b.HP_GAIN1),
     },
     {2: '1,palm', 4: '2,palm', 6: '3,energy', 8: '4,energy'},
 )
@@ -404,7 +404,7 @@ FOREIGN_STYLES = {
         {
             3: Tech('Wrestling I', grappling_strike_mult=b.STRIKE_MULT1),
             5: Tech('Wrestling II', strength_mult=b.STRENGTH1),
-            7: Tech('Wrestling III', hp_gain=b.HP_GAIN1),
+            7: Tech('Wrestling III', hp_gain_mult=b.HP_GAIN1),
         },
         {
             1: 'Throw',

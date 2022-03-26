@@ -48,8 +48,8 @@ HEALTH2 = 0.4
 HIT_DISARM1 = 0.5
 HIT_DISARM2 = 1.0
 HOME_TRAIN_BONUS = 0.5
-HP_GAIN1 = 10
-HP_GAIN2 = 20
+HP_GAIN1 = 0.05
+HP_GAIN2 = 0.1
 HP_MULT = 1.5  # todo this is not used?
 IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
@@ -89,6 +89,7 @@ WP_STRIKE_MULT1 = 0.25
 WP_STRIKE_MULT2 = 0.5
 
 
+# todo just apply these functions automatically to all boosts below
 HUND_ADD_SIGN_ADD_PCNT = (hund, add_sign, add_pcnt)
 
 
@@ -129,7 +130,7 @@ PMAP = (
     ('health_mult', 'health', 'health', HUND_ADD_SIGN_ADD_PCNT),
     ('hit_disarm', 'disarm', 'disarm chance when attacking', HUND_ADD_SIGN_ADD_PCNT),
     ('home_training_exp_mult', 'home train.', 'home training', HUND_ADD_SIGN_ADD_PCNT),
-    ('hp_gain', 'HP gain', 'HP/turn', [add_sign]),
+    ('hp_gain_mult', 'HP gain', 'HP gain per turn', HUND_ADD_SIGN_ADD_PCNT),
     (
         'in_fight_impro_wp_chance',
         'weapons',

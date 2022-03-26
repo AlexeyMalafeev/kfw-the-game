@@ -84,7 +84,8 @@ class FightAttributes(BasicAttributes):
         self.hit_disarm = 0.005
         self.hp = 0
         self.hp_max = 0
-        self.hp_gain = 0
+        self.hp_gain = 0  # actual amount of hp restored per turn, derived
+        self.hp_gain_mult = 0.0  # tech-dependent
         self.in_fight_impro_wp_chance = 0.0
         self.lying_dfs_mult = 0.5
         self.maneuver_time_cost_mult = 1.0  # lower is better
@@ -93,9 +94,9 @@ class FightAttributes(BasicAttributes):
         self.off_balance_dfs_mult = 0.75
         self.preemptive_chance = 0.0  # tech-dependent
         self.qp = 0
-        self.qp_gain = 0  # NB! level-dependent
-        self.qp_gain_mult = 1.0
-        self.qp_max = 0  # NB! level-dependent
+        self.qp_gain = 0  # level-dependent
+        self.qp_gain_mult = 1.0  # tech-dependent
+        self.qp_max = 0  # level-dependent
         self.qp_max_mult = 1.0
         self.speed_mult = 1.0
         self.stamina = 0
@@ -153,7 +154,7 @@ class FightAttributes(BasicAttributes):
             curr_v = getattr(self, k)
             setattr(self, k, curr_v + v)
         self.refresh_full_atts()
-        self.refresh_level_dependent_atts()
+        self.refresh_dependent_atts()
 
     def change_hp(self, amount):
         self.hp += amount
@@ -215,8 +216,9 @@ class FightAttributes(BasicAttributes):
         # return f'{padding}{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
         return f'{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
-    def refresh_level_dependent_atts(self):
+    def refresh_dependent_atts(self):
         self.hp_max = self.health_full * HP_PER_HEALTH_LV
+        self.hp_gain = round(self.hp_max * self.hp_gain_mult)
         self.stamina_max = round(
             (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
         )
@@ -245,4 +247,4 @@ class FightAttributes(BasicAttributes):
             kwargs_copy[k] = -v
         self.boost(**kwargs_copy)
         self.refresh_full_atts()
-        self.refresh_level_dependent_atts()
+        self.refresh_dependent_atts()

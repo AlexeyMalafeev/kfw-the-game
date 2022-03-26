@@ -17,10 +17,10 @@ Date
 13. feat: school students are now levels 1-10, masters levels 11-14
 14. fix: bug in saving game (duplicated players)
 15. feat: change tournament levels: 1-3 "beginner", 4-6 "intermediate", 7-10 "advanced", 11-14 "master"
+16. feat: hp gain is relative to max hp
 
 
-### Coming soon:  
-* hp gain is relative to max hp
+### Coming soon:
 * dam reduc is relative to max hp
 * toughness: level-dependent dam reduction for all
 * reduce feel too scared
@@ -35,6 +35,7 @@ Date
 * continue refactoring encounters while adding lucky/unlucky developments
 * refactor game.py
 * more strike types (see strike notes)
+* style's secret tech at lv 10, don't know in advance
 
 ---
 

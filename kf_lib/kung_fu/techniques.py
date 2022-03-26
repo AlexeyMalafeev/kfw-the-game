@@ -112,8 +112,8 @@ LINKED_TECHS = [
         Tech('Energy Breathing', qp_gain_mult=b.QP_GAIN2, is_advanced=True),
     ),
     (
-        Tech('Health Breathing', hp_gain=b.HP_GAIN1, is_upgradable=True),
-        Tech('Vitality Breathing', hp_gain=b.HP_GAIN2, is_advanced=True),
+        Tech('Health Breathing', hp_gain_mult=b.HP_GAIN1, is_upgradable=True),
+        Tech('Vitality Breathing', hp_gain_mult=b.HP_GAIN2, is_advanced=True),
     ),
     (
         Tech('Monkey and Fox', block_disarm=b.BLOCK_DISARM1, hit_disarm=b.HIT_DISARM1,
@@ -271,7 +271,7 @@ def apply(tn, f):
     t = get_tech_obj(tn)
     t.apply(f)
     f.refresh_full_atts()  # in case techs affects them
-    f.refresh_level_dependent_atts()  # in case techs affects them
+    f.refresh_dependent_atts()  # in case techs affects them
 
 
 def get_all_techs():

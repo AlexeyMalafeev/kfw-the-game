@@ -58,7 +58,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     ),
     "Tough": Tech('Toughness', health_mult=b.HEALTH1),
     "Unstoppable": Tech('Unstoppable Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
-    "Vigorous": Tech('Vigor', hp_gain=b.HP_GAIN1),
+    "Vigorous": Tech('Vigor', hp_gain_mult=b.HP_GAIN1),
 }  # drunken: trick, acrobatic, surprise backflip; light-footed, furious, enraged
 
 # exclude resist_ko=b.RESIST_KO1
@@ -102,7 +102,7 @@ W2 = {
     'Sun': Tech('Sun\'s Orbit', dist3_bonus=b.DIST3_MULT1),
     "Vengeful": Tech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
     'Venom': Tech('Deadly Venom', stun_chance=b.STUN_CH1),
-    "Water": Tech('Healing Water', hp_gain=b.HP_GAIN1),
+    "Water": Tech('Healing Water', hp_gain_mult=b.HP_GAIN1),
     'White': Tech('White Energy', health_mult=b.HEALTH1),
     "Wind": Tech('Wind Form', speed_mult=b.SPEED1),
     "Wooden": Tech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
@@ -132,7 +132,7 @@ W3 = {  # todo add grappling stike multiplier
     "Hawk": Tech('Hunting Hawk', dist3_bonus=b.DIST3_MULT1),
     "Leopard": Tech('Hunting Leopard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     "Lion": Tech('Lion\'s Paws', punch_strike_mult=b.STRIKE_MULT1),
-    "Lizard": Tech('Regenerating Lizard', hp_gain=b.HP_GAIN1),
+    "Lizard": Tech('Regenerating Lizard', hp_gain_mult=b.HP_GAIN1),
     "Mantis": Tech('Praying Mantis', preemptive_chance=b.PREEMPTIVE_CH1),
     "Monkey": Tech('Playing Monkey', agility_mult=b.AGILITY1),
     "Ox": Tech(
