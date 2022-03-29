@@ -18,8 +18,8 @@ CRIT_CH1 = 0.15
 CRIT_CH2 = 0.3
 CRIT_M1 = 0.5
 CRIT_M2 = 1
-DAM_REDUC1 = 5
-DAM_REDUC2 = 10
+DAM_REDUC1 = 0.15
+DAM_REDUC2 = 0.3
 DEFENSE1 = 0.5
 DEFENSE2 = 1.0
 DEFENSE_HALF = round(DEFENSE1 / 2, 2)
@@ -103,7 +103,7 @@ PMAP = (
     ('counter_chance_mult', 'counters', 'counterattack chance', HUND_ADD_SIGN_ADD_PCNT),
     ('critical_chance_mult', 'criticals', 'critical attack chance', HUND_ADD_SIGN_ADD_PCNT),
     ('critical_dam_mult', 'criticals', 'critical attack power', HUND_ADD_SIGN_ADD_PCNT),
-    ('dam_reduc', 'dam.reduc.', 'damage reduction', (add_sign, )),
+    ('dam_reduc', 'dam.reduc.', 'damage reduction', HUND_ADD_SIGN_ADD_PCNT),
     ('dfs_mult', 'defense', 'defense', HUND_ADD_SIGN_ADD_PCNT),
     (
         'dfs_penalty_step',
@@ -133,7 +133,7 @@ PMAP = (
     ('hp_gain_mult', 'HP gain', 'HP gain per turn', HUND_ADD_SIGN_ADD_PCNT),
     (
         'in_fight_impro_wp_chance',
-        'weapons',
+        'improv.weapons',
         'in-fight improvised weapon chance',
         HUND_ADD_SIGN_ADD_PCNT,
     ),

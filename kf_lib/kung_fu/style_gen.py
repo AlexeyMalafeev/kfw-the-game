@@ -63,7 +63,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
 
 # exclude resist_ko=b.RESIST_KO1
 W2 = {
-    'Adamant': Tech('Adamant Strikes', unblock_chance=b.UNBLOCK_CHANCE1),
+    'Avalanche': Tech('Avalanche Strikes', unblock_chance=b.UNBLOCK_CHANCE1),
     "Air": Tech('Air Attacks', flying_strike_mult=b.STRIKE_MULT1),
     "Astral": Tech('Astral Footwork', kick_strike_mult=b.STRIKE_MULT1),
     "Bizarre": Tech(
@@ -107,8 +107,9 @@ W2 = {
     "Wind": Tech('Wind Form', speed_mult=b.SPEED1),
     "Wooden": Tech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
     # crystal, colors, colorless, snow, mountain, river,
-    # imperial, golden, southern, northern, silver, bronze, lotus, avalanche, sky,
+    # imperial, golden, southern, northern, silver, bronze, lotus, sky,
     # diamond, pearl, hellish, hard, soft, deadly, lightning
+    # adamantine
 }
 
 W3 = {  # todo add grappling stike multiplier

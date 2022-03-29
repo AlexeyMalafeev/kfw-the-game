@@ -196,7 +196,8 @@ class FighterWithActions(
         if self.dam > 0:
             self.try_critical()
             self.try_epic()
-            self.dam = max(self.dam - tgt.dam_reduc, 0)
+            if tgt.dam_reduc:
+                self.dam *= (1 - tgt.dam_reduc)
             tgt.take_damage(self.dam)
             if tgt.momentum > 0:
                 tgt.momentum = 0

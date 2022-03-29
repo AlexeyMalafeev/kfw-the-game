@@ -9,7 +9,7 @@ Date
 5. fix: increase guard bonus for all
 6. refactor: factor folder name constants and ensuring folders exist to a separate module
 7. feat: also save moves as a Pandas DataFrame (for development purposes only)
-8. refactor: separate fight.__init__.py into submodules
+8. refactor: separate fight into submodules
 9. **feat: bleeding mechanic**
 10. feat: techniques (and styles) related to bleeding
 11. feat: "Slashing" moves (3095 -> 3313) and Claw is slashing by default
@@ -18,10 +18,12 @@ Date
 14. fix: bug in saving game (duplicated players)
 15. feat: change tournament levels: 1-3 "beginner", 4-6 "intermediate", 7-10 "advanced", 11-14 "master"
 16. feat: hp gain is relative to max hp
+17. feat: dam reduc is relative to damage
 
 
 ### Coming soon:
-* dam reduc is relative to max hp
+* overhaul move tiers
+* analysis skill
 * toughness: level-dependent dam reduction for all
 * reduce feel too scared
 * orgainize move list, remove unused moves  

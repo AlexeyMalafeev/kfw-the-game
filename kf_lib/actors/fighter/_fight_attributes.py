@@ -64,7 +64,7 @@ class FightAttributes(BasicAttributes):
         self.critical_chance = 0.05  # NB! level-dependent
         self.critical_chance_mult = 1.0  # tech-dependent
         self.critical_dam_mult = 1.5
-        self.dam_reduc = 0  # todo adjust this and hp_gain in boosts.py
+        self.dam_reduc = 0.0  # portion of damage to be 'absorbed'
         self.dfs_bonus = 1.0  # for moves like Guard
         self.dfs_mult = 1.0
         self.dfs_penalty_mult = 1.0
