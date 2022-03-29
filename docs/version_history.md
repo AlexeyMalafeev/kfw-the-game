@@ -19,6 +19,7 @@ Date
 15. feat: change tournament levels: 1-3 "beginner", 4-6 "intermediate", 7-10 "advanced", 11-14 "master"
 16. feat: hp gain is relative to max hp
 17. feat: dam reduc is relative to damage
+18. feat[dev]: basic move analysis (with pandas)
 
 
 ### Coming soon:
