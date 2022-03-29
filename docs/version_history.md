@@ -20,10 +20,10 @@ Date
 16. feat: hp gain is relative to max hp
 17. feat: dam reduc is relative to damage
 18. feat[dev]: basic move analysis (with pandas)
+19. feat: overhaul move tiers
 
 
 ### Coming soon:
-* overhaul move tiers
 * analysis skill
 * toughness: level-dependent dam reduction for all
 * reduce feel too scared
