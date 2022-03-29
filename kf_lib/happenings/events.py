@@ -17,9 +17,32 @@ TOURN_PRIZE_MULT = 4
 TOURN_TYPES = (
     'beginner',
     'intermediate',
-    'expert',
+    'advanced',
+    'master',
 )
-TOURN_TYPE_BGN, TOURN_TYPE_MED, TOURN_TYPE_ADV = TOURN_TYPES
+TOURN_TYPE_BGN, TOURN_TYPE_MED, TOURN_TYPE_ADV, TOURN_TYPE_MAS = TOURN_TYPES
+TOURNAMENTS = [
+        {
+            'min_lv': 1,
+            'max_lv': 3,
+            'tourn_type': TOURN_TYPE_BGN,
+        },
+        {
+            'min_lv': 4,
+            'max_lv': 6,
+            'tourn_type': TOURN_TYPE_MED,
+        },
+        {
+            'min_lv': 7,
+            'max_lv': 10,
+            'tourn_type': TOURN_TYPE_ADV,
+        },
+        {
+            'min_lv': 11,
+            'max_lv': 14,
+            'tourn_type': TOURN_TYPE_MAS,
+        },
+    ]
 
 # town
 MAX_CRIME = 0.5
@@ -79,24 +102,7 @@ def new_story(g):
 
 def new_tournament(g):
     # game, num_participants=8, min_lv=1, max_lv=5, tourn_type='?', fee='random', prize='auto'
-    tournaments = [
-        {
-            'min_lv': 1,
-            'max_lv': 4,
-            'tourn_type': TOURN_TYPE_BGN,
-        },
-        {
-            'min_lv': 5,
-            'max_lv': 8,
-            'tourn_type': TOURN_TYPE_MED,
-        },
-        {
-            'min_lv': 9,
-            'max_lv': 12,
-            'tourn_type': TOURN_TYPE_ADV,
-        },
-    ]
-    t = random.choice(tournaments)
+    t = random.choice(TOURNAMENTS)
     n = random.choices(
         population=(8, 16, 12, 10, 14, 18, 20),
         weights=(1.0, 0.5, 0.05, 0.05, 0.05, 0.025, 0.025),

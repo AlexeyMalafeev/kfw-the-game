@@ -12,7 +12,6 @@ from .human_controlled_fighter import HumanControlledFighter
 BEGGAR_LV = (8, 12)
 BODYGUARD_LV = (6, 8)
 BRAWLER_LV = (3, 6)
-CHALLENGER_LV = (3, 10)
 CONVICT_LV = (3, 10)
 CRAFTSMAN_LV = (5, 20)
 DRUNKARD_STRONG_LV = (8, 12)
@@ -20,15 +19,15 @@ DRUNKARD_WEAK_LV = (1, 3)
 FAT_GIRL_LV = (5, 7)
 FOREIGNER_LV = (10, 14)
 GAMBLER_LV = (3, 6)
-MASTER_LV = (8, 12)
+MASTER_LV = (11, 14)
 PERFORMER_LV = (7, 10)
 POLICE_LV = (1, 5)
 ROBBER_LV = (1, 5)
+STUDENT_LV = (1, 10)
 STYLE_TECH_LV = 8
 THIEF_LV = (1, 3)
 THUG_LV = (1, 5)
 TOUGH_THIEF_LV = (7, 10)
-TOURN_PART_LV = (5, 10)
 
 
 def from_exp_worth(x):  # todo reimplement
@@ -93,13 +92,6 @@ def new_bodyguard(weak=False, n=1):
 def new_brawler():
     lv = rndint(*BRAWLER_LV)
     return Thug('Brawler', style=styles.DIRTY_FIGHTING, level=lv)
-
-
-def new_challenger():
-    lv = rndint(*CHALLENGER_LV)
-    style = style_gen.get_new_randomly_generated_style()
-    f = Challenger('Unknown', style, lv)
-    return f
 
 
 def new_convict():
@@ -312,23 +304,10 @@ def new_robber(weak=False, n=1):
         return fs
 
 
-def new_student(name, style, lv):
+def new_student(name, style):
+    lv = rndint(*STUDENT_LV)
     f = Challenger(name, style, lv)
     return f
-
-
-def new_tourn_part(n=1):
-    fs = []
-    for i in range(n):
-        lv = rndint(*TOURN_PART_LV)
-        style = style_gen.get_new_randomly_generated_style()
-        f = Fighter(names.DFLT_TOURN_PART_NAME, style, lv)
-        fs.append(f)
-    if len(fs) == 1:
-        return fs[0]
-    else:
-        add_numbers_to_names(fs)
-        return fs
 
 
 def new_thief(tough=False):

@@ -49,8 +49,7 @@ class NewGame(BaseGame):
     # This method is actually used outside this module, so it is not protected
     def get_new_student(self, style_name):
         name = self.get_new_name()
-        lv = rndint(1, 7)
-        return fighter_factory.new_student(name, style_name, lv)
+        return fighter_factory.new_student(name, style_name)
 
     def new_game(
         self,

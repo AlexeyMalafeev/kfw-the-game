@@ -1,6 +1,6 @@
 ### v.0.6.7-beta
-""  
-Date  
+"Blood Sport"  
+March 29, 2022  
 
 1. fix: nerf default block power, agility goes down in significance, balance improves
 2. fix: remove depth-3 move generation for cleaner moves with shorter names (17699 -> 3095 moves)
@@ -9,18 +9,24 @@ Date
 5. fix: increase guard bonus for all
 6. refactor: factor folder name constants and ensuring folders exist to a separate module
 7. feat: also save moves as a Pandas DataFrame (for development purposes only)
-8. refactor: separate fight.__init__.py into submodules
+8. refactor: separate fight into submodules
 9. **feat: bleeding mechanic**
 10. feat: techniques (and styles) related to bleeding
 11. feat: "Slashing" moves (3095 -> 3313) and Claw is slashing by default
 12. refactor: game.py is now a package
+13. feat: school students are now levels 1-10, masters levels 11-14
+14. fix: bug in saving game (duplicated players)
+15. feat: change tournament levels: 1-3 "beginner", 4-6 "intermediate", 7-10 "advanced", 11-14 "master"
+16. feat: hp gain is relative to max hp
+17. feat: dam reduc is relative to damage
+18. feat[dev]: basic move analysis (with pandas)
+19. feat: overhaul move tiers
 
 
-### Coming soon:  
-* maybe move school creation and challenging your master to lv 10? increase master levels then, and upper fighters' too
-* hp gain is relative to max hp
-* dam reduc is relative to max hp
+### Coming soon:
+* analysis skill
 * toughness: level-dependent dam reduction for all
+* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  
@@ -33,6 +39,7 @@ Date
 * continue refactoring encounters while adding lucky/unlucky developments
 * refactor game.py
 * more strike types (see strike notes)
+* style's secret tech at lv 10, don't know in advance
 
 ---
 

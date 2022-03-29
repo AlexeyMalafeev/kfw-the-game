@@ -196,7 +196,8 @@ class FighterWithActions(
         if self.dam > 0:
             self.try_critical()
             self.try_epic()
-            self.dam = max(self.dam - tgt.dam_reduc, 0)
+            if tgt.dam_reduc:
+                self.dam *= (1 - tgt.dam_reduc)
             tgt.take_damage(self.dam)
             if tgt.momentum > 0:
                 tgt.momentum = 0
@@ -253,7 +254,8 @@ class FighterWithActions(
         self.dfs_penalty_mult = 1.0
         self.target = None
         # breathing techs and other automatic actions
-        self.change_hp(self.hp_gain)
+        if self.hp_gain:
+            self.change_hp(self.hp_gain)
         self.change_qp(self.qp_gain)
         self.change_stamina(self.stamina_gain)
         self.try_in_fight_impro_wp()  # before get_av_atk_actions! or won't get weapon moves

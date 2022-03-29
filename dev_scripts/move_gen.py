@@ -10,12 +10,8 @@ if lib_path not in sys.path:
 import pandas as pd
 
 
-TIER1_QI_COST = 6
-TIER2_QI_COST = 12
-TIER3_QI_COST = 20
-TIER4_QI_COST = 30
-TIER5_QI_COST = 42
 TIER_MAX = 10
+QI_COST_PER_TIER = 5
 
 
 def listr(s):
@@ -62,6 +58,7 @@ def add(m, k, diff, mx=None, mn=None):
 
 def up_tier(m, n=1):
     add(m, 'tier', n, mx=TIER_MAX)
+    add(m, 'qi_cost', n * QI_COST_PER_TIER)
 
 
 def mult(m, k, co):
@@ -91,7 +88,6 @@ def light(m):
     mult(m, 'power', 0.8)
     mult(m, 'accuracy', 1.1)
     mult(m, 'stam_cost', 0.75)
-    add(m, 'qi_cost', TIER1_QI_COST)
     up_tier(m)
     prefix(m, 'Light')
     return m
@@ -104,7 +100,6 @@ def heavy(m):
     mult(m, 'power', 1.2)
     mult(m, 'accuracy', 0.9)
     mult(m, 'stam_cost', 1.25)
-    add(m, 'qi_cost', TIER1_QI_COST)
     up_tier(m)
     prefix(m, 'Heavy')
     return m
@@ -115,13 +110,11 @@ def long(m):
         return None
     m = m.copy()
     add(m, 'distance', 1)
-    up_tier(m)
     add(m, 'freq', -1, mn=1)
     if m['distance'] == 4:
-        up_tier(m)
-        add(m, 'qi_cost', TIER2_QI_COST)
+        up_tier(m, 2)
     else:
-        add(m, 'qi_cost', TIER1_QI_COST)
+        up_tier(m)
     prefix(m, 'Long')
     return m
 
@@ -133,7 +126,6 @@ def short(m):
     add(m, 'distance', -1)
     up_tier(m)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER1_QI_COST)
     prefix(m, 'Short')
     return m
 
@@ -142,9 +134,8 @@ def charging(m):
     m = m.copy()
     if m['distance'] <= 1:
         add(m, 'distance', 1)
-    up_tier(m)
+    up_tier(m, 2)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER1_QI_COST)
     mult(m, 'stam_cost', 1.1)
     mult(m, 'time_cost', 1.2)
     add(m, 'dist_change', -1)
@@ -156,9 +147,8 @@ def retreating(m):
     if m['distance'] >= 4:
         return None
     m = m.copy()
-    up_tier(m)
+    up_tier(m, 2)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER1_QI_COST)
     mult(m, 'stam_cost', 1.15)
     mult(m, 'time_cost', 1.25)
     add(m, 'dist_change', 1)
@@ -170,9 +160,8 @@ def onslaught(m):
     m = m.copy()
     if m['distance'] <= 2:
         add(m, 'distance', 2)
-    up_tier(m, 2)
+    up_tier(m, 3)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER2_QI_COST)
     mult(m, 'stam_cost', 1.2)
     mult(m, 'time_cost', 1.4)
     add(m, 'complexity', 1)
@@ -185,9 +174,8 @@ def vanishing(m):
     if m['distance'] >= 3:
         return None
     m = m.copy()
-    up_tier(m, 2)
+    up_tier(m, 3)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER2_QI_COST)
     mult(m, 'stam_cost', 1.25)
     mult(m, 'time_cost', 1.45)
     add(m, 'complexity', 1)
@@ -200,10 +188,9 @@ def backflip(m):
     if 'kick' not in m['features'] or 'do_agility_based_dam' in m['functions']:
         return None
     m = m.copy()
-    up_tier(m, 2)
+    up_tier(m, 4)
     add(m, 'distance', -2)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER2_QI_COST)
     mult(m, 'stam_cost', 1.25)
     mult(m, 'time_cost', 1.25)
     add(m, 'complexity', 1)
@@ -220,7 +207,6 @@ def pushing(m):
         return None
     m = m.copy()
     up_tier(m)
-    add(m, 'qi_cost', TIER1_QI_COST)
     add_fun(m, 'do_knockback')
     prefix(m, 'Pushing')
     return m
@@ -230,8 +216,7 @@ def surprise(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    up_tier(m)
-    add(m, 'qi_cost', TIER1_QI_COST)
+    up_tier(m, 2)
     add_fun(m, 'try_shock_move')
     prefix(m, 'Surprise')
     return m
@@ -241,7 +226,6 @@ def fast(m):
     m = m.copy()
     mult(m, 'time_cost', 0.8)
     mult(m, 'stam_cost', 1.1)
-    add(m, 'qi_cost', TIER1_QI_COST)
     up_tier(m)
     prefix(m, 'Fast')
     return m
@@ -253,7 +237,6 @@ def strong(m):
     m = m.copy()
     mult(m, 'power', 1.2)
     mult(m, 'stam_cost', 1.1)
-    add(m, 'qi_cost', TIER1_QI_COST)
     up_tier(m, 2)
     prefix(m, 'Strong')
     return m
@@ -265,7 +248,6 @@ def precise(m):
     m = m.copy()
     mult(m, 'time_cost', 1.1)
     mult(m, 'accuracy', 1.2)
-    add(m, 'qi_cost', TIER1_QI_COST)
     up_tier(m, 2)
     prefix(m, 'Precise')
     return m
@@ -280,9 +262,8 @@ def flying(m):
     add(m, 'distance', 1)
     add(m, 'dist_change', -1)
     add(m, 'complexity', 1)
-    up_tier(m)
+    up_tier(m, 3)
     add(m, 'freq', -1, mn=1)
-    add(m, 'qi_cost', TIER1_QI_COST)
     prefix(m, 'Flying')
     return m
 
@@ -296,11 +277,10 @@ def acrobatic(m):
     m = m.copy()
     mult(m, 'stam_cost', 1.25)
     add(m, 'complexity', 2)
-    up_tier(m, 2)
+    up_tier(m, 3)
     add_fun(m, 'do_agility_based_dam')
     add_fun(m, 'do_strength_based_dam')
     add(m, 'freq', -2, mn=1)
-    add(m, 'qi_cost', TIER2_QI_COST)
     prefix(m, 'Acrobatic')
     return m
 
@@ -309,7 +289,6 @@ def power(m):
     if 'do_strength_based_dam' in m['functions']:
         return None
     m = m.copy()
-    add(m, 'qi_cost', TIER2_QI_COST)
     up_tier(m, 2)
     add_fun(m, 'do_strength_based_dam')
     prefix(m, 'Power')
@@ -320,7 +299,6 @@ def trick(m):
     if 'do_agility_based_dam' in m['functions']:
         return None
     m = m.copy()
-    add(m, 'qi_cost', TIER2_QI_COST)
     up_tier(m, 2)
     add_fun(m, 'do_agility_based_dam')
     prefix(m, 'Trick')
@@ -331,7 +309,6 @@ def lightning(m):
     if 'do_speed_based_dam' in m['functions']:
         return None
     m = m.copy()
-    add(m, 'qi_cost', TIER2_QI_COST)
     up_tier(m, 2)
     add_fun(m, 'do_speed_based_dam')
     prefix(m, 'Lightning')
@@ -342,7 +319,6 @@ def energy(m):
     if 'do_qi_based_dam' in m['functions']:
         return None
     m = m.copy()
-    add(m, 'qi_cost', TIER2_QI_COST)
     up_tier(m, 2)
     add_fun(m, 'do_qi_based_dam')
     prefix(m, 'Energy')
@@ -354,8 +330,7 @@ def ferocious(m):
         return None
     m = m.copy()
     mult(m, 'stam_cost', 1.2)
-    add(m, 'qi_cost', TIER3_QI_COST)
-    up_tier(m, 3)
+    up_tier(m, 4)
     add_fun(m, 'do_speed_based_dam')
     add_fun(m, 'do_strength_based_dam')
     prefix(m, 'Ferocious')
@@ -369,8 +344,7 @@ def piercing(m):
         return None
     m = m.copy()
     mult(m, 'stam_cost', 1.2)
-    add(m, 'qi_cost', TIER3_QI_COST)
-    up_tier(m, 3)
+    up_tier(m, 4)
     add_fun(m, 'do_agility_based_dam')
     add_fun(m, 'do_speed_based_dam')
     prefix(m, 'Piercing')
@@ -381,8 +355,7 @@ def shocking(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    up_tier(m, 2)
-    add(m, 'qi_cost', TIER2_QI_COST)
+    up_tier(m, 3)
     add_fun(m, 'do_shock_move')
     prefix(m, 'Shocking')
     return m
@@ -392,8 +365,7 @@ def solar(m):
     if 'takedown' in m['features']:
         return None
     m = m.copy()
-    up_tier(m, 2)
-    add(m, 'qi_cost', TIER2_QI_COST)
+    up_tier(m, 3)
     add_fun(m, 'do_stam_dam')
     prefix(m, 'Solar')
     return m
@@ -403,8 +375,7 @@ def nerve(m):
     if 'takedown' in m['features']:
         return None
     m = m.copy()
-    up_tier(m, 2)
-    add(m, 'qi_cost', TIER2_QI_COST)
+    up_tier(m, 3)
     add_fun(m, 'do_mob_dam')
     prefix(m, 'Nerve')
     return m
@@ -414,8 +385,7 @@ def debilitating(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    up_tier(m, 4)
-    add(m, 'qi_cost', TIER4_QI_COST)
+    up_tier(m, 5)
     add_fun(m, 'do_shock_move')
     add_fun(m, 'do_stam_dam')
     add_fun(m, 'do_mob_dam')
@@ -428,8 +398,7 @@ def lethal(m):
     if 'takedown' in m['features']:
         return None
     m = m.copy()
-    add(m, 'qi_cost', TIER5_QI_COST)
-    up_tier(m, 5)
+    up_tier(m, 6)
     add_fun(m, 'try_insta_ko')
     add(m, 'freq', -2, mn=1)
     prefix(m, 'Lethal')
@@ -440,8 +409,7 @@ def slashing(m):
     if 'cause_bleeding' in m['functions']:
         return None
     m = m.copy()
-    add(m, 'qi_cost', TIER2_QI_COST)
-    up_tier(m, 2)
+    up_tier(m, 4)
     add_fun(m, 'cause_bleeding')
     add(m, 'freq', -2, mn=1)
     prefix(m, 'Slashing')
@@ -450,8 +418,7 @@ def slashing(m):
 
 def skillful(m):
     m = m.copy()
-    add(m, 'qi_cost', TIER1_QI_COST)
-    up_tier(m, 1)
+    up_tier(m, 2)
     mult(m, 'power', 1.1)
     mult(m, 'accuracy', 1.1)
     mult(m, 'time_cost', 0.9)
@@ -462,8 +429,7 @@ def skillful(m):
 
 def superior(m):
     m = m.copy()
-    add(m, 'qi_cost', TIER2_QI_COST)
-    up_tier(m, 2)
+    up_tier(m, 3)
     mult(m, 'power', 1.2)
     mult(m, 'accuracy', 1.2)
     mult(m, 'time_cost', 0.8)
@@ -474,8 +440,7 @@ def superior(m):
 
 def advanced(m):
     m = m.copy()
-    add(m, 'qi_cost', TIER3_QI_COST)
-    up_tier(m, 3)
+    up_tier(m, 4)
     mult(m, 'power', 1.3)
     mult(m, 'accuracy', 1.3)
     mult(m, 'time_cost', 0.7)
@@ -486,8 +451,7 @@ def advanced(m):
 
 def expert(m):
     m = m.copy()
-    add(m, 'qi_cost', TIER4_QI_COST)
-    up_tier(m, 4)
+    up_tier(m, 5)
     mult(m, 'power', 1.4)
     mult(m, 'accuracy', 1.4)
     mult(m, 'time_cost', 0.6)
@@ -498,8 +462,7 @@ def expert(m):
 
 def ultimate(m):
     m = m.copy()
-    add(m, 'qi_cost', TIER5_QI_COST)
-    up_tier(m, 5)
+    up_tier(m, 6)
     mult(m, 'power', 1.5)
     mult(m, 'accuracy', 1.5)
     mult(m, 'time_cost', 0.5)
