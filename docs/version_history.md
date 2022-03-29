@@ -1,6 +1,6 @@
 ### v.0.6.7-beta
-""  
-Date  
+"Blood Sport"  
+March 29, 2022  
 
 1. fix: nerf default block power, agility goes down in significance, balance improves
 2. fix: remove depth-3 move generation for cleaner moves with shorter names (17699 -> 3095 moves)
@@ -26,6 +26,7 @@ Date
 ### Coming soon:
 * analysis skill
 * toughness: level-dependent dam reduction for all
+* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
 * reduce feel too scared
 * orgainize move list, remove unused moves  
 * learn moves only if lucky  

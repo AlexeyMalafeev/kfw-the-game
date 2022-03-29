@@ -2,8 +2,8 @@
 'Backfist'       |1        |0           |26    |23       |1          |20        |50        |0       |{'punch'}                       |[]                     |0    |0    
 'Charging Step'  |0        |-2          |0     |0        |1          |10        |70        |1       |{'non-attack', 'special'}       |[]                     |0    |0    
 'Dragon Claw'    |2        |0           |20    |30       |1          |25        |50        |3       |{'claw', 'special'}             |['do_level_based_dam'] |0    |0    
-'Leopard Punch'  |2        |0           |27    |27       |1          |20        |50        |3       |{'punch', 'solar', 'special'}   |['do_stam_dam']        |0    |0    
-'Mantis Hook'    |1        |0           |26    |33       |1          |24        |45        |3       |{'claw', 'special', 'surprise'} |['try_shock_move']     |0    |0    
-'No-Shadow_Kick' |4        |-3          |60    |40       |3          |40        |80        |40      |{'kick', 'flying', 'special'}   |['try_insta_ko']       |0    |0    
+'Leopard Punch'  |2        |0           |27    |27       |1          |20        |50        |3       |{'solar', 'special', 'punch'}   |['do_stam_dam']        |0    |0    
+'Mantis Hook'    |1        |0           |26    |33       |1          |24        |45        |3       |{'surprise', 'claw', 'special'} |['try_shock_move']     |0    |0    
+'No-Shadow_Kick' |4        |-3          |60    |40       |3          |40        |80        |40      |{'flying', 'kick', 'special'}   |['try_insta_ko']       |0    |0    
 
 # 6 moves

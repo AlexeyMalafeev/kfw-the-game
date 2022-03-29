@@ -331,7 +331,7 @@ default_styles = [
         },
         {
             2: '1,fast,mid-range',
-            4: '2,shocking,close-range',
+            4: '2,surprise,close-range',
             6: '3,lightning,punch',
             8: '4,lightning,mid-range',
         },

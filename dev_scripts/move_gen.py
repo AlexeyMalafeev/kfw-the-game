@@ -355,7 +355,7 @@ def shocking(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    up_tier(m, 4)
+    up_tier(m, 3)
     add_fun(m, 'do_shock_move')
     prefix(m, 'Shocking')
     return m
