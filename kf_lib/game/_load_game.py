@@ -1,10 +1,9 @@
 from pathlib import Path
 
 # used with exec, do not delete
-from kf_lib.actors.player import ( # noqa
-    HumanPlayer,
-    ALL_AI_PLAYERS,
-)
+from kf_lib.actors.player import ALL_AI_PLAYERS, HumanPlayer, SmartAIP, SmartAIPVisible
+from kf_lib.actors.fighter import Challenger, Fighter, Master, Thug
+from kf_lib.happenings import story
 from kf_lib.utils import SAVE_FOLDER
 from ._base_game import BaseGame
 from . import game_stats
