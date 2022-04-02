@@ -392,7 +392,7 @@ class BaseFight(object):
     def show(self, *args, **kwargs):
         pass
 
-    def show_win_message(self, who_shows_ascii=None):
+    def show_win_message(self, who_shows_ascii=None, alternative_printing_fn=None):
         self.cls()
         if who_shows_ascii is None:
             who_shows_ascii = self.main_player
@@ -406,7 +406,10 @@ class BaseFight(object):
         dur_st = f'The fight lasted {t_string}'
         sep = '-' * len(dur_st)
         s += f'\n{sep}\n{dur_st}'
-        self.main_player.show(s)
+        if alternative_printing_fn is None:
+            self.main_player.show(s)
+        else:
+            alternative_printing_fn(s)
 
     def show_stats(self):
         print(self.stats)

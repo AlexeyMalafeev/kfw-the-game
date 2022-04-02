@@ -24,6 +24,8 @@ March 29, 2022
 
 
 ### Coming soon:
+* bug in careless inactive time?
+* energy strikes are OP
 * analysis skill
 * toughness: level-dependent dam reduction for all
 * couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
