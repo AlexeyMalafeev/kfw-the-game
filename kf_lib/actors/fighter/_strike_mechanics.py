@@ -97,7 +97,7 @@ class StrikeMechanics(FighterWithASCII):
         self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
     def cause_bleeding(self):
-        self.current_fight.display(f'{self.target.name} is bleeding!')
+        self.current_fight.display(f'{self.target.name} is BLEEDING!')
         self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
 
     def cause_fall(self):

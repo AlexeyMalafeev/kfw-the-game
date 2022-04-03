@@ -1373,7 +1373,8 @@ ENC_LIST = [
 
 # extra chance of getting these encounters when choosing the corresponding day actions
 BUY_ITEMS_ENCS = (
-        [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 3 + [Merchant] * 3 + [StreetPerformer] * 2
+        [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 5 + [Merchant] * 3
+        + [StreetPerformer] * 2
 )
 FIGHT_CRIME_ENCS = (
     [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [HelpPolice] * 7 + [RobbingSomeone] * 7
