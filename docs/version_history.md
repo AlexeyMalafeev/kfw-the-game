@@ -1,3 +1,39 @@
+### v.0.6.8-beta
+""  
+Date  
+
+1. Fixes: game loading, SpectateFight, qi-based damage, feel too scared
+2. add quotes from Dark
+
+### Coming soon:
+
+* bug in careless inactive time?
+* buff att-based damage for strikes
+* add Weak strike
+* Drunken: no fall damage, off-balance gives bonus, no complexity
+* style with head strikes
+* donate to friends; charity
+* if negative money, don't start some encounters
+* add more stories 
+* add societies (bandits, sect)
+* analysis skill
+* toughness: level-dependent dam reduction for all
+* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
+* reduce feel too scared
+* orgainize move list, remove unused moves  
+* learn moves only if lucky  
+* move filtering with pandas, save as csv, collect useful stats  
+* config (not to choose every time, time-consuming)  
+* fav_strikes in techs    
+* increase epic min lv; epic should be used against a strong opponent only? movie-like  
+* reflexes; compute to_block and to_dodge differently?  
+* strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
+* continue refactoring encounters while adding lucky/unlucky developments
+* more strike types (see strike notes)
+* style's secret tech at lv 10, don't know in advance
+
+---
+
 ### v.0.6.7-beta
 "Blood Sport"  
 March 29, 2022  
@@ -21,27 +57,6 @@ March 29, 2022
 17. feat: dam reduc is relative to damage
 18. feat[dev]: basic move analysis (with pandas)
 19. feat: overhaul move tiers
-
-
-### Coming soon:
-* bug in careless inactive time?
-* energy strikes are OP
-* analysis skill
-* toughness: level-dependent dam reduction for all
-* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
-* reduce feel too scared
-* orgainize move list, remove unused moves  
-* learn moves only if lucky  
-* move filtering with pandas, save as csv, collect useful stats  
-* config (not to choose every time, time-consuming)  
-* fav_strikes in techs    
-* increase epic min lv; epic should be used against a strong opponent only? movie-like  
-* reflexes; compute to_block and to_dodge differently?  
-* strong against stronger, strong against weaker - techs (intimidating, fearless)  
-* continue refactoring encounters while adding lucky/unlucky developments
-* refactor game.py
-* more strike types (see strike notes)
-* style's secret tech at lv 10, don't know in advance
 
 ---
 
