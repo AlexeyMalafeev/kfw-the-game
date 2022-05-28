@@ -2,8 +2,9 @@
 ""  
 Date  
 
-1. Fixes: game loading, SpectateFight, qi-based damage, feel too scared
-2. add quotes from Dark
+1. fixes: game loading, SpectateFight, qi-based damage, feel too scared
+2. feat: add quotes from Dark
+3. feat: add Weak and Pathetic moves
 
 ### Coming soon:
 
