@@ -36,8 +36,8 @@ class SpectateFight(NormalFight):
     def show(self, text, **kwargs):
         print(text)
 
-    def show_win_message(self, who_shows_ascii=None):
-        BaseFight.show_win_message(self, who_shows_ascii=self.side_a[0])
+    def show_win_message(self, who_shows_ascii=None, alternative_printing_fn=None):
+        super().show_win_message(who_shows_ascii=self.side_a[0], alternative_printing_fn=print)
 
     def pak(self):
         pak()

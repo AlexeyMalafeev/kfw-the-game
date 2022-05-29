@@ -27,7 +27,7 @@ LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
 MOB_DAM_PENALTY = 0.3
 MOMENTUM_EFFECT_SIZE = 0.1
 OFF_BALANCE_HP_THRESHOLD = 0.25
-QI_BASED_DAM_UPPER_MULT = 3
+QI_BASED_DAM_UPPER_MULT = 2
 SHOCK_CHANCE = 0.5  # for moves
 STAMINA_DAMAGE = 0.2  # for moves
 STAMINA_FACTOR_BIAS = 0.5
@@ -97,7 +97,7 @@ class StrikeMechanics(FighterWithASCII):
         self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
     def cause_bleeding(self):
-        self.current_fight.display(f'{self.target.name} is bleeding!')
+        self.current_fight.display(f'{self.target.name} is BLEEDING!')
         self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
 
     def cause_fall(self):

@@ -198,6 +198,7 @@ class FighterWithActions(
             self.try_epic()
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)
+                self.dam = round(self.dam)
             tgt.take_damage(self.dam)
             if tgt.momentum > 0:
                 tgt.momentum = 0
