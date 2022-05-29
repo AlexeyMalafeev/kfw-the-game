@@ -6,6 +6,7 @@ Date
 2. feat: add quotes from Dark
 3. feat: add Weak and Pathetic moves (3313 -> 3795 moves)
 4. feat: ~8 more new quotes (various sources)
+5. fix: bug in 'unlucky' craftsman encounter
 
 ### Coming soon:
 
