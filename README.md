@@ -11,6 +11,12 @@ KFW, short for Kung-Fu World, is a turn-based hot-seat role-playing game. It has
 * Fight AI is trained with a custom-implemented genetic algorithm
 * Machine learning-based fight outcome prediction
 
+The game looks something like this:
+
+<img width="308" alt="image" src="https://user-images.githubusercontent.com/10167436/178922104-f26d6bfb-2499-4437-962f-29a807a8b269.png">
+
+<img width="428" alt="image" src="https://user-images.githubusercontent.com/10167436/178922621-e7b6f80d-6f81-47e0-a97d-a6ee6e8c88c1.png">
+
 ## Installing and running the game
 
 Grab the latest release (I don't recommend just cloning master, as it has a lot of extra files that are used in development, but not necessary for playing the game). To play, you only need Python 3.8 or greater (install from python.org).  
