@@ -108,12 +108,12 @@ class BanditFianceStory(Story):
         b.name = g.get_new_name(random.choice(ROBBER_NICKNAMES))
         g.register_fighter(b)
         t = (
-            f'{p.name} meets an old man in the tavern. The old man looks very sad.'
-            f'It turns out that the infamous bandit {b.name} wants to marry the old man\'s'
-            f'beautiful daughter. The old man cannot refuse as {b.name} will likely kill'
+            f'{p.name} meets an old man in the tavern. The old man looks very sad. '
+            f'It turns out that the infamous bandit {b.name} wants to marry the old man\'s '
+            f'beautiful daughter. The old man cannot refuse as {b.name} will likely kill '
             'him and take his daughter anyway.'
             f'\n{p.name}: "Don\'t worry! When I was on Mount Wutai I learned the Buddhist Laws '
-            'of Logic from the abbot. Now I can talk a man around even if he\'s hard as iron.'
+            'of Logic from the abbot. Now I can talk a man around even if he\'s hard as iron. '
             f'I am sure {b.name} will listen."'
             f'\nOld Man: "What great good fortune that I could meet you today!"'
         )
@@ -129,7 +129,7 @@ class BanditFianceStory(Story):
         t = (
             f'{b.name}: "Old man, are you trying to make a fool of me? Where is your daughter?"'
             f'\nOld Man: "Please, sir, have mercy..."'
-            f'{p.name}: "Wait, {b.name}, let us discuss this like civil men!"'
+            f'\n{p.name}: "Wait, {b.name}, let us discuss this like civil men!"'
         )
         g.msg(t)
         if p.fight(b):
@@ -140,6 +140,8 @@ class BanditFianceStory(Story):
         else:
             g.msg(f'{b.name}: "It is no good, the police are coming! The people here are not'
                   f'hospitable at all. It is time for {b.name} to move on to the next town!"')
+        # end of the story
+        self.end()
 
 
 class ForeignerStory(Story):
