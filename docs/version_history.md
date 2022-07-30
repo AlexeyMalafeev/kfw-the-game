@@ -8,10 +8,12 @@ Date
 4. feat: ~8 more new quotes (various sources)
 5. fix: bug in 'unlucky' craftsman encounter
 6. feat: Bandit Fiance story
+7. feat: test story in debug menu
 
 ### Coming soon:
 
 * learn weak / pathetic moves in books
+* tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * upgrade moves from pathetic to ultimate
 * Drunken Boxing - no fall dam, off-balance gives bonus, acrobat (no complexity for moves)
 * Underhanded - "dirty"; rep penalty?
