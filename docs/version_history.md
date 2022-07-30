@@ -7,10 +7,10 @@ Date
 3. feat: add Weak and Pathetic moves (3313 -> 3795 moves)
 4. feat: ~8 more new quotes (various sources)
 5. fix: bug in 'unlucky' craftsman encounter
+6. feat: Bandit Fiance story
 
 ### Coming soon:
 
-* fix: bad luck is shown too early in craftsman encounter
 * learn weak / pathetic moves in books
 * upgrade moves from pathetic to ultimate
 * Drunken Boxing - no fall dam, off-balance gives bonus, acrobat (no complexity for moves)
