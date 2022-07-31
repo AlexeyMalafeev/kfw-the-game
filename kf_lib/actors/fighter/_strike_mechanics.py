@@ -104,7 +104,7 @@ class StrikeMechanics(FighterWithASCII):
         lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
         self.add_status('skip', lying_dur)
-        fall_dam = rndint(*FALL_DAMAGE)
+        fall_dam = int(rndint(*FALL_DAMAGE) * self.fall_damage_mult)
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)

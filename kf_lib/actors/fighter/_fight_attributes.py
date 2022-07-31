@@ -74,6 +74,7 @@ class FightAttributes(BasicAttributes):
         self.epic_chance = 0.0  # NB! level-dependent
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_dam_mult = 2.0
+        self.fall_damage_mult = 1.0  # style-dependent & wine-dependent?
         self.fury_to_all_mult = 1.6
         self.fury_chance = 0.0  # this gets multiplied by opp_to_self_pwr_ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
@@ -89,6 +90,7 @@ class FightAttributes(BasicAttributes):
         self.in_fight_impro_wp_chance = 0.0
         self.lying_dfs_mult = 0.5
         self.maneuver_time_cost_mult = 1.0  # lower is better
+        self.move_fail_chance_mult = 1.0  # style-dependent & wine-dependent?
         self.num_moves_choose = 3
         self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
@@ -98,6 +100,7 @@ class FightAttributes(BasicAttributes):
         self.qp_gain_mult = 1.0  # tech-dependent
         self.qp_max = 0  # level-dependent
         self.qp_max_mult = 1.0
+        self._resist_ko = 0.0
         self.speed_mult = 1.0
         self.stamina = 0
         self.stamina_factor = 1.0
@@ -108,7 +111,6 @@ class FightAttributes(BasicAttributes):
         self.strength_mult = 1.0
         self.strike_time_cost_mult = 1.0  # lower is better
         self.stun_chance = 0.0
-        self._resist_ko = 0.0
         self.unblock_chance = 0.0
 
         # weapon-related

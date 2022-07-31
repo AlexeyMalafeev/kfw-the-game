@@ -9,6 +9,8 @@ Date
 5. fix: bug in 'unlucky' craftsman encounter
 6. feat: Bandit Fiance story
 7. feat: test story in debug menu
+8. refactor: ratio -> opp_to_self_pwr_ratio
+9. feat: move fail chance multiplier and fall damage multiplier
 
 ### Coming soon:
 
