@@ -1,3 +1,7 @@
+"""To add a story, implement it as a subclass of BaseStory in a separate module using one of the
+existing stories as a reference.
+After this, it is sufficient to import the new story here like others below."""
+
 from typing import List, Type
 
 from ._base_story import BaseStory, _all_stories
