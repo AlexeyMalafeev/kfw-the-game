@@ -45,7 +45,11 @@ class Tech:
     def apply(self, f):
         for p in self.params:
             v = getattr(f, p)
-            setattr(f, p, v + self.params[p])
+            try:
+                setattr(f, p, v + self.params[p])
+            except TypeError:
+                print(f'DEBUG INFO:\n{f=}\n{p=}\n{v=}')
+                raise
 
     def undo(self, f):
         for p in self.params:

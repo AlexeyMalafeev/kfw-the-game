@@ -12,6 +12,7 @@ Date
 8. refactor: ratio -> opp_to_self_pwr_ratio
 9. feat: move fail chance multiplier and fall damage multiplier
 10. feat: add descriptors for value validation
+11. feat: exception handling when applying techs
 
 ### Coming soon:
 
