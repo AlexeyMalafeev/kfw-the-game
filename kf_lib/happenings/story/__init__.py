@@ -89,58 +89,11 @@ BRIBE = 100
 OFFICIALS_BODYGUARDS = (3, 5)
 
 # reputation
-BEAT_FOREIGNER = 30
 BRIBERY_REP_PENALTY = -5
 RECOVER_TREASURES = 30
 
 
-class RenownedMaster(BaseStory):
-    min_level = 14
-    max_level = 16
 
-    def intro(self):
-        g, p = self.game, self.player
-        g.cls()
-        name = g.get_new_name(prefix='Master')
-        b = self.boss = fighter_factory.new_master_challenger(p.level, name)
-        g.register_fighter(b)
-        t = (
-            '{}, a renowned master of {} kung-fu from a remote province, comes to {} and stays at a local '
-            'tavern.'.format(b.name, b.style.name, g.town_name)
-        )
-        g.msg(t)
-
-    def reward(self):
-        p = self.player
-        p.add_accompl('Renowned Master')
-        t = (
-            'Having defeated such a strong opponent, {} gained an important insight into his own fighting '
-            'technique.'.format(p.name)
-        )
-        p.write(t)
-        p.choose_tech_to_upgrade()
-
-    def scene1(self):
-        g, p, b = self.game, self.player, self.boss
-        t = (
-            '{p} meets {b}. {b}: "I feel that I have reached perfection in my kung-fu, {bs}. I have been looking for '
-            'a worthy opponent for a very, very long time. I will be honored to test your famous {ps} '
-            'kung-fu."'.format(p=p.name, b=b.name, bs=b.style.name, ps=p.style.name)
-        )
-        g.show(t)
-        p.log(f'Challenged by {b.name}.')
-        g.pak()
-        if p.fight(b, environment_allowed=False, items_allowed=False):
-            t = (
-                '{}: "Indeed remarkable! What excellent skill. I thank you for showing me that I '
-                'still have something to learn."'.format(b.name, p.name)
-            )
-            g.show(t)
-            self.reward()
-        else:
-            g.show(f'{b.name}: "I am disappointed - yet again."')
-        self.end()
-        g.pak()
 
 
 class StrangeDreamsBaseStory(BaseStory):
