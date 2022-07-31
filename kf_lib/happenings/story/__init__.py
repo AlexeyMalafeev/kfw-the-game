@@ -1,51 +1,27 @@
 import random
+from typing import List, Type
 
-from kf_lib.actors import fighter_factory
-from kf_lib.actors.names import ROBBER_NICKNAMES
 from kf_lib.kung_fu import styles
 from kf_lib.utils import rnd, rndint
 
 
-# todo refactor story into a package
-# constants
-# required levels
-# the last element in range is not included; todo refactor REQ_LV
-# todo this is bad design, factor REQ_LV with story classes
-REQ_LV = {
-    'BanditFianceStory': range(6, 10),
-    'ForeignerStory': range(10, 13),
-    'NinjaTurtlesStory': range(13, 16),
-    'RenownedMaster': range(14, 17),
-    'StrangeDreamsStory': range(6, 9),
-    'TreasuresStory': range(8, 11),
-}
-
-# exp
-DREAM1_EXP = 50
-DREAM2_EXP = 100
-DREAM3_EXP = 200
-
-# money
-BRIBE = 100
-
-# numbers
-OFFICIALS_BODYGUARDS = (3, 5)
-
-# reputation
-BEAT_BANDIT_FIANCE = 25
-BEAT_FOREIGNER = 30
-BRIBERY_REP_PENALTY = -5
-RECOVER_TREASURES = 30
+_all_stories = []
 
 
-class Story(object):
+class BaseStory:
+    min_level = None
+    max_level = None
+
     def __init__(self, g, state=None, player=None, boss=None):
         self.game = g
         self.name = self.__class__.__name__
         self.state = state
         self.player = player
         self.boss = boss
-        self.required_lv = REQ_LV[self.name]
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        _all_stories.append(cls)
 
     def __repr__(self):
         return self.get_init_string()
@@ -96,137 +72,34 @@ class Story(object):
 
     def test(self, player):
         p = player
-        return p.level in self.required_lv
+        return self.min_level <= p.level <= self.max_level
 
 
-class BanditFianceStory(Story):
-    def intro(self):
-        g = self.game
-        g.cls()
-        b = self.boss = fighter_factory.new_convict()
-        b.name = g.get_new_name(random.choice(ROBBER_NICKNAMES))
-        g.register_fighter(b)
-        t = (
-            f'A coversation in {g.town_name}\'s tavern:'
-            f'\n{b.name}: "That old man\'s daughter is really pretty..."'
-            f'\n{b.name}\'s Henchman: "If you like her that much, boss, why not marry her?"'
-            f'\n{b.name}: "Hmm..."'
-        )
-        g.show(t)
-        g.pak()
-
-    def reward(self):
-        g, p, b = self.game, self.player, self.boss
-        p.gain_rep(BEAT_BANDIT_FIANCE)
-        p.add_accompl('Beat Bandit Fiance')
-
-    def scene1(self):
-        g, p, b = self.game, self.player, self.boss
-        t = (
-            f'{p.name} meets an old man in the tavern. The old man looks very sad. '
-            f'It turns out that the infamous bandit {b.name} wants to marry the old man\'s '
-            f'beautiful daughter. The old man cannot refuse as {b.name} will likely kill '
-            'him and take his daughter anyway.'
-            f'\n{p.name}: "Don\'t worry! When I was on Mount Wutai I learned the Buddhist Laws '
-            'of Logic from the abbot. Now I can talk a man around even if he\'s hard as iron. '
-            f'I am sure {b.name} will listen."'
-            f'\nOld Man: "What great good fortune that I could meet you today!"'
-        )
-        g.msg(t)
-
-    def scene2(self):
-        g, p, b = self.game, self.player, self.boss
-        t = (
-            f'{b.name}: "Old man, are you trying to make a fool of me? Where is your daughter?"'
-            f'\nOld Man: "Please, sir, have mercy..."'
-            f'\n{p.name}: "Wait, {b.name}, let us discuss this like civil men!"'
-        )
-        g.msg(t)
-        if p.fight(b):
-            g.show(f'{p.name}: "Do you see now? You are not a good match for this girl."')
-            g.show(f'{b.name}: "Forgive me, master! You won\'t see me again."')
-            g.pak()
-            self.reward()
-        else:
-            g.msg(f'{b.name}: "It is no good, the police are coming! The people here are not'
-                  f'hospitable at all. It is time for {b.name} to move on to the next town!"')
-        # end of the story
-        self.end()
+def get_all_stories() -> List[Type[BaseStory]]:
+    return _all_stories
 
 
-class ForeignerStory(Story):
-    def intro(self):
-        g = self.game
-        g.cls()
-        b = self.boss = fighter_factory.new_foreigner()
-        g.register_fighter(b)
-        t = 'Rumor has it that {}, a renowned martial artist from {}, has arrived in {} to defeat local masters and \
-             prove the superiority of his own fighting style, {}.'.format(
-            b.name, b.country, g.town_name, b.style.name
-        )
-        g.msg(t)
+# exp
+DREAM1_EXP = 50
+DREAM2_EXP = 100
+DREAM3_EXP = 200
 
-    def reward(self):
-        g, p, b = self.game, self.player, self.boss
-        p.gain_rep(BEAT_FOREIGNER)
-        p.add_accompl('Foreign Challenger')
+# money
+BRIBE = 100
 
-    def scene1(self):
-        g, b = self.game, self.boss
-        t = (
-            'The people of {} keep talking about the foreigner, {}. He has already defeated some good '
-            'fighters.'.format(g.town_name, b.name)
-        )
-        g.msg(t)
+# numbers
+OFFICIALS_BODYGUARDS = (3, 5)
 
-    def scene2(self):
-        g, p, b = self.game, self.player, self.boss
-        f = fighter_factory.new_fighter(5)
-        p.spectate([b], [f])
-        t = "{b} has challenged some martial artists in {f}, yet again. Today {p} watched him fight, in a few of \
-        his \'friendly matches\', which didn\'t seem all that friendly. In the last fight, {b} defeated three \
-        opponents at once, injuring them badly. He is a formidable adversary... \nBy watching {b} fight {p} gained \
-        some valuable insights into the foreigner\'s technique.".format(
-            b=b.name, f=g.town_name, p=p.name
-        )
-        g.show(t)
-        base_exp = 10
-        p.gain_exp(rndint(base_exp, base_exp * 3))
-        g.pak()
-
-    def scene3(self):
-        g, p, b = self.game, self.player, self.boss
-        av_friends = [f for f in p.friends if f not in g.players]
-        if p.best_student:
-            f = p.best_student
-            f_st = '{}\'s best student {}'.format(p.name, f.name)
-        elif av_friends:
-            f = random.choice(av_friends)
-            f_st = '{}\'s friend {}'.format(p.name, f.name)
-        else:
-            f = random.choice(list(g.masters.values()))
-            f_st = f'{f.name} of {f.style.name}'
-        t = '{} finds out that {} beat {}! Can no one stop this arrogant foreigner?'.format(
-            p.name, b.name, f_st
-        )
-        g.show(t)
-        if not p.is_human or g.yn(f'Challenge {b.name}?'):
-            if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
-                g.show(
-                    '{}: "It\'s not about styles. True strength is in the fighter\'s heart."'.format(
-                        p.name
-                    )
-                )
-                g.msg('The people of {} are amazed at {}\'s victory!'.format(g.town_name, p.name))
-                self.reward()
-            else:
-                g.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
-                # get depressed?
-        # end of the story
-        self.end()
+# reputation
+BEAT_FOREIGNER = 30
+BRIBERY_REP_PENALTY = -5
+RECOVER_TREASURES = 30
 
 
-class NinjaTurtlesStory(Story):
+class NinjaTurtlesBaseStory(BaseStory):
+    min_level = 12
+    max_level = 15
+
     def intro(self):
         g = self.game
         g.cls()
@@ -258,7 +131,10 @@ class NinjaTurtlesStory(Story):
         self.end()
 
 
-class RenownedMaster(Story):
+class RenownedMaster(BaseStory):
+    min_level = 14
+    max_level = 16
+
     def intro(self):
         g, p = self.game, self.player
         g.cls()
@@ -304,7 +180,10 @@ class RenownedMaster(Story):
         g.pak()
 
 
-class StrangeDreamsStory(Story):
+class StrangeDreamsBaseStory(BaseStory):
+    min_level = 6
+    max_level = 8
+
     def intro(self):
         g = self.game
         g.cls()
@@ -351,7 +230,10 @@ class StrangeDreamsStory(Story):
         self.end()
 
 
-class TreasuresStory(Story):
+class TreasuresBaseStory(BaseStory):
+    min_level = 8
+    max_level = 10
+
     def intro(self):
         g = self.game
         g.cls()
@@ -466,14 +348,3 @@ Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t 
         g.pak()
         # end of the story
         self.end()
-
-
-# in the order added, though the order doesn't matter
-all_stories = (
-    BanditFianceStory,
-    ForeignerStory,
-    TreasuresStory,
-    StrangeDreamsStory,
-    RenownedMaster,
-    NinjaTurtlesStory,
-)

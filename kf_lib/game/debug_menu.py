@@ -3,7 +3,7 @@ import pprint
 from kf_lib.actors import fighter_factory
 from kf_lib.happenings import tournament
 from kf_lib.kung_fu import techniques
-from kf_lib.happenings.story import all_stories
+from kf_lib.happenings.story import get_all_stories
 from kf_lib.things import items
 from kf_lib.ui import cls, get_int_from_user, get_str_from_user, menu, pak
 
@@ -100,7 +100,7 @@ class DebugMenu:
 
     def debug_story(self):
         story_class = menu(
-            [(story_cls.__name__, story_cls) for story_cls in all_stories],
+            [(story_cls.__name__, story_cls) for story_cls in get_all_stories()],
             title="Choose a story",
         )
         story_obj = story_class(self.g)
