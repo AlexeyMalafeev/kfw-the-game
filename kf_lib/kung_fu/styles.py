@@ -1,4 +1,5 @@
 import random
+from typing import Dict, Text
 
 from . import boosts as b
 from .techniques import Tech
@@ -9,7 +10,12 @@ DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4', 10: '5'}
 
 
 class Style(object):
-    def __init__(self, name, techs_dict, move_str_dict):
+    def __init__(
+            self,
+            name: Text,
+            techs_dict: Dict[int, Tech],
+            move_str_dict: Dict[int, Text],
+    ):
         self.name = name
         self.techs = techs_dict
         if self.techs:
