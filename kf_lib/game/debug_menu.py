@@ -3,6 +3,7 @@ import pprint
 from kf_lib.actors import fighter_factory
 from kf_lib.happenings import tournament
 from kf_lib.kung_fu import techniques
+from kf_lib.kung_fu.moves import resolve_move_string
 from kf_lib.happenings.story import get_all_stories
 from kf_lib.things import items
 from kf_lib.ui import cls, get_int_from_user, get_str_from_user, menu, pak
@@ -67,11 +68,8 @@ class DebugMenu:
 
     def debug_learn_move(self):
         p = self.g.current_player
-        move_name = get_str_from_user('Enter move name or tier:')
-        if move_name.isdigit() and 1 <= (move_tier := int(move_name)) <= 10:
-            p.learn_random_move(move_tier)
-        else:
-            p.learn_move(move_name)
+        move_s = get_str_from_user('Enter move string (move name / tier / features, etc.):')
+        resolve_move_string(move_s, p)
 
     def debug_learn_tech(self):
         p = self.g.current_player
