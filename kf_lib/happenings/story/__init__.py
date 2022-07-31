@@ -1,7 +1,5 @@
-import random
 from typing import List, Type
 
-from kf_lib.kung_fu import styles
 from kf_lib.utils import rnd, rndint
 
 
@@ -94,41 +92,6 @@ OFFICIALS_BODYGUARDS = (3, 5)
 BEAT_FOREIGNER = 30
 BRIBERY_REP_PENALTY = -5
 RECOVER_TREASURES = 30
-
-
-class NinjaTurtlesBaseStory(BaseStory):
-    min_level = 12
-    max_level = 15
-
-    def intro(self):
-        g = self.game
-        g.cls()
-        t = (
-            'A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite '
-            'human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed '
-            'tones, clearly deciding what to do next...'
-        )
-        g.show(t)
-        g.pak()
-
-    def reward(self):
-        p = self.player
-        p.add_accompl('TMNT')
-        p.learn_tech(*list(styles.TURTLE_NUNJUTSU.techs.values()))
-
-    def scene1(self):
-        p = self.player
-        p.write(
-            f'{p.name} encounters the four teenage mutant ninja turtles travelling in time.'
-        )
-        p.pak()
-        # p.choose_best_norm_wp()
-        ens = fighter_factory.new_ninja_turtles()
-        if p.fight(ens[0], en_allies=ens[1:], items_allowed=False):
-            self.reward()
-
-        # end of the story
-        self.end()
 
 
 class RenownedMaster(BaseStory):
