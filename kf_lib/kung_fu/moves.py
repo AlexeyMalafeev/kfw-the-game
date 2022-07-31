@@ -1,6 +1,7 @@
 from pathlib import Path
 import random
 import re
+from typing import Text
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import rndint_2d, roman
@@ -194,7 +195,7 @@ def get_rand_moves(f, n, tier, moves_to_exclude=None):
     return random.choices(pool, weights=weights, k=n)
 
 
-def resolve_style_move(move_s, f):
+def resolve_move_string(move_s: Text, f):
     pool = []
     features = None
     tier = None

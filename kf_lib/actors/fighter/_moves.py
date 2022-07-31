@@ -64,11 +64,11 @@ class MoveMethods(BaseFighter):
         # style move
         if self.level in self.style.move_strings:
             move_s = self.style.move_strings[self.level]
-            moves.resolve_style_move(move_s, self)
+            moves.resolve_move_string(move_s, self)
         # advanced move
         elif self.level in LVS_GET_NEW_ADVANCED_MOVE:
             move_s = self.get_tier_str_for_lv()
-            moves.resolve_style_move(move_s, self)
+            moves.resolve_move_string(move_s, self)
 
     def set_moves(self, move_names):
         for m in moves.BASIC_MOVES:
@@ -89,4 +89,4 @@ class MoveMethods(BaseFighter):
                 if isinstance(moves_to_learn, str):  # can be a tuple, can be a string
                     moves_to_learn = (moves_to_learn,)
                 for move_s in moves_to_learn:
-                    moves.resolve_style_move(move_s, self)
+                    moves.resolve_move_string(move_s, self)
