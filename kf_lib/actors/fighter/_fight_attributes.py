@@ -1,4 +1,5 @@
 from ._basic_attributes import BasicAttributes
+from kf_lib.utils import Float, Integer
 
 
 # COUNTER_CHANCE_BASE = 0.0
@@ -22,6 +23,9 @@ STAMINA_PORTION_RESTORED_PER_TURN = 0.1
 
 
 class FightAttributes(BasicAttributes):
+    resist_ko = Float(maxvalue=MAX_RESIST_KO)
+    stamina = Integer()
+
     def __init__(self):
         super().__init__()
         self.act_allies = []
@@ -92,7 +96,7 @@ class FightAttributes(BasicAttributes):
         self.maneuver_time_cost_mult = 1.0  # lower is better
         self.move_fail_chance_mult = 1.0  # style-dependent & wine-dependent?
         self.num_moves_choose = 3
-        self.off_balance_atk_mult = 0.75
+        self.off_balance_atk_mult = 0.75  # todo use in drunken boxing
         self.off_balance_dfs_mult = 0.75
         self.preemptive_chance = 0.0  # tech-dependent
         self.qp = 0
@@ -100,7 +104,7 @@ class FightAttributes(BasicAttributes):
         self.qp_gain_mult = 1.0  # tech-dependent
         self.qp_max = 0  # level-dependent
         self.qp_max_mult = 1.0
-        self._resist_ko = 0.0
+        self.resist_ko = 0.0
         self.speed_mult = 1.0
         self.stamina = 0
         self.stamina_factor = 1.0
@@ -135,15 +139,6 @@ class FightAttributes(BasicAttributes):
         self.palm_strike_mult = 1.0
         self.punch_strike_mult = 1.0
         self.weapon_strike_mult = 1.0
-
-    @property
-    def resist_ko(self):
-        return self._resist_ko
-
-    @resist_ko.setter
-    def resist_ko(self, value):
-        self._resist_ko = value
-        self._resist_ko = min(self._resist_ko, MAX_RESIST_KO)
 
     def add_status(self, status, dur):
         if status not in self.status:
