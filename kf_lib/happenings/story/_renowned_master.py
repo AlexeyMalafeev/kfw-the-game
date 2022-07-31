@@ -2,7 +2,7 @@ from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 
 
-class RenownedMaster(BaseStory):
+class RenownedMasterStory(BaseStory):
     min_level = 14
     max_level = 16
 

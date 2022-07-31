@@ -8,7 +8,7 @@ from ._base_story import BaseStory, _all_stories
 from ._bandit_fiance import BanditFianceStory
 from ._foreigner import ForeignerStory
 from ._ninja_turtles import NinjaTurtlesStory
-from ._renowned_master import RenownedMaster
+from ._renowned_master import RenownedMasterStory
 from ._stolen_treasures import StolenTreasuresStory
 from ._strange_dreams import StrangeDreamsStory
 
