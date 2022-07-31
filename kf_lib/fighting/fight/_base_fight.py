@@ -241,7 +241,7 @@ class BaseFight(object):
                     ratio = round(sum([f.exp_yield for f in self.losers]) / p.exp_yield, 2)
                     curr_stat = p.get_stat(
                         'aston_victory'
-                    )  # tuple: (date, p.level, [enemies], big ratio)
+                    )  # tuple: (date, p.level, [enemies], big opp_to_self_pwr_ratio)
                     if (curr_stat is None and ratio >= ASTON_VICTORY_MIN_RATIO) or (
                         curr_stat is not None and ratio > curr_stat[-1]
                     ):
@@ -257,7 +257,7 @@ class BaseFight(object):
                     ratio = round(sum([f.exp_yield for f in self.winners]) / p.exp_yield, 2)
                     curr_stat = p.get_stat(
                         'humil_defeat'
-                    )  # tuple: (date, p.level, [enemies], small ratio)
+                    )  # tuple: (date, p.level, [enemies], small opp_to_self_pwr_ratio)
                     if (curr_stat is None and ratio <= HUMIL_DEFEAT_MIN_RATIO) or (
                         curr_stat is not None and ratio < curr_stat[-1]
                     ):

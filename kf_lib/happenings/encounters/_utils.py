@@ -23,10 +23,10 @@ def check_feeling_greedy(p):
     return False
 
 
-def check_scary_fight(p, ratio):
-    if ratio < 1.0 and 'cowardly' not in p.traits:
+def check_scary_fight(p, opp_to_self_pwr_ratio):
+    if opp_to_self_pwr_ratio < 1.0 and 'cowardly' not in p.traits:
         return False
-    if rnd() <= p.feel_too_scared * ratio:
+    if rnd() <= p.feel_too_scared * opp_to_self_pwr_ratio:
         p.show(f"{p.name} feels too scared to fight!")
         p.log("Feels too scared to fight.")
         p.pak()

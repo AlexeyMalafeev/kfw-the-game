@@ -40,7 +40,7 @@ class Challenger(BaseEncounter):
         p.show(t)
         p.log(f"Challenged by {c.name}, number {rank} in the {c.style.name} school.")
         opp_strength = p.get_rel_strength(c)
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             if rnd() <= CH_CHALLENGER_ARMED:
                 set_up_weapon_fight(p, c)
             self.do_fight()

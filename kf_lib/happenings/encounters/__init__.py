@@ -208,7 +208,7 @@ class Criminal(BaseEncounter):
         p.show(f"{p.name} accidentally bumps into a wanted criminal, {c.name}.")
         p.log("Encounters a wanted criminal.")
         opp_strength = p.get_rel_strength(c)
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             if c.check_lv(p.level + 1):
                 self.allies = p.check_allies(1)
             if rnd() <= CH_CONVICT_ARMED:
@@ -321,7 +321,7 @@ class Extorters(BaseEncounter):
             if random.choice((True, False, False)):
                 e.arm_robber()
         opp_strength = p.get_rel_strength(*en)
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             p.check_help()
             p.gain_rep(num_en * 2)
             if p.fight(en[0], p.allies, en[1:]):
@@ -575,7 +575,7 @@ class HelpPolice(BaseEncounter):
             if random.choice((True, False)):
                 e.arm_robber()
         opp_strength = p.get_rel_strength(*en, allies=al)
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             p.gain_rep(num_en - num_al)
             p.check_help(allies=False, master=False, school=False)
             if p.fight(en[0], al, en[1:]):
@@ -688,7 +688,7 @@ class OverhearConversation(BaseEncounter):
         g = self.player.game
         for p in g.players:
             for stat in ("aston_victory", "humil_defeat"):
-                result = p.get_stat(stat)  # tuple: (date, p.level, [enemies strings], big ratio)
+                result = p.get_stat(stat)  # tuple: (date, p.level, [enemies strings], big opp_to_self_pwr_ratio)
                 if result is not None:
                     self.facts.append((p, stat, result))
 
@@ -908,7 +908,7 @@ class RobbingSomeone(BaseEncounter):
         p.log(f"Sees {num_en} men robbing someone.")
         en = fighter_factory.new_thug(n=num_en)
         opp_strength = p.get_rel_strength(*en)
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             p.check_help()
             p.gain_rep(num_en * 2)
             if p.fight(en[0], p.allies, en[1:]):
@@ -1026,7 +1026,7 @@ class StreetPerformer(BaseEncounter):
         if (
             p.fight_or_not(opp_strength)
             and p.check_money(cost)
-            and not check_scary_fight(p, ratio=opp_strength[0])
+            and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0])
         ):
             p.pay(cost)
             if rnd() <= CH_STREET_PERFORMER_ARMED:
@@ -1110,7 +1110,7 @@ class StreetPerformer(BaseEncounter):
         p.log(f"{n} thugs attack the master.")
         thugs = fighter_factory.new_thug(weak=True, n=n)
         opp_strength = p.get_rel_strength(*thugs, allies=[c])
-        if p.fight_or_not(opp_strength) and not check_scary_fight(p, ratio=opp_strength[0]):
+        if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             p.gain_rep(n - 1)
             if p.fight(thugs[0], allies=[c], en_allies=thugs[1:]):
                 self.reward()

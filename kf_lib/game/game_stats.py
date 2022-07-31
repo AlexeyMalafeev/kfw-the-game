@@ -4,7 +4,7 @@ COLUMN_INTERVAL = 2
 # it is safe to add new stats - that won't break the saved games
 
 DEFAULT_STATS = (
-    ('aston_victory', None),  # tuple: (date, p.level, [enemies], big ratio)
+    ('aston_victory', None),  # tuple: (date, p.level, [enemies], big opp_to_self_pwr_ratio)
     ('bad_luck', 0),
     ('became_master', '--'),
     ('became_master_at_lv', 0),
@@ -18,7 +18,7 @@ DEFAULT_STATS = (
     ('good_luck', 0),
     ('got_drunk', 0),
     ('healers_used', 0),
-    ('humil_defeat', None),  # tuple: (date, p.level, [enemies], small ratio)
+    ('humil_defeat', None),  # tuple: (date, p.level, [enemies], small opp_to_self_pwr_ratio)
     ('items_bought', 0),
     ('items_found', 0),
     ('items_lost', 0),

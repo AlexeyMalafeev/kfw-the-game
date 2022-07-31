@@ -12,10 +12,13 @@ Date
 
 ### Coming soon:
 
+* 
 * learn weak / pathetic moves in books
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * upgrade moves from pathetic to ultimate
 * Drunken Boxing - no fall dam, off-balance gives bonus, acrobat (no complexity for moves)
+* when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
+* drunken boxers can buy wine
 * Underhanded - "dirty"; rep penalty?
 * donate to friends, to charity 
 * mind training - fight enemies in your mind
