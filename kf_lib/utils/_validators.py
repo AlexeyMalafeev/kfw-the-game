@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import logging
-from time import ctime
 from typing import Literal, Optional, Text, Union
 
 
@@ -78,7 +77,7 @@ class BaseNumber(Validator):
             return self.maxvalue
         return value
 
-    def _warn(self, output_str: Text):
+    def _warn(self, output_str: Text):  # noqa
         print(output_str)
         logger.warning(output_str)
 

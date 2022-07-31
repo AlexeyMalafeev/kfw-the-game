@@ -103,10 +103,25 @@ class BanditFianceStory(Story):
     def intro(self):
         g = self.game
         g.cls()
-        p = self.player
         b = self.boss = fighter_factory.new_convict()
         b.name = g.get_new_name(random.choice(ROBBER_NICKNAMES))
         g.register_fighter(b)
+        t = (
+            f'A coversation in {g.town_name}\'s tavern:'
+            f'\n{b.name}: "That old man\'s daughter is really pretty..."'
+            f'\n{b.name}\'s Henchman: "If you like her that much, boss, why not marry her?"'
+            f'\n{b.name}: "Hmm..."'
+        )
+        g.show(t)
+        g.pak()
+
+    def reward(self):
+        g, p, b = self.game, self.player, self.boss
+        p.gain_rep(BEAT_BANDIT_FIANCE)
+        p.add_accompl('Beat Bandit Fiance')
+
+    def scene1(self):
+        g, p, b = self.game, self.player, self.boss
         t = (
             f'{p.name} meets an old man in the tavern. The old man looks very sad. '
             f'It turns out that the infamous bandit {b.name} wants to marry the old man\'s '
@@ -119,12 +134,7 @@ class BanditFianceStory(Story):
         )
         g.msg(t)
 
-    def reward(self):
-        g, p, b = self.game, self.player, self.boss
-        p.gain_rep(BEAT_BANDIT_FIANCE)
-        p.add_accompl('Beat Bandit Fiance')
-
-    def scene1(self):
+    def scene2(self):
         g, p, b = self.game, self.player, self.boss
         t = (
             f'{b.name}: "Old man, are you trying to make a fool of me? Where is your daughter?"'
@@ -248,7 +258,6 @@ class NinjaTurtlesStory(Story):
         self.end()
 
 
-# todo master uses a randomly-generated style
 class RenownedMaster(Story):
     def intro(self):
         g, p = self.game, self.player
