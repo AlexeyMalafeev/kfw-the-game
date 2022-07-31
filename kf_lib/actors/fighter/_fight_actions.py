@@ -52,7 +52,7 @@ class FighterWithActions(
 
     def check_move_failed(self):
         compl = self.action.complexity
-        f_ch = self.get_move_fail_chance(self.action) * self.move_fail_chance_mult
+        f_ch = self.get_move_fail_chance(self.action)
         if rnd() <= f_ch:
             if self.action.power:
                 self.to_hit = 0

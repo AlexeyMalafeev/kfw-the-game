@@ -208,7 +208,7 @@ class StrikeMechanics(FighterWithASCII):
         targ.cause_fall()
 
     def get_move_fail_chance(self, move_obj):
-        return move_obj.complexity ** 2 / self.agility_full ** 2
+        return (move_obj.complexity ** 2 / self.agility_full ** 2) * self.move_fail_chance_mult
 
     def get_move_time_cost(self, move_obj):
         if self.check_status('slowed down'):
