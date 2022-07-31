@@ -14,6 +14,7 @@ Date
 10. feat: add descriptors for value validation
 11. feat: exception handling when applying techs
 12. refactor: major refactor of stories
+13. feat: 3 new style words: Drunken, Acrobatic, Squirrel
 
 ### Coming soon:
 
