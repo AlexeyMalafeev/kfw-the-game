@@ -2,15 +2,34 @@
 ""  
 Date  
 
-1. Fixes: game loading, SpectateFight, qi-based damage, feel too scared
-2. add quotes from Dark
+1. fixes: game loading, SpectateFight, qi-based damage, feel too scared
+2. feat: add quotes from Dark
+3. feat: add Weak and Pathetic moves (3313 -> 3795 moves)
+4. feat: ~8 more new quotes (various sources)
+5. fix: bug in 'unlucky' craftsman encounter
+6. feat: Bandit Fiance story
 
 ### Coming soon:
 
-* bug in careless inactive time?
+* learn weak / pathetic moves in books
+* upgrade moves from pathetic to ultimate
+* Drunken Boxing - no fall dam, off-balance gives bonus, acrobat (no complexity for moves)
+* Underhanded - "dirty"; rep penalty?
+* donate to friends, to charity 
+* mind training - fight enemies in your mind
+* time travel item
+* turtles: arm them, fight one after another, if lucky, they just give you rewards, if unlucky, they attack you all at once
 * buff att-based damage for strikes
-* add Weak strike
-* Drunken: no fall damage, off-balance gives bonus, no complexity
+* in-fight nunchacku tech (like impro weapons)
+* reimplement selection of moves for bonuses
+* style's secret technique, learn at lv 10, don't know in advance 
+* more complex moves can be upgrades / modifications
+* moves for generated styles: "ferocious", "acrobatic", etc. 
+* boosts to dict and auto-adjust
+* some upgradable techs shouldn't be upgradable
+* phrases from unused (friends, never repay)
+* snake fist secret technique: Weishen (false body)
+* bug in careless inactive time?
 * style with head strikes
 * donate to friends; charity
 * if negative money, don't start some encounters

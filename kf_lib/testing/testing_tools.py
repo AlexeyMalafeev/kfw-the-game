@@ -270,6 +270,7 @@ class Tester(object):
         print(wins)
         input('Press Enter')
 
+    # todo remove this, deprecated?
     def test_story(self, story_class):
         s = story_class(self.g)
         s.start(self.g.current_player)

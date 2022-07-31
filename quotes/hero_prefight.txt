@@ -33,12 +33,13 @@ Go to hell!
 Good! Fight!
 Have a few strokes!
 Haven't you heard of me? Where do you get the gall to come and tweak the tiger's whiskers?
+He who can only strike what he sees is a second-rate martial artist. Do not underestimate me.
 He's huge and fierce...
 He's quite big...
 He's small! Should be easy!
-Here comes an earthquake!
 Here I come!
 Here I come! Winds sweep the plum flowers!
+Here comes an earthquake!
 Here, bite this.
 Here, eat this.
 Here, just taste that.
@@ -63,6 +64,7 @@ I must get my second wind...
 I must save Mikasa and Armin! Wait... Whose memories are these?
 I see that you come from Japan.
 I want to try something...
+I will defeat you for love.
 I won't run!
 I'll fight you, even if it kills me!
 I'll have to teach you a lesson!
@@ -70,11 +72,11 @@ I'll show you excellence!
 I'll show you once!
 I'll strike the vital points!
 I'll try out my new technique.
+I'm Chief Fox. You're under arrest.
 I'm a killer of pigs!
 I'm afraid you are making a mistake.
 I'm as good as dead!
 I'm bullying you if I fight.
-I'm Chief Fox. You're under arrest.
 I'm here.
 I'm not scared!
 I'm now going to demonstrate.
@@ -104,6 +106,7 @@ Let me see if you're still vicious!
 Let me see what this is all about.
 Let me show you...
 Let me teach this low life a lesson!
+Let them cut your flesh so you can kick their ass
 Let's get started.
 Let's have a little fun!
 Let's see it then.
@@ -119,12 +122,12 @@ None of you is my equal.
 Not that easy!
 Nothing's been going right today, so you caught me in a bad mood.
 Now you hit me. I promise I won't fight back. ...Just kidding!
+OK, I'll see what mischief you're up to!
+OK, a little force may help...
 Oh, boy!
 Oh, dear.
 Oh, no, you don't!
 Oh, now we'll really have fun.
-OK, a little force may help...
-OK, I'll see what mischief you're up to!
 One at a time.
 Patience!
 People might very well call me Lord of the West.
@@ -134,6 +137,7 @@ Ready or not, here I come!
 Ready?
 Repent!
 Right. Come on!
+So that's how it is, huh?
 So what?
 So you want to beat me? I'll smash you!
 So, I'm unlucky today.
@@ -183,6 +187,7 @@ Who are you? I haven't met you before. Why do you want to kill me?
 Why are you so sad?
 Why don't you start to jump!
 Why?
+Would the tiger devour the elephant? Or would the elephant trample the tiger?
 Would you like to try it?
 You are no match for my technique!
 You are too much!

@@ -1,3 +1,21 @@
+---
+
+*LEVEL UP*
+
+Yuan Cao, lv.6 Persevering Moon Rat
+(stamina, mid-range, fury), pair of swords
+Str:5 Agi:5 Spd:5 Hlt:4
+Improve:
+ 1 - agility
+ 2 - health
+ 3 - strength
+
+---
+
+Craftsman -> too greedy -> p.home_training_exp_mult = 1.5 (not 1.0)
+
+---
+
 через блок больше отнимает, чем без блока
 
 

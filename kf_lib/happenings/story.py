@@ -1,6 +1,7 @@
 import random
 
 from kf_lib.actors import fighter_factory
+from kf_lib.actors.names import ROBBER_NICKNAMES
 from kf_lib.kung_fu import styles
 from kf_lib.utils import rnd, rndint
 
@@ -9,7 +10,9 @@ from kf_lib.utils import rnd, rndint
 # constants
 # required levels
 # the last element in range is not included; todo refactor REQ_LV
+# todo this is bad design, factor REQ_LV with story classes
 REQ_LV = {
+    'BanditFianceStory': range(6, 10),
     'ForeignerStory': range(10, 13),
     'NinjaTurtlesStory': range(13, 16),
     'RenownedMaster': range(14, 17),
@@ -29,6 +32,7 @@ BRIBE = 100
 OFFICIALS_BODYGUARDS = (3, 5)
 
 # reputation
+BEAT_BANDIT_FIANCE = 25
 BEAT_FOREIGNER = 30
 BRIBERY_REP_PENALTY = -5
 RECOVER_TREASURES = 30
@@ -93,6 +97,51 @@ class Story(object):
     def test(self, player):
         p = player
         return p.level in self.required_lv
+
+
+class BanditFianceStory(Story):
+    def intro(self):
+        g = self.game
+        g.cls()
+        p = self.player
+        b = self.boss = fighter_factory.new_convict()
+        b.name = g.get_new_name(random.choice(ROBBER_NICKNAMES))
+        g.register_fighter(b)
+        t = (
+            f'{p.name} meets an old man in the tavern. The old man looks very sad. '
+            f'It turns out that the infamous bandit {b.name} wants to marry the old man\'s '
+            f'beautiful daughter. The old man cannot refuse as {b.name} will likely kill '
+            'him and take his daughter anyway.'
+            f'\n{p.name}: "Don\'t worry! When I was on Mount Wutai I learned the Buddhist Laws '
+            'of Logic from the abbot. Now I can talk a man around even if he\'s hard as iron. '
+            f'I am sure {b.name} will listen."'
+            f'\nOld Man: "What great good fortune that I could meet you today!"'
+        )
+        g.msg(t)
+
+    def reward(self):
+        g, p, b = self.game, self.player, self.boss
+        p.gain_rep(BEAT_BANDIT_FIANCE)
+        p.add_accompl('Beat Bandit Fiance')
+
+    def scene1(self):
+        g, p, b = self.game, self.player, self.boss
+        t = (
+            f'{b.name}: "Old man, are you trying to make a fool of me? Where is your daughter?"'
+            f'\nOld Man: "Please, sir, have mercy..."'
+            f'\n{p.name}: "Wait, {b.name}, let us discuss this like civil men!"'
+        )
+        g.msg(t)
+        if p.fight(b):
+            g.show(f'{p.name}: "Do you see now? You are not a good match for this girl."')
+            g.show(f'{b.name}: "Forgive me, master! You won\'t see me again."')
+            g.pak()
+            self.reward()
+        else:
+            g.msg(f'{b.name}: "It is no good, the police are coming! The people here are not'
+                  f'hospitable at all. It is time for {b.name} to move on to the next town!"')
+        # end of the story
+        self.end()
 
 
 class ForeignerStory(Story):
@@ -412,6 +461,7 @@ Of course, the crook disappears with all the treasures... Too bad {p} couldn\'t 
 
 # in the order added, though the order doesn't matter
 all_stories = (
+    BanditFianceStory,
     ForeignerStory,
     TreasuresStory,
     StrangeDreamsStory,
