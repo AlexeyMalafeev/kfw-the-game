@@ -207,6 +207,7 @@ LINKED_TECHS = [
     #     Tech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
     #     Tech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2),
     # ),
+    # todo remove environment-related techs
     (
         Tech('Environment Fighting', environment_chance=b.ENVIRONMENT_CH1, is_upgradable=True),
         Tech('Environment Domination', environment_chance=b.ENVIRONMENT_CH2, is_advanced=True),
@@ -258,6 +259,20 @@ LINKED_TECHS = [
         Tech('Blood Strikes', chance_cause_bleeding=b.BLEEDING_CH1, is_upgradable=True),
         Tech('Advanced Blood Strikes', chance_cause_bleeding=b.BLEEDING_CH2, is_advanced=True),
     ),
+    (
+        Tech(
+            'Drunken Moves',
+            fall_damage_mult=b.FALL_DAMAGE_MULT1,
+            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+            is_upgradable=True,
+        ),
+        Tech(
+            'Drunken Acrobat',
+            fall_damage_mult=b.FALL_DAMAGE_MULT2,
+            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
+            is_advanced=True,
+        )
+    )
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]

@@ -15,6 +15,7 @@ Date
 11. feat: exception handling when applying techs
 12. refactor: major refactor of stories
 13. feat: 3 new style words: Drunken, Acrobatic, Squirrel
+14. feat: 2 new techs: Drunken Moves and Drunken Acrobat
 
 ### Coming soon:
 
