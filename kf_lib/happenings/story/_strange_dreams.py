@@ -2,7 +2,7 @@ from . import BaseStory
 from kf_lib.actors import fighter_factory
 
 
-class StrangeDreamsBaseStory(BaseStory):
+class StrangeDreamsStory(BaseStory):
     min_level = 6
     max_level = 8
 
