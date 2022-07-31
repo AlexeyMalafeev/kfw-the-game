@@ -13,6 +13,7 @@ Date
 9. feat: move fail chance multiplier and fall damage multiplier
 10. feat: add descriptors for value validation
 11. feat: exception handling when applying techs
+12. refactor: major refactor of stories
 
 ### Coming soon:
 

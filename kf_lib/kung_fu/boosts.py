@@ -35,6 +35,8 @@ ENVIRONMENT_CH1 = 0.15
 ENVIRONMENT_CH2 = 0.3
 EVADE1 = 0.4
 EVADE2 = 0.8
+FALL_DAMAGE_MULT1 = -0.5
+FALL_DAMAGE_MULT2 = -1.0
 FURY_CH1 = 0.3
 FURY_CH2 = 0.5
 GRAB_CH1 = 0.2  # todo this is not used!
@@ -55,6 +57,8 @@ IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
 MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
+MOVE_FAIL_CHANCE_MULT1 = -0.4
+MOVE_FAIL_CHANCE_MULT2 = -0.8
 PREEMPTIVE_CH1 = 0.10
 PREEMPTIVE_CH2 = 0.20
 QI_WHEN_ATK = 0.5  # todo this is not used
@@ -94,6 +98,7 @@ HUND_ADD_SIGN_ADD_PCNT = (hund, add_sign, add_pcnt)
 
 
 # att_name, short_descr, long_descr, funcs
+# todo they all seem to be using HUND_ADD_SIGN_ADD_PCNT, remove it?
 PMAP = (
     ('agility_mult', 'agility', 'agility', HUND_ADD_SIGN_ADD_PCNT),
     ('atk_mult', 'attack', 'attack', HUND_ADD_SIGN_ADD_PCNT),
@@ -111,15 +116,16 @@ PMAP = (
         'defense penalty (20% by default)',
         HUND_ADD_SIGN_ADD_PCNT,
     ),
-    ('environment_chance', 'environment', 'chance to use environment', HUND_ADD_SIGN_ADD_PCNT),
     ('dodge_mult', 'dodge', 'dodge efficiency', HUND_ADD_SIGN_ADD_PCNT),
+    ('environment_chance', 'environment', 'chance to use environment', HUND_ADD_SIGN_ADD_PCNT),
+    ('fall_damage_mult', 'low fall dam', 'fall damage', HUND_ADD_SIGN_ADD_PCNT),
+    ('fury_chance', 'fury', 'fury chance', HUND_ADD_SIGN_ADD_PCNT),
     (
         'grab_chance',
         'grabs',
         'grab chance',
         HUND_ADD_SIGN_ADD_PCNT,
     ),  # todo use grab_chance boost
-    ('fury_chance', 'fury', 'fury chance', HUND_ADD_SIGN_ADD_PCNT),
     ('guard_dfs_bonus', 'guard', 'guard efficiency', HUND_ADD_SIGN_ADD_PCNT),
     (
         'guard_while_attacking',
@@ -144,6 +150,7 @@ PMAP = (
         'preemptive strike chance',
         HUND_ADD_SIGN_ADD_PCNT,
     ),
+    ('move_fail_chance_mult', 'fail-safe moves', 'move fail chance', HUND_ADD_SIGN_ADD_PCNT),
     ('qi_when_atk', 'qi/atk', 'qi when attacking', HUND_ADD_SIGN_ADD_PCNT),
     ('qp_gain_mult', 'qi', 'QP/turn', HUND_ADD_SIGN_ADD_PCNT),
     ('qp_max_mult', 'qi', 'max QP', HUND_ADD_SIGN_ADD_PCNT),

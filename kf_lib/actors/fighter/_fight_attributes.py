@@ -1,11 +1,10 @@
+from typing import Final
+
 from ._basic_attributes import BasicAttributes
 from kf_lib.utils import Float, Integer
 
 
-# COUNTER_CHANCE_BASE = 0.0
-# COUNTER_CHANCE_INCR_PER_LV = 0.02
-# CRITICAL_CHANCE_BASE = 0.0
-# CRITICAL_CHANCE_INCR_PER_LV = 0.01
+# todo move the below to class constants?
 COUNTER_AGILITY_ADJUST = 3  # this will get subtracted from agility_full
 COUNTER_PER_AGILITY_POINT = 0.05
 CRITICAL_AGILITY_ADJUST = 3
@@ -23,9 +22,14 @@ STAMINA_PORTION_RESTORED_PER_TURN = 0.1
 
 
 class FightAttributes(BasicAttributes):
-    BLOCK_POWER = 1.0  # this is common between all fighters; non-tech-based
-    GUARD_POWER = 1.5  # this is the default effect of Guard
+    # common for all fighters, not modified
+    BLOCK_POWER: Final = 1.0
+    GUARD_POWER: Final = 1.5
+    # todo find more constants
 
+    # tech-dependent, with validation:
+    fall_damage_mult = Float(minvalue=0.0)  # also wine-dependent?
+    move_fail_chance_mult = Float(minvalue=0.0)  # also wine-dependent?
     resist_ko = Float(maxvalue=MAX_RESIST_KO)
     stamina = Integer()
 
@@ -80,7 +84,7 @@ class FightAttributes(BasicAttributes):
         self.epic_chance = 0.0  # NB! level-dependent
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_dam_mult = 2.0
-        self.fall_damage_mult = 1.0  # style-dependent & wine-dependent?
+        self.fall_damage_mult = 1.0  # with descriptor
         self.fury_to_all_mult = 1.6
         self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
@@ -95,7 +99,7 @@ class FightAttributes(BasicAttributes):
         self.in_fight_impro_wp_chance = 0.0
         self.lying_dfs_mult = 0.5
         self.maneuver_time_cost_mult = 1.0  # lower is better
-        self.move_fail_chance_mult = 1.0  # style-dependent & wine-dependent?
+        self.move_fail_chance_mult = 1.0  # with descriptor
         self.num_moves_choose = 3
         self.off_balance_atk_mult = 0.75  # todo use in drunken boxing
         self.off_balance_dfs_mult = 0.75
@@ -105,9 +109,9 @@ class FightAttributes(BasicAttributes):
         self.qp_gain_mult = 1.0  # tech-dependent
         self.qp_max = 0  # level-dependent
         self.qp_max_mult = 1.0
-        self.resist_ko = 0.0
+        self.resist_ko = 0.0  # with descriptor
         self.speed_mult = 1.0
-        self.stamina = 0
+        self.stamina = 0  # with descriptor
         self.stamina_factor = 1.0
         self.stamina_gain = 0  # NB! level-dependent
         self.stamina_gain_mult = 1.0
