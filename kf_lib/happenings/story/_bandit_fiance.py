@@ -59,7 +59,11 @@ class BanditFianceStory(BaseStory):
             g.pak()
             self.reward()
         else:
-            g.msg(f'{b.name}: "It is no good, the police are coming! The people here are not'
-                  f'hospitable at all. It is time for {b.name} to move on to the next town!"')
+            g.show(
+                f'{b.name}: "It is no good, the police are coming! The people here are not '
+                f'hospitable at all. It is time for {b.name} to move on to the next town!"'
+            )
+            g.pak()
+
         # end of the story
         self.end()
