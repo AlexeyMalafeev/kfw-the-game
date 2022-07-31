@@ -1,4 +1,4 @@
-from . import BaseStory
+from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 from kf_lib.kung_fu.styles import TURTLE_NUNJUTSU
 

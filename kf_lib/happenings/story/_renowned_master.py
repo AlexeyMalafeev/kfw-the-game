@@ -1,4 +1,4 @@
-from . import BaseStory
+from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 
 
