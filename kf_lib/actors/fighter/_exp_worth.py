@@ -39,12 +39,12 @@ class ExpMethods(BaseFighter):
         return sum([f.get_exp_worth() for f in self.act_targets])
 
     def get_rel_strength(self, *opp, allies=None):
-        """Return ratio (number, the lower the weaker) and legend (string, e.g. 'very risky')"""
+        """Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend (string, e.g. 'very risky')"""
         pwr = sum([op.get_exp_worth() for op in opp])
         own_pwr = self.get_exp_worth()
         if allies:
             own_pwr += sum([al.get_exp_worth() for al in allies])
-        ratio = round(pwr / own_pwr, 2)
+        opp_to_self_pwr_ratio = round(pwr / own_pwr, 2)
         for threshold, legend in RISK_DESCR_TABLE:
-            if ratio >= threshold:
-                return ratio, legend
+            if opp_to_self_pwr_ratio >= threshold:
+                return opp_to_self_pwr_ratio, legend

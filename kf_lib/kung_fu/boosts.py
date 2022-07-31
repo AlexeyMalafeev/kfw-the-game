@@ -35,6 +35,8 @@ ENVIRONMENT_CH1 = 0.15
 ENVIRONMENT_CH2 = 0.3
 EVADE1 = 0.4
 EVADE2 = 0.8
+FALL_DAMAGE_MULT1 = -0.5
+FALL_DAMAGE_MULT2 = -1.0
 FURY_CH1 = 0.3
 FURY_CH2 = 0.5
 GRAB_CH1 = 0.2  # todo this is not used!
@@ -55,6 +57,8 @@ IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
 MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
+MOVE_FAIL_CHANCE_MULT1 = -0.4
+MOVE_FAIL_CHANCE_MULT2 = -0.8
 PREEMPTIVE_CH1 = 0.10
 PREEMPTIVE_CH2 = 0.20
 QI_WHEN_ATK = 0.5  # todo this is not used
@@ -89,96 +93,90 @@ WP_STRIKE_MULT1 = 0.25
 WP_STRIKE_MULT2 = 0.5
 
 
-# todo just apply these functions automatically to all boosts below
-HUND_ADD_SIGN_ADD_PCNT = (hund, add_sign, add_pcnt)
-
-
 # att_name, short_descr, long_descr, funcs
 PMAP = (
-    ('agility_mult', 'agility', 'agility', HUND_ADD_SIGN_ADD_PCNT),
-    ('atk_mult', 'attack', 'attack', HUND_ADD_SIGN_ADD_PCNT),
-    ('chance_cause_bleeding', 'bleeding', 'cause bleeding', HUND_ADD_SIGN_ADD_PCNT),
-    ('block_disarm', 'disarm', 'disarm chance when defending', HUND_ADD_SIGN_ADD_PCNT),
-    ('block_mult', 'blocks', 'block efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('counter_chance_mult', 'counters', 'counterattack chance', HUND_ADD_SIGN_ADD_PCNT),
-    ('critical_chance_mult', 'criticals', 'critical attack chance', HUND_ADD_SIGN_ADD_PCNT),
-    ('critical_dam_mult', 'criticals', 'critical attack power', HUND_ADD_SIGN_ADD_PCNT),
-    ('dam_reduc', 'dam.reduc.', 'damage reduction', HUND_ADD_SIGN_ADD_PCNT),
-    ('dfs_mult', 'defense', 'defense', HUND_ADD_SIGN_ADD_PCNT),
+    ('agility_mult', 'agility', 'agility'),
+    ('atk_mult', 'attack', 'attack'),
+    ('chance_cause_bleeding', 'bleeding', 'cause bleeding'),
+    ('block_disarm', 'disarm', 'disarm chance when defending'),
+    ('block_mult', 'blocks', 'block efficiency'),
+    ('counter_chance_mult', 'counters', 'counterattack chance'),
+    ('critical_chance_mult', 'criticals', 'critical attack chance'),
+    ('critical_dam_mult', 'criticals', 'critical attack power'),
+    ('dam_reduc', 'dam.reduc.', 'damage reduction'),
+    ('dfs_mult', 'defense', 'defense'),
     (
         'dfs_penalty_step',
         'vs crowd',
         'defense penalty (20% by default)',
-        HUND_ADD_SIGN_ADD_PCNT,
     ),
-    ('environment_chance', 'environment', 'chance to use environment', HUND_ADD_SIGN_ADD_PCNT),
-    ('dodge_mult', 'dodge', 'dodge efficiency', HUND_ADD_SIGN_ADD_PCNT),
+    ('dodge_mult', 'dodge', 'dodge efficiency'),
+    ('environment_chance', 'environment', 'chance to use environment'),
+    ('fall_damage_mult', 'low fall dam', 'fall damage'),
+    ('fury_chance', 'fury', 'fury chance'),
     (
         'grab_chance',
         'grabs',
         'grab chance',
-        HUND_ADD_SIGN_ADD_PCNT,
     ),  # todo use grab_chance boost
-    ('fury_chance', 'fury', 'fury chance', HUND_ADD_SIGN_ADD_PCNT),
-    ('guard_dfs_bonus', 'guard', 'guard efficiency', HUND_ADD_SIGN_ADD_PCNT),
+    ('guard_dfs_bonus', 'guard', 'guard efficiency'),
     (
         'guard_while_attacking',
         'guard while atk',
         'guard while attacking',
-        HUND_ADD_SIGN_ADD_PCNT,
     ),
-    ('health_mult', 'health', 'health', HUND_ADD_SIGN_ADD_PCNT),
-    ('hit_disarm', 'disarm', 'disarm chance when attacking', HUND_ADD_SIGN_ADD_PCNT),
-    ('home_training_exp_mult', 'home train.', 'home training', HUND_ADD_SIGN_ADD_PCNT),
-    ('hp_gain_mult', 'HP gain', 'HP gain per turn', HUND_ADD_SIGN_ADD_PCNT),
+    ('health_mult', 'health', 'health'),
+    ('hit_disarm', 'disarm', 'disarm chance when attacking'),
+    ('home_training_exp_mult', 'home train.', 'home training'),
+    ('hp_gain_mult', 'HP gain', 'HP gain per turn'),
     (
         'in_fight_impro_wp_chance',
         'improv.weapons',
         'in-fight improvised weapon chance',
-        HUND_ADD_SIGN_ADD_PCNT,
     ),
-    ('maneuver_time_cost_mult', 'maneuv.time', 'maneuver time cost', HUND_ADD_SIGN_ADD_PCNT),
+    ('maneuver_time_cost_mult', 'maneuv.time', 'maneuver time cost'),
     (
         'preemptive_chance',
         'preemptive',
         'preemptive strike chance',
-        HUND_ADD_SIGN_ADD_PCNT,
     ),
-    ('qi_when_atk', 'qi/atk', 'qi when attacking', HUND_ADD_SIGN_ADD_PCNT),
-    ('qp_gain_mult', 'qi', 'QP/turn', HUND_ADD_SIGN_ADD_PCNT),
-    ('qp_max_mult', 'qi', 'max QP', HUND_ADD_SIGN_ADD_PCNT),
-    ('qp_start', 'qi', 'QP to start with', HUND_ADD_SIGN_ADD_PCNT),
-    ('resist_ko', 'resist KO', 'chance to resist KO', HUND_ADD_SIGN_ADD_PCNT),
-    ('speed_mult', 'speed', 'speed', HUND_ADD_SIGN_ADD_PCNT),
-    ('stamina_max_mult', 'stamina', 'max stamina', HUND_ADD_SIGN_ADD_PCNT),
-    ('stamina_gain_mult', 'stamina', 'restore stamina', HUND_ADD_SIGN_ADD_PCNT),
-    ('strength_mult', 'strength', 'strength', HUND_ADD_SIGN_ADD_PCNT),
-    ('strike_time_cost_mult', 'strike time', 'strike time cost', HUND_ADD_SIGN_ADD_PCNT),
-    ('stun_chance', 'stun', 'stun chance', HUND_ADD_SIGN_ADD_PCNT),
-    ('unblock_chance', 'unblock.', 'unblockable attack', HUND_ADD_SIGN_ADD_PCNT),
+    ('move_fail_chance_mult', 'fail-safe moves', 'move fail chance'),
+    ('qi_when_atk', 'qi/atk', 'qi when attacking'),
+    ('qp_gain_mult', 'qi', 'QP/turn'),
+    ('qp_max_mult', 'qi', 'max QP'),
+    ('qp_start', 'qi', 'QP to start with'),
+    ('resist_ko', 'resist KO', 'chance to resist KO'),
+    ('speed_mult', 'speed', 'speed'),
+    ('stamina_max_mult', 'stamina', 'max stamina'),
+    ('stamina_gain_mult', 'stamina', 'restore stamina'),
+    ('strength_mult', 'strength', 'strength'),
+    ('strike_time_cost_mult', 'strike time', 'strike time cost'),
+    ('stun_chance', 'stun', 'stun chance'),
+    ('unblock_chance', 'unblock.', 'unblockable attack'),
+
     # strike multipliers  # todo add more strike multipliers
-    ('dist1_bonus', 'close-range', 'close-range strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('dist2_bonus', 'mid-range', 'mid-range strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('dist3_bonus', 'long-range', 'long-range strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('elbow_strike_mult', 'elbows', 'elbow strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('exotic_strike_mult', 'exot.str.', 'exotic strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('flying_strike_mult', 'jumps', 'jumping strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('grappling_strike_mult', 'grappling', 'grappling efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('kick_strike_mult', 'kicks', 'kick efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('knee_strike_mult', 'knees', 'knee strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('palm_strike_mult', 'palm str.', 'palm strike efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('punch_strike_mult', 'punches', 'punch efficiency', HUND_ADD_SIGN_ADD_PCNT),
-    ('weapon_strike_mult', 'weapons', 'weapon efficiency', HUND_ADD_SIGN_ADD_PCNT),
+    ('dist1_bonus', 'close-range', 'close-range strike efficiency'),
+    ('dist2_bonus', 'mid-range', 'mid-range strike efficiency'),
+    ('dist3_bonus', 'long-range', 'long-range strike efficiency'),
+    ('elbow_strike_mult', 'elbows', 'elbow strike efficiency'),
+    ('exotic_strike_mult', 'exot.str.', 'exotic strike efficiency'),
+    ('flying_strike_mult', 'jumps', 'jumping strike efficiency'),
+    ('grappling_strike_mult', 'grappling', 'grappling efficiency'),
+    ('kick_strike_mult', 'kicks', 'kick efficiency'),
+    ('knee_strike_mult', 'knees', 'knee strike efficiency'),
+    ('palm_strike_mult', 'palm str.', 'palm strike efficiency'),
+    ('punch_strike_mult', 'punches', 'punch efficiency'),
+    ('weapon_strike_mult', 'weapons', 'weapon efficiency'),
 )
 
 
 def set_descr(obj):
     descr_list = []
     descr_short_set = set()
-    for param, short, long, funcs in PMAP:
+    for param, short, long in PMAP:
         if param in obj.params:
             v = obj.params[param]
-            for f in funcs:
+            for f in (hund, add_sign, add_pcnt):
                 v = f(v)
             descr_list.append(f'{v} {long}')
             descr_short_set.add(short)

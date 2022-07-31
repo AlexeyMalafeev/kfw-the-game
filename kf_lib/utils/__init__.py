@@ -1,6 +1,7 @@
 import time
 
 from ._data import *
+from ._validators import *
 from ._folders import *
 from ._lang_tools import *
 from ._numbers import *

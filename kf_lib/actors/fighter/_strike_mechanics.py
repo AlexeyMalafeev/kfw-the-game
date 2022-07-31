@@ -87,7 +87,7 @@ class StrikeMechanics(FighterWithASCII):
             # print('to dodge, to block', self.to_dodge, self.to_block)
             # todo divide dfs_pwr by sth?
             self.dfs_pwr = (self.dfs_penalty_mult
-                            * self.block_default_power * self.block_mult * BLOCK_POWER
+                            * self.BLOCK_POWER * self.block_mult * BLOCK_POWER
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
@@ -104,7 +104,7 @@ class StrikeMechanics(FighterWithASCII):
         lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
         self.add_status('skip', lying_dur)
-        fall_dam = rndint(*FALL_DAMAGE)
+        fall_dam = int(rndint(*FALL_DAMAGE) * self.fall_damage_mult)
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
@@ -208,7 +208,7 @@ class StrikeMechanics(FighterWithASCII):
         targ.cause_fall()
 
     def get_move_fail_chance(self, move_obj):
-        return move_obj.complexity ** 2 / self.agility_full ** 2
+        return (move_obj.complexity ** 2 / self.agility_full ** 2) * self.move_fail_chance_mult
 
     def get_move_time_cost(self, move_obj):
         if self.check_status('slowed down'):

@@ -8,12 +8,24 @@ Date
 4. feat: ~8 more new quotes (various sources)
 5. fix: bug in 'unlucky' craftsman encounter
 6. feat: Bandit Fiance story
+7. feat: test story in debug menu
+8. refactor: ratio -> opp_to_self_pwr_ratio
+9. feat: move fail chance multiplier and fall damage multiplier
+10. feat: add descriptors for value validation
+11. feat: exception handling when applying techs
+12. refactor: major refactor of stories
+13. feat: 3 new style words: Drunken, Acrobatic, Squirrel
+14. feat: 2 new techs: Drunken Moves and Drunken Acrobat
 
 ### Coming soon:
 
+* 
 * learn weak / pathetic moves in books
+* tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * upgrade moves from pathetic to ultimate
 * Drunken Boxing - no fall dam, off-balance gives bonus, acrobat (no complexity for moves)
+* when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
+* drunken boxers can buy wine
 * Underhanded - "dirty"; rep penalty?
 * donate to friends, to charity 
 * mind training - fight enemies in your mind

@@ -42,7 +42,7 @@ class FighterWithActions(
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(f' (guarding while attacking)')
-            self.dfs_bonus *= self.guard_dfs_mult * (1.0 + self.guard_while_attacking)
+            self.dfs_bonus *= self.GUARD_POWER * (1.0 + self.guard_while_attacking)
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()
@@ -187,7 +187,7 @@ class FighterWithActions(
     def guard(self):
         """This is called with eval as a function of the Guard move."""
         # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
-        self.dfs_bonus *= self.guard_dfs_bonus * self.guard_dfs_mult
+        self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
 
     def hit_or_miss(self):
         # todo use skip list here for functions not to be applied twice

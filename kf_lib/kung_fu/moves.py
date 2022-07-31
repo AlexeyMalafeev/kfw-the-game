@@ -1,6 +1,7 @@
 from pathlib import Path
 import random
 import re
+from typing import Text
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import rndint_2d, roman
@@ -194,7 +195,7 @@ def get_rand_moves(f, n, tier, moves_to_exclude=None):
     return random.choices(pool, weights=weights, k=n)
 
 
-def resolve_style_move(move_s, f):
+def resolve_move_string(move_s: Text, f):
     pool = []
     features = None
     tier = None
@@ -230,8 +231,11 @@ def resolve_style_move(move_s, f):
             return
     elif move_s != '' and ',' in move_s:
         features = move_s.split(',')
-        tier = int(features[0])
-        features = features[1:]
+        if features[0].isdigit():
+            tier = int(features[0])
+            features = features[1:]
+        else:
+            tier = f.get_move_tier_for_lv()
         pool = [m for m in get_moves_by_features(features, tier) if m not in f.moves]
         n = len(pool)
         if not n:
@@ -246,7 +250,7 @@ def resolve_style_move(move_s, f):
     # todo if move_s == '', make moves that have strike_mult > 1.0 more likely
     else:
         # print('warning: move {} not found'.format(move_s))
-        pool = get_rand_moves(f, f.num_moves_choose, rndint_2d(1, 5))
+        pool = get_rand_moves(f, f.num_moves_choose, f.get_move_tier_for_lv())
     try:
         f.choose_new_move(pool)
     except IndexError:

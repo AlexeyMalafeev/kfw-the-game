@@ -1,9 +1,10 @@
-/save/
 /.idea/
-/kf_lib/__pycache__/
-errors.txt
 /debug.txt
+/kf_lib/__pycache__/
+/legacy/
 /moves/move_gen.py - Shortcut.lnk
+/save/
 /tests/AI actions
 /tests/genetic
-/legacy/
+errors.txt
+validators.log

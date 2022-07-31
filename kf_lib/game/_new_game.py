@@ -156,4 +156,6 @@ class NewGame(BaseGame):
             # print(school)
 
     def _init_stories(self):
-        self.stories = {f'{S.__name__}': S(self) for S in story.all_stories}
+        self.stories = {
+            f'{story_cls.__name__}': story_cls(self) for story_cls in story.get_all_stories()
+        }
