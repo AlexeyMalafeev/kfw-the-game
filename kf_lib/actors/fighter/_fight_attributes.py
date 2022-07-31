@@ -23,6 +23,9 @@ STAMINA_PORTION_RESTORED_PER_TURN = 0.1
 
 
 class FightAttributes(BasicAttributes):
+    BLOCK_POWER = 1.0  # this is common between all fighters; non-tech-based
+    GUARD_POWER = 1.5  # this is the default effect of Guard
+
     resist_ko = Float(maxvalue=MAX_RESIST_KO)
     stamina = Integer()
 
@@ -61,7 +64,6 @@ class FightAttributes(BasicAttributes):
         self.atk_wp_bonus = 0
         self.block_disarm = 0.005
         self.block_mult = 1.0  # tech-based
-        self.block_default_power = 1.0  # this is common between all fighters; non-tech-based
         self.chance_cause_bleeding = 0.03  # tech-dependent
         self.counter_chance = 0.0  # NB! level-dependent
         self.counter_chance_mult = 1.0  # tech-dependent
@@ -80,10 +82,9 @@ class FightAttributes(BasicAttributes):
         self.epic_dam_mult = 2.0
         self.fall_damage_mult = 1.0  # style-dependent & wine-dependent?
         self.fury_to_all_mult = 1.6
-        self.fury_chance = 0.0  # this gets multiplied by opp_to_self_pwr_ratio of hp to max hp
+        self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.grab_chance = 0.0  # todo not used yet
-        self.guard_dfs_bonus = 1.0  # this is the tech-dependent bonus to Guard
-        self.guard_dfs_mult = 1.5  # this is the default effect of Guard
+        self.guard_dfs_bonus = 1.0  # the tech-dependent bonus to Guard
         self.guard_while_attacking = 0.0
         self.health_mult = 1.0
         self.hit_disarm = 0.005
