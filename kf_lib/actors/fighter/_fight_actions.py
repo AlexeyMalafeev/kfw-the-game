@@ -208,8 +208,6 @@ class FighterWithActions(
             self.try_knockback()
             self.try_knockdown()
             self.try_ko()
-            if tgt.momentum > 0:
-                tgt.momentum = 0
 
     def maneuver(self):
         m = self.action

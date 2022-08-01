@@ -19,9 +19,12 @@ Date
 15. feat: better move learning through debug menu
 16. fix: double knockback (at last!)
 17. fix: easy knockback when rushing forward
+18. feat: improved handling of knockback
 
 ### Coming soon:
 
+* nerf guard while atk
+* y defense buff not working?
 * drunken punch
 * bull - head strikes
 * add buffs to drunken boxing

@@ -285,6 +285,8 @@ class StrikeMechanics(FighterWithASCII):
                 kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
             if kb > 0:
                 targ.cause_knockback(kb)
+            elif kb < 0:
+                targ.momentum += kb  # slow down the rushing opponent
 
     def try_knockdown(self):
         targ = self.target
