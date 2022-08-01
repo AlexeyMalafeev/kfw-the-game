@@ -18,11 +18,11 @@ Date
 14. feat: 2 new techs: Drunken Moves and Drunken Acrobat
 15. feat: better move learning through debug menu
 16. fix: double knockback (at last!)
+17. fix: easy knockback when rushing forward
 
 ### Coming soon:
 
 * drunken punch
-* momentum shouldn't let the attacker get knocked back easily
 * bull - head strikes
 * add buffs to drunken boxing
 * change default drunken boxing and drunkard's style

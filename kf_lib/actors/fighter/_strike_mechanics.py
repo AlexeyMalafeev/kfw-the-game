@@ -277,13 +277,14 @@ class StrikeMechanics(FighterWithASCII):
             targ.take_damage(dam)
 
     def try_knockback(self):
-        targ = self.target
-        kb = 0
-        if not targ.check_status('lying'):
-            dam_ratio = self.dam / targ.hp_max
-            kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
-        if kb > 0:
-            targ.cause_knockback(kb)
+        if 'do_knockback' not in self.action.functions:
+            targ = self.target
+            kb = 0
+            if not targ.check_status('lying'):
+                dam_ratio = self.dam / targ.hp_max
+                kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
+            if kb > 0:
+                targ.cause_knockback(kb)
 
     def try_knockdown(self):
         targ = self.target

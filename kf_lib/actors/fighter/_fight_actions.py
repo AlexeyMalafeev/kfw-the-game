@@ -200,17 +200,16 @@ class FighterWithActions(
                 self.dam *= (1 - tgt.dam_reduc)
                 self.dam = round(self.dam)
             tgt.take_damage(self.dam)
-            if tgt.momentum > 0:
-                tgt.momentum = 0
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_cause_bleeding()
             self.try_hit_disarm()
             self.do_move_functions(self.action)
             self.try_stun()
-            if 'do_knockback' not in self.action.functions:
-                self.try_knockback()
+            self.try_knockback()
             self.try_knockdown()
             self.try_ko()
+            if tgt.momentum > 0:
+                tgt.momentum = 0
 
     def maneuver(self):
         m = self.action
