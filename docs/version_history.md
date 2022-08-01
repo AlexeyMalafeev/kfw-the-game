@@ -20,6 +20,7 @@ Date
 16. fix: double knockback (at last!)
 17. fix: easy knockback when rushing forward
 18. feat: improved handling of knockback
+19. feat: Drunken Kick ASCII
 
 ### Coming soon:
 
