@@ -16,10 +16,17 @@ Date
 12. refactor: major refactor of stories
 13. feat: 3 new style words: Drunken, Acrobatic, Squirrel
 14. feat: 2 new techs: Drunken Moves and Drunken Acrobat
+15. feat: better move learning through debug menu
+16. fix: double knockback (at last!)
 
 ### Coming soon:
 
-* 
+* drunken punch
+* momentum shouldn't let the attacker get knocked back easily
+* bull - head strikes
+* add buffs to drunken boxing
+* change default drunken boxing and drunkard's style
+* Drink Wine during fight?
 * learn weak / pathetic moves in books
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * upgrade moves from pathetic to ultimate

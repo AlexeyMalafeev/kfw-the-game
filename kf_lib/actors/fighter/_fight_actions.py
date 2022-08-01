@@ -207,7 +207,8 @@ class FighterWithActions(
             self.try_hit_disarm()
             self.do_move_functions(self.action)
             self.try_stun()
-            self.try_knockback()
+            if 'do_knockback' not in self.action.functions:
+                self.try_knockback()
             self.try_knockdown()
             self.try_ko()
 
