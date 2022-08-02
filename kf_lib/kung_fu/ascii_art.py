@@ -75,6 +75,10 @@ def set_ascii_art():
             art, as_lines = finalize(lines[1:])
             mir = mirror(as_lines)
             for mn in m_names:
+                mn = mn.strip()
+                if mn in FIGHTER_ART_L:
+                    print(f'{mn} already has an ASCII art. A duplicate?')
+                    input('Press Enter to continue')
                 FIGHTER_ART_L[mn] = art
                 FIGHTER_ART_R[mn] = mir
 

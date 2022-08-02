@@ -20,7 +20,9 @@ Date
 16. fix: double knockback (at last!)
 17. fix: easy knockback when rushing forward
 18. feat: improved handling of knockback
-19. feat: Drunken Kick ASCII
+19. feat: new ASCII arts (drunken, acrobatic) (total 198 arts)
+20. feat: redraw a few old ASCII arts
+21. feat: detect duplicates in ASCII arts
 
 ### Coming soon:
 
