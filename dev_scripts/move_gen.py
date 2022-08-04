@@ -81,6 +81,7 @@ def add_feat(m, n):
 
 
 def add_fun(m, n):
+    # this is to avoid modifying function lists in other moves
     m['functions'] = m['functions'][:] + [n]
 
 
@@ -272,7 +273,7 @@ def flying(m):
 
 
 def acrobatic(m):
-    """More power and accuracy at the cost of increased complexity; can stun"""
+    """More power and accuracy at the cost of increased complexity"""
     if 'do_agility_based_dam' in m['functions'] or 'do_strength_based_dam' in m['functions']:
         return None
     if 'takedown' in m['features']:
@@ -398,8 +399,8 @@ def debilitating(m):
 
 
 def lethal(m):
-    if 'takedown' in m['features']:
-        return None
+    # if 'takedown' in m['features']:
+    #     return None
     m = m.copy()
     change_tier(m, 6)
     add_fun(m, 'try_insta_ko')
@@ -416,6 +417,21 @@ def slashing(m):
     add_fun(m, 'cause_bleeding')
     modify(m, 'freq', -2, mn=1)
     prefix(m, 'Slashing')
+    return m
+
+
+def drunken(m):
+    if 'cause_off_balance' in m['functions'] or 'do_agility_based_dam' in m['functions']:
+        return None
+    if 'takedown' in m['features']:
+        return None
+    m = m.copy()
+    modify(m, 'complexity', 1)
+    change_tier(m, 1)
+    add_fun(m, 'cause_off_balance')
+    add_fun(m, 'do_agility_based_dam')
+    modify(m, 'freq', -2, mn=1)
+    prefix(m, 'Drunken')
     return m
 
 
