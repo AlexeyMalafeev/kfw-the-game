@@ -432,7 +432,7 @@ def drunken(m):
     change_tier(m, 1)
     add_fun(m, 'cause_off_balance')
     add_fun(m, 'do_agility_based_dam')
-    modify(m, 'freq', -2, mn=1)
+    modify(m, 'freq', -5, mn=0)
     prefix(m, 'Drunken')
     return m
 
