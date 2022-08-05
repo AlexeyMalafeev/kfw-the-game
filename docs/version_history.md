@@ -7,7 +7,7 @@ Date
 3. feat: add Weak and Pathetic moves (3313 -> 3795 moves)
 4. feat: ~8 more new quotes (various sources)
 5. fix: bug in 'unlucky' craftsman encounter
-6. feat: Bandit Fiance story
+6. **feat: Bandit Fiance story**
 7. feat: test story in debug menu
 8. refactor: ratio -> opp_to_self_pwr_ratio
 9. feat: move fail chance multiplier and fall damage multiplier
@@ -23,6 +23,9 @@ Date
 19. feat: new ASCII arts (drunken, acrobatic) (total 198 arts)
 20. feat: redraw a few old ASCII arts
 21. feat: detect duplicates in ASCII arts
+22. feat: remove backflip strikes
+23. feat: combinations of move functions for generation are now described in a table ("move_word_combinations.csv"), not in the code 
+24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3794 moves)
 
 ### Coming soon:
 
