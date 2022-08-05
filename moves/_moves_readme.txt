@@ -1,0 +1,2 @@
+Change move in "{base}|{extra}|{style}_moves.txt", then run move_gen.py from root dir for changes to take effect (they will be reflected in the "all_moves.txt").
+The file "move_word_combinations.csv" describes how move "words" can be combined.
