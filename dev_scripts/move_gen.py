@@ -188,24 +188,6 @@ def vanishing(m):
     return m
 
 
-def backflip(m):
-    if 'kick' not in m['features'] or 'do_agility_based_dam' in m['functions']:
-        return None
-    m = m.copy()
-    change_tier(m, 4)
-    modify(m, 'distance', -2)
-    modify(m, 'freq', -1, mn=1)
-    mult(m, 'stam_cost', 1.25)
-    mult(m, 'time_cost', 1.25)
-    modify(m, 'complexity', 1)
-    modify(m, 'dist_change', 2)
-    add_fun(m, 'do_agility_based_dam')
-    add_fun(m, 'try_shock_move')
-    prefix(m, 'Backflip')
-    add_feat(m, 'acrobatic')
-    return m
-
-
 def pushing(m):
     if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
@@ -512,7 +494,7 @@ def ultimate(m):
     return m
 
 
-# todo ultra short kick
+# todo ultra short kick, ultra long punch
 def gen_moves(moves):
     new_moves = []  # move dicts
     move_names = set()  # strings
@@ -524,7 +506,6 @@ def gen_moves(moves):
             heavy,
             charging,
             onslaught,
-            backflip,
             pushing,
             surprise,
             shocking,
@@ -645,12 +626,10 @@ def gen_moves(moves):
             piercing,
             slashing,
         ),
-        backflip: (solar, nerve, slashing),
         pushing: (heavy, surprise, shocking, solar, nerve, fast, strong, precise),
-        surprise: (light, backflip, fast, trick, lightning, piercing, slashing),
+        surprise: (light, fast, trick, lightning, piercing, slashing),
         fast: (
             light,
-            backflip,
             flying,
             acrobatic,
             power,
@@ -666,7 +645,6 @@ def gen_moves(moves):
             slashing,
         ),
         strong: (
-            backflip,
             flying,
             acrobatic,
             trick,
@@ -682,7 +660,6 @@ def gen_moves(moves):
         ),
         precise: (
             light,
-            backflip,
             flying,
             acrobatic,
             trick,
@@ -749,7 +726,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
@@ -779,7 +755,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
@@ -809,7 +784,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
@@ -839,7 +813,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
@@ -869,7 +842,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
@@ -899,7 +871,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
@@ -929,7 +900,6 @@ def gen_moves(moves):
             retreating,
             onslaught,
             vanishing,
-            backflip,
             pushing,
             surprise,
             fast,
