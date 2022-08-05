@@ -4,7 +4,7 @@ import re
 from typing import Text
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
-from kf_lib.utils import rndint_2d, roman
+from kf_lib.utils import roman
 from .ascii_art import get_ascii
 from kf_lib.utils import MOVES_FOLDER
 
@@ -13,6 +13,8 @@ from kf_lib.utils import MOVES_FOLDER
 
 # move container (for easy retrieval)
 ALL_MOVES_DICT = {}  # list derives later
+SPECIAL_FEATURES = {'drunken'}
+# todo container for default moves istead of .is_basic
 
 
 class Move:
@@ -36,6 +38,7 @@ class Move:
         self.time_cost = 0
         for k, v in kwargs.items():
             setattr(self, k, v)
+        self.special_features = set(self.features) & SPECIAL_FEATURES
         self.descr = ''
         self.descr_short = ''
         self.set_descr()
@@ -229,7 +232,7 @@ def resolve_move_string(move_s: Text, f):
         if move not in f.moves:
             f.learn_move(move)
             return
-    elif move_s != '' and ',' in move_s:
+    elif move_s and ',' in move_s:
         features = move_s.split(',')
         if features[0].isdigit():
             tier = int(features[0])

@@ -365,7 +365,7 @@ THIEF_STYLE = Style(
 DRUNKARD_STYLE = Style(
     'Drunken Dragon',
     {
-        3: Tech('Drunken Dragon I', agility_mult=b.AGILITY1),
+        3: Tech('Drunken Dragon I', agility_mult=b.AGILITY1, drunken_strike_mult=b.STRIKE_MULT1),
         5: Tech('Drunken Dragon II', exotic_strike_mult=b.RARE_STRIKE_MULT1),
         7: Tech('Drunken Dragon III', unblock_chance=b.UNBLOCK_CHANCE1),
     },

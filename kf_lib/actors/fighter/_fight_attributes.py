@@ -129,11 +129,12 @@ class FightAttributes(BasicAttributes):
         self.wp_dfs_bonus = 1.0  # for current fight only
 
         # strike multipliers
-        # todo reimplement strike multipliers as a default dict? a data class?
+        # todo reimplement strike multipliers as a default dict not to store unneeded ones
         self.claw_strike_mult = 1.0
         self.dist1_bonus = 1.0
         self.dist2_bonus = 1.0
         self.dist3_bonus = 1.0
+        self.drunken_strike_mult = 1.0
         self.elbow_strike_mult = 1.0
         self.exotic_strike_mult = 1.0
         self.flying_strike_mult = 1.0

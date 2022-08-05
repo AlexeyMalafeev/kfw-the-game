@@ -68,6 +68,11 @@ def save_moves(moves, keys, file_name, sort_alph=False):
 
 
 def modify(m, k, diff, mx=None, mn=None):
+    # Don't modify if already above maximum / below minimum; Flying (min=1) Drunken (min=0) Claw
+    if diff > 0 and mx is not None and m[k] >= mx:
+        return
+    if diff < 0 and mn is not None and m[k] <= mn:
+        return
     m[k] += diff
     if mx is not None and m[k] > mx:
         m[k] = mx
@@ -412,10 +417,10 @@ def lethal(m):
 
 
 def slashing(m):
-    if 'cause_bleeding' in m['functions']:
+    if 'cause_bleeding' in m['functions'] or 'takedown' in m['features']:
         return None
     m = m.copy()
-    change_tier(m, 4)
+    change_tier(m, 2)
     add_fun(m, 'cause_bleeding')
     modify(m, 'freq', -2, mn=1)
     prefix(m, 'Slashing')
