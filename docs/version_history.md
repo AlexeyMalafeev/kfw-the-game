@@ -25,7 +25,7 @@ Date
 21. feat: detect duplicates in ASCII arts
 22. feat: remove backflip strikes
 23. **feat: combinations of move functions for generation are now described in a table ("move_word_combinations.csv"), not in the code** 
-24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3794 moves)
+24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3727 moves)
 
 ### Coming soon:
 
