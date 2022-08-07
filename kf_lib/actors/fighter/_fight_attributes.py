@@ -27,6 +27,24 @@ class FightAttributes(BasicAttributes):
     GUARD_POWER: Final = 1.5
     # todo find more constants
 
+    # strike multipliers
+    STRIKE_MULTIPLIERS = (
+        'claw_strike_mult',
+        'dist1_strike_mult',
+        'dist2_strike_mult',
+        'dist3_strike_mult',
+        'drunken_strike_mult',
+        'elbow_strike_mult',
+        'flying_strike_mult',
+        'grappling_strike_mult',
+        'head_strike_mult',
+        'kick_strike_mult',
+        'knee_strike_mult',
+        'palm_strike_mult',
+        'punch_strike_mult',
+        'weapon_strike_mult',
+    )
+
     # tech-dependent, with validation:
     fall_damage_mult = Float(minvalue=0.0)  # also wine-dependent?
     move_fail_chance_mult = Float(minvalue=0.0)  # also wine-dependent?
@@ -129,22 +147,8 @@ class FightAttributes(BasicAttributes):
         self.wp_dfs_bonus = 1.0  # for current fight only
 
         # strike multipliers
-        # todo reimplement strike multipliers as a default dict not to store unneeded ones
-        self.claw_strike_mult = 1.0
-        self.dist1_bonus = 1.0
-        self.dist2_bonus = 1.0
-        self.dist3_bonus = 1.0
-        self.drunken_strike_mult = 1.0
-        self.elbow_strike_mult = 1.0
-        self.exotic_strike_mult = 1.0
-        self.flying_strike_mult = 1.0
-        self.grappling_strike_mult = 1.0
-        self.head_strike_mult = 1.0
-        self.kick_strike_mult = 1.0
-        self.knee_strike_mult = 1.0
-        self.palm_strike_mult = 1.0
-        self.punch_strike_mult = 1.0
-        self.weapon_strike_mult = 1.0
+        for att in self.STRIKE_MULTIPLIERS:
+            setattr(self, att, 1.0)
 
     def add_status(self, status, dur):
         if status not in self.status:

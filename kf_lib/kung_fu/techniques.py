@@ -199,9 +199,6 @@ LINKED_TECHS = [
         Tech('Hardened Palms', palm_strike_mult=b.RARE_STRIKE_MULT1, is_upgradable=True),
         Tech('Palms of Justice', palm_strike_mult=b.RARE_STRIKE_MULT2, is_advanced=True),
     ),
-    # todo fix this
-    # (Tech('Uncanny Strikes', exotic_strike_mult=b.RARE_STRIKE_MULT1),
-    #  Tech('Whole Body Weapon', exotic_strike_mult=b.RARE_STRIKE_MULT2)),
     # todo implement Weapon Competence tech
     # (
     #     Tech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),

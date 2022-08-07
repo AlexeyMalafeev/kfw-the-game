@@ -53,6 +53,9 @@ class MoveMethods(BaseFighter):
         move_obj = moves.get_rand_move(self, move_tier)
         self.learn_move(move_obj, silent=silent)
 
+    def refresh_fav_move_features(self):
+
+
     def replace_move(self, rep_mv, rep_with):
         def _rep_in_list(mv_a, mv_b, move_list):
             i = move_list.index(mv_a)

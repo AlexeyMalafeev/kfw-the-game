@@ -187,7 +187,7 @@ def get_rand_moves(f, n, tier):
     known_moves = set(f.moves)
     pool = [m for m in MOVES_BY_TIERS[tier]
             if m not in known_moves
-            and not (m.special_features - f.move_features)]
+            and not (m.special_features - f.fav_move_features)]
     if not pool:
         raise MoveNotFoundError(
             f'Cannot find any moves to learn at tier {tier} for {f}'

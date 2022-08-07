@@ -155,11 +155,11 @@ PMAP = (
     ('unblock_chance', 'unblock.', 'unblockable attack'),
 
     # strike multipliers  # todo add more strike multipliers
-    ('dist1_bonus', 'close-range', 'close-range strike efficiency'),
-    ('dist2_bonus', 'mid-range', 'mid-range strike efficiency'),
-    ('dist3_bonus', 'long-range', 'long-range strike efficiency'),
+    ('dist1_mult', 'close-range', 'close-range strike efficiency'),
+    ('dist2_mult', 'mid-range', 'mid-range strike efficiency'),
+    ('dist3_mult', 'long-range', 'long-range strike efficiency'),
+    ('drunken_strike_mult', 'drun.str.', 'drunken strike efficiency'),
     ('elbow_strike_mult', 'elbows', 'elbow strike efficiency'),
-    ('exotic_strike_mult', 'exot.str.', 'exotic strike efficiency'),
     ('flying_strike_mult', 'jumps', 'jumping strike efficiency'),
     ('grappling_strike_mult', 'grappling', 'grappling efficiency'),
     ('kick_strike_mult', 'kicks', 'kick efficiency'),
