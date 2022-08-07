@@ -8,6 +8,18 @@ from ._numbers import *
 from ._random import *
 
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler(
+        filename=f'kfw.log',
+        mode='w',
+        encoding='utf-8',
+    )
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
 def get_time():
     return time.ctime()
 

@@ -10,11 +10,10 @@ if lib_path not in sys.path:
 
 import pandas as pd  # noqa
 
+from kf_lib.kung_fu.moves import TIER_MIN, TIER_MAX
 from kf_lib.utils import MOVES_FOLDER  # noqa
 
 
-TIER_MIN = 0
-TIER_MAX = 10
 QI_COST_PER_TIER = 5
 
 

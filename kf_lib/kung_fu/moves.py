@@ -1,7 +1,8 @@
+import logging
 from pathlib import Path
 import random
 import re
-from typing import Text
+from typing import List, Literal, Text, Union
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import roman
@@ -9,11 +10,13 @@ from .ascii_art import get_ascii
 from kf_lib.utils import MOVES_FOLDER
 
 
-# RARE_FEATURE = 'exotic'
+logger = logging.getLogger()
 
 # move container (for easy retrieval)
 ALL_MOVES_DICT = {}  # list derives later
 SPECIAL_FEATURES = {'drunken'}
+TIER_MIN = 0
+TIER_MAX = 10
 # todo container for default moves istead of .is_basic
 
 
@@ -47,8 +50,6 @@ class Move:
         self.set_ascii()
         if self.distance in DISTANCE_FEATURES:
             self.features.add(DISTANCE_FEATURES[self.distance])
-        # if self.freq <= 2:
-        #    self.features.add(RARE_FEATURE)
         ALL_MOVES_DICT[self.name] = self
 
     def __repr__(self):
@@ -183,11 +184,23 @@ def get_rand_move(f, tier):
     return get_rand_moves(f=f, n=1, tier=tier)[0]
 
 
-def get_rand_moves(f, n, tier):
+def get_rand_moves(
+        f,
+        n: int,
+        tier: Union[int, Literal['random', 'auto']] = 'auto',
+        features: Union[List[Text], Literal['auto']] = 'auto',
+):
     """Uses frequency of moves; should never return style moves"""
+    if tier == 'auto':
+        tier = f.get_move_tier_for_lv()
+    elif tier == 'random':
+        tier = random.randint(TIER_MIN, TIER_MAX)
+    if features == 'auto':
+        features = f.fav_move_features
     known_moves = set(f.moves)
     pool = [m for m in MOVES_BY_TIERS[tier]
             if m not in known_moves
+            and any(feat in m.features for feat in features)
             and not (m.special_features - f.fav_move_features)]
     if not pool:
         raise MoveNotFoundError(

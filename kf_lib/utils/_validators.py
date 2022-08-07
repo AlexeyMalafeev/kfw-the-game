@@ -3,16 +3,7 @@ import logging
 from typing import Literal, Optional, Text, Union
 
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-handler = logging.FileHandler(
-        filename=f'validators.log',
-        mode='w',
-        encoding='utf-8',
-    )
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+logger = logging.getLogger()
 
 
 class Validator(ABC):
