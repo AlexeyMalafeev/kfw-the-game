@@ -42,9 +42,7 @@ class StrikeMechanics(FighterWithASCII):
     def calc_atk(self, action):
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
         strike_mult = 1.0
-        strike_mult *= getattr(self, f'dist{action.distance}_bonus', 1.0)
         for feature in action.features:
-            # low-prio todo reimplement computing strike_mult without getattr, use dict
             strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
         self.atk_bonus = self.atk_mult * strike_mult
         if self.check_status('off-balance'):

@@ -47,6 +47,8 @@ class Tech:
             v = getattr(f, p)
             try:
                 setattr(f, p, v + self.params[p])
+                if p.endswith('_strike_mult'):
+                    f.fav_move_features.add(p.replace('_strike_mult', ''))
             except TypeError:
                 print(f'DEBUG INFO:\n{f=}\n{p=}\n{v=}')
                 raise

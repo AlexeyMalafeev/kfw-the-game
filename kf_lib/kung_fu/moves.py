@@ -45,7 +45,8 @@ class Move:
         self.ascii_l = ''
         self.ascii_r = ''
         self.set_ascii()
-        self.features.add(DISTANCE_FEATURES[self.distance])
+        if self.distance in DISTANCE_FEATURES:
+            self.features.add(DISTANCE_FEATURES[self.distance])
         # if self.freq <= 2:
         #    self.features.add(RARE_FEATURE)
         ALL_MOVES_DICT[self.name] = self

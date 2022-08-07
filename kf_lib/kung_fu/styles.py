@@ -55,7 +55,7 @@ default_styles = [
     Style(
         'Balanced Fist',
         {
-            3: Tech('Balanced Fist I', dist2_mult=b.DIST2_MULT1),
+            3: Tech('Balanced Fist I', dist2_strike_mult=b.DIST2_MULT1),
             5: Tech('Balanced Fist II', atk_mult=b.ATTACK_HALF, dfs_mult=b.DEFENSE_HALF),
             7: Tech('Balanced Fist III', atk_mult=b.ATTACK1, dfs_mult=b.DEFENSE1),
         },
@@ -113,7 +113,7 @@ default_styles = [
         # todo jumps cost less stamina; jumps restore qp?; reduced complexity for jumps
         # todo jump feature is called flying and it's hard to change
         {
-            3: Tech('Eagle Claw I', dist3_mult=b.DIST3_MULT1),
+            3: Tech('Eagle Claw I', dist3_strike_mult=b.DIST3_MULT1),
             5: Tech('Eagle Claw II', stun_chance=b.STUN_CH1),
             7: Tech('Eagle Claw III', critical_chance_mult=b.CRIT_CH1,
                     critical_mult=b.CRIT_M1),
@@ -130,7 +130,7 @@ default_styles = [
         'Eight Extremities Fist',
         # todo opens the opponent's arms forcibly? fast movement?
         {
-            3: Tech('Eight Extremities Fist I', dist1_mult=b.DIST1_MULT1),
+            3: Tech('Eight Extremities Fist I', dist1_strike_mult=b.DIST1_MULT1),
             5: Tech('Eight Extremities Fist II', elbow_strike_mult=b.RARE_STRIKE_MULT1),
             7: Tech('Eight Extremities Fist III', speed_mult=b.SPEED1),
         },
@@ -146,7 +146,7 @@ default_styles = [
         'Gecko',
         # todo an emphasis on speed and gravity? walls? implement 'cornered' status?
         {
-            3: Tech('Gecko I', dist3_mult=b.DIST3_MULT1),
+            3: Tech('Gecko I', dist3_strike_mult=b.DIST3_MULT1),
             5: Tech('Gecko II', environment_chance=b.ENVIRONMENT_CH1),
             7: Tech('Gecko III', flying_strike_mult=b.STRIKE_MULT1),
         },
@@ -189,7 +189,7 @@ default_styles = [
         'Long Fist',
         # todo acrobatics bonus - more damage with complexity and no penalty
         {
-            3: Tech('Long Fist I', dist3_mult=b.DIST3_MULT1),
+            3: Tech('Long Fist I', dist3_strike_mult=b.DIST3_MULT1),
             5: Tech('Whirlwind Kicks', kick_strike_mult=b.STRIKE_MULT1),
             7: Tech('Long Fist III', atk_mult=b.ATTACK1),
         },
@@ -308,7 +308,7 @@ default_styles = [
         'White Crane',
         {
             3: Tech('White Crane I', dfs_mult=b.DEFENSE1),
-            5: Tech('White Crane II', dist1_mult=b.DIST1_MULT1),
+            5: Tech('White Crane II', dist1_strike_mult=b.DIST1_MULT1),
             7: Tech('White Crane III', block_mult=b.BLOCK1),
         },
         {2: '1,claw', 4: '2,claw', 6: '3,close-range', 8: '4,kick'},  # todo "Crane's Beak"
@@ -317,7 +317,7 @@ default_styles = [
         'Wing Chun',
         {
             3: Tech('Wing Chun I', punch_strike_mult=b.STRIKE_MULT1),
-            5: Tech('Wing Chun II', dist1_mult=b.DIST1_MULT1),
+            5: Tech('Wing Chun II', dist1_strike_mult=b.DIST1_MULT1),
             7: Tech('Wing Chun III', speed_mult=b.SPEED1),
         },
         {
