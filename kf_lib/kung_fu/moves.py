@@ -212,15 +212,20 @@ def get_rand_moves(
             f'\n{n=}'
             f'\n{tier=}'
             f'\n{features=}'
-            f'Setting pool to all moves at tier'
+            f'\nSetting pool to all moves at tier'
         )
         pool = MOVES_BY_TIERS[tier]
     random.shuffle(pool)
+    print(
+        f'{"*"*20}\nPOOL: '
+        f'\n{f=}'
+        f'\n{n=}'
+        f'\n{tier=}'
+        f'\n{features=}'
+        )
+    print(pool[:10])
     pool.sort(
-        key=lambda m: (
-            len([feat for feat in features if feat in m.features]),
-            m.freq,
-        ),
+        key=lambda m: len([feat for feat in features if feat in m.features]),
         reverse=True,
     )
     if len(pool) < n:
@@ -231,9 +236,15 @@ def get_rand_moves(
             f'\n{tier=}'
             f'\n{features=}'
             f'\n{len(pool)=}'
-            f'Returning <n moves'
+            f'\nReturning <n moves'
         )
-    return pool[:n]
+    pool = pool[:n * 3]  # for a bit more variety
+    print(pool[:10])
+    weights = [m.freq for m in pool]
+    selected = random.choices(pool, weights=weights, k=n)
+    print(f'{selected=}')
+    input('...')
+    return selected
 
 
 def resolve_move_string(move_s: Text, f):
