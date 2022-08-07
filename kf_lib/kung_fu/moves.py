@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 import random
 import re
-from typing import List, Literal, Text, Union
+from typing import Dict, List, Literal, Text, Union
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import roman
@@ -157,7 +157,7 @@ for m in BASIC_MOVES:
 
 
 ALL_MOVES_LIST = list(ALL_MOVES_DICT.values())
-MOVES_BY_TIERS = {}
+MOVES_BY_TIERS: Dict[int, List[Move]] = {}
 for mv in ALL_MOVES_LIST:
     m_tier = mv.tier
     if m_tier in MOVES_BY_TIERS:
@@ -179,9 +179,13 @@ def get_moves_by_features(features, tier):
     return moves
 
 
-def get_rand_move(f, tier):
+def get_rand_move(
+        f,
+        tier: Union[int, Literal['random', 'auto']] = 'auto',
+        features: Union[List[Text], Literal['auto']] = 'auto',
+):
     """Special case of get_rand_moves"""
-    return get_rand_moves(f=f, n=1, tier=tier)[0]
+    return get_rand_moves(f=f, n=1, tier=tier, features=features)[0]
 
 
 def get_rand_moves(
@@ -200,14 +204,36 @@ def get_rand_moves(
     known_moves = set(f.moves)
     pool = [m for m in MOVES_BY_TIERS[tier]
             if m not in known_moves
-            and any(feat in m.features for feat in features)
             and not (m.special_features - f.fav_move_features)]
     if not pool:
-        raise MoveNotFoundError(
-            f'Cannot find any moves to learn at tier {tier} for {f}'
+        logger.warning(
+            f'The pool in get_rand_moves is empty: '
+            f'\n{f=}'
+            f'\n{n=}'
+            f'\n{tier=}'
+            f'\n{features=}'
+            f'Setting pool to all moves at tier'
         )
-    weights = [m.freq for m in pool]  # can never get style moves like this as their freq is 0
-    return random.choices(pool, weights=weights, k=n)
+        pool = MOVES_BY_TIERS[tier]
+    random.shuffle(pool)
+    pool.sort(
+        key=lambda m: (
+            len([feat for feat in features if feat in m.features]),
+            m.freq,
+        ),
+        reverse=True,
+    )
+    if len(pool) < n:
+        logger.warning(
+            f'Cannot select enough moves: '
+            f'\n{f=}'
+            f'\n{n=}'
+            f'\n{tier=}'
+            f'\n{features=}'
+            f'\n{len(pool)=}'
+            f'Returning <n moves'
+        )
+    return pool[:n]
 
 
 def resolve_move_string(move_s: Text, f):
@@ -254,18 +280,16 @@ def resolve_move_string(move_s: Text, f):
         pool = [m for m in get_moves_by_features(features, tier) if m not in f.moves]
         n = len(pool)
         if not n:
-            print(f'warning: couldn\'t find any moves for move string {move_s}, fighter {f}')
-            pool = get_rand_moves(f, f.num_moves_choose, tier)
+            logger.warning(f'couldn\'t find any moves for move string {move_s}, fighter {f}')
+            pool = get_rand_moves(f, f.num_moves_choose)
         elif n == 1:
             f.learn_move(pool[0])
             return
         elif n > f.num_moves_choose:
             weights = [m.freq for m in pool]  # use move frequency
             pool = random.choices(pool, weights=weights, k=f.num_moves_choose)
-    # todo if move_s == '', make moves that have strike_mult > 1.0 more likely
     else:
-        # print('warning: move {} not found'.format(move_s))
-        pool = get_rand_moves(f, f.num_moves_choose, f.get_move_tier_for_lv())
+        pool = get_rand_moves(f, f.num_moves_choose)
     try:
         f.choose_new_move(pool)
     except IndexError:
