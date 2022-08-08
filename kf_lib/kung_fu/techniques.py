@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Text
 
 
 from kf_lib.kung_fu import boosts as b
@@ -22,20 +22,20 @@ class Tech:
             self.fav_moves = fav_moves
         self.is_upgradable = is_upgradable
         if self.is_upgradable:
-            upgradable_tech_names.append(self.name)
+            _upgradable_techs.append(self.name)
         self.is_advanced = is_advanced
         if self.is_advanced:
-            advanced_tech_names.append(self.name)
+            _advanced_techs.append(self.name)
         self.is_weapon_tech = is_weapon_tech
         if self.is_weapon_tech:
-            weapon_tech_names.append(self.name)
+            _weapon_techs.append(self.name)
         for k in kwargs:
             setattr(self, k, kwargs[k])
         self.params = kwargs
         self.descr = ''
         self.descr_short = ''
         b.set_descr(self)
-        all_techs[self.name] = self
+        _all_techs[self.name] = self
 
     def __repr__(self):
         return (f'Tech({self.name!r}, fav_moves={self.fav_moves!r}, '
@@ -65,7 +65,7 @@ class WeaponTech(Tech):
         self.wp_type = ''
         self.wp_bonus = (0, 0)
         super().__init__(name, is_weapon_tech=True, **kwargs)
-        weapon_tech_names.append(self.name)
+        _weapon_techs.append(self.name)
 
     def apply(self, f):
         if self.wp_type in f.weapon_bonus:
@@ -92,13 +92,13 @@ class WeaponTech(Tech):
 
 # tech containers (for easy retrieval)
 # tech_name: tech_obj
-all_techs: Dict[str, Tech] = {}
+_all_techs: Dict[str, Tech] = {}
 
 # tech names (for convenient random choosing)
-upgradable_tech_names: List[str] = []
-advanced_tech_names: List[str] = []
-style_tech_names: List[str] = []
-weapon_tech_names: List[str] = []
+_upgradable_techs: List[Tech] = []
+_advanced_techs: List[Tech] = []
+_style_techs: List[Tech] = []
+_weapon_techs: List[Tech] = []
 
 
 # todo weapon techniques do nothing; implement
@@ -277,31 +277,29 @@ LINKED_TECHS = [
 ]
 
 # todo refactor upgradable to advanced tech mapping as attributes
-UPG_MAP_ADV_REG = {t[1].name: t[0].name for t in LINKED_TECHS}
-UPG_MAP_REG_ADV = {t[0].name: t[1].name for t in LINKED_TECHS}
+UPG_MAP_ADV_REG = {t[1]: t[0] for t in LINKED_TECHS}
+UPG_MAP_REG_ADV = {t[0]: t[1] for t in LINKED_TECHS}
 
 
 def adv_to_reg(tech_name):
     return UPG_MAP_ADV_REG[tech_name]
 
 
-def apply(tn, f):
-    t = get_tech_obj(tn)
-    t.apply(f)
+def apply_tech(tech: Tech, f):
+    tech.apply(f)
     f.refresh_full_atts()  # in case techs affects them
     f.refresh_dependent_atts()  # in case techs affects them
 
 
-def get_all_techs():
-    return all_techs
+def get_all_techs_dict() -> Dict[str, Tech]:
+    return _all_techs
 
 
-def get_descr(tech_name):
+# todo remove get_tech_descr as it is a stupid getter for .descr
+def get_tech_descr(tech: Tech) -> Text:
     """Return description of tech."""
-    return get_tech_obj(tech_name).descr
+    return tech.descr
 
-
-# todo refactor and optimize the functions in techniques.py, they are a mess
 
 def get_learnable_techs(fighter=None):
     """Return names of techs fighter can learn."""
@@ -310,56 +308,55 @@ def get_learnable_techs(fighter=None):
         for t in fighter.techs:
             if t in techs:
                 techs.remove(t)
-            elif t in advanced_tech_names:
+            elif t in _advanced_techs:
                 techs.remove(adv_to_reg(t))
     return techs
 
 
-def get_style_techs(fighter=None):
+def get_style_techs(fighter=None) -> List[Tech]:
     if fighter is None:
-        return style_tech_names
+        return _style_techs
     else:
-        return [t for t in fighter.techs if t in style_tech_names]
+        return [t for t in fighter.techs if t in _style_techs]
 
 
-def get_tech_obj(tech_name):
-    if tech_name not in all_techs:
+def get_tech_obj(tech_name: Text) -> Tech:
+    if tech_name not in _all_techs:
         raise ValueError(f'unable to find tech name "{tech_name!r}" in all_techs (keys are tech '
                          f'names)')
-    return all_techs[tech_name]
+    return _all_techs[tech_name]
 
 
-def get_upgradable_techs(fighter=None):
+def get_upgradable_techs(fighter=None) -> List[Tech]:
     """If fighter is None, return list of all upgradable techs.
     If fighter is given, return names of techs fighter can upgrade."""
     if fighter is None:
-        return upgradable_tech_names
+        return _upgradable_techs
     else:
         return [t for t in fighter.techs if get_tech_obj(t).is_upgradable]
 
 
-def get_upgraded_techs(fighter=None):
+def get_upgraded_techs(fighter=None) -> List[Tech]:
     """If fighter is None, return list of all upgraded techs.
     If fighter is given, return names of upgraded techs fighter doesn't have."""
     if fighter is None:
-        return advanced_tech_names
+        return _advanced_techs
     else:
-        return [t for t in advanced_tech_names if t not in fighter.techs]
+        return [t for t in _advanced_techs if t not in fighter.techs]
 
 
-def get_weapon_techs(fighter=None):
+def get_weapon_techs(fighter=None) -> List[Tech]:
     """If fighter is None, return list of all weapon techs.
     If fighter is given, return list of weapon techs fighter has."""
     if fighter is None:
-        return weapon_tech_names
+        return _weapon_techs
     else:
         return [t for t in fighter.techs if get_tech_obj(t).is_weapon_tech]
 
 
-def reg_to_adv(tech_name):
-    return UPG_MAP_REG_ADV[tech_name]
+def reg_to_adv(tech: Tech) -> Tech:
+    return UPG_MAP_REG_ADV[tech]
 
 
-def undo(tn, f):
-    t = get_tech_obj(tn)
-    t.undo(f)
+def undo(tech: Tech, f):
+    tech.undo(f)

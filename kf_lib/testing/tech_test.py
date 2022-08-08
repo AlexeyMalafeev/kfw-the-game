@@ -74,7 +74,7 @@ class TechTester(object):
         for legend, wins in self.fight_types:
             tuples = [(v, k) for k, v in wins.items() if k in techs]
             as_str = '\n'.join(
-                [f'{v} {k} ({techniques.get_descr(k)})' for v, k in sorted(tuples)]
+                [f'{v} {k} ({techniques.get_tech_descr(k)})' for v, k in sorted(tuples)]
             )
             text += f'\n  {legend}:\n{as_str}\n'
             # if not wins is self.wins_total:
@@ -95,7 +95,7 @@ class TechTester(object):
     def test_tech(self, t=None):
         """If t is None, False etc., get baseline result."""
         if t:
-            print(f'testing {t} ({techniques.get_descr(t)})')
+            print(f'testing {t} ({techniques.get_tech_descr(t)})')
         else:
             print('getting baseline...')
             t = self.BASELINE

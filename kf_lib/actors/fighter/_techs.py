@@ -18,7 +18,7 @@ class TechMethods(BaseFighter):
 
     def apply_tech(self, *tech_names):
         for tn in tech_names:
-            techniques.apply(tn, self)
+            techniques.apply_tech(tn, self)
 
     def choose_new_tech(self):
         sample = self.get_techs_to_choose()
@@ -42,7 +42,7 @@ class TechMethods(BaseFighter):
         d = ''
         for t in self.techs:
             if descr:
-                d = f'- {techniques.get_descr(t)}'
+                d = f'- {techniques.get_tech_descr(t)}'
             output.append('{:<{}}{}'.format(t, align, d))
         output = [header] + sorted(output)
         return '\n'.join(output)
@@ -55,7 +55,7 @@ class TechMethods(BaseFighter):
             num = self.num_techs_choose
             av_techs = techniques.get_learnable_techs(self)
         if annotated:
-            d = techniques.get_descr
+            d = techniques.get_tech_descr
             av_techs = [('{} ({})'.format(t, d(t)), t) for t in av_techs]
         if 0 < len(av_techs) < num:
             return av_techs
@@ -77,14 +77,12 @@ class TechMethods(BaseFighter):
 
     def learn_tech(self, *techs):
         """techs can be Tech objects or tech name strings (or mixed)"""
-        for tn in techs:
-            if isinstance(tn, techniques.Tech):
-                tn = tn.name
-            if tn not in self.techs:
-                descr = techniques.get_descr(tn)
-                self.add_tech(tn)
-                self.show(f'{self.name} learns {tn} ({descr}).')
-                self.log(f'Learns {tn} ({descr})')
+        for tech in techs:
+            if tech not in self.techs:
+                descr = techniques.get_tech_descr(tech)
+                self.add_tech(tech)
+                self.show(f'{self.name} learns {tech} ({descr}).')
+                self.log(f'Learns {tech} ({descr})')
                 self.pak()
 
     def resolve_techs_on_level_up(self):
@@ -103,9 +101,9 @@ class TechMethods(BaseFighter):
     def set_rand_techs(self, forced=False):
         if forced or self.style.is_tech_style:
             # style techs
-            for lv, t in self.style.techs.items():
+            for lv, tech in self.style.techs.items():
                 if self.level >= lv:
-                    self.techs.add(t.name)
+                    self.techs.add(tech)
             # general techs
             n = len([lv for lv in self.LVS_GET_GENERAL_TECH if lv <= self.level])
             if n:
@@ -119,7 +117,7 @@ class TechMethods(BaseFighter):
         if not tech_names:
             self.set_rand_techs()
         else:
-            self.techs = set(tech_names)
+            self.techs = set(techniques.get_tech_obj(tn) for tn in tech_names)
         self.apply_tech(*self.techs)
 
     def unlearn_tech(self, tech):
