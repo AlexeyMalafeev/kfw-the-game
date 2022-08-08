@@ -4,11 +4,10 @@ from kf_lib.kung_fu import techniques
 from ._base_fighter import BaseFighter
 
 
-ADVANCED_TECH_AT_LV = 19
-LVS_GET_GENERAL_TECH = {13, 15, 17}
-
-
 class TechMethods(BaseFighter):
+    ADVANCED_TECH_AT_LV = 19
+    LVS_GET_GENERAL_TECH = {13, 15, 17}
+
     num_techs_choose = 3
     num_techs_choose_upgrade = 3
     techs = None  # set of tech names
@@ -95,10 +94,10 @@ class TechMethods(BaseFighter):
         if t := self.get_style_tech_if_any():
             self.learn_tech(t.name)
         # upgrade tech if possible
-        if self.level == ADVANCED_TECH_AT_LV:
+        if self.level == self.ADVANCED_TECH_AT_LV:
             self.choose_tech_to_upgrade()
         # learn new general tech if possible
-        if self.level in LVS_GET_GENERAL_TECH:
+        if self.level in self.LVS_GET_GENERAL_TECH:
             self.choose_new_tech()
 
     def set_rand_techs(self, forced=False):
@@ -108,10 +107,10 @@ class TechMethods(BaseFighter):
                 if self.level >= lv:
                     self.techs.add(t.name)
             # general techs
-            n = len([lv for lv in LVS_GET_GENERAL_TECH if lv <= self.level])
+            n = len([lv for lv in self.LVS_GET_GENERAL_TECH if lv <= self.level])
             if n:
                 self.techs |= set(random.sample(techniques.get_upgradable_techs(), n))
-            if self.level >= ADVANCED_TECH_AT_LV:
+            if self.level >= self.ADVANCED_TECH_AT_LV:
                 t = random.choice(techniques.get_upgradable_techs(self))
                 self.upgrade_tech(t)
 
