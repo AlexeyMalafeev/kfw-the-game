@@ -26,7 +26,7 @@ class BaseFighter(
             self.style.name,
             self.level,
             self.get_base_atts_tup(),
-            self.techs,
+            [t.name for t in self.techs],
             [m.name for m in self.moves if not m.is_basic],
         )
 
