@@ -28,6 +28,7 @@ Date
 24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3727 moves)
 25. refactor: strike multipliers
 26. feat: common logger
+27. refactor: Fighter.techs now consists of Tech objects, rather than strings
 
 ### Coming soon:
 

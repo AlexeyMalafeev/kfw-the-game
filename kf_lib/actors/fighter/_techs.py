@@ -91,7 +91,7 @@ class TechMethods(BaseFighter):
             return
         # learn new style tech if possible
         if t := self.get_style_tech_if_any():
-            self.learn_tech(t.name)
+            self.learn_tech(t)
         # upgrade tech if possible
         if self.level == self.ADVANCED_TECH_AT_LV:
             self.choose_tech_to_upgrade()

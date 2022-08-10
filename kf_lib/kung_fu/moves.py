@@ -216,14 +216,14 @@ def get_rand_moves(
         )
         pool = MOVES_BY_TIERS[tier]
     random.shuffle(pool)
-    print(
-        f'{"*"*20}\nPOOL: '
-        f'\n{f=}'
-        f'\n{n=}'
-        f'\n{tier=}'
-        f'\n{features=}'
-        )
-    print(pool[:10])
+    # print(
+    #     f'{"*"*20}\nPOOL: '
+    #     f'\n{f=}'
+    #     f'\n{n=}'
+    #     f'\n{tier=}'
+    #     f'\n{features=}'
+    #     )
+    # print(pool[:10])
     pool.sort(
         key=lambda m: len([feat for feat in features if feat in m.features]),
         reverse=True,
@@ -239,11 +239,11 @@ def get_rand_moves(
             f'\nReturning <n moves'
         )
     pool = pool[:n * 3]  # for a bit more variety
-    print(pool[:10])
+    # print(pool[:10])
     weights = [m.freq for m in pool]
     selected = random.choices(pool, weights=weights, k=n)
-    print(f'{selected=}')
-    input('...')
+    # print(f'{selected=}')
+    # input('...')
     return selected
 
 
@@ -253,12 +253,8 @@ def resolve_move_string(move_s: Text, f):
     tier = None
     # a special case with tier-only move_s
     if move_s.isdigit():
-        # todo reimplement: make .techs store tech objects, not names; convert on save/load only
-        from .techniques import get_tech_obj
-
         features = []
-        for t in f.techs:
-            t_obj = get_tech_obj(t)
+        for t_obj in f.techs:
             for par in t_obj.params:
                 if par.endswith('_strike_mult'):
                     par = par.replace('_strike_mult', '')

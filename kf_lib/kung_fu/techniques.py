@@ -22,13 +22,13 @@ class Tech:
             self.fav_moves = fav_moves
         self.is_upgradable = is_upgradable
         if self.is_upgradable:
-            _upgradable_techs.append(self.name)
+            _upgradable_techs.append(self)
         self.is_advanced = is_advanced
         if self.is_advanced:
-            _advanced_techs.append(self.name)
+            _advanced_techs.append(self)
         self.is_weapon_tech = is_weapon_tech
         if self.is_weapon_tech:
-            _weapon_techs.append(self.name)
+            _weapon_techs.append(self)
         for k in kwargs:
             setattr(self, k, kwargs[k])
         self.params = kwargs
@@ -65,7 +65,7 @@ class WeaponTech(Tech):
         self.wp_type = ''
         self.wp_bonus = (0, 0)
         super().__init__(name, is_weapon_tech=True, **kwargs)
-        _weapon_techs.append(self.name)
+        _weapon_techs.append(self)
 
     def apply(self, f):
         if self.wp_type in f.weapon_bonus:
@@ -333,7 +333,7 @@ def get_upgradable_techs(fighter=None) -> List[Tech]:
     if fighter is None:
         return _upgradable_techs
     else:
-        return [t for t in fighter.techs if get_tech_obj(t).is_upgradable]
+        return [t for t in fighter.techs if t.is_upgradable]
 
 
 def get_upgraded_techs(fighter=None) -> List[Tech]:
@@ -351,7 +351,7 @@ def get_weapon_techs(fighter=None) -> List[Tech]:
     if fighter is None:
         return _weapon_techs
     else:
-        return [t for t in fighter.techs if get_tech_obj(t).is_weapon_tech]
+        return [t for t in fighter.techs if t.is_weapon_tech]
 
 
 def reg_to_adv(tech: Tech) -> Tech:
