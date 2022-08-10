@@ -1423,5 +1423,6 @@ class EncControl:
         random_encounters(p, encs)
 
     def run_enc(self, enc_name_string, test=False):
+        # todo properly run encounters without execs
         p = self.g.current_player
         exec(f"{enc_name_string}(p, test={test})")
