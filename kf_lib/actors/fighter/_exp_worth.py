@@ -21,7 +21,7 @@ RISK_DESCR_TABLE = (  # must be sorted high to low
 
 
 class ExpMethods(BaseFighter):
-    def get_allies_power(self):  # todo: use get_allies_power for AI, high-prio
+    def get_allies_power(self):  # todo use get_allies_power for AI, high-prio
         return sum([f.get_exp_worth() for f in self.act_allies])
 
     def get_exp_worth(self):  # todo check that get_exp_worth still makes sense
@@ -39,7 +39,10 @@ class ExpMethods(BaseFighter):
         return sum([f.get_exp_worth() for f in self.act_targets])
 
     def get_rel_strength(self, *opp, allies=None):
-        """Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend (string, e.g. 'very risky')"""
+        """
+        Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend
+        (string, e.g. 'very risky')
+        """
         pwr = sum([op.get_exp_worth() for op in opp])
         own_pwr = self.get_exp_worth()
         if allies:
