@@ -1,6 +1,8 @@
 from kf_lib.utils import add_pcnt, add_sign, hund
 
 
+ACROBATIC_STRIKE_MULT1 = 0.1
+ACROBATIC_STRIKE_MULT2 = 0.2
 AGILITY1 = 0.2
 AGILITY2 = 0.4
 ATTACK1 = 0.15
@@ -31,6 +33,8 @@ DIST2_MULT1 = 0.25
 DIST2_MULT2 = 0.5
 DIST3_MULT1 = 0.2
 DIST3_MULT2 = 0.4
+DRUNKEN_STRIKE_MULT1 = 0.1
+DRUNKEN_STRIKE_MULT2 = 0.2
 ENVIRONMENT_CH1 = 0.15
 ENVIRONMENT_CH2 = 0.3
 EVADE1 = 0.4
@@ -59,6 +63,8 @@ MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
 MOVE_FAIL_CHANCE_MULT1 = -0.4
 MOVE_FAIL_CHANCE_MULT2 = -0.8
+OFF_BAL_MULT1 = 0.25
+OFF_BAL_MULT2 = 0.5
 PREEMPTIVE_CH1 = 0.10
 PREEMPTIVE_CH2 = 0.20
 QI_WHEN_ATK = 0.5  # todo this is not used
@@ -141,6 +147,8 @@ PMAP = (
         'preemptive strike chance',
     ),
     ('move_fail_chance_mult', 'fail-safe moves', 'move fail chance'),
+    ('off_balance_atk_mult', 'off-bal.atk', 'off-balance attack'),
+    ('off_balance_dfs_mult', 'off-bal.dfs', 'off-balance defense'),
     ('qi_when_atk', 'qi/atk', 'qi when attacking'),
     ('qp_gain_mult', 'qi', 'QP/turn'),
     ('qp_max_mult', 'qi', 'max QP'),
@@ -155,6 +163,7 @@ PMAP = (
     ('unblock_chance', 'unblock.', 'unblockable attack'),
 
     # strike multipliers  # todo add more strike multipliers
+    ('acrobatic_strike_mult', 'acrob.str', 'acrobatic strike efficiency'),
     ('dist1_strike_mult', 'close-range', 'close-range strike efficiency'),
     ('dist2_strike_mult', 'mid-range', 'mid-range strike efficiency'),
     ('dist3_strike_mult', 'long-range', 'long-range strike efficiency'),

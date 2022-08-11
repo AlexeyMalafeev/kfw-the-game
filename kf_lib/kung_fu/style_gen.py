@@ -8,6 +8,14 @@ from .techniques import Tech
 
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
+    'Acrobatic': Tech(
+        'Acrobatics',
+        fall_damage_mult=b.FALL_DAMAGE_MULT1,
+        move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+        acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
+        off_balance_atk_mult=b.OFF_BAL_MULT1,
+        off_balance_dfs_mult=b.OFF_BAL_MULT1,
+    ),
     'Attacking': Tech('Attack Method', atk_mult=b.ATTACK1),
     'Averting': Tech('Avert Attacks', preemptive_chance=b.PREEMPTIVE_CH1),
     'Balanced': Tech('Mid-Range Strikes', dist2_strike_mult=b.DIST2_MULT1),
@@ -19,6 +27,9 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
         'Drunken Form',
         fall_damage_mult=b.FALL_DAMAGE_MULT1,
         move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+        drunken_strike_mult=b.DRUNKEN_STRIKE_MULT1,
+        off_balance_atk_mult=b.OFF_BAL_MULT1,
+        off_balance_dfs_mult=b.OFF_BAL_MULT1,
     ),
     'Elusive': Tech('Elusive Moves', dodge_mult=b.EVADE1),
     'Exotic': Tech(
@@ -64,15 +75,10 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     'Tough': Tech('Toughness', health_mult=b.HEALTH1),
     'Unstoppable': Tech('Unstoppable Attacks', unblock_chance=b.UNBLOCK_CHANCE1),
     'Vigorous': Tech('Vigor', hp_gain_mult=b.HP_GAIN1),
-}  # drunken: trick, acrobatic, surprise backflip; light-footed, furious, enraged
+}  # light-footed, furious, enraged
 
 # exclude resist_ko=b.RESIST_KO1
 W2 = {
-    'Acrobatic': Tech(
-        'Acrobatics',
-        fall_damage_mult=b.FALL_DAMAGE_MULT1,
-        move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
-    ),
     'Air': Tech('Air Attacks', flying_strike_mult=b.STRIKE_MULT1),
     'Astral': Tech('Astral Footwork', kick_strike_mult=b.STRIKE_MULT1),
     'Avalanche': Tech('Avalanche Strikes', unblock_chance=b.UNBLOCK_CHANCE1),
@@ -94,6 +100,14 @@ W2 = {
     'Meteor': Tech('Meteor Punches', punch_strike_mult=b.STRIKE_MULT1),
     'Misty': Tech('Misty Steps', dodge_mult=b.EVADE1),
     'Moon': Tech('Moon\'s Orbit', dist2_strike_mult=b.DIST2_MULT1),
+    'Nimble': Tech(
+        'Nimble Movements',
+        fall_damage_mult=b.FALL_DAMAGE_MULT1,
+        move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+        acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
+        off_balance_atk_mult=b.OFF_BAL_MULT1,
+        off_balance_dfs_mult=b.OFF_BAL_MULT1,
+    ),
     'Northern': Tech('Northern Style Kung-fu', strength_mult=b.STRENGTH1),
     'Obsidian': Tech('Obsidian Guard', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
     'Rainbow': Tech('Rainbow Steps', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1),
@@ -110,6 +124,14 @@ W2 = {
         'Relentless Storm', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
     ),
     'Sun': Tech('Sun\'s Orbit', dist3_strike_mult=b.DIST3_MULT1),
+    'Tipsy': Tech(
+        'Tipsy Form',
+        fall_damage_mult=b.FALL_DAMAGE_MULT1,
+        move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+        drunken_strike_mult=b.DRUNKEN_STRIKE_MULT1,
+        off_balance_atk_mult=b.OFF_BAL_MULT1,
+        off_balance_dfs_mult=b.OFF_BAL_MULT1,
+    ),
     'Vengeful': Tech('Strikes of Vengeance', counter_chance_mult=b.COUNTER_CH_MULT1),
     'Venom': Tech('Deadly Venom', stun_chance=b.STUN_CH1),
     'Water': Tech('Healing Water', hp_gain_mult=b.HP_GAIN1),
@@ -117,7 +139,7 @@ W2 = {
     'Wind': Tech('Wind Form', speed_mult=b.SPEED1),
     'Wooden': Tech('Wooden Limbs', guard_dfs_bonus=b.GUARD_DFS1),
     # crystal, colors, colorless, snow, mountain, river,
-    # imperial, golden, southern, northern, silver, bronze, lotus, sky,
+    # imperial, golden, southern, silver, bronze, lotus, sky,
     # diamond, pearl, hellish, hard, soft, deadly, lightning
     # adamantine
 }
@@ -156,9 +178,12 @@ W3 = {  # todo add grappling stike multiplier
     'Scorpion': Tech('Stinging Scorpion', kick_strike_mult=b.STRIKE_MULT1),
     'Snake': Tech('Twisting Snake', dodge_mult=b.EVADE1),
     'Squirrel': Tech(
-        'Nimble Squirrel',
+        'Squirrel\'s Agility',
         fall_damage_mult=b.FALL_DAMAGE_MULT1,
         move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+        acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
+        off_balance_atk_mult=b.OFF_BAL_MULT1,
+        off_balance_dfs_mult=b.OFF_BAL_MULT1,
     ),
     'Tiger': Tech('Tiger\'s Rage', atk_mult=b.ATTACK1),
     'Toad': Tech('Toad\'s Toughness', dam_reduc=b.DAM_REDUC1),
@@ -166,6 +191,14 @@ W3 = {  # todo add grappling stike multiplier
         'Turtle\'s Shell', block_mult=b.BLOCK1, block_disarm=b.BLOCK_DISARM1
     ),
     'Viper': Tech('Stinging Viper', stun_chance=b.STUN_CH1),
+    'Wino': Tech(
+        'Wino Form',
+        fall_damage_mult=b.FALL_DAMAGE_MULT1,
+        move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+        drunken_strike_mult=b.DRUNKEN_STRIKE_MULT1,
+        off_balance_atk_mult=b.OFF_BAL_MULT1,
+        off_balance_dfs_mult=b.OFF_BAL_MULT1,
+    ),
     'Wolf': Tech('Attacking Wolf', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1),
     # crow, horse, spider - grabs?, dog, bull
     # see https://imperialcombatarts.com/rare-kung-fu-styles--animal-substyles.html

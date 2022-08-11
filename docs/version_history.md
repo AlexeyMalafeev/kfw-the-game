@@ -25,24 +25,25 @@ Date
 21. feat: detect duplicates in ASCII arts
 22. feat: remove backflip strikes
 23. **feat: combinations of move functions for generation are now described in a table ("move_word_combinations.csv"), not in the code** 
-24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3727 moves)
+24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3768 moves)
 25. refactor: strike multipliers
 26. feat: common logger
 27. refactor: Fighter.techs now consists of Tech objects, rather than strings
+28. feat: acrobatic styles and buffs
 
 ### Coming soon:
 
-* nerf guard while atk
-* y defense buff not working?
-* drunken punch
-* bull - head strikes
 * add buffs to drunken boxing
 * change default drunken boxing and drunkard's style
+* move complexity - apply direct multiplier
+* NEW EXP SYSTEM
+* nerf guard while atk
+* y defense buff not working?
+* bull - head strikes
 * Drink Wine during fight?
 * learn weak / pathetic moves in books
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * upgrade moves from pathetic to ultimate
-* Drunken Boxing - no fall dam, off-balance gives bonus, acrobat (no complexity for moves)
 * when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
 * drunken boxers can buy wine
 * Underhanded - "dirty"; rep penalty?

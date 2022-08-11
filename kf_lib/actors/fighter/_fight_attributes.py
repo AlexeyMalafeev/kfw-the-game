@@ -28,7 +28,8 @@ class FightAttributes(BasicAttributes):
     # todo find more constants
 
     # strike multipliers
-    STRIKE_MULTIPLIERS = (
+    STRIKE_MULTIPLIERS: Final = (
+        'acrobatic_strike_mult',
         'claw_strike_mult',
         'dist1_strike_mult',
         'dist2_strike_mult',
@@ -119,7 +120,7 @@ class FightAttributes(BasicAttributes):
         self.maneuver_time_cost_mult = 1.0  # lower is better
         self.move_fail_chance_mult = 1.0  # with descriptor
         self.num_moves_choose = 3
-        self.off_balance_atk_mult = 0.75  # todo use in drunken boxing
+        self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
         self.preemptive_chance = 0.0  # tech-dependent
         self.qp = 0
@@ -130,7 +131,7 @@ class FightAttributes(BasicAttributes):
         self.resist_ko = 0.0  # with descriptor
         self.speed_mult = 1.0
         self.stamina = 0  # with descriptor
-        self.stamina_factor = 1.0
+        self.stamina_factor = 1.0  # todo comment for stamina_factor
         self.stamina_gain = 0  # NB! level-dependent
         self.stamina_gain_mult = 1.0
         self.stamina_max = 0  # NB! level-dependent
