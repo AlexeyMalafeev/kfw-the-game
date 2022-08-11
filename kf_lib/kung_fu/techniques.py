@@ -266,12 +266,28 @@ LINKED_TECHS = [
             is_upgradable=True,
         ),
         Tech(
-            'Drunken Acrobat',
+            'Advanced Drunken Moves',
             fall_damage_mult=b.FALL_DAMAGE_MULT2,
             move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
             is_advanced=True,
         )
-    )
+    ),
+(
+        Tech(
+            'Acrobatic Training',
+            fall_damage_mult=b.FALL_DAMAGE_MULT1,
+            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+            acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
+            is_upgradable=True,
+        ),
+        Tech(
+            'Advanced Acrobatic Training',
+            fall_damage_mult=b.FALL_DAMAGE_MULT2,
+            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
+            acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT2,
+            is_advanced=True,
+        )
+    ),
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back
 ]

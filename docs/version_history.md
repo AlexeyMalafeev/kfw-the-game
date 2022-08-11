@@ -29,7 +29,7 @@ Date
 25. refactor: strike multipliers
 26. feat: common logger
 27. refactor: Fighter.techs now consists of Tech objects, rather than strings
-28. feat: acrobatic styles and buffs
+28. feat: acrobatic styles, techs and buffs
 29. feat: reduce folk hero reputation
 
 ### Coming soon:
