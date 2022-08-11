@@ -30,9 +30,11 @@ Date
 26. feat: common logger
 27. refactor: Fighter.techs now consists of Tech objects, rather than strings
 28. feat: acrobatic styles and buffs
+29. feat: reduce folk hero reputation
 
 ### Coming soon:
 
+* acrobatic techs
 * add buffs to drunken boxing
 * change default drunken boxing and drunkard's style
 * move complexity - apply direct multiplier
