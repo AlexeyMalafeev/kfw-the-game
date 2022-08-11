@@ -18,9 +18,9 @@ WALK_EXTRA_ENC = 2
 
 # victory conditions
 GRANDMASTER_LV = 20
-FOLK_HERO_REP = 150
+FOLK_HERO_REP = 120
 KFLEGEND_ACCOMPL = 8
-GT_FIGHTER_FIGHTS = (100, 150)  # fights_won, num_kos
+GT_FIGHTER_FIGHTS = (80, 120)  # fights_won, num_kos
 
 
 class Playing(BaseGame):

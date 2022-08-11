@@ -32,6 +32,7 @@ Date
 28. feat: acrobatic styles, techs and buffs
 29. feat: reduce folk hero reputation
 30. feat: boost_combos.py as SSOT for technique effects
+31. feat: improve new move selection
 
 ### Coming soon:
 
