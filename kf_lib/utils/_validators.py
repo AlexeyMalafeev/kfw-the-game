@@ -34,7 +34,7 @@ class BaseNumber(Validator):
             self,
             minvalue: Optional[Union[int, float]] = None,
             maxvalue: Optional[Union[int, float]] = None,
-            action: Literal['raise', 'warn', 'ignore'] = 'warn',
+            action: Literal['raise', 'warn', 'ignore'] = 'ignore',
     ):
         self.minvalue = minvalue
         self.maxvalue = maxvalue
