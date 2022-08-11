@@ -7,6 +7,7 @@ from kf_lib.kung_fu.styles import Style
 from kf_lib.kung_fu.techniques import Tech
 
 
+# todo consider adding move strings to each word below
 W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     # + stats
     'Acrobatic': Tech('Acrobatics', **bc.ACROBATIC1),

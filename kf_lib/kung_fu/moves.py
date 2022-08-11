@@ -14,6 +14,7 @@ logger = logging.getLogger()
 
 # move container (for easy retrieval)
 ALL_MOVES_DICT = {}  # list derives later
+RANDOM_MOVE_POOL_SIZE_MULT = 3
 SPECIAL_FEATURES = {'drunken'}
 TIER_MIN = 0
 TIER_MAX = 10
@@ -172,13 +173,6 @@ def get_move_obj(move_name):
     return ALL_MOVES_DICT[move_name]
 
 
-def get_moves_by_features(features, tier):
-    moves = [
-        m for m in ALL_MOVES_LIST if m.tier == tier and all((f in m.features for f in features))
-    ]
-    return moves
-
-
 def get_rand_move(
         f,
         tier: Union[int, Literal['random', 'auto']] = 'auto',
@@ -194,7 +188,6 @@ def get_rand_moves(
         tier: Union[int, Literal['random', 'auto']] = 'auto',
         features: Union[List[Text], Literal['auto']] = 'auto',
 ):
-    """Uses frequency of moves; should never return style moves"""
     if tier == 'auto':
         tier = f.get_move_tier_for_lv()
     elif tier == 'random':
@@ -238,7 +231,7 @@ def get_rand_moves(
             f'\n{len(pool)=}'
             f'\nReturning <n moves'
         )
-    pool = pool[:n * 3]  # for a bit more variety
+    pool = pool[:n * RANDOM_MOVE_POOL_SIZE_MULT]  # for a bit more variety
     # print(pool[:10])
     weights = [m.freq for m in pool]
     selected = random.choices(pool, weights=weights, k=n)
@@ -248,62 +241,33 @@ def get_rand_moves(
 
 
 def resolve_move_string(move_s: Text, f):
-    pool = []
-    features = None
-    tier = None
-    # a special case with tier-only move_s
-    if move_s.isdigit():
-        features = []
-        for t_obj in f.techs:
-            for par in t_obj.params:
-                if par.endswith('_strike_mult'):
-                    par = par.replace('_strike_mult', '')
-                    features.append(par)
-                # todo reimplement adding distance feature to style move, without regex
-                elif par.startswith('dist') and par.endswith('_bonus'):
-                    from kf_lib.fighting.distances import DISTANCE_FEATURES
-                    tier = int(re.findall(r'dist(\d)_bonus', par)[0])
-                    features.append(DISTANCE_FEATURES[tier])  # this matches move features
-        if features:
-            feat = random.choice(features)
-            move_s += f',{feat}'
-        else:
-            # todo reimplement function
-            pool = get_rand_moves(f, f.num_moves_choose, int(move_s))
-            f.choose_new_move(pool)
-            return
-    if move_s in ALL_MOVES_DICT:
+    if move_s.isdigit():  # a special case with tier-only move_s
+        pool = get_rand_moves(f, f.num_moves_choose, int(move_s))
+    elif move_s in ALL_MOVES_DICT:  # literal move name
         move = ALL_MOVES_DICT[move_s]
-        if move not in f.moves:
-            f.learn_move(move)
-            return
-    elif move_s and ',' in move_s:
+        f.learn_move(move)
+        return
+    elif ',' in move_s:  # tier (optional) and features
         features = move_s.split(',')
         if features[0].isdigit():
             tier = int(features[0])
             features = features[1:]
         else:
             tier = f.get_move_tier_for_lv()
-        pool = [m for m in get_moves_by_features(features, tier) if m not in f.moves]
-        n = len(pool)
-        if not n:
-            logger.warning(f'couldn\'t find any moves for move string {move_s}, fighter {f}')
-            pool = get_rand_moves(f, f.num_moves_choose)
-        elif n == 1:
-            f.learn_move(pool[0])
-            return
-        elif n > f.num_moves_choose:
-            weights = [m.freq for m in pool]  # use move frequency
-            pool = random.choices(pool, weights=weights, k=f.num_moves_choose)
-    else:
-        pool = get_rand_moves(f, f.num_moves_choose)
+        pool = get_rand_moves(
+            f,
+            n=f.num_moves_choose,
+            tier=tier,
+            features=features,
+        )
+    else:  # None or blank string
+        pool = get_rand_moves(f, n=f.num_moves_choose)
     try:
         f.choose_new_move(pool)
     except IndexError:
-        print(
-            f'Cannot choose new move for {pool=}, {move_s}, {features=}, {tier=} {f=}'
+        logger.warning(
+            f'Cannot choose new move for {pool=}, {move_s=}'
         )
-        input('...')
 
 
 class MoveNotFoundError(Exception):
