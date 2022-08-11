@@ -177,12 +177,8 @@ LINKED_TECHS = [
         Tech('Hurricane Legs', kick_strike_mult=b.STRIKE_MULT2, is_advanced=True),
     ),
     (
-        Tech('Elbow Boxing', elbow_strike_mult=b.RARE_STRIKE_MULT1, is_upgradable=True),
-        Tech('Mighty Elbows', elbow_strike_mult=b.RARE_STRIKE_MULT2, is_advanced=True),
-    ),
-    (
-        Tech('Knee Boxing', knee_strike_mult=b.RARE_STRIKE_MULT1, is_upgradable=True),
-        Tech('Mighty Knees', knee_strike_mult=b.RARE_STRIKE_MULT2, is_advanced=True),
+        Tech('Exotic Boxing', **bc.EXOTIC1, is_upgradable=True),
+        Tech('Advanced Exotic Boxing', **bc.EXOTIC2, is_advanced=True),
     ),
     (
         Tech('Flying Strikes', flying_strike_mult=b.RARE_STRIKE_MULT1, is_upgradable=True),

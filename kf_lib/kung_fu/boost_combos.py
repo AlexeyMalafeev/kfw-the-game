@@ -50,6 +50,11 @@ EXOTIC1 = dict(
     elbow_strike_mult=b.STRIKE_MULT1,
     head_strike_mult=b.STRIKE_MULT1,
 )
+EXOTIC2 = dict(
+    knee_strike_mult=b.STRIKE_MULT2,
+    elbow_strike_mult=b.STRIKE_MULT2,
+    head_strike_mult=b.STRIKE_MULT2,
+)
 PALM_AND_CLAW1 = dict(
     palm_strike_mult=b.STRIKE_MULT1,
     claw_strike_mult=b.STRIKE_MULT1,
