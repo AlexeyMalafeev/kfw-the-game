@@ -427,15 +427,12 @@ def slashing(m):
 
 
 def drunken(m):
-    if 'cause_off_balance' in m['functions'] or 'do_agility_based_dam' in m['functions']:
-        return None
-    if 'takedown' in m['features']:
+    if 'cause_off_balance' in m['functions']:
         return None
     m = m.copy()
     modify(m, 'complexity', 1)
     change_tier(m, 1)
     add_fun(m, 'cause_off_balance')
-    add_fun(m, 'do_agility_based_dam')
     prefix(m, 'Drunken')
     return m
 
