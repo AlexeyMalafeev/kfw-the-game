@@ -2,10 +2,12 @@ from typing import Dict, List, Text
 
 
 from kf_lib.kung_fu import boosts as b
+from kf_lib.kung_fu import boost_combos as bc
 from kf_lib.things import weapons
 from kf_lib.utils import add_sign
 
 
+# todo refactor to a separate module
 class Tech:
     def __init__(
             self,
@@ -14,7 +16,7 @@ class Tech:
             is_upgradable=False,
             is_advanced=False,
             is_weapon_tech=False,
-            **kwargs
+            **kwargs,
     ):
         self.name = name
         self.fav_moves = set()
@@ -112,11 +114,8 @@ _WEAPON_TECHS = [
     WeaponTech('Star Sword'),
 ]
 
+# todo refactor to a separate module
 LINKED_TECHS = [
-    (
-        Tech('Qi Breathing', qp_gain_mult=b.QP_GAIN1, is_upgradable=True),
-        Tech('Energy Breathing', qp_gain_mult=b.QP_GAIN2, is_advanced=True),
-    ),
     (
         Tech('Health Breathing', hp_gain_mult=b.HP_GAIN1, is_upgradable=True),
         Tech('Vitality Breathing', hp_gain_mult=b.HP_GAIN2, is_advanced=True),
@@ -142,24 +141,16 @@ LINKED_TECHS = [
         Tech('Dragon Guards a Treasure', guard_dfs_bonus=b.GUARD_DFS2, is_advanced=True),
     ),
     (
-        Tech('Lotus Stance', qp_max=b.QP_MAX1, qp_start=b.QP_START1, is_upgradable=True),
-        Tech('Golden Lotus Stance', qp_max=b.QP_MAX2, qp_start=b.QP_START2, is_advanced=True),
+        Tech('Lotus Stance', **bc.QI1, is_upgradable=True),
+        Tech('Golden Lotus Stance', **bc.QI2, is_advanced=True),
     ),
     (
-        Tech(
-            'Horse-like Stamina', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1,
-            is_upgradable=True
-        ),
-        Tech(
-            'Strong as an Ox', stamina_max_mult=b.STAM_MAX2, stamina_gain_mult=b.STAM_RESTORE2,
-            is_advanced=True
-        ),
+        Tech('Horse-like Stamina', **bc.STAMINA1, is_upgradable=True),
+        Tech('Strong as an Ox', **bc.STAMINA2, is_advanced=True),
     ),
     (
-        Tech('Fierce Strikes', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1,
-             is_upgradable=True),
-        Tech('Explosive Strikes', critical_chance_mult=b.CRIT_CH2, critical_dam_mult=b.CRIT_M2,
-             is_advanced=True),
+        Tech('Fierce Strikes', **bc.CRITICAL1, is_upgradable=True),
+        Tech('Explosive Strikes', **bc.CRITICAL2, is_advanced=True)
     ),
     (
         Tech('Iron Vest', dam_reduc=b.DAM_REDUC1, is_upgradable=True),
@@ -170,8 +161,8 @@ LINKED_TECHS = [
         Tech('Shadow of a Shadow', dodge_mult=b.EVADE2, is_advanced=True),
     ),
     (
-        Tech('Wall-like Protection', block_mult=b.BLOCK1, is_upgradable=True),
-        Tech('Emperor\'s Fortress', block_mult=b.BLOCK2, is_advanced=True),
+        Tech('Wall-like Protection', **bc.BLOCKS1, is_upgradable=True),
+        Tech('Emperor\'s Fortress', **bc.BLOCKS2, is_advanced=True),
     ),
     (
         Tech('Behind You', dfs_penalty_step=b.DFS_PEN1, is_upgradable=True),
@@ -198,15 +189,15 @@ LINKED_TECHS = [
         Tech('Sky Dragon', flying_strike_mult=b.RARE_STRIKE_MULT2, is_advanced=True),
     ),
     (
-        Tech('Hardened Palms', palm_strike_mult=b.RARE_STRIKE_MULT1, is_upgradable=True),
-        Tech('Palms of Justice', palm_strike_mult=b.RARE_STRIKE_MULT2, is_advanced=True),
+        Tech('Hardened Palms', **bc.PALM_AND_CLAW1, is_upgradable=True),
+        Tech('Palms of Justice', **bc.PALM_AND_CLAW2, is_advanced=True),
     ),
     # todo implement Weapon Competence tech
     # (
     #     Tech('Weapon Competence', weapon_strike_mult=b.WP_STRIKE_MULT1),
     #     Tech('Weapon Mastery', weapon_strike_mult=b.WP_STRIKE_MULT2),
     # ),
-    # todo remove environment-related techs
+    # todo redesign / rethink environment-related techs
     (
         Tech('Environment Fighting', environment_chance=b.ENVIRONMENT_CH1, is_upgradable=True),
         Tech('Environment Domination', environment_chance=b.ENVIRONMENT_CH2, is_advanced=True),
@@ -259,34 +250,12 @@ LINKED_TECHS = [
         Tech('Advanced Blood Strikes', chance_cause_bleeding=b.BLEEDING_CH2, is_advanced=True),
     ),
     (
-        Tech(
-            'Drunken Moves',
-            fall_damage_mult=b.FALL_DAMAGE_MULT1,
-            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
-            is_upgradable=True,
-        ),
-        Tech(
-            'Advanced Drunken Moves',
-            fall_damage_mult=b.FALL_DAMAGE_MULT2,
-            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
-            is_advanced=True,
-        )
+        Tech('Drunken Moves', **bc.DRUNKEN1, is_upgradable=True,),
+        Tech('Advanced Drunken Moves', **bc.DRUNKEN2, is_advanced=True,)
     ),
 (
-        Tech(
-            'Acrobatic Training',
-            fall_damage_mult=b.FALL_DAMAGE_MULT1,
-            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
-            acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
-            is_upgradable=True,
-        ),
-        Tech(
-            'Advanced Acrobatic Training',
-            fall_damage_mult=b.FALL_DAMAGE_MULT2,
-            move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
-            acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT2,
-            is_advanced=True,
-        )
+        Tech('Acrobatic Training', **bc.ACROBATIC1, is_upgradable=True,),
+        Tech('Advanced Acrobatic Training', **bc.ACROBATIC2, is_advanced=True,)
     ),
     # todo 'momentum' technique - bonus after moving forward '+' and '++'
     # possibly another technique that improves defense after moving back

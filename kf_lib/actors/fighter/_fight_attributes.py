@@ -46,10 +46,12 @@ class FightAttributes(BasicAttributes):
         'weapon_strike_mult',
     )
 
-    # tech-dependent, with validation:
+    # tech-dependent, with validation. NB! double declaration! add initial values below
     fall_damage_mult = Float(minvalue=0.0)  # also wine-dependent?
     move_fail_chance_mult = Float(minvalue=0.0)  # also wine-dependent?
+    qp_start = Float(minvalue=0.0, maxvalue=1.0)  # portion of total
     resist_ko = Float(maxvalue=MAX_RESIST_KO)
+
     stamina = Integer()
 
     def __init__(self):
@@ -74,7 +76,6 @@ class FightAttributes(BasicAttributes):
         self.kos_this_fight = 0
         self.momentum = 0  # (-3, 3)
         self.previous_actions = ['', '', '']
-        self.qp_start = 0.0  # portion of total
         self.status = {}  # {'status_name': status_dur}
         self.target = None  # used both for attacker and defender
         self.to_block = 0
@@ -128,6 +129,7 @@ class FightAttributes(BasicAttributes):
         self.qp_gain_mult = 1.0  # tech-dependent
         self.qp_max = 0  # level-dependent
         self.qp_max_mult = 1.0
+        self.qp_start = 0.0  # with descriptor
         self.resist_ko = 0.0  # with descriptor
         self.speed_mult = 1.0
         self.stamina = 0  # with descriptor

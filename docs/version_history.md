@@ -31,6 +31,7 @@ Date
 27. refactor: Fighter.techs now consists of Tech objects, rather than strings
 28. feat: acrobatic styles, techs and buffs
 29. feat: reduce folk hero reputation
+30. feat: boost_combos.py as SSOT for technique effects
 
 ### Coming soon:
 
