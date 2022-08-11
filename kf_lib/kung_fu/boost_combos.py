@@ -5,15 +5,11 @@ ACROBATIC1 = dict(
     fall_damage_mult=b.FALL_DAMAGE_MULT1,
     move_complexity_mult=b.MOVE_COMPLEXITY_MULT1,
     acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
-    off_balance_atk_mult=b.OFF_BAL_MULT1,
-    off_balance_dfs_mult=b.OFF_BAL_MULT1,
 )
 ACROBATIC2 = dict(
     fall_damage_mult=b.FALL_DAMAGE_MULT2,
     move_complexity_mult=b.MOVE_COMPLEXITY_MULT2,
     acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT2,
-    off_balance_atk_mult=b.OFF_BAL_MULT2,
-    off_balance_dfs_mult=b.OFF_BAL_MULT2,
 )
 BLOCKS1 = dict(
     block_mult=b.BLOCK1,
@@ -32,13 +28,11 @@ CRITICAL2 = dict(
     critical_dam_mult=b.CRIT_M2,
 )
 DRUNKEN1 = dict(
-    fall_damage_mult=b.FALL_DAMAGE_MULT1,
     drunken_strike_mult=b.DRUNKEN_STRIKE_MULT1,
     off_balance_atk_mult=b.OFF_BAL_MULT1,
     off_balance_dfs_mult=b.OFF_BAL_MULT1,
 )
 DRUNKEN2 = dict(
-    fall_damage_mult=b.FALL_DAMAGE_MULT2,
     drunken_strike_mult=b.DRUNKEN_STRIKE_MULT2,
     off_balance_atk_mult=b.OFF_BAL_MULT2,
     off_balance_dfs_mult=b.OFF_BAL_MULT2,
