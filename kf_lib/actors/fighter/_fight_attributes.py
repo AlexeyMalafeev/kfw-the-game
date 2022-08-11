@@ -48,9 +48,11 @@ class FightAttributes(BasicAttributes):
 
     # tech-dependent, with validation. NB! double declaration! add initial values below
     fall_damage_mult = Float(minvalue=0.0)  # also wine-dependent?
-    move_fail_chance_mult = Float(minvalue=0.0)  # also wine-dependent?
+    move_complexity_mult = Float(minvalue=0.0)  # wine-dependent?
+    maneuver_time_cost_mult = Float(minvalue=0.0)
     qp_start = Float(minvalue=0.0, maxvalue=1.0)  # portion of total
     resist_ko = Float(maxvalue=MAX_RESIST_KO)
+    strike_time_cost_mult = Float(minvalue=0.0)
 
     stamina = Integer()
 
@@ -118,8 +120,8 @@ class FightAttributes(BasicAttributes):
         self.hp_gain_mult = 0.0  # tech-dependent
         self.in_fight_impro_wp_chance = 0.0
         self.lying_dfs_mult = 0.5
-        self.maneuver_time_cost_mult = 1.0  # lower is better
-        self.move_fail_chance_mult = 1.0  # with descriptor
+        self.maneuver_time_cost_mult = 1.0  # with descriptor
+        self.move_complexity_mult = 1.0  # with descriptor
         self.num_moves_choose = 3
         self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
@@ -139,7 +141,7 @@ class FightAttributes(BasicAttributes):
         self.stamina_max = 0  # NB! level-dependent
         self.stamina_max_mult = 1.0
         self.strength_mult = 1.0
-        self.strike_time_cost_mult = 1.0  # lower is better
+        self.strike_time_cost_mult = 1.0  # with descriptor
         self.stun_chance = 0.0
         self.unblock_chance = 0.0
 

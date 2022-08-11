@@ -3,14 +3,14 @@ from kf_lib.kung_fu import boosts as b
 
 ACROBATIC1 = dict(
     fall_damage_mult=b.FALL_DAMAGE_MULT1,
-    move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
+    move_complexity_mult=b.MOVE_COMPLEXITY_MULT1,
     acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1,
     off_balance_atk_mult=b.OFF_BAL_MULT1,
     off_balance_dfs_mult=b.OFF_BAL_MULT1,
 )
 ACROBATIC2 = dict(
     fall_damage_mult=b.FALL_DAMAGE_MULT2,
-    move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
+    move_complexity_mult=b.MOVE_COMPLEXITY_MULT2,
     acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT2,
     off_balance_atk_mult=b.OFF_BAL_MULT2,
     off_balance_dfs_mult=b.OFF_BAL_MULT2,
@@ -33,14 +33,12 @@ CRITICAL2 = dict(
 )
 DRUNKEN1 = dict(
     fall_damage_mult=b.FALL_DAMAGE_MULT1,
-    move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT1,
     drunken_strike_mult=b.DRUNKEN_STRIKE_MULT1,
     off_balance_atk_mult=b.OFF_BAL_MULT1,
     off_balance_dfs_mult=b.OFF_BAL_MULT1,
 )
 DRUNKEN2 = dict(
     fall_damage_mult=b.FALL_DAMAGE_MULT2,
-    move_fail_chance_mult=b.MOVE_FAIL_CHANCE_MULT2,
     drunken_strike_mult=b.DRUNKEN_STRIKE_MULT2,
     off_balance_atk_mult=b.OFF_BAL_MULT2,
     off_balance_dfs_mult=b.OFF_BAL_MULT2,

@@ -51,7 +51,7 @@ class FighterWithActions(
             self.target.try_counter()
 
     def check_move_failed(self):
-        compl = self.action.complexity
+        compl = self.calc_move_complexity(self.action)
         f_ch = self.get_move_fail_chance(self.action)
         if rnd() <= f_ch:
             if self.action.power:

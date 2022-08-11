@@ -61,8 +61,8 @@ IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
 MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
-MOVE_FAIL_CHANCE_MULT1 = -0.4
-MOVE_FAIL_CHANCE_MULT2 = -0.8
+MOVE_COMPLEXITY_MULT1 = -0.5
+MOVE_COMPLEXITY_MULT2 = -1.0
 OFF_BAL_MULT1 = 0.25
 OFF_BAL_MULT2 = 0.5
 PREEMPTIVE_CH1 = 0.10
@@ -146,7 +146,7 @@ PMAP = (
         'preemptive',
         'preemptive strike chance',
     ),
-    ('move_fail_chance_mult', 'fail-safe moves', 'move fail chance'),
+    ('move_complexity_mult', 'move cplx.', 'move complexity'),
     ('off_balance_atk_mult', 'off-bal.atk', 'off-balance attack'),
     ('off_balance_dfs_mult', 'off-bal.dfs', 'off-balance defense'),
     ('qi_when_atk', 'qi/atk', 'qi when attacking'),

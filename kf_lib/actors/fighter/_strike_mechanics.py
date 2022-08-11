@@ -1,7 +1,7 @@
 import random
 
 from kf_lib.utils import rnd, rndint, rndint_2d
-from ._ascii import FighterWithASCII
+from kf_lib.actors.fighter._ascii import FighterWithASCII
 
 BLEEDING_PART_OF_DAM = 0.15
 BLOCK_DIVISOR = 2
@@ -89,6 +89,9 @@ class StrikeMechanics(FighterWithASCII):
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
+
+    def calc_move_complexity(self, move_obj):
+        return move_obj.complexity * self.move_complexity_mult
 
     def calc_stamina_factor(self):
         # todo docstring calc_stamina_factor
@@ -206,7 +209,7 @@ class StrikeMechanics(FighterWithASCII):
         targ.cause_fall()
 
     def get_move_fail_chance(self, move_obj):
-        return (move_obj.complexity ** 2 / self.agility_full ** 2) * self.move_fail_chance_mult
+        return self.calc_move_complexity(move_obj) ** 2 / self.agility_full ** 2
 
     def get_move_time_cost(self, move_obj):
         if self.check_status('slowed down'):
