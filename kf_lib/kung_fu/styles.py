@@ -1,7 +1,8 @@
 import random
 from typing import Dict, Optional, Text
 
-from . import boosts as b
+from kf_lib.kung_fu import boosts as b
+from kf_lib.kung_fu import boost_combos as bc
 from .techniques import Tech
 
 all_styles = {}
@@ -59,13 +60,7 @@ default_styles = [
             5: Tech('Balanced Fist II', atk_mult=b.ATTACK_HALF, dfs_mult=b.DEFENSE_HALF),
             7: Tech('Balanced Fist III', atk_mult=b.ATTACK1, dfs_mult=b.DEFENSE1),
         },
-        {
-            1: 'Sweep',  # deprives opponent of balance
-            2: '1,mid-range',
-            4: '2,mid-range',
-            6: '3,long-range,charging',
-            8: '4,mid-range',
-        },
+        None,
     ),
     Style(
         'Centipede',
@@ -78,7 +73,7 @@ default_styles = [
                 palm_strike_mult=b.STRIKE_MULT_HALF,
             ),
         },
-        {1: 'Short Palm', 2: '1,punch', 4: '2,palm', 6: '3,punch', 8: '4,palm'},
+        None,
     ),
     Style(
         'Choy Li Fut',
@@ -106,7 +101,7 @@ default_styles = [
             5: Tech('Drunken Boxing II', drunken_strike_mult=b.RARE_STRIKE_MULT1),
             7: Tech('Drunken Boxing III', drunken_strike_mult=b.RARE_STRIKE_MULT1),
         },
-        {2: '1,grappling', 4: 'Trick Punch', 6: '3,trick', 8: '4,trick'},  # todo 'Drunken Punch'
+        None,
     ),
     Style(
         'Eagle Claw',
@@ -134,13 +129,7 @@ default_styles = [
             5: Tech('Eight Extremities Fist II', elbow_strike_mult=b.RARE_STRIKE_MULT1),
             7: Tech('Eight Extremities Fist III', speed_mult=b.SPEED1),
         },
-        {
-            1: ('Elbow', 'Charging Step'),
-            2: '1,knee',
-            4: '2,punch',
-            6: '3,elbow',
-            8: '4,close-range',
-        },
+        None,
     ),
     Style(
         'Gecko',
@@ -150,13 +139,7 @@ default_styles = [
             5: Tech('Gecko II', environment_chance=b.ENVIRONMENT_CH1),
             7: Tech('Gecko III', flying_strike_mult=b.STRIKE_MULT1),
         },
-        {
-            1: 'Leap Back',
-            2: '1,long-range',
-            4: '2,long-range',
-            6: '3,extra long-range',
-            8: '4,long-range',
-        },
+        None,
     ),
     Style(
         'Hung Ga',
@@ -351,7 +334,7 @@ BEGGAR_STYLE = Style(
         5: Tech('Beggar\'s Fist II', palm_strike_mult=b.RARE_STRIKE_MULT1),
         7: Tech('Beggar\'s Fist III', qp_gain_mult=b.QP_GAIN1, hp_gain_mult=b.HP_GAIN1),
     },
-    {2: '1,palm', 4: '2,palm', 6: '3,energy', 8: '4,energy'},
+    None,
 )
 THIEF_STYLE = Style(
     'Thief\'s Shadow',
@@ -365,27 +348,27 @@ THIEF_STYLE = Style(
 DRUNKARD_STYLE = Style(
     'Drunken Dragon',
     {
-        3: Tech('Drunken Dragon I', agility_mult=b.AGILITY1),
-        5: Tech('Drunken Dragon II', drunken_strike_mult=b.STRIKE_MULT1),
+        3: Tech('Drunken Dragon I', **bc.DRUNKEN1),
+        5: Tech('Drunken Dragon II', agility_mult=b.AGILITY1),
         7: Tech('Drunken Dragon III', unblock_chance=b.UNBLOCK_CHANCE1),
     },
-    {2: '1,punch', 4: '2,energy', 6: '5,trick', 8: '6,trick'},  # 'Drunken Punch'?
+    None,
 )
 TURTLE_NUNJUTSU = Style(
     'Turtle Ninjutsu',
     {
         3: Tech('Cowabunga I', agility_mult=b.AGILITY1),
         5: Tech('Cowabunga II', flying_strike_mult=b.RARE_STRIKE_MULT1),
-        7: Tech('Cowabunga III', weapon_strike_mult=b.WP_STRIKE_MULT1),
+        7: Tech('Cowabunga III', acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1),
     },
-    {2: '1,punch', 4: '2,kick', 6: '3,flying', 8: '4,flying'},
+    None,
 )
 
 FLOWER_KUNGFU = Style('Flower Kung-fu', {}, {})
 DIRTY_FIGHTING = Style(
     'Dirty Fighting',
-    {},  # todo techs for dirty fighting?
-    {2: '1,heavy', 4: '2,power', 6: '3,shocking', 8: '4,surprise'},
+    {},  # todo techs for dirty fighting? like Dirty Strikes?
+    None,
 )
 POLICE_KUNGFU = Style('Police Kung-fu', {}, {})
 MONSTER_KUNGFU = Style('Monster Kung-fu', {}, {})
@@ -402,7 +385,7 @@ FOREIGN_STYLES = {
             5: Tech('English Boxing II', block_mult=b.BLOCK1),
             7: Tech('English Boxing III', punch_strike_mult=b.STRIKE_MULT1),
         },
-        {1: ('Long Punch', 'Short Punch'), 2: '1,punch', 4: '2,punch', 6: '3,punch', 8: '4,punch'},
+        None,
     ),
     'Germany': Style(
         'Wrestling',
@@ -412,13 +395,7 @@ FOREIGN_STYLES = {
             5: Tech('Wrestling II', strength_mult=b.STRENGTH1),
             7: Tech('Wrestling III', hp_gain_mult=b.HP_GAIN1),
         },
-        {
-            1: 'Throw',
-            2: '1,grappling',
-            4: '2,grappling',
-            6: '3,grappling',
-            8: '4,grappling',
-        },
+        None,
     ),
     'Japan': Style(
         'Karate',
@@ -427,7 +404,7 @@ FOREIGN_STYLES = {
             5: Tech('Karate II', kick_strike_mult=b.STRIKE_MULT1),
             7: Tech('Karate III', block_mult=b.BLOCK1),
         },
-        {2: '1,punch', 4: '2,kick', 6: '3,shocking,palm', 8: '4,kick'},
+        None,
     ),
     'Korea': Style(
         'Taekwondo',
@@ -436,7 +413,7 @@ FOREIGN_STYLES = {
             5: Tech('Taekwondo II', block_mult=b.BLOCK1),
             7: Tech('Taekwondo III', kick_strike_mult=b.STRIKE_MULT1),
         },
-        {1: 'Short Kick', 2: '1,kick', 4: '2,kick', 6: '3,kick', 8: '4,kick'},
+        None,
     ),
     'Thailand': Style(
         'Muai Thai',
@@ -447,18 +424,18 @@ FOREIGN_STYLES = {
             ),
             7: Tech('Muai Thai III', kick_strike_mult=b.STRIKE_MULT1),
         },
-        {1: ('Knee', 'Elbow'), 2: '1,kick', 4: '2,elbow', 6: '3,knee', 8: '4,flying,kick'},
+        None,
     ),
     'Brazil': Style(
         'Capoeira',
         {
             3: Tech('Capoeira I', agility_mult=b.AGILITY1),
-            5: Tech('Capoeira II', strength_mult=b.STRENGTH1),
+            5: Tech('Capoeira II', acrobatic_strike_mult=b.ACROBATIC_STRIKE_MULT1),
             7: Tech(
                 'Capoeira III', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
             ),
         },
-        {2: '1,kick', 4: 'Acrobatic Kick', 6: '3,acrobatic,kick', 8: '4,acrobatic,flying,kick'},
+        None,
     ),
 }
 
@@ -471,7 +448,4 @@ def get_style_obj(sname):
     if sname not in all_styles:
         from .style_gen import get_style_from_str
         get_style_from_str(sname)  # this should register the style in all_styles
-        # style = FLOWER_KUNGFU
-        # print(f'warning: unknown style name {sname}, replacing with {style}')
-        # return style
     return all_styles[sname]
