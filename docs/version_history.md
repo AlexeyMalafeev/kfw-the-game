@@ -1,3 +1,58 @@
+### v0.6.9-beta
+""  
+Month Day, Year
+
+1. feat: change how exp is computed in fights
+
+### Coming soon:
+* NEW EXP SYSTEM
+* tests of strength / speed / health / agility in various encounters and stories = new mechanics
+* nerf guard while atk
+* y defense buff not working?
+* bull - head strikes
+* Drink Wine during fight?
+* learn weak / pathetic moves in books
+* upgrade moves from pathetic to ultimate
+* when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
+* drunken boxers can buy wine
+* Underhanded - "dirty"; rep penalty?
+* donate to friends, to charity 
+* mind training - fight enemies in your mind
+* time travel item
+* turtles: arm them, fight one after another, if lucky, they just give you rewards, if unlucky, they attack you all at once
+* buff att-based damage for strikes
+* in-fight nunchacku tech (like impro weapons)
+* style's secret technique, learn at lv 10, don't know in advance 
+* more complex moves can be upgrades / modifications
+* moves for generated styles: "ferocious", "acrobatic", etc. 
+* boosts to dict and auto-adjust
+* some upgradable techs shouldn't be upgradable
+* phrases from unused (friends, never repay)
+* snake fist secret technique: Weishen (false body)
+* bug in careless inactive time?
+* style with head strikes
+* donate to friends; charity
+* if negative money, don't start some encounters
+* add more stories 
+* add societies (bandits, sect)
+* analysis skill
+* toughness: level-dependent dam reduction for all
+* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
+* reduce feel too scared
+* orgainize move list, remove unused moves  
+* learn moves only if lucky  
+* move filtering with pandas, save as csv, collect useful stats  
+* config (not to choose every time, time-consuming)  
+* fav_strikes in techs    
+* increase epic min lv; epic should be used against a strong opponent only? movie-like  
+* reflexes; compute to_block and to_dodge differently?  
+* strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
+* continue refactoring encounters while adding lucky/unlucky developments
+* more strike types (see strike notes)
+* style's secret tech at lv 10, don't know in advance
+
+---
+
 ### v0.6.8-beta
 "Drunken Boxing"  
 August 13, 2022  
@@ -33,54 +88,6 @@ August 13, 2022
 29. feat: reduce folk hero reputation
 30. feat: boost_combos.py as SSOT for technique effects
 31. feat: improve new move selection
-
-### Coming soon:
-* NEW EXP SYSTEM
-* nerf guard while atk
-* y defense buff not working?
-* bull - head strikes
-* Drink Wine during fight?
-* learn weak / pathetic moves in books
-* tests of strength / speed / health / agility in various encounters and stories = new mechanics
-* upgrade moves from pathetic to ultimate
-* when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
-* drunken boxers can buy wine
-* Underhanded - "dirty"; rep penalty?
-* donate to friends, to charity 
-* mind training - fight enemies in your mind
-* time travel item
-* turtles: arm them, fight one after another, if lucky, they just give you rewards, if unlucky, they attack you all at once
-* buff att-based damage for strikes
-* in-fight nunchacku tech (like impro weapons)
-* reimplement selection of moves for bonuses
-* style's secret technique, learn at lv 10, don't know in advance 
-* more complex moves can be upgrades / modifications
-* moves for generated styles: "ferocious", "acrobatic", etc. 
-* boosts to dict and auto-adjust
-* some upgradable techs shouldn't be upgradable
-* phrases from unused (friends, never repay)
-* snake fist secret technique: Weishen (false body)
-* bug in careless inactive time?
-* style with head strikes
-* donate to friends; charity
-* if negative money, don't start some encounters
-* add more stories 
-* add societies (bandits, sect)
-* analysis skill
-* toughness: level-dependent dam reduction for all
-* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
-* reduce feel too scared
-* orgainize move list, remove unused moves  
-* learn moves only if lucky  
-* move filtering with pandas, save as csv, collect useful stats  
-* config (not to choose every time, time-consuming)  
-* fav_strikes in techs    
-* increase epic min lv; epic should be used against a strong opponent only? movie-like  
-* reflexes; compute to_block and to_dodge differently?  
-* strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
-* continue refactoring encounters while adding lucky/unlucky developments
-* more strike types (see strike notes)
-* style's secret tech at lv 10, don't know in advance
 
 ---
 

@@ -5,19 +5,12 @@ from kf_lib.ui import cls, menu, pak
 
 
 ASTON_VICTORY_MIN_RATIO = 1.2
+BASE_FIGHT_EXP = 20
 BORING_FIGHT_RATIO = 0.4
 DRAW_EXP_DIVISOR = 2
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
 EPIC_FIGHT_MIN_LEN = 10
 EPIC_FIGHT_RATIO = 0.8
-# todo reimplement exp bonuses to get rid of eval
-# name of the bonus, exp mult, condition
-EXP_BONUSES = (
-    ('Quick victory', 1.25, 'self.timer / TIME_TO_SEC_DIVISOR <= 10'),
-    ('Not a scratch', 1.25, 'not p.took_damage'),
-    ('Multi-knockout', 1.25, 'p.kos_this_fight >= 3'),
-    ('Strong enemy', 1.25, 'p.exp_yield < self.win_exp'),
-)
 HUMIL_DEFEAT_MIN_RATIO = 0.8
 LOSER_EXP_DIVISOR = 4
 NARROW_VICTORY_HP_PCNT = 0.05
@@ -38,7 +31,6 @@ class BaseFight(object):
         self.winners = []
         self.losers = []
         self.win = None
-        self.win_exp = 0
 
         # fight settings
         self.environment_allowed = environment_allowed
@@ -181,29 +173,19 @@ class BaseFight(object):
     def give_exp(self):
         # todo use relative and probabilistic exp system
         # fight outcome (exp and statistics)
-        num_w = len(self.winners)
-        num_l = len(self.losers)
-        num_f = len(self.all_fighters)
-        if self.winners:
-            self.win_exp = sum([f.exp_yield for f in self.losers]) // num_w
-            los_exp = sum([w.exp_yield for w in self.winners]) // num_l // LOSER_EXP_DIVISOR
-            los_mess = 'Loses.'
-        else:
-            los_exp = sum([f.exp_yield for f in self.all_fighters]) // num_f // DRAW_EXP_DIVISOR
-            los_mess = 'Draw.'
+        n_winners = len(self.winners)
+        n_losers = len(self.losers)
+        winners_yield = sum(f.exp_yield for f in self.winners)
+        losers_yield = sum(f.exp_yield for f in self.losers)
+        winners_gain = (losers_yield / winners_yield) * BASE_FIGHT_EXP // n_winners
+        losers_gain = ((winners_yield / losers_yield) * BASE_FIGHT_EXP // LOSER_EXP_DIVISOR
+                       // n_losers)
         for p in self.players:
             if p in self.winners:
-                exp = self.win_exp
-                for bname, bmult, bcond in EXP_BONUSES:
-                    if eval(bcond):
-                        s = f'{bname}!'
-                        p.show(p.name + ': ' + s)
-                        p.log(s)
-                        exp = round(exp * bmult)
-                        p.exp_bonuses += 1
+                exp = self.handle_exp_bonuses(p, winners_gain)
             else:
-                exp = los_exp
-                p.log(los_mess)
+                exp = losers_gain
+                p.log('Loses.')
             p.gain_exp(exp)
         self.handle_player_stats()
         self.main_player.pak()
@@ -223,6 +205,22 @@ class BaseFight(object):
                 w.add_accompl('Against All Odds')
             if self.timer / TIME_TO_SEC_DIVISOR <= 1:
                 w.add_accompl('Split-Second Victory')
+
+    def handle_exp_bonuses(self, p, exp):
+        bonuses = []
+        if self.timer / TIME_TO_SEC_DIVISOR <= 10:
+            bonuses.append('Quick victory')
+        if not p.took_damage:
+            bonuses.append('Not a scratch')
+        if p.kos_this_fight >= 3:
+            bonuses.append('Multi-knockout')
+        for bonus in bonuses:
+            p.show(f'{p.name}: {bonus}')
+            p.log(bonus)
+        n_bonuses = len(bonuses)
+        exp = round(exp * (1 + n_bonuses * 0.25))
+        p.exp_bonuses += n_bonuses
+        return exp
 
     def handle_gossip(self):
         for p in self.players:
