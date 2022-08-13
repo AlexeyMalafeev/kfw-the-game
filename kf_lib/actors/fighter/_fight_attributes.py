@@ -27,10 +27,33 @@ class FightAttributes(BasicAttributes):
     GUARD_POWER: Final = 1.5
     # todo find more constants
 
-    # tech-dependent, with validation:
+    # strike multipliers
+    STRIKE_MULTIPLIERS: Final = (
+        'acrobatic_strike_mult',
+        'claw_strike_mult',
+        'dist1_strike_mult',
+        'dist2_strike_mult',
+        'dist3_strike_mult',
+        'drunken_strike_mult',
+        'elbow_strike_mult',
+        'flying_strike_mult',
+        'grappling_strike_mult',
+        'head_strike_mult',
+        'kick_strike_mult',
+        'knee_strike_mult',
+        'palm_strike_mult',
+        'punch_strike_mult',
+        'weapon_strike_mult',
+    )
+
+    # tech-dependent, with validation. NB! double declaration! add initial values below
     fall_damage_mult = Float(minvalue=0.0)  # also wine-dependent?
-    move_fail_chance_mult = Float(minvalue=0.0)  # also wine-dependent?
+    move_complexity_mult = Float(minvalue=0.0)  # wine-dependent?
+    maneuver_time_cost_mult = Float(minvalue=0.0)
+    qp_start = Float(minvalue=0.0, maxvalue=1.0)  # portion of total
     resist_ko = Float(maxvalue=MAX_RESIST_KO)
+    strike_time_cost_mult = Float(minvalue=0.0)
+
     stamina = Integer()
 
     def __init__(self):
@@ -55,7 +78,6 @@ class FightAttributes(BasicAttributes):
         self.kos_this_fight = 0
         self.momentum = 0  # (-3, 3)
         self.previous_actions = ['', '', '']
-        self.qp_start = 0.0  # portion of total
         self.status = {}  # {'status_name': status_dur}
         self.target = None  # used both for attacker and defender
         self.to_block = 0
@@ -98,10 +120,10 @@ class FightAttributes(BasicAttributes):
         self.hp_gain_mult = 0.0  # tech-dependent
         self.in_fight_impro_wp_chance = 0.0
         self.lying_dfs_mult = 0.5
-        self.maneuver_time_cost_mult = 1.0  # lower is better
-        self.move_fail_chance_mult = 1.0  # with descriptor
+        self.maneuver_time_cost_mult = 1.0  # with descriptor
+        self.move_complexity_mult = 1.0  # with descriptor
         self.num_moves_choose = 3
-        self.off_balance_atk_mult = 0.75  # todo use in drunken boxing
+        self.off_balance_atk_mult = 0.75
         self.off_balance_dfs_mult = 0.75
         self.preemptive_chance = 0.0  # tech-dependent
         self.qp = 0
@@ -109,16 +131,17 @@ class FightAttributes(BasicAttributes):
         self.qp_gain_mult = 1.0  # tech-dependent
         self.qp_max = 0  # level-dependent
         self.qp_max_mult = 1.0
+        self.qp_start = 0.0  # with descriptor
         self.resist_ko = 0.0  # with descriptor
         self.speed_mult = 1.0
         self.stamina = 0  # with descriptor
-        self.stamina_factor = 1.0
+        self.stamina_factor = 1.0  # todo comment for stamina_factor
         self.stamina_gain = 0  # NB! level-dependent
         self.stamina_gain_mult = 1.0
         self.stamina_max = 0  # NB! level-dependent
         self.stamina_max_mult = 1.0
         self.strength_mult = 1.0
-        self.strike_time_cost_mult = 1.0  # lower is better
+        self.strike_time_cost_mult = 1.0  # with descriptor
         self.stun_chance = 0.0
         self.unblock_chance = 0.0
 
@@ -129,21 +152,8 @@ class FightAttributes(BasicAttributes):
         self.wp_dfs_bonus = 1.0  # for current fight only
 
         # strike multipliers
-        # todo reimplement strike multipliers as a default dict? a data class?
-        self.claw_strike_mult = 1.0
-        self.dist1_bonus = 1.0
-        self.dist2_bonus = 1.0
-        self.dist3_bonus = 1.0
-        self.elbow_strike_mult = 1.0
-        self.exotic_strike_mult = 1.0
-        self.flying_strike_mult = 1.0
-        self.grappling_strike_mult = 1.0
-        self.head_strike_mult = 1.0
-        self.kick_strike_mult = 1.0
-        self.knee_strike_mult = 1.0
-        self.palm_strike_mult = 1.0
-        self.punch_strike_mult = 1.0
-        self.weapon_strike_mult = 1.0
+        for att in self.STRIKE_MULTIPLIERS:
+            setattr(self, att, 1.0)
 
     def add_status(self, status, dur):
         if status not in self.status:

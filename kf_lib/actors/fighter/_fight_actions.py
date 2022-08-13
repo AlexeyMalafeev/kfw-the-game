@@ -51,7 +51,7 @@ class FighterWithActions(
             self.target.try_counter()
 
     def check_move_failed(self):
-        compl = self.action.complexity
+        compl = self.calc_move_complexity(self.action)
         f_ch = self.get_move_fail_chance(self.action)
         if rnd() <= f_ch:
             if self.action.power:
@@ -200,8 +200,6 @@ class FighterWithActions(
                 self.dam *= (1 - tgt.dam_reduc)
                 self.dam = round(self.dam)
             tgt.take_damage(self.dam)
-            if tgt.momentum > 0:
-                tgt.momentum = 0
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_cause_bleeding()
             self.try_hit_disarm()

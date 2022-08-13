@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+from typing import Callable, Dict, List
 # this has to be before imports from kf_lib
 lib_path = Path('..').resolve()
 os.chdir(lib_path)
@@ -9,15 +10,31 @@ if lib_path not in sys.path:
 
 import pandas as pd  # noqa
 
+from kf_lib.kung_fu.moves import TIER_MIN, TIER_MAX
+from kf_lib.utils import MOVES_FOLDER  # noqa
 
-TIER_MIN = 0
-TIER_MAX = 10
+
 QI_COST_PER_TIER = 5
 
 
-def listr(s):
-    """'x,x,x'string to list"""
-    return [ss for ss in s.split(',') if ss]
+module_vars = vars()
+
+
+def read_move_word_combinations() -> Dict[Callable, List[Callable]]:
+    result = {}
+    with open(Path(MOVES_FOLDER, 'move_word_combinations.csv'), 'r', encoding='utf-8') as f:
+        words = f.readline().split(',')
+        words = words[1:]
+        # strip is for removing trailing new line characters
+        words = [module_vars[w.strip()] for w in words]
+        for line in f:
+            move_fun, *combinations = line.split(',')
+            move_fun = module_vars[move_fun]
+            result[move_fun] = [
+                # strip is for removing trailing new line characters
+                words[i] for i, one_or_nothing in enumerate(combinations) if one_or_nothing.strip()
+            ]
+    return result
 
 
 def save_moves(moves, keys, file_name, sort_alph=False):
@@ -50,6 +67,11 @@ def save_moves(moves, keys, file_name, sort_alph=False):
 
 
 def modify(m, k, diff, mx=None, mn=None):
+    # Don't modify if already above maximum / below minimum; Flying (min=1) Drunken (min=0) Claw
+    if diff > 0 and mx is not None and m[k] >= mx:
+        return
+    if diff < 0 and mn is not None and m[k] <= mn:
+        return
     m[k] += diff
     if mx is not None and m[k] > mx:
         m[k] = mx
@@ -81,9 +103,12 @@ def add_feat(m, n):
 
 
 def add_fun(m, n):
+    # this is to avoid modifying function lists in other moves
     m['functions'] = m['functions'][:] + [n]
 
 
+# todo make a table instead of separate move gen functions
+# todo automatic checks for incompatible moves (when effects can't be applied)
 def light(m):
     if 'takedown' in m['features']:
         return None
@@ -187,24 +212,6 @@ def vanishing(m):
     return m
 
 
-def backflip(m):
-    if 'kick' not in m['features'] or 'do_agility_based_dam' in m['functions']:
-        return None
-    m = m.copy()
-    change_tier(m, 4)
-    modify(m, 'distance', -2)
-    modify(m, 'freq', -1, mn=1)
-    mult(m, 'stam_cost', 1.25)
-    mult(m, 'time_cost', 1.25)
-    modify(m, 'complexity', 1)
-    modify(m, 'dist_change', 2)
-    add_fun(m, 'do_agility_based_dam')
-    add_fun(m, 'try_shock_move')
-    prefix(m, 'Backflip')
-    add_feat(m, 'acrobatic')
-    return m
-
-
 def pushing(m):
     if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
@@ -272,7 +279,7 @@ def flying(m):
 
 
 def acrobatic(m):
-    """More power and accuracy at the cost of increased complexity; can stun"""
+    """More power and accuracy at the cost of increased complexity"""
     if 'do_agility_based_dam' in m['functions'] or 'do_strength_based_dam' in m['functions']:
         return None
     if 'takedown' in m['features']:
@@ -398,8 +405,8 @@ def debilitating(m):
 
 
 def lethal(m):
-    if 'takedown' in m['features']:
-        return None
+    # if 'takedown' in m['features']:
+    #     return None
     m = m.copy()
     change_tier(m, 6)
     add_fun(m, 'try_insta_ko')
@@ -409,13 +416,24 @@ def lethal(m):
 
 
 def slashing(m):
-    if 'cause_bleeding' in m['functions']:
+    if 'cause_bleeding' in m['functions'] or 'takedown' in m['features']:
         return None
     m = m.copy()
-    change_tier(m, 4)
+    change_tier(m, 2)
     add_fun(m, 'cause_bleeding')
     modify(m, 'freq', -2, mn=1)
     prefix(m, 'Slashing')
+    return m
+
+
+def drunken(m):
+    if 'cause_off_balance' in m['functions']:
+        return None
+    m = m.copy()
+    modify(m, 'complexity', 1)
+    change_tier(m, 1)
+    add_fun(m, 'cause_off_balance')
+    prefix(m, 'Drunken')
     return m
 
 
@@ -496,452 +514,19 @@ def ultimate(m):
     return m
 
 
-# todo ultra short kick
+# todo ultra short kick, ultra long punch
 def gen_moves(moves):
     new_moves = []  # move dicts
     move_names = set()  # strings
-    gen_dict = {
-        light: (shocking, solar, nerve, slashing),
-        heavy: (shocking, solar, nerve, slashing),
-        long: (
-            light,
-            heavy,
-            charging,
-            onslaught,
-            backflip,
-            pushing,
-            surprise,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            fast,
-            strong,
-            precise,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            slashing,
-        ),
-        short: (
-            light,
-            heavy,
-            retreating,
-            pushing,
-            surprise,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            fast,
-            strong,
-            precise,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            slashing,
-        ),
-        charging: (
-            light,
-            heavy,
-            surprise,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            fast,
-            strong,
-            precise,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            slashing,
-        ),
-        retreating: (
-            light,
-            heavy,
-            surprise,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            fast,
-            strong,
-            precise,
-            power,
-            trick,
-            lightning,
-            energy,
-            piercing,
-            slashing,
-        ),
-        onslaught: (
-            light,
-            heavy,
-            surprise,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            fast,
-            strong,
-            precise,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            slashing,
-        ),
-        vanishing: (
-            light,
-            heavy,
-            surprise,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            fast,
-            strong,
-            precise,
-            power,
-            trick,
-            lightning,
-            energy,
-            piercing,
-            slashing,
-        ),
-        backflip: (solar, nerve, slashing),
-        pushing: (heavy, surprise, shocking, solar, nerve, fast, strong, precise),
-        surprise: (light, backflip, fast, trick, lightning, piercing, slashing),
-        fast: (
-            light,
-            backflip,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        strong: (
-            backflip,
-            flying,
-            acrobatic,
-            trick,
-            lightning,
-            energy,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        precise: (
-            light,
-            backflip,
-            flying,
-            acrobatic,
-            trick,
-            lightning,
-            energy,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        flying: (
-            light,
-            heavy,
-            shocking,
-            solar,
-            nerve,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        acrobatic: (
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            flying,
-            shocking,
-            solar,
-            nerve,
-            lightning,
-            energy,
-            piercing,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        power: (solar, nerve, debilitating, lethal, slashing),
-        trick: (solar, nerve, debilitating, lethal, slashing),
-        lightning: (solar, nerve, debilitating, lethal, slashing),
-        energy: (solar, nerve, debilitating, lethal, slashing),
-        ferocious: (solar, nerve, debilitating, lethal, slashing),
-        piercing: (solar, nerve, debilitating, lethal, slashing),
-        shocking: (solar, nerve, power, trick, lightning, energy, ferocious, piercing, slashing),
-        solar: (),
-        nerve: (),
-        debilitating: (),
-        lethal: (),
-        slashing: (),
-        pathetic: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        weak: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        skillful: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        superior: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        advanced: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        expert: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-        ultimate: (
-            light,
-            heavy,
-            long,
-            short,
-            charging,
-            retreating,
-            onslaught,
-            vanishing,
-            backflip,
-            pushing,
-            surprise,
-            fast,
-            strong,
-            precise,
-            flying,
-            acrobatic,
-            power,
-            trick,
-            lightning,
-            energy,
-            ferocious,
-            piercing,
-            shocking,
-            solar,
-            nerve,
-            debilitating,
-            lethal,
-            slashing,
-        ),
-    }
+    gen_dict: Dict[Callable, List[Callable]] = read_move_word_combinations()
     for base_m in moves:
-        chains = []  # variable-length tuples of functions
-        # get all 'chains' of up to 3 functions for the base move
+        chains = []  # variable-length chains of functions
+        # get all chains of up to 2 functions for the base move
         for fun1, funs2 in gen_dict.items():
             chains.append((fun1,))
             for fun2 in funs2:
                 chains.append((fun1, fun2))
+                # used to have chains of up to 3 functions, but decided against
                 # for fun3 in gen_dict[fun2]:
                 #     chains.append((fun1, fun2, fun3))
         # apply the chains whenever possible
@@ -963,7 +548,6 @@ def gen_moves(moves):
 
 def main():
     from kf_lib.kung_fu.moves import read_moves
-    from kf_lib.utils import MOVES_FOLDER
 
     base_moves, keys = read_moves(Path(MOVES_FOLDER, 'base_moves.txt'))
     save_moves(base_moves, keys, Path(MOVES_FOLDER, 'base_moves.txt'))

@@ -142,12 +142,11 @@ class Tester(object):
                 for f, d0, d1, d2 in (
                         (wnr, buffs_wnr, techs1_wnr, techs2_wnr),
                         (lsr, buffs_lsr, techs1_lsr, techs2_lsr)):
-                    for t in f.techs:
-                        t_obj = techniques.get_tech_obj(t)
+                    for t_obj in f.techs:
                         if t_obj.is_upgradable:
-                            add_to_dict(d1, t, 1)
+                            add_to_dict(d1, t_obj.name, 1)
                         elif t_obj.is_advanced:
-                            add_to_dict(d2, t, 1)
+                            add_to_dict(d2, t_obj.name, 1)
                         for feature in t_obj.descr_short.split(', '):
                             add_to_dict(d0, feature, 1)
                             if not feature.strip():

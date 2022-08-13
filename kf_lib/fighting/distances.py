@@ -2,11 +2,10 @@ import random
 
 
 DISTANCE_FEATURES = {
-    0: 'no range',
-    1: 'close-range',
-    2: 'mid-range',
-    3: 'long-range',
-    4: 'extra long-range',
+    1: 'dist1',
+    2: 'dist2',
+    3: 'dist3',
+    4: 'dist4',
 }
 DISTANCES_VISUALIZATION = {1: 'OX', 2: 'O.X', 3: 'O..X', 4: 'O...X'}
 VALID_DISTANCES = DISTANCES_VISUALIZATION.keys()

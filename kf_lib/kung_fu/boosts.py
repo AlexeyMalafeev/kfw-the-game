@@ -1,6 +1,8 @@
 from kf_lib.utils import add_pcnt, add_sign, hund
 
 
+ACROBATIC_STRIKE_MULT1 = 0.1
+ACROBATIC_STRIKE_MULT2 = 0.2
 AGILITY1 = 0.2
 AGILITY2 = 0.4
 ATTACK1 = 0.15
@@ -31,6 +33,8 @@ DIST2_MULT1 = 0.25
 DIST2_MULT2 = 0.5
 DIST3_MULT1 = 0.2
 DIST3_MULT2 = 0.4
+DRUNKEN_STRIKE_MULT1 = 0.1
+DRUNKEN_STRIKE_MULT2 = 0.2
 ENVIRONMENT_CH1 = 0.15
 ENVIRONMENT_CH2 = 0.3
 EVADE1 = 0.4
@@ -57,8 +61,10 @@ IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
 MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
-MOVE_FAIL_CHANCE_MULT1 = -0.4
-MOVE_FAIL_CHANCE_MULT2 = -0.8
+MOVE_COMPLEXITY_MULT1 = -0.5
+MOVE_COMPLEXITY_MULT2 = -1.0
+OFF_BAL_MULT1 = 0.25
+OFF_BAL_MULT2 = 0.5
 PREEMPTIVE_CH1 = 0.10
 PREEMPTIVE_CH2 = 0.20
 QI_WHEN_ATK = 0.5  # todo this is not used
@@ -140,7 +146,9 @@ PMAP = (
         'preemptive',
         'preemptive strike chance',
     ),
-    ('move_fail_chance_mult', 'fail-safe moves', 'move fail chance'),
+    ('move_complexity_mult', 'move cplx.', 'move complexity'),
+    ('off_balance_atk_mult', 'off-bal.atk', 'off-balance attack'),
+    ('off_balance_dfs_mult', 'off-bal.dfs', 'off-balance defense'),
     ('qi_when_atk', 'qi/atk', 'qi when attacking'),
     ('qp_gain_mult', 'qi', 'QP/turn'),
     ('qp_max_mult', 'qi', 'max QP'),
@@ -155,11 +163,12 @@ PMAP = (
     ('unblock_chance', 'unblock.', 'unblockable attack'),
 
     # strike multipliers  # todo add more strike multipliers
-    ('dist1_bonus', 'close-range', 'close-range strike efficiency'),
-    ('dist2_bonus', 'mid-range', 'mid-range strike efficiency'),
-    ('dist3_bonus', 'long-range', 'long-range strike efficiency'),
+    ('acrobatic_strike_mult', 'acrob.str', 'acrobatic strike efficiency'),
+    ('dist1_strike_mult', 'close-range', 'close-range strike efficiency'),
+    ('dist2_strike_mult', 'mid-range', 'mid-range strike efficiency'),
+    ('dist3_strike_mult', 'long-range', 'long-range strike efficiency'),
+    ('drunken_strike_mult', 'drun.str.', 'drunken strike efficiency'),
     ('elbow_strike_mult', 'elbows', 'elbow strike efficiency'),
-    ('exotic_strike_mult', 'exot.str.', 'exotic strike efficiency'),
     ('flying_strike_mult', 'jumps', 'jumping strike efficiency'),
     ('grappling_strike_mult', 'grappling', 'grappling efficiency'),
     ('kick_strike_mult', 'kicks', 'kick efficiency'),

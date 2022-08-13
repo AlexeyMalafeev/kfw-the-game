@@ -15,8 +15,10 @@ class MoveMethods(BaseFighter):
     def get_moves_to_choose(self, tier):
         return moves.get_rand_moves(self, self.num_moves_choose, tier)
 
-    def get_move_tier_for_lv(self):
-        return ceil(self.level / 2)
+    def get_move_tier_for_lv(self, level=None):
+        if level is None:
+            level = self.level
+        return ceil(level / 2)
 
     @staticmethod
     def get_move_tier_string(move_obj):
@@ -48,7 +50,6 @@ class MoveMethods(BaseFighter):
             self.learn_move(mv)
             # print(f'{self} learns {mv}')
 
-    # todo in learn_random_move, if move_tier is not given, make it relative to current level
     def learn_random_move(self, move_tier, silent=False):
         move_obj = moves.get_rand_move(self, move_tier)
         self.learn_move(move_obj, silent=silent)
@@ -82,8 +83,8 @@ class MoveMethods(BaseFighter):
     def set_rand_moves(self):
         for lv in LVS_GET_NEW_ADVANCED_MOVE:
             if self.level >= lv:
-                tier = self.get_move_tier_for_lv()
-                self.learn_move(moves.get_rand_moves(self, 1, tier)[0])
+                tier = self.get_move_tier_for_lv(lv)
+                self.learn_move(moves.get_rand_move(self, tier))
         for lv, moves_to_learn in self.style.move_strings.items():
             if self.level >= lv:
                 if isinstance(moves_to_learn, str):  # can be a tuple, can be a string

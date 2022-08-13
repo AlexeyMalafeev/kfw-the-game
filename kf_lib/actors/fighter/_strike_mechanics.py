@@ -1,7 +1,7 @@
 import random
 
 from kf_lib.utils import rnd, rndint, rndint_2d
-from ._ascii import FighterWithASCII
+from kf_lib.actors.fighter._ascii import FighterWithASCII
 
 BLEEDING_PART_OF_DAM = 0.15
 BLOCK_DIVISOR = 2
@@ -42,9 +42,7 @@ class StrikeMechanics(FighterWithASCII):
     def calc_atk(self, action):
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
         strike_mult = 1.0
-        strike_mult *= getattr(self, f'dist{action.distance}_bonus', 1.0)
         for feature in action.features:
-            # low-prio todo reimplement computing strike_mult without getattr, use dict
             strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
         self.atk_bonus = self.atk_mult * strike_mult
         if self.check_status('off-balance'):
@@ -91,6 +89,9 @@ class StrikeMechanics(FighterWithASCII):
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
+
+    def calc_move_complexity(self, move_obj):
+        return move_obj.complexity * self.move_complexity_mult
 
     def calc_stamina_factor(self):
         # todo docstring calc_stamina_factor
@@ -208,7 +209,7 @@ class StrikeMechanics(FighterWithASCII):
         targ.cause_fall()
 
     def get_move_fail_chance(self, move_obj):
-        return (move_obj.complexity ** 2 / self.agility_full ** 2) * self.move_fail_chance_mult
+        return self.calc_move_complexity(move_obj) ** 2 / self.agility_full ** 2
 
     def get_move_time_cost(self, move_obj):
         if self.check_status('slowed down'):
@@ -277,13 +278,16 @@ class StrikeMechanics(FighterWithASCII):
             targ.take_damage(dam)
 
     def try_knockback(self):
-        targ = self.target
-        kb = 0
-        if not targ.check_status('lying'):
-            dam_ratio = self.dam / targ.hp_max
-            kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
-        if kb > 0:
-            targ.cause_knockback(kb)
+        if 'do_knockback' not in self.action.functions:
+            targ = self.target
+            kb = 0
+            if not targ.check_status('lying'):
+                dam_ratio = self.dam / targ.hp_max
+                kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
+            if kb > 0:
+                targ.cause_knockback(kb)
+            elif kb < 0:
+                targ.momentum += kb  # slow down the rushing opponent
 
     def try_knockdown(self):
         targ = self.target

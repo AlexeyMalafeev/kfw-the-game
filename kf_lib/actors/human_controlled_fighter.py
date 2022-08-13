@@ -183,16 +183,9 @@ class HumanControlledFighter(Fighter):
     def get_move_stars(self, move_obj):
         n = 0
         for feature in move_obj.features:
-            if isinstance(feature, str):  # todo reimplement this
-                val_a = getattr(self, feature + '_strike_mult', 1.0)
-                val_b = getattr(self, feature + '_mult', 1.0)
-                if max(val_a, val_b) > 1.0:
-                    n += 1
-        if (
-            hasattr(move_obj, 'distance')
-            and getattr(self, f'dist{move_obj.distance}_bonus', 1.0) > 1.0
-        ):
-            n += 1
+            val = getattr(self, feature + '_strike_mult', 1.0)
+            if val > 1.0:
+                n += 1
         return '*' * n
 
     def level_up(self, times=1):

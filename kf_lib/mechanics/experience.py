@@ -7,17 +7,6 @@ DRAW_EXP_DIVISOR = 2
 LOSER_EXP_DIVISOR = 4
 
 
-def calc_fight_exp(winners, losers):
-    """Uses .exp_worth that is established at the beginning of a fight"""
-    win_exp_total = sum([f.exp_worth for f in winners])  # can be 0 because there might be a draw
-    lose_exp_total = sum(
-        [f.exp_worth for f in losers]
-    )  # can't be 0 because there are always losers
-    win_exp_relative = round(win_exp_total / lose_exp_total * FIGHT_EXP_BASE)
-    lose_exp_relative = round(lose_exp_total / win_exp_total * FIGHT_EXP_BASE / LOSER_EXP_DIVISOR)
-    # todo finish calc_fight_exp
-
-
 # todo refactor extract_features
 def extract_features(side_a, side_b):
     # side_a.average_lv, side_b.average_lv, lv_relation
@@ -68,8 +57,3 @@ def extract_features(side_a, side_b):
     features.append(val3)
 
     return features
-
-
-# todo fighters_to_exp is not used
-def fighters_to_exp(fs):
-    return sum(f.get_exp_worth() for f in fs)

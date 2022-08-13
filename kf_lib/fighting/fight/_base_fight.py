@@ -10,6 +10,7 @@ DRAW_EXP_DIVISOR = 2
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
 EPIC_FIGHT_MIN_LEN = 10
 EPIC_FIGHT_RATIO = 0.8
+# todo reimplement exp bonuses to get rid of eval
 # name of the bonus, exp mult, condition
 EXP_BONUSES = (
     ('Quick victory', 1.25, 'self.timer / TIME_TO_SEC_DIVISOR <= 10'),
@@ -125,10 +126,6 @@ class BaseFight(object):
             nxt = min(self.order)
             elapsed = nxt - self.timer
             self.timer = nxt
-            # print('timer', self.timer)
-            # print('elapsed', elapsed)
-            # print('order', self.order)
-            # pak()
             fs = self.order.get(self.timer)
             self.handle_status_times(elapsed)
             # if fs is None:  # nobody's turn
@@ -182,6 +179,7 @@ class BaseFight(object):
         return n_min, n_sec_left
 
     def give_exp(self):
+        # todo use relative and probabilistic exp system
         # fight outcome (exp and statistics)
         num_w = len(self.winners)
         num_l = len(self.losers)
@@ -206,14 +204,6 @@ class BaseFight(object):
             else:
                 exp = los_exp
                 p.log(los_mess)
-            # todo remove this when change the exp system
-            if p.weapon:
-                exp /= p.weapon.get_exp_mult()
-                exp = round(exp)
-            # todo probably reimplement this when change the exp system
-            if self.items_allowed and p.used_item:
-                p.cancel_item(p.used_item)
-                p.used_item = ''
             p.gain_exp(exp)
         self.handle_player_stats()
         self.main_player.pak()

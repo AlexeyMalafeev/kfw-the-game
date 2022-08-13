@@ -146,7 +146,7 @@ Buy it?"""
                 else:
                     if rnd() < CH_BOOK_MOVE:
                         tier = random.randint(*BOOK_MOVE_TIERS)
-                        move = moves.get_rand_move(f=p, tier=tier, moves_to_exclude=None)
+                        move = moves.get_rand_move(f=p, tier=tier)
                         p.learn_move(move)
                     else:
                         exp = random.randint(*experience.BOOK_EXP)
@@ -1423,5 +1423,6 @@ class EncControl:
         random_encounters(p, encs)
 
     def run_enc(self, enc_name_string, test=False):
+        # todo properly run encounters without execs
         p = self.g.current_player
         exec(f"{enc_name_string}(p, test={test})")
