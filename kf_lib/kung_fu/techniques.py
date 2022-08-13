@@ -276,12 +276,6 @@ def get_all_techs_dict() -> Dict[str, Tech]:
     return _all_techs
 
 
-# todo remove get_tech_descr as it is a stupid getter for .descr
-def get_tech_descr(tech: Tech) -> Text:
-    """Return description of tech."""
-    return tech.descr
-
-
 def get_learnable_techs(fighter=None):
     """Return names of techs fighter can learn."""
     techs = get_upgradable_techs()[:]

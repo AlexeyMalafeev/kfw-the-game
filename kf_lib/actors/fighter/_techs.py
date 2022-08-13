@@ -41,11 +41,11 @@ class TechMethods(BaseFighter):
             return ''
         align = max((len(t.name) for t in self.techs)) + 1
         output = []
-        d = ''
         for t in self.techs:
             if show_descr:
-                d = f'- {techniques.get_tech_descr(t)}'
-            output.append('{:<{}}{}'.format(t, align, d))
+                output.append(f'{t.name:<{align}}{t.descr}')
+            else:
+                output.append(f'{t.name:<{align}}')
         output = [header] + sorted(output)
         return '\n'.join(output)
 
@@ -57,8 +57,7 @@ class TechMethods(BaseFighter):
             num = self.num_techs_choose
             av_techs = techniques.get_learnable_techs(self)
         if annotated:
-            d = techniques.get_tech_descr
-            av_techs = [('{} ({})'.format(t, d(t)), t) for t in av_techs]
+            av_techs = [(f'{t.name} ({t.descr})', t) for t in av_techs]
         if 0 < len(av_techs) < num:
             return av_techs
         elif not av_techs:
@@ -80,10 +79,9 @@ class TechMethods(BaseFighter):
     def learn_tech(self, *techs: Tech) -> None:
         for tech in techs:
             if tech not in self.techs:
-                descr = techniques.get_tech_descr(tech)
                 self.add_tech(tech)
-                self.show(f'{self.name} learns {tech} ({descr}).')
-                self.log(f'Learns {tech} ({descr})')
+                self.show(f'{self.name} learns {tech.name} ({tech.descr}).')
+                self.log(f'Learns {tech.name} ({tech.descr})')
                 self.pak()
 
     def resolve_techs_on_level_up(self) -> None:

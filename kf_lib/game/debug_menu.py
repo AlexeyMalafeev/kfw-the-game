@@ -73,7 +73,8 @@ class DebugMenu:
 
     def debug_learn_tech(self):
         p = self.g.current_player
-        tech = menu(sorted(techniques.get_all_techs_dict()), title='Choose a tech:')
+        tech_name = menu(sorted(techniques.get_all_techs_dict()), title='Choose a tech:')
+        tech = techniques.get_tech_obj(tech_name)
         p.learn_tech(tech)
 
     def debug_level_up(self):
