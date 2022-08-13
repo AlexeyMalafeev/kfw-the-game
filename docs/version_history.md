@@ -1,6 +1,6 @@
-### v.0.6.8-beta
-""  
-Date  
+### v0.6.8-beta
+"Drunken Boxing"  
+August 13, 2022  
 
 1. fixes: game loading, SpectateFight, qi-based damage, feel too scared
 2. feat: add quotes from Dark
@@ -35,11 +35,6 @@ Date
 31. feat: improve new move selection
 
 ### Coming soon:
-
-* acrobatic techs
-* add buffs to drunken boxing
-* change default drunken boxing and drunkard's style
-* move complexity - apply direct multiplier
 * NEW EXP SYSTEM
 * nerf guard while atk
 * y defense buff not working?
