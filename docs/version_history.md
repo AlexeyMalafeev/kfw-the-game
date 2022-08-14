@@ -7,6 +7,7 @@ Month Day, Year
    2. feat: static accomplishment experience
    3. feat: modify exp per level (static) and school training exp
    4. feat: constants package, experience module inside it
+   5. feat: misc exp-related tweaks for the new exp system
 
 ### Coming soon:
 * NEW EXP SYSTEM:

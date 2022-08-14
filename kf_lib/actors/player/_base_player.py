@@ -6,7 +6,13 @@ from kf_lib.actors.fighter import Fighter
 # todo refactor importing get_rand_traits
 # have to import separately or .set_rand_traits doesn't work
 from kf_lib.actors.traits import get_rand_traits
-from kf_lib.constants.experience import ACCOMPL_EXP, EXP_PER_LEVEL
+from kf_lib.constants.experience import (
+    ACCOMPL_EXP,
+    EXP_PER_LEVEL,
+    HOME_TRAINING_EXP,
+    MASTER_TRAINING_EXP,
+    SCHOOL_TRAINING_EXP,
+)
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.things import items
@@ -19,7 +25,6 @@ EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
 LUCK_ACCOMPLISHMENT_THRESHOLD = 10
 MASTER_GREETING_CHANCE = 0.1
-SCHOOL_TRAINING_EXP = 5
 TUITION_FEE = 20
 WAGE = 50
 
@@ -583,12 +588,12 @@ class BasePlayer(Fighter):
     def practice_home(self, suppress_log=False):
         if not suppress_log:
             self.log('Practices at home.')
-        exp = round((self.level + len(self.friends)) * self.home_training_exp_mult)
+        exp = round(HOME_TRAINING_EXP * self.home_training_exp_mult)
         self.gain_exp(exp, silent=True)
 
     def practice_master(self):
         self.log('Practices at his school.')
-        base_exp = SCHOOL_TRAINING_EXP * 2
+        base_exp = MASTER_TRAINING_EXP
         base_exp = round(base_exp * self.school_training_exp_mult)
         min_exp = round(base_exp * 0.8)
         max_exp = round(base_exp * 1.2)
