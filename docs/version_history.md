@@ -8,7 +8,7 @@ Month Day, Year
    3. feat: modify exp per level (static) and school training exp
    4. feat: constants package, experience module inside it
    5. feat: misc exp-related tweaks for the new exp system
-2. 
+2. feat: biography generation for winning players
 
 ### Coming soon:
 * biographies:

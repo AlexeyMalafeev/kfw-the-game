@@ -3,12 +3,13 @@ from pathlib import Path
 from typing import List, Text
 
 from kf_lib.actors import fighter_factory, names
+from kf_lib.game import biographies
+from kf_lib.game import game_stats
+from kf_lib.game._base_game import BaseGame
 from kf_lib.happenings import events
 from kf_lib.things import items
 from kf_lib.ui import cls, pak, yn
 from kf_lib.utils import rnd, SAVE_FOLDER
-from . import game_stats
-from ._base_game import BaseGame
 
 
 # misc constants
@@ -54,8 +55,11 @@ class Playing(BaseGame):
         if self.play_indefinitely:
             return False
         wins = []
+        winners = []
         for p in self.players:
             victories = self.check_victory_conditions(p)
+            if victories:
+                winners.append(p)
             for victory_type in victories:
                 wins.append(f'{p.name} becomes {victory_type}!')
         if wins:
@@ -67,6 +71,7 @@ class Playing(BaseGame):
                 input('Press Enter to see stats.')
                 self.save_game('game over.txt')
                 self.show_stats(do_cls=False, do_pak=False)
+                self.show_bio(winners)
                 self.play_indefinitely = yn('Keep playing indefinitely?')
             return True
 
@@ -207,6 +212,13 @@ class Playing(BaseGame):
         # the default for self.spectator is None (in __init__)
         self.hook_up_players()
         self.collect_used_names()
+
+    @staticmethod
+    def show_bio(winners: List):
+        bio = [biographies.generate_bio(p) for p in winners]
+        bio = '\n'.join(bio)
+        print(bio)
+        print(bio, file=open(Path(SAVE_FOLDER, 'bio.txt'), 'w'))
 
     def show_stats(self, do_cls=True, do_pak=True):
         stats = game_stats.get_full_report_string(self)

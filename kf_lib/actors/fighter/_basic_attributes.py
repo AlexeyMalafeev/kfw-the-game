@@ -80,9 +80,6 @@ class BasicAttributes:
     def get_full_att_value(self, att):
         return getattr(self, att + '_full')
 
-    def get_max_att_value(self):
-        return max(self.get_base_atts_tup())
-
     def refresh_full_atts(self):
         for att in self.att_names:
             base = getattr(self, att)
