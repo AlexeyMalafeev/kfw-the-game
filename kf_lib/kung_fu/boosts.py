@@ -53,7 +53,6 @@ HEALTH1 = 0.2
 HEALTH2 = 0.4
 HIT_DISARM1 = 0.5
 HIT_DISARM2 = 1.0
-HOME_TRAIN_BONUS = 0.5
 HP_GAIN1 = 0.05
 HP_GAIN2 = 0.1
 HP_MULT = 1.5  # todo this is not used?
@@ -133,7 +132,6 @@ PMAP = (
     ),
     ('health_mult', 'health', 'health'),
     ('hit_disarm', 'disarm', 'disarm chance when attacking'),
-    ('home_training_exp_mult', 'home train.', 'home training'),
     ('hp_gain_mult', 'HP gain', 'HP gain per turn'),
     (
         'in_fight_impro_wp_chance',

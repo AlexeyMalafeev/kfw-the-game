@@ -40,7 +40,6 @@ class Craftsman(BaseEncounter):
                 p.spar(c)
                 p.show('Craftsman: "What a good sparring session!"')
                 p.buy_item(item, 0)
-                items.use_item(item, p)
                 p.pak()
                 return
             p.buy_item(item, price)
@@ -50,5 +49,3 @@ class Craftsman(BaseEncounter):
                        'Too bad the craftsman has vanished in thin air!')
                 p.lose_item(item)
                 p.pak()
-            else:
-                items.use_item(item, p)

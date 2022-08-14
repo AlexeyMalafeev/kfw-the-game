@@ -34,7 +34,7 @@ WAGE = 50
 
 class BasePlayer(Fighter):
     is_player = True
-    savable_atts = '''exp home_training_exp_mult is_master new_school_name money reputation 
+    savable_atts = '''exp home_training_allowed is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
     quotes = 'hero'
@@ -77,7 +77,7 @@ class BasePlayer(Fighter):
         self.gamble_continue = 0.4
         self.gamble_with_gambler = 0.3
         self.grab_improvised_weapon = 0.5
-        self.home_training_exp_mult = 1.0
+        self.home_training_allowed = False
         self.item_is_found = 0.01
         self.item_is_lost = 0.01
         self.master_joins_fight = 0.5
@@ -590,8 +590,7 @@ class BasePlayer(Fighter):
     def practice_home(self, suppress_log=False):
         if not suppress_log:
             self.log('Practices at home.')
-        exp = round(HOME_TRAINING_EXP * self.home_training_exp_mult)
-        self.gain_exp(exp, silent=True)
+        self.gain_exp(HOME_TRAINING_EXP, silent=True)
 
     def practice_master(self):
         self.log('Practices at his school.')

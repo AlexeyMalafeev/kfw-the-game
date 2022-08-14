@@ -62,6 +62,11 @@ class Item(object):
         all_items[self.name] = self
 
 
+_manneq = Item(MANNEQUIN)  # a bit of a special case
+_manneq.descr = 'Allows home training'
+_manneq.descr_short = 'home training'
+
+
 def ef_boost(target, **kwargs):
     target.boost(**kwargs)
 
@@ -116,7 +121,6 @@ EFFECTS = {
             'stamina_gain_mult': boosts.STAM_RESTORE2,
         },
     ),
-    MANNEQUIN: (ef_boost, {'home_training_exp_mult': boosts.HOME_TRAIN_BONUS}),
 }
 
 

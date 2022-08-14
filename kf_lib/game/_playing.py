@@ -20,9 +20,9 @@ WALK_EXTRA_ENC = 2
 
 # victory conditions
 GRANDMASTER_LV = 20
-FOLK_HERO_REP = 120
+FOLK_HERO_REP = 100
 KFLEGEND_ACCOMPL = 8
-GT_FIGHTER_FIGHTS = (80, 120)  # fights_won, num_kos
+GT_FIGHTER_FIGHTS = (70, 100)  # fights_won, num_kos
 
 
 class Playing(BaseGame):
@@ -101,7 +101,7 @@ class Playing(BaseGame):
         self.cls()
         for p in self.players:
             p.log_new_day()
-            if not p.inactive:
+            if not p.inactive and p.check_item(items.MANNEQUIN):
                 p.practice_home(suppress_log=True)
 
     def do_monthly(self):
