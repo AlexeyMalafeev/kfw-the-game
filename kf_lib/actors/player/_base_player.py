@@ -13,8 +13,7 @@ from kf_lib.utils import add_sign, enum_words, rnd, rndint
 
 # todo refactor _base_player into specific modules
 
-# todo compute accompl exp dynamically
-ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
+ACCOMPL_EXP = 50
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
 LUCK_ACCOMPLISHMENT_THRESHOLD = 10
@@ -135,8 +134,7 @@ class BasePlayer(Fighter):
             self.accompl.append(label)
             self.accompl_dates.append(self.game.get_date())
             self.write(f'Accomplishment: {label}')
-            # gain experience points; the more accomplishments, the more exp.p.
-            self.gain_exp(ACCOMPL_EXP[len(self.accompl)])
+            self.gain_exp(ACCOMPL_EXP)
             self.pak()
 
     def add_enemy(self, enemy):

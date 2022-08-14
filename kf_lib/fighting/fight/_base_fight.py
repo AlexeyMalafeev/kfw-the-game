@@ -171,8 +171,6 @@ class BaseFight(object):
         return n_min, n_sec_left
 
     def give_exp(self):
-        # todo use relative and probabilistic exp system
-        # fight outcome (exp and statistics)
         n_winners = len(self.winners)
         n_losers = len(self.losers)
         winners_yield = sum(f.exp_yield for f in self.winners)

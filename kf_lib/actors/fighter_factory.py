@@ -34,12 +34,6 @@ def from_exp_worth(x):  # todo reimplement
     """Return a list of fighters with x exp worth."""
     max_diff = round(x / 10)
     too_high = x + max_diff + 1
-    # f = new_fighter(lv=1)
-    # low_exp = f.get_exp_worth()
-    # if low_exp > too_high:
-    #     print('fighter_factory.from_exp_worth(x): x is too small ({})'.format(x))
-    #     input('Press Enter to return.')
-    #     return
     weapon_chance = 0.35
     min_lv = 1
     max_lv = 20

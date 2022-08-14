@@ -5,15 +5,24 @@ Month Day, Year
 1. feat: change how exp is computed in fights
 
 ### Coming soon:
-* NEW EXP SYSTEM
+* NEW EXP SYSTEM:
+  * ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
+  * next level
+  * home training
+  * school training
+  * mannequin
+  * books
+  * other exp rewards (stories etc.)
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * Drunken has improved ground defense (there is a multiplier for this)
+* redo names (Chen Kuo-Wei, Su Hua-Chi)?
+* biographies
 * yell (as move_fun?)
 * in-fight nunchacku tech (like impro weapons)
 * refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
 * reduce dist3 and dist2 bonuses
-* redo names (Chen Kuo-Wei, Su Hua-Chi)?
 * ABC for Fighter
+* ability to upgrade moves (from pathetic to ultimate)
 * refactor, refactor, refactor
 * fight AI rule to hurry and finish off knocked down opponent 
 * learn weak / pathetic moves in books
