@@ -6,18 +6,18 @@ from kf_lib.actors.fighter import Fighter
 # todo refactor importing get_rand_traits
 # have to import separately or .set_rand_traits doesn't work
 from kf_lib.actors.traits import get_rand_traits
+from kf_lib.constants.experience import ACCOMPL_EXP, EXP_PER_LEVEL
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.things import items
 from kf_lib.utils import add_sign, enum_words, rnd, rndint
 
+
 # todo refactor _base_player into specific modules
 
-ACCOMPL_EXP = 50
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
 LUCK_ACCOMPLISHMENT_THRESHOLD = 10
-EXP_PER_LEVEL = 100
 MASTER_GREETING_CHANCE = 0.1
 SCHOOL_TRAINING_EXP = 5
 TUITION_FEE = 20

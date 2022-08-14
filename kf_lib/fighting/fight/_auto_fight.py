@@ -2,7 +2,7 @@ from ._base_fight import BaseFight
 
 
 class AutoFight(BaseFight):
-    """Has all fight mechanics but no output of what happens during the fight."""
+    """Has all fight constants but no output of what happens during the fight."""
 
     def __init__(
         self,

@@ -3,7 +3,7 @@ from ._auto_fight import AutoFight
 
 
 class NormalFight(AutoFight):
-    """Does not only have fight mechanics, but also outputs what happens during the fight."""
+    """Does not only have fight constants, but also outputs what happens during the fight."""
 
     def cls(self):
         self.main_player.cls()

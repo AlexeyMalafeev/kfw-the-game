@@ -6,14 +6,12 @@ Month Day, Year
    1. feat: change how exp is computed in fights
    2. feat: static accomplishment experience
    3. feat: modify exp per level (static) and school training exp
+   4. feat: constants package, experience module inside it
 
 ### Coming soon:
 * NEW EXP SYSTEM:
-  * next level
   * home training
-  * school training
   * mannequin
-  * books
   * other exp rewards (stories etc.)
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * Drunken has improved ground defense (there is a multiplier for this)

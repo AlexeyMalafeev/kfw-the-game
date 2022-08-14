@@ -1,11 +1,11 @@
 import random
 
 from kf_lib.actors.names import GROUP_NAMES
+from kf_lib.constants.experience import BASE_FIGHT_EXP
 from kf_lib.ui import cls, menu, pak
 
 
 ASTON_VICTORY_MIN_RATIO = 1.2
-BASE_FIGHT_EXP = 20
 BORING_FIGHT_RATIO = 0.4
 DRAW_EXP_DIVISOR = 2
 ENVIRONMENT_BONUSES = (1.2, 1.3, 1.5, 1.8, 2.0)
@@ -39,7 +39,7 @@ class BaseFight(object):
         self.school_display = False
         self.win_messages = None
 
-        # fight mechanics and interface
+        # fight constants and interface
         self.timer = -1  # NB! not zero, to avoid skipping first fighter in fight_loop
         self.time_limit = 500000
         self.order = {}  # {time units: [1 or more fighters]}

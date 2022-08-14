@@ -2,7 +2,7 @@ import random
 
 from kf_lib.actors import fighter_factory, traits, quotes
 from kf_lib.kung_fu import moves
-from kf_lib.mechanics import experience
+from kf_lib.constants import experience
 from kf_lib.things import items
 from kf_lib.ui import yn
 from kf_lib.utils import add_article, enum_words, rnd, rndint
