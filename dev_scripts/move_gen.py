@@ -461,7 +461,7 @@ def weak(m):
 
 def skillful(m):
     m = m.copy()
-    change_tier(m, 2)
+    change_tier(m, 1)
     mult(m, 'power', 1.1)
     mult(m, 'accuracy', 1.1)
     mult(m, 'time_cost', 0.9)
@@ -472,7 +472,7 @@ def skillful(m):
 
 def superior(m):
     m = m.copy()
-    change_tier(m, 3)
+    change_tier(m, 2)
     mult(m, 'power', 1.2)
     mult(m, 'accuracy', 1.2)
     mult(m, 'time_cost', 0.8)
@@ -483,7 +483,7 @@ def superior(m):
 
 def advanced(m):
     m = m.copy()
-    change_tier(m, 4)
+    change_tier(m, 3)
     mult(m, 'power', 1.3)
     mult(m, 'accuracy', 1.3)
     mult(m, 'time_cost', 0.7)
@@ -494,7 +494,7 @@ def advanced(m):
 
 def expert(m):
     m = m.copy()
-    change_tier(m, 5)
+    change_tier(m, 4)
     mult(m, 'power', 1.4)
     mult(m, 'accuracy', 1.4)
     mult(m, 'time_cost', 0.6)
@@ -505,7 +505,7 @@ def expert(m):
 
 def ultimate(m):
     m = m.copy()
-    change_tier(m, 6)
+    change_tier(m, 5)
     mult(m, 'power', 1.5)
     mult(m, 'accuracy', 1.5)
     mult(m, 'time_cost', 0.5)

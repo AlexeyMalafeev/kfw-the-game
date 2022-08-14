@@ -62,8 +62,10 @@ class Item(object):
         all_items[self.name] = self
 
 
+# todo improve mannequin instantiation
 _manneq = Item(MANNEQUIN)  # a bit of a special case
-_manneq.descr = 'Allows home training'
+_manneq.descr = 'a' \
+                'llows home training'
 _manneq.descr_short = 'home training'
 
 

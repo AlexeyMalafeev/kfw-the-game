@@ -12,17 +12,17 @@ Month Day, Year
 2. feat: biography generation for winning players
 
 ### Coming soon:
+* make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
 * biographies:
   * favorite strike: most feared move, preferred
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * Drunken has improved ground defense (there is a multiplier for this)
-* redo names (Chen Kuo-Wei, Su Hua-Chi)?
+* ability to upgrade moves (from pathetic to ultimate)
 * yell (as move_fun?)
 * in-fight nunchacku tech (like impro weapons)
 * refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
 * reduce dist3 and dist2 bonuses
 * ABC for Fighter
-* ability to upgrade moves (from pathetic to ultimate)
 * refactor, refactor, refactor
 * fight AI rule to hurry and finish off knocked down opponent 
 * learn weak / pathetic moves in books
