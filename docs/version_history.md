@@ -2,22 +2,20 @@
 ""  
 Month Day, Year
 
-1. New experience system:
+1. **New experience system**:
    1. feat: change how exp is computed in fights
    2. feat: static accomplishment experience
    3. feat: modify exp per level (static) and school training exp
    4. feat: constants package, experience module inside it
    5. feat: misc exp-related tweaks for the new exp system
+2. 
 
 ### Coming soon:
-* NEW EXP SYSTEM:
-  * home training
-  * mannequin
-  * other exp rewards (stories etc.)
+* biographies:
+  * favorite strike: most feared move, preferred
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * Drunken has improved ground defense (there is a multiplier for this)
 * redo names (Chen Kuo-Wei, Su Hua-Chi)?
-* biographies
 * yell (as move_fun?)
 * in-fight nunchacku tech (like impro weapons)
 * refactor accomplishemnts as dict {accompl: date}, otherwise inefficient

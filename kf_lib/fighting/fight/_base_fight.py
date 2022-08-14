@@ -175,16 +175,16 @@ class BaseFight(object):
         n_losers = len(self.losers)
         winners_yield = sum(f.exp_yield for f in self.winners)
         losers_yield = sum(f.exp_yield for f in self.losers)
-        winners_gain = (losers_yield / winners_yield) * BASE_FIGHT_EXP // n_winners
-        losers_gain = ((winners_yield / losers_yield) * BASE_FIGHT_EXP // LOSER_EXP_DIVISOR
-                       // n_losers)
+        winners_gain = (losers_yield / winners_yield) * BASE_FIGHT_EXP / n_winners
+        losers_gain = ((winners_yield / losers_yield) * BASE_FIGHT_EXP / LOSER_EXP_DIVISOR
+                       / n_losers)
         for p in self.players:
             if p in self.winners:
                 exp = self.handle_exp_bonuses(p, winners_gain)
             else:
                 exp = losers_gain
                 p.log('Loses.')
-            p.gain_exp(exp)
+            p.gain_exp(round(exp))
         self.handle_player_stats()
         self.main_player.pak()
 
@@ -216,7 +216,7 @@ class BaseFight(object):
             p.show(f'{p.name}: {bonus}')
             p.log(bonus)
         n_bonuses = len(bonuses)
-        exp = round(exp * (1 + n_bonuses * 0.25))
+        exp *= 1 + n_bonuses * 0.25  # rounded and converted to int later
         p.exp_bonuses += n_bonuses
         return exp
 

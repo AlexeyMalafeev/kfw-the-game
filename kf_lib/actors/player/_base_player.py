@@ -16,7 +16,7 @@ from kf_lib.constants.experience import (
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.things import items
-from kf_lib.utils import add_sign, enum_words, rnd, rndint
+from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
 
 
 # todo refactor _base_player into specific modules
@@ -38,6 +38,8 @@ class BasePlayer(Fighter):
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
     quotes = 'hero'
+
+    exp = Integer(minvalue=0, action='raise')
 
     # the order of arguments should not be changed, or saving will break
     def __init__(
