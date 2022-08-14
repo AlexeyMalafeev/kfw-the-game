@@ -17,15 +17,9 @@ ACCOMPL_EXP = 50
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
 LUCK_ACCOMPLISHMENT_THRESHOLD = 10
-# todo compute level up exp dynamically
-LV_UP_EXP = [
-    25 * x ** 2 + 75 * x for x in range(0, 51)
-]  # ignore value at index 0; index = current lv (how many exp
+EXP_PER_LEVEL = 100
 MASTER_GREETING_CHANCE = 0.1
-SCHOOL_TRAINING_EXP = 10
-# todo compute accompl exp dynamically
-# todo all luck-related to a separate sub-module (mix-in)
-# to next?); max lv = 50
+SCHOOL_TRAINING_EXP = 5
 TUITION_FEE = 20
 WAGE = 50
 
@@ -466,7 +460,7 @@ class BasePlayer(Fighter):
         return self.game.masters[self.style.name]
 
     def get_next_lv_exp(self):
-        return round(LV_UP_EXP[self.level] * self.next_lv_exp_mult)
+        return round(EXP_PER_LEVEL * self.next_lv_exp_mult * self.level)
 
     def get_nonhuman_friends(self):
         return [f for f in self.friends if not f.is_human]

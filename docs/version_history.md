@@ -2,11 +2,13 @@
 ""  
 Month Day, Year
 
-1. feat: change how exp is computed in fights
+1. New experience system:
+   1. feat: change how exp is computed in fights
+   2. feat: static accomplishment experience
+   3. feat: modify exp per level (static) and school training exp
 
 ### Coming soon:
 * NEW EXP SYSTEM:
-  * ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
   * next level
   * home training
   * school training
