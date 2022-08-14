@@ -1,3 +1,34 @@
+* y defense buff not working?
+* bull - head strikes
+* Drink Wine during fight?
+* upgrade moves from pathetic to ultimate
+* when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
+* drunken boxers can buy wine
+* Underhanded - "dirty"; rep penalty?
+* mind training - fight enemies in your mind
+* time travel item
+* turtles: arm them, fight one after another, if lucky, they just give you rewards, if unlucky, they attack you all at once
+* style's secret technique, learn at lv 10, don't know in advance 
+* more complex moves can be upgrades / modifications
+* moves for generated styles: "ferocious", "acrobatic", etc. 
+* boosts to dict and auto-adjust
+* some upgradable techs shouldn't be upgradable
+* phrases from unused (friends, never repay)
+* snake fist secret technique: Weishen (false body)
+* bug in careless inactive time?
+* style with head strikes
+* if negative money, don't start some encounters
+* add more stories
+* analysis skill
+* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
+* orgainize move list, remove unused moves  
+* learn moves only if lucky  
+* move filtering with pandas, save as csv, collect useful stats  
+* config (not to choose every time, time-consuming)  
+* fav_strikes in techs    
+* increase epic min lv; epic should be used against a strong opponent only? movie-like  
+* reflexes; compute to_block and to_dodge differently?
+
 pain resistance technique: immune to shock/stun and other debilitating strikes
 
 make tournaments with various non-kung-fu styles and bet (as a separate mini-game)
@@ -12,20 +43,13 @@ master day action: do street performance to earn money, unique encounters (chall
 
 qi shouldn't increase by default? Maybe it should even decrease unless you focus. It could increase when you successfully defend or attack.
 
-momentum style / techs
-
 On dodge / block / hit / fall - techniques
-
-fury (when low on hp, increase atk or str or crit)
 
 Some opponents enter fury spontaneously
 
 item bundles
 
 Observe opponent: see atts and moves, but selectively, with ??
-
-refactor: 
-* @property
 
 story:
 * righteous sect, evil sect, triads?
@@ -39,8 +63,6 @@ modify qi_when_atk
 
 repair tests; make balance and test suites
 
-y no close-range @ lv up ?  
-
 evil weapons  
 
 remove wp atk bonus
@@ -50,8 +72,6 @@ fight players from past games (legendary, story?)
 generate new maneuvers (fast charging step etc.), a fixed chance at getting maneuvers when choosing new move
 
 more complex genetic fight AI that learns not only probabilies to execute moves, but also some thresholds (e.g. do focus when qp < threshold etc.; also consider group advantage
-
-specific encs: test of strength, speed, agility, health
 
 ! use | in style move_s (e.g. short-range,punch|kick)
 
@@ -118,7 +138,6 @@ other fight-based mini-games: evade/block as many attacks as you can, etc.
 impro weapon break chance on each hit! (techs that reduce it)); may be implemented via move functions
 
 turn numbers - another tactical dimension
-(wtf is this??)
 
 rich boy - monthly allowance; prodigy - starting level?
 
@@ -142,11 +161,7 @@ advanced martial arts tournament, super advanced fighters
 
 off-balance when dodge
 
-Focus (with dfs penalty?)
-
 . align ascii in the middle
-
-foreign styles
 
 always get reward for helping people?
 
@@ -165,8 +180,6 @@ a tech that negates fall damage, improves ground dfs, reduces knockback ('will t
 more impro weapons
 
 in-fight stats (strikes thrown/landed etc.)
-
-sometimes, both opponents strike each other at the same time, so double KOs (and draws) are possible
 
 knockback resistance tech; stun/shock resistance tech
 
@@ -189,8 +202,6 @@ add straight/circular/shocking/stam_dam/mob_dam to boosts and techniques
 more sophisticated chat system (hero to challenger, hero to villain, master to student, etc.)
 
 fight without being able to attack (subclass Fight)
-
-redo names (Chen Kuo-Wei, Su Hua-Chi)?
 
 Iron Bullet (iron head fighter), Bamboo King (and other weapon masters), Thunderleg
 
