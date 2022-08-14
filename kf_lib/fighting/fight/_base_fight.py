@@ -50,6 +50,13 @@ class BaseFight(object):
         # in-attack attributes
         self.current_fighter = None
 
+    def cancel_items_for_all(self):
+        if self.items_allowed:
+            for p in self.players:
+                if p.used_item:
+                    p.cancel_item(p.used_item)
+                    p.used_item = ''
+
     def check_epic(self):
         unique = set(self.cartoon)
         total = len(self.cartoon)

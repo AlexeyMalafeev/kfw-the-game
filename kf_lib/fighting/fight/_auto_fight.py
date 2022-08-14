@@ -29,6 +29,8 @@ class AutoFight(BaseFight):
         self.prepare_fighters()
         self.handle_prefight_quote()
         self.fight_loop()
+        self.disarm_all()
+        self.cancel_items_for_all()
         if self.main_player.is_human:
             self.show_win_message()
             self.post_fight_menu()
@@ -37,4 +39,3 @@ class AutoFight(BaseFight):
             self.handle_gossip()
             self.give_exp()
             self.handle_accompl()
-        self.disarm_all()
