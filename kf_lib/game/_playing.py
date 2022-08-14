@@ -1,5 +1,6 @@
 import random
 from pathlib import Path
+from typing import List, Text
 
 from kf_lib.actors import fighter_factory, names
 from kf_lib.happenings import events
@@ -53,29 +54,14 @@ class Playing(BaseGame):
         if self.play_indefinitely:
             return False
         wins = []
-        winners = []
-        victory_types = []
         for p in self.players:
-            # victory conditions
-            vc = {
-                'Grandmaster': p.check_lv(GRANDMASTER_LV),
-                'Folk Hero': p.reputation >= FOLK_HERO_REP,
-                'Kung-fu Legend': len(p.accompl) >= KFLEGEND_ACCOMPL,
-                'Greatest Fighter': (
-                    p.get_stat('fights_won') >= GT_FIGHTER_FIGHTS[0]
-                    and p.get_stat('num_kos') >= GT_FIGHTER_FIGHTS[1]
-                ),
-            }
-            for k in vc:
-                if vc[k]:
-                    wins.append(f'{p.name} becomes {k}!')
-                    winners.append(p)
-                    victory_types.append(k)
+            victories = self.check_victory_conditions(p)
+            for victory_type in victories:
+                wins.append(f'{p.name} becomes {victory_type}!')
         if wins:
             days, months, years = [int(x) for x in self.get_date().split('/')]
             n_days = (years - 1) * 360 + (months - 1) * 30 + days
             self.n_days_to_win = n_days
-
             if not self.silent_ending:
                 print('\n'.join(wins))
                 input('Press Enter to see stats.')
@@ -83,6 +69,24 @@ class Playing(BaseGame):
                 self.show_stats(do_cls=False, do_pak=False)
                 self.play_indefinitely = yn('Keep playing indefinitely?')
             return True
+
+    @staticmethod
+    def check_victory_conditions(player_instance) -> List[Text]:
+        p = player_instance
+        victories = []
+        victory_conditions = {
+            'Grandmaster': p.check_lv(GRANDMASTER_LV),
+            'Folk Hero': p.reputation >= FOLK_HERO_REP,
+            'Kung-fu Legend': len(p.accompl) >= KFLEGEND_ACCOMPL,
+            'Greatest Fighter': (
+                    p.get_stat('fights_won') >= GT_FIGHTER_FIGHTS[0]
+                    and p.get_stat('num_kos') >= GT_FIGHTER_FIGHTS[1]
+            ),
+        }
+        for victory_type in victory_conditions:
+            if victory_conditions[victory_type]:
+                victories.append(victory_type)
+        return victories
 
     def collect_used_names(self):
         self.used_names = set(self.fighters_dict)
