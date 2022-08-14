@@ -58,19 +58,19 @@ class BaseNumber(Validator):
     def _validate(self, value, obj):
         if not isinstance(value, self.expected_type):
             self._act(
-                f'Expected {self.private_name} {value!r} to be {self.expected_type!r}'
+                f'Expected {self.private_name} {value!r} to be {self.expected_type!r} '
                 f'for {obj}'
             )
             return self.expected_type(value)
         if self.minvalue is not None and value < self.minvalue:
             self._act(
-                f'Expected {self.private_name} {value!r} to be at least {self.minvalue!r}'
+                f'Expected {self.private_name} {value!r} to be at least {self.minvalue!r} '
                 f'for {obj}'
             )
             return self.minvalue
         if self.maxvalue is not None and value > self.maxvalue:
             self._act(
-                f'Expected {self.private_name} {value!r} to be no more than {self.maxvalue!r}'
+                f'Expected {self.private_name} {value!r} to be no more than {self.maxvalue!r} '
                 f'for {obj}')
             return self.maxvalue
         return value
