@@ -205,8 +205,7 @@ class Playing(BaseGame):
         self.collect_used_names()
 
     def show_stats(self, do_cls=True, do_pak=True):
-        sg = game_stats.StatGen(self)
-        stats = sg.get_full_report_string()
+        stats = game_stats.get_full_report_string(self)
         if do_cls:
             cls()
         print(stats)
