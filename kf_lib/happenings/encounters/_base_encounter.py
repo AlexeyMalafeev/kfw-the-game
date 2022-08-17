@@ -4,11 +4,12 @@ from abc import ABC, abstractmethod
 all_encounter_classes = []
 
 
-# todo type annotations
 class BaseEncounter(ABC):
-    """Base encounter class."""
-
-    def __init__(self, player, check_if_happens=True):
+    def __init__(
+            self,
+            player,
+            check_if_happens: bool = True
+    ):
         self.p = self.player = player
         if (check_if_happens and self.check_if_happens()) or not check_if_happens:
             enc_name = self.__class__.__name__
@@ -25,11 +26,11 @@ class BaseEncounter(ABC):
         all_encounter_classes.append(cls)
 
     @abstractmethod
-    def check_if_happens(self):
+    def check_if_happens(self) -> bool:
         pass
 
     @abstractmethod
-    def run(self):
+    def run(self) -> None:
         pass
 
 
