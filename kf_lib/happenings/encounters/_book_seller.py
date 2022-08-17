@@ -26,7 +26,8 @@ class BookSeller(BaseEncounter):
             f'{p.name} meets a traveling book seller.'
             '\nBook Seller: "Ah, a martial artist! I\'m selling this wonderful kung-fu book for '
             f'only {price} coins! Its secret and powerful techniques will make you a legendary '
-            'fighter! What say you?" Buy it?'
+            'fighter! What say you?"'
+            '\nBuy it?'
         )
         p.show(t)
         p.log("Meets a book seller.")
@@ -40,7 +41,7 @@ class BookSeller(BaseEncounter):
                     p.write(t)
                 else:  # todo weak/pathetic
                     if rnd() < CH_BOOK_MOVE:
-                        tier = max(1, p.get_move_tier_for_lv - BOOK_MOVE_TIER_PENALTY)
+                        tier = max(1, p.get_move_tier_for_lv() - BOOK_MOVE_TIER_PENALTY)
                         features = p.fav_move_features.copy()
                         features.add(random.choice(['weak', 'pathetic']))
                         move = moves.get_rand_move(f=p, tier=tier, features=features)

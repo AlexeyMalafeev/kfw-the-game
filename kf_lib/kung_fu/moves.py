@@ -16,7 +16,7 @@ logger = logging.getLogger()
 ALL_MOVES_DICT = {}  # list derives later
 RANDOM_MOVE_POOL_SIZE_MULT = 3
 SPECIAL_FEATURES = {'drunken'}
-TIER_MIN = 0
+TIER_MIN = 1
 TIER_MAX = 10
 # todo container for default moves istead of .is_basic
 

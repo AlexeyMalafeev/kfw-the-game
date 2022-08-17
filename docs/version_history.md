@@ -20,8 +20,12 @@ Month Day, Year
 4. feat: changes in encounters
    1. feat: change logic of learning moves from books
    2. feat: test encounters in debug menu
+5. feat: new moves
+   1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
 
 ### Coming soon:
+* generate more weak, pathetic, etc. moves
+* finish BookSeller enc
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
 * rethink loser exp? no need to reward losses so much
 * Fat Girl, Thief, and other strong opponents - encounters can happen at any level, but the enemies are persistent
@@ -59,7 +63,7 @@ August 13, 2022
 
 1. fixes: game loading, SpectateFight, qi-based damage, feel too scared
 2. feat: add quotes from Dark
-3. feat: add Weak and Pathetic moves (3313 -> 3795 moves)
+3. feat: add Weak and Pathetic moves
 4. feat: ~8 more new quotes (various sources)
 5. fix: bug in 'unlucky' craftsman encounter
 6. **feat: Bandit Fiance story**

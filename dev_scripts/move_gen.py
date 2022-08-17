@@ -539,6 +539,19 @@ def gen_moves(moves):
                     if new_move['name'] not in move_names:
                         new_moves.append(new_move)
                         move_names.add(new_move['name'])
+                        for modifier_fun in (
+                            pathetic,
+                            weak,
+                            skillful,
+                            superior,
+                            advanced,
+                            expert,
+                            ultimate,
+                        ):
+                            modified_move = modifier_fun(new_move)
+                            if modified_move is not None:
+                                new_moves.append(new_move)
+                                move_names.add(new_move['name'])
                     temp = new_move
                 else:
                     break
