@@ -17,6 +17,8 @@ Month Day, Year
    2. refactor: BaseEncounter is an ABC
    3. refactor: type annotations for BaseEncounter methods
    4. refactor: BookSeller to a separate module
+4. feat: changes in encounters
+   1. feat: change logic of learning moves from books
 
 ### Coming soon:
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)

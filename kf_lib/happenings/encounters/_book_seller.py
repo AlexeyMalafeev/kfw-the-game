@@ -7,10 +7,11 @@ from kf_lib.constants import experience
 from kf_lib.utils import rnd
 
 
-BOOK_MOVE_TIERS = (1, 5)
+BOOK_MOVE_TIER_PENALTY = 1
+BOOK_MOVE_TIER_BONUS = 1
 CH_BOOK_RUBBISH = 0.3
-CH_BOOK_MOVE = 0.3  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
-ENC_CH_BOOK_SELLER = 0.02
+CH_BOOK_MOVE = 0.5  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
+ENC_CH_BOOK_SELLER = 0.02  # todo move to constants module
 MONEY_BOOK = 100
 
 
@@ -39,8 +40,10 @@ class BookSeller(BaseEncounter):
                     p.write(t)
                 else:  # todo weak/pathetic
                     if rnd() < CH_BOOK_MOVE:
-                        tier = random.randint(*BOOK_MOVE_TIERS)
-                        move = moves.get_rand_move(f=p, tier=tier)
+                        tier = max(1, p.get_move_tier_for_lv - BOOK_MOVE_TIER_PENALTY)
+                        features = p.fav_move_features.copy()
+                        features.add(random.choice(['weak', 'pathetic']))
+                        move = moves.get_rand_move(f=p, tier=tier, features=features)
                         p.learn_move(move)
                     else:
                         exp = random.randint(*experience.BOOK_EXP)
