@@ -9,10 +9,13 @@ Month Day, Year
    4. feat: constants package, experience module inside it
    5. feat: misc exp-related tweaks for the new exp system
    6. feat: home training is only allowed when have a wooden mannequin
+   7. feat: base and derived experience constants
 2. feat: biography generation for winning players
 
 ### Coming soon:
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
+* rethink loser exp? no need to reward losses so much
+* Fat Girl, Thief, and other strong opponents - encounters can happen at any level, but the enemies are persistent
 * biographies:
   * favorite strike: most feared move, preferred
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
