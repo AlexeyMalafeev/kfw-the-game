@@ -14,6 +14,7 @@ Month Day, Year
    1. feat: describe strengths
 3. refactor:
    1. refactor: __init_subclass__ in base encounter for automatic class registration
+   2. refactor: BaseEncounter is an ABC
 
 ### Coming soon:
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)

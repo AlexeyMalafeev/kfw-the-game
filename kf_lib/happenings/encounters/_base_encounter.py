@@ -1,9 +1,11 @@
+from abc import ABC, abstractmethod
+
+
 all_encounter_classes = []
 
 
-# todo ABC
 # todo type annotations
-class BaseEncounter(object):
+class BaseEncounter(ABC):
     """Base encounter class."""
 
     def __init__(self, player, check_if_happens=True):
@@ -22,9 +24,11 @@ class BaseEncounter(object):
         super().__init_subclass__(**kwargs)
         all_encounter_classes.append(cls)
 
+    @abstractmethod
     def check_if_happens(self):
-        return True
+        pass
 
+    @abstractmethod
     def run(self):
         pass
 
