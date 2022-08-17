@@ -550,8 +550,8 @@ def gen_moves(moves):
                         ):
                             modified_move = modifier_fun(new_move)
                             if modified_move is not None:
-                                new_moves.append(new_move)
-                                move_names.add(new_move['name'])
+                                new_moves.append(modified_move)
+                                move_names.add(modified_move['name'])
                     temp = new_move
                 else:
                     break
