@@ -1,3 +1,5 @@
+from typing import Set, Text
+
 from ._blank_io import BlankFighterIO
 from ._fight_attributes import FightAttributes
 
@@ -11,7 +13,7 @@ class BaseFighter(
         self.exp_yield = 0
         self.fight_ai = None
         self.moves = []
-        self.fav_move_features = set()
+        self.fav_move_features: Set[Text] = set()
         self.name = ''
         self.style = None
         self.techs = []

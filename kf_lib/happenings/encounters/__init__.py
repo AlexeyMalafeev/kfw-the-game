@@ -1,14 +1,13 @@
 import random
 
 from kf_lib.actors import fighter_factory, traits, quotes
-from kf_lib.kung_fu import moves
-from kf_lib.constants import experience
 from kf_lib.things import items
 from kf_lib.ui import yn
 from kf_lib.utils import add_article, enum_words, rnd, rndint
 from ._ambush import Ambush
 from ._base_encounter import BaseEncounter, Guaranteed, all_encounter_classes
 from ._beggar import Beggar, GBeggar
+from ._book_seller import BookSeller
 from ._challenger import Challenger, GChallenger
 from ._craftsman import Craftsman
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, \
@@ -19,7 +18,6 @@ from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, 
 
 # constants
 # encounter chances
-ENC_CH_BOOK_SELLER = 0.02
 ENC_CH_BRAWLER = 0.03
 ENC_CH_CRIMINAL = 0.03
 ENC_CH_DRUNKARD = 0.05
@@ -39,8 +37,6 @@ ENC_CH_WEIRDO = 0.02
 ENC_CH_WISE_MAN = 0.02
 
 # misc chances
-CH_BOOK_RUBBISH = 0.3
-CH_BOOK_MOVE = 0.3  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
 CH_BRAWLER_ATTACKS = 0.2
 CH_CHANGE_TRAIT = 0.15
 CH_CONVICT_ARMED = 0.35
@@ -78,7 +74,6 @@ LINES_ROBBER = (
 )
 
 # money
-MONEY_BOOK = 100
 MONEY_CONVICT_REWARD_MULT = (10, 15, 20, 25, 30, 40)
 MONEY_GAMBLING_BETS = (20, 25, 30, 40, 50)
 MONEY_GOSSIP_COST = (15, 20, 25, 30, 35)
@@ -92,7 +87,6 @@ MONEY_THIEF_STEALS = (25, 50, 75, 100, 200)
 MONEY_WISE_MAN = 10
 
 # moves
-BOOK_MOVE_TIERS = (1, 5)
 BEGGAR_LOSE_MOVE_TIERS = (2, 4)
 # BEGGAR_WIN_MOVE_TIERS = (4, 6)  # decided not to implement
 DRUNKARD_LOSE_MOVE_TIERS = (2, 4)
@@ -120,38 +114,6 @@ REP_NOT_BRAWL = 1
 # misc
 FAILED_ESCAPE_BEATING = (3, 5)
 PERFORMER_EXP_REWARD = 50
-
-
-class BookSeller(BaseEncounter):
-    def check_if_happens(self):
-        return rnd() <= ENC_CH_BOOK_SELLER
-
-    def run(self):
-        p = self.player
-        price = MONEY_BOOK
-        t = f"""{p.name} meets a traveling book seller.
-Book Seller: "Ah, a martial artist! I'm selling this wonderful kung-fu book for only {price} \
-coins! Its secret and powerful techniques will make you a legendary fighter! What do you say?"
-Buy it?"""
-        p.show(t)
-        p.log("Meets a book seller.")
-        if p.buy_item_or_not() and not check_feeling_greedy(p):
-            if not p.check_money(price):
-                p.show(f"{p.name} doesn't have enough money.")
-            else:
-                p.pay(price)
-                if rnd() < CH_BOOK_RUBBISH:
-                    t = "The book turns out to be complete rubbish!"
-                    p.write(t)
-                else:
-                    if rnd() < CH_BOOK_MOVE:
-                        tier = random.randint(*BOOK_MOVE_TIERS)
-                        move = moves.get_rand_move(f=p, tier=tier)
-                        p.learn_move(move)
-                    else:
-                        exp = random.randint(*experience.BOOK_EXP)
-                        p.gain_exp(exp)
-            p.pak()
 
 
 class Brawler(BaseEncounter):
