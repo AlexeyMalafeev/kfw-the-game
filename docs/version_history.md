@@ -11,6 +11,9 @@ Month Day, Year
    6. feat: home training is only allowed when have a wooden mannequin
    7. feat: base and derived experience constants
 2. feat: biography generation for winning players
+   1. feat: describe strengths
+3. refactor:
+   1. refactor: __init_subclass__ in base encounter for automatic class registration
 
 ### Coming soon:
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)

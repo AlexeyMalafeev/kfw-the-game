@@ -63,7 +63,7 @@ class BaseGame(GameIO):
         self.silent_ending = False
 
         self.enc_count_dict = {}  # counter for how many times encounters happened
-        for e in encounters.ENC_LIST:
+        for e in encounters.all_encounter_classes:
             self.enc_count_dict[e.__name__] = 0
         self.enc = encounters.EncControl(self)
         self.debug_menu = DebugMenu(self)

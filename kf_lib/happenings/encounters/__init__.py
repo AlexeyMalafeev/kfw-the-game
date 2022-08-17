@@ -7,7 +7,7 @@ from kf_lib.things import items
 from kf_lib.ui import yn
 from kf_lib.utils import add_article, enum_words, rnd, rndint
 from ._ambush import Ambush
-from ._base_encounter import BaseEncounter, Guaranteed
+from ._base_encounter import BaseEncounter, Guaranteed, all_encounter_classes
 from ._beggar import Beggar, GBeggar
 from ._challenger import Challenger, GChallenger
 from ._craftsman import Craftsman
@@ -1333,44 +1333,7 @@ class GRobbers(Guaranteed, Robbers):
     pass
 
 
-# all encounters; can happen regardless of the day action chosen (except 'Rest', with no encounters)
-ENC_LIST = [
-    Ambush,
-    Beggar,
-    BookSeller,
-    Brawler,
-    Challenger,
-    ContinueStory,
-    Craftsman,
-    Criminal,
-    Drunkard,
-    Extorters,
-    FatGirl,
-    FindItem,
-    FriendMatch,
-    Gambler,
-    Gossip,
-    HelpPolice,
-    LoseItem,
-    MasterTrial,
-    Merchant,
-    OverhearConversation,
-    PlayerMatch,
-    PrizeFighting,
-    Robbers,
-    RobbingSomeone,
-    SchoolBullying,
-    SchoolChallenge,
-    StreetPerformer,
-    Students,
-    Thief,
-    Weirdo,
-    WiseMan,
-]
-
 # todo reimplement enc extra chances with random.choices
-
-
 # extra chance of getting these encounters when choosing the corresponding day actions
 BUY_ITEMS_ENCS = (
         [Craftsman] * 2 + [BookSeller] * 2 + [GMerchant] * 5 + [Merchant] * 3
@@ -1405,7 +1368,7 @@ WORK_ENCS = []
 
 def random_encounters(p, encs=None):
     if encs is None:
-        encs = ENC_LIST[:]
+        encs = all_encounter_classes[:]
     random.shuffle(encs)
 
     for e in encs:

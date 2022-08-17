@@ -1,3 +1,8 @@
+all_encounter_classes = []
+
+
+# todo ABC
+# todo type annotations
 class BaseEncounter(object):
     """Base encounter class."""
 
@@ -12,6 +17,10 @@ class BaseEncounter(object):
                 enc_dict[enc_name] = 1
             self.p.refresh_screen()
             self.run()
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        all_encounter_classes.append(cls)
 
     def check_if_happens(self):
         return True
