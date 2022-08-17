@@ -19,6 +19,7 @@ Month Day, Year
    4. refactor: BookSeller to a separate module
 4. feat: changes in encounters
    1. feat: change logic of learning moves from books
+   2. feat: test encounters in debug menu
 
 ### Coming soon:
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
