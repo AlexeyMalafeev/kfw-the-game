@@ -147,6 +147,20 @@ def long(m):
     return m
 
 
+def ultra_long(m):
+    if m['distance'] >= 3:
+        return None
+    m = m.copy()
+    modify(m, 'distance', 2)
+    modify(m, 'freq', -2, mn=1)
+    if m['distance'] == 4:
+        change_tier(m, 2)
+    else:
+        change_tier(m)
+    prefix(m, 'Ultra Long')
+    return m
+
+
 def short(m):
     if m['distance'] <= 1:
         return None
@@ -155,6 +169,17 @@ def short(m):
     change_tier(m)
     modify(m, 'freq', -1, mn=1)
     prefix(m, 'Short')
+    return m
+
+
+def ultra_short(m):
+    if m['distance'] <= 2:
+        return None
+    m = m.copy()
+    modify(m, 'distance', -2)
+    change_tier(m)
+    modify(m, 'freq', -2, mn=1)
+    prefix(m, 'Ultra Short')
     return m
 
 

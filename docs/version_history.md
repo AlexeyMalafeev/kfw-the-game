@@ -22,6 +22,7 @@ Month Day, Year
    2. feat: test encounters in debug menu
 5. feat: new moves
    1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
+   2. feat: ultra short and ultra long strikes (-> 18436)
 
 ### Coming soon:
 * generate more weak, pathetic, etc. moves
