@@ -61,7 +61,9 @@ def from_exp_worth(x):  # todo reimplement
 
 def new_beggar():
     lv = rndint(*BEGGAR_LV)
-    return Master('Beggar', styles.BEGGAR_STYLE.name, lv)
+    f = Master('Beggar', styles.BEGGAR_STYLE.name, level=1)
+    f.level_up(lv - 1)  # to gradually learn techs and moves
+    return f
 
 
 def new_bodyguard(weak=False, n=1):
@@ -96,7 +98,9 @@ def new_convict():
 def new_craftsman():
     lv = rndint(*CRAFTSMAN_LV)
     style = style_gen.get_new_randomly_generated_style()
-    return Master('Craftsman', level=lv, style=style)
+    f = Master('Craftsman', level=1, style=style)
+    f.level_up(lv - 1)
+    return f
 
 
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
@@ -112,7 +116,7 @@ def new_custom_hcf():
     level = get_int_from_user('Level:', 1, 20)
     f = HumanControlledFighter(name=name, style=style)
     if level > 1:
-        f.level_up(level - 1)  # fixme level-up doesn't work (e.g. level=10), only works once
+        f.level_up(level - 1)
     return f
 
 
@@ -126,7 +130,9 @@ def new_drunkard(strong=False):
         lv = rndint(*DRUNKARD_STRONG_LV)
         style = styles.DRUNKARD_STYLE.name
         rand_atts_mode = 2
-        return Master('Drunkard', style, lv, rand_atts_mode=rand_atts_mode)
+        f = Master('Drunkard', style, level=1, rand_atts_mode=rand_atts_mode)
+        f.level_up(lv - 1)
+        return f
     else:
         lv = rndint(*DRUNKARD_WEAK_LV)
         rand_atts_mode = 0
@@ -150,7 +156,8 @@ def new_f(name, style, lv, weapon=None, n=1):
 def new_fat_girl():
     lv = rndint(*FAT_GIRL_LV)
     style = style_gen.get_new_randomly_generated_style()
-    f = Fighter('Fat Girl', style, lv)
+    f = Fighter('Fat Girl', style, level=1)
+    f.level_up(lv - 1)
     return f
 
 
@@ -178,7 +185,8 @@ def new_foreigner(lv=0, country=None, name=None, style=None):
         name = random.choice(names.FOREIGN_NAMES[country])
     if style is None:
         style = styles.FOREIGN_STYLES[country]
-    f = Fighter(name, style, lv)
+    f = Fighter(name, style, level=1)
+    f.level_up(lv - 1)
     f.country = country  # used in story module
     return f
 
@@ -196,14 +204,16 @@ def new_hcf(name='Player', lv=1):
 
 def new_master(name, style):
     lv = rndint(*MASTER_LV)
-    f = Master(name, style, lv)
+    f = Master(name, style, level=1)
+    f.level_up(lv - 1)  # to gradually learn techs and moves
     return f
 
 
 def new_master_challenger(p_lv, name):
     lv = rndint(p_lv, p_lv + 2)
     style = style_gen.get_new_randomly_generated_style()
-    f = Master(name, style, lv)
+    f = Master(name, style, level=1)
+    f.level_up(lv - 1)
     return f
 
 
@@ -221,7 +231,9 @@ def new_monster(lv=0):
 def new_ninja_turtles(lv=8):
     turtles = []
     for name in names.TURTLE_NAMES:
-        turtles.append(Fighter(name, styles.TURTLE_NUNJUTSU.name, lv))
+        f = Fighter(name, styles.TURTLE_NUNJUTSU.name, level=1)
+        f.level_up(lv - 1)
+        turtles.append(f)
     return turtles
 
 
@@ -244,7 +256,9 @@ def new_opponent(style=styles.FLOWER_KUNGFU, lv=1, n=1, rand_atts_mode=0):
 def new_performer():
     lv = rndint(*PERFORMER_LV)
     style = style_gen.get_new_randomly_generated_style()
-    return Master('Kung-fu Master', style, lv)
+    f = Master('Kung-fu Master', style, level=1)
+    f.level_up(lv - 1)
+    return f
 
 
 def new_police(n=1):
@@ -273,7 +287,8 @@ def new_random_fighter(styles_to_choose=None, n=1):
     for i in range(n):
         style = random.choice(styles_to_choose).name
         lv = rndint(1, 20)
-        f = Fighter(name, style, lv)
+        f = Fighter(name, style, level=1)
+        f.level_up(lv - 1)
         fs.append(f)
     if len(fs) == 1:
         return fs[0]
@@ -300,7 +315,8 @@ def new_robber(weak=False, n=1):
 
 def new_student(name, style):
     lv = rndint(*STUDENT_LV)
-    f = Challenger(name, style, lv)
+    f = Challenger(name, style, level=1)
+    f.level_up(lv - 1)
     return f
 
 
@@ -309,11 +325,14 @@ def new_thief(tough=False):
         lv = rndint(*THIEF_LV)
         style = styles.DIRTY_FIGHTING.name
         rand_atts_mode = 0
+        f = Thug('Thief', style, lv, rand_atts_mode=rand_atts_mode)
     else:
         lv = rndint(*TOUGH_THIEF_LV)
         style = styles.THIEF_STYLE.name
         rand_atts_mode = 2
-    return Thug('Thief', style, lv, rand_atts_mode=rand_atts_mode)
+        f = Thug('Thief', style, level=1, rand_atts_mode=rand_atts_mode)
+        f.level_up(lv - 1)
+    return f
 
 
 def new_thug(weak=False, n=1):

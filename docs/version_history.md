@@ -26,6 +26,7 @@ Month Day, Year
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
    3. feat: remove weak and pathetic moves (-> 13844)
 6. feat: add non-linearity to win exp
+7. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
 
 ### Coming soon:
 * finish BookSeller enc
