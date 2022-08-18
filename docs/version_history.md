@@ -24,9 +24,9 @@ Month Day, Year
    1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
    3. feat: remove weak and pathetic moves (-> 13844)
+6. feat: add non-linearity to win exp
 
 ### Coming soon:
-* weak, pathetic, etc. moves -> number postfixes?
 * finish BookSeller enc
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
 * rethink loser exp? no need to reward losses so much
