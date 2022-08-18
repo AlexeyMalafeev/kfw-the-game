@@ -25,7 +25,7 @@ Month Day, Year
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
 
 ### Coming soon:
-* generate more weak, pathetic, etc. moves
+* weak, pathetic, etc. moves -> number postfixes?
 * finish BookSeller enc
 * make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
 * rethink loser exp? no need to reward losses so much

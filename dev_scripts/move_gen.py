@@ -10,7 +10,7 @@ if lib_path not in sys.path:
 
 import pandas as pd  # noqa
 
-from kf_lib.kung_fu.moves import TIER_MIN, TIER_MAX
+from kf_lib.kung_fu.moves import TIER_MIN
 from kf_lib.utils import MOVES_FOLDER  # noqa
 
 
@@ -80,7 +80,7 @@ def modify(m, k, diff, mx=None, mn=None):
 
 
 def change_tier(m, n=1):
-    modify(m, 'tier', n, mx=TIER_MAX, mn=TIER_MIN)
+    modify(m, 'tier', n, mn=TIER_MIN)
     # don't modify qi if tier is actually decreasing
     if n > 0:
         modify(m, 'qi_cost', n * QI_COST_PER_TIER)
