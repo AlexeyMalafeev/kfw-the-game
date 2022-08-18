@@ -1,8 +1,7 @@
 # base constants
-BASE_FIGHT_EXP = _BASE = 25
+BASE_FIGHT_EXP = _BASE = 30
 DRAW_EXP_DIVISOR = 2
 EXP_PER_LEVEL = 100
-LOSER_EXP_DIVISOR = 4
 
 # derived
 ACCOMPL_EXP = round(_BASE * 2.5)
@@ -11,6 +10,7 @@ DREAM1_EXP = round(_BASE * 0.5)
 DREAM2_EXP = _BASE
 DREAM3_EXP = round(_BASE * 1.5)
 HOME_TRAINING_EXP = round(_BASE * 0.15)
+LOSER_EXP = round(_BASE * 0.1)
 MASTER_TRAINING_EXP = round(_BASE * 0.25)
 SCHOOL_TRAINING_EXP = round(_BASE * 0.25)
 SPECTATE_FOREIGNER_EXP = (round(_BASE * 0.25), round(_BASE * 0.75))

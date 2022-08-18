@@ -1,7 +1,7 @@
 import random
 
 from kf_lib.actors.names import GROUP_NAMES
-from kf_lib.constants.experience import BASE_FIGHT_EXP
+from kf_lib.constants.experience import BASE_FIGHT_EXP, LOSER_EXP
 from kf_lib.ui import cls, menu, pak
 
 
@@ -182,10 +182,9 @@ class BaseFight(object):
         n_losers = len(self.losers)
         winners_yield = sum(f.exp_yield for f in self.winners)
         losers_yield = sum(f.exp_yield for f in self.losers)
-        winners_diff = (losers_yield / winners_yield) ** 2
-        losers_diff = (winners_yield / losers_yield)
+        winners_diff = (losers_yield / winners_yield) ** 1.5
         winners_gain = winners_diff * BASE_FIGHT_EXP / n_winners
-        losers_gain = losers_diff * BASE_FIGHT_EXP / LOSER_EXP_DIVISOR / n_losers
+        losers_gain = LOSER_EXP
         for p in self.players:
             if p in self.winners:
                 exp = self.handle_exp_bonuses(p, winners_gain)

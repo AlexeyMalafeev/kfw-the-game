@@ -10,6 +10,7 @@ Month Day, Year
    5. feat: misc exp-related tweaks for the new exp system
    6. feat: home training is only allowed when have a wooden mannequin
    7. feat: base and derived experience constants
+   8. feat: losers get fixed amount of exp
 2. feat: biography generation for winning players
    1. feat: describe strengths
 3. refactor:
