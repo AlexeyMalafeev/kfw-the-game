@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 
 
-all_encounter_classes = []
+all_random_encounter_classes = []
 
 
 class BaseEncounter(ABC):
+    guaranteed = False
+
     def __init__(
             self,
             player,
@@ -23,7 +25,8 @@ class BaseEncounter(ABC):
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        all_encounter_classes.append(cls)
+        if not cls.guaranteed:
+            all_random_encounter_classes.append(cls)
 
     @abstractmethod
     def check_if_happens(self) -> bool:
@@ -34,7 +37,9 @@ class BaseEncounter(ABC):
         pass
 
 
-class Guaranteed(object):
+class Guaranteed:
+    guaranteed = True
+
     @staticmethod
     def check_if_happens():
         return True

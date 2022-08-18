@@ -1,7 +1,7 @@
 import pprint
 
 from kf_lib.actors import fighter_factory
-from kf_lib.happenings.encounters import all_encounter_classes
+from kf_lib.happenings.encounters import all_random_encounter_classes
 from kf_lib.happenings import tournament
 from kf_lib.kung_fu import techniques
 from kf_lib.kung_fu.moves import resolve_move_string
@@ -36,7 +36,7 @@ class DebugMenu:
 
     def debug_encounter(self):
         enc_class = menu(
-            [(enc_cls.__name__, enc_cls) for enc_cls in all_encounter_classes],
+            [(enc_cls.__name__, enc_cls) for enc_cls in all_random_encounter_classes],
             title="Choose an encounter",
         )
         enc_class(self.g.current_player, check_if_happens=False)

@@ -21,12 +21,15 @@ Month Day, Year
 4. feat: changes in encounters
    1. feat: change logic of learning moves from books
    2. feat: test encounters in debug menu
+   3. feat: lucky and unlucky cases in book seller encounter
 5. feat: new moves
    1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
    3. feat: remove weak and pathetic moves (-> 13844)
 6. feat: add non-linearity to win exp
 7. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
+
+
 
 ### Coming soon:
 * finish BookSeller enc

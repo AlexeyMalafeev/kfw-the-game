@@ -5,7 +5,7 @@ from kf_lib.things import items
 from kf_lib.ui import yn
 from kf_lib.utils import add_article, enum_words, rnd, rndint
 from ._ambush import Ambush
-from ._base_encounter import BaseEncounter, Guaranteed, all_encounter_classes
+from ._base_encounter import BaseEncounter, Guaranteed, all_random_encounter_classes
 from ._beggar import Beggar, GBeggar
 from ._book_seller import BookSeller
 from ._challenger import Challenger, GChallenger
@@ -1330,7 +1330,7 @@ WORK_ENCS = []
 
 def random_encounters(p, encs=None):
     if encs is None:
-        encs = all_encounter_classes[:]
+        encs = all_random_encounter_classes[:]
     random.shuffle(encs)
 
     for e in encs:
