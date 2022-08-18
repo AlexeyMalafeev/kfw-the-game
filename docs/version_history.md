@@ -30,9 +30,7 @@ Month Day, Year
 
 ### Coming soon:
 * finish BookSeller enc
-* make sure that new moves to automatically created fighters are assigned fairly (without premature bonuses)
-* rethink loser exp? no need to reward losses so much
-* Fat Girl, Thief, and other strong opponents - encounters can happen at any level, but the enemies are persistent
+* improve a move with books
 * biographies:
   * favorite strike: most feared move, preferred
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics

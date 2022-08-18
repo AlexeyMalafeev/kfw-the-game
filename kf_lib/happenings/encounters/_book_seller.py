@@ -3,15 +3,15 @@ import random
 from kf_lib.happenings.encounters._base_encounter import BaseEncounter
 from kf_lib.happenings.encounters._utils import check_feeling_greedy
 from kf_lib.kung_fu import moves
-from kf_lib.constants import experience
+from kf_lib.constants.experience import BOOK_EXP
 from kf_lib.utils import rnd
 
 
 BOOK_MOVE_TIER_PENALTY = 1
 BOOK_MOVE_TIER_BONUS = 1
-CH_BOOK_RUBBISH = 0.3
 CH_BOOK_MOVE = 0.5  # given book is not rubbish, so (1 - p(not_rubbish)) * p(move)
 ENC_CH_BOOK_SELLER = 0.02  # todo move to constants module
+EXP_LUCKY_MULT = 3
 MONEY_BOOK = 100
 
 
@@ -36,18 +36,21 @@ class BookSeller(BaseEncounter):
                 p.show(f"{p.name} doesn't have enough money.")
             else:
                 p.pay(price)
-                if rnd() < CH_BOOK_RUBBISH:  # todo BAD LUCK only
+                luck = p.check_luck()
+                if luck == -1:
                     t = "The book turns out to be complete rubbish!"
                     p.write(t)
-                else:  # todo weak/pathetic
+                else:  # todo improve a move with books
                     if rnd() < CH_BOOK_MOVE:
-                        tier = max(1, p.get_move_tier_for_lv() - BOOK_MOVE_TIER_PENALTY)
-                        features = p.fav_move_features.copy()
-                        features.add(random.choice(['weak', 'pathetic']))
-                        move = moves.get_rand_move(f=p, tier=tier, features=features)
+                        if luck == 1:
+                            tier = p.get_move_tier_for_lv() + BOOK_MOVE_TIER_BONUS
+                        else:
+                            tier = max(1, p.get_move_tier_for_lv() - BOOK_MOVE_TIER_PENALTY)
+                        move = moves.get_rand_move(f=p, tier=tier)
                         p.learn_move(move)
                     else:
-                        exp = random.randint(*experience.BOOK_EXP)
+                        exp = random.randint(*BOOK_EXP)
+                        if luck == 1:
+                            exp *= EXP_LUCKY_MULT
                         p.gain_exp(exp)
-                    # todo LUCKY case
             p.pak()
