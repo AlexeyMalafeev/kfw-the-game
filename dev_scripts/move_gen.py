@@ -107,7 +107,6 @@ def add_fun(m, n):
     m['functions'] = m['functions'][:] + [n]
 
 
-# todo make a table instead of separate move gen functions
 # todo automatic checks for incompatible moves (when effects can't be applied)
 def light(m):
     if 'takedown' in m['features']:
@@ -539,7 +538,6 @@ def ultimate(m):
     return m
 
 
-# todo ultra short kick, ultra long punch
 def gen_moves(moves):
     new_moves = []  # move dicts
     move_names = set()  # strings
@@ -565,8 +563,8 @@ def gen_moves(moves):
                         new_moves.append(new_move)
                         move_names.add(new_move['name'])
                         for modifier_fun in (
-                            pathetic,
-                            weak,
+                            # pathetic,
+                            # weak,
                             skillful,
                             superior,
                             advanced,

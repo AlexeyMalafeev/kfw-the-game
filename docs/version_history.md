@@ -23,6 +23,7 @@ Month Day, Year
 5. feat: new moves
    1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
+   3. feat: remove weak and pathetic moves (-> 13844)
 
 ### Coming soon:
 * weak, pathetic, etc. moves -> number postfixes?
