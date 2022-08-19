@@ -115,7 +115,7 @@ def light(m):
     mult(m, 'power', 0.8)
     mult(m, 'accuracy', 1.1)
     mult(m, 'stam_cost', 0.75)
-    change_tier(m)
+    change_tier(m, 1)
     prefix(m, 'Light')
     return m
 
@@ -127,7 +127,7 @@ def heavy(m):
     mult(m, 'power', 1.2)
     mult(m, 'accuracy', 0.9)
     mult(m, 'stam_cost', 1.25)
-    change_tier(m)
+    change_tier(m, 1)
     prefix(m, 'Heavy')
     return m
 
@@ -153,9 +153,9 @@ def ultra_long(m):
     modify(m, 'distance', 2)
     modify(m, 'freq', -2, mn=1)
     if m['distance'] == 4:
-        change_tier(m, 2)
+        change_tier(m, 3)
     else:
-        change_tier(m)
+        change_tier(m, 2)
     prefix(m, 'Ultra Long')
     return m
 
@@ -165,7 +165,7 @@ def short(m):
         return None
     m = m.copy()
     modify(m, 'distance', -1)
-    change_tier(m)
+    change_tier(m, 1)
     modify(m, 'freq', -1, mn=1)
     prefix(m, 'Short')
     return m
@@ -176,7 +176,7 @@ def ultra_short(m):
         return None
     m = m.copy()
     modify(m, 'distance', -2)
-    change_tier(m)
+    change_tier(m, 2)
     modify(m, 'freq', -2, mn=1)
     prefix(m, 'Ultra Short')
     return m
@@ -186,7 +186,7 @@ def charging(m):
     m = m.copy()
     if m['distance'] <= 1:
         modify(m, 'distance', 1)
-    change_tier(m, 2)
+    change_tier(m, 1)
     modify(m, 'freq', -1, mn=1)
     mult(m, 'stam_cost', 1.1)
     mult(m, 'time_cost', 1.2)
@@ -199,7 +199,7 @@ def retreating(m):
     if m['distance'] >= 4:
         return None
     m = m.copy()
-    change_tier(m, 2)
+    change_tier(m, 1)
     modify(m, 'freq', -1, mn=1)
     mult(m, 'stam_cost', 1.15)
     mult(m, 'time_cost', 1.25)
@@ -212,7 +212,7 @@ def onslaught(m):
     m = m.copy()
     if m['distance'] <= 2:
         modify(m, 'distance', 2)
-    change_tier(m, 3)
+    change_tier(m, 2)
     modify(m, 'freq', -1, mn=1)
     mult(m, 'stam_cost', 1.2)
     mult(m, 'time_cost', 1.4)
@@ -226,7 +226,7 @@ def vanishing(m):
     if m['distance'] >= 3:
         return None
     m = m.copy()
-    change_tier(m, 3)
+    change_tier(m, 2)
     modify(m, 'freq', -1, mn=1)
     mult(m, 'stam_cost', 1.25)
     mult(m, 'time_cost', 1.45)
@@ -240,7 +240,7 @@ def pushing(m):
     if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
     m = m.copy()
-    change_tier(m)
+    change_tier(m, 1)
     add_fun(m, 'do_knockback')
     prefix(m, 'Pushing')
     return m
@@ -250,7 +250,7 @@ def surprise(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    change_tier(m, 2)
+    change_tier(m, 1)
     add_fun(m, 'try_shock_move')
     prefix(m, 'Surprise')
     return m
@@ -260,7 +260,7 @@ def fast(m):
     m = m.copy()
     mult(m, 'time_cost', 0.8)
     mult(m, 'stam_cost', 1.1)
-    change_tier(m)
+    change_tier(m, 1)
     prefix(m, 'Fast')
     return m
 
@@ -271,7 +271,7 @@ def strong(m):
     m = m.copy()
     mult(m, 'power', 1.2)
     mult(m, 'stam_cost', 1.1)
-    change_tier(m, 2)
+    change_tier(m, 1)
     prefix(m, 'Strong')
     return m
 
@@ -282,7 +282,7 @@ def precise(m):
     m = m.copy()
     mult(m, 'time_cost', 1.1)
     mult(m, 'accuracy', 1.2)
-    change_tier(m, 2)
+    change_tier(m, 1)
     prefix(m, 'Precise')
     return m
 
@@ -291,12 +291,14 @@ def flying(m):
     if m['distance'] >= 4 or 'takedown' in m['features']:
         return None
     m = m.copy()
-    mult(m, 'power', 0.9)
     mult(m, 'stam_cost', 1.2)
     modify(m, 'distance', 1)
     modify(m, 'dist_change', -1)
     modify(m, 'complexity', 1)
-    change_tier(m, 3)
+    if m['distance'] == 4:
+        change_tier(m, 2)
+    else:
+        change_tier(m, 1)
     modify(m, 'freq', -1, mn=1)
     prefix(m, 'Flying')
     return m
@@ -311,7 +313,7 @@ def acrobatic(m):
     m = m.copy()
     mult(m, 'stam_cost', 1.25)
     modify(m, 'complexity', 2)
-    change_tier(m, 3)
+    change_tier(m, 2)
     add_fun(m, 'do_agility_based_dam')
     add_fun(m, 'do_strength_based_dam')
     modify(m, 'freq', -2, mn=1)
@@ -364,7 +366,7 @@ def ferocious(m):
         return None
     m = m.copy()
     mult(m, 'stam_cost', 1.2)
-    change_tier(m, 4)
+    change_tier(m, 3)
     add_fun(m, 'do_speed_based_dam')
     add_fun(m, 'do_strength_based_dam')
     prefix(m, 'Ferocious')
@@ -378,7 +380,7 @@ def piercing(m):
         return None
     m = m.copy()
     mult(m, 'stam_cost', 1.2)
-    change_tier(m, 4)
+    change_tier(m, 3)
     add_fun(m, 'do_agility_based_dam')
     add_fun(m, 'do_speed_based_dam')
     prefix(m, 'Piercing')
@@ -389,7 +391,7 @@ def shocking(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    change_tier(m, 3)
+    change_tier(m, 2)
     add_fun(m, 'do_shock_move')
     prefix(m, 'Shocking')
     return m
@@ -399,7 +401,7 @@ def solar(m):
     if 'takedown' in m['features']:
         return None
     m = m.copy()
-    change_tier(m, 3)
+    change_tier(m, 2)
     add_fun(m, 'do_stam_dam')
     prefix(m, 'Solar')
     return m
@@ -409,7 +411,7 @@ def nerve(m):
     if 'takedown' in m['features']:
         return None
     m = m.copy()
-    change_tier(m, 3)
+    change_tier(m, 2)
     add_fun(m, 'do_mob_dam')
     prefix(m, 'Nerve')
     return m
@@ -419,7 +421,7 @@ def debilitating(m):
     if any(feat in m['features'] for feat in ('shocking', 'surprise', 'debilitating')):
         return None
     m = m.copy()
-    change_tier(m, 5)
+    change_tier(m, 4)
     add_fun(m, 'do_shock_move')
     add_fun(m, 'do_stam_dam')
     add_fun(m, 'do_mob_dam')
@@ -461,7 +463,7 @@ def drunken(m):
     return m
 
 
-def pathetic(m):
+def pathetic(m):  # not used
     m = m.copy()
     change_tier(m, -2)
     mult(m, 'power', 0.8)
@@ -472,7 +474,7 @@ def pathetic(m):
     return m
 
 
-def weak(m):
+def weak(m):  # not used
     m = m.copy()
     change_tier(m, -1)
     mult(m, 'power', 0.9)
@@ -486,9 +488,9 @@ def weak(m):
 def skillful(m):
     m = m.copy()
     change_tier(m, 1)
-    mult(m, 'power', 1.1)
-    mult(m, 'accuracy', 1.1)
-    mult(m, 'time_cost', 0.9)
+    mult(m, 'power', 1.05)
+    mult(m, 'accuracy', 1.05)
+    mult(m, 'time_cost', 0.95)
     mult(m, 'stam_cost', 1.2)
     prefix(m, 'Skillful')
     return m
@@ -497,10 +499,10 @@ def skillful(m):
 def superior(m):
     m = m.copy()
     change_tier(m, 2)
-    mult(m, 'power', 1.2)
-    mult(m, 'accuracy', 1.2)
-    mult(m, 'time_cost', 0.8)
-    mult(m, 'stam_cost', 1.4)
+    mult(m, 'power', 1.1)
+    mult(m, 'accuracy', 1.1)
+    mult(m, 'time_cost', 0.9)
+    mult(m, 'stam_cost', 1.3)
     prefix(m, 'Superior')
     return m
 
@@ -508,10 +510,10 @@ def superior(m):
 def advanced(m):
     m = m.copy()
     change_tier(m, 3)
-    mult(m, 'power', 1.3)
-    mult(m, 'accuracy', 1.3)
-    mult(m, 'time_cost', 0.7)
-    mult(m, 'stam_cost', 1.6)
+    mult(m, 'power', 1.15)
+    mult(m, 'accuracy', 1.15)
+    mult(m, 'time_cost', 0.85)
+    mult(m, 'stam_cost', 1.4)
     prefix(m, 'Advanced')
     return m
 
@@ -519,10 +521,10 @@ def advanced(m):
 def expert(m):
     m = m.copy()
     change_tier(m, 4)
-    mult(m, 'power', 1.4)
-    mult(m, 'accuracy', 1.4)
-    mult(m, 'time_cost', 0.6)
-    mult(m, 'stam_cost', 1.8)
+    mult(m, 'power', 1.2)
+    mult(m, 'accuracy', 1.2)
+    mult(m, 'time_cost', 0.8)
+    mult(m, 'stam_cost', 1.5)
     prefix(m, 'Expert')
     return m
 
@@ -530,10 +532,10 @@ def expert(m):
 def ultimate(m):
     m = m.copy()
     change_tier(m, 5)
-    mult(m, 'power', 1.5)
-    mult(m, 'accuracy', 1.5)
-    mult(m, 'time_cost', 0.5)
-    mult(m, 'stam_cost', 2.0)
+    mult(m, 'power', 1.25)
+    mult(m, 'accuracy', 1.25)
+    mult(m, 'time_cost', 0.75)
+    mult(m, 'stam_cost', 1.6)
     prefix(m, 'Ultimate')
     return m
 

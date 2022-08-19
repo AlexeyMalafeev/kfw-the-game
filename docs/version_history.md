@@ -23,10 +23,11 @@ Month Day, Year
    1. feat: change logic of learning moves from books
    2. feat: test encounters in debug menu
    3. feat: lucky and unlucky cases in book seller encounter
-5. feat: new moves
+5. feat: moves
    1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
    3. feat: remove weak and pathetic moves (-> 13844)
+   4. feat: rebalance moves / tiers
 6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
 7. feat: toughness - damage reduction that is level-dependent (for all fighters)
 
@@ -36,6 +37,7 @@ Month Day, Year
 * rebalance advanced, skillful, etc.
 * random.sample in random move
 * compute crowd exp worth differently?
+* come back to experiments with level significance
 * improve finding right ascii
 * improve a move with books
 * reduce dist3 and dist2 bonuses
