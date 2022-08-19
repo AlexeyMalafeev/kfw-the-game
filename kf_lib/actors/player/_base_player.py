@@ -34,7 +34,7 @@ WAGE = 50
 
 class BasePlayer(Fighter):
     is_player = True
-    savable_atts = '''exp home_training_allowed is_master new_school_name money reputation 
+    savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
     quotes = 'hero'
@@ -77,7 +77,6 @@ class BasePlayer(Fighter):
         self.gamble_continue = 0.4
         self.gamble_with_gambler = 0.3
         self.grab_improvised_weapon = 0.5
-        self.home_training_allowed = False
         self.item_is_found = 0.01
         self.item_is_lost = 0.01
         self.master_joins_fight = 0.5

@@ -33,21 +33,20 @@ Month Day, Year
 
 
 ### Coming soon:
-* remove home_training_allowed
 * rebalance advanced, skillful, etc.
 * random.sample in random move
 * compute crowd exp worth differently?
 * improve finding right ascii
 * improve a move with books
+* reduce dist3 and dist2 bonuses
 * biographies:
-  * favorite strike: most feared move, preferred
+   * favorite strike: most feared move, preferred
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * Drunken has improved ground defense (there is a multiplier for this)
 * ability to upgrade moves (from pathetic to ultimate)
 * yell (as move_fun?)
 * in-fight nunchacku tech (like impro weapons)
 * refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
-* reduce dist3 and dist2 bonuses
 * ABC for Fighter
 * refactor, refactor, refactor
 * fight AI rule to hurry and finish off knocked down opponent 
@@ -56,7 +55,6 @@ Month Day, Year
 * donate to friends, to charity 
 * buff att-based damage for strikes
 * add societies (bandits, sect: Righteous, White Lotus)
-* toughness: level-dependent dam reduction for all
 * strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
 * continue refactoring encounters while adding lucky/unlucky developments
 * more strike types (see strike notes)
