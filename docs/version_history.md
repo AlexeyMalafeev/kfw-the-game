@@ -11,6 +11,7 @@ Month Day, Year
    6. feat: home training is only allowed when have a wooden mannequin
    7. feat: base and derived experience constants
    8. feat: losers get fixed amount of exp
+   9. feat: add non-linearity to win exp
 2. feat: biography generation for winning players
    1. feat: describe strengths
 3. refactor:
@@ -26,13 +27,17 @@ Month Day, Year
    1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
    3. feat: remove weak and pathetic moves (-> 13844)
-6. feat: add non-linearity to win exp
-7. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
+6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
+7. feat: toughness - damage reduction that is level-dependent (for all fighters)
 
 
 
 ### Coming soon:
-* finish BookSeller enc
+* remove home_training_allowed
+* rebalance advanced, skillful, etc.
+* random.sample in random move
+* compute crowd exp worth differently?
+* improve finding right ascii
 * improve a move with books
 * biographies:
   * favorite strike: most feared move, preferred

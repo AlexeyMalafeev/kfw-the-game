@@ -196,9 +196,11 @@ class FighterWithActions(
         if self.dam > 0:
             self.try_critical()
             self.try_epic()
+            self.dam = max(self.dam - tgt.toughness, 0)
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)
                 self.dam = round(self.dam)
+                self.current_fight.display(f'damage is reduced!')
             tgt.take_damage(self.dam)
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_cause_bleeding()

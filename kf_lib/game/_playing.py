@@ -22,7 +22,7 @@ WALK_EXTRA_ENC = 2
 GRANDMASTER_LV = 20
 FOLK_HERO_REP = 100
 KFLEGEND_ACCOMPL = 8
-GT_FIGHTER_FIGHTS = (90, 120)  # fights_won, num_kos
+GT_FIGHTER_FIGHTS = (75, 100)  # fights_won, num_kos
 
 
 class Playing(BaseGame):

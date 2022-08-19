@@ -25,6 +25,7 @@ class FightAttributes(BasicAttributes):
     # common for all fighters, not modified
     BLOCK_POWER: Final = 1.0
     GUARD_POWER: Final = 1.5
+    TOUGHNESS_PER_LV: Final = 3
     # todo find more constants
 
     # strike multipliers
@@ -143,6 +144,7 @@ class FightAttributes(BasicAttributes):
         self.strength_mult = 1.0
         self.strike_time_cost_mult = 1.0  # with descriptor
         self.stun_chance = 0.0
+        self.toughness = 0  # level-dependent
         self.unblock_chance = 0.0
 
         # weapon-related
@@ -251,6 +253,7 @@ class FightAttributes(BasicAttributes):
         self.epic_chance = (
             (EPIC_CHANCE_BASE + EPIC_CHANCE_INCR_PER_LV * self.level) * self.epic_chance_mult
         )
+        self.toughness = (self.level - 1) * self.TOUGHNESS_PER_LV
 
     def unboost(self, **kwargs):
         """'Unboost' fighter's attributes."""
