@@ -30,21 +30,21 @@ Month Day, Year
    4. feat: rebalance moves / tiers
 6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
 7. feat: toughness - damage reduction that is level-dependent (for all fighters)
+8. feat: Drunken has improved ground defense
 
 
 
 ### Coming soon:
-* rebalance advanced, skillful, etc.
 * random.sample in random move
+* in get rand move: two moves with bonuses, one random (variety)
 * compute crowd exp worth differently?
 * come back to experiments with level significance
 * improve finding right ascii
 * improve a move with books
-* reduce dist3 and dist2 bonuses
+* further reduce dist3 and dist2 bonuses?
 * biographies:
    * favorite strike: most feared move, preferred
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
-* Drunken has improved ground defense (there is a multiplier for this)
 * ability to upgrade moves (from pathetic to ultimate)
 * yell (as move_fun?)
 * in-fight nunchacku tech (like impro weapons)
@@ -52,7 +52,7 @@ Month Day, Year
 * ABC for Fighter
 * refactor, refactor, refactor
 * fight AI rule to hurry and finish off knocked down opponent 
-* learn weak / pathetic moves in books
+* learn weak / pathetic moves in books?
 * nerf guard while atk
 * donate to friends, to charity 
 * buff att-based damage for strikes

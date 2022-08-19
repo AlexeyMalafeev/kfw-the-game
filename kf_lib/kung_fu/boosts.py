@@ -58,6 +58,8 @@ HP_GAIN2 = 0.1
 HP_MULT = 1.5  # todo this is not used?
 IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
+LYING_DFS_MULT1 = 0.5
+LYING_DFS_MULT2 = 1.0
 MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
 MOVE_COMPLEXITY_MULT1 = -0.5
@@ -138,6 +140,7 @@ PMAP = (
         'improv.weapons',
         'in-fight improvised weapon chance',
     ),
+    ('lying_dfs_mult', 'lying dfs', 'defense while lying'),
     ('maneuver_time_cost_mult', 'maneuv.time', 'maneuver time cost'),
     (
         'preemptive_chance',
