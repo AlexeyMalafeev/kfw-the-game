@@ -28,6 +28,7 @@ Month Day, Year
    2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
    3. feat: remove weak and pathetic moves (-> 13844)
    4. feat: rebalance moves / tiers
+   5. feat: improve random move selection logic (no duplicates, one random move for variety)
 6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
 7. feat: toughness - damage reduction that is level-dependent (for all fighters)
 8. feat: Drunken has improved ground defense
