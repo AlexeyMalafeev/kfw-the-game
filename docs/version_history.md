@@ -32,12 +32,12 @@ Month Day, Year
 6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
 7. feat: toughness - damage reduction that is level-dependent (for all fighters)
 8. feat: Drunken has improved ground defense
+9. fix: UI functions in stories
 
 
 
 ### Coming soon:
-* random.sample in random move
-* in get rand move: two moves with bonuses, one random (variety)
+* speed up early progress? slow down late progress (progressive exp, e.g. step 20 start from 40 or even 20 or use base fight exp as step)
 * compute crowd exp worth differently?
 * come back to experiments with level significance
 * improve finding right ascii

@@ -38,7 +38,7 @@ class StolenTreasuresStory(BaseStory):
             'Some old man: "Fear not officials, except those who officiate over you! This is '
             f'{b.name}. Too bad he\'s so corrupt and arrogant... He\'s a shame to our town!"'
         )
-        g.msg(t)
+        p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -48,7 +48,7 @@ class StolenTreasuresStory(BaseStory):
             f'"Unless..." he looks at {p.name}, "...you want to pay a fine of {self.bribe_amount} '
             f'coins for insulting an official?"'
         )
-        g.show(t)
+        p.show(t)
         if (not p.is_human or g.yn('Pay the bribe?')) and p.check_money(self.bribe_amount):
             if rnd() <= p.feel_too_greedy:
                 p.show(
@@ -73,10 +73,10 @@ class StolenTreasuresStory(BaseStory):
                 f'{b.name}: "I should hire better bodyguards... What idiots! You are lucky I '
                 f'don\'t have time to beat you up myself!" \n{p.name}: "..."'
             )
-            g.show(t)
+            p.show(t)
         else:
-            g.show(f'{b.name}: "That will teach you! Next time just pay.')
-        g.pak()
+            p.show(f'{b.name}: "That will teach you! Next time just pay.')
+        p.pak()
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
@@ -86,8 +86,8 @@ class StolenTreasuresStory(BaseStory):
             f'\'good money\'. Could it be that {b.name} is somehow connected with national '
             f'treasures being stolen? Too bad {p.name} lacks solid proof...'
         )
-        g.show(t)
-        g.pak()
+        p.show(t)
+        p.pak()
 
     def scene4(self):
         g, p, b = self.game, self.player, self.boss
@@ -100,20 +100,20 @@ class StolenTreasuresStory(BaseStory):
             f'\nSo it was him all along!.. {b.name} is behind all this!.. {p.name} barely has '
             f'time to figure this out before {b.name}\'s thugs jump at him...'
         )
-        g.show(t)
-        g.pak()
+        p.show(t)
+        p.pak()
         # first fight
         enemies = fighter_factory.new_bodyguard(n=2)
         if p.fight(enemies[0], en_allies=enemies[1:], af_option=True):
-            g.show(f'{b.name}: "This can\'t be... They were supposed to..."')
-            g.pak()
+            p.show(f'{b.name}: "This can\'t be... They were supposed to..."')
+            p.pak()
             if p.fight(b):
                 t = (
                     f'The police arrested {b.name}... The people of {g.town_name} are proud of '
                     f'{p.name}!'
                 )
-                g.show(t)
-                g.pak()
+                p.show(t)
+                p.pak()
                 self.reward()
             else:
                 t = (
@@ -122,14 +122,14 @@ class StolenTreasuresStory(BaseStory):
                     f'\nNeedless to say, the crook disappears with all the treasures... '
                     f'Too bad even {p.name} couldn\'t stop him.'
                 )
-                g.show(t)
+                p.show(t)
         else:
             t = (
                 f'As {p.name} comes to, he realizes that {b.name} and his men have disappeared. '
                 f'They took all the treasures, too. {p.name} is lucky to be alive...'
             )
-            g.show(t)
-        g.pak()
+            p.show(t)
+        p.pak()
 
         # end of the story
         self.end()

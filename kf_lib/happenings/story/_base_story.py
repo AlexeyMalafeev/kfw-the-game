@@ -21,10 +21,9 @@ class BaseStory:
 
     def advance(self):
         self.state += 1
-        g = self.game
         p = self.player
-        g.cls()
-        g.show(p.get_p_info(), align=False)
+        p.cls()
+        p.show(p.get_p_info(), align=False)
         exec(f'self.scene{self.state}()')
 
     def check_hasnt_started(self):

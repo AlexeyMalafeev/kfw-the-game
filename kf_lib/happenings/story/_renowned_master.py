@@ -37,17 +37,17 @@ class RenownedMasterStory(BaseStory):
             f'I have been looking for a worthy opponent for a very, very long time. I will be '
             f'honored to test your famous {p.style.name} kung-fu."'
         )
-        g.show(t)
+        p.show(t)
         p.log(f'Challenged by {b.name}.')
-        g.pak()
+        p.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
             t = (
                 f'{b.name}: "Indeed remarkable! What excellent skill. I thank you for showing me '
                 f'that I still have something to learn."'
             )
-            g.show(t)
+            p.show(t)
             self.reward()
         else:
-            g.show(f'{b.name}: "I am disappointed - yet again."')
+            p.show(f'{b.name}: "I am disappointed - yet again."')
         self.end()
-        g.pak()
+        p.pak()
