@@ -183,7 +183,7 @@ class BaseFight(object):
         winners_yield = sum(f.exp_yield for f in self.winners)
         losers_yield = sum(f.exp_yield for f in self.losers)
         winners_diff = (losers_yield / winners_yield) ** 1.5
-        winners_gain = winners_diff * BASE_FIGHT_EXP / n_winners
+        winners_gain = winners_diff * BASE_FIGHT_EXP
         losers_gain = LOSER_EXP
         for p in self.players:
             if p in self.winners:
