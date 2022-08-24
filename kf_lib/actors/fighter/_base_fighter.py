@@ -1,27 +1,21 @@
-from typing import Set, Text
+from abc import ABC
+from typing import List, Set, Text, Tuple
 
-from ._blank_io import BlankFighterIO
-from ._fight_attributes import FightAttributes
+from kf_lib.actors.fighter._abc import FighterAPI
 
 
-class BaseFighter(
-    FightAttributes,
-    BlankFighterIO,
-):
-    def __init__(self):
-        super().__init__()
-        self.exp_yield = 0
-        self.fight_ai = None
-        self.moves = []
-        self.fav_move_features: Set[Text] = set()
-        self.name = ''
-        self.style = None
-        self.techs = []
-
-    def __repr__(self):
+class BaseFighter(FighterAPI, ABC):
+    def __repr__(self) -> Text:
         return self.get_init_string()
 
-    def get_init_atts(self):
+    def get_init_atts(self) -> Tuple[
+        Text,
+        Text,
+        int,
+        Tuple[int, int, int, int],
+        List[Text],
+        List[Text],
+    ]:
         """Return tuple of attributes used by __init__"""
         return (
             self.name,
@@ -32,5 +26,5 @@ class BaseFighter(
             [m.name for m in self.moves if not m.is_basic],
         )
 
-    def get_init_string(self):
+    def get_init_string(self) -> Text:
         return f'{self.__class__.__name__}{self.get_init_atts()!r}'

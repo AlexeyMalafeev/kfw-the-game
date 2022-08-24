@@ -1,21 +1,27 @@
-from typing import List, Tuple, Union
+from typing import List, Set, Text, Tuple, Union
 
 from kf_lib.kung_fu import styles
-from ._ai import FightAIMethods
-from ._fight_actions import FighterWithActions
-from ._fight_utils import FightUtils
-from ._moves import MoveMethods
-from ._quotes import QuoteMethods
-from ._stats import FighterStats
-from ._style import StyleMethods
-from ._techs import TechMethods
-from ._weapons import WeaponMethods
+from kf_lib.actors.fighter._ai import FightAIMethods
+from kf_lib.actors.fighter._ascii import FighterWithASCII
+from kf_lib.actors.fighter._blank_io import BlankFighterIO
+from kf_lib.actors.fighter._fight_actions import FighterWithActions
+from kf_lib.actors.fighter._fight_attributes import FightAttributes
+from kf_lib.actors.fighter._fight_utils import FightUtils
+from kf_lib.actors.fighter._moves import MoveMethods
+from kf_lib.actors.fighter._quotes import QuoteMethods
+from kf_lib.actors.fighter._stats import FighterStats
+from kf_lib.actors.fighter._style import StyleMethods
+from kf_lib.actors.fighter._techs import TechMethods
+from kf_lib.actors.fighter._weapons import WeaponMethods
 
 
 class Fighter(
     FightAIMethods,
+    FighterWithASCII,
+    BlankFighterIO,
     FighterStats,
     FighterWithActions,
+    FightAttributes,
     FightUtils,
     MoveMethods,
     QuoteMethods,
@@ -37,7 +43,12 @@ class Fighter(
         move_names: List[str] = None,
         rand_atts_mode: int = 0,  # todo give rand_atts_mode interpretable str values
     ):
-        super().__init__()
+        self.exp_yield = 0
+        self.moves = []
+        self.fav_move_features: Set[Text] = set()
+        self.style = None
+        self.techs = []
+
         self.name = name
         self.level = level
         self.rand_atts_mode = rand_atts_mode
