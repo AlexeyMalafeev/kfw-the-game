@@ -38,6 +38,7 @@ Month Day, Year
 
 ### Coming soon:
 * speed up early progress? slow down late progress (progressive exp, e.g. step 20 start from 40 or even 20 or use base fight exp as step)
+* encounter in practice at school - improve move
 * compute crowd exp worth differently?
 * come back to experiments with level significance
 * improve finding right ascii
