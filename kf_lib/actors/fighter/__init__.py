@@ -3,6 +3,8 @@ from typing import List, Set, Text, Tuple, Union
 from kf_lib.kung_fu import styles
 from kf_lib.actors.fighter._ai import FightAIMethods
 from kf_lib.actors.fighter._ascii import FighterWithASCII
+from kf_lib.actors.fighter._base_fighter import BaseFighter
+from kf_lib.actors.fighter._basic_attributes import BasicAttributes
 from kf_lib.actors.fighter._blank_io import BlankFighterIO
 from kf_lib.actors.fighter._fight_actions import FighterWithActions
 from kf_lib.actors.fighter._fight_attributes import FightAttributes
@@ -18,6 +20,8 @@ from kf_lib.actors.fighter._weapons import WeaponMethods
 class Fighter(
     FightAIMethods,
     FighterWithASCII,
+    BaseFighter,
+    BasicAttributes,
     BlankFighterIO,
     FighterStats,
     FighterWithActions,
@@ -34,15 +38,29 @@ class Fighter(
 
     # the order of arguments should not be changed, or saving will break
     def __init__(
-        self,
-        name: str = '',
-        style: Union[str, styles.Style] = styles.FLOWER_KUNGFU,
-        level: int = 1,
-        atts_tuple: Tuple[int, int, int, int] = None,
-        tech_names: List[str] = None,
-        move_names: List[str] = None,
-        rand_atts_mode: int = 0,  # todo give rand_atts_mode interpretable str values
-    ):
+            self,
+            name: str = '',
+            style: Union[str, styles.Style] = None,
+            level: int = 1,
+            atts_tuple: Tuple[int, int, int, int] = None,
+            tech_names: List[str] = None,
+            move_names: List[str] = None,
+            rand_atts_mode: int = 0,  # todo give rand_atts_mode interpretable str values
+    ) -> None:
+        self.att_weights = {}
+        self.strength = 0
+        self.strength_full = 0
+        self.agility = 0
+        self.agility_full = 0
+        self.speed = 0
+        self.speed_full = 0
+        self.health = 0
+        self.health_full = 0
+
+        self.level = 1
+        self.num_atts_choose = 3
+        self.rand_atts_mode = 0  # 0, 1, 2
+
         self.exp_yield = 0
         self.moves = []
         self.fav_move_features: Set[Text] = set()
