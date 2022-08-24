@@ -33,6 +33,7 @@ Month Day, Year
 7. feat: toughness - damage reduction that is level-dependent (for all fighters)
 8. feat: Drunken has improved ground defense
 9. fix: UI functions in stories
+10. refactor: FighterAPI
 
 
 
