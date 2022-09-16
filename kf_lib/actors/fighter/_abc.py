@@ -83,6 +83,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def cls(self):
+        pass
+
+    @abstractmethod
     def get_all_atts_str(self) -> Text:
         pass
 
@@ -140,6 +144,18 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def log(self, text: str) -> None:
+        pass
+
+    @abstractmethod
+    def msg(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def pak(self):
+        pass
+
+    @abstractmethod
     def refresh_ascii(self) -> None:
         pass
 
@@ -148,10 +164,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def set_ascii(
-            self,
-            ascii_name: Text,
-    ) -> None:
+    def set_ascii(self, ascii_name: Text) -> None:
         pass
 
     @abstractmethod
@@ -178,9 +191,17 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def show(self, text, align=False):
+        pass
+
+    @abstractmethod
     def show_ascii(self) -> None:
         pass
 
     @abstractmethod
     def upgrade_att(self) -> None:
+        pass
+
+    @abstractmethod
+    def write(self, *args, **kwargs):
         pass
