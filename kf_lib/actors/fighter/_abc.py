@@ -23,12 +23,14 @@ class FighterAPI(ABC):
     att_names_short: Tuple[Text, Text, Text, Text] = None
     att_weights: Dict[Text, int] = None
     current_fight: BaseFight = None
+    distances: Dict[FighterAPI, int] = None
     exp_yield: int = None
     fav_move_features: Set[Text] = None
     fight_ai: BaseAI = None
     health: int = None
     health_full: int = None
     level: int = None
+    momentum: int = None
     moves: List[Move] = None
     name: Text = None
     num_atts_choose: int = None
@@ -64,6 +66,14 @@ class FighterAPI(ABC):
             self,
             att: Text,
             amount: int,
+    ) -> None:
+        pass
+
+    @abstractmethod
+    def change_distance(
+        self,
+        dist: int,
+        targ: FighterAPI,
     ) -> None:
         pass
 
@@ -143,6 +153,11 @@ class FighterAPI(ABC):
     def get_init_string(self) -> Text:
         pass
 
+    @staticmethod
+    @abstractmethod
+    def get_vis_distance(dist: int) -> str:
+        pass
+
     @abstractmethod
     def log(self, text: str) -> None:
         pass
@@ -176,6 +191,13 @@ class FighterAPI(ABC):
             self,
             atts: Tuple[int, int, int, int],
     ) -> None:
+        pass
+
+    @abstractmethod
+    def set_distance(self, targ: FighterAPI, dist: int) -> None:
+        pass
+
+    def set_distances_before_fight(self) -> None:
         pass
 
     @abstractmethod

@@ -1,5 +1,4 @@
 from abc import ABC
-from typing import Dict, List, Optional, Text, Tuple
 
 from kf_lib.actors.fighter._abc import FighterAPI
 
