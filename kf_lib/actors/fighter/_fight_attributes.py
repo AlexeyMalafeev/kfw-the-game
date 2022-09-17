@@ -1,6 +1,6 @@
 from abc import ABC
 from collections import deque
-from typing import Dict, Final, Union
+from typing import Final, Union
 
 from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.utils import Float, Integer

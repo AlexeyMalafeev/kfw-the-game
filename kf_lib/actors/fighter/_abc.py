@@ -23,7 +23,6 @@ if TYPE_CHECKING:
     from kf_lib.kung_fu.styles import Style
     from kf_lib.kung_fu.techniques import Tech
     from kf_lib.things.weapons import Weapon
-    from kf_lib.utils import Float, Integer
 
 
 class FighterAPI(ABC):
@@ -69,7 +68,7 @@ class FighterAPI(ABC):
     epic_chance_mult: float = None
     epic_dam_mult: float = None
     exp_yield: int = None
-    fall_damage_mult: Float = None
+    fall_damage_mult: float = None  # descriptor
     fav_move_features: Set[Text] = None
     fight_ai: BaseAI = None
     fury_to_all_mult: float = None
@@ -89,9 +88,9 @@ class FighterAPI(ABC):
     kos_this_fight: int = None
     level: int = None
     lying_dfs_mult: float = None
-    maneuver_time_cost_mult: Float = None
+    maneuver_time_cost_mult: float = None  # descriptor
     momentum: int = None
-    move_complexity_mult: Float = None
+    move_complexity_mult: float = None  # descriptor
     moves: List[Move] = None
     name: Text = None
     num_atts_choose: int = None
@@ -105,13 +104,13 @@ class FighterAPI(ABC):
     qp_gain_mult: float = None
     qp_max: int = None
     qp_max_mult: float = None
-    qp_start: Float = None
+    qp_start: float = None  # descriptor
     rand_atts_mode: Literal[0, 1, 2] = None
-    resist_ko: Float = None
+    resist_ko: float = None  # descriptor
     speed: int = None
     speed_mult: float = None
     speed_full: int = None
-    stamina: Integer = None
+    stamina: int = None  # descriptor
     stamina_factor: float = None
     stamina_gain: int = None
     stamina_gain_mult: float = None
@@ -121,7 +120,7 @@ class FighterAPI(ABC):
     strength: int = None
     strength_mult: float = None
     strength_full: int = None
-    strike_time_cost_mult: Float = None
+    strike_time_cost_mult: float = None  # descriptor
     stun_chance: float = None
     style: Style = None
     target: Optional[FighterAPI] = None
@@ -202,6 +201,14 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def check_move_failed(self) -> bool:
+        pass
+
+    @abstractmethod
+    def check_preemptive(self) -> bool:
+        pass
+
+    @abstractmethod
     def check_stamina(self, amount: int) -> bool:
         pass
 
@@ -214,7 +221,35 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def choose_move(self) -> None:
+        pass
+
+    @abstractmethod
+    def choose_target(self) -> None:
+        pass
+
+    @abstractmethod
     def cls(self):
+        pass
+
+    @abstractmethod
+    def defend(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_counter(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_preemptive(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_strike(self) -> None:
+        pass
+
+    @abstractmethod
+    def exec_move(self) -> None:
         pass
 
     @abstractmethod
@@ -239,6 +274,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def get_atts_to_choose(self) -> List[Text]:
+        pass
+
+    @abstractmethod
+    def get_av_moves(self, attack_moves_only: bool = False) -> List[Move]:
         pass
 
     @abstractmethod
@@ -297,6 +336,14 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def guard(self) -> None:
+        pass
+
+    @abstractmethod
+    def hit_or_miss(self) -> None:
+        pass
+
+    @abstractmethod
     def init_fight_attributes(self) -> None:
         pass
 
@@ -305,11 +352,19 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def maneuver(self) -> None:
+        pass
+
+    @abstractmethod
     def msg(self, *args, **kwargs):
         pass
 
     @abstractmethod
     def pak(self):
+        pass
+
+    @abstractmethod
+    def prepare_for_fight(self) -> None:
         pass
 
     @abstractmethod
@@ -356,6 +411,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def set_target(self, target: FighterAPI) -> None:
+        pass
+
+    @abstractmethod
     def show(self, text, align=False):
         pass
 
@@ -364,11 +423,43 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def start_fight_turn(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_block_disarm(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_counter(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_fury(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_in_fight_impro_wp(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_ko(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_strike(self) -> None:
+        pass
+
+    @abstractmethod
     def unboost(self, **kwargs: Union[int, float]) -> None:
         pass
 
     @abstractmethod
     def upgrade_att(self) -> None:
+        pass
+
+    @abstractmethod
+    def visualize_fight_state(self) -> str:
         pass
 
     @abstractmethod
