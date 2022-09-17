@@ -224,7 +224,7 @@ class StrikeMechanics(FighterWithASCII):
         return round(cost)
 
     def get_rep_actions_factor(self, move):
-        n = self.previous_actions.count(move.name)  # 0-3
+        n = self.previous_actions.count(move)  # 0-3
         return 1.0 + n * 0.33  # up to 1.99
 
     def take_damage(self, dam):

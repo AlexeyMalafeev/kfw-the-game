@@ -1,40 +1,36 @@
+from abc import ABC
 import random
+from typing import Final, Optional, Tuple
 
+from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.ui import get_bar
 from kf_lib.utils import choose_adverb, rnd, rndint_2d
-from ._distances import DistanceMethods
-from ._exp_worth import ExpMethods
-from ._strike_mechanics import StrikeMechanics
-from ._weapons import WeaponMethods
-
-DUR_FURY_MIN = 500
-DUR_FURY_MAX = 1000
 
 
-class FighterWithActions(
-    DistanceMethods,
-    ExpMethods,
-    StrikeMechanics,
-    WeaponMethods,
-):
-    def apply_bleeding(self):
+class FighterWithActions(FighterAPI, ABC):
+    BLOCK_POWER: Final = 1.0
+    GUARD_POWER: Final = 1.5
+    DUR_FURY_MIN: Final = 500
+    DUR_FURY_MAX: Final = 1000
+
+    def apply_bleeding(self) -> None:
         if self.bleeding:
             self.change_hp(-self.bleeding)
             if self.hp <= 0:
                 self.current_fight.display(f'{self.name} passes out because of bleeding!')
                 self.current_fight.pak()
 
-    def apply_dfs_penalty(self):
+    def apply_dfs_penalty(self) -> None:
         self.dfs_penalty_mult -= self.dfs_penalty_step
         if self.dfs_penalty_mult < 0:
             self.dfs_penalty_mult = 0
 
-    def apply_move_cost(self):
+    def apply_move_cost(self) -> None:
         m = self.action
         self.change_stamina(-m.stam_cost)
         self.change_qp(-m.qi_cost)
 
-    def attack(self):
+    def attack(self) -> None:
         n1 = self.current_fight.get_f_name_string(self)
         fury = ' *FURY*' if self.check_status('fury') else ''
         n2 = self.current_fight.get_f_name_string(self.target)
@@ -150,7 +146,7 @@ class FighterWithActions(
             self.change_distance(m.dist_change, self.target)
         else:
             self.momentum = 0
-        self.previous_actions = self.previous_actions[1:] + [m.name]
+        self.previous_actions.append(m)
 
     def exec_move(self):
         m = self.action
@@ -229,7 +225,7 @@ class FighterWithActions(
         self.qp = round(self.qp_max * self.qp_start)
         self.stamina = self.stamina_max
         self.bleeding = 0
-        self.previous_actions = ['', '', '']
+        self.previous_actions.clear()
         self.is_auto_fighting = True
         self.set_distances_before_fight()
         self.status = {}
