@@ -18,15 +18,15 @@ from kf_lib.actors.fighter._weapons import WeaponMethods
 
 
 class Fighter(
-    FightAIMethods,
-    FighterWithASCII,
     BaseFighter,
     BasicAttributes,
     BlankFighterIO,
-    FighterStats,
-    FighterWithActions,
+    FightAIMethods,
     FightAttributes,
     FightUtils,
+    FighterStats,
+    FighterWithASCII,
+    FighterWithActions,
     MoveMethods,
     QuoteMethods,
     StyleMethods,
@@ -66,6 +66,8 @@ class Fighter(
         self.fav_move_features: Set[Text] = set()
         self.style = None
         self.techs = []
+
+        self.init_fight_attributes()
 
         self.name = name
         self.level = level
