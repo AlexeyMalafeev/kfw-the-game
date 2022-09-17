@@ -138,13 +138,13 @@ class FighterAPI(ABC):
     @abstractmethod
     def __init__(
             self,
-            name: str = '',
-            style: Union[str, Style] = None,
-            level: int = 1,
-            atts_tuple: Tuple[int, int, int, int] = None,
-            tech_names: List[str] = None,
-            move_names: List[str] = None,
-            rand_atts_mode: int = 0,
+            name: str,
+            style: Union[str, Style],
+            level: int,
+            atts_tuple: Tuple[int, int, int, int],
+            tech_names: List[str],
+            move_names: List[str],
+            rand_atts_mode: int,
     ) -> None:
         pass
 
@@ -197,7 +197,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def check_lv(self, minlv: int, maxlv: Optional[int] = None) -> bool:
+    def check_lv(self, minlv: int, maxlv: int) -> bool:
         pass
 
     @abstractmethod
@@ -253,6 +253,17 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def fight(
+        self,
+        en: FighterAPI,
+        allies: List[FighterAPI],
+        en_allies: List[FighterAPI],
+        *args,
+        **kwargs,
+    ) -> bool:
+        pass
+
+    @abstractmethod
     def get_all_atts_str(self) -> Text:
         pass
 
@@ -265,7 +276,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def get_att_str_prefight(self, att: Text, hide: bool = False,) -> Text:
+    def get_att_str_prefight(self, att: Text, hide: bool) -> Text:
         pass
 
     @abstractmethod
@@ -277,7 +288,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def get_av_moves(self, attack_moves_only: bool = False) -> List[Move]:
+    def get_av_moves(self, attack_moves_only: bool) -> List[Move]:
         pass
 
     @abstractmethod
@@ -322,12 +333,12 @@ class FighterAPI(ABC):
     def get_rel_strength(
         self,
         *opp: FighterAPI,
-        allies=Optional[Iterable[FighterAPI]],
+        allies: Optional[Iterable[FighterAPI]],
     ) -> Tuple[float, str]:
         pass
 
     @abstractmethod
-    def get_status_marks(self, right: bool = False) -> str:
+    def get_status_marks(self, right: bool) -> str:
         pass
 
     @staticmethod
@@ -401,8 +412,8 @@ class FighterAPI(ABC):
     @abstractmethod
     def set_fight_ai(
             self,
-            ai_class: Optional[Type[BaseAI]] = None,
-            write_log: bool = False,
+            ai_class: Type[BaseAI],
+            write_log: bool,
     ) -> None:
         pass
 
@@ -415,11 +426,24 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def show(self, text, align=False):
+    def show(self, text: str, align: bool) -> None:
         pass
 
     @abstractmethod
     def show_ascii(self) -> None:
+        pass
+
+    @abstractmethod
+    def spar(
+        self,
+        en: FighterAPI,
+        allies: List[FighterAPI],
+        en_allies: List[FighterAPI],
+        auto_fight: bool,
+        af_option: bool,
+        hide_stats: bool,
+        environment_allowed: bool,
+    ) -> bool:
         pass
 
     @abstractmethod

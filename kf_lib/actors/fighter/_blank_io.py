@@ -10,14 +10,14 @@ class BlankFighterIO(FighterAPI, ABC):
     def log(self, text: str) -> None:
         pass
 
-    def msg(self, *args, **kwargs):
+    def msg(self, *args, **kwargs) -> None:
         pass
 
-    def pak(self):
+    def pak(self) -> None:
         pass
 
-    def show(self, text, align=False):
+    def show(self, text: str, align: bool = False) -> None:
         pass
 
-    def write(self, *args, **kwargs):
+    def write(self, *args, **kwargs) -> None:
         pass
