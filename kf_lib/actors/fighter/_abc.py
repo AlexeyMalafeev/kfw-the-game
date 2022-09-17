@@ -1,6 +1,18 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Dict, List, Literal, Optional, Set, Text, Tuple, Type, TYPE_CHECKING, Union
+from typing import (
+    Dict,
+    Iterable,
+    List,
+    Literal,
+    Optional,
+    Set,
+    Text,
+    Tuple,
+    TYPE_CHECKING,
+    Type,
+    Union,
+)
 
 if TYPE_CHECKING:
     # todo refactor - use base classes in separate files
@@ -9,9 +21,12 @@ if TYPE_CHECKING:
     from kf_lib.kung_fu.moves import Move
     from kf_lib.kung_fu.styles import Style
     from kf_lib.kung_fu.techniques import Tech
+    from kf_lib.things.weapons import Weapon
 
 
 class FighterAPI(ABC):
+    act_allies: List[FighterAPI] = None
+    act_targets: List[FighterAPI] = None
     action: Move = None
     agility: int = None
     agility_full: int = None
@@ -42,6 +57,7 @@ class FighterAPI(ABC):
     style: Style = None
     target: FighterAPI = None
     techs: List[Tech] = None
+    weapon: Weapon = None
 
     # noinspection PyUnusedLocal
     @abstractmethod
@@ -101,6 +117,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_allies_power(self) -> int:
+        pass
+
+    @abstractmethod
     def get_att_str(self, att: Text) -> Text:
         pass
 
@@ -132,6 +152,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_exp_worth(self) -> int:
+        pass
+
+    @abstractmethod
     def get_full_att_value(
             self,
             att: Text,
@@ -151,6 +175,18 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def get_init_string(self) -> Text:
+        pass
+
+    @abstractmethod
+    def get_opponents_power(self) -> int:
+        pass
+
+    @abstractmethod
+    def get_rel_strength(
+        self,
+        *opp: FighterAPI,
+        allies=Optional[Iterable[FighterAPI]],
+    ) -> Tuple[float, str]:
         pass
 
     @staticmethod

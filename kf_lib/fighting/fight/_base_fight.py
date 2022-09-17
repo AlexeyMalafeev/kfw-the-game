@@ -273,6 +273,7 @@ class BaseFight(object):
             for p in self.players:
                 if p.check_fight_items():
                     p.act_targets = self.side_b[:] if p in self.side_a else self.side_a[:]
+                    # todo consider removing p from p.act_allies
                     p.act_allies = self.side_b[:] if p in self.side_b else self.side_a[:]
                     choice = p.use_fight_item_or_not()
                     if choice:
