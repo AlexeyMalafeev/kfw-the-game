@@ -105,6 +105,7 @@ class FighterAPI(ABC):
     qp_max: int = None
     qp_max_mult: float = None
     qp_start: float = None  # descriptor
+    quotes: str = None
     rand_atts_mode: Literal[0, 1, 2] = None
     resist_ko: float = None  # descriptor
     speed: int = None
@@ -430,6 +431,14 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def resolve_moves_on_level_up(self) -> None:
+        pass
+
+    @abstractmethod
+    def say_prefight_quote(self) -> bool:
+        pass
+
+    @abstractmethod
+    def say_win_quote(self) -> None:
         pass
 
     @abstractmethod
