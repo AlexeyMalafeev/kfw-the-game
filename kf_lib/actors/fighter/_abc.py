@@ -222,6 +222,11 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def choose_move(self) -> None:
+        """Called in a fight at the beginning of a turn."""
+        pass
+
+    @abstractmethod
+    def choose_new_move(self, sample: List[Move]) -> None:
         pass
 
     @abstractmethod
@@ -326,6 +331,19 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_moves_to_choose(self, tier: int) -> List[Move]:
+        pass
+
+    @abstractmethod
+    def get_move_tier_for_lv(self, level: int = None) -> int:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def get_move_tier_string(move_obj: Move) -> str:
+        pass
+
+    @abstractmethod
     def get_opponents_power(self) -> int:
         pass
 
@@ -339,6 +357,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def get_status_marks(self, right: bool) -> str:
+        pass
+
+    @abstractmethod
+    def get_tier_str_for_lv(self) -> str:
         pass
 
     @staticmethod
@@ -356,6 +378,18 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def init_fight_attributes(self) -> None:
+        pass
+
+    @abstractmethod
+    def learn_move(self, move: Move, silent: bool = False) -> None:
+        pass
+
+    @abstractmethod
+    def learn_move_from(self, other: FighterAPI) -> None:
+        pass
+
+    @abstractmethod
+    def learn_random_move(self, move_tier: int, silent: bool = False) -> None:
         pass
 
     @abstractmethod
@@ -391,6 +425,14 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def replace_move(self, rep_mv: Move, rep_with: Move) -> None:
+        pass
+
+    @abstractmethod
+    def resolve_moves_on_level_up(self) -> None:
+        pass
+
+    @abstractmethod
     def set_ascii(self, ascii_name: Text) -> None:
         pass
 
@@ -418,7 +460,15 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def set_moves(self, move_objs: List[Move]) -> None:
+        pass
+
+    @abstractmethod
     def set_rand_atts(self) -> None:
+        pass
+
+    @abstractmethod
+    def set_rand_moves(self) -> None:
         pass
 
     @abstractmethod
@@ -426,7 +476,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def show(self, text: str, align: bool) -> None:
+    def show(self, text: str, align: bool = False) -> None:
         pass
 
     @abstractmethod
