@@ -12,6 +12,7 @@ from kf_lib.actors.fighter._fight_utils import FightUtils
 from kf_lib.actors.fighter._moves import MoveMethods
 from kf_lib.actors.fighter._quotes import QuoteMethods
 from kf_lib.actors.fighter._stats import FighterStats
+from kf_lib.actors.fighter._strike_mechanics import StrikeMechanics
 from kf_lib.actors.fighter._style import StyleMethods
 from kf_lib.actors.fighter._techs import TechMethods
 from kf_lib.actors.fighter._weapons import WeaponMethods
@@ -29,6 +30,7 @@ class Fighter(
     FighterWithActions,
     MoveMethods,
     QuoteMethods,
+    StrikeMechanics,
     StyleMethods,
     TechMethods,
     WeaponMethods,

@@ -9,40 +9,39 @@ if TYPE_CHECKING:
     from kf_lib.kung_fu.moves import Move
 
 
-BLEEDING_PART_OF_DAM = 0.15
-BLOCK_DIVISOR = 2
-BLOCK_POWER = 20  # Punch power = 26
-DAM_DIVISOR = 2
-DODGE_DIVISOR = 3
-DUR_LYING_MIN = 100
-DUR_LYING_MAX = 200
-DUR_OFF_BAL_MIN = 50
-DUR_OFF_BAL_MAX = 100
-DUR_SHOCK_MIN = 50
-DUR_SHOCK_MAX = 100
-DUR_SLOW_MIN = 300
-DUR_SLOW_MAX = 600
-DUR_STUN_MIN = 50
-DUR_STUN_MAX = 150
-FALL_DAMAGE = (25, 50)
-INSTA_KO_CHANCE = 0.25
-KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
-KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp
-KNOCKDOWN_HP_THRESHOLD = 0.5
-LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
-MOB_DAM_PENALTY = 0.3
-MOMENTUM_EFFECT_SIZE = 0.1
-OFF_BALANCE_HP_THRESHOLD = 0.25
-QI_BASED_DAM_UPPER_MULT = 2
-SHOCK_CHANCE = 0.5  # for moves
-STAMINA_DAMAGE = 0.2  # for moves
-STAMINA_FACTOR_BIAS = 0.5
-STAT_BASED_DAM_UPPER_MULT = 5
-STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
-TIME_UNIT_MULTIPLIER = 20
-
-
 class StrikeMechanics(FighterAPI, ABC):
+    BLEEDING_PART_OF_DAM = 0.15
+    BLOCK_DIVISOR = 2
+    BLOCK_POWER = 20  # Punch power = 26
+    DAM_DIVISOR = 2
+    DODGE_DIVISOR = 3
+    DUR_LYING_MAX = 200
+    DUR_LYING_MIN = 100
+    DUR_OFF_BAL_MAX = 100
+    DUR_OFF_BAL_MIN = 50
+    DUR_SHOCK_MAX = 100
+    DUR_SHOCK_MIN = 50
+    DUR_SLOW_MAX = 600
+    DUR_SLOW_MIN = 300
+    DUR_STUN_MAX = 150
+    DUR_STUN_MIN = 50
+    FALL_DAMAGE = (25, 50)
+    INSTA_KO_CHANCE = 0.25
+    KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
+    KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp
+    KNOCKDOWN_HP_THRESHOLD = 0.5
+    LEVEL_BASED_DAM_UPPER_MULT = 10  # * self.level in damage; upper bound
+    MOB_DAM_PENALTY = 0.3
+    MOMENTUM_EFFECT_SIZE = 0.1
+    OFF_BALANCE_HP_THRESHOLD = 0.25
+    QI_BASED_DAM_UPPER_MULT = 2
+    SHOCK_CHANCE = 0.5  # for moves
+    STAMINA_DAMAGE = 0.2  # for moves
+    STAMINA_FACTOR_BIAS = 0.5
+    STAT_BASED_DAM_UPPER_MULT = 5
+    STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
+    TIME_UNIT_MULTIPLIER = 20
+
     def calc_atk(self, action: Move) -> None:
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
         strike_mult = 1.0
@@ -52,11 +51,12 @@ class StrikeMechanics(FighterAPI, ABC):
         if self.check_status('off-balance'):
             self.atk_bonus *= self.off_balance_atk_mult
         self.atk_pwr = (
-            self.strength_full * action.power * self.atk_bonus * self.stamina_factor / DAM_DIVISOR
+            self.strength_full * action.power * self.atk_bonus * self.stamina_factor
+            / self.DAM_DIVISOR
         )
         self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
         # take into account momentum
-        momentum_effect = 1.0 + MOMENTUM_EFFECT_SIZE * self.momentum
+        momentum_effect = 1.0 + self.MOMENTUM_EFFECT_SIZE * self.momentum
         self.atk_pwr *= momentum_effect
         self.to_hit *= momentum_effect
         if self.check_status('fury'):
@@ -83,13 +83,13 @@ class StrikeMechanics(FighterAPI, ABC):
                 x *= self.off_balance_dfs_mult
             if self.check_status('lying'):
                 x *= self.lying_dfs_mult
-            self.to_dodge = x / DODGE_DIVISOR
-            self.to_block = x / BLOCK_DIVISOR
+            self.to_dodge = x / self.DODGE_DIVISOR
+            self.to_block = x / self.BLOCK_DIVISOR
             self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
             # print('to dodge, to block', self.to_dodge, self.to_block)
             # todo divide dfs_pwr by sth?
             self.dfs_pwr = (self.dfs_penalty_mult
-                            * self.BLOCK_POWER * self.block_mult * BLOCK_POWER
+                            * self.BLOCK_POWER * self.block_mult * self.BLOCK_POWER
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
@@ -99,17 +99,17 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def calc_stamina_factor(self) -> None:
         # todo docstring calc_stamina_factor
-        self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
+        self.stamina_factor = self.stamina / self.stamina_max / 2 + self.STAMINA_FACTOR_BIAS
 
     def cause_bleeding(self) -> None:
         self.current_fight.display(f'{self.target.name} is BLEEDING!')
-        self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
+        self.target.bleeding += max(1, round(self.dam * self.BLEEDING_PART_OF_DAM))
 
     def cause_fall(self) -> None:
-        lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
+        lying_dur = rndint_2d(self.DUR_LYING_MIN, self.DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
         self.add_status('skip', lying_dur)
-        fall_dam = int(rndint(*FALL_DAMAGE) * self.fall_damage_mult)
+        fall_dam = int(rndint(*self.FALL_DAMAGE) * self.fall_damage_mult)
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
@@ -124,13 +124,13 @@ class StrikeMechanics(FighterAPI, ABC):
         self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
 
     def cause_off_balance(self) -> None:
-        ob_dur = rndint_2d(DUR_OFF_BAL_MIN, DUR_OFF_BAL_MAX) // self.speed_full
+        ob_dur = rndint_2d(self.DUR_OFF_BAL_MIN, self.DUR_OFF_BAL_MAX) // self.speed_full
         self.add_status('off-balance', ob_dur)
         self.current_fight.display(' off-balance!', align=False)
 
     def cause_shock(self) -> None:
         """Shock is worse than stun."""
-        shock_dur = rndint_2d(DUR_SHOCK_MIN, DUR_SHOCK_MAX) // self.speed_full
+        shock_dur = rndint_2d(self.DUR_SHOCK_MIN, self.DUR_SHOCK_MAX) // self.speed_full
         self.add_status('shocked', shock_dur)
         self.add_status('skip', shock_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
@@ -138,7 +138,7 @@ class StrikeMechanics(FighterAPI, ABC):
         self.current_fight.display(' shocked!', align=False)
 
     def cause_slow_down(self) -> None:
-        slow_dur = rndint_2d(DUR_SLOW_MIN, DUR_SLOW_MAX) // self.speed_full
+        slow_dur = rndint_2d(self.DUR_SLOW_MIN, self.DUR_SLOW_MAX) // self.speed_full
         self.add_status('slowed down', slow_dur)
         # todo do not repeat this line in all functions, use helper
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
@@ -147,7 +147,7 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def cause_stun(self) -> None:
         """Stun is not as bad as shock."""
-        stun_dur = rndint_2d(DUR_STUN_MIN, DUR_STUN_MAX) // self.speed_full
+        stun_dur = rndint_2d(self.DUR_STUN_MIN, self.DUR_STUN_MAX) // self.speed_full
         self.add_status('stunned', stun_dur)
         self.add_status('skip', stun_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
@@ -156,17 +156,17 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def do_agility_based_dam(self) -> None:
         targ = self.target
-        dam = rndint_2d(1, self.agility_full * STAT_BASED_DAM_UPPER_MULT)
+        dam = rndint_2d(1, self.agility_full * self.STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' agility-based -{dam} HP ({targ.hp})', align=False)
 
     def do_knockback(self) -> None:
-        dist = random.choice(KNOCKBACK_DIST_FORCED)
+        dist = random.choice(self.KNOCKBACK_DIST_FORCED)
         self.target.cause_knockback(dist)
 
     def do_level_based_dam(self) -> None:
         targ = self.target
-        dam = rndint_2d(1, self.level * LEVEL_BASED_DAM_UPPER_MULT)
+        dam = rndint_2d(1, self.level * self.LEVEL_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' level-based -{dam} HP ({targ.hp})', align=False)
 
@@ -181,7 +181,7 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def do_qi_based_dam(self) -> None:
         targ = self.target
-        dam = rndint_2d(self.qp, self.qp * QI_BASED_DAM_UPPER_MULT)
+        dam = rndint_2d(self.qp, self.qp * self.QI_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' qi-based -{dam} HP ({targ.hp})', align=False)
 
@@ -190,13 +190,13 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def do_speed_based_dam(self) -> None:
         targ = self.target
-        dam = rndint_2d(1, self.speed_full * STAT_BASED_DAM_UPPER_MULT)
+        dam = rndint_2d(1, self.speed_full * self.STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' speed-based -{dam} HP ({targ.hp})', align=False)
 
     def do_stam_dam(self) -> None:
         targ = self.target
-        dam = round(targ.stamina_max * STAMINA_DAMAGE)
+        dam = round(targ.stamina_max * self.STAMINA_DAMAGE)
         targ.change_stamina(-dam)
         prefix = 'lying ' if targ.check_status('lying') else ''
         targ.set_ascii(prefix + 'Hit Effect')
@@ -204,7 +204,7 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def do_strength_based_dam(self) -> None:
         targ = self.target
-        dam = rndint_2d(1, self.strength_full * STAT_BASED_DAM_UPPER_MULT)
+        dam = rndint_2d(1, self.strength_full * self.STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' strength-based -{dam} HP ({targ.hp})', align=False)
 
@@ -217,7 +217,7 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def get_move_time_cost(self, move_obj: Move) -> int:
         if self.check_status('slowed down'):
-            mob_mod = 1 - MOB_DAM_PENALTY
+            mob_mod = 1 - self.MOB_DAM_PENALTY
         else:
             mob_mod = 1
         cost = move_obj.time_cost / (self.speed_full * mob_mod)
@@ -274,7 +274,7 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def try_insta_ko(self) -> None:
         targ = self.target
-        if rnd() <= INSTA_KO_CHANCE:
+        if rnd() <= self.INSTA_KO_CHANCE:
             dam = targ.hp
             self.current_fight.display('INSTANT KNOCK-OUT!!!')
             targ.take_damage(dam)
@@ -285,7 +285,7 @@ class StrikeMechanics(FighterAPI, ABC):
             kb = 0
             if not targ.check_status('lying'):
                 dam_ratio = self.dam / targ.hp_max
-                kb = int(dam_ratio * KNOCKBACK_FULL_HP_DAM) - targ.momentum
+                kb = int(dam_ratio * self.KNOCKBACK_FULL_HP_DAM) - targ.momentum
             if kb > 0:
                 targ.cause_knockback(kb)
             elif kb < 0:
@@ -295,19 +295,19 @@ class StrikeMechanics(FighterAPI, ABC):
         targ = self.target
         if not targ.check_status('lying'):
             hp_before_dam = targ.hp + self.dam
-            if self.dam >= hp_before_dam * KNOCKDOWN_HP_THRESHOLD:
+            if self.dam >= hp_before_dam * self.KNOCKDOWN_HP_THRESHOLD:
                 targ.cause_fall()
-            elif self.dam >= hp_before_dam * OFF_BALANCE_HP_THRESHOLD:
+            elif self.dam >= hp_before_dam * self.OFF_BALANCE_HP_THRESHOLD:
                 targ.cause_off_balance()
 
     def try_shock_move(self) -> None:
         targ = self.target
-        if rnd() <= SHOCK_CHANCE:
+        if rnd() <= self.SHOCK_CHANCE:
             targ.cause_shock()
 
     def try_stun(self) -> None:
         targ = self.target
-        if (self.dam >= targ.hp_max / STUN_HP_DIVISOR) or (
+        if (self.dam >= targ.hp_max / self.STUN_HP_DIVISOR) or (
             self.stun_chance and rnd() <= self.stun_chance
         ):
             targ.cause_stun()
