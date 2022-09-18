@@ -1,6 +1,6 @@
 from abc import ABC
 import random
-from typing import Set, List, Optional, Text
+from typing import List, Optional, Text
 
 from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.kung_fu import techniques
@@ -8,13 +8,6 @@ from kf_lib.kung_fu.techniques import Tech
 
 
 class TechMethods(FighterAPI, ABC):
-    ADVANCED_TECH_AT_LV = 19
-    LVS_GET_GENERAL_TECH = {13, 15, 17}
-
-    num_techs_choose = 3
-    num_techs_choose_upgrade = 3
-    techs: Set[Tech] = None
-
     def add_tech(self, tech: Tech) -> None:
         self.techs.add(tech)
         self.apply_tech(tech)

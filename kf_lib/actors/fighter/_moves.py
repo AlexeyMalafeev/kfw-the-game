@@ -1,7 +1,7 @@
 from abc import ABC
 from math import ceil
 import random
-from typing import List
+from typing import List, Union
 
 from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.kung_fu import moves
@@ -30,12 +30,14 @@ class MoveMethods(FighterAPI, ABC):
     def get_tier_str_for_lv(self) -> str:
         return str(self.get_move_tier_for_lv())
 
-    def learn_move(self, move: moves.Move, silent: bool = False) -> None:
+    def learn_move(self, move: Union[moves.Move, str], silent: bool = False) -> None:
+        # do not remove support for str
+        if isinstance(move, str):
+            move = moves.get_move_obj(move)
         if move not in self.moves:
             self.moves.append(move)
         else:
             print(f'warning: trying to learn move {move} that is already known by {self}')
-            # pak()
         if not silent:
             self.show(f'{self.name} learns {move.name} ({move.descr}).')
             self.log(f'Learns {move.name} ({move.descr})')

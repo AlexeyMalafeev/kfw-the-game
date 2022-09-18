@@ -45,7 +45,7 @@ class ExpMethods(FighterAPI, ABC):
     def get_rel_strength(
         self,
         *opp: FighterAPI,
-        allies=Optional[Iterable[FighterAPI]],
+        allies: Optional[Iterable[FighterAPI]] = None,
     ) -> Tuple[float, str]:
         """
         Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend
@@ -53,7 +53,7 @@ class ExpMethods(FighterAPI, ABC):
         """
         pwr = sum([op.get_exp_worth() for op in opp])
         own_pwr = self.get_exp_worth()
-        if allies:
+        if allies is not None:
             own_pwr += sum([al.get_exp_worth() for al in allies])
         opp_to_self_pwr_ratio = round(pwr / own_pwr, 2)
         for threshold, legend in self.RISK_DESCR_TABLE:

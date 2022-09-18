@@ -3,7 +3,7 @@ from typing import List, Set, Text, Tuple, Union
 from kf_lib.kung_fu import styles
 from kf_lib.actors.fighter._ai import FightAIMethods
 from kf_lib.actors.fighter._ascii import FighterWithASCII
-from kf_lib.actors.fighter._base_fighter import BaseFighter
+from kf_lib.actors.fighter._fighter_repr import FighterRepr
 from kf_lib.actors.fighter._basic_attributes import BasicAttributes
 from kf_lib.actors.fighter._blank_io import BlankFighterIO
 from kf_lib.actors.fighter._distances import DistanceMethods
@@ -21,7 +21,7 @@ from kf_lib.actors.fighter._weapons import WeaponMethods
 
 
 class Fighter(
-    BaseFighter,
+    FighterRepr,
     BasicAttributes,
     BlankFighterIO,
     DistanceMethods,
@@ -71,7 +71,7 @@ class Fighter(
         self.moves = []
         self.fav_move_features: Set[Text] = set()
         self.style = None
-        self.techs = []
+        self.techs = set()
 
         self.init_fight_attributes()
 

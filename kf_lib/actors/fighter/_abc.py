@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from collections import deque
 from typing import (
     Dict,
+    Final,
     Iterable,
     List,
     Literal,
@@ -26,6 +27,9 @@ if TYPE_CHECKING:
 
 
 class FighterAPI(ABC):
+    ADVANCED_TECH_AT_LV: Final[int] = 19
+    LVS_GET_GENERAL_TECH: Final[Set[int]] = {13, 15, 17}
+
     act_allies: List[FighterAPI] = None
     act_targets: List[FighterAPI] = None
     action: Optional[Move] = None
@@ -95,6 +99,8 @@ class FighterAPI(ABC):
     name: Text = None
     num_atts_choose: int = None
     num_moves_choose: int = None
+    num_techs_choose: int = 3
+    num_techs_choose_upgrade: int = 3
     off_balance_atk_mult: float = None
     off_balance_dfs_mult: float = None
     preemptive_chance: float = None
@@ -125,7 +131,7 @@ class FighterAPI(ABC):
     stun_chance: float = None
     style: Style = None
     target: Optional[FighterAPI] = None
-    techs: List[Tech] = None
+    techs: Set[Tech] = None
     to_block: float = None
     to_dodge: float = None
     to_hit: float = None
@@ -497,7 +503,7 @@ class FighterAPI(ABC):
     def get_rel_strength(
         self,
         *opp: FighterAPI,
-        allies: Optional[Iterable[FighterAPI]],
+        allies: Optional[Iterable[FighterAPI]] = None,
     ) -> Tuple[float, str]:
         pass
 
@@ -551,7 +557,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def learn_move(self, move: Move, silent: bool = False) -> None:
+    def learn_move(self, move: Union[Move, str], silent: bool = False) -> None:
         pass
 
     @abstractmethod

@@ -71,7 +71,7 @@ class HumanControlledFighter(Fighter):
         options = pretty_table(options, sep=' ', as_list=True)
         first_line = options[0]
         options = options[1:]
-        options = list(zip(options, [m.name for m in sample]))
+        options = list(zip(options, [m for m in sample]))
         mn = menu(
             options,
             title='Choose a move to learn:\n     ' + first_line,

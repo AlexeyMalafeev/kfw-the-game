@@ -1,3 +1,4 @@
+from __future__ import annotations
 from abc import ABC
 import random
 from typing import TYPE_CHECKING

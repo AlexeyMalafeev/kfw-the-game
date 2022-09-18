@@ -1,10 +1,10 @@
 from abc import ABC
-from typing import List, Set, Text, Tuple
+from typing import List, Text, Tuple
 
 from kf_lib.actors.fighter._abc import FighterAPI
 
 
-class BaseFighter(FighterAPI, ABC):
+class FighterRepr(FighterAPI, ABC):
     def __repr__(self) -> Text:
         return self.get_init_string()
 
