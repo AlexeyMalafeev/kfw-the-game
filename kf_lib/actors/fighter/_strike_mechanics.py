@@ -1,7 +1,13 @@
+from abc import ABC
 import random
+from typing import TYPE_CHECKING
 
+from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.utils import rnd, rndint, rndint_2d
-from kf_lib.actors.fighter._ascii import FighterWithASCII
+
+if TYPE_CHECKING:
+    from kf_lib.kung_fu.moves import Move
+
 
 BLEEDING_PART_OF_DAM = 0.15
 BLOCK_DIVISOR = 2
@@ -36,10 +42,8 @@ STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
 TIME_UNIT_MULTIPLIER = 20
 
 
-class StrikeMechanics(FighterWithASCII):
-    took_damage = False
-
-    def calc_atk(self, action):
+class StrikeMechanics(FighterAPI, ABC):
+    def calc_atk(self, action: Move) -> None:
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
         strike_mult = 1.0
         for feature in action.features:
@@ -60,7 +64,7 @@ class StrikeMechanics(FighterWithASCII):
             self.to_hit *= self.fury_to_all_mult
 
     # todo how is calc_dfs used? why not relative to attacker?
-    def calc_dfs(self):
+    def calc_dfs(self) -> None:
         """Calculate defense numbers."""
         if self.check_status('shocked'):
             self.to_dodge = 0
@@ -90,18 +94,18 @@ class StrikeMechanics(FighterWithASCII):
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
 
-    def calc_move_complexity(self, move_obj):
+    def calc_move_complexity(self, move_obj: Move) -> float:
         return move_obj.complexity * self.move_complexity_mult
 
-    def calc_stamina_factor(self):
+    def calc_stamina_factor(self) -> None:
         # todo docstring calc_stamina_factor
         self.stamina_factor = self.stamina / self.stamina_max / 2 + STAMINA_FACTOR_BIAS
 
-    def cause_bleeding(self):
+    def cause_bleeding(self) -> None:
         self.current_fight.display(f'{self.target.name} is BLEEDING!')
         self.target.bleeding += max(1, round(self.dam * BLEEDING_PART_OF_DAM))
 
-    def cause_fall(self):
+    def cause_fall(self) -> None:
         lying_dur = rndint_2d(DUR_LYING_MIN, DUR_LYING_MAX) // self.speed_full
         self.add_status('lying', lying_dur)
         self.add_status('skip', lying_dur)
@@ -111,7 +115,7 @@ class StrikeMechanics(FighterWithASCII):
         self.current_fight.display(f' falls to the ground! -{fall_dam} HP ({self.hp})', align=False)
         self.momentum = 0
 
-    def cause_knockback(self, dist):
+    def cause_knockback(self, dist: int) -> None:
         opp = self.target
         self.change_distance(dist, opp)
         s = 's' if dist > 1 else ''
@@ -119,12 +123,12 @@ class StrikeMechanics(FighterWithASCII):
         self.ascii_buffer += dist
         self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
 
-    def cause_off_balance(self):
+    def cause_off_balance(self) -> None:
         ob_dur = rndint_2d(DUR_OFF_BAL_MIN, DUR_OFF_BAL_MAX) // self.speed_full
         self.add_status('off-balance', ob_dur)
         self.current_fight.display(' off-balance!', align=False)
 
-    def cause_shock(self):
+    def cause_shock(self) -> None:
         """Shock is worse than stun."""
         shock_dur = rndint_2d(DUR_SHOCK_MIN, DUR_SHOCK_MAX) // self.speed_full
         self.add_status('shocked', shock_dur)
@@ -133,7 +137,7 @@ class StrikeMechanics(FighterWithASCII):
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' shocked!', align=False)
 
-    def cause_slow_down(self):
+    def cause_slow_down(self) -> None:
         slow_dur = rndint_2d(DUR_SLOW_MIN, DUR_SLOW_MAX) // self.speed_full
         self.add_status('slowed down', slow_dur)
         # todo do not repeat this line in all functions, use helper
@@ -141,7 +145,7 @@ class StrikeMechanics(FighterWithASCII):
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' slowed down!', align=False)
 
-    def cause_stun(self):
+    def cause_stun(self) -> None:
         """Stun is not as bad as shock."""
         stun_dur = rndint_2d(DUR_STUN_MIN, DUR_STUN_MAX) // self.speed_full
         self.add_status('stunned', stun_dur)
@@ -150,47 +154,47 @@ class StrikeMechanics(FighterWithASCII):
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' stunned!', align=False)
 
-    def do_agility_based_dam(self):
+    def do_agility_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(1, self.agility_full * STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' agility-based -{dam} HP ({targ.hp})', align=False)
 
-    def do_knockback(self):
+    def do_knockback(self) -> None:
         dist = random.choice(KNOCKBACK_DIST_FORCED)
         self.target.cause_knockback(dist)
 
-    def do_level_based_dam(self):
+    def do_level_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(1, self.level * LEVEL_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' level-based -{dam} HP ({targ.hp})', align=False)
 
-    def do_mob_dam(self):
+    def do_mob_dam(self) -> None:
         self.target.cause_slow_down()
 
-    def do_move_functions(self, m):
+    def do_move_functions(self, m: Move) -> None:
         if m.functions:
             for fun_s in m.functions:
                 fun = getattr(self, fun_s)
                 fun()
 
-    def do_qi_based_dam(self):
+    def do_qi_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(self.qp, self.qp * QI_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' qi-based -{dam} HP ({targ.hp})', align=False)
 
-    def do_shock_move(self):
+    def do_shock_move(self) -> None:
         self.target.cause_shock()
 
-    def do_speed_based_dam(self):
+    def do_speed_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(1, self.speed_full * STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' speed-based -{dam} HP ({targ.hp})', align=False)
 
-    def do_stam_dam(self):
+    def do_stam_dam(self) -> None:
         targ = self.target
         dam = round(targ.stamina_max * STAMINA_DAMAGE)
         targ.change_stamina(-dam)
@@ -198,20 +202,20 @@ class StrikeMechanics(FighterWithASCII):
         targ.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' gasps for breath!', align=False)
 
-    def do_strength_based_dam(self):
+    def do_strength_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(1, self.strength_full * STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
         self.current_fight.display(f' strength-based -{dam} HP ({targ.hp})', align=False)
 
-    def do_takedown(self):
+    def do_takedown(self) -> None:
         targ = self.target
         targ.cause_fall()
 
-    def get_move_fail_chance(self, move_obj):
+    def get_move_fail_chance(self, move_obj: Move) -> float:
         return self.calc_move_complexity(move_obj) ** 2 / self.agility_full ** 2
 
-    def get_move_time_cost(self, move_obj):
+    def get_move_time_cost(self, move_obj: Move) -> int:
         if self.check_status('slowed down'):
             mob_mod = 1 - MOB_DAM_PENALTY
         else:
@@ -223,26 +227,25 @@ class StrikeMechanics(FighterWithASCII):
             cost *= self.maneuver_time_cost_mult
         return round(cost)
 
-    def get_rep_actions_factor(self, move):
+    def get_rep_actions_factor(self, move: Move) -> float:
         n = self.previous_actions.count(move)  # 0-3
         return 1.0 + n * 0.33  # up to 1.99
 
-    def take_damage(self, dam):
+    def take_damage(self, dam: int) -> None:
         self.change_hp(-dam)
         self.took_damage = True
 
-    def try_cause_bleeding(self):
+    def try_cause_bleeding(self) -> None:
         if self.chance_cause_bleeding and rnd() <= self.chance_cause_bleeding:
             self.cause_bleeding()
 
-    def try_critical(self):
+    def try_critical(self) -> None:
         if rnd() <= self.critical_chance:
             self.dam *= self.critical_dam_mult
             self.dam = round(self.dam)
             self.current_fight.display('CRITICAL!')
-            # print('critical')
 
-    def try_environment(self, mode):
+    def try_environment(self, mode: str) -> None:
         if (
             self.environment_chance
             and self.current_fight.environment_allowed
@@ -257,27 +260,26 @@ class StrikeMechanics(FighterWithASCII):
                 self.to_dodge *= self.current_fight.environment_bonus
             self.current_fight.display(f'{self.name} uses the environment!')
 
-    def try_epic(self):
+    def try_epic(self) -> None:
         if self.epic_chance and rnd() <= self.epic_chance:
             self.dam *= self.epic_dam_mult
             self.dam = round(self.dam)
             self.current_fight.display('~*~*~EPIC!!!~*~*~')
-            # print('epic')
 
-    def try_hit_disarm(self):
+    def try_hit_disarm(self) -> None:
         tgt = self.target
         if tgt.weapon and self.hit_disarm and rnd() <= self.hit_disarm:
             tgt.disarm()
             self.current_fight.display(f'{self.name} disarms {tgt.name} while attacking')
 
-    def try_insta_ko(self):
+    def try_insta_ko(self) -> None:
         targ = self.target
         if rnd() <= INSTA_KO_CHANCE:
             dam = targ.hp
             self.current_fight.display('INSTANT KNOCK-OUT!!!')
             targ.take_damage(dam)
 
-    def try_knockback(self):
+    def try_knockback(self) -> None:
         if 'do_knockback' not in self.action.functions:
             targ = self.target
             kb = 0
@@ -289,7 +291,7 @@ class StrikeMechanics(FighterWithASCII):
             elif kb < 0:
                 targ.momentum += kb  # slow down the rushing opponent
 
-    def try_knockdown(self):
+    def try_knockdown(self) -> None:
         targ = self.target
         if not targ.check_status('lying'):
             hp_before_dam = targ.hp + self.dam
@@ -298,19 +300,19 @@ class StrikeMechanics(FighterWithASCII):
             elif self.dam >= hp_before_dam * OFF_BALANCE_HP_THRESHOLD:
                 targ.cause_off_balance()
 
-    def try_shock_move(self):
+    def try_shock_move(self) -> None:
         targ = self.target
         if rnd() <= SHOCK_CHANCE:
             targ.cause_shock()
 
-    def try_stun(self):
+    def try_stun(self) -> None:
         targ = self.target
         if (self.dam >= targ.hp_max / STUN_HP_DIVISOR) or (
             self.stun_chance and rnd() <= self.stun_chance
         ):
             targ.cause_stun()
 
-    def try_unblockable(self):
+    def try_unblockable(self) -> None:
         if self.unblock_chance and rnd() <= self.unblock_chance:
             self.target.to_block = 0
             self.current_fight.display('UNBLOCKABLE!')

@@ -129,6 +129,7 @@ class FighterAPI(ABC):
     to_block: float = None
     to_dodge: float = None
     to_hit: float = None
+    took_damage: bool = None
     toughness: int = None
     unblock_chance: float = None
     weapon: Optional[Weapon] = None
@@ -178,6 +179,50 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def calc_atk(self, action: Move) -> None:
+        pass
+
+    @abstractmethod
+    def calc_dfs(self) -> None:
+        pass
+
+    @abstractmethod
+    def calc_move_complexity(self, move_obj: Move) -> float:
+        pass
+
+    @abstractmethod
+    def calc_stamina_factor(self) -> None:
+        pass
+
+    @abstractmethod
+    def cause_bleeding(self) -> None:
+        pass
+
+    @abstractmethod
+    def cause_fall(self) -> None:
+        pass
+
+    @abstractmethod
+    def cause_knockback(self, dist: int) -> None:
+        pass
+
+    @abstractmethod
+    def cause_off_balance(self) -> None:
+        pass
+
+    @abstractmethod
+    def cause_shock(self) -> None:
+        pass
+
+    @abstractmethod
+    def cause_slow_down(self) -> None:
+        pass
+
+    @abstractmethod
+    def cause_stun(self) -> None:
+        pass
+
+    @abstractmethod
     def change_att(self, att: Text, amount: int) -> None:
         pass
 
@@ -195,6 +240,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def change_stamina(self, amount: int) -> None:
+        pass
+
+    @abstractmethod
+    def change_stat(self, *args, **kwargs) -> None:
         pass
 
     @abstractmethod
@@ -243,7 +292,27 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def do_agility_based_dam(self) -> None:
+        pass
+
+    @abstractmethod
     def do_counter(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_knockback(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_level_based_dam(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_mob_dam(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_move_functions(self, m: Move) -> None:
         pass
 
     @abstractmethod
@@ -251,7 +320,31 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def do_qi_based_dam(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_shock_move(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_speed_based_dam(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_stam_dam(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_strength_based_dam(self) -> None:
+        pass
+
+    @abstractmethod
     def do_strike(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_takedown(self) -> None:
         pass
 
     @abstractmethod
@@ -332,6 +425,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_move_fail_chance(self, move_obj: Move) -> float:
+        pass
+
+    @abstractmethod
     def get_moves_to_choose(self, tier: int) -> List[Move]:
         pass
 
@@ -345,6 +442,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_move_time_cost(self, move_obj: Move) -> int:
+        pass
+
+    @abstractmethod
     def get_opponents_power(self) -> int:
         pass
 
@@ -354,6 +455,10 @@ class FighterAPI(ABC):
         *opp: FighterAPI,
         allies: Optional[Iterable[FighterAPI]],
     ) -> Tuple[float, str]:
+        pass
+
+    @abstractmethod
+    def get_rep_actions_factor(self, move: Move) -> float:
         pass
 
     @abstractmethod
@@ -510,11 +615,31 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def take_damage(self, dam: int) -> None:
+        pass
+
+    @abstractmethod
     def try_block_disarm(self) -> None:
         pass
 
     @abstractmethod
+    def try_cause_bleeding(self) -> None:
+        pass
+
+    @abstractmethod
     def try_counter(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_critical(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_environment(self, mode: str) -> None:
+        pass
+
+    @abstractmethod
+    def try_epic(self) -> None:
         pass
 
     @abstractmethod
@@ -526,11 +651,39 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def try_insta_ko(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_hit_disarm(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_knockback(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_knockdown(self) -> None:
+        pass
+
+    @abstractmethod
     def try_ko(self) -> None:
         pass
 
     @abstractmethod
+    def try_shock_move(self) -> None:
+        pass
+
+    @abstractmethod
     def try_strike(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_stun(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_unblockable(self) -> None:
         pass
 
     @abstractmethod
