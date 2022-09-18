@@ -6,6 +6,8 @@ from kf_lib.actors.fighter._ascii import FighterWithASCII
 from kf_lib.actors.fighter._base_fighter import BaseFighter
 from kf_lib.actors.fighter._basic_attributes import BasicAttributes
 from kf_lib.actors.fighter._blank_io import BlankFighterIO
+from kf_lib.actors.fighter._distances import DistanceMethods
+from kf_lib.actors.fighter._exp_worth import ExpMethods
 from kf_lib.actors.fighter._fight_actions import FighterWithActions
 from kf_lib.actors.fighter._fight_attributes import FightAttributes
 from kf_lib.actors.fighter._fight_utils import FightUtils
@@ -22,6 +24,8 @@ class Fighter(
     BaseFighter,
     BasicAttributes,
     BlankFighterIO,
+    DistanceMethods,
+    ExpMethods,
     FightAIMethods,
     FightAttributes,
     FightUtils,

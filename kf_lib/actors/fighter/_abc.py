@@ -159,6 +159,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def add_tech(self, tech: Tech) -> None:
+        pass
+
+    @abstractmethod
     def apply_bleeding(self) -> None:
         pass
 
@@ -168,6 +172,30 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def apply_move_cost(self) -> None:
+        pass
+
+    @abstractmethod
+    def apply_tech(self, *techs: Tech) -> None:
+        pass
+
+    @abstractmethod
+    def arm(self, weapon: Optional[Union[Weapon, str]] = None) -> None:
+        pass
+
+    @abstractmethod
+    def arm_improv(self) -> None:
+        pass
+
+    @abstractmethod
+    def arm_normal(self) -> None:
+        pass
+
+    @abstractmethod
+    def arm_police(self) -> None:
+        pass
+
+    @abstractmethod
+    def arm_robber(self) -> None:
         pass
 
     @abstractmethod
@@ -267,6 +295,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def choose_best_norm_wp(self) -> None:
+        pass
+
+    @abstractmethod
     def choose_better_att(self, atts: List[Text]) -> Text:
         pass
 
@@ -280,7 +312,15 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def choose_new_tech(self) -> None:
+        pass
+
+    @abstractmethod
     def choose_target(self) -> None:
+        pass
+
+    @abstractmethod
+    def choose_tech_to_upgrade(self) -> None:
         pass
 
     @abstractmethod
@@ -289,6 +329,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def defend(self) -> None:
+        pass
+
+    @abstractmethod
+    def disarm(self) -> None:
         pass
 
     @abstractmethod
@@ -466,12 +510,32 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_style_string(self, show_emph: bool = False) -> str:
+        pass
+
+    @abstractmethod
+    def get_style_tech_if_any(self) -> Optional[Tech]:
+        pass
+
+    @abstractmethod
+    def get_techs_string(self, show_descr: bool = True, header: Text = 'Techniques:') -> Text:
+        pass
+
+    @abstractmethod
+    def get_techs_to_choose(self, annotated: bool = False, for_upgrade: bool = False) -> List[Tech]:
+        pass
+
+    @abstractmethod
     def get_tier_str_for_lv(self) -> str:
         pass
 
     @staticmethod
     @abstractmethod
     def get_vis_distance(dist: int) -> str:
+        pass
+
+    @abstractmethod
+    def get_weapon_techs(self) -> List[Tech]:
         pass
 
     @abstractmethod
@@ -496,6 +560,14 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def learn_random_move(self, move_tier: int, silent: bool = False) -> None:
+        pass
+
+    @abstractmethod
+    def learn_random_new_tech(self) -> None:
+        pass
+
+    @abstractmethod
+    def learn_tech(self, *techs: Tech) -> None:
         pass
 
     @abstractmethod
@@ -536,6 +608,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def resolve_moves_on_level_up(self) -> None:
+        pass
+
+    @abstractmethod
+    def resolve_techs_on_level_up(self) -> None:
         pass
 
     @abstractmethod
@@ -586,7 +662,19 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def set_rand_techs(self, forced: bool = False) -> None:
+        pass
+
+    @abstractmethod
+    def set_style(self, style: Union[Style, str]) -> None:
+        pass
+
+    @abstractmethod
     def set_target(self, target: FighterAPI) -> None:
+        pass
+
+    @abstractmethod
+    def set_techs(self, tech_names: List[Text]) -> None:
         pass
 
     @abstractmethod
@@ -691,7 +779,15 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def unlearn_tech(self, tech: Tech) -> None:
+        pass
+
+    @abstractmethod
     def upgrade_att(self) -> None:
+        pass
+
+    @abstractmethod
+    def upgrade_tech(self, tech: Tech) -> None:
         pass
 
     @abstractmethod
