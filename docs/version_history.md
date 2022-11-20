@@ -1,6 +1,6 @@
 ### v0.6.9-beta
-""  
-Month Day, Year
+"Not Fail, But Experience"  
+November 20, 2022
 
 1. **New experience system**:
    1. feat: change how exp is computed in fights
@@ -33,12 +33,16 @@ Month Day, Year
 7. feat: toughness - damage reduction that is level-dependent (for all fighters)
 8. feat: Drunken has improved ground defense
 9. fix: UI functions in stories
-10. refactor: FighterAPI
-
+10. **refactor: FighterAPI (ABC for Fighter)**
 
 
 ### Coming soon:
+* flower kung-fu has moves (only weak and pathetic)
+* initial attribute values in FighterAPI
+* constants in FighterAPI
+* fix possible bug in exp progression in lazy / hardworking players 
 * speed up early progress? slow down late progress (progressive exp, e.g. step 20 start from 40 or even 20 or use base fight exp as step)
+* butt strike, hip strike - handle specially
 * encounter in practice at school - improve move
 * compute crowd exp worth differently?
 * come back to experiments with level significance
