@@ -1,9 +1,12 @@
-from ._base_fighter import BaseFighter
+from abc import ABC
+from typing import Text
+
+from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.kung_fu import ascii_art
 
 
-class FighterWithASCII(BaseFighter):
-    def refresh_ascii(self):
+class FighterWithASCII(FighterAPI, ABC):
+    def refresh_ascii(self) -> None:
         self.ascii_l, self.ascii_r = self.action.ascii_l, self.action.ascii_r
         targ = self.target
         self.ascii_buffer = targ.ascii_buffer = 0
@@ -12,11 +15,14 @@ class FighterWithASCII(BaseFighter):
         else:
             targ.set_ascii('Stance')
 
-    def set_ascii(self, ascii_name):
+    def set_ascii(
+            self,
+            ascii_name: Text,
+    ) -> None:
         self.ascii_l, self.ascii_r = ascii_art.get_ascii(ascii_name)
         self.ascii_name = ascii_name
 
-    def show_ascii(self):
+    def show_ascii(self) -> None:
         try:
             if self in self.current_fight.side_a:
                 a = self.ascii_l

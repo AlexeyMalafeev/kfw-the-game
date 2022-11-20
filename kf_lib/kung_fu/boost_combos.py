@@ -31,11 +31,13 @@ DRUNKEN1 = dict(
     drunken_strike_mult=b.DRUNKEN_STRIKE_MULT1,
     off_balance_atk_mult=b.OFF_BAL_MULT1,
     off_balance_dfs_mult=b.OFF_BAL_MULT1,
+    lying_dfs_mult=b.LYING_DFS_MULT1,
 )
 DRUNKEN2 = dict(
     drunken_strike_mult=b.DRUNKEN_STRIKE_MULT2,
     off_balance_atk_mult=b.OFF_BAL_MULT2,
     off_balance_dfs_mult=b.OFF_BAL_MULT2,
+    lying_dfs_mult=b.LYING_DFS_MULT2,
 )
 EXOTIC1 = dict(
     knee_strike_mult=b.STRIKE_MULT1,

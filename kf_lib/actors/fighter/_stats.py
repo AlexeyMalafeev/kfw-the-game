@@ -1,6 +1,8 @@
-from ._base_fighter import BaseFighter
+from abc import ABC
+
+from kf_lib.actors.fighter._abc import FighterAPI
 
 
-class FighterStats(BaseFighter):
-    def change_stat(self, *args):
+class FighterStats(FighterAPI, ABC):
+    def change_stat(self, *args, **kwargs) -> None:
         pass

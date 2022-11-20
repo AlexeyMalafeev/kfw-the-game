@@ -6,27 +6,25 @@ from kf_lib.actors.fighter import Fighter
 # todo refactor importing get_rand_traits
 # have to import separately or .set_rand_traits doesn't work
 from kf_lib.actors.traits import get_rand_traits
+from kf_lib.constants.experience import (
+    ACCOMPL_EXP,
+    EXP_PER_LEVEL,
+    HOME_TRAINING_EXP,
+    MASTER_TRAINING_EXP,
+    SCHOOL_TRAINING_EXP,
+)
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.things import items
-from kf_lib.utils import add_sign, enum_words, rnd, rndint
+from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
+
 
 # todo refactor _base_player into specific modules
 
-# todo compute accompl exp dynamically
-ACCOMPL_EXP = [50 * i for i in range(0, 25)]  # should start with 0
 EXTREMELY_GOOD_LUCK = 20
 EXTREMELY_BAD_LUCK = 1
 LUCK_ACCOMPLISHMENT_THRESHOLD = 10
-# todo compute level up exp dynamically
-LV_UP_EXP = [
-    25 * x ** 2 + 75 * x for x in range(0, 51)
-]  # ignore value at index 0; index = current lv (how many exp
 MASTER_GREETING_CHANCE = 0.1
-SCHOOL_TRAINING_EXP = 10
-# todo compute accompl exp dynamically
-# todo all luck-related to a separate sub-module (mix-in)
-# to next?); max lv = 50
 TUITION_FEE = 20
 WAGE = 50
 
@@ -36,10 +34,12 @@ WAGE = 50
 
 class BasePlayer(Fighter):
     is_player = True
-    savable_atts = '''exp home_training_exp_mult is_master new_school_name money reputation 
+    savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
     quotes = 'hero'
+
+    exp = Integer(minvalue=0, action='raise')
 
     # the order of arguments should not be changed, or saving will break
     def __init__(
@@ -77,7 +77,6 @@ class BasePlayer(Fighter):
         self.gamble_continue = 0.4
         self.gamble_with_gambler = 0.3
         self.grab_improvised_weapon = 0.5
-        self.home_training_exp_mult = 1.0
         self.item_is_found = 0.01
         self.item_is_lost = 0.01
         self.master_joins_fight = 0.5
@@ -135,8 +134,7 @@ class BasePlayer(Fighter):
             self.accompl.append(label)
             self.accompl_dates.append(self.game.get_date())
             self.write(f'Accomplishment: {label}')
-            # gain experience points; the more accomplishments, the more exp.p.
-            self.gain_exp(ACCOMPL_EXP[len(self.accompl)])
+            self.gain_exp(ACCOMPL_EXP)
             self.pak()
 
     def add_enemy(self, enemy):
@@ -468,7 +466,7 @@ class BasePlayer(Fighter):
         return self.game.masters[self.style.name]
 
     def get_next_lv_exp(self):
-        return round(LV_UP_EXP[self.level] * self.next_lv_exp_mult)
+        return round(EXP_PER_LEVEL * self.next_lv_exp_mult * self.level)
 
     def get_nonhuman_friends(self):
         return [f for f in self.friends if not f.is_human]
@@ -591,12 +589,11 @@ class BasePlayer(Fighter):
     def practice_home(self, suppress_log=False):
         if not suppress_log:
             self.log('Practices at home.')
-        exp = round((self.level + len(self.friends)) * self.home_training_exp_mult)
-        self.gain_exp(exp, silent=True)
+        self.gain_exp(HOME_TRAINING_EXP, silent=True)
 
     def practice_master(self):
         self.log('Practices at his school.')
-        base_exp = SCHOOL_TRAINING_EXP * 2
+        base_exp = MASTER_TRAINING_EXP
         base_exp = round(base_exp * self.school_training_exp_mult)
         min_exp = round(base_exp * 0.8)
         max_exp = round(base_exp * 1.2)

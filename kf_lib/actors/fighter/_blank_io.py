@@ -1,18 +1,23 @@
-class BlankFighterIO:
-    def log(self, text):
-        pass
+from abc import ABC
 
-    def msg(self, *args, **kwargs):
-        pass
+from kf_lib.actors.fighter._abc import FighterAPI
 
-    def pak(self):
-        pass
 
-    def show(self, text, align=False):
-        pass
-
+class BlankFighterIO(FighterAPI, ABC):
     def cls(self):
         pass
 
-    def write(self, *args, **kwargs):
+    def log(self, text: str) -> None:
+        pass
+
+    def msg(self, *args, **kwargs) -> None:
+        pass
+
+    def pak(self) -> None:
+        pass
+
+    def show(self, text: str, align: bool = False) -> None:
+        pass
+
+    def write(self, *args, **kwargs) -> None:
         pass

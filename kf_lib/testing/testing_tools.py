@@ -318,7 +318,7 @@ class Tester(object):
     def two_players_fight(self):
         self.g.players[0].fight(self.g.players[1], hide_stats=False)
 
-    def quick_exp(self, exp=10000):
+    def quick_exp(self, exp=1000):
         self.g.current_player.gain_exp(exp)
 
     def quick_money(self, money=10000):

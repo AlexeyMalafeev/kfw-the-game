@@ -53,12 +53,13 @@ HEALTH1 = 0.2
 HEALTH2 = 0.4
 HIT_DISARM1 = 0.5
 HIT_DISARM2 = 1.0
-HOME_TRAIN_BONUS = 0.5
 HP_GAIN1 = 0.05
 HP_GAIN2 = 0.1
 HP_MULT = 1.5  # todo this is not used?
 IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
+LYING_DFS_MULT1 = 0.5
+LYING_DFS_MULT2 = 1.0
 MANEUVER_TIME_COST_MULT1 = -0.4
 MANEUVER_TIME_COST_MULT2 = -0.8
 MOVE_COMPLEXITY_MULT1 = -0.5
@@ -133,13 +134,13 @@ PMAP = (
     ),
     ('health_mult', 'health', 'health'),
     ('hit_disarm', 'disarm', 'disarm chance when attacking'),
-    ('home_training_exp_mult', 'home train.', 'home training'),
     ('hp_gain_mult', 'HP gain', 'HP gain per turn'),
     (
         'in_fight_impro_wp_chance',
         'improv.weapons',
         'in-fight improvised weapon chance',
     ),
+    ('lying_dfs_mult', 'lying dfs', 'defense while lying'),
     ('maneuver_time_cost_mult', 'maneuv.time', 'maneuver time cost'),
     (
         'preemptive_chance',

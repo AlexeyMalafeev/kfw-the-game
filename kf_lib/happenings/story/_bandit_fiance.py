@@ -43,7 +43,7 @@ class BanditFianceStory(BaseStory):
             f'I am sure {b.name} will listen."'
             f'\nOld Man: "What great good fortune that I could meet you today!"'
         )
-        g.msg(t)
+        p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -52,18 +52,18 @@ class BanditFianceStory(BaseStory):
             f'\nOld Man: "Please, sir, have mercy..."'
             f'\n{p.name}: "Wait, {b.name}, let us discuss this like civil men!"'
         )
-        g.msg(t)
+        p.msg(t)
         if p.fight(b):
-            g.show(f'{p.name}: "Do you see now? You are not a good match for this girl."')
-            g.show(f'{b.name}: "Forgive me, master! You won\'t see me again."')
-            g.pak()
+            p.show(f'{p.name}: "Do you see now? You are not a good match for this girl."')
+            p.show(f'{b.name}: "Forgive me, master! You won\'t see me again."')
+            p.pak()
             self.reward()
         else:
-            g.show(
+            p.show(
                 f'{b.name}: "It is no good, the police are coming! The people here are not '
                 f'hospitable at all. It is time for {b.name} to move on to the next town!"'
             )
-            g.pak()
+            p.pak()
 
         # end of the story
         self.end()

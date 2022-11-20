@@ -45,6 +45,31 @@ def get_blank_stats_dict():
     return dict(DEFAULT_STATS)
 
 
+def get_full_report(game_instance):
+    g = game_instance
+    labels = get_player_data(g.current_player, labels_only=True)
+    report = [[lab] for lab in labels]
+    for p in g.players:
+        data = get_player_data(p, data_only=True)
+        for i, d in enumerate(data):
+            report[i].append(d)
+    return report
+
+
+def get_full_report_string(game_instance):
+    g = game_instance
+    report = get_full_report(g)
+    num_columns = len(report[0])
+    lines = [[] for _ in report]
+    for ncol in range(num_columns):
+        width = max((len(str(x[ncol])) for x in report)) + COLUMN_INTERVAL
+        for k, line in enumerate(report):
+            lines[k].append('{:<{}}'.format(line[ncol], width))
+    lines = [''.join(line) for line in lines]
+    lines = [g.get_date()] + lines
+    return '\n'.join(lines)
+
+
 # todo refactor game_stats.get_player_data
 def get_player_data(p, labels_only=False, data_only=False):
     gs = p.get_stat
@@ -99,32 +124,3 @@ def get_player_data(p, labels_only=False, data_only=False):
         return [b for a, b in full]
     else:
         return full
-
-
-class StatGen(object):
-    def __init__(self, game):
-        self.game = game
-
-    def get_full_report(self):
-        g = self.game
-        labels = get_player_data(g.current_player, labels_only=True)
-        report = [[lab] for lab in labels]
-        for p in g.players:
-            data = get_player_data(p, data_only=True)
-            for i, d in enumerate(data):
-                report[i].append(d)
-        return report
-
-    def get_full_report_string(self):
-        g = self.game
-        report = self.get_full_report()
-        num_columns = len(report[0])
-        lines = [[] for _ in report]
-        for ncol in range(num_columns):
-            width = max((len(str(x[ncol])) for x in report)) + COLUMN_INTERVAL
-            for k, line in enumerate(report):
-                lines[k].append('{:<{}}'.format(line[ncol], width))
-
-        lines = [''.join(line) for line in lines]
-        lines = [g.get_date()] + lines
-        return '\n'.join(lines)

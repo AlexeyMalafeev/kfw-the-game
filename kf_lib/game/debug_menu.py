@@ -1,6 +1,7 @@
 import pprint
 
 from kf_lib.actors import fighter_factory
+from kf_lib.happenings.encounters import all_random_encounter_classes
 from kf_lib.happenings import tournament
 from kf_lib.kung_fu import techniques
 from kf_lib.kung_fu.moves import resolve_move_string
@@ -24,6 +25,7 @@ class DebugMenu:
                 ('Learn Tech', self.debug_learn_tech),
                 ('Fight Thug(s)', self.debug_fight_thugs),
                 ('Tournament', self.debug_tournament),
+                ('Encounter', self.debug_encounter),
                 ('Story', self.debug_story),
                 ('Inspect Player', self.debug_inspect_player),
                 ('Set Attribute', self.debug_set_att),
@@ -31,6 +33,13 @@ class DebugMenu:
             )
         )
         choice()
+
+    def debug_encounter(self):
+        enc_class = menu(
+            [(enc_cls.__name__, enc_cls) for enc_cls in all_random_encounter_classes],
+            title="Choose an encounter",
+        )
+        enc_class(self.g.current_player, check_if_happens=False)
 
     def debug_fight_thugs(self):
         p = self.g.current_player

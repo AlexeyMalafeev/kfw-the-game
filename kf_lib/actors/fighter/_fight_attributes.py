@@ -1,31 +1,28 @@
-from typing import Final
+from abc import ABC
+from collections import deque
+from typing import Final, Union
 
-from ._basic_attributes import BasicAttributes
+from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.utils import Float, Integer
 
 
-# todo move the below to class constants?
-COUNTER_AGILITY_ADJUST = 3  # this will get subtracted from agility_full
-COUNTER_PER_AGILITY_POINT = 0.05
-CRITICAL_AGILITY_ADJUST = 3
-CRITICAL_PER_AGILITY_POINT = 0.05
-EPIC_CHANCE_BASE = 0.0
-EPIC_CHANCE_INCR_PER_LV = 0.005
-HP_PER_HEALTH_LV = 50
-MAX_RESIST_KO = 0.5
-QP_BASE = 0
-QP_INCR_PER_LV = 5
-QP_PORTION_RESTORED_PER_TURN = 0.2
-STAMINA_BASE = 50  # for all fighter levels
-STAMINA_INCR_PER_LV = 10
-STAMINA_PORTION_RESTORED_PER_TURN = 0.1
-
-
-class FightAttributes(BasicAttributes):
+class FightAttributes(FighterAPI, ABC):
     # common for all fighters, not modified
-    BLOCK_POWER: Final = 1.0
-    GUARD_POWER: Final = 1.5
-    # todo find more constants
+    COUNTER_AGILITY_ADJUST: Final = 3  # this will get subtracted from agility_full
+    COUNTER_PER_AGILITY_POINT: Final = 0.05
+    CRITICAL_AGILITY_ADJUST: Final = 3
+    CRITICAL_PER_AGILITY_POINT: Final = 0.05
+    EPIC_CHANCE_BASE: Final = 0.0
+    EPIC_CHANCE_INCR_PER_LV: Final = 0.005
+    HP_PER_HEALTH_LV: Final = 50
+    MAX_RESIST_KO: Final = 0.5
+    QP_BASE: Final = 0
+    QP_INCR_PER_LV: Final = 5
+    QP_PORTION_RESTORED_PER_TURN: Final = 0.2
+    STAMINA_BASE: Final = 50  # for all fighter levels
+    STAMINA_INCR_PER_LV: Final = 10
+    STAMINA_PORTION_RESTORED_PER_TURN: Final = 0.1
+    TOUGHNESS_PER_LV: Final = 3
 
     # strike multipliers
     STRIKE_MULTIPLIERS: Final = (
@@ -56,8 +53,7 @@ class FightAttributes(BasicAttributes):
 
     stamina = Integer()
 
-    def __init__(self):
-        super().__init__()
+    def init_fight_attributes(self) -> None:
         self.act_allies = []
         self.act_targets = []
         self.action = None
@@ -65,29 +61,28 @@ class FightAttributes(BasicAttributes):
         self.ascii_l = ''
         self.ascii_r = ''
         self.ascii_name = ''
-        self.atk_bonus = 0
-        self.atk_pwr = 0
+        self.atk_bonus = 0.0
+        self.atk_pwr = 0.0
         self.av_moves = []
         self.bleeding = 0  # refreshed every fight
         self.current_fight = None  # ...Fight object
         self.dam = 0
         self.defended = False
-        self.dfs_pwr = 0
+        self.dfs_pwr = 0.0
         self.distances = {}  # fighter_obj: int
         self.is_auto_fighting = True
         self.kos_this_fight = 0
         self.momentum = 0  # (-3, 3)
-        self.previous_actions = ['', '', '']
+        self.previous_actions = deque(maxlen=3)
         self.status = {}  # {'status_name': status_dur}
         self.target = None  # used both for attacker and defender
-        self.to_block = 0
-        self.to_dodge = 0
-        self.to_hit = 0
+        self.to_block = 0.0
+        self.to_dodge = 0.0
+        self.to_hit = 0.0
 
         # modified by level, techs and styles:
         self.agility_mult = 1.0
         self.atk_mult = 1.0
-        self.atk_wp_bonus = 0
         self.block_disarm = 0.005
         self.block_mult = 1.0  # tech-based
         self.chance_cause_bleeding = 0.03  # tech-dependent
@@ -109,7 +104,6 @@ class FightAttributes(BasicAttributes):
         self.fall_damage_mult = 1.0  # with descriptor
         self.fury_to_all_mult = 1.6
         self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
-        self.grab_chance = 0.0  # todo not used yet
         self.guard_dfs_bonus = 1.0  # the tech-dependent bonus to Guard
         self.guard_while_attacking = 0.0
         self.health_mult = 1.0
@@ -143,6 +137,7 @@ class FightAttributes(BasicAttributes):
         self.strength_mult = 1.0
         self.strike_time_cost_mult = 1.0  # with descriptor
         self.stun_chance = 0.0
+        self.toughness = 0  # level-dependent
         self.unblock_chance = 0.0
 
         # weapon-related
@@ -155,12 +150,10 @@ class FightAttributes(BasicAttributes):
         for att in self.STRIKE_MULTIPLIERS:
             setattr(self, att, 1.0)
 
-    def add_status(self, status, dur):
-        if status not in self.status:
-            self.status[status] = 0
-        self.status[status] += dur
+    def add_status(self, status: str, dur: int) -> None:
+        self.status[status] = self.status.get(status, 0) + dur
 
-    def boost(self, **kwargs):
+    def boost(self, **kwargs: Union[int, float]) -> None:
         """Boost fighter's attribute(s); k = att_name, v = quantity"""
         for k, v in kwargs.items():
             curr_v = getattr(self, k)
@@ -168,7 +161,8 @@ class FightAttributes(BasicAttributes):
         self.refresh_full_atts()
         self.refresh_dependent_atts()
 
-    def change_hp(self, amount):
+    # todo remove change_hp and other similar methods? but it's dynamic
+    def change_hp(self, amount: int) -> None:
         self.hp += amount
         if self.hp > self.hp_max:
             self.hp = self.hp_max
@@ -177,27 +171,27 @@ class FightAttributes(BasicAttributes):
             # set qp to zero too
             self.qp = 0
 
-    def change_qp(self, amount):
+    def change_qp(self, amount: int) -> None:
         self.qp += amount
         if self.qp > self.qp_max:
             self.qp = self.qp_max
         elif self.qp < 0:
             self.qp = 0
 
-    def change_stamina(self, amount):
+    def change_stamina(self, amount: int) -> None:
         self.stamina += amount
         if self.stamina > self.stamina_max:
             self.stamina = self.stamina_max
         elif self.stamina < 0:
             self.stamina = 0
 
-    def check_stamina(self, amount):
+    def check_stamina(self, amount: int) -> bool:
         return self.stamina >= amount
 
-    def check_status(self, status):
-        return self.status.get(status, False)
+    def check_status(self, status: str) -> bool:
+        return bool(self.status.get(status, 0))
 
-    def get_status_marks(self, right=False):
+    def get_status_marks(self, right: bool = False) -> str:
         bleeding = ';' if self.bleeding else ''
         fury = '#' if self.check_status('fury') else ''
         slowed_down = ',' if self.check_status('slowed down') else ''
@@ -209,7 +203,6 @@ class FightAttributes(BasicAttributes):
         elif self.check_status('stunned'):
             excl = 1
         inact = '!' * excl
-        # padding = ' ' if lying or inact else ''
         if self.momentum:
             if right:
                 if self.momentum > 0:
@@ -225,35 +218,36 @@ class FightAttributes(BasicAttributes):
             mom_s = f' {mom_s}'
         else:
             mom_s = ''
-        # return f'{padding}{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
         return f'{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
-    def refresh_dependent_atts(self):
-        self.hp_max = self.health_full * HP_PER_HEALTH_LV
+    def refresh_dependent_atts(self) -> None:
+        self.hp_max = self.health_full * self.HP_PER_HEALTH_LV
         self.hp_gain = round(self.hp_max * self.hp_gain_mult)
         self.stamina_max = round(
-            (STAMINA_BASE + STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
+            (self.STAMINA_BASE + self.STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
         )
-        self.stamina_gain = round(self.stamina_max * STAMINA_PORTION_RESTORED_PER_TURN *
+        self.stamina_gain = round(self.stamina_max * self.STAMINA_PORTION_RESTORED_PER_TURN *
                                   self.stamina_gain_mult)
         self.qp_max = round(
-            (QP_BASE + QP_INCR_PER_LV * self.level) * self.qp_max_mult
+            (self.QP_BASE + self.QP_INCR_PER_LV * self.level) * self.qp_max_mult
         )
-        self.qp_gain = round(self.qp_max * QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult)
+        self.qp_gain = round(self.qp_max * self.QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult)
         self.counter_chance = (
-            (self.agility_full - COUNTER_AGILITY_ADJUST) * COUNTER_PER_AGILITY_POINT
+            (self.agility_full - self.COUNTER_AGILITY_ADJUST) * self.COUNTER_PER_AGILITY_POINT
             * self.counter_chance_mult
         )
         self.critical_chance = (
-            (self.agility_full - CRITICAL_AGILITY_ADJUST) * CRITICAL_PER_AGILITY_POINT
+            (self.agility_full - self.CRITICAL_AGILITY_ADJUST) * self.CRITICAL_PER_AGILITY_POINT
             * self.critical_chance_mult
         )
         self.epic_chance = (
-            (EPIC_CHANCE_BASE + EPIC_CHANCE_INCR_PER_LV * self.level) * self.epic_chance_mult
+            (self.EPIC_CHANCE_BASE + self.EPIC_CHANCE_INCR_PER_LV * self.level)
+            * self.epic_chance_mult
         )
+        self.toughness = (self.level - 1) * self.TOUGHNESS_PER_LV
 
-    def unboost(self, **kwargs):
-        """'Unboost' fighter's attributes."""
+    def unboost(self, **kwargs: Union[int, float]) -> None:
+        """'Unboost' fighter's attributes: k = att_name, v = quantity."""
         kwargs_copy = {}
         for k, v in kwargs.items():
             kwargs_copy[k] = -v

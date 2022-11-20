@@ -16,7 +16,7 @@ logger = logging.getLogger()
 ALL_MOVES_DICT = {}  # list derives later
 RANDOM_MOVE_POOL_SIZE_MULT = 3
 SPECIAL_FEATURES = {'drunken'}
-TIER_MIN = 0
+TIER_MIN = 1
 TIER_MAX = 10
 # todo container for default moves istead of .is_basic
 
@@ -198,6 +198,7 @@ def get_rand_moves(
     pool = [m for m in MOVES_BY_TIERS[tier]
             if m not in known_moves
             and not (m.special_features - f.fav_move_features)]
+    random_move = random.choice(pool)
     if not pool:
         logger.warning(
             f'The pool in get_rand_moves is empty: '
@@ -209,14 +210,6 @@ def get_rand_moves(
         )
         pool = MOVES_BY_TIERS[tier]
     random.shuffle(pool)
-    # print(
-    #     f'{"*"*20}\nPOOL: '
-    #     f'\n{f=}'
-    #     f'\n{n=}'
-    #     f'\n{tier=}'
-    #     f'\n{features=}'
-    #     )
-    # print(pool[:10])
     pool.sort(
         key=lambda m: len([feat for feat in features if feat in m.features]),
         reverse=True,
@@ -231,12 +224,20 @@ def get_rand_moves(
             f'\n{len(pool)=}'
             f'\nReturning <n moves'
         )
+        return pool
     pool = pool[:n * RANDOM_MOVE_POOL_SIZE_MULT]  # for a bit more variety
-    # print(pool[:10])
-    weights = [m.freq for m in pool]
-    selected = random.choices(pool, weights=weights, k=n)
-    # print(f'{selected=}')
-    # input('...')
+    weighted_pool = []
+    for move in pool:
+        weighted_pool.extend([move] * move.freq)
+    selected = set()
+    if n > 1:
+        selected.add(random_move)  # for variety
+    while len(selected) < n:
+        choice = random.choice(weighted_pool)
+        if choice not in selected:
+            selected.add(choice)
+    selected = list(selected)
+    random.shuffle(selected)
     return selected
 
 

@@ -1,13 +1,15 @@
 import random
 from pathlib import Path
+from typing import List, Text
 
 from kf_lib.actors import fighter_factory, names
+from kf_lib.game import biographies
+from kf_lib.game import game_stats
+from kf_lib.game._base_game import BaseGame
 from kf_lib.happenings import events
 from kf_lib.things import items
 from kf_lib.ui import cls, pak, yn
 from kf_lib.utils import rnd, SAVE_FOLDER
-from . import game_stats
-from ._base_game import BaseGame
 
 
 # misc constants
@@ -18,9 +20,9 @@ WALK_EXTRA_ENC = 2
 
 # victory conditions
 GRANDMASTER_LV = 20
-FOLK_HERO_REP = 120
+FOLK_HERO_REP = 100
 KFLEGEND_ACCOMPL = 8
-GT_FIGHTER_FIGHTS = (80, 120)  # fights_won, num_kos
+GT_FIGHTER_FIGHTS = (75, 100)  # fights_won, num_kos
 
 
 class Playing(BaseGame):
@@ -54,35 +56,42 @@ class Playing(BaseGame):
             return False
         wins = []
         winners = []
-        victory_types = []
         for p in self.players:
-            # victory conditions
-            vc = {
-                'Grandmaster': p.check_lv(GRANDMASTER_LV),
-                'Folk Hero': p.reputation >= FOLK_HERO_REP,
-                'Kung-fu Legend': len(p.accompl) >= KFLEGEND_ACCOMPL,
-                'Greatest Fighter': (
-                    p.get_stat('fights_won') >= GT_FIGHTER_FIGHTS[0]
-                    and p.get_stat('num_kos') >= GT_FIGHTER_FIGHTS[1]
-                ),
-            }
-            for k in vc:
-                if vc[k]:
-                    wins.append(f'{p.name} becomes {k}!')
-                    winners.append(p)
-                    victory_types.append(k)
+            victories = self.check_victory_conditions(p)
+            if victories:
+                winners.append(p)
+            for victory_type in victories:
+                wins.append(f'{p.name} becomes {victory_type}!')
         if wins:
             days, months, years = [int(x) for x in self.get_date().split('/')]
             n_days = (years - 1) * 360 + (months - 1) * 30 + days
             self.n_days_to_win = n_days
-
             if not self.silent_ending:
                 print('\n'.join(wins))
                 input('Press Enter to see stats.')
                 self.save_game('game over.txt')
                 self.show_stats(do_cls=False, do_pak=False)
+                self.show_bio(winners)
                 self.play_indefinitely = yn('Keep playing indefinitely?')
             return True
+
+    @staticmethod
+    def check_victory_conditions(player_instance) -> List[Text]:
+        p = player_instance
+        victories = []
+        victory_conditions = {
+            'Grandmaster': p.check_lv(GRANDMASTER_LV),
+            'Folk Hero': p.reputation >= FOLK_HERO_REP,
+            'Kung-fu Legend': len(p.accompl) >= KFLEGEND_ACCOMPL,
+            'Greatest Fighter': (
+                    p.get_stat('fights_won') >= GT_FIGHTER_FIGHTS[0]
+                    and p.get_stat('num_kos') >= GT_FIGHTER_FIGHTS[1]
+            ),
+        }
+        for victory_type in victory_conditions:
+            if victory_conditions[victory_type]:
+                victories.append(victory_type)
+        return victories
 
     def collect_used_names(self):
         self.used_names = set(self.fighters_dict)
@@ -92,7 +101,7 @@ class Playing(BaseGame):
         self.cls()
         for p in self.players:
             p.log_new_day()
-            if not p.inactive:
+            if not p.inactive and p.check_item(items.MANNEQUIN):
                 p.practice_home(suppress_log=True)
 
     def do_monthly(self):
@@ -204,9 +213,15 @@ class Playing(BaseGame):
         self.hook_up_players()
         self.collect_used_names()
 
+    @staticmethod
+    def show_bio(winners: List):
+        bio = [biographies.generate_bio(p) for p in winners]
+        bio = '\n'.join(bio)
+        print(bio)
+        print(bio, file=open(Path(SAVE_FOLDER, 'bio.txt'), 'w'))
+
     def show_stats(self, do_cls=True, do_pak=True):
-        sg = game_stats.StatGen(self)
-        stats = sg.get_full_report_string()
+        stats = game_stats.get_full_report_string(self)
         if do_cls:
             cls()
         print(stats)

@@ -39,7 +39,8 @@ class Zen(human_player.HumanPlayer):
 
     def set_rand_moves(self):
         for m in moves.BASIC_MOVES:
-            self.learn_move(m.name, silent=True)  # 'silent' is not to write in the log about learning basic moves
+            # 'silent' is not to write in the log about learning basic moves
+            self.learn_move(m, silent=True)
 
     def set_rand_techs(self):
         pass

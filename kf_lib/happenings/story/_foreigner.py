@@ -2,7 +2,7 @@ import random
 
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
-from kf_lib.utils import rndint_2d
+from kf_lib.constants.experience import SPECTATE_FOREIGNER_EXP
 
 
 class ForeignerStory(BaseStory):
@@ -30,13 +30,13 @@ class ForeignerStory(BaseStory):
         p.add_accompl('Foreign Challenger')
 
     def scene1(self):
-        g, b = self.game, self.boss
+        g, p, b = self.game, self.player, self.boss
         t = (
             f'The people of {g.town_name} keep talking about the foreigner, {b.name}. He has '
             f'already defeated some good fighters.'
         )
-        g.show(t)
-        g.pak()
+        p.show(t)
+        p.pak()
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
@@ -50,10 +50,9 @@ class ForeignerStory(BaseStory):
             f'\nBy watching {b.name} fight {p.name} gained some valuable insights into the '
             f'foreigner\'s technique.'
         )
-        g.show(t)
-        base_exp = 10
-        p.gain_exp(rndint_2d(base_exp, base_exp * 3))
-        g.pak()
+        p.show(t)
+        p.gain_exp(random.randint(*SPECTATE_FOREIGNER_EXP))
+        p.pak()
 
     def scene3(self):
         g, p, b = self.game, self.player, self.boss
@@ -71,17 +70,17 @@ class ForeignerStory(BaseStory):
             f'{p.name} finds out that {b.name} beat {f_st}! Can no one stop this arrogant '
             f'foreigner?'
         )
-        g.show(t)
+        p.show(t)
         if not p.is_human or g.yn(f'Challenge {b.name}?'):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
-                g.show(
+                p.show(
                     f'{p.name}: "It\'s not about styles. True strength is in the fighter\'s heart."'
                 )
-                g.show(f'The people of {g.town_name} are amazed at {p.name}\'s victory!')
-                g.pak()
+                p.show(f'The people of {g.town_name} are amazed at {p.name}\'s victory!')
+                p.pak()
                 self.reward()
             else:
-                g.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
+                p.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
                 # todo get depressed after losing to the foreigner?
         # end of the story
         self.end()

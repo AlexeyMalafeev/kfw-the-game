@@ -1,10 +1,86 @@
-### v.0.6.8-beta
-""  
-Date  
+### v0.6.9-beta
+"Not Fail, But Experience"  
+November 20, 2022
+
+1. **New experience system**:
+   1. feat: change how exp is computed in fights
+   2. feat: static accomplishment experience
+   3. feat: modify exp per level (static) and school training exp
+   4. feat: constants package, experience module inside it
+   5. feat: misc exp-related tweaks for the new exp system
+   6. feat: home training is only allowed when have a wooden mannequin
+   7. feat: base and derived experience constants
+   8. feat: losers get fixed amount of exp
+   9. feat: add non-linearity to win exp
+2. feat: biography generation for winning players
+   1. feat: describe strengths
+3. refactor:
+   1. refactor: __init_subclass__ in base encounter for automatic class registration
+   2. refactor: BaseEncounter is an ABC
+   3. refactor: type annotations for BaseEncounter methods
+   4. refactor: BookSeller to a separate module
+4. feat: changes in encounters
+   1. feat: change logic of learning moves from books
+   2. feat: test encounters in debug menu
+   3. feat: lucky and unlucky cases in book seller encounter
+5. feat: moves
+   1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
+   2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
+   3. feat: remove weak and pathetic moves (-> 13844)
+   4. feat: rebalance moves / tiers
+   5. feat: improve random move selection logic (no duplicates, one random move for variety)
+6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
+7. feat: toughness - damage reduction that is level-dependent (for all fighters)
+8. feat: Drunken has improved ground defense
+9. fix: UI functions in stories
+10. **refactor: FighterAPI (ABC for Fighter)**
+
+
+### Coming soon:
+* flower kung-fu has moves (only weak and pathetic)
+* initial attribute values in FighterAPI
+* constants in FighterAPI
+* fix possible bug in exp progression in lazy / hardworking players 
+* speed up early progress? slow down late progress (progressive exp, e.g. step 20 start from 40 or even 20 or use base fight exp as step)
+* butt strike, hip strike - handle specially
+* encounter in practice at school - improve move
+* compute crowd exp worth differently?
+* come back to experiments with level significance
+* improve finding right ascii
+* improve a move with books
+* further reduce dist3 and dist2 bonuses?
+* biographies:
+   * favorite strike: most feared move, preferred
+* tests of strength / speed / health / agility in various encounters and stories = new mechanics
+* ability to upgrade moves (from pathetic to ultimate)
+* yell (as move_fun?)
+* in-fight nunchacku tech (like impro weapons)
+* refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
+* ABC for Fighter
+* refactor, refactor, refactor
+* fight AI rule to hurry and finish off knocked down opponent 
+* learn weak / pathetic moves in books?
+* nerf guard while atk
+* donate to friends, to charity 
+* buff att-based damage for strikes
+* add societies (bandits, sect: Righteous, White Lotus)
+* strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
+* continue refactoring encounters while adding lucky/unlucky developments
+* more strike types (see strike notes)
+* momentum style / techs, use own and opponent's - like Judo
+* grabs
+* look at fighter atts for unused ideas
+* look at todos
+
+---
+
+### v0.6.8-beta
+"Drunken Boxing"  
+August 13, 2022  
 
 1. fixes: game loading, SpectateFight, qi-based damage, feel too scared
 2. feat: add quotes from Dark
-3. feat: add Weak and Pathetic moves (3313 -> 3795 moves)
+3. feat: add Weak and Pathetic moves
 4. feat: ~8 more new quotes (various sources)
 5. fix: bug in 'unlucky' craftsman encounter
 6. **feat: Bandit Fiance story**
@@ -33,59 +109,6 @@ Date
 29. feat: reduce folk hero reputation
 30. feat: boost_combos.py as SSOT for technique effects
 31. feat: improve new move selection
-
-### Coming soon:
-
-* acrobatic techs
-* add buffs to drunken boxing
-* change default drunken boxing and drunkard's style
-* move complexity - apply direct multiplier
-* NEW EXP SYSTEM
-* nerf guard while atk
-* y defense buff not working?
-* bull - head strikes
-* Drink Wine during fight?
-* learn weak / pathetic moves in books
-* tests of strength / speed / health / agility in various encounters and stories = new mechanics
-* upgrade moves from pathetic to ultimate
-* when get drunk, actually get drunk and suffer penalties (complexity and fall damage)
-* drunken boxers can buy wine
-* Underhanded - "dirty"; rep penalty?
-* donate to friends, to charity 
-* mind training - fight enemies in your mind
-* time travel item
-* turtles: arm them, fight one after another, if lucky, they just give you rewards, if unlucky, they attack you all at once
-* buff att-based damage for strikes
-* in-fight nunchacku tech (like impro weapons)
-* reimplement selection of moves for bonuses
-* style's secret technique, learn at lv 10, don't know in advance 
-* more complex moves can be upgrades / modifications
-* moves for generated styles: "ferocious", "acrobatic", etc. 
-* boosts to dict and auto-adjust
-* some upgradable techs shouldn't be upgradable
-* phrases from unused (friends, never repay)
-* snake fist secret technique: Weishen (false body)
-* bug in careless inactive time?
-* style with head strikes
-* donate to friends; charity
-* if negative money, don't start some encounters
-* add more stories 
-* add societies (bandits, sect)
-* analysis skill
-* toughness: level-dependent dam reduction for all
-* couldn't find any moves for move string 3,shocking; 1,flying; 2,flying
-* reduce feel too scared
-* orgainize move list, remove unused moves  
-* learn moves only if lucky  
-* move filtering with pandas, save as csv, collect useful stats  
-* config (not to choose every time, time-consuming)  
-* fav_strikes in techs    
-* increase epic min lv; epic should be used against a strong opponent only? movie-like  
-* reflexes; compute to_block and to_dodge differently?  
-* strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
-* continue refactoring encounters while adding lucky/unlucky developments
-* more strike types (see strike notes)
-* style's secret tech at lv 10, don't know in advance
 
 ---
 

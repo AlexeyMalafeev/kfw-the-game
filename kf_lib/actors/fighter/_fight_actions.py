@@ -1,40 +1,41 @@
+from __future__ import annotations
+from abc import ABC
 import random
+from typing import Final, List, TYPE_CHECKING
 
+if TYPE_CHECKING:
+    # todo refactor - use base classes in separate files
+    from kf_lib.kung_fu.moves import Move
+
+from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.ui import get_bar
 from kf_lib.utils import choose_adverb, rnd, rndint_2d
-from ._distances import DistanceMethods
-from ._exp_worth import ExpMethods
-from ._strike_mechanics import StrikeMechanics
-from ._weapons import WeaponMethods
-
-DUR_FURY_MIN = 500
-DUR_FURY_MAX = 1000
 
 
-class FighterWithActions(
-    DistanceMethods,
-    ExpMethods,
-    StrikeMechanics,
-    WeaponMethods,
-):
-    def apply_bleeding(self):
+class FighterWithActions(FighterAPI, ABC):
+    BLOCK_POWER: Final = 1.0
+    GUARD_POWER: Final = 1.5
+    DUR_FURY_MIN: Final = 500
+    DUR_FURY_MAX: Final = 1000
+
+    def apply_bleeding(self) -> None:
         if self.bleeding:
             self.change_hp(-self.bleeding)
             if self.hp <= 0:
                 self.current_fight.display(f'{self.name} passes out because of bleeding!')
                 self.current_fight.pak()
 
-    def apply_dfs_penalty(self):
+    def apply_dfs_penalty(self) -> None:
         self.dfs_penalty_mult -= self.dfs_penalty_step
         if self.dfs_penalty_mult < 0:
             self.dfs_penalty_mult = 0
 
-    def apply_move_cost(self):
+    def apply_move_cost(self) -> None:
         m = self.action
         self.change_stamina(-m.stam_cost)
         self.change_qp(-m.qi_cost)
 
-    def attack(self):
+    def attack(self) -> None:
         n1 = self.current_fight.get_f_name_string(self)
         fury = ' *FURY*' if self.check_status('fury') else ''
         n2 = self.current_fight.get_f_name_string(self.target)
@@ -50,7 +51,7 @@ class FighterWithActions(
             self.try_strike()
             self.target.try_counter()
 
-    def check_move_failed(self):
+    def check_move_failed(self) -> bool:
         compl = self.calc_move_complexity(self.action)
         f_ch = self.get_move_fail_chance(self.action)
         if rnd() <= f_ch:
@@ -69,20 +70,20 @@ class FighterWithActions(
         else:
             return False
 
-    def check_preemptive(self):
+    def check_preemptive(self) -> bool:
         return self.preemptive_chance and rnd() <= self.preemptive_chance
 
-    def choose_move(self):
+    def choose_move(self) -> None:
         self.av_moves = self.get_av_moves()  # this depends on target
         self.action = self.fight_ai.choose_move()
 
-    def choose_target(self):
+    def choose_target(self) -> None:
         if len(self.act_targets) == 1:
             self.set_target(self.act_targets[0])
         else:
             self.set_target(self.fight_ai.choose_target())
 
-    def defend(self):
+    def defend(self) -> None:
         atkr = self.target
         atkr.dam = atkr.atk_pwr
         dodge_chance = self.to_dodge / atkr.to_hit
@@ -113,7 +114,7 @@ class FighterWithActions(
         atkr.dam = round(atkr.dam)
         # todo handle the no defense case
 
-    def do_counter(self):
+    def do_counter(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
             self.current_fight.display('+COUNTER!+')
@@ -123,7 +124,7 @@ class FighterWithActions(
             self.current_fight.display(s)
             self.try_strike()
 
-    def do_preemptive(self):
+    def do_preemptive(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
             self.current_fight.display('<-PREEMPTIVE!-<')
@@ -136,7 +137,7 @@ class FighterWithActions(
             # this is by design separate from actually performing the strike
             self.apply_move_cost()
 
-    def do_strike(self):
+    def do_strike(self) -> None:
         m = self.action
         self.calc_atk(m)
         self.try_environment('attack')
@@ -150,9 +151,9 @@ class FighterWithActions(
             self.change_distance(m.dist_change, self.target)
         else:
             self.momentum = 0
-        self.previous_actions = self.previous_actions[1:] + [m.name]
+        self.previous_actions.append(m)
 
-    def exec_move(self):
+    def exec_move(self) -> None:
         m = self.action
         self.current_fight.cls()
         if m.power:
@@ -163,8 +164,8 @@ class FighterWithActions(
         self.current_fight.show(self.visualize_fight_state())
         self.show_ascii()
 
-    def get_av_moves(self, attack_moves_only=False):
-        av_moves = []
+    def get_av_moves(self, attack_moves_only: bool = False) -> List[Move]:
+        av_moves: List[Move] = []
         lying_op = self.target.check_status('lying')
         for m in self.moves + (self.weapon.moves if self.weapon else []):
             enough_stamina = self.stamina >= m.stam_cost
@@ -184,21 +185,23 @@ class FighterWithActions(
             av_moves = [m for m in av_moves if m.power]
         return av_moves
 
-    def guard(self):
+    def guard(self) -> None:
         """This is called with eval as a function of the Guard move."""
         # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
         self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
 
-    def hit_or_miss(self):
+    def hit_or_miss(self) -> None:
         # todo use skip list here for functions not to be applied twice
         # todo let try_* functions return True or False to determine skip
         tgt = self.target
         if self.dam > 0:
             self.try_critical()
             self.try_epic()
+            self.dam = max(self.dam - tgt.toughness, 0)
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)
                 self.dam = round(self.dam)
+                self.current_fight.display(f'damage is reduced!')
             tgt.take_damage(self.dam)
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_cause_bleeding()
@@ -209,7 +212,7 @@ class FighterWithActions(
             self.try_knockdown()
             self.try_ko()
 
-    def maneuver(self):
+    def maneuver(self) -> None:
         m = self.action
         n = self.current_fight.get_f_name_string(self)
         s = f'{n}: {m.name}'
@@ -222,12 +225,12 @@ class FighterWithActions(
             self.momentum = 0
         self.do_move_functions(m)
 
-    def prepare_for_fight(self):
+    def prepare_for_fight(self) -> None:
         self.hp = self.hp_max
         self.qp = round(self.qp_max * self.qp_start)
         self.stamina = self.stamina_max
         self.bleeding = 0
-        self.previous_actions = ['', '', '']
+        self.previous_actions.clear()
         self.is_auto_fighting = True
         self.set_distances_before_fight()
         self.status = {}
@@ -236,11 +239,11 @@ class FighterWithActions(
         self.kos_this_fight = 0
         self.momentum = 0
 
-    def set_target(self, target):
+    def set_target(self, target: FighterAPI) -> None:
         self.target = target
         target.target = self
 
-    def start_fight_turn(self):
+    def start_fight_turn(self) -> None:
         cur_fight = self.current_fight
         self.act_targets = (
             cur_fight.active_side_b if self in cur_fight.active_side_a else cur_fight.active_side_a
@@ -261,34 +264,34 @@ class FighterWithActions(
         self.try_fury()
         self.calc_stamina_factor()
 
-    def try_strike(self):
+    def try_strike(self) -> None:
         if not self.check_move_failed():
             self.do_strike()
 
-    def try_block_disarm(self):
+    def try_block_disarm(self) -> None:
         atkr = self.target
         if atkr.weapon and self.block_disarm and rnd() <= self.block_disarm:
             atkr.disarm()
             self.current_fight.display(f'{self.name} disarms {atkr.name} while blocking')
 
-    def try_counter(self):
+    def try_counter(self) -> None:
         # print(f'{self.name}: {self.counter_chance=}')
         if not self.target.dam and self.hp > 0 and rnd() <= self.counter_chance:
             self.do_counter()
 
-    def try_fury(self):
+    def try_fury(self) -> None:
         if (
             not self.check_status('fury')
             # todo possibly change how fury prob is computed
             and rnd() <= ((1 - self.hp / self.hp_max) * self.fury_chance)
         ):
-            fury_dur = rndint_2d(DUR_FURY_MIN, DUR_FURY_MAX) // self.speed_full
+            fury_dur = rndint_2d(self.DUR_FURY_MIN, self.DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(f'{s} is in FURY!')
             self.current_fight.pak()
 
-    def try_in_fight_impro_wp(self):
+    def try_in_fight_impro_wp(self) -> None:
         if (
             self.in_fight_impro_wp_chance
             and not self.weapon
@@ -300,7 +303,7 @@ class FighterWithActions(
             self.current_fight.display(f'{s} grabs an improvised weapon!')
             self.current_fight.pak()
 
-    def try_ko(self):
+    def try_ko(self) -> None:
         tgt = self.target
         if not tgt.hp:
             if tgt.resist_ko and rnd() <= tgt.resist_ko:
@@ -316,7 +319,7 @@ class FighterWithActions(
                     tgt.set_ascii('Falling')
                 self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
 
-    def visualize_fight_state(self):
+    def visualize_fight_state(self) -> str:
         ft = self.current_fight
         side_a, side_b = ft.active_side_a, ft.active_side_b
         n_a, n_b = len(side_a), len(side_b)
