@@ -24,7 +24,7 @@ class ExpMethods(FighterAPI, ABC):
 
     # todo use get_allies_power for AI, high-prio
     def get_allies_power(self) -> int:
-        return sum([f.get_exp_worth() for f in self.act_allies])
+        return sum(f.get_exp_worth() for f in self.act_allies)
 
     # todo check that get_exp_worth still makes sense
     def get_exp_worth(self) -> int:
@@ -38,9 +38,9 @@ class ExpMethods(FighterAPI, ABC):
         exp = round(exp)
         return exp
 
-    # todo: use get_opponents_power for AI, high-prio
+    # todo: use get_opponents_power for AI
     def get_opponents_power(self) -> int:
-        return sum([f.get_exp_worth() for f in self.act_targets])
+        return sum(f.get_exp_worth() for f in self.act_targets)
 
     def get_rel_strength(
         self,
@@ -48,13 +48,13 @@ class ExpMethods(FighterAPI, ABC):
         allies: Optional[Iterable[FighterAPI]] = None,
     ) -> Tuple[float, str]:
         """
-        Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend
+        Return opp_to_self_pwr_ratio (float, the lower the weaker) and legend
         (string, e.g. 'very risky')
         """
-        pwr = sum([op.get_exp_worth() for op in opp])
+        pwr = sum(op.get_exp_worth() for op in opp)
         own_pwr = self.get_exp_worth()
         if allies is not None:
-            own_pwr += sum([al.get_exp_worth() for al in allies])
+            own_pwr += sum(al.get_exp_worth() for al in allies)
         opp_to_self_pwr_ratio = round(pwr / own_pwr, 2)
         for threshold, legend in self.RISK_DESCR_TABLE:
             if opp_to_self_pwr_ratio >= threshold:

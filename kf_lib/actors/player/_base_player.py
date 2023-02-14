@@ -140,42 +140,39 @@ class BasePlayer(Fighter):
     def add_enemy(self, enemy):
         self.enemies.append(enemy)
         self.game.register_fighter(enemy)
-        self.log('{} is now {}\' enemy.'.format(enemy.name, self.name))
+        self.log(f"{enemy.name} is now {self.name}\' enemy.")
 
     def add_friend(self, obj):
         if len(self.friends) < self.max_num_friends:
             self.friends.append(obj)
-            self.log('{} is now {}\' friend.'.format(obj.name, self.name))
+            self.log(f"{obj.name} is now {self.name}\' friend.")
 
     def add_students(self, num_stud):
         self.students += num_stud
         new_students = []
         school = self.game.schools[self.new_school_name]
-        for i in range(num_stud):
+        for _ in range(num_stud):
             new_student = self.game.get_new_student(self.style.name)
             new_students.append(new_student)
             school.append(new_student)
             self.game.register_fighter(new_student)
         if num_stud > 1:
-            self.log('{} students join {}\'s school.'.format(num_stud, self.name))
+            self.log(f"{num_stud} students join {self.name}\'s school.")
         else:
-            self.log('A new student joins {}\'s school.'.format(self.name))
+            self.log(f"A new student joins {self.name}\'s school.")
         self.log('\n'.join((str(s) for s in new_students)))
 
     def add_trait(self, trait):
         """NB: differs from the activate_trait method.
         Should be used only for adding NEW traits in-game."""
         opp_trait = traits.get_opposite_trait(trait)
-        if trait not in self.traits and opp_trait not in self.traits:
-            self.traits.append(trait)
-            self.activate_trait(trait)
-            self.write(f'{self.name} becomes {trait}.')
-        else:
-            raise Exception(
-                'Cannot add trait "{}" to player {}\'s traits: {}'.format(
-                    trait, self.name, self.traits
-                )
+        if trait in self.traits or opp_trait in self.traits:
+            raise ValueError(
+                f"""Cannot add trait "{trait}" to player {self.name}\'s traits: {self.traits}"""
             )
+        self.traits.append(trait)
+        self.activate_trait(trait)
+        self.write(f'{self.name} becomes {trait}.')
 
     def buy_item(self, item, price):
         self.pay(price)
@@ -194,7 +191,7 @@ class BasePlayer(Fighter):
 
     def change_att(self, att, amount):
         Fighter.change_att(self, att, amount)
-        self.msg('{}: {}'.format(att, add_sign(amount)))
+        self.msg(f'{att}: {add_sign(amount)}')
 
     def change_stat(self, stat_name, value):
         """Modify stat by adding value"""
@@ -203,27 +200,22 @@ class BasePlayer(Fighter):
     def check_allies(self, max_num_allies=-1):
         if not self.friends:
             return None
-        else:
-            if max_num_allies == -1:
-                max_num_allies = self.max_num_friends
-            allies = []
-            for a in self.friends:
-                if a.is_player:
-                    if not a.inactive and rnd() <= self.coop_joins_fight:
-                        allies.append(a)
-                else:
-                    if rnd() <= self.friend_joins_fight:
-                        allies.append(a)
-                if len(allies) == max_num_allies:
-                    break
-            if allies:
-                if len(allies) > 1:
-                    s = ''
-                else:
-                    s = 's'
-                a_str = enum_words([a.name for a in allies])
-                self.msg('{} join{} the fight on {}\'s side.'.format(a_str, s, self.name))
-            return allies
+        if max_num_allies == -1:
+            max_num_allies = self.max_num_friends
+        allies = []
+        for a in self.friends:
+            if a.is_player:
+                if not a.inactive and rnd() <= self.coop_joins_fight:
+                    allies.append(a)
+            elif rnd() <= self.friend_joins_fight:
+                allies.append(a)
+            if len(allies) == max_num_allies:
+                break
+        if allies:
+            s = '' if len(allies) > 1 else 's'
+            a_str = enum_words([a.name for a in allies])
+            self.msg(f"{a_str} join{s} the fight on {self.name}\'s side.")
+        return allies
 
     def check_fight_items(self):
         """Return True if player has any items usable in fights"""
@@ -249,7 +241,7 @@ class BasePlayer(Fighter):
         elif x == 'm':
             if rnd() <= self.master_joins_fight:
                 m = p.get_master()
-                p.show('{}: "What\'s going on here?"'.format(m.name))
+                p.show(f"""{m.name}: "What\'s going on here?\"""")
                 p.log(f"{m.name} joins the fight on {p.name}'s side.")
                 p.allies = [m]
                 p.pak()
@@ -266,11 +258,7 @@ class BasePlayer(Fighter):
                 mates = random.sample(av_mates, n)
                 a_str = enum_words([f.name for f in mates])
                 p.allies = mates
-                self.msg(
-                    '{}, who were passing by, join the fight on {}\'s side.'.format(
-                        a_str, self.name
-                    )
-                )
+                self.msg(f'{a_str}, who were passing by, join the fight on {self.name}\'s side.')
 
     def check_injured(self):
         return self.inact_status == 'injured'
@@ -304,21 +292,21 @@ class BasePlayer(Fighter):
     def check_partners(self):
         if not self.friends:
             return None
-        else:
-            partners = []
-            for a in self.friends:
-                if (a.is_player and not a.inactive and rnd() <= self.coop_joins_training) or (
-                    not a.is_player and rnd() <= self.friend_joins_training
-                ):
-                    partners.append(a)
-            if partners:
-                if len(partners) > 1:
-                    s = ''
-                else:
-                    s = 's'
-                p_str = enum_words([p.name for p in partners])
-                self.write('{} join{} {}\'s training session.'.format(p_str, s, self.name))
-            return partners
+        partners = [
+            a
+            for a in self.friends
+            if (
+                a.is_player
+                and not a.inactive
+                and rnd() <= self.coop_joins_training
+            )
+            or (not a.is_player and rnd() <= self.friend_joins_training)
+        ]
+        if partners:
+            s = '' if len(partners) > 1 else 's'
+            p_str = enum_words([p.name for p in partners])
+            self.write(f"{p_str} join{s} {self.name}\'s training session.")
+        return partners
 
     def check_training_injury(self):
         if rnd() <= self.training_injury:
@@ -328,7 +316,7 @@ class BasePlayer(Fighter):
             self.injure(1)
 
     def cls(self):
-        raise Exception('Not implemented.')
+        raise NotImplementedError
 
     def deactivate_trait(self, trait):
         eff_dict = traits.get_trait_eff_dict(trait)
@@ -398,7 +386,7 @@ class BasePlayer(Fighter):
 
     def gain_rep(self, amount):
         self.reputation += amount
-        self.log('Reputation: {} ({})'.format(add_sign(amount), self.reputation))
+        self.log(f'Reputation: {add_sign(amount)} ({self.reputation})')
 
     def get_items(self, incl_healer=False, incl_mock=False, as_dict=False):
         item_strings = items.FIGHT_ITEMS[:]
@@ -413,22 +401,20 @@ class BasePlayer(Fighter):
 
     def get_day_actions(self):
         """Return list of available options"""
-        ops = [
-            ('Practice at school', self.practice_school)
-            if not self.is_master
-            else ('Practice', self.practice_master),
+        return [
+            ('Practice', self.practice_master)
+            if self.is_master
+            else ('Practice at school', self.practice_school),
             ('Go to work', self.go_work),
             ('Buy items', self.buy_items),
             ('Fight crime', self.fight_crime),
             ('Help the poor', self.help_poor),
-            ('Pick fights', self.pick_fights)
-            if not self.is_master
-            else ('Teach students', self.teach_students),
+            ('Teach students', self.teach_students)
+            if self.is_master
+            else ('Pick fights', self.pick_fights),
             ('Go to seedy places', self.go_seedy),
             ('Go for a walk', self.go_walk),
-            # ('Dummy', self.fight_dummy)
         ]
-        return ops
 
     def get_fame(self):
         return (
@@ -436,13 +422,17 @@ class BasePlayer(Fighter):
         ) * 0.01
 
     def get_fight_statistics(self):
-        return 'Fights/Wins/KOs: {}/{}/{}'.format(
-            self.get_stat('num_fights'), self.get_stat('fights_won'), self.get_stat('num_kos')
+        return (
+            f"Fights/Wins/KOs: "
+            f"{self.get_stat('num_fights')}/"
+            f"{self.get_stat('fights_won')}/"
+            f"{self.get_stat('num_kos')}"
         )
 
     def get_inact_info(self):
-        s = '{} is {} and needs {} day{} to recover.'.format(
-            self.name, self.inact_status, self.inactive, 's' if self.inactive > 1 else ''
+        s = (
+            f"{self.name} is {self.inact_status} "
+            f"and needs {self.inactive} day{'s' if self.inactive > 1 else ''} to recover."
         )
         self.log(s)
         return s
@@ -455,11 +445,8 @@ class BasePlayer(Fighter):
         )
 
     def get_inventory_info(self):
-        lines = []
-        for k, v in self.inventory.items():
-            if v > 0:
-                lines.append(f'{k}: {v}')
-        lines = ['{}\'s items:'.format(self.name)] + sorted(lines)
+        lines = [f'{k}: {v}' for k, v in self.inventory.items() if v > 0]
+        lines = [f"{self.name}\'s items:"] + sorted(lines)
         return '\n'.join(lines)
 
     def get_master(self):
@@ -487,8 +474,8 @@ class BasePlayer(Fighter):
             f'traits: {enum_words(self.traits)}',
             f'rank in school: {self.school_rank}/{self.max_school_rank}',
         ]
-        fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
-        en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
+        fr_info = f'friends:{len(self.friends)}' if self.friends else ''
+        en_info = f'enemies:{len(self.enemies)}' if self.enemies else ''
         stud_info = f'students:{self.students}' if self.students else ''
         lines.append(' '.join(w for w in (fr_info, en_info, stud_info) if w))
         lines.append(self.get_fight_statistics())
@@ -574,7 +561,7 @@ class BasePlayer(Fighter):
         self.change_stat('items_obtained', quantity)
 
     def pak(self):
-        raise Exception('Not implemented.')
+        raise NotImplementedError
 
     def pay(self, amount):
         self.money -= amount
@@ -604,20 +591,22 @@ class BasePlayer(Fighter):
     def practice_school(self):
         self.log('Practices at school.')
         if self.check_money(TUITION_FEE):
-            self.pay(TUITION_FEE)
-            self.change_stat('spent_on_training', TUITION_FEE)
-            base_exp = SCHOOL_TRAINING_EXP
-            base_exp = round(base_exp * self.school_training_exp_mult)
-            min_exp = round(base_exp * 0.8)
-            max_exp = round(base_exp * 1.2)
-            self.gain_exp(rndint(min_exp, max_exp), silent=True)
-            encs = encounters.PRACTICE_SCHOOL_ENCS
-            encounters.random_encounters(self, encs)
-            self.check_training_injury()
-            return True  # to end turn
-        else:
-            self.show('Not enough money!')
-            self.pak()
+            return self._practice_school()
+        self.show('Not enough money!')
+        self.pak()
+
+    def _practice_school(self):
+        self.pay(TUITION_FEE)
+        self.change_stat('spent_on_training', TUITION_FEE)
+        base_exp = SCHOOL_TRAINING_EXP
+        base_exp = round(base_exp * self.school_training_exp_mult)
+        min_exp = round(base_exp * 0.8)
+        max_exp = round(base_exp * 1.2)
+        self.gain_exp(rndint(min_exp, max_exp), silent=True)
+        encs = encounters.PRACTICE_SCHOOL_ENCS
+        encounters.random_encounters(self, encs)
+        self.check_training_injury()
+        return True  # to end turn
 
     def prepare_for_fight(self):
         super().prepare_for_fight()
@@ -650,11 +639,11 @@ class BasePlayer(Fighter):
         self.max_school_rank = len(school)
 
     def refresh_screen(self):
-        raise Exception('Not implemented.')
+        raise NotImplementedError
 
     def remove_enemy(self, enemy):
         self.enemies.remove(enemy)
-        self.log('{} is no longer {}\' enemy.'.format(enemy.name, self.name))
+        self.log(f"{enemy.name} is no longer {self.name}\' enemy.")
         self.game.unregister_fighter(enemy)
 
     def remove_trait(self, trait):
@@ -664,7 +653,7 @@ class BasePlayer(Fighter):
 
     @staticmethod
     def rest():
-        # don't log anything because rest gets called somewhere unexpectedly
+        # don't log anything because rest gets called somewhere unexpectedly  # todo investigate .rest calls
         # self.log('{} has a rest.'.format(self.name))
         return True  # to end turn
 
