@@ -48,6 +48,7 @@ class FighterAPI(ABC):
     att_weights: Dict[Text, int] = None
     av_moves: List[Move] = None
     bleeding: int = None
+    block_chance: float = None  # refreshed per attack
     block_disarm: float = None
     block_mult: float = None
     chance_cause_bleeding: float = None
@@ -66,6 +67,7 @@ class FighterAPI(ABC):
     dfs_penalty_step: float = None
     dfs_pwr: float = None
     distances: Dict[FighterAPI, int] = None
+    dodge_chance: float = None  # refreshed per attack
     dodge_mult: float = None
     environment_chance: float = None
     epic_chance: float = None
@@ -75,8 +77,8 @@ class FighterAPI(ABC):
     fall_damage_mult: float = None  # descriptor
     fav_move_features: Set[Text] = None
     fight_ai: BaseAI = None
-    fury_to_all_mult: float = None
     fury_chance: float = None
+    fury_to_all_mult: float = None
     guard_dfs_bonus: float = None
     guard_while_attacking: float = None
     health: int = None
@@ -84,9 +86,9 @@ class FighterAPI(ABC):
     health_mult: float = None
     hit_disarm: float = None
     hp: int = None
-    hp_max: int = None
     hp_gain: int = None
     hp_gain_mult: float = None
+    hp_max: int = None
     in_fight_impro_wp_chance: float = None
     is_auto_fighting: bool = None
     kos_this_fight: int = None
@@ -115,8 +117,8 @@ class FighterAPI(ABC):
     rand_atts_mode: Literal[0, 1, 2] = None
     resist_ko: float = None  # descriptor
     speed: int = None
-    speed_mult: float = None
     speed_full: int = None
+    speed_mult: float = None
     stamina: int = None  # descriptor
     stamina_factor: float = None
     stamina_gain: int = None
@@ -125,8 +127,8 @@ class FighterAPI(ABC):
     stamina_max_mult: float = None
     status: Dict[str, int] = None
     strength: int = None
-    strength_mult: float = None
     strength_full: int = None
+    strength_mult: float = None
     strike_time_cost_mult: float = None  # descriptor
     stun_chance: float = None
     style: Style = None
@@ -226,6 +228,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def calc_stamina_factor(self) -> None:
+        pass
+
+    @abstractmethod
+    def can_use_move_now(self, m: Move) -> bool:
         pass
 
     @abstractmethod
@@ -334,11 +340,67 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def defend(self) -> None:
+    def disarm(self) -> None:
         pass
 
     @abstractmethod
-    def disarm(self) -> None:
+    def display_bleed_pass_out(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_block(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_block_disarm(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_counter(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_dodge(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_fail(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_fury(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_grab_impro_wp(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_hit(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_ko(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_miss(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_preemptive(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_resist_ko(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_start_of_attack(self) -> None:
+        pass
+
+    @abstractmethod
+    def display_start_of_maneuver(self) -> None:
         pass
 
     @abstractmethod
@@ -346,7 +408,15 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def do_block(self) -> None:
+        pass
+
+    @abstractmethod
     def do_counter(self) -> None:
+        pass
+
+    @abstractmethod
+    def do_dodge(self) -> None:
         pass
 
     @abstractmethod
@@ -363,6 +433,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def do_move_functions(self, m: Move) -> None:
+        pass
+
+    @abstractmethod
+    def do_per_turn_actions(self) -> None:
         pass
 
     @abstractmethod
@@ -617,6 +691,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def refresh_per_turn_attributes(self) -> None:
+        pass
+
+    @abstractmethod
     def resolve_techs_on_level_up(self) -> None:
         pass
 
@@ -726,6 +804,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def try_critical(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_defend(self) -> None:
         pass
 
     @abstractmethod

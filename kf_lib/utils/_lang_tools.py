@@ -10,13 +10,13 @@ def add_article(word):
     return word
 
 
-def choose_adverb(n, adv_low, adv_high):
-    if n <= 0.3:
-        return adv_low + ' '
-    elif n <= 0.7:
+def choose_adverb(x: float, adv_low: str, adv_high: str):
+    if x <= 0.3:
+        return f'{adv_low} '
+    elif x <= 0.7:
         return ''
     else:
-        return adv_high + ' '
+        return f'{adv_high} '
 
 
 def enum_words(words_iterable):

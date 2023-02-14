@@ -10,6 +10,7 @@ from kf_lib.actors.fighter._distances import DistanceMethods
 from kf_lib.actors.fighter._exp_worth import ExpMethods
 from kf_lib.actors.fighter._fight_actions import FighterWithActions
 from kf_lib.actors.fighter._fight_attributes import FightAttributes
+from kf_lib.actors.fighter._fight_display import FightDisplayMethods
 from kf_lib.actors.fighter._fight_utils import FightUtils
 from kf_lib.actors.fighter._moves import MoveMethods
 from kf_lib.actors.fighter._quotes import QuoteMethods
@@ -28,6 +29,7 @@ class Fighter(
     ExpMethods,
     FightAIMethods,
     FightAttributes,
+    FightDisplayMethods,
     FightUtils,
     FighterStats,
     FighterWithASCII,
