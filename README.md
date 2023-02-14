@@ -37,7 +37,7 @@ There are four ways to win in this game:
 
 ## Note about the code
 
-Should you want to take a peek at the code, since we're on GitHub and all, be warned that it is messy. The bulk of it was written back when my Python kung-fu was still weak, and I don't have much time these days to clean up accrued technical debt. That said, the code base in its present state is not completely terrible; it is somewhat readable and hopefully free of major bugs. I hope that one day I'll get around to refactoring everything. :P
+Should you want to take a peek at the code, since we're on GitHub and all, be warned that it is messy. The bulk of it was written back when my Python kung-fu was still weak, and I don't have much time these days to clean up the technical debt accrued. That said, the code base in its present state is not completely terrible; it is somewhat readable and hopefully free of major bugs. I hope that one day I'll get around to refactoring everything. :P
 
 ## Final remarks
 
