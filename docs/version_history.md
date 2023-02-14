@@ -4,6 +4,7 @@ Month XX, 2023
 
 1. feat:
    1. parametrize exp system
+   2. change formula for next level exp
    2. add dev notes
    3. add quick sparring to debug menu
    4. add "spectate" option to debug menu

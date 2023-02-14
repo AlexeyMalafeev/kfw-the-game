@@ -13,8 +13,6 @@ from kf_lib.utils import choose_adverb, rnd, rndint_2d
 
 
 class FighterWithActions(FighterAPI, ABC):
-    BLOCK_POWER: Final = 1.0
-    GUARD_POWER: Final = 1.5
     DUR_FURY_MIN: Final = 500
     DUR_FURY_MAX: Final = 1000
 
@@ -36,15 +34,17 @@ class FighterWithActions(FighterAPI, ABC):
         self.change_qp(-m.qi_cost)
 
     def attack(self) -> None:
+        # todo refactor into display module
         n1 = self.current_fight.get_f_name_string(self)
         fury = ' *FURY*' if self.check_status('fury') else ''
         n2 = self.current_fight.get_f_name_string(self.target)
         s = f'{n1}{fury}: {self.action.name} @ {n2}'
         self.current_fight.display(s)
         if self.guard_while_attacking:
-            self.current_fight.display(f' (guarding while attacking)')
+            self.current_fight.display(' (guarding while attacking)')
             self.dfs_bonus *= self.GUARD_POWER * (1.0 + self.guard_while_attacking)
         self.current_fight.display('=' * len(s))
+
         if self.target.check_preemptive():
             self.target.do_preemptive()
         else:
@@ -95,9 +95,9 @@ class FighterWithActions(FighterAPI, ABC):
             atkr.dam = 0
             self.change_qp(self.qp_gain)
             self.current_fight.display(
-                '{} {}dodges!'.format(self.name, choose_adverb(dodge_chance, 'barely', 'easily'))
+                f"{self.name} {choose_adverb(dodge_chance, 'barely', 'easily')}dodges!"
             )
-            self.set_ascii(prefix + 'Dodge')
+            self.set_ascii(f'{prefix}Dodge')
             self.defended = True
         elif roll <= block_chance:
             self.dfs_pwr = round(self.dfs_pwr)
@@ -191,17 +191,17 @@ class FighterWithActions(FighterAPI, ABC):
         self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
 
     def hit_or_miss(self) -> None:
-        # todo use skip list here for functions not to be applied twice
-        # todo let try_* functions return True or False to determine skip
-        tgt = self.target
         if self.dam > 0:
             self.try_critical()
             self.try_epic()
+            # todo use skip list here for functions not to be applied twice
+            # todo let try_* functions return True or False to determine skip
+            tgt = self.target
             self.dam = max(self.dam - tgt.toughness, 0)
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)
                 self.dam = round(self.dam)
-                self.current_fight.display(f'damage is reduced!')
+                self.current_fight.display('damage is reduced!')
             tgt.take_damage(self.dam)
             self.current_fight.display(f'hit: -{self.dam} HP ({tgt.hp})')
             self.try_cause_bleeding()
@@ -244,6 +244,7 @@ class FighterWithActions(FighterAPI, ABC):
         target.target = self
 
     def start_fight_turn(self) -> None:
+        # refresh per-turn attributes
         cur_fight = self.current_fight
         self.act_targets = (
             cur_fight.active_side_b if self in cur_fight.active_side_a else cur_fight.active_side_a
@@ -255,7 +256,8 @@ class FighterWithActions(FighterAPI, ABC):
         self.dfs_bonus = 1.0
         self.dfs_penalty_mult = 1.0
         self.target = None
-        # breathing techs and other automatic actions
+
+        # apply breathing techs and other automatic actions
         if self.hp_gain:
             self.change_hp(self.hp_gain)
         self.change_qp(self.qp_gain)
@@ -325,5 +327,4 @@ class FighterWithActions(FighterAPI, ABC):
         n_a, n_b = len(side_a), len(side_b)
         hp_a, hp_b = sum((f.hp for f in side_a)), sum((f.hp for f in side_b))
         bar = get_bar(hp_a, hp_a + hp_b, '/', '\\', 20)
-        s = f'\n{n_a} {bar} {n_b}\n'
-        return s
+        return f'\n{n_a} {bar} {n_b}\n'
