@@ -27,7 +27,6 @@ class StrikeMechanics(FighterAPI, ABC):
     DUR_STUN_MAX = 150
     DUR_STUN_MIN = 50
     FALL_DAMAGE = (25, 50)
-    GUARD_POWER = 1.5
     INSTA_KO_CHANCE = 0.25
     KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
     KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp

@@ -15,6 +15,7 @@ from kf_lib.utils import choose_adverb, rnd, rndint_2d
 class FighterWithActions(FighterAPI, ABC):
     DUR_FURY_MIN: Final = 500
     DUR_FURY_MAX: Final = 1000
+    GUARD_POWER = 1.5
 
     def apply_bleeding(self) -> None:
         if self.bleeding:
@@ -25,8 +26,7 @@ class FighterWithActions(FighterAPI, ABC):
 
     def apply_dfs_penalty(self) -> None:
         self.dfs_penalty_mult -= self.dfs_penalty_step
-        if self.dfs_penalty_mult < 0:
-            self.dfs_penalty_mult = 0
+        self.dfs_penalty_mult = max(self.dfs_penalty_mult, 0)
 
     def apply_move_cost(self) -> None:
         m = self.action
@@ -54,21 +54,20 @@ class FighterWithActions(FighterAPI, ABC):
     def check_move_failed(self) -> bool:
         compl = self.calc_move_complexity(self.action)
         f_ch = self.get_move_fail_chance(self.action)
-        if rnd() <= f_ch:
-            if self.action.power:
-                self.to_hit = 0
-                if compl >= 1:
-                    self.current_fight.display('Miss!')
-                    self.cause_off_balance()
-            if self.action.dist_change:
-                self.current_fight.display('Fail!')
-                if compl >= 3:
-                    self.cause_fall()
-                else:
-                    self.cause_off_balance()
-            return True
-        else:
+        if rnd() > f_ch:
             return False
+        if self.action.power:
+            self.to_hit = 0
+            if compl >= 1:
+                self.current_fight.display('Miss!')
+                self.cause_off_balance()
+        if self.action.dist_change:
+            self.current_fight.display('Fail!')
+            if compl >= 3:
+                self.cause_fall()
+            else:
+                self.cause_off_balance()
+        return True
 
     def check_preemptive(self) -> bool:
         return self.preemptive_chance and rnd() <= self.preemptive_chance
@@ -109,14 +108,13 @@ class FighterWithActions(FighterAPI, ABC):
             self.try_block_disarm()
             self.defended = True
         else:
-            self.set_ascii(prefix + 'Hit')
+            self.set_ascii(f'{prefix}Hit')
         # this is necessary here, do not remove, otherwise dam will be a float on hit / block
         atkr.dam = round(atkr.dam)
         # todo handle the no defense case
 
     def do_counter(self) -> None:
-        cand_moves = self.get_av_moves(attack_moves_only=True)
-        if cand_moves:
+        if cand_moves := self.get_av_moves(attack_moves_only=True):
             self.current_fight.display('+COUNTER!+')
             new_action = random.choice(cand_moves)
             self.action = new_action
@@ -125,8 +123,7 @@ class FighterWithActions(FighterAPI, ABC):
             self.try_strike()
 
     def do_preemptive(self) -> None:
-        cand_moves = self.get_av_moves(attack_moves_only=True)
-        if cand_moves:
+        if cand_moves := self.get_av_moves(attack_moves_only=True):
             self.current_fight.display('<-PREEMPTIVE!-<')
             new_action = random.choice(cand_moves)
             self.action = new_action
