@@ -3,13 +3,18 @@
 Month XX, 2023
 
 1. feat:
-   1. parametrize exp system
-   2. change formula for next level exp
-   2. add dev notes
-   3. add quick sparring to debug menu
-   4. add "spectate" option to debug menu
+   * exp system:
+      * parametrize exp system
+      * change formula for next level exp
+      * set experience parameters based on experiments
+   * debug menu:
+     * add quick sparring to debug menu
+     * add "spectate" option to debug menu
+   * fix blocks [WIP]
 2. refactor:
-   1. get help from Sourcery
+   * use Sourcery plugin for refactoring
+3. docs:
+   * add dev notes
 
 ### Coming soon:
 * flower kung-fu has moves (only weak and pathetic)
