@@ -24,6 +24,7 @@ class DebugMenu:
                 ('Learn Move', self.debug_learn_move),
                 ('Learn Tech', self.debug_learn_tech),
                 ('Fight Thug(s)', self.debug_fight_thugs),
+                ('Quick Sparring', self.debug_quick_sparring),
                 ('Tournament', self.debug_tournament),
                 ('Encounter', self.debug_encounter),
                 ('Story', self.debug_story),
@@ -66,13 +67,12 @@ class DebugMenu:
         att = get_str_from_user('Input att (type "all" to see all atts)')
         if att == 'all':
             pprint.pprint(vars(p))
+        elif hasattr(p, att):
+            val = getattr(p, att)
+            pprint.pprint(val)
+            print(type(val))
         else:
-            if not hasattr(p, att):
-                print('No such attribute!')
-            else:
-                val = getattr(p, att)
-                pprint.pprint(val)
-                print(type(val))
+            print('No such attribute!')
         pak()
 
     def debug_learn_move(self):
@@ -93,7 +93,12 @@ class DebugMenu:
 
     def debug_pvp(self):
         p = self.g.current_player
-        opp = menu([pp for pp in self.g.players if not (pp is p)])
+        opp = menu([pp for pp in self.g.players if pp is not p])
+        p.spar(opp)
+
+    def debug_quick_sparring(self):
+        p = self.g.current_player
+        opp = fighter_factory.new_fighter(lv=p.level, n=1)
         p.spar(opp)
 
     def debug_set_att(self):
