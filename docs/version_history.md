@@ -1,39 +1,8 @@
-### v0.6.9-beta
-"Not Fail, But Experience"  
-November 20, 2022
+### v0.7.0-beta
+""  
+Month XX, 2023
 
-1. **New experience system**:
-   1. feat: change how exp is computed in fights
-   2. feat: static accomplishment experience
-   3. feat: modify exp per level (static) and school training exp
-   4. feat: constants package, experience module inside it
-   5. feat: misc exp-related tweaks for the new exp system
-   6. feat: home training is only allowed when have a wooden mannequin
-   7. feat: base and derived experience constants
-   8. feat: losers get fixed amount of exp
-   9. feat: add non-linearity to win exp
-2. feat: biography generation for winning players
-   1. feat: describe strengths
-3. refactor:
-   1. refactor: __init_subclass__ in base encounter for automatic class registration
-   2. refactor: BaseEncounter is an ABC
-   3. refactor: type annotations for BaseEncounter methods
-   4. refactor: BookSeller to a separate module
-4. feat: changes in encounters
-   1. feat: change logic of learning moves from books
-   2. feat: test encounters in debug menu
-   3. feat: lucky and unlucky cases in book seller encounter
-5. feat: moves
-   1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
-   2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
-   3. feat: remove weak and pathetic moves (-> 13844)
-   4. feat: rebalance moves / tiers
-   5. feat: improve random move selection logic (no duplicates, one random move for variety)
-6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
-7. feat: toughness - damage reduction that is level-dependent (for all fighters)
-8. feat: Drunken has improved ground defense
-9. fix: UI functions in stories
-10. **refactor: FighterAPI (ABC for Fighter)**
+1. 
 
 
 ### Coming soon:
@@ -71,6 +40,45 @@ November 20, 2022
 * grabs
 * look at fighter atts for unused ideas
 * look at todos
+
+---
+
+### v0.6.9-beta
+"Not Fail, But Experience"  
+November 20, 2022
+
+1. **New experience system**:
+   1. feat: change how exp is computed in fights
+   2. feat: static accomplishment experience
+   3. feat: modify exp per level (static) and school training exp
+   4. feat: constants package, experience module inside it
+   5. feat: misc exp-related tweaks for the new exp system
+   6. feat: home training is only allowed when have a wooden mannequin
+   7. feat: base and derived experience constants
+   8. feat: losers get fixed amount of exp
+   9. feat: add non-linearity to win exp
+2. feat: biography generation for winning players
+   1. feat: describe strengths
+3. refactor:
+   1. refactor: __init_subclass__ in base encounter for automatic class registration
+   2. refactor: BaseEncounter is an ABC
+   3. refactor: type annotations for BaseEncounter methods
+   4. refactor: BookSeller to a separate module
+4. feat: changes in encounters
+   1. feat: change logic of learning moves from books
+   2. feat: test encounters in debug menu
+   3. feat: lucky and unlucky cases in book seller encounter
+5. feat: moves
+   1. feat: generate pathetic, weak, skillful, etc. variants for all moves (3768 -> 16844)
+   2. feat: ultra short and ultra long strikes (with ASCII arts) (-> 18436)
+   3. feat: remove weak and pathetic moves (-> 13844)
+   4. feat: rebalance moves / tiers
+   5. feat: improve random move selection logic (no duplicates, one random move for variety)
+6. fix: in fighter_factory.py, first create fighters of level 1, then level them up for gradual move progression
+7. feat: toughness - damage reduction that is level-dependent (for all fighters)
+8. feat: Drunken has improved ground defense
+9. fix: UI functions in stories
+10. **refactor: FighterAPI (ABC for Fighter)**
 
 ---
 
