@@ -34,7 +34,6 @@ class HumanControlledFighter(Fighter):
             self.see_fight_info(show_opp=True)
             # print('status', self.status)
             # print('opp status', self.target.status)
-            # print(self.dfs_bonus)
             m_names = [
                 f'{m.name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}'
                 for m in self.av_moves

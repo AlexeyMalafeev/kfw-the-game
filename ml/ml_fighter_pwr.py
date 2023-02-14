@@ -56,9 +56,9 @@ def extract_features(side_a, side_b):
     features.append(val3)
 
     # weapon
-    val1 = 1 + mean([0.0] + [f.weapon.dfs_bonus + f.weapon.atk_mean for f in side_a if f.weapon])
+    val1 = 1 + mean([0.0] + [f.weapon.dfs_bonus_from_guarding + f.weapon.atk_mean for f in side_a if f.weapon])
     features.append(val1)
-    val2 = 1 + mean([0.0] + [f.weapon.dfs_bonus + f.weapon.atk_mean for f in side_b if f.weapon])
+    val2 = 1 + mean([0.0] + [f.weapon.dfs_bonus_from_guarding + f.weapon.atk_mean for f in side_b if f.weapon])
     features.append(val2)
     val3 = round(val1 / val2, 2)
     features.append(val3)

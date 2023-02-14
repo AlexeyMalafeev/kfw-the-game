@@ -54,6 +54,7 @@ class FightAttributes(FighterAPI, ABC):
     stamina = Integer()
 
     def init_fight_attributes(self) -> None:
+        # todo part of these are always assigned before modification, so no need to init here
         self.act_allies = []
         self.act_targets = []
         self.action = None
@@ -61,8 +62,7 @@ class FightAttributes(FighterAPI, ABC):
         self.ascii_l = ''
         self.ascii_r = ''
         self.ascii_name = ''
-        self.atk_bonus = 0.0
-        self.atk_pwr = 0.0
+        self.potential_dam = 0.0
         self.av_moves = []
         self.bleeding = 0  # refreshed every fight
         self.current_fight = None  # ...Fight object
@@ -97,7 +97,7 @@ class FightAttributes(FighterAPI, ABC):
         self.dfs_penalty_mult = 1.0
         self.dfs_penalty_step = 0.2
         self.dodge_mult = 1.0
-        self.environment_chance = 0.0  # todo get rid of this as it is just another critical?
+        self.environment_chance = 0.0  # todo get rid of this as it is just another critical
         self.epic_chance = 0.0  # NB! level-dependent
         self.epic_chance_mult = 1.0  # tech-dependent, todo not used yet, secret tech?
         self.epic_dam_mult = 2.0

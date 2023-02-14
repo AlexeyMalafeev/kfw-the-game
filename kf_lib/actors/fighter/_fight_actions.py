@@ -12,10 +12,13 @@ from kf_lib.ui import get_bar
 from kf_lib.utils import rnd, rndint_2d
 
 
+DEBUG = True
+
+
 class FighterWithActions(FighterAPI, ABC):
+    BASE_DFS_BONUS_FROM_GUARDING = 1.5
     DUR_FURY_MIN: Final = 500
     DUR_FURY_MAX: Final = 1000
-    GUARD_POWER = 1.5
 
     def apply_bleeding(self) -> None:
         if self.bleeding:
@@ -35,7 +38,7 @@ class FighterWithActions(FighterAPI, ABC):
     def attack(self) -> None:
         self.display_start_of_attack()
         if self.guard_while_attacking:
-            self.dfs_bonus *= self.GUARD_POWER * (1.0 + self.guard_while_attacking)
+            self.dfs_bonus_from_guarding *= self.BASE_DFS_BONUS_FROM_GUARDING * (1.0 + self.guard_while_attacking)
         if self.target.check_preemptive():
             self.target.do_preemptive()
         else:
@@ -91,8 +94,9 @@ class FighterWithActions(FighterAPI, ABC):
             self.set_target(self.fight_ai.choose_target())
 
     def do_block(self) -> None:
-        self.dfs_pwr = round(self.dfs_pwr)
-        self.target.dam = max(self.target.dam - self.dfs_pwr, 0)
+        self._calc_block_pwr()
+        self.block_pwr = round(self.block_pwr)
+        self.target.dam = max(self.target.dam - self.block_pwr, 0)
         self.change_qp(self.qp_gain // 2)
         self.display_block()
         prefix = 'Lying ' if self.check_status('lying') else ''
@@ -115,6 +119,13 @@ class FighterWithActions(FighterAPI, ABC):
         self.set_ascii(f'{prefix}Dodge')
         self.defended = True
 
+    def do_on_strike_end(self) -> None:
+        if self.action.dist_change:
+            self.change_distance(self.action.dist_change, self.target)
+        else:
+            self.momentum = 0
+        self.previous_actions.append(self.action)
+
     def do_per_turn_actions(self) -> None:
         if self.hp_gain:
             self.change_hp(self.hp_gain)
@@ -135,20 +146,15 @@ class FighterWithActions(FighterAPI, ABC):
             self.apply_move_cost()
 
     def do_strike(self) -> None:
-        m = self.action
-        self.calc_atk(m)
+        self.calc_atk(self.action)
         self.try_environment('attack')
         self.target.calc_dfs()
         self.try_unblockable()
         self.target.try_environment('defense')
         self.target.try_defend()
-        self.hit_or_miss()
+        self.try_hit()
         self.target.apply_dfs_penalty()
-        if m.dist_change:
-            self.change_distance(m.dist_change, self.target)
-        else:
-            self.momentum = 0
-        self.previous_actions.append(m)
+        self.do_on_strike_end()
 
     def exec_move(self) -> None:
         m = self.action
@@ -174,27 +180,7 @@ class FighterWithActions(FighterAPI, ABC):
     def guard(self) -> None:
         """This is called with eval as a function of the Guard move."""
         # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
-        self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
-
-    def hit_or_miss(self) -> None:
-        if self.dam > 0:
-            self.try_critical()
-            self.try_epic()
-            # todo use skip list here for functions not to be applied twice
-            # todo let try_* functions return True or False to determine skip
-            self.dam = max(self.dam - self.target.toughness, 0)
-            if self.target.dam_reduc:
-                self.dam *= (1 - self.target.dam_reduc)
-                self.dam = round(self.dam)
-            self.target.take_damage(self.dam)
-            self.display_hit()
-            self.try_cause_bleeding()
-            self.try_hit_disarm()
-            self.do_move_functions(self.action)
-            self.try_stun()
-            self.try_knockback()
-            self.try_knockdown()
-            self.try_ko()
+        self.dfs_bonus_from_guarding *= self.guard_dfs_bonus * self.BASE_DFS_BONUS_FROM_GUARDING
 
     def maneuver(self) -> None:
         m = self.action
@@ -207,6 +193,7 @@ class FighterWithActions(FighterAPI, ABC):
         self.do_move_functions(m)
 
     def prepare_for_fight(self) -> None:
+        # this is done to clean up after possible previous fights
         self.hp = self.hp_max
         self.qp = round(self.qp_max * self.qp_start)
         self.stamina = self.stamina_max
@@ -220,6 +207,35 @@ class FighterWithActions(FighterAPI, ABC):
         self.kos_this_fight = 0
         self.momentum = 0
 
+        # attack- and defense-related
+        self.stamina_factor = 1.0
+        self.dfs_penalty_mult = 1.0
+        self.dfs_bonus_from_guarding = 1.0
+
+    def _print_defender_debug_info(self, roll: float) -> None:
+        print(
+            '\n---DEBUG---'
+            f'{self.target.name} '
+            f'to_hit: {round(self.target.to_hit, 2)} '
+            f'\n{self.name} '
+            f'curr_dfs_mult: {round(self.curr_dfs_mult, 2)} '
+            f'\nto_dodge: {round(self.to_dodge, 2)} '
+            f'dodge_chance: {round(self.dodge_chance, 2)} '
+            f'\nto_block: {round(self.to_block, 2)} '
+            f'block_chance: {round(self.block_chance, 2)} '
+            f'\nroll: {round(roll, 2)}'
+        )
+        if not self.curr_dfs_mult:
+            print(
+                f'---EXTRA-DEBUG---'
+                f'\n{self.BASE_DFS_MULT=}'
+                f'\n{self.dfs_penalty_mult=}'
+                f'\n{self.agility_full=}'
+                f'\n{self.stamina_factor=}'
+                f'\n{self.dfs_bonus_from_guarding=}'
+            )
+        print('---END-OF-DEBUG---\n')
+
     def refresh_per_turn_attributes(self) -> None:
         cur_fight = self.current_fight
         self.act_targets = (
@@ -229,7 +245,7 @@ class FighterWithActions(FighterAPI, ABC):
             cur_fight.active_side_b if self in cur_fight.active_side_b else cur_fight.active_side_a
         )
         self.action = None
-        self.dfs_bonus = 1.0
+        self.dfs_bonus_from_guarding = 1.0  # needs to be refreshed because guarding can happen during both atk and dfs
         self.dfs_penalty_mult = 1.0
         self.target = None
 
@@ -240,10 +256,6 @@ class FighterWithActions(FighterAPI, ABC):
     def start_fight_turn(self) -> None:
         self.refresh_per_turn_attributes()
         self.do_per_turn_actions()
-
-    def try_strike(self) -> None:
-        if not self.check_move_failed():
-            self.do_strike()
 
     def try_block_disarm(self) -> None:
         if self.target.weapon and self.block_disarm and rnd() <= self.block_disarm:
@@ -256,12 +268,13 @@ class FighterWithActions(FighterAPI, ABC):
             self.do_counter()
 
     def try_defend(self) -> None:
-        # sourcery skip: extract-method, use-fstring-for-concatenation
         atkr = self.target
-        atkr.dam = atkr.atk_pwr
+        atkr.dam = atkr.potential_dam
         self.dodge_chance = self.to_dodge / atkr.to_hit
         self.block_chance = self.to_block / atkr.to_hit
         roll = rnd()
+        if DEBUG:
+            self._print_defender_debug_info(roll)
         self.defended = False
         if roll <= self.dodge_chance:
             self.do_dodge()
@@ -283,6 +296,26 @@ class FighterWithActions(FighterAPI, ABC):
             fury_dur = rndint_2d(self.DUR_FURY_MIN, self.DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
             self.display_fury()
+
+    def try_hit(self) -> None:
+        if self.dam > 0:
+            self.try_critical()
+            self.try_epic()
+            # todo use skip list here for functions not to be applied twice
+            # todo let try_* functions return True or False to determine skip
+            self.dam = max(self.dam - self.target.toughness, 0)
+            if self.target.dam_reduc:
+                self.dam *= (1 - self.target.dam_reduc)
+                self.dam = round(self.dam)
+            self.target.take_damage(self.dam)
+            self.display_hit()
+            self.try_cause_bleeding()
+            self.try_hit_disarm()
+            self.do_move_functions(self.action)
+            self.try_stun()
+            self.try_knockback()
+            self.try_knockdown()
+            self.try_ko()
 
     def try_in_fight_impro_wp(self) -> None:
         if (
@@ -307,6 +340,10 @@ class FighterWithActions(FighterAPI, ABC):
                 if not tgt.ascii_name.startswith('lying'):
                     tgt.set_ascii('Falling')
                 self.display_ko()
+
+    def try_strike(self) -> None:
+        if not self.check_move_failed():
+            self.do_strike()
 
     def visualize_fight_state(self) -> str:
         ft = self.current_fight

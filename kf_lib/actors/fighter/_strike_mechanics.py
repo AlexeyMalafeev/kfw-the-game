@@ -11,11 +11,12 @@ if TYPE_CHECKING:
 
 
 class StrikeMechanics(FighterAPI, ABC):
-    BASE_BLOCK_STRENGTH = 20  # Punch power = 26
+    BASE_BLOCK_STRENGTH = 10  # Punch power = 26, but potential_dam is divided by 2
+    BASE_DFS_MULT = 20  # to balance out move accuracy
     BLEEDING_PART_OF_DAM = 0.15
-    BLOCK_DIVISOR = 2
-    DAM_DIVISOR = 2
-    DODGE_DIVISOR = 3
+    BLOCK_CHANCE_NORMALIZER = 3  # used to adjust against to_hit and dodge chance
+    DAMAGE_NORMALIZER = 2  # used to adjust all damage values against block strength and max health
+    DODGE_CHANCE_NORMALIZER = 4  # used to adjust against to_hit and block chance
     DUR_LYING_MAX = 200
     DUR_LYING_MIN = 100
     DUR_OFF_BAL_MAX = 100
@@ -43,63 +44,113 @@ class StrikeMechanics(FighterAPI, ABC):
     STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
     TIME_UNIT_MULTIPLIER = 20
 
+    def _apply_fury_for_atk(self) -> None:
+        if self.check_status('fury'):
+            self.potential_dam *= self.fury_to_all_mult
+            self.to_hit *= self.fury_to_all_mult
+
+    def _apply_fury_for_dfs(self) -> None:
+        # todo should fury apply to dfs?
+        if self.check_status('fury'):
+            self.curr_dfs_mult *= self.fury_to_all_mult
+
+    def _apply_momentum_for_atk(self) -> None:
+        momentum_effect = 1.0 + self.MOMENTUM_EFFECT_SIZE * self.momentum
+        self.potential_dam *= momentum_effect
+        self.to_hit *= momentum_effect
+
     def calc_atk(self, action: Move) -> None:
         """Calculate attack numbers w.r.t. some action (not necessarily action chosen)."""
+        self._calc_curr_atk_mult(action)
+        self._calc_potential_dam(action)
+        self._calc_to_hit(action)
+        self._apply_momentum_for_atk()
+        self._apply_fury_for_atk()
+
+    def _calc_block_pwr(self) -> None:
+        # needs to be computed independently of curr_dfs_mult
+        self.block_pwr = (
+            self.BASE_BLOCK_STRENGTH
+            * self.block_mult
+            * self.strength_full
+            * self.wp_dfs_bonus
+        )
+
+    def _calc_curr_atk_mult(self, action: Move) -> None:
         strike_mult = 1.0
         for feature in action.features:
             strike_mult *= getattr(self, f'{feature}_strike_mult', 1.0)
-        self.atk_bonus = self.atk_mult * strike_mult
-        if self.check_status('off-balance'):
-            self.atk_bonus *= self.off_balance_atk_mult
-        self.atk_pwr = (
-            self.strength_full * action.power * self.atk_bonus * self.stamina_factor
-            / self.DAM_DIVISOR
+        self.curr_atk_mult = (
+            self.atk_mult
+            * strike_mult
+            * self.stamina_factor
         )
-        self.to_hit = self.agility_full * action.accuracy * self.atk_bonus * self.stamina_factor
-        # take into account momentum
-        momentum_effect = 1.0 + self.MOMENTUM_EFFECT_SIZE * self.momentum
-        self.atk_pwr *= momentum_effect
-        self.to_hit *= momentum_effect
-        if self.check_status('fury'):
-            self.atk_pwr *= self.fury_to_all_mult
-            self.to_hit *= self.fury_to_all_mult
+        if self.check_status('off-balance'):
+            self.curr_atk_mult *= self.off_balance_atk_mult
+
+    def _calc_curr_dfs_mult(self) -> None:
+        self.curr_dfs_mult = (
+            self.BASE_DFS_MULT
+            * self.dfs_penalty_mult
+            * self.agility_full
+            * self.stamina_factor
+            * self.dfs_bonus_from_guarding
+        )
+        if self.check_status('off-balance'):
+            self.curr_dfs_mult *= self.off_balance_dfs_mult
+        if self.check_status('lying'):
+            self.curr_dfs_mult *= self.lying_dfs_mult
 
     # todo how is calc_dfs used? why not relative to attacker?
     def calc_dfs(self) -> None:
-        """Calculate defense numbers."""
         if self.check_status('shocked'):
             self.to_dodge = 0
             self.to_block = 0
         else:
-            attacker = self.target
-            atk_action = attacker.action
-            # todo recalc as a value in (0.0, 1.0)?
-            # * 10 because of new system:
-            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
-            x *= self.stamina_factor * attacker.get_rep_actions_factor(atk_action)
-            x *= self.dfs_bonus
-            # print('x after dfs_bonus', x)
-            if self.check_status('off-balance'):
-                x *= self.off_balance_dfs_mult
-            if self.check_status('lying'):
-                x *= self.lying_dfs_mult
-            self.to_dodge = x / self.DODGE_DIVISOR
-            self.to_block = x / self.BLOCK_DIVISOR
-            self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
-            # print('to dodge, to block', self.to_dodge, self.to_block)
-            # todo divide dfs_pwr by sth?
-            self.dfs_pwr = (self.dfs_penalty_mult
-                            * self.BASE_BLOCK_STRENGTH * self.block_mult
-                            * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
-            if self.check_status('fury'):
-                self.dfs_pwr *= self.fury_to_all_mult
+            self._calc_curr_dfs_mult()
+            self._apply_fury_for_dfs()
+            self._calc_to_dodge()
+            self._calc_to_block()
+            # todo should momentum affect dfs as well?
 
     def calc_move_complexity(self, move_obj: Move) -> float:
         return move_obj.complexity * self.move_complexity_mult
 
+    def _calc_potential_dam(self, action: Move) -> None:
+        self.potential_dam = (
+            self.strength_full
+            * action.power
+            * self.curr_atk_mult
+            / self.DAMAGE_NORMALIZER
+        )
+
     def calc_stamina_factor(self) -> None:
         # todo docstring calc_stamina_factor
-        self.stamina_factor = self.stamina / self.stamina_max / 2 + self.STAMINA_FACTOR_BIAS
+        self.stamina_factor = (
+            self.stamina
+            / self.stamina_max
+            / 2
+            + self.STAMINA_FACTOR_BIAS
+        )
+
+    def _calc_to_block(self) -> None:
+        self.to_block = (
+            self.curr_dfs_mult
+            * self.wp_dfs_bonus
+            * self.block_mult
+            / self.BLOCK_CHANCE_NORMALIZER
+        )
+
+    def _calc_to_dodge(self) -> None:
+        self.to_dodge = self.curr_dfs_mult * self.dodge_mult / self.DODGE_CHANCE_NORMALIZER
+
+    def _calc_to_hit(self, action: Move) -> None:
+        self.to_hit = (
+            self.agility_full
+            * action.accuracy
+            * self.curr_atk_mult
+            * self.get_rep_actions_factor(self.target.action)
+        )
 
     def cause_bleeding(self) -> None:
         self.current_fight.display(f'{self.target.name} is BLEEDING!')
@@ -134,7 +185,7 @@ class StrikeMechanics(FighterAPI, ABC):
         self.add_status('shocked', shock_dur)
         self.add_status('skip', shock_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
-        self.set_ascii(prefix + 'Hit Effect')
+        self.set_ascii(f'{prefix}Hit Effect')
         self.current_fight.display(' shocked!', align=False)
 
     def cause_slow_down(self) -> None:
@@ -142,7 +193,7 @@ class StrikeMechanics(FighterAPI, ABC):
         self.add_status('slowed down', slow_dur)
         # todo do not repeat this line in all functions, use helper
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
-        self.set_ascii(prefix + 'Hit Effect')
+        self.set_ascii(f'{prefix}Hit Effect')
         self.current_fight.display(' slowed down!', align=False)
 
     def cause_stun(self) -> None:
@@ -151,7 +202,7 @@ class StrikeMechanics(FighterAPI, ABC):
         self.add_status('stunned', stun_dur)
         self.add_status('skip', stun_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
-        self.set_ascii(prefix + 'Hit Effect')
+        self.set_ascii(f'{prefix}Hit Effect')
         self.current_fight.display(' stunned!', align=False)
 
     def do_agility_based_dam(self) -> None:
@@ -199,7 +250,7 @@ class StrikeMechanics(FighterAPI, ABC):
         dam = round(targ.stamina_max * self.STAMINA_DAMAGE)
         targ.change_stamina(-dam)
         prefix = 'lying ' if targ.check_status('lying') else ''
-        targ.set_ascii(prefix + 'Hit Effect')
+        targ.set_ascii(f'{prefix}Hit Effect')
         self.current_fight.display(' gasps for breath!', align=False)
 
     def do_strength_based_dam(self) -> None:
@@ -216,10 +267,7 @@ class StrikeMechanics(FighterAPI, ABC):
         return self.calc_move_complexity(move_obj) ** 2 / self.agility_full ** 2
 
     def get_move_time_cost(self, move_obj: Move) -> int:
-        if self.check_status('slowed down'):
-            mob_mod = 1 - self.MOB_DAM_PENALTY
-        else:
-            mob_mod = 1
+        mob_mod = 1 - self.MOB_DAM_PENALTY if self.check_status('slowed down') else 1
         cost = move_obj.time_cost / (self.speed_full * mob_mod)
         if move_obj.power:
             cost *= self.strike_time_cost_mult
@@ -229,7 +277,7 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def get_rep_actions_factor(self, move: Move) -> float:
         n = self.previous_actions.count(move)  # 0-3
-        return 1.0 + n * 0.33  # up to 1.99
+        return 1 - n * 0.2  # 0.4-1.0
 
     def take_damage(self, dam: int) -> None:
         self.change_hp(-dam)
@@ -252,10 +300,10 @@ class StrikeMechanics(FighterAPI, ABC):
             and rnd() <= self.environment_chance
         ):
             if mode == 'attack':
-                self.atk_pwr *= self.current_fight.environment_bonus
+                self.potential_dam *= self.current_fight.environment_bonus
                 self.to_hit *= self.current_fight.environment_bonus
             elif mode == 'defense':
-                self.dfs_pwr *= self.current_fight.environment_bonus
+                self.block_pwr *= self.current_fight.environment_bonus
                 self.to_block *= self.current_fight.environment_bonus
                 self.to_dodge *= self.current_fight.environment_bonus
             self.current_fight.display(f'{self.name} uses the environment!')

@@ -65,7 +65,7 @@ class BaseAI(object):
 
 class GeneticAI(BaseAI):
     """Choose a random opponent and an action based on action weights (weighted random choice).
-    Considers only atk_pwr * to_hit."""
+    Considers only potential_dam * to_hit."""
 
     prob_atk = 10.0
     prob_move = 3.0
@@ -111,7 +111,7 @@ class GeneticAI(BaseAI):
             weights = []
             for m in pool:
                 owner.calc_atk(m)
-                weights.append(owner.atk_pwr * owner.to_hit)
+                weights.append(owner.potential_dam * owner.to_hit)
             return random.choices(pool, weights=weights, k=1)[0]
 
     def get_a_maneuver(self):
@@ -124,7 +124,7 @@ class GeneticAI(BaseAI):
             for m in self.owner.moves:
                 if m.distance:
                     owner.calc_atk(m)
-                    w = owner.atk_pwr * owner.to_hit
+                    w = owner.potential_dam * owner.to_hit
                     dist_table[m.distance] += w
             curr_dist = owner.distances[owner.target]
             max_score = max(dist_table.values())

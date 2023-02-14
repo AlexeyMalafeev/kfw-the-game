@@ -13,15 +13,19 @@ Month XX, 2023
    * fix blocks [WIP]
 2. refactor:
    * use Sourcery plugin for refactoring
+   * major refactor of _fight_actions.py, separate part of code into _fight_display.py 
 3. docs:
    * add dev notes
 
 ### Coming soon:
+* write what happens during fight loop in dev notes
+* fix blocks and guard
+* reduce move bonuses, as they are multiplied by one another -> or just stack the bonuses
+* remove environment
 * flower kung-fu has moves (only weak and pathetic)
 * initial attribute values in FighterAPI
 * constants in FighterAPI
-* fix possible bug in exp progression in lazy / hardworking players 
-* speed up early progress? slow down late progress (progressive exp, e.g. step 20 start from 40 or even 20 or use base fight exp as step)
+* fix possible bug in exp progression in lazy / hardworking players
 * butt strike, hip strike - handle specially
 * encounter in practice at school - improve move
 * compute crowd exp worth differently?
@@ -34,10 +38,9 @@ Month XX, 2023
    * accomplishments to text
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * ability to upgrade moves (from pathetic to ultimate)
-* yell (as move_fun?)
+* yell (as move_fun?) - it can be a tech that reduces enemy defense
 * in-fight nunchacku tech (like impro weapons)
 * refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
-* ABC for Fighter
 * refactor, refactor, refactor
 * fight AI rule to hurry and finish off knocked down opponent 
 * learn weak / pathetic moves in books?

@@ -34,21 +34,19 @@ class FighterAPI(ABC):
     act_targets: List[FighterAPI] = None
     action: Optional[Move] = None
     agility: int = None
-    agility_full: int = None
+    agility_full: int = 0
     agility_mult: float = None
     ascii_buffer: int = None
     ascii_l: Text = None
     ascii_name: Text = None
     ascii_r: Text = None
-    atk_bonus: float = None
     atk_mult: float = None
-    atk_pwr: float = None
     att_names: Tuple[Text, Text, Text, Text] = None
     att_names_short: Tuple[Text, Text, Text, Text] = None
     att_weights: Dict[Text, int] = None
     av_moves: List[Move] = None
     bleeding: int = None
-    block_chance: float = None  # refreshed per attack
+    block_chance: float = 0.0  # refreshed per attack
     block_disarm: float = None
     block_mult: float = None
     chance_cause_bleeding: float = None
@@ -57,17 +55,19 @@ class FighterAPI(ABC):
     critical_chance: float = None
     critical_chance_mult: float = None
     critical_dam_mult: float = None
+    curr_atk_mult: float = 1.0  # refreshed per attack
+    curr_dfs_mult: float = 1.0  # refreshed even more often than per attack
     current_fight: Optional[BaseFight] = None
     dam: int = None
     dam_reduc: float = None
     defended: bool = None
-    dfs_bonus: float = None
+    dfs_bonus_from_guarding: float = 1.0
     dfs_mult: float = None
     dfs_penalty_mult: float = None
     dfs_penalty_step: float = None
-    dfs_pwr: float = None
+    block_pwr: float = None
     distances: Dict[FighterAPI, int] = None
-    dodge_chance: float = None  # refreshed per attack
+    dodge_chance: float = 0.0  # refreshed per attack
     dodge_mult: float = None
     environment_chance: float = None
     epic_chance: float = None
@@ -105,6 +105,7 @@ class FighterAPI(ABC):
     num_techs_choose_upgrade: int = 3
     off_balance_atk_mult: float = None
     off_balance_dfs_mult: float = None
+    potential_dam: float = None  # computed per strike, before it connects
     preemptive_chance: float = None
     previous_actions: deque = None
     qp: int = None
@@ -179,6 +180,18 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def _apply_fury_for_atk(self) -> None:
+        pass
+
+    @abstractmethod
+    def _apply_fury_for_dfs(self) -> None:
+        pass
+
+    @abstractmethod
+    def _apply_momentum_for_atk(self) -> None:
+        pass
+
+    @abstractmethod
     def apply_move_cost(self) -> None:
         pass
 
@@ -218,6 +231,17 @@ class FighterAPI(ABC):
     def calc_atk(self, action: Move) -> None:
         pass
 
+    def _calc_block_pwr(self) -> None:
+        pass
+
+    @abstractmethod
+    def _calc_curr_atk_mult(self, action: Move) -> None:
+        pass
+
+    @abstractmethod
+    def _calc_curr_dfs_mult(self) -> None:
+        pass
+
     @abstractmethod
     def calc_dfs(self) -> None:
         pass
@@ -227,7 +251,23 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def _calc_potential_dam(self, action: Move) -> None:
+        pass
+
+    @abstractmethod
     def calc_stamina_factor(self) -> None:
+        pass
+
+    @abstractmethod
+    def _calc_to_block(self) -> None:
+        pass
+
+    @abstractmethod
+    def _calc_to_dodge(self) -> None:
+        pass
+
+    @abstractmethod
+    def _calc_to_hit(self, action: Move) -> None:
         pass
 
     @abstractmethod
@@ -436,6 +476,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def do_on_strike_end(self) -> None:
+        pass
+
+    @abstractmethod
     def do_per_turn_actions(self) -> None:
         pass
 
@@ -620,10 +664,6 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def guard(self) -> None:
-        pass
-
-    @abstractmethod
-    def hit_or_miss(self) -> None:
         pass
 
     @abstractmethod
@@ -820,6 +860,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def try_fury(self) -> None:
+        pass
+
+    @abstractmethod
+    def try_hit(self) -> None:
         pass
 
     @abstractmethod

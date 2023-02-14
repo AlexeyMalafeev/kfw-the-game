@@ -163,10 +163,7 @@ class BaseFight(object):
                 return
 
     def get_f_name_string(self, f):
-        if self.school_display:
-            return f'{f.name} ({f.style.name})'
-        else:
-            return f.name
+        return f'{f.name} ({f.style.name})' if self.school_display else f.name
 
     def get_seconds(self):
         return round(self.timer / TIME_TO_SEC_DIVISOR)

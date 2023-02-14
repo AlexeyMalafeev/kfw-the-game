@@ -11,7 +11,7 @@ class FightDisplayMethods(FighterAPI, ABC):
 
     def display_block(self) -> None:
         adv = choose_adverb(self.block_chance, 'barely', 'easily')
-        self.current_fight.display(f'{self.name} {adv}blocks! ({self.dfs_pwr})')
+        self.current_fight.display(f'{self.name} {adv}blocks! ({self.block_pwr})')
 
     def display_block_disarm(self) -> None:
         self.current_fight.display(f'{self.name} disarms {self.target.name} while blocking')
