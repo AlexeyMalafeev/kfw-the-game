@@ -116,9 +116,12 @@ class Playing(BaseGame):
         # chance for school students to level up
         for school in self.schools.values():
             for student in school:
-                if not student.is_player:
-                    if rnd() <= CH_STUDENT_LV_UP and student.level < MAX_STUDENT_LEVEL:
-                        student.level_up()
+                if (
+                    not student.is_player
+                    and rnd() <= CH_STUDENT_LV_UP
+                    and student.level < MAX_STUDENT_LEVEL
+                ):
+                    student.level_up()
         self.rerank_schools()
         # for p in self.players:
         #     p.refresh_school_rank()
