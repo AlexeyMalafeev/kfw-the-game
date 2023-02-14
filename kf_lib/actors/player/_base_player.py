@@ -8,8 +8,9 @@ from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.traits import get_rand_traits
 from kf_lib.constants.experience import (
     ACCOMPL_EXP,
-    EXP_PER_LEVEL,
+    EXP_DIFF_PER_LV,
     HOME_TRAINING_EXP,
+    LV1_EXP,
     MASTER_TRAINING_EXP,
     SCHOOL_TRAINING_EXP,
 )
@@ -224,6 +225,8 @@ class BasePlayer(Fighter):
                 return True
 
     def check_help(self, allies=True, master=True, impr_wp=True, school=True):
+        # sourcery skip: extract-method
+        # todo refactor this method
         p = self
         p.allies = []
         hlp = []
@@ -453,7 +456,11 @@ class BasePlayer(Fighter):
         return self.game.masters[self.style.name]
 
     def get_next_lv_exp(self):
-        return round(EXP_PER_LEVEL * self.next_lv_exp_mult * self.level)
+        return round(
+            (2 * LV1_EXP + EXP_DIFF_PER_LV * (self.level - 1))
+            / 2 * self.level
+            * self.next_lv_exp_mult
+        )
 
     def get_nonhuman_friends(self):
         return [f for f in self.friends if not f.is_human]
