@@ -31,6 +31,7 @@ class DebugMenu:
                 ('Inspect Player', self.debug_inspect_player),
                 ('Set Attribute', self.debug_set_att),
                 ('PvP', self.debug_pvp),
+                ('Spectate', self.debug_spectate),
             )
         )
         choice()
@@ -110,6 +111,12 @@ class DebugMenu:
         else:
             val = input('Enter value:\n > ')
             setattr(p, att, eval(val))
+
+    def debug_spectate(self):
+        p = self.g.current_player
+        f1 = fighter_factory.new_fighter()
+        f2 = fighter_factory.new_fighter()
+        p.spectate([f1], [f2])
 
     def debug_story(self):
         story_class = menu(

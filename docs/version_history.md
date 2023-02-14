@@ -2,8 +2,13 @@
 ""  
 Month XX, 2023
 
-1. 
-
+1. feat:
+   1. parametrize exp system
+   2. add dev notes
+   3. add quick sparring to debug menu
+   4. add "spectate" option to debug menu
+2. refactor:
+   1. get help from Sourcery
 
 ### Coming soon:
 * flower kung-fu has moves (only weak and pathetic)
@@ -20,6 +25,7 @@ Month XX, 2023
 * further reduce dist3 and dist2 bonuses?
 * biographies:
    * favorite strike: most feared move, preferred
+   * accomplishments to text
 * tests of strength / speed / health / agility in various encounters and stories = new mechanics
 * ability to upgrade moves (from pathetic to ultimate)
 * yell (as move_fun?)
