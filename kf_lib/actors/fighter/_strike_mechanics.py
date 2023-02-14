@@ -11,9 +11,9 @@ if TYPE_CHECKING:
 
 
 class StrikeMechanics(FighterAPI, ABC):
+    BASE_BLOCK_STRENGTH = 20  # Punch power = 26
     BLEEDING_PART_OF_DAM = 0.15
     BLOCK_DIVISOR = 2
-    BLOCK_POWER = 20  # Punch power = 26
     DAM_DIVISOR = 2
     DODGE_DIVISOR = 3
     DUR_LYING_MAX = 200
@@ -27,6 +27,7 @@ class StrikeMechanics(FighterAPI, ABC):
     DUR_STUN_MAX = 150
     DUR_STUN_MIN = 50
     FALL_DAMAGE = (25, 50)
+    GUARD_POWER = 1.5
     INSTA_KO_CHANCE = 0.25
     KNOCKBACK_DIST_FORCED = (1, 1, 1, 2, 2, 3)
     KNOCKBACK_FULL_HP_DAM = 5  # knockback distance when damage = full hp
@@ -73,11 +74,10 @@ class StrikeMechanics(FighterAPI, ABC):
         else:
             attacker = self.target
             atk_action = attacker.action
-            rep_actions_factor = attacker.get_rep_actions_factor(atk_action)
             # todo recalc as a value in (0.0, 1.0)?
             # * 10 because of new system:
             x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
-            x *= self.stamina_factor * rep_actions_factor
+            x *= self.stamina_factor * attacker.get_rep_actions_factor(atk_action)
             x *= self.dfs_bonus
             # print('x after dfs_bonus', x)
             if self.check_status('off-balance'):
@@ -90,7 +90,7 @@ class StrikeMechanics(FighterAPI, ABC):
             # print('to dodge, to block', self.to_dodge, self.to_block)
             # todo divide dfs_pwr by sth?
             self.dfs_pwr = (self.dfs_penalty_mult
-                            * self.BLOCK_POWER * self.block_mult * self.BLOCK_POWER
+                            * self.BASE_BLOCK_STRENGTH * self.block_mult
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
