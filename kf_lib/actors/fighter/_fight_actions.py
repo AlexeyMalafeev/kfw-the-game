@@ -12,7 +12,7 @@ from kf_lib.ui import get_bar
 from kf_lib.utils import rnd, rndint_2d
 
 
-DEBUG = True
+DEBUG = False
 
 
 class FighterWithActions(FighterAPI, ABC):
@@ -213,10 +213,12 @@ class FighterWithActions(FighterAPI, ABC):
         self.dfs_bonus_from_guarding = 1.0
 
     def _print_defender_debug_info(self, roll: float) -> None:
+        # todo separate module for fighter debug
         print(
             '\n---DEBUG---'
-            f'{self.target.name} '
+            f'\n{self.target.name} '
             f'to_hit: {round(self.target.to_hit, 2)} '
+            f'potential_dam: {round(self.target.potential_dam, 2)}'
             f'\n{self.name} '
             f'curr_dfs_mult: {round(self.curr_dfs_mult, 2)} '
             f'\nto_dodge: {round(self.to_dodge, 2)} '
@@ -263,8 +265,19 @@ class FighterWithActions(FighterAPI, ABC):
             self.display_block_disarm()
 
     def try_counter(self) -> None:
-        # print(f'{self.name}: {self.counter_chance=}')
-        if not self.target.dam and self.hp > 0 and rnd() <= self.counter_chance:
+        if self.target.dam or self.hp <= 0:
+            return
+        roll = rnd()
+        # todo wrap in a method
+        if DEBUG:
+            print('\n---COUNTER-DEBUG---')
+            print(
+                f'{self.name}: '
+                f'\ncounter_chance={round(self.counter_chance, 2)} '
+                f'roll={round(roll, 2)}'
+            )
+            print('---END-OF-COUNTER-DEBUG---\n')
+        if roll <= self.counter_chance:
             self.do_counter()
 
     def try_defend(self) -> None:

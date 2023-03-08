@@ -10,7 +10,8 @@ Month XX, 2023
    * debug menu:
      * add quick sparring to debug menu
      * add "spectate" option to debug menu
-   * fix blocks [WIP]
+   * fighting:
+     * rework main fight mechanics
 2. refactor:
    * use Sourcery plugin for refactoring
    * major refactor of _fight_actions.py, separate part of code into _fight_display.py 
@@ -18,6 +19,8 @@ Month XX, 2023
    * add dev notes
 
 ### Coming soon:
+* in-fight attributes should be properly refreshed at the beginning of each fight
+* document all attributes in api
 * write what happens during fight loop in dev notes
 * fix blocks and guard
 * reduce move bonuses, as they are multiplied by one another -> or just stack the bonuses

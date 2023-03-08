@@ -74,6 +74,7 @@ class StrikeMechanics(FighterAPI, ABC):
             * self.block_mult
             * self.strength_full
             * self.wp_dfs_bonus
+            * self.stamina_factor
         )
 
     def _calc_curr_atk_mult(self, action: Move) -> None:
@@ -303,9 +304,17 @@ class StrikeMechanics(FighterAPI, ABC):
                 self.potential_dam *= self.current_fight.environment_bonus
                 self.to_hit *= self.current_fight.environment_bonus
             elif mode == 'defense':
-                self.block_pwr *= self.current_fight.environment_bonus
-                self.to_block *= self.current_fight.environment_bonus
-                self.to_dodge *= self.current_fight.environment_bonus
+                try:
+                    self.block_pwr *= self.current_fight.environment_bonus
+                    self.to_block *= self.current_fight.environment_bonus
+                    self.to_dodge *= self.current_fight.environment_bonus
+                except TypeError:
+                    print(f'{self.block_pwr=}')
+                    print(f'{self.to_block=}')
+                    print(f'{self.to_dodge=}')
+                    print(f'{self.current_fight.environment_bonus=}')
+                    import sys
+                    sys.exit()
             self.current_fight.display(f'{self.name} uses the environment!')
 
     def try_epic(self) -> None:

@@ -65,7 +65,7 @@ class FighterAPI(ABC):
     dfs_mult: float = None
     dfs_penalty_mult: float = None
     dfs_penalty_step: float = None
-    block_pwr: float = None
+    block_pwr: float = 1.0
     distances: Dict[FighterAPI, int] = None
     dodge_chance: float = 0.0  # refreshed per attack
     dodge_mult: float = None
