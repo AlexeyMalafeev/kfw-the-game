@@ -14,7 +14,8 @@ Month XX, 2023
      * rework main fight mechanics
 2. refactor:
    * use Sourcery plugin for refactoring
-   * major refactor of _fight_actions.py, separate part of code into _fight_display.py 
+   * major refactor of _fight_actions.py, separate part of code into _fight_display.py
+   * all hero, challenger and thug quotes in a separate file
 3. docs:
    * add dev notes
 

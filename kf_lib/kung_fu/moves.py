@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
 import random
-import re
 from typing import Dict, List, Literal, Text, Union
 
 from kf_lib.fighting.distances import DISTANCE_FEATURES
@@ -18,7 +17,7 @@ RANDOM_MOVE_POOL_SIZE_MULT = 3
 SPECIAL_FEATURES = {'drunken'}
 TIER_MIN = 1
 TIER_MAX = 10
-# todo container for default moves istead of .is_basic
+# todo container for default moves istead of .is_basic?
 
 
 class Move:
@@ -120,16 +119,15 @@ def read_moves(file_name):
         for line in f:
             if line.startswith('#') or not line.strip():
                 continue
-            m = {}
             vals = [v.strip() for v in line.split('|')]
-            for k, v in zip(keys, vals):
-                m[k] = eval(v)
+            m = {k: eval(v) for k, v in zip(keys, vals)}
             moves.append(m)
     return moves, keys
 
 
 move_list = read_moves(Path(MOVES_FOLDER, 'all_moves.txt'))[0]
 
+# todo wrap all such code in functions
 for mv in move_list:
     m_obj = Move(**mv)
 
@@ -153,8 +151,8 @@ BASIC_MOVES = [
         'Finishing Kick',
     )
 ]
-for m in BASIC_MOVES:
-    m.is_basic = True
+for m_ in BASIC_MOVES:
+    m_.is_basic = True
 
 
 ALL_MOVES_LIST = list(ALL_MOVES_DICT.values())
