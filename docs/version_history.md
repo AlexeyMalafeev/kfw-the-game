@@ -7,6 +7,7 @@ Month XX, 2023
       * parametrize exp system
       * change formula for next level exp
       * set experience parameters based on experiments
+      * feat: change exp for losing fights: base * 0.1 -> base * 0.25
    * debug menu:
      * add quick sparring to debug menu
      * add "spectate" option to debug menu
