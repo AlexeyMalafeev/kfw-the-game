@@ -21,6 +21,8 @@ Month XX, 2023
    * add dev notes
 
 ### Coming soon:
+* robbers should take all money
+* rankings between schools (tournaments etc.)
 * in-fight attributes should be properly refreshed at the beginning of each fight
 * document all attributes in api
 * write what happens during fight loop in dev notes
