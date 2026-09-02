@@ -1,6 +1,6 @@
 /.idea/
 /debug.txt
-/kf_lib/__pycache__/
+__pycache__/
 /legacy/
 /moves/move_gen.py - Shortcut.lnk
 /save/
