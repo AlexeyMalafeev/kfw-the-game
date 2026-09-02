@@ -13,12 +13,16 @@ class LoadGame(BaseGame):
     def load_game(self, file_name):
         """Read and execute the save file."""
         # todo reimplement game loading to avoid using exec
-        # do not delete the below line; needed for loading
-        g = self  # noqa
+        # Shared namespace: names bound by one exec'd line (fsd, md, school, p)
+        # must persist to the next, so do NOT use bare exec() in function scope.
+        namespace = {'g': self, 'story': story}
+        for cls in (*ALL_AI_PLAYERS, HumanPlayer, SmartAIP, SmartAIPVisible,
+                    Challenger, Fighter, Master, Thug):
+            namespace[cls.__name__] = cls
         with open(Path(SAVE_FOLDER, file_name), 'r') as f:
             for line in f:
                 # print(line)
-                exec(line)
+                exec(line, namespace)
         # loading clears logs
         # (do not use 'p' as variable here as it breaks exec code)
         for player in self.players:

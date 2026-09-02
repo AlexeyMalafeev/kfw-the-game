@@ -146,16 +146,40 @@ class TestInitStringRoundtrip:
 
 
 class TestLoading:
-    def test_load_game_raises_name_error(self, temp_save_folder):
-        # BUG?: game loading is broken on Python 3.13 (and any CPython 3.x):
-        # _load_game.load_game() exec()s the save file line by line inside a
-        # method, but names assigned by one exec'd line (e.g. `fsd` in
-        # `g.fighters_dict = fsd = {}`) do not persist into the local namespace
-        # seen by the next exec() call, so loading ANY save fails with
-        # NameError on the first fighter line. This test pins the broken
-        # behavior; delete/rewrite it when load_game is fixed.
+    def test_load_roundtrip_preserves_state(self, temp_save_folder):
+        g = make_game()
+        for p in g.players:
+            p.gain_exp(50, silent=True)
+            p.earn_money(100)
+        g.save_game(SAVE_NAME)
+        snapshot = player_snapshot(g)
+        date = (g.year, g.month, g.day)
+
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        assert player_snapshot(g2) == snapshot
+        assert (g2.year, g2.month, g2.day) == date
+        assert len(g2.fighters_dict) == len(g.fighters_dict)
+        assert set(g2.stories) == set(g.stories)
+        assert set(g2.masters) == set(g.masters)
+        assert set(g2.schools) == set(g.schools)
+
+    def test_loaded_game_continues_playing(self, temp_save_folder):
         g = make_game()
         g.save_game(SAVE_NAME)
-        g2 = make_game(seed=99)  # any Game instance
-        with pytest.raises(NameError):
-            g2.load_game(SAVE_NAME)
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        # the loaded game must be able to run to a victory without a TTY
+        g2.silent_ending = True  # not serialized in the save format
+        g2.play()
+        assert any(p.level > 1 for p in g2.players)
+
+    def test_loading_clears_player_logs(self, temp_save_folder):
+        g = make_game()
+        for p in g.players:
+            p.log('some log entry')
+        g.save_game(SAVE_NAME)
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        for p in g2.players:
+            assert p.plog == []

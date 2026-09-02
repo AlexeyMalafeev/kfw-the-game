@@ -35,11 +35,9 @@ are unordered unless marked.
 
 ## Bugs / known issues
 
-- **Game loading is broken** (found 2026-09, pinned by `test/test_save_load.py`):
-  `LoadGame.load_game` exec()s save lines in function scope, so names bound by one
-  line (`fsd`) don't persist to the next; also some AI classes (e.g. `LazyAIP`)
-  aren't in the exec namespace → `NameError` on load. Save side works. Fix via a
-  shared exec namespace, or properly via the JSON save migration (Engineering #2).
+- ~~Game loading is broken~~ ✅ Fixed 2026-09 (minimal fix: shared exec namespace
+  in `LoadGame.load_game`, incl. all AI player classes). The exec-based format is
+  still tech debt — supersede via the JSON save migration (Engineering #2).
 - double knockback!
 - y defense buff not working?
 - bug in careless inactive time?
