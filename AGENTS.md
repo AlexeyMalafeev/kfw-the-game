@@ -42,8 +42,9 @@ to completion as a regression check. `kf_lib/ai/fight_ai_test.py` and
 - `dev_scripts/` — dev utilities (each starts with a `Path('..')` chdir/sys.path hack)
 - `ml/` — ML fight-outcome prediction experiment; needs the dev venv, not needed to play
 - `minigames/` — standalone prototypes, not wired into the game
-- `docs/` — `version_history.md` (changelog conventions), `todo.md`, `backlog.md`,
-  `known bugs.txt`, combat/content design notes
+- `docs/` — `version_history.md` (changelog conventions), `known bugs.txt`,
+  combat/content design notes; the structured backlog lives at repo root
+  (`BACKLOG.md`)
 
 ## Conventions
 
