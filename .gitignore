@@ -1,6 +1,7 @@
 /.idea/
 /debug.txt
 __pycache__/
+/.venv/
 /legacy/
 /moves/move_gen.py - Shortcut.lnk
 /save/
