@@ -6,11 +6,9 @@ are unordered unless marked.
 
 ## Engineering (tech debt) — do these first
 
-1. **Automated tests.** No test suite exists; regression checking = running
-   `NG_autoplay_silent_ending.py`. Build a small pytest suite: seeded
-   deterministic `AutoFight`s, style/move generation invariants, one full
-   headless autoplay game as integration test. (Old note: "repair tests; make
-   balance and test suites".)
+1. ~~**Automated tests.**~~ ✅ Done (initial suite): `test/` has seeded
+   deterministic `AutoFight` tests, generation invariants, and a full headless
+   autoplay game. Next: broaden coverage (saves, encounters, stories).
 2. **Replace exec-based saves with JSON.** `kf_lib/game/_load_game.py` exec()s
    save files line by line, which freezes class names, `Fighter.__init__`
    argument order, and `savable_atts` forever — and is a security smell.

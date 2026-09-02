@@ -10,3 +10,4 @@ __pycache__/
 desktop.ini
 errors.txt
 kfw.log
+.pytest_cache/

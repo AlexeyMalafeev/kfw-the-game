@@ -18,8 +18,10 @@ cwd-relative paths.
 - `python NG_autoplay_crowd.py` — 100-player stress test
 - `python NG_autoplay_silent_ending.py` — fast quiet autoplay (used for profiling)
 
-There are **no automated tests**. After any change, run `NG_autoplay_silent_ending.py`
-to completion as a regression check. `kf_lib/ai/fight_ai_test.py` and
+There is a small pytest suite in `test/` (run `.venv/bin/python -m pytest` from the
+repo root): seeded deterministic fights, generation invariants, and a full headless
+autoplay game as an integration test. After any change, run it — and for riskier
+changes also `NG_autoplay_silent_ending.py`. `kf_lib/ai/fight_ai_test.py` and
 `kf_lib/testing/` provide manual balance/benchmark harnesses (their output goes to
 `tests/`, which holds committed logs, not test code).
 
