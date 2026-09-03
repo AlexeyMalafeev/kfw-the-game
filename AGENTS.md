@@ -48,9 +48,9 @@ changes also `NG_autoplay_silent_ending.py`. `kf_lib/ai/fight_ai_test.py` and
 - `dev_scripts/` — dev utilities (each starts with a `Path('..')` chdir/sys.path hack)
 - `ml/` — ML fight-outcome prediction experiment; needs the dev venv, not needed to play
 - `minigames/` — standalone prototypes, not wired into the game
-- `docs/` — `version_history.md` (changelog conventions), `known bugs.txt`,
-  combat/content design notes; the structured backlog lives at repo root
-  (`BACKLOG.md`)
+- `docs/` — `known bugs.txt`, combat/content design notes; changelog lives at
+  repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with release codenames),
+  the structured backlog in `BACKLOG.md`
 
 ## Conventions
 

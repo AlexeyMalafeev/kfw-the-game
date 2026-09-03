@@ -35,6 +35,7 @@ are unordered unless marked.
    - collective_name attribute in fighters, filled in `fighter_factory.py`
    - `add_numbers` utility function; fight approximation formula
    - time AI play (when there are no human players); look for bottlenecks
+   - refactor accomplishments as dict {accomplishment: date} (inefficient now)
 
 ## Bugs / known issues
 
@@ -42,7 +43,10 @@ are unordered unless marked.
   in `LoadGame.load_game`, incl. all AI player classes). Superseded by the JSON
   save migration (Engineering #2): the exec path remains only as the legacy
   loader for old saves.
-- double knockback!
+- double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
+  last!)" — verify whether it regressed or the todo entry was stale)
+- possible bug in exp progression in lazy/hardworking players
+- flower kung-fu has only weak and pathetic moves (intended?)
 - y defense buff not working?
 - bug in careless inactive time?
 - weapon techs don't do anything — reintroduce them
@@ -93,6 +97,9 @@ are unordered unless marked.
   automatic), interact with environment (esp. unblockables)
 - free-for-all fights
 - in-fight stats (strikes thrown/landed, accuracy, moves used, damage dealt)
+- yell (as a move function?)
+- tests of strength/speed/health/agility in encounters and stories — new
+  mechanics beyond fighting
 
 ## Moves, styles, techniques, weapons
 
@@ -126,6 +133,13 @@ are unordered unless marked.
 - styles: add Hapkido, Jeet Kune Do; style moves for non-playable styles
   (Muay Thai etc.) + emphases; learn several styles and switch before/in
   fights?; create new style with extra bonus at lv 20 (or 15)
+- butt strike, hip strike — handle specially
+- learn weak/pathetic moves from books?; improve a move with books
+- in-fight nunchaku tech (like impro weapons)
+- momentum style/techs — use own and opponent's momentum, like Judo
+- strong-against-stronger / strong-against-weaker techs (intimidating,
+  fearless, Giant Killer)
+- more strike types (see `docs/strike notes.txt`)
 
 ## AI
 
@@ -145,6 +159,7 @@ are unordered unless marked.
 - subclass Fighter for different enemies (Robber, Thug etc. — collective
   names, styles — instead of ugly style.name)
 - new AI players; simulating AI (when choosing upgrades/techs)
+- fight AI rule: hurry and finish off knocked-down opponents
 
 ## Balance & analysis
 
@@ -156,6 +171,12 @@ are unordered unless marked.
 - new AI testing routine: one vs big crowd
 - move filtering with pandas, save as csv, collect useful stats
 - a simple utility to count total moves, styles, techs, etc.
+- speed up early progress / slow down late progress (progressive exp step)
+- compute crowd exp worth differently?
+- further reduce dist3/dist2 bonuses?
+- nerf guard while attacking
+- buff attribute-based damage for strikes
+- come back to experiments with level significance
 
 ## Game systems & gameplay
 
@@ -211,6 +232,8 @@ are unordered unless marked.
   drinking player; summarize the player's career, highlight interesting things
 - accompl: Crime Fighter; 3 exp bonuses at a time → accomplishment?
 - display hp as percentage/string?
+- donate to friends / to charity
+- biographies: favorite strike (most feared / most used move)
 
 ## Content: encounters, events, stories
 
@@ -224,6 +247,8 @@ are unordered unless marked.
   protected by thugs; more rare things (suddenly a very strong robber);
   unique encounters per location (school, walk, etc.)
 - events: kung-fu festival
+- societies: bandits, sects (Righteous, White Lotus)
+- school practice encounter: improve a move
 - stories: righteous sect vs evil sect, triads; thugs burn down school;
   arrest gang leader to prove innocence; school attacked; 10 masters from the
   North; powerful item; style stories (drunken, Wong Fei-Hung master of fan);

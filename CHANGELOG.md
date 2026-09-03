@@ -1,6 +1,41 @@
-### v0.6.9-beta
-"Not Fail, But Experience"  
-November 20, 2022
+# Changelog
+
+All notable changes to KFW are documented here. Format loosely follows
+[Keep a Changelog](https://keepachangelog.com/); releases have codenames
+because kung-fu movies.
+
+## [Unreleased] — post-hiatus modernization (September 2026)
+
+### Added
+- pytest suite in `test/` (200 tests): seeded deterministic fights, style/move
+  generation invariants, save/load roundtrips (both formats), leveling,
+  economy, player AI, game mechanics, headless tournament, full-game
+  integration tests
+- `kfw.py`: single argparse-based entry point (`--autoplay`, `-n`,
+  `--autosave`, `--silent-ending`, `--load`); old root scripts kept as thin
+  wrappers
+- `AGENTS.md` (onboarding/pitfalls), `BACKLOG.md` (structured, replaces the
+  old `docs/backlog.md` + `docs/todo.md` dumps), this changelog
+- `pyproject.toml` with black config; `numpy`/`tqdm` added to dev requirements
+
+### Changed
+- **Save format is now JSON** (versioned schema); old exec-based saves still
+  load via a legacy shim in `LoadGame._load_legacy`
+- `encounters/__init__.py` (1353 lines) split into thematic modules
+- `Challenger`/`Master`/`Thug` fighter subclasses replaced by a
+  `Fighter.occupation` attribute; old saves keep loading via factory shims
+
+### Fixed
+- **Game loading was completely broken** (exec() namespace bug + missing AI
+  classes in the loader namespace) — any save failed with `NameError`
+- macOS/Linux support: `msvcrt`-only keyboard input now falls back to
+  termios/tty; `cls` → `clear` on non-Windows
+
+---
+
+## Historical releases (migrated from docs/version_history.md)
+
+### v0.6.9-beta "Not Fail, But Experience" — 2022-11-20
 
 1. **New experience system**:
    1. feat: change how exp is computed in fights
@@ -35,48 +70,9 @@ November 20, 2022
 9. fix: UI functions in stories
 10. **refactor: FighterAPI (ABC for Fighter)**
 
-
-### Coming soon:
-* flower kung-fu has moves (only weak and pathetic)
-* initial attribute values in FighterAPI
-* constants in FighterAPI
-* fix possible bug in exp progression in lazy / hardworking players 
-* speed up early progress? slow down late progress (progressive exp, e.g. step 20 start from 40 or even 20 or use base fight exp as step)
-* butt strike, hip strike - handle specially
-* encounter in practice at school - improve move
-* compute crowd exp worth differently?
-* come back to experiments with level significance
-* improve finding right ascii
-* improve a move with books
-* further reduce dist3 and dist2 bonuses?
-* biographies:
-   * favorite strike: most feared move, preferred
-* tests of strength / speed / health / agility in various encounters and stories = new mechanics
-* ability to upgrade moves (from pathetic to ultimate)
-* yell (as move_fun?)
-* in-fight nunchacku tech (like impro weapons)
-* refactor accomplishemnts as dict {accompl: date}, otherwise inefficient
-* ABC for Fighter
-* refactor, refactor, refactor
-* fight AI rule to hurry and finish off knocked down opponent 
-* learn weak / pathetic moves in books?
-* nerf guard while atk
-* donate to friends, to charity 
-* buff att-based damage for strikes
-* add societies (bandits, sect: Righteous, White Lotus)
-* strong against stronger, strong against weaker - techs (intimidating, fearless) Giant Killer
-* continue refactoring encounters while adding lucky/unlucky developments
-* more strike types (see strike notes)
-* momentum style / techs, use own and opponent's - like Judo
-* grabs
-* look at fighter atts for unused ideas
-* look at todos
-
 ---
 
-### v0.6.8-beta
-"Drunken Boxing"  
-August 13, 2022  
+### v0.6.8-beta "Drunken Boxing" — 2022-08-13
 
 1. fixes: game loading, SpectateFight, qi-based damage, feel too scared
 2. feat: add quotes from Dark
@@ -100,7 +96,7 @@ August 13, 2022
 20. feat: redraw a few old ASCII arts
 21. feat: detect duplicates in ASCII arts
 22. feat: remove backflip strikes
-23. **feat: combinations of move functions for generation are now described in a table ("move_word_combinations.csv"), not in the code** 
+23. **feat: combinations of move functions for generation are now described in a table ("move_word_combinations.csv"), not in the code**
 24. feat: new "Drunken" moves, revamp move word combinations (generated 3095 -> 3768 moves)
 25. refactor: strike multipliers
 26. feat: common logger
@@ -112,9 +108,7 @@ August 13, 2022
 
 ---
 
-### v.0.6.7-beta
-"Blood Sport"  
-March 29, 2022  
+### v0.6.7-beta "Blood Sport" — 2022-03-29
 
 1. fix: nerf default block power, agility goes down in significance, balance improves
 2. fix: remove depth-3 move generation for cleaner moves with shorter names (17699 -> 3095 moves)
@@ -138,10 +132,9 @@ March 29, 2022
 
 ---
 
-### v.0.6.6-beta
-"Rebalance, Fixes and Fun"  
-February 24, 2022    
-1. feat: start using rich module for colorful text 
+### v0.6.6-beta "Rebalance, Fixes and Fun" — 2022-02-24
+
+1. feat: start using rich module for colorful text
 2. refactor: significant overhaul of utils, ui and testing tools
 3. refactor: remove unnecessary tech classes, reimplement their functionality as attributes
 4. feat: preemptive strikes are tech-only
@@ -164,9 +157,7 @@ February 24, 2022
 
 ---
 
-### v.0.6.5-beta
-"Fist of Fury"  
-February 12, 2022  
+### v0.6.5-beta "Fist of Fury" — 2022-02-12
 
 1. feat: luck (extremely good/bad, corresponding stats and accomplishments)
 2. feat: learn other fighters' moves
@@ -194,99 +185,91 @@ February 12, 2022
 
 ---
 
-### v.0.6.4-beta
-"Flashy Fights"  
-December 25, 2021  
+### v0.6.4-beta "Flashy Fights" — 2021-12-25
 
 1. docs: add a (more or less) proper README
-2. feat: PvP in debug menu  
-3. fix: turn off items in ninja turtles fight  
-4. feat: momentum!  
-5. feat: ability to learn any existing tech via the debug menu  
-6. feat: ability to inspect current player's attributes in the debug menu  
-7. feat: ability to set any player attribute in the debug menu   
-8. feat: faster strike / maneuver mechanics (28594 possible unique styles)  
-9. feat: utility for counting the number of possible generated styles  
-10. feat: new styles for generation (including preemptive strikes)  
-11. feat: preemptive strikes!  
-12. feat: ASCII additions and improvements  
-13. fix: bug in debug menu (current player was assigned only once)  
-14. feat: new formula for knockback caused by damage  
-15. feat: visualize knockback  
-16. feat: criticals are level-dependent  
-17. feat: "~*~*~EPIC!!!~*~*~"  
-18. refactor: basic and fight attributes  
-19. feat: a few new hero quotes  
-20. feat: 3x3 co-op mode  
+2. feat: PvP in debug menu
+3. fix: turn off items in ninja turtles fight
+4. feat: momentum!
+5. feat: ability to learn any existing tech via the debug menu
+6. feat: ability to inspect current player's attributes in the debug menu
+7. feat: ability to set any player attribute in the debug menu
+8. feat: faster strike / maneuver mechanics (28594 possible unique styles)
+9. feat: utility for counting the number of possible generated styles
+10. feat: new styles for generation (including preemptive strikes)
+11. feat: preemptive strikes!
+12. feat: ASCII additions and improvements
+13. fix: bug in debug menu (current player was assigned only once)
+14. feat: new formula for knockback caused by damage
+15. feat: visualize knockback
+16. feat: criticals are level-dependent
+17. feat: "~*~*~EPIC!!!~*~*~"
+18. refactor: basic and fight attributes
+19. feat: a few new hero quotes
+20. feat: 3x3 co-op mode
 
 ---
 
-### v.0.6.3-beta  
-"Bet on Tournaments"  
-October 31, 2021  
+### v0.6.3-beta "Bet on Tournaments" — 2021-10-31
 
-1. feat: ability to bet on tournament outcome  
-2. feat: ability to start a tournament via the debug menu  
-3. feat: knockdown and off-balance are relative to current hp, not max hp (knockback and stun remain relative to max hp)  
-4. feat: probability of feeling too scared to fight is now proportional to risk  
-5. feat: debug mode in user input (get_key)  
-6. feat: a few new quotes, inspired by Lady Bloodfight  
-7. feat: one of the rewards for protecting street performer from thugs is new move  
-8. feat: new "Super" fight items  
-9.  refactor: Tournament  
-10.  refactor: major refactor of Fighter (split into submodules) as well as some other modules  
-11.  refactor: put docs to separate folder, add some todos  
-12.  fix: bug in tournaments with odd numbers of fighters  
-13.  fix: small import bug in encounters  
-14.  fix: bug when fights didn't happen because fighters started with 0 hp  
-15.  fix: import bug in turtles reward  
-16.  fix: fight items have relative effect  
-17.  fix: qp-related custom styles  
-18.  fix: qi cost rebalance  
+1. feat: ability to bet on tournament outcome
+2. feat: ability to start a tournament via the debug menu
+3. feat: knockdown and off-balance are relative to current hp, not max hp (knockback and stun remain relative to max hp)
+4. feat: probability of feeling too scared to fight is now proportional to risk
+5. feat: debug mode in user input (get_key)
+6. feat: a few new quotes, inspired by Lady Bloodfight
+7. feat: one of the rewards for protecting street performer from thugs is new move
+8. feat: new "Super" fight items
+9. refactor: Tournament
+10. refactor: major refactor of Fighter (split into submodules) as well as some other modules
+11. refactor: put docs to separate folder, add some todos
+12. fix: bug in tournaments with odd numbers of fighters
+13. fix: small import bug in encounters
+14. fix: bug when fights didn't happen because fighters started with 0 hp
+15. fix: import bug in turtles reward
+16. fix: fight items have relative effect
+17. fix: qp-related custom styles
+18. fix: qi cost rebalance
 
 ---
 
-### v.0.6.2  
-"Debug Menu"  
-June 17, 2021  
+### v0.6.2 "Debug Menu" — 2021-06-17
 
-1. feat: add debug menu to status screen  
-2. fix: proper input validation in get_int_from_user  
-3. feat: ability to get money via debug menu  
-4. feat: ability to get items via debug menu  
-5. feat: ability to level up via debug menu  
-6. feat: first custom exception - MoveNotFoundError  
-7. feat: randomly choosing weapons in school challenges  
-8. feat: ability to learn moves (by name or tier) via debug menu  
-9. feat: ability to fight thugs via debug menu  
+1. feat: add debug menu to status screen
+2. fix: proper input validation in get_int_from_user
+3. feat: ability to get money via debug menu
+4. feat: ability to get items via debug menu
+5. feat: ability to level up via debug menu
+6. feat: first custom exception - MoveNotFoundError
+7. feat: randomly choosing weapons in school challenges
+8. feat: ability to learn moves (by name or tier) via debug menu
+9. feat: ability to fight thugs via debug menu
 
 ---
 
-### v.0.6.1  
-"Fist of Vengeance"  
-June 16, 2021  
+### v0.6.1 "Fist of Vengeance" — 2021-06-16
 
-1. feat: if lose to strong Beggar/Drunkard/Performer, learn a move  
-2. feat: books sometimes give moves  
-3. feat: more flexible tournaments (variable number of participants)  
-4. feat: new default move: Weak Short Punch  
-5. refactor: flynt (convert to f-strings)  
-6. feat: max stamina is relative to level and stamina gain is relative to max stamina  
-7. feat: stamina boosts in techs are relative (and a bit nerfed?)  
-8. feat: stamina damage is relative  
-9. balance: Guard doesn't gain additional stamina, but also doesn't reduce qi  
-10. feat: add Do Nothing move  
-11. feat: qp max / gain increases with level  
-12. balance: leaps, sweeps and other basic moves don't expend qp  
-13. balance: reduce qi cost for moves  
-14. feat: qi-related boosts are multipliers, like with stamina  
-15. feat: COUNTERS!  
-16. feat: crash report generation  
-17. feat: counter chance increases with level  
-18. feat: boosts / techniques / styles related to counters  
-19. fix: adjust qi-based damage  
-20. fix: 20 options on screen by default  
-21. fix: counter chance increases by 0.02, not by 2  
-22. fix: game loading didn't work after refactoring  
-23. fix: "Ox Herb" and "Dragon Herb" now work properly  
-24. feat: add version history  
+1. feat: if lose to strong Beggar/Drunkard/Performer, learn a move
+2. feat: books sometimes give moves
+3. feat: more flexible tournaments (variable number of participants)
+4. feat: new default move: Weak Short Punch
+5. refactor: flynt (convert to f-strings)
+6. feat: max stamina is relative to level and stamina gain is relative to max stamina
+7. feat: stamina boosts in techs are relative (and a bit nerfed?)
+8. feat: stamina damage is relative
+9. balance: Guard doesn't gain additional stamina, but also doesn't reduce qi
+10. feat: add Do Nothing move
+11. feat: qp max / gain increases with level
+12. balance: leaps, sweeps and other basic moves don't expend qp
+13. balance: reduce qi cost for moves
+14. feat: qi-related boosts are multipliers, like with stamina
+15. feat: COUNTERS!
+16. feat: crash report generation
+17. feat: counter chance increases with level
+18. feat: boosts / techniques / styles related to counters
+19. fix: adjust qi-based damage
+20. fix: 20 options on screen by default
+21. fix: counter chance increases by 0.02, not by 2
+22. fix: game loading didn't work after refactoring
+23. fix: "Ox Herb" and "Dragon Herb" now work properly
+24. feat: add version history
