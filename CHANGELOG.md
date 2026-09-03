@@ -16,6 +16,10 @@ because kung-fu movies.
   scripts were removed, and the profiler moved to `dev_scripts/profile_game.py`
 - `AGENTS.md` (onboarding/pitfalls), `BACKLOG.md` (structured, replaces the
   old `docs/backlog.md` + `docs/todo.md` dumps), this changelog
+- System docs in `docs/`, one per game system, mechanics-as-implemented with
+  ⚠️ flags for suspicious behavior: `fight_mechanics.md`, `gameplay.md`,
+  `encounters.md`, `ai_players.md`, `kung_fu.md`, `items.md`, `stats.md`,
+  `social_and_traits.md`, `text_content.md`, `minigames.md`, `debug_menu.md`
 - `pyproject.toml` with black config; `numpy`/`tqdm` added to dev requirements
 
 ### Changed

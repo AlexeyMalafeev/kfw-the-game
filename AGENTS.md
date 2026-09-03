@@ -51,9 +51,15 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   `run_test_level_sign.py`
 - `ml/` — ML fight-outcome prediction experiment; needs the dev venv, not needed to play
 - `minigames/` — standalone prototypes, not wired into the game
-- `docs/` — `known bugs.txt`, combat/content design notes; changelog lives at
-  repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with release codenames),
-  the structured backlog in `BACKLOG.md`
+- `docs/` — one file per game system (mechanics-as-implemented, ⚠️ marks
+  suspicious behavior): `fight_mechanics.md`, `gameplay.md` (day loop, economy,
+  victory), `encounters.md` (encounters/events/stories/tournaments),
+  `ai_players.md` (strategic AI), `kung_fu.md` (moves/styles/techs/weapons as
+  content), `items.md`, `stats.md` (stats/accomplishments/gossip/bios),
+  `social_and_traits.md`, `text_content.md` (quotes/names/ASCII art),
+  `minigames.md`, `debug_menu.md`; plus `known bugs.txt` and old design notes.
+  Changelog lives at repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with
+  release codenames), the structured backlog in `BACKLOG.md`
 
 ## Conventions
 

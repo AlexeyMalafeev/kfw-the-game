@@ -55,14 +55,45 @@ are unordered unless marked.
 - weapons are OP? / remove weapon atk bonus
 - wtf is STAMINA_FACTOR_BIAS in fighter.py?
 - some upgradable techs shouldn't be upgradable
-- `minigames/Chocolate_mini_game.py` is broken (has a todo)
-- **Explicitly address every remaining ⚠️ point in `docs/fight_mechanics.md`**
-  (HIGH priority): the user confirmed only 2-3 of them are intended behavior,
-  the rest are bugs. Go through them one by one, fix or document as intended.
+- `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
+  (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
+  tech/move names no longer in the data files, `learn_tech` now takes Tech
+  objects. RING works (needs a TTY; run from `minigames/`).
+- **Explicitly address every remaining ⚠️ point across `docs/*.md`** (HIGH
+  priority): the user confirmed only 2-3 of them are intended behavior, the
+  rest are bugs. Go through them one by one, fix or document as intended.
   (The BLOCK_POWER shadowing and the draw crash were already fixed 2026-09;
-  ~10 remain: environment_bonus = 0.0, dodge-checked-before-block, `do_mob_dam`
-  naming, stun having no defense penalty, free counters, dead boosts/techs,
-  `get_rand_moves` empty-pool IndexError, etc.)
+  ~10 remain in `fight_mechanics.md` — environment_bonus = 0.0,
+  dodge-checked-before-block, `do_mob_dam` naming, stun having no defense
+  penalty, free counters, dead boosts/techs, `get_rand_moves` empty-pool
+  IndexError — plus ~50 more across encounters/gameplay/ai_players/items/
+  kung_fu/minigames/stats/debug_menu/social_and_traits/text_content.)
+  The most significant confirmed ones from the 2026-09 docs sweep:
+  - `Weapon.get_exp_mult` double-counts the 1.0 base → all weapons inflate
+    exp yield to ~1.8–2.0× (`things/weapons.py:46`, verified at runtime)
+  - `SmartAIP` sets nonexistent attrs (`drink_chance`, `continue_gambling_chance`,
+    `buy_med_chance`) — the real knobs keep base values, so the "smart" AI
+    drinks/gambles like VanillaAIP (`_ai_player.py`)
+  - crime encounters grant reputation *before* the fight → rep farmable by
+    losing (Extorters/HelpPolice/RobbingSomeone)
+  - `EncControl.run_enc` execs `{name}(p, test=...)` but no encounter accepts
+    `test` → TypeError when used (`encounters/__init__.py:75`)
+  - `Guaranteed` encounters duplicated in category lists fire once per
+    duplicate (e.g. `[GMerchant]*5` → 5 merchant encounters per Buy items)
+  - `repr()` of a player mid-`Fighter.__init__` crashes (`traits` set only
+    after `super().__init__()` in `BasePlayer`) — any `{self}` warning path
+    during construction triggers it
+  - move tiers 11–14 (291 moves incl. all `Lethal …` chains) unreachable:
+    auto tier caps at 10; style move strings reference nonexistent moves
+    (`'No-Shadow Kick'` vs `No-Shadow_Kick`) and nonexistent features
+    (`close-range`/`mid-range`) that silently fall through to random picks
+  - tournament crash paths: zero participants → IndexError; winnerless final
+    → NotImplementedError
+  - `OverhearConversation` log lines swapped (astonishing victory ↔
+    humiliating defeat); lying-hit ASCII art unreachable (`startswith('lying')`
+    vs `'Lying Hit'`)
+  - `add_friend` over-cap drops are silent; `get_new_name` loops forever
+    after 1000 collisions; `new_foreigner` skips the collision check
 - ~~**BLOCK_POWER MRO shadowing**~~ ✅ Fixed 2026-09: the per-fighter hook in
   `_fight_actions.py` was renamed to `BLOCK_DEFAULT_POWER` (1.0); the global
   `BLOCK_POWER` (20) in `_strike_mechanics.py` now actually applies in
