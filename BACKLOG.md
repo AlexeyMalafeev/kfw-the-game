@@ -14,14 +14,15 @@ are unordered unless marked.
    exec()-based loader (`LoadGame._load_legacy`) for old saves. While that
    shim exists, class names, `Fighter.__init__` argument order, and
    `savable_atts` are still frozen.
-3. **Hygiene:** add `tqdm`/`numpy` to `requirements_dev.txt`; add
-   `pyproject.toml` with black config; deduplicate the near-identical root
-   scripts into one entry point with flags.
-4. **Structural refactors:** split `kf_lib/happenings/encounters/__init__.py`
-   (1353 lines); tease apart the 17-mixin `Fighter`; the `# todo` markers.
-   ~~Replace `Challenger`/`Master`/`Thug` subclasses with an occupation
-   attribute~~ ✅ Done: `Fighter.occupation` drives quote selection; old saves
-   still load via factory shims in `LoadGame`.
+3. ~~**Hygiene:**~~ ✅ Done: `numpy`/`tqdm` in `requirements_dev.txt`;
+   `pyproject.toml` with black config; root scripts deduplicated into
+   `kfw.py` (argparse entry point) with thin legacy wrappers.
+4. **Structural refactors:** ✅ Done 2026-09. `encounters/__init__.py` (1353
+   lines) split into thematic modules; `Challenger`/`Master`/`Thug` replaced
+   by `Fighter.occupation` (old saves load via factory shims in `LoadGame`).
+   The 17-mixin `Fighter` was assessed and left as-is: mixins are small and
+   focused, the `FighterAPI` ABC (153 abstract methods) is fully in sync with
+   the implementations (audited), and flattening would make things worse.
 5. Smaller code items from the old backlog:
    - subclass `Fight` more (spectator/no spectator; exp/no exp; stats/no stats)
    - `.__repr__`/`.__str__` in all classes instead of `get_init_string()`

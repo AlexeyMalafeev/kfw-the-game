@@ -3,7 +3,7 @@
 Turn-based hot-seat text RPG set in a fantasy kung-fu world. Pure Python, no runtime
 dependencies for playing (pandas/numpy/scikit-learn only for the optional ML tooling).
 In development on and off since 2013; the code carries significant tech debt — change
-things incrementally and verify by playing, not by test suite (there is none).
+things incrementally and verify with the pytest suite in `test/` plus autoplay runs.
 
 Minimum Python: 3.8. Dev venv: `.venv` (see `requirements_dev.txt`).
 
@@ -26,8 +26,13 @@ changes also `NG_autoplay_silent_ending.py`. `kf_lib/ai/fight_ai_test.py` and
 
 ## Layout
 
-- `kf_lib/actors/fighter/` — `Fighter` composed from ~17 private mixin modules
-  (`_fight_actions.py`, `_strike_mechanics.py`, `_techs.py`, ...); API contract in `_abc.py`
+- `kf_lib/actors/fighter/` — `Fighter` composed from ~17 small private mixin modules
+  (`_fight_actions.py`, `_strike_mechanics.py`, `_techs.py`, ...). `_abc.py` defines
+  `FighterAPI`, an ABC every mixin inherits: it declares the full attribute/method
+  surface with types. Audited 2026-09: all 153 abstract methods implemented, no
+  attribute drift — keep new attributes/methods declared there when adding them.
+  Fighters have an `occupation` attr ('fighter'/'thug'/'master'/'challenger'/'hero')
+  that drives quote selection.
 - `kf_lib/actors/player/` — `HumanPlayer` and AI player variants (`SmartAIP` etc.)
 - `kf_lib/actors/fighter_factory.py` — NPC constructors (`new_opponent`, `new_thief`, ...)
 - `kf_lib/ai/` — fight AI heuristics + hand-rolled genetic algorithm (`fight_ai_gen.py`)
