@@ -6,7 +6,10 @@ from kf_lib.actors import quotes
 
 
 class QuoteMethods(FighterAPI, ABC):
-    quotes = 'fighter'
+    @property
+    def quotes(self) -> str:
+        """Key into the quote pools in kf_lib.actors.quotes; derived from occupation."""
+        return self.occupation
 
     def say_prefight_quote(self) -> bool:
         """Returning True/False is used for making pauses correctly."""

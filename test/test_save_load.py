@@ -9,6 +9,7 @@ pytest tmp_path.
 import json
 import random
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -16,7 +17,7 @@ from kf_lib import game  # import first: avoids circular import via kf_lib.actor
 import kf_lib.game._save_game as save_mod
 import kf_lib.game._load_game as load_mod
 from kf_lib.actors import fighter_factory
-from kf_lib.actors.fighter import Challenger, Fighter, Master, Thug
+from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.player import SmartAIP
 from kf_lib.happenings import story
 
@@ -179,6 +180,7 @@ def game_snapshot(g):
         return (
             f.name,
             type(f).__name__,
+            f.occupation,
             f.style.name,
             f.level,
             f.get_base_atts_tup(),
@@ -275,10 +277,7 @@ class TestInitStringRoundtrip:
     legacy save-format contract (old saves break if it changes)."""
 
     EVAL_NS = dict(
-        Challenger=Challenger,
         Fighter=Fighter,
-        Master=Master,
-        Thug=Thug,
         SmartAIP=SmartAIP,
     )
 
@@ -296,13 +295,15 @@ class TestInitStringRoundtrip:
         random.seed(0)
         self.check_roundtrip(fighter_factory.new_fighter(10))
 
-    def test_named_npc_classes(self):
+    def test_named_npc_occupations(self):
         random.seed(0)
-        for f in (
-            fighter_factory.new_thug(),
-            fighter_factory.new_master('Test Master', 'Long Fist'),
-            fighter_factory.new_convict(),
+        for f, occupation in (
+            (fighter_factory.new_thug(), 'thug'),
+            (fighter_factory.new_master('Test Master', 'Long Fist'), 'master'),
+            (fighter_factory.new_convict(), 'thug'),
         ):
+            assert type(f) is Fighter
+            assert f.occupation == occupation
             self.check_roundtrip(f)
 
     def test_player(self):
@@ -398,6 +399,72 @@ class TestLoading:
         for p in g2.players:
             assert p.plog == []
 
+    def test_occupation_json_roundtrip_is_stable(self, temp_save_folder):
+        g = make_game()
+        occupations = {f.name: f.occupation for f in g.fighters_dict.values()}
+        assert {'master', 'thug'} <= set(occupations.values())
+        g.save_game(SAVE_NAME)
+        data1 = json.loads((temp_save_folder / SAVE_NAME).read_text())
+        # non-default occupations are serialized alongside the constructor args
+        by_name = {fd['args'][0]: fd for fd in data1['fighters']}
+        for name, occ in occupations.items():
+            if occ == 'fighter':
+                assert 'occupation' not in by_name[name]
+            else:
+                assert by_name[name]['occupation'] == occ
+
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        assert {f.name: f.occupation for f in g2.fighters_dict.values()} == occupations
+        # re-saving a loaded game produces the same fighter payload
+        # (fighter ordering in the roster is not preserved, so compare by name)
+        g2.save_game(SAVE_NAME)
+        data2 = json.loads((temp_save_folder / SAVE_NAME).read_text())
+        for data in (data1, data2):
+            for fd in data['fighters']:
+                fd['args'][4] = sorted(fd['args'][4])  # techs come from a set
+            data['fighters'].sort(key=lambda fd: fd['args'][0])
+        assert data2['fighters'] == data1['fighters']
+
+
+class TestOccupationQuotes:
+    """Occupation drives quote pool selection (replacing the old subclasses)."""
+
+    def make_fight(self, shown):
+        return SimpleNamespace(show=shown.append)
+
+    def test_thug_gets_thug_quotes(self):
+        from kf_lib.actors import quotes
+
+        f = fighter_factory.new_thug()
+        assert f.occupation == 'thug'
+        assert f.quotes == 'thug'
+        shown = []
+        f.current_fight = self.make_fight(shown)
+        assert f.say_prefight_quote() is True
+        assert shown[0].split('"')[1] in quotes.PREFIGHT_QUOTES['thug']
+        shown.clear()
+        f.say_win_quote()
+        assert shown[0].split('"')[1] in quotes.WIN_QUOTES['thug']
+
+    def test_master_and_plain_fighter_quotes(self):
+        from kf_lib.actors import quotes
+
+        m = fighter_factory.new_master('Test Master', 'Long Fist')
+        assert m.quotes == 'master'
+        shown = []
+        m.current_fight = self.make_fight(shown)
+        assert m.say_prefight_quote() is True
+        assert shown[0].split('"')[1] in quotes.PREFIGHT_QUOTES['master']
+        f = fighter_factory.new_fighter(5)
+        assert f.occupation == 'fighter'
+        assert f.quotes == 'fighter'
+        # no quote pool for plain fighters: no output, no pause
+        shown.clear()
+        f.current_fight = self.make_fight(shown)
+        assert f.say_prefight_quote() is False
+        assert shown == []
+
 
 class TestLegacyLoading:
     """Saves in the old exec-based format must still load."""
@@ -413,7 +480,10 @@ class TestLegacyLoading:
         assert sorted(p.traits) == ['brave', 'unfriendly']
         assert p.inventory == {'Tiger Herb': 1}
         assert set(g.masters) == {'Drunken Boxing', 'Long Fist', 'Tiger'}
-        assert type(g.masters['Long Fist']).__name__ == 'Master'
+        # the legacy Master/Thug classes load as plain Fighters with occupation set
+        assert type(g.masters['Long Fist']) is Fighter
+        assert g.masters['Long Fist'].occupation == 'master'
+        assert g.masters['Long Fist'].quotes == 'master'
         assert [f.name for f in g.schools['Drunken Boxing']] == [
             'Wang Jing',
             'Liu Shen',
@@ -421,7 +491,11 @@ class TestLegacyLoading:
             'Test Hero',
         ]
         assert g.beggar.name == 'Beggar Xue'
-        assert type(g.thief).__name__ == 'Thug'
+        assert type(g.thief) is Fighter
+        assert g.thief.occupation == 'thug'
+        assert g.fighters_dict['Little Gu'].occupation == 'thug'
+        assert g.fighters_dict['Wang Jing'].occupation == 'fighter'
+        assert p.occupation == 'hero'
         assert [c.name for c in g.criminals] == ['Little Gu']
         assert set(g.stories) == {
             'BanditFianceStory',

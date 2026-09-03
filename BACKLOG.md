@@ -18,9 +18,10 @@ are unordered unless marked.
    `pyproject.toml` with black config; deduplicate the near-identical root
    scripts into one entry point with flags.
 4. **Structural refactors:** split `kf_lib/happenings/encounters/__init__.py`
-   (1353 lines); tease apart the 17-mixin `Fighter`; the `# todo` markers
-   (e.g. replace `Challenger`/`Master`/`Thug` subclasses with an occupation
-   attribute, `fighter/__init__.py`).
+   (1353 lines); tease apart the 17-mixin `Fighter`; the `# todo` markers.
+   ~~Replace `Challenger`/`Master`/`Thug` subclasses with an occupation
+   attribute~~ ✅ Done: `Fighter.occupation` drives quote selection; old saves
+   still load via factory shims in `LoadGame`.
 5. Smaller code items from the old backlog:
    - subclass `Fight` more (spectator/no spectator; exp/no exp; stats/no stats)
    - `.__repr__`/`.__str__` in all classes instead of `get_init_string()`

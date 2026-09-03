@@ -111,7 +111,8 @@ class FighterAPI(ABC):
     qp_max: int = None
     qp_max_mult: float = None
     qp_start: float = None  # descriptor
-    quotes: str = None
+    occupation: str = None
+    quotes: str = None  # property derived from occupation
     rand_atts_mode: Literal[0, 1, 2] = None
     resist_ko: float = None  # descriptor
     speed: int = None

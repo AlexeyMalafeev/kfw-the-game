@@ -37,7 +37,6 @@ class BasePlayer(Fighter):
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
-    quotes = 'hero'
 
     exp = Integer(minvalue=0, action='raise')
 
@@ -62,6 +61,7 @@ class BasePlayer(Fighter):
             tech_names=tech_names,
             move_names=move_names,
             rand_atts_mode=rand_atts_mode,
+            occupation='hero',
         )
         self.allies = []
         self.ended_turn = False

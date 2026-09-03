@@ -4,7 +4,7 @@ from kf_lib.kung_fu import styles, style_gen
 from kf_lib.ui import get_int_from_user, menu
 from kf_lib.utils import rnd, rndint
 from . import names
-from .fighter import Fighter, Challenger, Master, Thug
+from .fighter import Fighter
 from .human_controlled_fighter import HumanControlledFighter
 
 
@@ -61,7 +61,7 @@ def from_exp_worth(x):  # todo reimplement
 
 def new_beggar():
     lv = rndint(*BEGGAR_LV)
-    f = Master('Beggar', styles.BEGGAR_STYLE.name, level=1)
+    f = Fighter('Beggar', styles.BEGGAR_STYLE.name, level=1, occupation='master')
     f.level_up(lv - 1)  # to gradually learn techs and moves
     return f
 
@@ -76,7 +76,7 @@ def new_bodyguard(weak=False, n=1):
             lv = 1
             rand_atts_mode = 0
         style = style_gen.get_new_randomly_generated_style()
-        f = Challenger('Bodyguard', style, lv, rand_atts_mode=rand_atts_mode)
+        f = Fighter('Bodyguard', style, lv, rand_atts_mode=rand_atts_mode, occupation='challenger')
         fs.append(f)
     if len(fs) == 1:
         return fs[0]
@@ -87,18 +87,18 @@ def new_bodyguard(weak=False, n=1):
 
 def new_brawler():
     lv = rndint(*BRAWLER_LV)
-    return Thug('Brawler', style=styles.DIRTY_FIGHTING, level=lv)
+    return Fighter('Brawler', style=styles.DIRTY_FIGHTING, level=lv, occupation='thug')
 
 
 def new_convict():
     lv = rndint(*CONVICT_LV)
-    return Thug('Criminal', style=styles.DIRTY_FIGHTING, level=lv)
+    return Fighter('Criminal', style=styles.DIRTY_FIGHTING, level=lv, occupation='thug')
 
 
 def new_craftsman():
     lv = rndint(*CRAFTSMAN_LV)
     style = style_gen.get_new_randomly_generated_style()
-    f = Master('Craftsman', level=1, style=style)
+    f = Fighter('Craftsman', level=1, style=style, occupation='master')
     f.level_up(lv - 1)
     return f
 
@@ -130,13 +130,13 @@ def new_drunkard(strong=False):
         lv = rndint(*DRUNKARD_STRONG_LV)
         style = styles.DRUNKARD_STYLE.name
         rand_atts_mode = 2
-        f = Master('Drunkard', style, level=1, rand_atts_mode=rand_atts_mode)
+        f = Fighter('Drunkard', style, level=1, rand_atts_mode=rand_atts_mode, occupation='master')
         f.level_up(lv - 1)
         return f
     else:
         lv = rndint(*DRUNKARD_WEAK_LV)
         rand_atts_mode = 0
-        return Thug('Drunkard', level=lv, rand_atts_mode=rand_atts_mode)
+        return Fighter('Drunkard', level=lv, rand_atts_mode=rand_atts_mode, occupation='thug')
 
 
 def new_f(name, style, lv, weapon=None, n=1):
@@ -193,7 +193,7 @@ def new_foreigner(lv=0, country=None, name=None, style=None):
 
 def new_gambler():
     lv = rndint(*GAMBLER_LV)
-    return Thug('Gambler', styles.DIRTY_FIGHTING.name, level=lv)
+    return Fighter('Gambler', styles.DIRTY_FIGHTING.name, level=lv, occupation='thug')
 
 
 def new_hcf(name='Player', lv=1):
@@ -204,7 +204,7 @@ def new_hcf(name='Player', lv=1):
 
 def new_master(name, style):
     lv = rndint(*MASTER_LV)
-    f = Master(name, style, level=1)
+    f = Fighter(name, style, level=1, occupation='master')
     f.level_up(lv - 1)  # to gradually learn techs and moves
     return f
 
@@ -212,7 +212,7 @@ def new_master(name, style):
 def new_master_challenger(p_lv, name):
     lv = rndint(p_lv, p_lv + 2)
     style = style_gen.get_new_randomly_generated_style()
-    f = Master(name, style, level=1)
+    f = Fighter(name, style, level=1, occupation='master')
     f.level_up(lv - 1)
     return f
 
@@ -256,7 +256,7 @@ def new_opponent(style=styles.FLOWER_KUNGFU, lv=1, n=1, rand_atts_mode=0):
 def new_performer():
     lv = rndint(*PERFORMER_LV)
     style = style_gen.get_new_randomly_generated_style()
-    f = Master('Kung-fu Master', style, level=1)
+    f = Fighter('Kung-fu Master', style, level=1, occupation='master')
     f.level_up(lv - 1)
     return f
 
@@ -276,7 +276,7 @@ def new_police(n=1):
 
 def new_prize_fighter(lv):
     name = 'Prize Fighter'
-    return Thug(name, styles.DIRTY_FIGHTING.name, lv)
+    return Fighter(name, styles.DIRTY_FIGHTING.name, lv, occupation='thug')
 
 
 def new_random_fighter(styles_to_choose=None, n=1):
@@ -304,7 +304,7 @@ def new_robber(weak=False, n=1):
             lv = rndint(*ROBBER_LV)
         else:
             lv = 1
-        f = Thug('Robber', styles.DIRTY_FIGHTING.name, lv)
+        f = Fighter('Robber', styles.DIRTY_FIGHTING.name, lv, occupation='thug')
         fs.append(f)
     if len(fs) == 1:
         return fs[0]
@@ -315,7 +315,7 @@ def new_robber(weak=False, n=1):
 
 def new_student(name, style):
     lv = rndint(*STUDENT_LV)
-    f = Challenger(name, style, level=1)
+    f = Fighter(name, style, level=1, occupation='challenger')
     f.level_up(lv - 1)
     return f
 
@@ -325,12 +325,12 @@ def new_thief(tough=False):
         lv = rndint(*THIEF_LV)
         style = styles.DIRTY_FIGHTING.name
         rand_atts_mode = 0
-        f = Thug('Thief', style, lv, rand_atts_mode=rand_atts_mode)
+        f = Fighter('Thief', style, lv, rand_atts_mode=rand_atts_mode, occupation='thug')
     else:
         lv = rndint(*TOUGH_THIEF_LV)
         style = styles.THIEF_STYLE.name
         rand_atts_mode = 2
-        f = Thug('Thief', style, level=1, rand_atts_mode=rand_atts_mode)
+        f = Fighter('Thief', style, level=1, rand_atts_mode=rand_atts_mode, occupation='thug')
         f.level_up(lv - 1)
     return f
 
@@ -342,7 +342,7 @@ def new_thug(weak=False, n=1):
             lv = rndint(*THUG_LV)
         else:
             lv = 1
-        f = Thug('Thug', styles.DIRTY_FIGHTING.name, lv)
+        f = Fighter('Thug', styles.DIRTY_FIGHTING.name, lv, occupation='thug')
         fs.append(f)
     if len(fs) == 1:
         return fs[0]
@@ -361,7 +361,7 @@ def copy_fighter(orig):
     """Return a Fighter copy of original fighter/player, e.g. for simulation.
     Weapons are included."""
     atts = Fighter.get_init_atts(orig)
-    new = Fighter(*atts)
+    new = Fighter(*atts, occupation=orig.occupation)
     if orig.weapon:
         new.arm(orig.weapon.name)
     return new

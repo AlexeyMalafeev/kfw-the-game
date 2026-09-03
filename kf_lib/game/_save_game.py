@@ -44,8 +44,14 @@ class SaveGame(BaseGame):
 
     @staticmethod
     def _fighter_to_data(ftr):
-        """Serialize a fighter via the same constructor contract as get_init_string()."""
-        return {'class': ftr.__class__.__name__, 'args': list(ftr.get_init_atts())}
+        """Serialize a fighter via the same constructor contract as get_init_string().
+        Occupation is stored separately (and only when non-default) so that the
+        constructor args keep the legacy 6-element shape."""
+        data = {'class': ftr.__class__.__name__, 'args': list(ftr.get_init_atts())}
+        occupation = getattr(ftr, 'occupation', 'fighter')
+        if occupation != 'fighter':
+            data['occupation'] = occupation
+        return data
 
     @staticmethod
     def _name_or_none(ftr):

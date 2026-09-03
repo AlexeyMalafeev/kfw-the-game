@@ -52,6 +52,7 @@ class Fighter(
             tech_names: List[str] = None,
             move_names: List[str] = None,
             rand_atts_mode: int = 0,  # todo give rand_atts_mode interpretable str values
+            occupation: str = 'fighter',
     ) -> None:
         self.att_weights = {}
         self.strength = 0
@@ -78,6 +79,7 @@ class Fighter(
         self.name = name
         self.level = level
         self.rand_atts_mode = rand_atts_mode
+        self.occupation = occupation  # determines which quotes the fighter says
         self.set_att_weights()
         self.set_atts(atts_tuple)
         self.set_style(style)
@@ -111,15 +113,3 @@ class Fighter(
             # NB! no need to refresh full atts here since they are refreshed when upgrading atts and
             # learning techs
 
-
-# todo refactor: get rid of Challenger, Master, Thug, but set occupation (quotes) instead
-class Challenger(Fighter):
-    quotes = 'challenger'
-
-
-class Master(Fighter):
-    quotes = 'master'
-
-
-class Thug(Fighter):
-    quotes = 'thug'

@@ -62,12 +62,16 @@ changes also `NG_autoplay_silent_ending.py`. `kf_lib/ai/fight_ai_test.py` and
 
 - **Save files are JSON**, written by `kf_lib/game/_save_game.py` (fighters via
   class name + `get_init_atts()` constructor args, cross-references by fighter
-  name). `load_game()` auto-detects the format: old saves are executable Python
-  and are loaded by a legacy shim that `exec()`s them line by line
-  (`LoadGame._load_legacy`). Consequences while the shim exists:
+  name; a fighter's `occupation` is stored as a separate optional key so the
+  constructor args keep their legacy shape). `load_game()` auto-detects the
+  format: old saves are executable Python and are loaded by a legacy shim that
+  `exec()`s them line by line (`LoadGame._load_legacy`). Consequences while the
+  shim exists:
   - Never reorder `Fighter.__init__` arguments (explicit warning at
     `kf_lib/actors/fighter/__init__.py`) — old saves break
-  - Renaming classes or changing `savable_atts` / `get_init_atts()` breaks saves
+  - Renaming classes or changing `savable_atts` / `get_init_atts()` breaks saves;
+    removed fighter classes (Challenger/Master/Thug) stay mapped to factory
+    shims in `LoadGame.FIGHTER_CLASSES`
 - **Import-time side effects**: `kung_fu/moves.py` reads `moves/all_moves.txt`,
   `actors/quotes.py` reads `quotes/*.txt`, `utils/_folders.py` mkdirs folders, and
   `utils/__init__.py` configures a root logger writing `kfw.log`. Importing `kf_lib`

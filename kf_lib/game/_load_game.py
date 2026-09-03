@@ -3,11 +3,21 @@ from pathlib import Path
 
 # used with exec by the legacy loader, do not delete
 from kf_lib.actors.player import ALL_AI_PLAYERS, HumanPlayer, SmartAIP, SmartAIPVisible
-from kf_lib.actors.fighter import Challenger, Fighter, Master, Thug
+from kf_lib.actors.fighter import Fighter
 from kf_lib.happenings import story
 from kf_lib.utils import SAVE_FOLDER
 from ._base_game import BaseGame
 from . import game_stats
+
+
+def _legacy_fighter_class(occupation):
+    """Factory standing in for the removed Challenger/Master/Thug fighter classes:
+    old saves (both JSON and legacy exec-based) still refer to them by name."""
+
+    def constructor(*args, **kwargs):
+        return Fighter(*args, occupation=occupation, **kwargs)
+
+    return constructor
 
 
 FIGHTER_CLASSES = {
@@ -17,12 +27,16 @@ FIGHTER_CLASSES = {
         HumanPlayer,
         SmartAIP,
         SmartAIPVisible,
-        Challenger,
         Fighter,
-        Master,
-        Thug,
     )
 }
+FIGHTER_CLASSES.update(
+    {
+        'Challenger': _legacy_fighter_class('challenger'),
+        'Master': _legacy_fighter_class('master'),
+        'Thug': _legacy_fighter_class('thug'),
+    }
+)
 
 # stats_dict values that are tuples in the legacy format (JSON stores them as lists)
 TUPLE_STATS = ('aston_victory', 'humil_defeat')
@@ -51,8 +65,10 @@ class LoadGame(BaseGame):
         # Shared namespace: names bound by one exec'd line (fsd, md, school, p)
         # must persist to the next, so do NOT use bare exec() in function scope.
         namespace = {'g': self, 'story': story}
-        for cls in FIGHTER_CLASSES.values():
-            namespace[cls.__name__] = cls
+        # values may be factory functions (e.g. for the removed Challenger/Master/Thug
+        # classes), so use the dict keys as names, not __name__
+        for name, cls in FIGHTER_CLASSES.items():
+            namespace[name] = cls
         for line in text.splitlines():
             # print(line)
             exec(line, namespace)
@@ -62,7 +78,12 @@ class LoadGame(BaseGame):
         cls = FIGHTER_CLASSES[fdata['class']]
         args = list(fdata['args'])
         args[3] = tuple(args[3])  # atts_tuple: JSON stores it as a list
-        return cls(*args)
+        f = cls(*args)
+        # occupation is serialized separately (only when non-default) to keep
+        # get_init_atts() — and thus the legacy save contract — unchanged
+        if 'occupation' in fdata:
+            f.occupation = fdata['occupation']
+        return f
 
     def _load_json(self, text):
         data = json.loads(text)
