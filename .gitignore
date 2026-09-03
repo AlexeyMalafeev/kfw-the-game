@@ -11,3 +11,4 @@ desktop.ini
 errors.txt
 kfw.log
 .pytest_cache/
+.DS_Store
