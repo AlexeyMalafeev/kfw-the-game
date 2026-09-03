@@ -23,22 +23,15 @@ Grab the latest release (I don't recommend just cloning master, as it has a lot 
 
 Note: some ML-related modules do require such external dependencies as `pandas`, `numpy` and `sklearn`, but these are not needed to just play the game. 
 
-To start a new game, run `kfw.py`. To load a previously saved game, run `kfw.py --load save.txt`. Run `kfw.py --help` for all options (autoplay, number of players, autosave, etc.). Note that it won't work correctly if you run it in an IDE like PyCharm. Instead, run it from the command line.
+To start a new game, run:
 
-If you're used to the old scripts, they are gone — here's the mapping:
+    python kfw.py
 
-| old script | new command |
-|---|---|
-| `NG_default.py` | `python kfw.py` |
-| `load_game.py` | `python kfw.py --load save.txt` |
-| `load_auto_save.py` | `python kfw.py --load "auto save.txt"` |
-| `load em save.py` | `python kfw.py --load emergency_save.txt` |
-| `NG_autoplay.py` | `python kfw.py --autoplay` |
-| `NG autoplay single.py` | `python kfw.py --autoplay -n 1` |
-| `NG_autoplay_autosave.py` | `python kfw.py --autoplay --autosave` |
-| `NG_autoplay_crowd.py` | `python kfw.py --autoplay -n 100` |
-| `NG_autoplay_silent_ending.py` | `python kfw.py --autoplay --silent-ending` |
-| `NG_profile.py` | `python dev_scripts/profile_game.py` |
+To load a previously saved game:
+
+    python kfw.py --load save.txt
+
+Run it from the command line — it won't work correctly in an IDE like PyCharm. For more ways to run the game (autoplay, profiling, tests), see "For the curious" below.
 
 ## How to play
 
@@ -50,9 +43,19 @@ There are four ways to win in this game:
 3. **Kung-fu Legend**: perform a few of unique Accomplishments
 4. **Greatest Fighter**: win in a crazy number of fights
 
+## For the curious
+
+A few more things you can do from the command line:
+
+* `python kfw.py --help` — all available options
+* `python kfw.py --autoplay` — watch a fully AI-driven game (add `-n 100` for a hundred-player chaos run, `--autosave` to keep auto-saving)
+* `python kfw.py --load "auto save.txt"` — load the autosave instead of the manual save
+* `python dev_scripts/profile_game.py` — profile the game with cProfile (developer tool)
+* `.venv/bin/python -m pytest` — run the automated test suite (developer tool; needs the dev requirements installed)
+
 ## Note about the code
 
-Should you want to take a peek at the code, since we're on GitHub and all, be warned that it is messy. The bulk of it was written back when my Python kung-fu was still weak, and I don't have much time these days to clean up the technical debt accrued. That said, the code base in its present state is not completely terrible; it is somewhat readable and hopefully free of major bugs. I hope that one day I'll get around to refactoring everything. :P
+Should you want to take a peek at the code, since we're on GitHub and all: the bulk of it was written back when my Python kung-fu was still weak, and the technical debt accrued is being cleaned up gradually. The code base in its present state is somewhat readable, covered by a growing test suite, and hopefully free of major bugs. See `CHANGELOG.md` for what's changed and `BACKLOG.md` for what's planned.
 
 ## Final remarks
 
