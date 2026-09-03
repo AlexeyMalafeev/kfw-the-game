@@ -9,10 +9,11 @@ are unordered unless marked.
 1. ~~**Automated tests.**~~ ✅ Done (initial suite): `test/` has seeded
    deterministic `AutoFight` tests, generation invariants, and a full headless
    autoplay game. Next: broaden coverage (saves, encounters, stories).
-2. **Replace exec-based saves with JSON.** `kf_lib/game/_load_game.py` exec()s
-   save files line by line, which freezes class names, `Fighter.__init__`
-   argument order, and `savable_atts` forever — and is a security smell.
-   Provide a one-time loader shim for old saves. Do after tests exist.
+2. ~~**Replace exec-based saves with JSON.**~~ ✅ Done: `save_game()` writes
+   JSON; `load_game()` auto-detects the format and falls back to a legacy
+   exec()-based loader (`LoadGame._load_legacy`) for old saves. While that
+   shim exists, class names, `Fighter.__init__` argument order, and
+   `savable_atts` are still frozen.
 3. **Hygiene:** add `tqdm`/`numpy` to `requirements_dev.txt`; add
    `pyproject.toml` with black config; deduplicate the near-identical root
    scripts into one entry point with flags.
@@ -36,8 +37,9 @@ are unordered unless marked.
 ## Bugs / known issues
 
 - ~~Game loading is broken~~ ✅ Fixed 2026-09 (minimal fix: shared exec namespace
-  in `LoadGame.load_game`, incl. all AI player classes). The exec-based format is
-  still tech debt — supersede via the JSON save migration (Engineering #2).
+  in `LoadGame.load_game`, incl. all AI player classes). Superseded by the JSON
+  save migration (Engineering #2): the exec path remains only as the legacy
+  loader for old saves.
 - double knockback!
 - y defense buff not working?
 - bug in careless inactive time?

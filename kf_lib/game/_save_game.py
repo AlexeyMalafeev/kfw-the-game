@@ -1,7 +1,12 @@
+import json
 from pathlib import Path
 
 from kf_lib.utils import SAVE_FOLDER
 from ._base_game import BaseGame
+
+
+SAVE_FORMAT = 'kfw-save'
+SAVE_VERSION = 1
 
 
 class SaveGame(BaseGame):
@@ -31,108 +36,67 @@ class SaveGame(BaseGame):
         self.fighters_dict = {f.name: f for f in self.fighters_list}
 
     def save_game(self, file_name):
+        """Save the game as JSON (see get_save_data for the schema)."""
+        data = self.get_save_data()
         with open(Path(SAVE_FOLDER, file_name), 'w') as f:
-            self._save_all(f)
+            json.dump(data, f, indent=1)
+        self._dump_player_logs()
 
-    def _save_all(self, f):
-        self._save_fighters(f)
-        self._save_masters(f)
-        self._save_schools(f)
-        self._save_special_npcs(f)
-        self._save_stories(f)
-        self._save_game_atts(f)
-        self._save_players(f)
+    @staticmethod
+    def _fighter_to_data(ftr):
+        """Serialize a fighter via the same constructor contract as get_init_string()."""
+        return {'class': ftr.__class__.__name__, 'args': list(ftr.get_init_atts())}
 
-    def _save_fighters(self, f):
+    @staticmethod
+    def _name_or_none(ftr):
+        return ftr.name if ftr is not None else None
+
+    def _player_to_data(self, p):
+        return {
+            'name': p.name,
+            'atts': {att: getattr(p, att) for att in p.savable_atts},
+            'current_story': p.current_story.name if p.current_story else None,
+            'friends': [f.name for f in p.friends],
+            'enemies': [en.name for en in p.enemies],
+            'students': p.students,
+            'best_student': self._fighter_to_data(p.best_student) if p.best_student else None,
+        }
+
+    def _story_to_data(self, s):
+        return {
+            'state': s.state,
+            'player': self._name_or_none(s.player),
+            'boss': self._name_or_none(s.boss),
+        }
+
+    def get_save_data(self):
         self._refresh_roster()  # this is only to order the fighters
-        f.write('g.fighters_dict = fsd = {}')
-        for ftr in self.fighters_list:
-            f.write(f'\n\nfsd[{ftr.name!r}] = {ftr.get_init_string()}')
-        f.write('\n\ng.fighters_list = list(fsd.values())')
+        return {
+            'format': SAVE_FORMAT,
+            'version': SAVE_VERSION,
+            'fighters': [self._fighter_to_data(f) for f in self.fighters_list],
+            'masters': {sn: self.masters[sn].name for sn in sorted(self.masters)},
+            'schools': {
+                sn: [f.name for f in self.schools[sn]] for sn in sorted(self.schools)
+            },
+            'beggar': self._name_or_none(self.beggar),
+            'drunkard': self._name_or_none(self.drunkard),
+            'thief': self._name_or_none(self.thief),
+            'criminals': [c.name for c in self.criminals],
+            'fat_girl': self._name_or_none(self.fat_girl),
+            'stories': {name: self._story_to_data(s) for name, s in self.stories.items()},
+            # silent_ending is not in savable_atts for backward compat with the legacy format
+            'game_atts': dict(
+                {att: getattr(self, att) for att in self.savable_atts},
+                silent_ending=self.silent_ending,
+            ),
+            'players': [self._player_to_data(p) for p in self.players],
+        }
 
-    def _save_game_atts(self, f):
-        f.write('\n')
-        for att in self.savable_atts:
-            f.write('\ng.{} = {!r}'.format(att, getattr(self, att)))
-
-    def _save_masters(self, f):
-        f.write('\n\ng.masters = md = {}')
-        for sn in sorted(self.masters):
-            m = self.masters[sn]
-            f.write(f'\nmd[{sn!r}] = {self.get_fighter_ref(m)}')
-
-    def _save_players(self, f):
-        f.write('\n\ng.players = []')
+    def _dump_player_logs(self):
         for p in self.players:
-            f.write('\n\n' + '#' * 80)
-            f.write(f'\n\ng.players.append({self.get_fighter_ref(p)})\n')
-            f.write('p = g.players[-1]\n')
-
-            # save player attributes
-            for att in p.savable_atts:
-                f.write('p.{} = {!r}\n'.format(att, getattr(p, att)))
-
-            # save current story
-            if p.current_story:
-                f.write(
-                    'p.current_story = g.stories[{!r}]\n'.format(
-                        p.current_story.__class__.__name__
-                    )
-                )
-
-            # friends
-            f.write('\np.friends = [')
-            for friend in p.friends:
-                f.write(f'{self.get_fighter_ref(friend)}, ')
-            f.write(']\n')
-
-            # enemies
-            f.write('\np.enemies = [')
-            for en in p.enemies:
-                f.write(f'{self.get_fighter_ref(en)}, ')
-            f.write(']\n')
-
-            # students
-            f.write(f'\np.students = {p.students!r}\n')
-            best = p.best_student.get_init_string() if p.best_student else 'None'
-            f.write(f'\np.best_student = {best}')
-
             # dump log
             path = Path(SAVE_FOLDER, f'{p.name}\'s log.txt')
             with open(path, 'a') as log_file:
                 log_file.write('\n'.join(p.plog))
                 p.plog = []
-
-    def _save_schools(self, f):
-        f.write('\n\ng.schools = {}')
-        for sn in sorted(self.schools):
-            f.write(f'\n\ng.schools[{sn!r}] = school = []')
-            for student in self.schools[sn]:
-                f.write(f'\nschool.append({self.get_fighter_ref(student)})')
-
-    def _save_special_npcs(self, f):
-        bgr = self.beggar
-        drkd = self.drunkard
-        thf = self.thief
-        crmls = self.criminals
-        fg = self.fat_girl
-        f.write(
-            f"\n\ng.beggar = {self.get_fighter_ref(bgr) if bgr is not None else 'None'}"
-        )
-        f.write(
-            '\ng.drunkard = {}'.format(
-                self.get_fighter_ref(drkd) if drkd is not None else 'None'
-            )
-        )
-        f.write(
-            f"\ng.thief = {self.get_fighter_ref(thf) if thf is not None else 'None'}"
-        )
-        f.write('\ng.criminals = []')
-        for c in crmls:
-            f.write(f'\ng.criminals.append({self.get_fighter_ref(c)})')
-        f.write(
-            f"\ng.fat_girl = {self.get_fighter_ref(fg) if fg is not None else 'None'}"
-        )
-
-    def _save_stories(self, f):
-        f.write(f'\n\ng.stories = {self.stories!r}')
