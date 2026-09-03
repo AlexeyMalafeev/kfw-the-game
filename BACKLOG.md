@@ -56,6 +56,20 @@ are unordered unless marked.
 - wtf is STAMINA_FACTOR_BIAS in fighter.py?
 - some upgradable techs shouldn't be upgradable
 - `minigames/Chocolate_mini_game.py` is broken (has a todo)
+- **BLOCK_POWER MRO shadowing**: `_fight_actions.py` defines `BLOCK_POWER = 1.0`
+  and `_strike_mechanics.py` defines `BLOCK_POWER = 20`; the MRO resolves to 1.0,
+  and `dfs_pwr` multiplies by `BLOCK_POWER` twice — so blocking absorbs ~1/400 of
+  the intended damage. Probably the "blocking hurts more than not blocking" bug
+  in `docs/known bugs.txt`. Decide the intended value, then delete one
+  definition (details: `docs/fight_mechanics.md`)
+- **draw crashes `give_exp`** (`ZeroDivisionError` on empty `winners`) — draws
+  are nearly unreachable, which is why it survives (see `docs/fight_mechanics.md`)
+- 'Lightning-Fast Strikes' advanced tech reuses `STRIKE_TIME_COST_MULT1` —
+  identical to the basic tech, upgrading is a no-op
+- dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
+  `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
+- `get_rand_moves` empty-pool: `random.choice(pool)` runs before the empty
+  check → `IndexError` instead of the documented fallback
 
 ## Fight mechanics
 

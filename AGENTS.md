@@ -60,6 +60,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - Leaf packages (`utils`, `ui`, `constants`) must not import upward — layering is by
   convention, there are no cycle guards
 - Commit messages: conventional commits (`fix:`, `docs:`, `refactor:`, `chore:`, `RELEASE:`)
+- Docs rule: `docs/` holds one file per game system (mechanics/pipelines, not
+  constant tables — values live in code). A behavior change isn't done until
+  the matching doc paragraph is updated in the same commit.
 
 ## Pitfalls — read before editing
 
