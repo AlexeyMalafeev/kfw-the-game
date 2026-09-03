@@ -1,4 +1,6 @@
 black
+numpy
 pandas
-scikit-learn
 pytest
+scikit-learn
+tqdm

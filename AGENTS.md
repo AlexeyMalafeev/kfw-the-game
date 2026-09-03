@@ -12,11 +12,10 @@ Minimum Python: 3.8. Dev venv: `.venv` (see `requirements_dev.txt`).
 All scripts **must be run from the repo root** — moves, quotes and saves use
 cwd-relative paths.
 
-- `python NG_default.py` — normal interactive game
-- `python load_game.py` — load `save/save.txt` (also `load_auto_save.py`, `load em save.py`)
-- `python NG_autoplay.py` — headless AI-only game; the de-facto smoke test
-- `python NG_autoplay_crowd.py` — 100-player stress test
-- `python NG_autoplay_silent_ending.py` — fast quiet autoplay (used for profiling)
+- `python kfw.py` — single entry point (argparse: `--autoplay`, `-n N`,
+  `--autosave`, `--silent-ending`, `--load FILE`)
+- `python NG_default.py` / `load_game.py` — legacy wrappers around `kfw.py`;
+  `NG_autoplay*.py` are headless AI-only wrappers (good smoke tests)
 
 There is a small pytest suite in `test/` (run `.venv/bin/python -m pytest` from the
 repo root): seeded deterministic fights, generation invariants, and a full headless
@@ -50,7 +49,8 @@ changes also `NG_autoplay_silent_ending.py`. `kf_lib/ai/fight_ai_test.py` and
 
 ## Conventions
 
-- Formatting: black-ish at 88 cols, but not enforced and no config; match surrounding style
+- Formatting: black-ish at 88 cols (`pyproject.toml` has the black config; the old
+  code is only approximately formatted — match surrounding style, don't mass-reformat)
 - Private modules use a leading underscore; public API is re-exported through `__init__.py`
 - Absolute imports across packages (`from kf_lib.actors import fighter_factory`),
   relative within a package (`from ._base_game import BaseGame`)
