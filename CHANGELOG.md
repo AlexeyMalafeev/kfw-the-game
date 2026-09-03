@@ -12,8 +12,8 @@ because kung-fu movies.
   economy, player AI, game mechanics, headless tournament, full-game
   integration tests
 - `kfw.py`: single argparse-based entry point (`--autoplay`, `-n`,
-  `--autosave`, `--silent-ending`, `--load`); old root scripts kept as thin
-  wrappers
+  `--autosave`, `--silent-ending`, `--load`); the old `NG_*`/`load_*` root
+  scripts were removed, and the profiler moved to `dev_scripts/profile_game.py`
 - `AGENTS.md` (onboarding/pitfalls), `BACKLOG.md` (structured, replaces the
   old `docs/backlog.md` + `docs/todo.md` dumps), this changelog
 - `pyproject.toml` with black config; `numpy`/`tqdm` added to dev requirements

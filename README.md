@@ -23,7 +23,7 @@ Grab the latest release (I don't recommend just cloning master, as it has a lot 
 
 Note: some ML-related modules do require such external dependencies as `pandas`, `numpy` and `sklearn`, but these are not needed to just play the game. 
 
-To start a new game, run `kfw.py` (or `NG_default.py`). To load a previously saved game, run `kfw.py --load save.txt` (or `load_game.py`). Run `kfw.py --help` for all options (autoplay, number of players, autosave, etc.). Note that it won't work correctly if you run either of the scripts in an IDE like PyCharm. Instead, run these scripts from the command line.
+To start a new game, run `kfw.py`. To load a previously saved game, run `kfw.py --load save.txt`. Run `kfw.py --help` for all options (autoplay, number of players, autosave, etc.). Note that it won't work correctly if you run it in an IDE like PyCharm. Instead, run it from the command line.
 
 ## How to play
 

@@ -13,14 +13,12 @@ All scripts **must be run from the repo root** — moves, quotes and saves use
 cwd-relative paths.
 
 - `python kfw.py` — single entry point (argparse: `--autoplay`, `-n N`,
-  `--autosave`, `--silent-ending`, `--load FILE`)
-- `python NG_default.py` / `load_game.py` — legacy wrappers around `kfw.py`;
-  `NG_autoplay*.py` are headless AI-only wrappers (good smoke tests)
+  `--autosave`, `--silent-ending`, `--load FILE`); the only script at repo root
 
 There is a small pytest suite in `test/` (run `.venv/bin/python -m pytest` from the
 repo root): seeded deterministic fights, generation invariants, and a full headless
 autoplay game as an integration test. After any change, run it — and for riskier
-changes also `NG_autoplay_silent_ending.py`. `kf_lib/ai/fight_ai_test.py` and
+changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_test.py` and
 `kf_lib/testing/` provide manual balance/benchmark harnesses (their output goes to
 `tests/`, which holds committed logs, not test code).
 
