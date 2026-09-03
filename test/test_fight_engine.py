@@ -216,14 +216,56 @@ class TestExpAndStats:
     def test_loser_gets_koed_stat_and_injury(self):
         g = make_game()
         p = g.players[0]
-        random.seed(1)
+        random.seed(0)  # lv-1 player loses to the thug with this seed
         thug = fighter_factory.new_thug()
         f = AutoFight([p], [thug])
-        assert f.winners == [thug]  # lv-1 player loses to the thug with this seed
+        assert f.winners == [thug]
         assert p.stats_dict['times_koed'] == 1
         # knocked-out players get injured (inactive for some days)
         assert p.inact_status == 'injured'
         assert 1 <= p.inactive <= p.max_days_to_recover
+
+
+class TestBlocking:
+    """Pins for the BLOCK_POWER shadowing fix: the per-fighter hook
+    (BLOCK_DEFAULT_POWER) and the global constant (BLOCK_POWER) must not
+    collapse into one name, or MRO makes blocks absorb ~nothing."""
+
+    def test_block_constants_resolve_correctly(self):
+        f = lv1_fighter('A')
+        assert f.BLOCK_POWER == 20  # global, StrikeMechanics
+        assert f.BLOCK_DEFAULT_POWER == 1.0  # per-fighter hook, FightActions
+
+    def test_dfs_pwr_is_meaningful(self):
+        random.seed(0)
+        fa, fb = lv1_fighter('A'), lv1_fighter('B')
+        fight = BaseFight([fa], [fb])
+        fight.prepare_fighters()
+        fa.calc_stamina_factor()
+        fa.dfs_bonus = fa.dfs_penalty_mult = 1.0
+        fa.target = fb
+        fb.action = next(m for m in fb.moves if m.name == 'Punch')
+        fa.calc_dfs()
+        # pre-fix the shadowed formula gave dfs_pwr ~= 80/400 = 0.2; a working
+        # block must absorb a meaningful share of a punch (Punch power = 26)
+        assert fa.dfs_pwr >= 20
+
+
+class TestDraw:
+    def test_draw_gives_exp_without_crash(self):
+        # draw: no winners; give_exp must not divide by zero
+        g = make_game()
+        p1, p2 = g.players
+        fight = BaseFight([p1], [p2])
+        fight.prepare_fighters()
+        fight.main_player = p1
+        fight.winners = []
+        fight.losers = [p1, p2]
+        exp1, exp2 = p1.exp, p2.exp
+        fight.give_exp()
+        draw_exp = round(BASE_FIGHT_EXP / 2)  # DRAW_EXP_DIVISOR = 2
+        assert p1.exp == exp1 + draw_exp
+        assert p2.exp == exp2 + draw_exp
 
 
 class TestExpMath:

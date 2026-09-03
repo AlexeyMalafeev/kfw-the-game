@@ -130,7 +130,7 @@ if off-balance: x *= off_balance_dfs_mult   # 0.75
 if lying:       x *= lying_dfs_mult         # 0.5
 to_dodge = x / DODGE_DIVISOR                # /3
 to_block = x / BLOCK_DIVISOR * wp_dfs_bonus # /2
-dfs_pwr  = dfs_penalty_mult * BLOCK_POWER^2 * block_mult
+dfs_pwr  = dfs_penalty_mult * BLOCK_DEFAULT_POWER * block_mult * BLOCK_POWER
            * strength_full * stamina_factor * wp_dfs_bonus
 if fury: dfs_pwr *= fury_to_all_mult
 ```
@@ -139,13 +139,11 @@ if fury: dfs_pwr *= fury_to_all_mult
 how many of the attacker's last 3 actions (`previous_actions`, a maxlen-3 deque)
 are this move — up to ×1.99 to the *defender's* dodge/block.
 
-⚠️ `BLOCK_POWER` is defined twice: `20` in `_strike_mechanics.py` (comment:
-"Punch power = 26") and `1.0` in `_fight_actions.py`. `Fighter`'s MRO puts
-`FighterWithActions` before `StrikeMechanics`, so `self.BLOCK_POWER` is **1.0**
-(verified at runtime) and `dfs_pwr ≈ block_mult * strength_full *
-stamina_factor * wp_dfs_bonus` — single digits. The intended ×400 (20²) never
-applies, so blocking shaves off almost no damage. Likely the root of the old
-"через блок больше отнимает, чем без блока" note in `docs/known bugs.txt`.
+`BLOCK_DEFAULT_POWER` (1.0, `_fight_actions.py`) is the per-fighter hook —
+techniques can override it per fighter; `BLOCK_POWER` (20, `_strike_mechanics.py`,
+comment: "Punch power = 26") is the global constant. They were once both named
+`BLOCK_POWER` and `Fighter`'s MRO shadowed the global with 1.0, making blocks
+absorb ~1/400 of the intended damage (fixed 2026-09; see CHANGELOG).
 
 ### `do_strike` order
 
@@ -320,12 +318,12 @@ Everyone down → draw: `winners = []`, `losers = all`, `win = False`.
 - `exp_yield = 10 + str*agi*spd*hlt*0.03 + 3 per tech`, × weapon exp mult
   (`_exp_worth.py`).
 
-⚠️ On a draw `Σ winners' exp_yield` is 0 and `give_exp` raises
-`ZeroDivisionError` if a player participated (verified headless). Draws are
-nearly unreachable in normal play (need mutual KO or the 500000-unit time
-limit), which is why this survives. `DRAW_EXP_DIVISOR` (defined in both
-`_base_fight.py` and `constants/experience.py`) and `LOSER_EXP_DIVISOR` are
-unused leftovers of an intended draw/loser formula.
+On a draw there are no winners, so the ratio formula above doesn't apply:
+every player gets a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (25 / 2 = 12)
+instead. (Before 2026-09 this path raised `ZeroDivisionError`; draws are nearly
+unreachable in normal play — mutual KO or the 500000-unit time limit — which is
+why the crash survived.) `DRAW_EXP_DIVISOR` is still duplicated in
+`constants/experience.py` ⚠️, and `LOSER_EXP_DIVISOR` is an unused leftover.
 
 `handle_accompl` (single winner only): 'Lone Warrior' (≥ 5 losers), 'Narrow
 Victory' (winner hp ≤ 5% of max), 'Against All Odds' (losers' yield ≥ 1.5×

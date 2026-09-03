@@ -30,6 +30,12 @@ because kung-fu movies.
   classes in the loader namespace) — any save failed with `NameError`
 - macOS/Linux support: `msvcrt`-only keyboard input now falls back to
   termios/tty; `cls` → `clear` on non-Windows
+- **Blocking absorbed ~1/400 of intended damage**: the per-fighter hook and the
+  global constant were both named `BLOCK_POWER`, and `Fighter`'s MRO shadowed
+  the global (20) with the hook (1.0) — the "blocking hurts more than not
+  blocking" bug. The hook is now `BLOCK_DEFAULT_POWER`
+- **Draws crashed `give_exp`** with `ZeroDivisionError`; a draw now gives every
+  player a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (12 exp)
 
 ---
 

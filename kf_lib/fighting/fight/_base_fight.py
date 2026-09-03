@@ -178,6 +178,13 @@ class BaseFight(object):
         return n_min, n_sec_left
 
     def give_exp(self):
+        if not self.winners:
+            # draw: everyone gets a fixed, reduced amount of exp
+            for p in self.players:
+                p.gain_exp(round(BASE_FIGHT_EXP / DRAW_EXP_DIVISOR))
+            self.handle_player_stats()
+            self.main_player.pak()
+            return
         n_winners = len(self.winners)
         n_losers = len(self.losers)
         winners_yield = sum(f.exp_yield for f in self.winners)

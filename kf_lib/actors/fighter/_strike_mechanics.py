@@ -90,7 +90,7 @@ class StrikeMechanics(FighterAPI, ABC):
             # print('to dodge, to block', self.to_dodge, self.to_block)
             # todo divide dfs_pwr by sth?
             self.dfs_pwr = (self.dfs_penalty_mult
-                            * self.BLOCK_POWER * self.block_mult * self.BLOCK_POWER
+                            * self.BLOCK_DEFAULT_POWER * self.block_mult * self.BLOCK_POWER
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult

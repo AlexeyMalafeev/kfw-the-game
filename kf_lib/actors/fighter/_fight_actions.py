@@ -13,7 +13,9 @@ from kf_lib.utils import choose_adverb, rnd, rndint_2d
 
 
 class FighterWithActions(FighterAPI, ABC):
-    BLOCK_POWER: Final = 1.0
+    # per-fighter block power factor, a hook for future techs (non-tech-based);
+    # NOT to be confused with StrikeMechanics.BLOCK_POWER (the global constant)
+    BLOCK_DEFAULT_POWER: Final = 1.0
     GUARD_POWER: Final = 1.5
     DUR_FURY_MIN: Final = 500
     DUR_FURY_MAX: Final = 1000

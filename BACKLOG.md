@@ -56,14 +56,21 @@ are unordered unless marked.
 - wtf is STAMINA_FACTOR_BIAS in fighter.py?
 - some upgradable techs shouldn't be upgradable
 - `minigames/Chocolate_mini_game.py` is broken (has a todo)
-- **BLOCK_POWER MRO shadowing**: `_fight_actions.py` defines `BLOCK_POWER = 1.0`
-  and `_strike_mechanics.py` defines `BLOCK_POWER = 20`; the MRO resolves to 1.0,
-  and `dfs_pwr` multiplies by `BLOCK_POWER` twice — so blocking absorbs ~1/400 of
-  the intended damage. Probably the "blocking hurts more than not blocking" bug
-  in `docs/known bugs.txt`. Decide the intended value, then delete one
-  definition (details: `docs/fight_mechanics.md`)
-- **draw crashes `give_exp`** (`ZeroDivisionError` on empty `winners`) — draws
-  are nearly unreachable, which is why it survives (see `docs/fight_mechanics.md`)
+- **Explicitly address every remaining ⚠️ point in `docs/fight_mechanics.md`**
+  (HIGH priority): the user confirmed only 2-3 of them are intended behavior,
+  the rest are bugs. Go through them one by one, fix or document as intended.
+  (The BLOCK_POWER shadowing and the draw crash were already fixed 2026-09;
+  ~10 remain: environment_bonus = 0.0, dodge-checked-before-block, `do_mob_dam`
+  naming, stun having no defense penalty, free counters, dead boosts/techs,
+  `get_rand_moves` empty-pool IndexError, etc.)
+- ~~**BLOCK_POWER MRO shadowing**~~ ✅ Fixed 2026-09: the per-fighter hook in
+  `_fight_actions.py` was renamed to `BLOCK_DEFAULT_POWER` (1.0); the global
+  `BLOCK_POWER` (20) in `_strike_mechanics.py` now actually applies in
+  `dfs_pwr`, so blocking absorbs meaningful damage again (pinned in
+  `test/test_fight_engine.py::TestBlocking`).
+- ~~**draw crashes `give_exp`**~~ ✅ Fixed 2026-09: draws now give every player
+  a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (12) instead of raising
+  `ZeroDivisionError` (pinned in `test/test_fight_engine.py::TestDraw`).
 - 'Lightning-Fast Strikes' advanced tech reuses `STRIKE_TIME_COST_MULT1` —
   identical to the basic tech, upgrading is a no-op
 - dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
