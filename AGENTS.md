@@ -43,7 +43,12 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - `moves/` — move source data. Edit the `*_moves.txt` files, regenerate with
   `dev_scripts/move_gen.py` (see `moves/_moves_readme.txt`); `all_moves.txt` is generated
 - `quotes/` — dialogue text files loaded at import
-- `dev_scripts/` — dev utilities (each starts with a `Path('..')` chdir/sys.path hack)
+- `dev_scripts/` — dev utilities (each starts with a `Path('..')` chdir/sys.path
+  hack, so run them from their own directory). Includes `testing/` balance
+  harnesses: `run_test_fb.py` (fight balance: N mirror matches at random levels
+  with the default fight AI, tallying winner/loser attributes, buffs, techs and
+  moves into `tests/test f.b. *.txt`), `run_test_lv_vs_crowds.py`,
+  `run_test_level_sign.py`
 - `ml/` — ML fight-outcome prediction experiment; needs the dev venv, not needed to play
 - `minigames/` — standalone prototypes, not wired into the game
 - `docs/` — `known bugs.txt`, combat/content design notes; changelog lives at

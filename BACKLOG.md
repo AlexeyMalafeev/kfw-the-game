@@ -184,6 +184,24 @@ are unordered unless marked.
 
 ## Balance & analysis
 
+**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`, first run
+after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
+- Fixing blocks compressed the spread: defensive buffs lost less badly
+  (blocks −12.3→−10.1, guard −11.5→−9.5, resist KO −12.3→−5.5, close-range
+  −19.9→−14.2, grappling −16.3→−7.3), offensive buffs dominate less
+  (punches +16.2→+9.1, strength +11.9→+7.9).
+- Still true: **all defense-oriented buffs/techs correlate with losing**
+  (defense, guard, blocks, counters all ≈ −9…−10%; bottom techs are
+  Wall-like Protection, Fast Movement, Horse-like Stamina). Offense wins
+  mirror matches; blocking well doesn't deal damage.
+- 'Lightning-Fast Strikes' is at −13.5% in advanced techs — consistent with
+  its known no-op bug (uses the basic-tech mult), a wasted tech slot.
+- Suspicious: `unblock.` got *worse* (−3.7→−9.8) after blocking became 400×
+  stronger — unblockable strikes should benefit. Investigate (confounded by
+  boost combos? weak unblockable moves?).
+- dist4/flying/ultra-long moves win; ultra short/vanishing/trick/power lose;
+  range advantage is monotonic (dist1 −1.2 … dist4 +7.4).
+
 - evolutionary algorithm for balancing boosts
 - exp: all levels are 100 exp; calc win exp relative to difficulty (+bonuses);
   exponential exp?; reduce/rewrite trait exp bonuses; test exp bonuses, reweigh
