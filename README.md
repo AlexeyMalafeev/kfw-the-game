@@ -25,6 +25,21 @@ Note: some ML-related modules do require such external dependencies as `pandas`,
 
 To start a new game, run `kfw.py`. To load a previously saved game, run `kfw.py --load save.txt`. Run `kfw.py --help` for all options (autoplay, number of players, autosave, etc.). Note that it won't work correctly if you run it in an IDE like PyCharm. Instead, run it from the command line.
 
+If you're used to the old scripts, they are gone — here's the mapping:
+
+| old script | new command |
+|---|---|
+| `NG_default.py` | `python kfw.py` |
+| `load_game.py` | `python kfw.py --load save.txt` |
+| `load_auto_save.py` | `python kfw.py --load "auto save.txt"` |
+| `load em save.py` | `python kfw.py --load emergency_save.txt` |
+| `NG_autoplay.py` | `python kfw.py --autoplay` |
+| `NG autoplay single.py` | `python kfw.py --autoplay -n 1` |
+| `NG_autoplay_autosave.py` | `python kfw.py --autoplay --autosave` |
+| `NG_autoplay_crowd.py` | `python kfw.py --autoplay -n 100` |
+| `NG_autoplay_silent_ending.py` | `python kfw.py --autoplay --silent-ending` |
+| `NG_profile.py` | `python dev_scripts/profile_game.py` |
+
 ## How to play
 
 In this game, you play as a beginner kung-fu practitioner. You train hard to improve your fighting skills, protect the weak against oppressors and, one day, even found your own martial arts school. You have to compete with other practitioners as well as stand up against thugs and wrongdoers to prove your worth. Become stronger by either practicing or defeating foes in the streets of Foshan, learn new moves and techniques, take part in tournaments and enjoy your life in this fantasy Kung-Fu World.
