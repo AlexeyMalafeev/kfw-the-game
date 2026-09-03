@@ -7,6 +7,10 @@ CH_BEGGAR_FIGHT = 0.1
 MONEY_GIVE_BEGGAR = 10
 REQ_LV_BEGGAR_FIGHT = (5, 10)
 
+# moves
+BEGGAR_LOSE_MOVE_TIERS = (2, 4)
+# BEGGAR_WIN_MOVE_TIERS = (4, 6)  # decided not to implement
+
 
 class Beggar(BaseEncounter):
     def check_if_happens(self):
