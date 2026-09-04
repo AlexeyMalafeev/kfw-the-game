@@ -216,10 +216,13 @@ only), donations (0.2/coin), reforming an enemy (+10), stories (+25/30),
 protecting the performer (+n−1). Penalties: gambling/drinking/brawling −3,
 prize fighting −5, refusing to pay shop breakages −1.
 
-⚠️ Extorters, HelpPolice, RobbingSomeone and the performer's thugs call
-`gain_rep` *before* the fight — the rep is kept even if you lose. Reputation
-can thus be farmed by repeatedly starting (and losing) crime fights, at the
-cost of injuries.
+Extorters, HelpPolice, RobbingSomeone and the performer's thugs call
+`gain_rep` *before* the fight — the rep is kept even if you lose. This is
+**intended** (confirmed by the author 2026-09): standing up for the weak
+earns people's love even in defeat. It is not a viable farming strategy —
+losing costs injury days (or a Ginseng Root), worsens your fighting record,
+and pays far less exp than winning, so persistent losers fall behind the
+other players.
 
 ⚠️ Reputation's **only** mechanical effect is the Folk Hero victory check (and
 a line on the stats screen). Nothing else reads `p.reputation`. In particular,

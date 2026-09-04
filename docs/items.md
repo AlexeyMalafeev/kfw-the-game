@@ -174,10 +174,13 @@ Arming is always temporary and scene-driven:
 
 Weapon moves merge into the move pool while armed (`get_av_moves`), and the
 weapon's `get_exp_mult()` scales an armed fighter's `exp_yield` (snapshotted
-in `prepare_for_fight`, before `disarm_all`). ⚠️ `get_exp_mult` computes
-`1.0 + mean((self.dfs_bonus, self.atk_mean))`, but `dfs_bonus` already
-includes the 1.0 base — so every normal weapon inflates exp worth to ~1.8–2.0×
-(verified: sword 1.92, pair of swords 1.97), likely double-counting the base.
+in `prepare_for_fight`, before `disarm_all`). `get_exp_mult` computes
+`1.0 + mean((self.dfs_bonus, self.atk_mean))`; since `dfs_bonus` already
+includes the 1.0 base, every normal weapon lands at ~1.8–2.0× exp worth
+(verified: sword 1.92, pair of swords 1.97). Confirmed **intended** by the
+author (2026-09): an armed opponent is meant to be very roughly twice as hard
+to defeat, so the doubled yield is the design — even though the formula gets
+there by double-counting the base.
 
 Weapons can be knocked away mid-fight: `try_hit_disarm` / `try_block_disarm`
 roll the attacker's/blocker's `hit_disarm`/`block_disarm` (from the 'Monkey

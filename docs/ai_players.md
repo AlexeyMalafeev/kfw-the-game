@@ -162,11 +162,13 @@ described above.
   LazyAIP 0.7, SmartAIP 0.2), but the encounter also rolls
   `gamble_with_gambler` (0.3) as an independent temptation. Rock-paper-scissors
   picks are uniform random; after 5 rounds the continue/stop decision is
-  `rnd() < gamble_continue` (0.4, trait-modified). ⚠️ `SmartAIP` defines
-  `continue_gambling_chance = 0` and `drink_chance = 0` (and
-  `buy_med_chance = 100`) — none of these attributes is read anywhere; the real
-  knobs are `gamble_continue`, `drink_with_drunkard` and `buy_item_chance`, so
-  SmartAIP is exactly as drunkard-prone and gambling-sticky as VanillaAIP.
+  `rnd() < gamble_continue` (0.4, trait-modified). SmartAIP sets
+  `drink_with_drunkard = 0.0` and `gamble_continue = 0.0` in `__init__`
+  (post-`super()`, because these are instance attributes that traits adjust)
+  — so unlike VanillaAIP it never drinks with the drunkard and never chases
+  gambling losses. (Before 2026-09 these were dead class attributes named
+  `drink_chance` / `continue_gambling_chance` that nothing read, shadowed by
+  the instance defaults; fixed, pinned in `test/test_player_ai.py`.)
 - Fixed answers: `hear_rumors_or_not` → False (AI never buys gossip),
   `talk_wise_or_not` → True, `p_match_or_not` → True (all friendly
   friend/player spars accepted), `tourn_or_not` → True (every tournament and

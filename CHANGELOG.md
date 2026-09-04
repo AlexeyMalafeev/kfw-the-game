@@ -40,6 +40,11 @@ because kung-fu movies.
   blocking" bug. The hook is now `BLOCK_DEFAULT_POWER`
 - **Draws crashed `give_exp`** with `ZeroDivisionError`; a draw now gives every
   player a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (12 exp)
+- **`SmartAIP` set dead attribute names** (`drink_chance`,
+  `continue_gambling_chance`, `buy_med_chance`) that nothing ever read, so the
+  "smart" AI drank and chased gambling losses exactly like the base AI; it now
+  overrides the real instance knobs (`drink_with_drunkard`, `gamble_continue`)
+  post-init
 
 ---
 

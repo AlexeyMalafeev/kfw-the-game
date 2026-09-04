@@ -69,13 +69,14 @@ are unordered unless marked.
   IndexError — plus ~50 more across encounters/gameplay/ai_players/items/
   kung_fu/minigames/stats/debug_menu/social_and_traits/text_content.)
   The most significant confirmed ones from the 2026-09 docs sweep:
-  - `Weapon.get_exp_mult` double-counts the 1.0 base → all weapons inflate
-    exp yield to ~1.8–2.0× (`things/weapons.py:46`, verified at runtime)
-  - `SmartAIP` sets nonexistent attrs (`drink_chance`, `continue_gambling_chance`,
-    `buy_med_chance`) — the real knobs keep base values, so the "smart" AI
-    drinks/gambles like VanillaAIP (`_ai_player.py`)
-  - crime encounters grant reputation *before* the fight → rep farmable by
-    losing (Extorters/HelpPolice/RobbingSomeone)
+  - ~~`Weapon.get_exp_mult` double-counts the 1.0 base → ~1.8–2.0× exp~~
+    INTENDED (author, 2026-09): armed opponents are meant to be ~2× as hard
+  - ~~`SmartAIP` sets nonexistent attrs (`drink_chance`, …)~~ ✅ Fixed 2026-09:
+    real knobs (`drink_with_drunkard`, `gamble_continue`) now set post-init
+    (pinned in `test/test_player_ai.py::TestSmartAIPKnobs`)
+  - ~~crime encounters grant reputation *before* the fight → rep farmable by
+    losing~~ INTENDED (author, 2026-09): standing up for the weak earns love
+    even in defeat; injuries + poor exp make it non-viable as a strategy
   - `EncControl.run_enc` execs `{name}(p, test=...)` but no encounter accepts
     `test` → TypeError when used (`encounters/__init__.py:75`)
   - `Guaranteed` encounters duplicated in category lists fire once per
@@ -83,10 +84,11 @@ are unordered unless marked.
   - `repr()` of a player mid-`Fighter.__init__` crashes (`traits` set only
     after `super().__init__()` in `BasePlayer`) — any `{self}` warning path
     during construction triggers it
-  - move tiers 11–14 (291 moves incl. all `Lethal …` chains) unreachable:
-    auto tier caps at 10; style move strings reference nonexistent moves
-    (`'No-Shadow Kick'` vs `No-Shadow_Kick`) and nonexistent features
-    (`close-range`/`mid-range`) that silently fall through to random picks
+  - style move strings reference nonexistent moves (`'No-Shadow Kick'` vs
+    `No-Shadow_Kick`) and nonexistent features (`close-range`/`mid-range`)
+    that silently fall through to random picks. (Move tiers 11–14 being
+    unreachable is INTENDED for now — reserved for future content, author
+    2026-09)
   - tournament crash paths: zero participants → IndexError; winnerless final
     → NotImplementedError
   - `OverhearConversation` log lines swapped (astonishing victory ↔
@@ -270,6 +272,12 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   argument (students fight); school challenges only when you go to school /
   sequential challenges; more interactive school training (disobey master,
   practice aspects, injury risk); fight master when disobeying
+- **Romance system** (added 2026-09): none exists in code — the only trace is
+  the one-off FatGirl forced-marriage encounter. Ideas: dating/relationship
+  progression (a new social track next to friends/enemies), marriage with
+  gameplay effects (spouse as ally, household economy), romance-driven
+  stories/encounters (jealous rival → duels, bandit fiance ties in),
+  family/children as late-game legacy content.
 - more life sim: tavern day action (get quests?); persuade/talk checks
   (trait-dependent); depression (after important loss, or small chance);
   values/tenets; debt collectors; rich boy (monthly allowance) / prodigy

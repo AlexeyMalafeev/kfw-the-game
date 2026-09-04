@@ -165,9 +165,6 @@ class SmartAIP(AIPlayer):
     acceptable_fight_threshold = 1.1
     acceptable_escape_risk = 0.7
     brawl_chance = 0
-    buy_med_chance = 100
-    continue_gambling_chance = 0
-    drink_chance = 0
     gamble_chance = 0.2
     master_practice_chance = 0.5
     min_days_use_med = 3
@@ -175,6 +172,17 @@ class SmartAIP(AIPlayer):
     min_master_money = 150
     min_students_to_teach = 5
     non_master_practice_chance = 0.8
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # drink_with_drunkard and gamble_continue are *instance* attributes set
+        # in BasePlayer.__init__ (traits apply deltas to them), so class-level
+        # overrides would be shadowed; set them after super().__init__().
+        # (Replaces the dead class attrs drink_chance / continue_gambling_chance,
+        # which nothing ever read; buy_med_chance was dropped — buying medicine
+        # goes through buy_item_chance, using it through min_days_use_med.)
+        self.drink_with_drunkard = 0.0
+        self.gamble_continue = 0.0
 
 
 class SmartAIPVisible(SmartAIP):

@@ -85,7 +85,9 @@ Tiers in the generated data run 0–14, but `TIER_MAX = 10` and
 `get_move_tier_for_lv = ceil(level / 2)` caps at 10 for level-20 fighters.
 ⚠️ Tier 12–14 moves (291 of them, e.g. `Lethal …` chains with
 `try_insta_ko`) are **unreachable through any normal channel**; tier 11 is
-reachable only via a lucky book (see Learning). Tier 0 is never randomly
+reachable only via a lucky book (see Learning). Per the author (2026-09) this
+is deliberate for now — those tiers are reserved for future content (special
+encounters, rare/extreme buffs). Tier 0 is never randomly
 sampled either — it holds the basic/weapon/style moves that are only given
 out by name.
 

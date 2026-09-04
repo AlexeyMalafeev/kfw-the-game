@@ -164,3 +164,24 @@ class TestDayActionList:
         assert LazyAIP.non_master_practice_chance < VanillaAIP.non_master_practice_chance
         assert LazyAIP.gamble_chance > VanillaAIP.gamble_chance
         assert SmartAIP.brawl_chance == 0
+
+
+class TestSmartAIPKnobs:
+    """SmartAIP used to set dead attribute names (drink_chance,
+    continue_gambling_chance, buy_med_chance) that nothing ever read; the real
+    knobs are instance attributes set in BasePlayer.__init__, so they must be
+    overridden post-init, not as class attributes."""
+
+    def test_smart_ai_never_drinks_or_chases_losses(self):
+        p = make_player(cls=SmartAIP)
+        assert p.drink_with_drunkard == 0.0
+        assert p.gamble_continue == 0.0
+
+    def test_base_ai_keeps_default_knobs(self):
+        p = make_player(cls=VanillaAIP)
+        assert p.drink_with_drunkard == 0.25
+        assert p.gamble_continue == 0.4
+
+    def test_dead_attribute_names_are_gone(self):
+        for dead in ('drink_chance', 'continue_gambling_chance', 'buy_med_chance'):
+            assert not hasattr(SmartAIP, dead)
