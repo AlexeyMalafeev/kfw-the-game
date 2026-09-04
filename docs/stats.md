@@ -155,27 +155,47 @@ dumped to `save/<name>'s log.txt` on each save (`SaveGame._dump_player_logs`)
   (`check_victory`); with `--silent-ending` the ending never shows it.
 - The per-day header shows a short Fights/Wins/KOs line
   (`get_fight_statistics`, in `get_p_info_verbose`).
-- ⚠️ The post-fight menu option "Stats" (`BaseFight.post_fight_menu`) prints
-  `self.stats` — a fight-level dict initialized to `{}` and never written to —
-  so it always prints `{}`. It is not the player stats table.
-- Saving: `stats_dict`, `accompl`, `accompl_dates` are in
+- The post-fight menu option "Stats" (`BaseFight.post_fight_menu`) prints
+  per-fighter in-fight stats collected during the fight (since 2026-09):
+  each fighter's `fight_stats` (`strikes thrown/landed`, `dam_dealt`,
+  per-move `moves_used` counts, reset in `prepare_for_fight`) is rendered as
+  one line — accuracy, damage, top-3 moves. Before that it printed
+  `self.stats`, a dict initialized to `{}` and never written.
+- Saving: `stats_dict`, `accompl`, `accompl_dates`, `move_usage` are in
   `BasePlayer.savable_atts`, serialized under `players[].atts` in the JSON
   save (`_save_game.py`). On load (`_load_game.py`), any stat missing from
   the save is back-filled from `DEFAULT_STATS` (so new stats are
   save-compatible), and the two gossip records are converted from JSON lists
   back to tuples (`TUPLE_STATS`).
 
+## In-fight stats and move usage
+
+Added 2026-09. During a fight every fighter accumulates `fight_stats`
+(`{'thrown', 'landed', 'dam_dealt', 'moves_used'}`), hooked in `do_strike`
+(thrown/landed/damage, including counters and preemptives) and `maneuver`
+(per-move usage). "Landed" = the defender neither dodged nor blocked and the
+strike dealt damage; fumbled moves (`check_move_failed`) never reach
+`do_strike` and don't count as thrown. Damage includes bonus function damage
+and fall damage caused by the strike (measured as the target's hp delta).
+At fight end, `handle_player_stats` adds the numbers into the player's
+`stats_dict` (`strikes_thrown`/`strikes_landed`/`dam_dealt`) and merges
+`moves_used` into the persistent `p.move_usage` dict (move name → count).
+`get_favorite_move(attack_only=...)` reads the all-time leader; the full
+report shows strikes landed, damage dealt and favorite move, and biographies
+use the favorite *strike* ("His signature move was the …").
+
 ## Biographies
 
 `biographies.generate_bio(player)` runs at game end: `check_victory`
 (`_playing.py`) collects players who met a victory condition and calls
 `show_bio(winners)`, which prints the bios and writes `save/bio.txt`. The
-generated text covers only: the victory title(s), the style name, and a
+generated text covers: the victory title(s), the style name, the signature
+move (most-used strike, from `move_usage`, since 2026-09), and a
 3-sentence attribute-spread blurb derived from the gap between the player's
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
-"almost inhuman ... at the cost of ..."). Stats, accomplishments, traits and
-the gossip records are **not** used ⚠️ — the module docstring-comment lists
-planned content (undefeated record, money habits, favorite strike, notable
+"almost inhuman ... at the cost of ..."). Other stats, accomplishments, traits
+and the gossip records are **not** used ⚠️ — the module docstring-comment lists
+planned content (undefeated record, money habits, notable
 fights, "unwrap accomplishments into short stories") that was never
 implemented; BACKLOG has matching items. With `--silent-ending`, `show_bio`
 never runs and no `bio.txt` is written.

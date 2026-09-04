@@ -172,13 +172,26 @@ class TestSmartAIPKnobs:
     knobs are instance attributes set in BasePlayer.__init__, so they must be
     overridden post-init, not as class attributes."""
 
+    def make_sober_player(self, cls):
+        # traits_list=[]: random traits (e.g. 'undisciplined') modify these
+        # very knobs, so a traited player makes the test flaky
+        random.seed(0)
+        return cls(name='Test Player', style='Drunken Boxing', traits_list=[])
+
     def test_smart_ai_never_drinks_or_chases_losses(self):
-        p = make_player(cls=SmartAIP)
+        p = self.make_sober_player(SmartAIP)
+        assert p.drink_with_drunkard == 0.0
+        assert p.gamble_continue == 0.0
+
+    def test_smart_ai_knobs_override_traits(self):
+        # even an 'undisciplined' SmartAIP (trait bumps drinking/gambling)
+        # keeps the post-init override
+        p = SmartAIP(name='Test Player', style='Drunken Boxing', traits_list=['undisciplined'])
         assert p.drink_with_drunkard == 0.0
         assert p.gamble_continue == 0.0
 
     def test_base_ai_keeps_default_knobs(self):
-        p = make_player(cls=VanillaAIP)
+        p = self.make_sober_player(VanillaAIP)
         assert p.drink_with_drunkard == 0.25
         assert p.gamble_continue == 0.4
 

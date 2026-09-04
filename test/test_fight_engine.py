@@ -268,6 +268,65 @@ class TestDraw:
         assert p2.exp == exp2 + draw_exp
 
 
+class TestInFightStats:
+    """Per-fight strike stats: collected in Fighter.fight_stats during the
+    fight, shown post-fight via BaseFight.show_stats, accumulated into player
+    stats_dict/move_usage in handle_player_stats."""
+
+    def fight_with_player(self, seed=1):
+        g = make_game()
+        p = g.players[0]
+        random.seed(seed)
+        thug = fighter_factory.new_thug()
+        f = AutoFight([p], [thug])
+        return g, p, thug, f
+
+    def test_fight_stats_collected_for_all_fighters(self):
+        _, p, thug, _ = self.fight_with_player()
+        for ftr in (p, thug):
+            fs = ftr.fight_stats
+            assert fs['thrown'] >= 0
+            assert 0 <= fs['landed'] <= fs['thrown']
+            assert fs['dam_dealt'] >= 0
+            assert fs['moves_used']  # everyone at least guards/steps
+        # somebody won, so somebody dealt damage
+        assert p.fight_stats['dam_dealt'] + thug.fight_stats['dam_dealt'] > 0
+
+    def test_thrown_counts_only_strikes(self):
+        _, p, _, _ = self.fight_with_player()
+        from kf_lib.kung_fu.moves import ALL_MOVES_DICT
+        strikes = sum(
+            cnt
+            for name, cnt in p.fight_stats['moves_used'].items()
+            if name in ALL_MOVES_DICT and ALL_MOVES_DICT[name].power
+        )
+        assert strikes == p.fight_stats['thrown']
+
+    def test_stats_accumulate_into_player_stats(self):
+        _, p, _, _ = self.fight_with_player()
+        fs = p.fight_stats
+        assert p.get_stat('strikes_thrown') == fs['thrown']
+        assert p.get_stat('strikes_landed') == fs['landed']
+        assert p.get_stat('dam_dealt') == fs['dam_dealt']
+        assert p.move_usage == fs['moves_used']
+
+    def test_show_stats_prints_per_fighter_lines(self, capsys):
+        _, p, thug, f = self.fight_with_player()
+        f.show_stats()
+        out = capsys.readouterr().out
+        assert p.name in out and thug.name in out
+        assert 'landed' in out and 'damage dealt' in out
+
+    def test_favorite_move_and_biography(self):
+        _, p, _, _ = self.fight_with_player()
+        fav = p.get_favorite_move()
+        assert fav == max(p.move_usage.items(), key=lambda kv: kv[1])[0]
+        from kf_lib.game.biographies import generate_bio
+        fav_strike = p.get_favorite_move(attack_only=True)
+        if fav_strike:  # the player threw at least one strike
+            assert f'signature move was the {fav_strike}' in generate_bio(p)
+
+
 class TestExpMath:
     def test_loser_exp_constant(self):
         # exp math pinned from constants: losers always get LOSER_EXP

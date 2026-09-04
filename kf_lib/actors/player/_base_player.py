@@ -35,7 +35,8 @@ WAGE = 50
 class BasePlayer(Fighter):
     is_player = True
     savable_atts = '''exp is_master new_school_name money reputation 
-    inactive inact_status inventory ended_turn accompl accompl_dates stats_dict'''.split()
+    inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
+    move_usage'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
 
     exp = Integer(minvalue=0, action='raise')
@@ -102,6 +103,7 @@ class BasePlayer(Fighter):
         self.enemies = []
         self.accompl = []
         self.accompl_dates = []
+        self.move_usage = {}  # move name -> times used, accumulated over all fights
         self.is_master = False
         self.new_school_name = ''
         self.school_rank = None
@@ -503,6 +505,21 @@ class BasePlayer(Fighter):
 
     def get_school(self):
         return self.game.schools[self.style.name]
+
+    def get_favorite_move(self, attack_only=False):
+        """Most-used move across all fights ('' if none). With attack_only,
+        consider strikes only (defensive moves like Guard otherwise dominate)."""
+        usage = self.move_usage
+        if attack_only:
+            from kf_lib.kung_fu.moves import ALL_MOVES_DICT
+            usage = {
+                name: cnt
+                for name, cnt in usage.items()
+                if name in ALL_MOVES_DICT and ALL_MOVES_DICT[name].power
+            }
+        if usage:
+            return max(usage.items(), key=lambda kv: kv[1])[0]
+        return ''
 
     def get_stat(self, stat_name):
         return self.stats_dict[stat_name]

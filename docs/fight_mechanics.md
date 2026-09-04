@@ -330,7 +330,11 @@ Victory' (winner hp ≤ 5% of max), 'Against All Odds' (losers' yield ≥ 1.5×
 winner's), 'Split-Second Victory' (≤ 1 s). `handle_gossip` records personal-best
 `aston_victory` (lone win vs yield ratio ≥ 1.2) / `humil_defeat` (lone loss vs
 ratio ≤ 0.8). `handle_injuries`: players at `hp == 0` → `injure()` → inactive
-days. `handle_player_stats`: fights, wins, KOs, times KO'd, exp bonuses.
+days. `handle_player_stats`: fights, wins, KOs, times KO'd, exp bonuses — plus
+the in-fight stats: each fighter's `fight_stats` (strikes thrown/landed,
+damage dealt, per-move usage — collected in `do_strike`/`maneuver`) is folded
+into the players' all-time `stats_dict` and `move_usage`, and shown per
+fighter by the post-fight "Stats" menu option (see `docs/stats.md`).
 
 ## Fight variants
 

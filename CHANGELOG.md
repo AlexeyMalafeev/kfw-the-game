@@ -21,6 +21,12 @@ because kung-fu movies.
   `encounters.md`, `ai_players.md`, `kung_fu.md`, `items.md`, `stats.md`,
   `social_and_traits.md`, `text_content.md`, `minigames.md`, `debug_menu.md`
 - `pyproject.toml` with black config; `numpy`/`tqdm` added to dev requirements
+- **In-fight stats**: every fighter now accumulates per-fight stats (strikes
+  thrown/landed, damage dealt, per-move usage); the post-fight "Stats" menu
+  option shows them (it previously printed an always-empty dict), players
+  accumulate all-time `strikes_thrown/landed`, `dam_dealt` and `move_usage`
+  in saves, the full stats report shows them, and biographies name the
+  player's signature move (most-used strike)
 
 ### Changed
 - **Save format is now JSON** (versioned schema); old exec-based saves still

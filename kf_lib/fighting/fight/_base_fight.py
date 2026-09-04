@@ -304,6 +304,13 @@ class BaseFight(object):
                 p.change_stat('num_kos', p.kos_this_fight)
             if not p.hp:
                 p.change_stat('times_koed', 1)
+            fs = p.fight_stats
+            if fs:
+                p.change_stat('strikes_thrown', fs['thrown'])
+                p.change_stat('strikes_landed', fs['landed'])
+                p.change_stat('dam_dealt', fs['dam_dealt'])
+                for mv, cnt in fs['moves_used'].items():
+                    p.move_usage[mv] = p.move_usage.get(mv, 0) + cnt
 
     def handle_prefight_quote(self):
         f1 = self.side_a[0]
@@ -413,7 +420,20 @@ class BaseFight(object):
             alternative_printing_fn(s)
 
     def show_stats(self):
-        print(self.stats)
+        lines = []
+        for f in self.all_fighters:
+            fs = f.fight_stats
+            if not fs:
+                continue
+            thrown, landed = fs['thrown'], fs['landed']
+            accuracy = f'{round(landed / thrown * 100)}%' if thrown else '-'
+            top_moves = sorted(fs['moves_used'].items(), key=lambda kv: -kv[1])[:3]
+            top_moves_s = ', '.join(f'{name} x{cnt}' for name, cnt in top_moves) or '-'
+            lines.append(
+                f'{f.name}: strikes {landed}/{thrown} landed ({accuracy}), '
+                f'damage dealt {fs["dam_dealt"]}, moves: {top_moves_s}'
+            )
+        print('\n'.join(lines) if lines else 'No stats recorded.')
 
     def show_timeline(self):
         print('\n'.join(self.timeline))

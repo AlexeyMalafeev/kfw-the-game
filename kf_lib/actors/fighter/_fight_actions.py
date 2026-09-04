@@ -141,6 +141,10 @@ class FighterWithActions(FighterAPI, ABC):
 
     def do_strike(self) -> None:
         m = self.action
+        fs = self.fight_stats
+        fs['thrown'] += 1
+        fs['moves_used'][m.name] = fs['moves_used'].get(m.name, 0) + 1
+        hp_before = self.target.hp
         self.calc_atk(m)
         self.try_environment('attack')
         self.target.calc_dfs()
@@ -148,6 +152,9 @@ class FighterWithActions(FighterAPI, ABC):
         self.target.try_environment('defense')
         self.target.defend()
         self.hit_or_miss()
+        if not self.target.defended and self.dam > 0:
+            fs['landed'] += 1
+        fs['dam_dealt'] += max(hp_before - self.target.hp, 0)
         self.target.apply_dfs_penalty()
         if m.dist_change:
             self.change_distance(m.dist_change, self.target)
@@ -216,6 +223,7 @@ class FighterWithActions(FighterAPI, ABC):
 
     def maneuver(self) -> None:
         m = self.action
+        self.fight_stats['moves_used'][m.name] = self.fight_stats['moves_used'].get(m.name, 0) + 1
         n = self.current_fight.get_f_name_string(self)
         s = f'{n}: {m.name}'
         self.current_fight.display(s)
@@ -240,6 +248,7 @@ class FighterWithActions(FighterAPI, ABC):
         self.took_damage = False
         self.kos_this_fight = 0
         self.momentum = 0
+        self.fight_stats = {'thrown': 0, 'landed': 0, 'dam_dealt': 0, 'moves_used': {}}
 
     def set_target(self, target: FighterAPI) -> None:
         self.target = target

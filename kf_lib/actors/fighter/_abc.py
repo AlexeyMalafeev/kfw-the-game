@@ -72,6 +72,7 @@ class FighterAPI(ABC):
     epic_chance_mult: float = None
     epic_dam_mult: float = None
     exp_yield: int = None
+    fight_stats: dict = None
     fall_damage_mult: float = None  # descriptor
     fav_move_features: Set[Text] = None
     fight_ai: BaseAI = None

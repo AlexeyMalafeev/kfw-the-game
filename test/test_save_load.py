@@ -399,6 +399,35 @@ class TestLoading:
         for p in g2.players:
             assert p.plog == []
 
+    def test_move_usage_roundtrip(self, temp_save_folder):
+        g = make_game()
+        p = g.players[0]
+        p.move_usage['Punch'] = 7
+        p.stats_dict['strikes_thrown'] = 10
+        g.save_game(SAVE_NAME)
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        p2 = g2.players[0]
+        assert p2.move_usage == {'Punch': 7}
+        assert p2.get_stat('strikes_thrown') == 10
+        # stats added after the save format was written get back-filled
+        assert p2.get_stat('dam_dealt') == 0
+
+    def test_old_saves_without_move_usage_load(self, temp_save_folder):
+        # players in old saves lack move_usage; the __init__ default must survive
+        g = make_game()
+        g.save_game(SAVE_NAME)
+        data = json.loads((temp_save_folder / SAVE_NAME).read_text())
+        for pdata in data['players']:
+            del pdata['atts']['move_usage']
+            del pdata['atts']['stats_dict']['strikes_thrown']
+        (temp_save_folder / SAVE_NAME).write_text(json.dumps(data))
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        p2 = g2.players[0]
+        assert p2.move_usage == {}
+        assert p2.get_stat('strikes_thrown') == 0
+
     def test_occupation_json_roundtrip_is_stable(self, temp_save_folder):
         g = make_game()
         occupations = {f.name: f.occupation for f in g.fighters_dict.values()}

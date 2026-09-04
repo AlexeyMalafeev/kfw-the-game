@@ -43,6 +43,10 @@ are unordered unless marked.
   in `LoadGame.load_game`, incl. all AI player classes). Superseded by the JSON
   save migration (Engineering #2): the exec path remains only as the legacy
   loader for old saves.
+- trait selection iterates unsorted collections, so even with `random.seed()`
+  the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
+  flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
+  `traits_list=[]`). Consider sorting pools before sampling.
 - double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
   last!)" — verify whether it regressed or the todo entry was stale)
 - possible bug in exp progression in lazy/hardworking players
@@ -150,7 +154,10 @@ are unordered unless marked.
   weapon (Move), grab improvised weapons during fights (secret tech,
   automatic), interact with environment (esp. unblockables)
 - free-for-all fights
-- in-fight stats (strikes thrown/landed, accuracy, moves used, damage dealt)
+- ~~in-fight stats (strikes thrown/landed, accuracy, moves used, damage dealt)~~
+  ✅ Done 2026-09: per-fight `fight_stats` on every fighter, post-fight "Stats"
+  menu shows them, players accumulate all-time `strikes_thrown/landed`,
+  `dam_dealt` and `move_usage`; biographies name the signature move
 - yell (as a move function?)
 - tests of strength/speed/health/agility in encounters and stories — new
   mechanics beyond fighting
@@ -311,7 +318,8 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 - accompl: Crime Fighter; 3 exp bonuses at a time → accomplishment?
 - display hp as percentage/string?
 - donate to friends / to charity
-- biographies: favorite strike (most feared / most used move)
+- ~~biographies: favorite strike (most feared / most used move)~~ ✅ Done
+  2026-09 (most-used strike = "signature move"; "most feared" still open)
 
 ## Content: encounters, events, stories
 
