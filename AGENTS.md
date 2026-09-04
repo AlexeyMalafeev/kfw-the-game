@@ -57,7 +57,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   `ai_players.md` (strategic AI), `kung_fu.md` (moves/styles/techs/weapons as
   content), `items.md`, `stats.md` (stats/accomplishments/gossip/bios),
   `social_and_traits.md`, `text_content.md` (quotes/names/ASCII art),
-  `minigames.md`, `debug_menu.md`; plus `known bugs.txt` and old design notes.
+  `minigames.md`, `debug_menu.md`, `dev_scripts.md`; plus `known bugs.txt` and
+  old design notes.
   Changelog lives at repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with
   release codenames), the structured backlog in `BACKLOG.md`
 

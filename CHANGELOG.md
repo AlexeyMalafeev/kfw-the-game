@@ -19,7 +19,8 @@ because kung-fu movies.
 - System docs in `docs/`, one per game system, mechanics-as-implemented with
   ⚠️ flags for suspicious behavior: `fight_mechanics.md`, `gameplay.md`,
   `encounters.md`, `ai_players.md`, `kung_fu.md`, `items.md`, `stats.md`,
-  `social_and_traits.md`, `text_content.md`, `minigames.md`, `debug_menu.md`
+  `social_and_traits.md`, `text_content.md`, `minigames.md`, `debug_menu.md`,
+  `dev_scripts.md`
 - `pyproject.toml` with black config; `numpy`/`tqdm` added to dev requirements
 - **In-fight stats**: every fighter now accumulates per-fight stats (strikes
   thrown/landed, damage dealt, per-move usage); the post-fight "Stats" menu
@@ -51,6 +52,11 @@ because kung-fu movies.
   "smart" AI drank and chased gambling losses exactly like the base AI; it now
   overrides the real instance knobs (`drink_with_drunkard`, `gamble_continue`)
   post-init
+- **Default-styles games crashed on startup**: 'Eagle Claw III' passed
+  `critical_mult` instead of `critical_dam_mult`, so any Eagle Claw fighter
+  reaching lv 7 (school masters are created at lv 11-14) crashed
+  `_init_schools` — hidden since 2022 because tests/autoplay use generated
+  styles
 
 ---
 

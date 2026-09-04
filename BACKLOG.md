@@ -47,6 +47,20 @@ are unordered unless marked.
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
   `traits_list=[]`). Consider sorting pools before sampling.
+- ~~'Eagle Claw III' tech crashes default-styles games~~ ✅ Fixed 2026-09: it
+  passed `critical_mult` (nonexistent) instead of `critical_dam_mult`; any
+  Eagle Claw fighter reaching lv 7 (masters at game start!) crashed
+  `_init_schools`. Hidden since 2022 because tests/autoplay use
+  `generated_styles=True`. Pinned by
+  `test_game_integration.py::test_default_styles_new_game_boots`.
+- several dev scripts are broken (details + per-script verdicts in
+  `docs/dev_scripts.md`): `count_lines.py` (UnicodeDecodeError walking
+  `.venv`), `try_rich.py` (`rich` not installed; abandoned), `compare_AIPs.py`
+  (stale `game.BaselineAIP` import), `run_fight_ai_gen.py` /
+  `run_test_fight_ai` (gitignored `tests/genetic/`, `tests/AI actions/` dirs
+  never created), `ML_learn.py` (output path resolves outside the repo);
+  several scripts write outputs outside the repo via post-chdir `'../../'`
+  paths
 - double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
   last!)" — verify whether it regressed or the todo entry was stale)
 - possible bug in exp progression in lazy/hardworking players

@@ -111,7 +111,7 @@ default_styles = [
             3: Tech('Eagle Claw I', dist3_strike_mult=b.DIST3_MULT1),
             5: Tech('Eagle Claw II', stun_chance=b.STUN_CH1),
             7: Tech('Eagle Claw III', critical_chance_mult=b.CRIT_CH1,
-                    critical_mult=b.CRIT_M1),
+                    critical_dam_mult=b.CRIT_M1),
         },
         {
             1: ('Leap Forward', 'Leap Back'),
