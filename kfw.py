@@ -46,7 +46,10 @@ def main():
                 kwargs['auto_save_on'] = True
             visible_ai = yn("Do you want to see what AI players do?")
             DefaultAI = SmartAIPVisible if visible_ai else SmartAIP
-            g.new_game(forced_aip_class=DefaultAI, confirm_styles_with_player=True, **kwargs)
+            # generated styles are forced for now: several handcrafted default
+            # styles have broken move strings (see BACKLOG.md)
+            g.new_game(forced_aip_class=DefaultAI, confirm_styles_with_player=True,
+                       generated_styles=True, **kwargs)
         g.play()
     except Exception:  # noqa
         from kf_lib.testing.debug_tools import crash_report

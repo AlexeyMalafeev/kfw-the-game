@@ -36,6 +36,11 @@ because kung-fu movies.
 - `encounters/__init__.py` (1353 lines) split into thematic modules
 - `Challenger`/`Master`/`Thug` fighter subclasses replaced by a
   `Fighter.occupation` attribute; old saves keep loading via factory shims
+- **New games always use randomly generated styles for now** (`kfw.py` forces
+  `generated_styles=True`, interactive path included): 6 handcrafted style
+  move strings are broken and silently degrade to random picks (Hung Ga lv8,
+  Wing Chun lv2, White Crane lv6, Xing Yi lv2/4/8). Revert once the strings
+  are fixed (see BACKLOG.md)
 
 ### Fixed
 - **Game loading was completely broken** (exec() namespace bug + missing AI

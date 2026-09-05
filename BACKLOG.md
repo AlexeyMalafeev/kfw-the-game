@@ -104,9 +104,12 @@ are unordered unless marked.
     during construction triggers it
   - style move strings reference nonexistent moves (`'No-Shadow Kick'` vs
     `No-Shadow_Kick`) and nonexistent features (`close-range`/`mid-range`)
-    that silently fall through to random picks. (Move tiers 11–14 being
-    unreachable is INTENDED for now — reserved for future content, author
-    2026-09)
+    that silently fall through to random picks — 6 broken strings across
+    Hung Ga lv8, Wing Chun lv2, White Crane lv6, Xing Yi lv2/4/8 (verified
+    2026-09 against `ALL_MOVES_DICT`). Workaround in place: `kfw.py` forces
+    `generated_styles=True` for all new games until this is fixed. (Move
+    tiers 11–14 being unreachable is INTENDED for now — reserved for future
+    content, author 2026-09)
   - tournament crash paths: zero participants → IndexError; winnerless final
     → NotImplementedError
   - `OverhearConversation` log lines swapped (astonishing victory ↔

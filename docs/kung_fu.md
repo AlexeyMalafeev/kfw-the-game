@@ -140,10 +140,16 @@ displayed "emphases" (`descr_short`, shown by
 `get_style_string(show_emph=True)`) are just the deduped short descriptions
 of its techs. Every `Style` self-registers in `all_styles` at import.
 
-- 20 handcrafted `default_styles` (Bagua Zhang … Xing Yi), techs at levels
-  3/5/7, move strings typically at levels 1/2/4/6/8; `None` move strings
-  fall back to `DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4'}`
-  (a free choice from tiers 1–4).
+- 24 handcrafted `default_styles` (Bagua Zhang … Xing Yi) — all are tech
+  styles with techs at levels 3/5/7. 10 of them (Bagua Zhang, Choy Li Fut,
+  Eagle Claw, Hung Ga, Leopard, Long Fist, Monkey, Poking Foot, Praying
+  Mantis, Wing Chun) have custom named move strings at levels 1/2/4/6/8; the
+  other 14 fall back to
+  `DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4', 10: '5'}`
+  (a free choice from tiers 1–5). ⚠️ Six of the handcrafted move strings are
+  broken (unknown names `'No-Shadow Kick'`/`'Short Fast Punch'`, unknown
+  features `close-range`/`mid-range` — see above) and silently degrade to
+  random picks, so `kfw.py` currently forces generated styles for new games.
 - Special NPC styles: `BEGGAR_STYLE`, `THIEF_STYLE`, `DRUNKARD_STYLE`,
   `TURTLE_NUNJUTSU`.
 - Tech-less placeholder styles with `{}` techs: Flower Kung-fu (the
@@ -156,9 +162,13 @@ of its techs. Every `Style` self-registers in `all_styles` at import.
   styles are reconstructed on load.
 
 Game wiring (`game/_base_game.py`, `_new_game.py`): `BaseGame` defaults
-`style_list = styles.default_styles`; the "Randomly generated styles?" new
--game option replaces it with 10 generated ones (`NUM_STYLES`) — and also
-**mutates the module global** `styles.default_styles` (marked with a todo).
+`style_list = styles.default_styles`; the `generated_styles` option replaces
+it with 10 generated ones (`NUM_STYLES`) — and also **mutates the module
+global** `styles.default_styles` (marked with a todo). Since 2026-09 `kfw.py`
+forces `generated_styles=True` for every new game (autoplay and interactive;
+the `yn('Randomly generated styles?')` prompt in `new_game` is bypassed)
+because of the broken handcrafted move strings above — revert that once the
+strings are fixed.
 Each style in `style_list` gets a school: one master + 6–8 students.
 Players pick from `style_list`; most `fighter_factory` NPCs instead get a
 fresh `style_gen.get_new_randomly_generated_style()` each, so the world's
@@ -273,6 +283,36 @@ Level-up pipeline (`fighter/__init__.py: level_up` →
   modifiable by traits (`actors/traits.py`: broad-minded/narrow-minded ±1).
   `HumanControlledFighter` shows menus with full stat columns; the base
   (AI/NPC) implementations just `random.choice` from the same sample.
+
+Level-by-level view (default styles; generated styles use the default move
+dict at 2/4/6/8/10 and techs at 3/5/7 — `style_gen.py:187`):
+
+| Level | Move | Tech (tech styles only) |
+|-------|------|-------------------------|
+| 1 | named style move (10 custom styles only) | — |
+| 2 | style move (tier 1 for default-dict styles) | — |
+| 3 | — | style tech I |
+| 4 | style move (tier 2) | — |
+| 5 | — | style tech II |
+| 6 | style move (tier 3) | — |
+| 7 | — | style tech III |
+| 8 | style move (tier 4) | — |
+| 9 | — | — |
+| 10 | style move, tier 5 (default-dict styles only) | — |
+| 11 | — | — |
+| 12 | "advanced" move choice, tier 6 | — |
+| 13 | — | new general tech, choice of 3 |
+| 14 | "advanced" move choice, tier 7 | — |
+| 15 | — | new general tech, choice of 3 |
+| 16 | "advanced" move choice, tier 8 | — |
+| 17 | — | new general tech, choice of 3 |
+| 18 | "advanced" move choice, tier 9 | — |
+| 19 | — | upgrade one tech to its advanced twin, choice of 3 |
+| 20 | "advanced" move choice, tier 10 | — |
+
+Levels 9 and 11 grant nothing. Non-tech styles (Police Kung-fu, Flower
+Kung-fu, etc.) skip the whole tech column — `resolve_techs_on_level_up`
+returns early for them.
 
 NPC creation takes the same content through constructors:
 `Fighter(..., level=N)` samples moves/techs for the level outright
