@@ -190,6 +190,10 @@ In order:
    Successful rolls increment `fight_stats['criticals']` (since 2026-09).
 2. `try_epic()`: `epic_chance` roll → `dam *= epic_dam_mult` (2.0); successful
    rolls increment `fight_stats['epics']`.
+   `epic_chance = 0.005 * level * epic_chance_mult` — every fighter has it
+   (0.5% per level; 5% at lv 10, 10% at lv 20), no tech/move/style required.
+   The crit and epic rolls are independent and both run on the same strike,
+   so one hit can be critical *and* epic: `dam * 1.5 * 2.0 = ×3.0`.
    ⚠️ Both multipliers apply to *post-block* damage, since `defend()` already
    ran (hence the "Critical, then evade" oddity in `known bugs.txt`: the
    CRITICAL! line prints after the block/dodge line).
