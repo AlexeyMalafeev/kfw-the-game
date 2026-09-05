@@ -244,6 +244,8 @@ class StrikeMechanics(FighterAPI, ABC):
         if rnd() <= self.critical_chance:
             self.dam *= self.critical_dam_mult
             self.dam = round(self.dam)
+            if self.fight_stats is not None:
+                self.fight_stats['criticals'] += 1
             self.current_fight.display('CRITICAL!')
 
     def try_environment(self, mode: str) -> None:
@@ -265,6 +267,8 @@ class StrikeMechanics(FighterAPI, ABC):
         if self.epic_chance and rnd() <= self.epic_chance:
             self.dam *= self.epic_dam_mult
             self.dam = round(self.dam)
+            if self.fight_stats is not None:
+                self.fight_stats['epics'] += 1
             self.current_fight.display('~*~*~EPIC!!!~*~*~')
 
     def try_hit_disarm(self) -> None:

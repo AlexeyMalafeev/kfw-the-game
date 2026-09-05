@@ -187,7 +187,9 @@ In order:
 
 1. `try_critical()`: `critical_chance` roll → `dam *= critical_dam_mult` (1.5).
    `critical_chance = (agility_full - 3) * 0.05 * critical_chance_mult`.
-2. `try_epic()`: `epic_chance` roll → `dam *= epic_dam_mult` (2.0).
+   Successful rolls increment `fight_stats['criticals']` (since 2026-09).
+2. `try_epic()`: `epic_chance` roll → `dam *= epic_dam_mult` (2.0); successful
+   rolls increment `fight_stats['epics']`.
    ⚠️ Both multipliers apply to *post-block* damage, since `defend()` already
    ran (hence the "Critical, then evade" oddity in `known bugs.txt`: the
    CRITICAL! line prints after the block/dodge line).
@@ -332,9 +334,10 @@ winner's), 'Split-Second Victory' (≤ 1 s). `handle_gossip` records personal-be
 ratio ≤ 0.8). `handle_injuries`: players at `hp == 0` → `injure()` → inactive
 days. `handle_player_stats`: fights, wins, KOs, times KO'd, exp bonuses — plus
 the in-fight stats: each fighter's `fight_stats` (strikes thrown/landed,
-damage dealt, per-move usage — collected in `do_strike`/`maneuver`) is folded
-into the players' all-time `stats_dict` and `move_usage`, and shown per
-fighter by the post-fight "Stats" menu option (see `docs/stats.md`).
+damage dealt, criticals/EPICs, per-move usage — collected in
+`do_strike`/`try_critical`/`try_epic`/`maneuver`) is folded into the players'
+all-time `stats_dict` and `move_usage`, and shown per fighter by the
+post-fight "Stats" menu option (see `docs/stats.md`).
 
 ## Fight variants
 

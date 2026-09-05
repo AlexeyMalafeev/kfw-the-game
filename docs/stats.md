@@ -158,9 +158,10 @@ dumped to `save/<name>'s log.txt` on each save (`SaveGame._dump_player_logs`)
 - The post-fight menu option "Stats" (`BaseFight.post_fight_menu`) prints
   per-fighter in-fight stats collected during the fight (since 2026-09):
   each fighter's `fight_stats` (`strikes thrown/landed`, `dam_dealt`,
-  per-move `moves_used` counts, reset in `prepare_for_fight`) is rendered as
-  one line — accuracy, damage, top-3 moves. Before that it printed
-  `self.stats`, a dict initialized to `{}` and never written.
+  `criticals`, `epics`, per-move `moves_used` counts, reset in
+  `prepare_for_fight`) is rendered as one line — accuracy, damage,
+  criticals/epics, top-3 moves. Before that it printed `self.stats`, a dict
+  initialized to `{}` and never written.
 - Saving: `stats_dict`, `accompl`, `accompl_dates`, `move_usage` are in
   `BasePlayer.savable_atts`, serialized under `players[].atts` in the JSON
   save (`_save_game.py`). On load (`_load_game.py`), any stat missing from
@@ -171,18 +172,20 @@ dumped to `save/<name>'s log.txt` on each save (`SaveGame._dump_player_logs`)
 ## In-fight stats and move usage
 
 Added 2026-09. During a fight every fighter accumulates `fight_stats`
-(`{'thrown', 'landed', 'dam_dealt', 'moves_used'}`), hooked in `do_strike`
-(thrown/landed/damage, including counters and preemptives) and `maneuver`
+(`{'thrown', 'landed', 'dam_dealt', 'criticals', 'epics', 'moves_used'}`),
+hooked in `do_strike` (thrown/landed/damage, including counters and
+preemptives), `try_critical`/`try_epic` (critical/EPIC counts) and `maneuver`
 (per-move usage). "Landed" = the defender neither dodged nor blocked and the
 strike dealt damage; fumbled moves (`check_move_failed`) never reach
 `do_strike` and don't count as thrown. Damage includes bonus function damage
 and fall damage caused by the strike (measured as the target's hp delta).
 At fight end, `handle_player_stats` adds the numbers into the player's
-`stats_dict` (`strikes_thrown`/`strikes_landed`/`dam_dealt`) and merges
-`moves_used` into the persistent `p.move_usage` dict (move name → count).
-`get_favorite_move(attack_only=...)` reads the all-time leader; the full
-report shows strikes landed, damage dealt and favorite move, and biographies
-use the favorite *strike* ("His signature move was the …").
+`stats_dict` (`strikes_thrown`/`strikes_landed`/`dam_dealt`/`criticals`/
+`epics`) and merges `moves_used` into the persistent `p.move_usage` dict
+(move name → count). `get_favorite_move(attack_only=...)` reads the all-time
+leader; the full report shows strikes landed, damage dealt, crits/EPICs and
+favorite move, and biographies use the favorite *strike* ("His signature
+move was the …").
 
 ## Biographies
 

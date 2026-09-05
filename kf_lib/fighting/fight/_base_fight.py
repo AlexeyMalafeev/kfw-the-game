@@ -309,6 +309,8 @@ class BaseFight(object):
                 p.change_stat('strikes_thrown', fs['thrown'])
                 p.change_stat('strikes_landed', fs['landed'])
                 p.change_stat('dam_dealt', fs['dam_dealt'])
+                p.change_stat('criticals', fs['criticals'])
+                p.change_stat('epics', fs['epics'])
                 for mv, cnt in fs['moves_used'].items():
                     p.move_usage[mv] = p.move_usage.get(mv, 0) + cnt
 
@@ -431,7 +433,8 @@ class BaseFight(object):
             top_moves_s = ', '.join(f'{name} x{cnt}' for name, cnt in top_moves) or '-'
             lines.append(
                 f'{f.name}: strikes {landed}/{thrown} landed ({accuracy}), '
-                f'damage dealt {fs["dam_dealt"]}, moves: {top_moves_s}'
+                f'damage dealt {fs["dam_dealt"]}, criticals {fs["criticals"]}, '
+                f'epics {fs["epics"]}, moves: {top_moves_s}'
             )
         print('\n'.join(lines) if lines else 'No stats recorded.')
 

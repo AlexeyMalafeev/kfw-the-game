@@ -23,10 +23,11 @@ because kung-fu movies.
   `dev_scripts.md`
 - `pyproject.toml` with black config; `numpy`/`tqdm` added to dev requirements
 - **In-fight stats**: every fighter now accumulates per-fight stats (strikes
-  thrown/landed, damage dealt, per-move usage); the post-fight "Stats" menu
-  option shows them (it previously printed an always-empty dict), players
-  accumulate all-time `strikes_thrown/landed`, `dam_dealt` and `move_usage`
-  in saves, the full stats report shows them, and biographies name the
+  thrown/landed, damage dealt, criticals/EPICs, per-move usage); the
+  post-fight "Stats" menu option shows them (it previously printed an
+  always-empty dict), players accumulate all-time `strikes_thrown/landed`,
+  `dam_dealt`, `criticals`, `epics` and `move_usage` in saves, the full stats
+  report shows them (new "Crits,EPICs" row), and biographies name the
   player's signature move (most-used strike)
 
 ### Changed

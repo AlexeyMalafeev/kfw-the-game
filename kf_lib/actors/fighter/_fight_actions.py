@@ -248,7 +248,8 @@ class FighterWithActions(FighterAPI, ABC):
         self.took_damage = False
         self.kos_this_fight = 0
         self.momentum = 0
-        self.fight_stats = {'thrown': 0, 'landed': 0, 'dam_dealt': 0, 'moves_used': {}}
+        self.fight_stats = {'thrown': 0, 'landed': 0, 'dam_dealt': 0, 'criticals': 0, 'epics': 0,
+                            'moves_used': {}}
 
     def set_target(self, target: FighterAPI) -> None:
         self.target = target
