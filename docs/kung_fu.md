@@ -44,9 +44,9 @@ finishers) are flagged `is_basic` and given to every fighter at creation
 - `moves/extra_moves.txt` — 52 hand-written moves: maneuvers (Step Forward,
   Rush Forward, …), takedowns (Sweep/Throw/Trip), finishers, and all 35
   weapon moves (feature `'weapon'`, tier 0).
-- `moves/style_moves.txt` — 6 signature moves referenced by style move
+- `moves/style_moves.txt` — 7 signature moves referenced by style move
   strings (Backfist, Charging Step, Dragon Claw, Leopard Punch, Mantis
-  Hook, No-Shadow Kick), all tier 0, `freq 0`.
+  Hook, No-Shadow Kick, Short Fast Punch), all tier 0, `freq 0`.
 
 `dev_scripts/move_gen.py` (run from its own directory; it chdirs to repo
 root) feeds **base moves + takedown moves only** into `gen_moves`. The
@@ -116,17 +116,21 @@ strings and level-ups:
 - `'2,kick'` or `'3,fast,kick'` → optional leading tier, then feature
   filters into `get_rand_moves`.
 - anything else (blank, or an **unknown name**) → a fully random pick at
-  the auto tier/features. ⚠️ Unknown literals don't raise — Wing Chun's
-  level-2 `'Short Fast Punch'` doesn't exist in `ALL_MOVES_DICT`, so the
-  style silently gets a random move instead of its signature move (verified
-  against the data). (Hung Ga's `'No-Shadow Kick'` had the same problem until
-  2026-09 — the move was spelled `'No-Shadow_Kick'` in the data; the move was
-  renamed to the spaced spelling, with a `MOVE_ALIASES` entry in `moves.py`
-  so old saves using the old name still load.)
-- ⚠️ Feature tokens are only meaningful if they exist in move data:
-  White Crane (`'3,close-range'`) and Xing Yi (`'…,mid-range'`) use
-  `close-range`/`mid-range`, which no move has (the real tokens are
-  `dist1`–`dist4`); the filter silently does nothing.
+  the auto tier/features. ⚠️ Unknown literals don't raise — they silently
+  degrade. All historical cases are fixed as of 2026-09: Hung Ga's
+  `'No-Shadow Kick'` (the move data had the typo'd `'No-Shadow_Kick'`;
+  renamed, with a `MOVE_ALIASES` shim for old saves) and Wing Chun's
+  `'Short Fast Punch'` (the move never existed; added to the data with the
+  combined perks of Short Punch and Fast Punch).
+  `test_all_default_style_move_strings_are_valid` guards this.
+- Feature tokens are only meaningful if they exist in move data. The
+  distance tokens are `dist1`–`dist4`, **auto-derived from the distance
+  column** at `Move` init (`moves.py`, `DISTANCE_FEATURES`); White Crane's
+  `'close-range'` and Xing Yi's `'mid-range'` were invented tokens that did
+  nothing until 2026-09 (now `dist1`/`dist2` respectively). Note that
+  features are a *bias*, not a filter: the pool is the whole tier sorted by
+  feature overlap, and one fully random move is force-added to every menu
+  "for variety".
 - ⚠️ Tuples of names (Eagle Claw/Leopard/Monkey level 1) are handled by
   `set_rand_moves` but *not* by `resolve_move_string` — safe today only
   because all tuple entries sit at level 1, which `level_up` never passes
@@ -148,10 +152,9 @@ of its techs. Every `Style` self-registers in `all_styles` at import.
   Mantis, Wing Chun) have custom named move strings at levels 1/2/4/6/8; the
   other 14 fall back to
   `DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4', 10: '5'}`
-  (a free choice from tiers 1–5). ⚠️ Five of the handcrafted move strings are
-  broken (unknown name `'Short Fast Punch'`; unknown features
-  `close-range`/`mid-range` — see above) and silently degrade to random
-  picks, so `kfw.py` currently forces generated styles for new games.
+  (a free choice from tiers 1–5). All known-broken handcrafted move strings
+  were fixed in 2026-09 (see above); integrity is guarded by
+  `test_all_default_style_move_strings_are_valid`.
 - Special NPC styles: `BEGGAR_STYLE`, `THIEF_STYLE`, `DRUNKARD_STYLE`,
   `TURTLE_NUNJUTSU`.
 - Tech-less placeholder styles with `{}` techs: Flower Kung-fu (the
@@ -166,11 +169,11 @@ of its techs. Every `Style` self-registers in `all_styles` at import.
 Game wiring (`game/_base_game.py`, `_new_game.py`): `BaseGame` defaults
 `style_list = styles.default_styles`; the `generated_styles` option replaces
 it with 10 generated ones (`NUM_STYLES`) — and also **mutates the module
-global** `styles.default_styles` (marked with a todo). Since 2026-09 `kfw.py`
-forces `generated_styles=True` for every new game (autoplay and interactive;
-the `yn('Randomly generated styles?')` prompt in `new_game` is bypassed)
-because of the broken handcrafted move strings above — revert that once the
-strings are fixed.
+global** `styles.default_styles` (marked with a todo). Interactive games ask
+`yn('Randomly generated styles?')` at startup (autoplay always uses
+generated styles). `kfw.py` briefly forced `generated_styles=True` for all
+games in 2026-09 while the handcrafted move strings were broken; the prompt
+was restored once they were fixed.
 Each style in `style_list` gets a school: one master + 6–8 students.
 Players pick from `style_list`; most `fighter_factory` NPCs instead get a
 fresh `style_gen.get_new_randomly_generated_style()` each, so the world's

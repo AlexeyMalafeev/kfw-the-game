@@ -39,8 +39,9 @@ because kung-fu movies.
 - **New games always use randomly generated styles for now** (`kfw.py` forces
   `generated_styles=True`, interactive path included): 6 handcrafted style
   move strings are broken and silently degrade to random picks (Hung Ga lv8,
-  Wing Chun lv2, White Crane lv6, Xing Yi lv2/4/8). Revert once the strings
-  are fixed (see BACKLOG.md)
+  Wing Chun lv2, White Crane lv6, Xing Yi lv2/4/8). ~~Revert once the strings
+  are fixed~~ — fixed within the same release cycle (see Fixed); the startup
+  "Randomly generated styles?" prompt is restored
 
 ### Fixed
 - **Game loading was completely broken** (exec() namespace bug + missing AI
@@ -69,6 +70,13 @@ because kung-fu movies.
   move. The move is renamed to the spaced spelling (which also matches its
   dedicated ASCII art, previously unreachable), and a `MOVE_ALIASES` shim in
   `get_move_obj` keeps old saves referencing the old spelling loadable
+- **Remaining broken style move strings**: Wing Chun's lv-2 `'Short Fast
+  Punch'` never existed in the data — added as a new tier-0 style move
+  combining the perks of Short Punch and Fast Punch (distance 1, time cost
+  40, stamina cost 20, `fast`+`punch`+`short` features). White Crane lv-6
+  and Xing Yi lv-2/4/8 used invented feature tokens (`close-range`,
+  `mid-range`) that silently did nothing; replaced with the real
+  auto-derived distance features (`dist1`, `dist2`)
 
 ---
 

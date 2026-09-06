@@ -270,3 +270,55 @@ class TestMoveLookup:
         random.seed(42)
         f = Fighter('Test', 'Hung Ga', 8)
         assert 'No-Shadow Kick' in [mv.name for mv in f.moves]
+
+    def test_wing_chun_learns_short_fast_punch(self):
+        # the style string always said 'Short Fast Punch'; the move itself was
+        # only added to the data in 2026-09 (perks of Short Punch + Fast Punch)
+        from kf_lib.actors.fighter import Fighter
+        from kf_lib.kung_fu import moves
+
+        m = moves.get_move_obj('Short Fast Punch')
+        assert {'fast', 'punch', 'short'} <= m.features
+        random.seed(1)
+        f = Fighter('Test', 'Wing Chun', 8)
+        assert 'Short Fast Punch' in [mv.name for mv in f.moves]
+
+    def test_all_default_style_move_strings_are_valid(self):
+        # content integrity: every default-style move string must reference
+        # existing move names and existing feature tokens (features bias the
+        # random pick; unknown ones silently do nothing)
+        from kf_lib.kung_fu import styles
+        from kf_lib.kung_fu.moves import ALL_MOVES_DICT
+
+        valid_features = set()
+        for m in ALL_MOVES_DICT.values():
+            valid_features |= set(m.features)
+        for s in styles.default_styles:
+            for lv, ms in s.move_strings.items():
+                entries = ms if isinstance(ms, tuple) else (ms,)
+                for e in entries:
+                    parts = [p.strip() for p in e.split(',')]
+                    if len(parts) == 1 and not parts[0].isdigit():
+                        assert parts[0] in ALL_MOVES_DICT, f'{s.name} lv{lv}: {parts[0]!r}'
+                    else:
+                        feats = parts[1:] if parts[0].isdigit() else parts
+                        for feat in feats:
+                            assert feat in valid_features, f'{s.name} lv{lv}: {feat!r} in {e!r}'
+
+    def test_default_style_move_string_pools_non_empty(self):
+        # an empty pool crashes on random.choice before the fallback
+        from kf_lib.actors.fighter import Fighter
+        from kf_lib.kung_fu import styles
+        from kf_lib.kung_fu.moves import get_rand_moves
+
+        random.seed(0)
+        probe = Fighter('Probe', 'Xing Yi', 20)
+        for s in styles.default_styles:
+            for lv, ms in s.move_strings.items():
+                entries = ms if isinstance(ms, tuple) else (ms,)
+                for e in entries:
+                    parts = [p.strip() for p in e.split(',')]
+                    if len(parts) > 1:
+                        tier = int(parts[0]) if parts[0].isdigit() else 10
+                        feats = parts[1:] if parts[0].isdigit() else parts
+                        assert get_rand_moves(probe, 3, tier, feats), f'{s.name} lv{lv}: {e!r}'

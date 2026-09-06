@@ -294,7 +294,7 @@ default_styles = [
             5: Tech('White Crane II', dist1_strike_mult=b.DIST1_MULT1),
             7: Tech('White Crane III', block_mult=b.BLOCK1),
         },
-        {2: '1,claw', 4: '2,claw', 6: '3,close-range', 8: '4,kick'},  # todo "Crane's Beak"
+        {2: '1,claw', 4: '2,claw', 6: '3,dist1', 8: '4,kick'},  # todo "Crane's Beak"
     ),
     Style(
         'Wing Chun',
@@ -319,10 +319,10 @@ default_styles = [
             7: Tech('Xing Yi III', qp_gain_mult=b.QP_GAIN1),
         },
         {
-            2: '1,fast,mid-range',
-            4: '2,surprise,close-range',
+            2: '1,fast,dist2',
+            4: '2,surprise,dist1',
             6: '3,lightning,punch',
-            8: '4,lightning,mid-range',
+            8: '4,lightning,dist2',
         },
     ),
 ]
