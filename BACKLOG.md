@@ -287,6 +287,11 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
     association); reputation could influence creating it
 - exp/levels: all levels 100 exp (see Balance)
 - config file (not to choose every time); new game settings in a text file
+- **mod support**: world parameters (crime rate, kung-fu prevalence, etc.)
+  fixed at their current defaults, but overridable by mods the player picks
+  at the start of a new game via a new "advanced settings" menu (builds on
+  the config-file idea above; defines a mod = named bundle of stat/constant
+  overrides)
 - save winner fighters at end of game; fight players from past games
   (legendary/story?)
 - custom player creation option
