@@ -167,7 +167,15 @@ for mv in ALL_MOVES_LIST:
         MOVES_BY_TIERS[m_tier] = [mv]
 
 
+# Renamed moves, for backward compatibility with old save files (saves store
+# move names; get_move_obj is the choke point for both JSON and legacy loads).
+MOVE_ALIASES = {
+    'No-Shadow_Kick': 'No-Shadow Kick',  # renamed 2026-09 (underscore was a typo)
+}
+
+
 def get_move_obj(move_name):
+    move_name = MOVE_ALIASES.get(move_name, move_name)
     if move_name not in ALL_MOVES_DICT:
         raise MoveNotFoundError(f'"{move_name}" is not a known move')
     return ALL_MOVES_DICT[move_name]

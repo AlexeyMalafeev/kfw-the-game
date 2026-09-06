@@ -152,9 +152,10 @@ Fallback chain, first hit wins:
 lookup drops straight to `Stance` without trying `X` alone (branches 3–4 are
 in the `else`).
 
-The chain works well in practice: of ~13 800 generated moves only 4 end up on
-the Stance fallback — `Backfist`, `Do Nothing`, `Mantis Hook`,
-`No-Shadow_Kick`.
+The chain works well in practice: of ~13 800 generated moves only 3 end up on
+the Stance fallback — `Backfist`, `Do Nothing`, `Mantis Hook`. (Before the
+2026-09 rename, `No-Shadow_Kick` was a fourth; the spaced name now matches its
+dedicated art.)
 
 Besides move names, the mapping contains situational pictures the fight code
 asks for directly: `Stance`, `Win`, `Lying`, `Falling`, `Knockback`,

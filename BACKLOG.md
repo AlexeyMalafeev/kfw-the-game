@@ -102,14 +102,17 @@ are unordered unless marked.
   - `repr()` of a player mid-`Fighter.__init__` crashes (`traits` set only
     after `super().__init__()` in `BasePlayer`) — any `{self}` warning path
     during construction triggers it
-  - style move strings reference nonexistent moves (`'No-Shadow Kick'` vs
-    `No-Shadow_Kick`) and nonexistent features (`close-range`/`mid-range`)
-    that silently fall through to random picks — 6 broken strings across
-    Hung Ga lv8, Wing Chun lv2, White Crane lv6, Xing Yi lv2/4/8 (verified
-    2026-09 against `ALL_MOVES_DICT`). Workaround in place: `kfw.py` forces
-    `generated_styles=True` for all new games until this is fixed. (Move
-    tiers 11–14 being unreachable is INTENDED for now — reserved for future
-    content, author 2026-09)
+  - style move strings reference nonexistent moves and nonexistent features
+    that silently fall through to random picks — 5 broken strings remain:
+    Wing Chun lv2 (`'Short Fast Punch'` — `Short Punch`/`Fast Punch` exist,
+    decide which was meant), White Crane lv6 and Xing Yi lv2/4/8
+    (`close-range`/`mid-range` features — real tokens are `dist1`–`dist4`).
+    ~~Hung Ga lv8 `'No-Shadow Kick'`~~ ✅ Fixed 2026-09 by renaming the move
+    (`No-Shadow_Kick` → `No-Shadow Kick` in the data + `MOVE_ALIASES` shim
+    for old saves). Workaround still in place: `kfw.py` forces
+    `generated_styles=True` for all new games until the rest are fixed.
+    (Move tiers 11–14 being unreachable is INTENDED for now — reserved for
+    future content, author 2026-09)
   - tournament crash paths: zero participants → IndexError; winnerless final
     → NotImplementedError
   - `OverhearConversation` log lines swapped (astonishing victory ↔

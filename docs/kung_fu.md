@@ -46,7 +46,7 @@ finishers) are flagged `is_basic` and given to every fighter at creation
   weapon moves (feature `'weapon'`, tier 0).
 - `moves/style_moves.txt` — 6 signature moves referenced by style move
   strings (Backfist, Charging Step, Dragon Claw, Leopard Punch, Mantis
-  Hook, No-Shadow_Kick), all tier 0, `freq 0`.
+  Hook, No-Shadow Kick), all tier 0, `freq 0`.
 
 `dev_scripts/move_gen.py` (run from its own directory; it chdirs to repo
 root) feeds **base moves + takedown moves only** into `gen_moves`. The
@@ -116,11 +116,13 @@ strings and level-ups:
 - `'2,kick'` or `'3,fast,kick'` → optional leading tier, then feature
   filters into `get_rand_moves`.
 - anything else (blank, or an **unknown name**) → a fully random pick at
-  the auto tier/features. ⚠️ Unknown literals don't raise — Hung Ga's
-  level-8 `'No-Shadow Kick'` and Wing Chun's level-2 `'Short Fast Punch'`
-  don't exist in `ALL_MOVES_DICT` (the former is `'No-Shadow_Kick'` with an
-  underscore), so both styles silently get a random move instead of their
-  signature move (verified against the data).
+  the auto tier/features. ⚠️ Unknown literals don't raise — Wing Chun's
+  level-2 `'Short Fast Punch'` doesn't exist in `ALL_MOVES_DICT`, so the
+  style silently gets a random move instead of its signature move (verified
+  against the data). (Hung Ga's `'No-Shadow Kick'` had the same problem until
+  2026-09 — the move was spelled `'No-Shadow_Kick'` in the data; the move was
+  renamed to the spaced spelling, with a `MOVE_ALIASES` entry in `moves.py`
+  so old saves using the old name still load.)
 - ⚠️ Feature tokens are only meaningful if they exist in move data:
   White Crane (`'3,close-range'`) and Xing Yi (`'…,mid-range'`) use
   `close-range`/`mid-range`, which no move has (the real tokens are
@@ -146,10 +148,10 @@ of its techs. Every `Style` self-registers in `all_styles` at import.
   Mantis, Wing Chun) have custom named move strings at levels 1/2/4/6/8; the
   other 14 fall back to
   `DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4', 10: '5'}`
-  (a free choice from tiers 1–5). ⚠️ Six of the handcrafted move strings are
-  broken (unknown names `'No-Shadow Kick'`/`'Short Fast Punch'`, unknown
-  features `close-range`/`mid-range` — see above) and silently degrade to
-  random picks, so `kfw.py` currently forces generated styles for new games.
+  (a free choice from tiers 1–5). ⚠️ Five of the handcrafted move strings are
+  broken (unknown name `'Short Fast Punch'`; unknown features
+  `close-range`/`mid-range` — see above) and silently degrade to random
+  picks, so `kfw.py` currently forces generated styles for new games.
 - Special NPC styles: `BEGGAR_STYLE`, `THIEF_STYLE`, `DRUNKARD_STYLE`,
   `TURTLE_NUNJUTSU`.
 - Tech-less placeholder styles with `{}` techs: Flower Kung-fu (the

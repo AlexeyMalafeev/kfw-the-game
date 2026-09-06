@@ -252,3 +252,21 @@ class TestMoveLookup:
         moves.resolve_move_string('1', f)  # '1' = one random tier-1 move
         assert len(f.moves) == n_moves + 1
         assert f.moves[-1].tier == 1
+
+    def test_no_shadow_kick_rename_and_legacy_alias(self):
+        # the move was 'No-Shadow_Kick' (a one-off underscore typo) before
+        # 2026-09; old saves may still reference the old spelling
+        from kf_lib.kung_fu import moves
+
+        m = moves.get_move_obj('No-Shadow Kick')
+        assert 'No-Shadow_Kick' not in moves.ALL_MOVES_DICT
+        assert moves.get_move_obj('No-Shadow_Kick') is m
+
+    def test_hung_ga_learns_signature_move(self):
+        # regression: styles.py said 'No-Shadow Kick' but the move was named
+        # 'No-Shadow_Kick', so Hung Ga lv-8 silently granted a random move
+        from kf_lib.actors.fighter import Fighter
+
+        random.seed(42)
+        f = Fighter('Test', 'Hung Ga', 8)
+        assert 'No-Shadow Kick' in [mv.name for mv in f.moves]

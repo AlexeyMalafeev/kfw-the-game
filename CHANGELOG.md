@@ -63,6 +63,12 @@ because kung-fu movies.
   reaching lv 7 (school masters are created at lv 11-14) crashed
   `_init_schools` — hidden since 2022 because tests/autoplay use generated
   styles
+- **Hung Ga's lv-8 signature move was unreachable**: the style string said
+  `'No-Shadow Kick'` but the move was spelled `'No-Shadow_Kick'` in the move
+  data (a one-off underscore typo), so the level-up silently granted a random
+  move. The move is renamed to the spaced spelling (which also matches its
+  dedicated ASCII art, previously unreachable), and a `MOVE_ALIASES` shim in
+  `get_move_obj` keeps old saves referencing the old spelling loadable
 
 ---
 
