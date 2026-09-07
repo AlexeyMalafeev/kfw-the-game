@@ -104,7 +104,16 @@ move strings).
 
 ---
 
-## Historical releases (migrated from docs/version_history.md)
+## Historical releases
+
+v0.6.1–v0.6.9 were migrated from `docs/version_history.md`. Everything older
+was reconstructed in September 2026 from the per-release `! development.txt` /
+`changes.txt` files preserved in `old_versions/kfw/` (cross-checked against
+git history for v0.5.9–v0.6.0). Wording is kept close to the original files,
+including the move-count progressions; `!`-highlighted items in the sources
+are bolded here. v0.1.x predates changelog-keeping entirely — those entries
+are inferred from diffs between consecutive `to do.txt` files and marked as
+such.
 
 ### v0.6.9-beta "Not Fail, But Experience" — 2022-11-20
 
@@ -349,12 +358,12 @@ move strings).
 
 ### v0.6.0 "I'll Be Watching You" — 2020-10-31
 
-Reconstructed from the `! development.txt` changelog file in git history (the
-old `docs/version_history.md` only went back to v0.6.1).
+Reconstructed from the release snapshot's `! development.txt`
+(`old_versions/kfw/`, cross-checked against git history).
 
 1. **feat: ability to observe what AI players do during their turns** (hence the codename)
 2. **feat: machine learning-based prediction of fight outcomes, 90-91% accurate (LR, RF)**; the trained LR model's intercept and coefficients are usable without any heavy dependencies (`ml_fighter_pwr.py`)
-3. feat: `utilities.multiply(numbers)`, `experience.extract_features(side_a, side_b)`
+3. feat[dev]: `utilities.multiply(numbers)`, `experience.extract_features(side_a, side_b)`
 4. feat: style moves: Backfist (karate); default moves for some foreign styles
 5. feat: generated throws (15789 -> 15803 moves)
 6. feat: new style: Capoeira
@@ -364,47 +373,560 @@ old `docs/version_history.md` only went back to v0.6.1).
 10. fix: evil crash in spectating fights
 11. fix: style generation used the same subset of strings
 12. fix: bug in learning new moves at level 10+
-13. feat[dev]: `_run_test_lv_vs_crowd.py` shortcut, `tests` folder, improved `Tester.test_level_vs_crowds`
+13. fix: fight items are now canceled after exp earned is calculated
+14. fix: exp bonuses are now properly recorded in statistics
+15. feat[dev]: `_run_test_lv_vs_crowd.py` shortcut, `tests` folder, improved `Tester.test_level_vs_crowds`
 
 ---
 
 ### v0.5.9 "Thousands of Styles" — 2020-05-11
 
-The first version covered by the git repo (initial commit 2020-04-19 was an
-upload of the project mid-cycle); reconstructed from `! development.txt`.
+Reconstructed from the release snapshot's `! development.txt`
+(`old_versions/kfw/`, cross-checked against git history; this is the first
+version covered by the repo at all — the initial commit of 2020-04-19 was an
+upload of the project mid-cycle).
 
 1. **feat: style generation**
-2. feat: new fight AI `GeneticAIAggro`, good at both 1-on-1 and crowd-vs-crowd fights (internal rankings at the time: GeneticAIAggro 7629, GeneticAIExtraRules4 6870, GeneticAITrainedParams8 6795, WeightedActionsAI 6206, BaseAI 862)
-3. feat: player confirms whether the randomly generated fighter is ok in RING
-4. feat: successful blocks and dodges increase qp
-5. feat: foreign styles have appropriate strikes and techs
-6. balance: nerfed weapons; reduced exp multiplier for weapons
-7. feat: moves: Charging and Onslaught elbow, claw and knee moves now possible (13803 -> 16125 moves)
-8. feat: move generation constraints: 'surprise', 'shocking' and 'debilitating' don't overlap in one move (16125 -> 16041); x-based damage functions don't overlap (16041 -> 15789)
-9. refactor: techniques.py, moves.py; removed `move_gen.modified_move` and `RING_debug.py`
-10. feat: Unix support — the game is playable, although with small UI issues
+2. **feat: Unix support — the game is playable, although with small UI issues**
+3. feat: new fight AI `GeneticAIAggro`, good at both 1-on-1 and crowd-vs-crowd fights (internal rankings at the time: GeneticAIAggro 7629, GeneticAIExtraRules4 6870, GeneticAIExtraRules7 6852, GeneticAITrainedParams8 6795, GeneticAIExtraRules9 6786, WeightedActionsAI 6206, BaseAI 862)
+4. feat: player confirms whether the randomly generated fighter is ok in RING
+5. feat: successful blocks and dodges increase qp
+6. feat: foreign styles have appropriate strikes and techs
+7. balance: nerfed weapons; reduced exp multiplier for weapons
+8. feat: moves: Charging and Onslaught elbow, claw and knee moves now possible (13803 -> 16125 moves)
+9. feat: move generation constraints: 'surprise', 'shocking' and 'debilitating' don't overlap in one move (16125 -> 16041); x-based damage functions don't overlap (16041 -> 15789)
+10. refactor: techniques.py, moves.py; removed `move_gen.modified_move` and `RING_debug.py`
 11. fix: properly linked ASCII for weapon moves
 12. fix: don't get the same move more than once when leveling up
-13. fix: fight items are now canceled after exp earned is calculated
-14. fix: exp bonuses are now properly recorded in statistics
-15. feat: UI: move tier displayed in some situations; ASCII for all weapon moves; more ASCII art for old moves; more concise messages in fights
-16. feat[dev]: reworked test level significance
+13. feat: UI: move tier displayed in some situations; ASCII for all weapon moves; more ASCII art for old moves; more concise fight messages
+14. feat[dev]: reworked test level significance
 
 ---
 
-### Pre-git era (2016–2020)
+### v0.5.8 "13.8K Moves and a Genetic Fight AI" — 2020-02-07
 
-These releases predate the repository (the first git commit is 2020-04-19,
-already mid-v0.5.9), so only versions, codenames and dates survive, from the
-author's records. Note the codenames of v0.5.6/v0.5.7 — the v0.7.0 "comeback"
-theme has a precedent:
+1. **feat: a brand new fight AI, GeneticAI, optimized with a genetic algorithm**
+2. **feat: moves explosion: 1237 -> 1527 -> 1673 -> 2009 -> 2031 -> 10892 -> 11397 -> 13803 moves**
+3. feat: moves: level-based damage for some moves; special style moves (Dragon Claw, No-Shadow Kick, Charging Step, Leopard Punch, Mantis Hook); Acrobatic moves (agility-/strength-based damage at the cost of increased complexity); Pushing moves (knockback); Solar moves (damage stamina); Nerve moves (mobility damage); Ferocious, Piercing, Onslaught, Vanishing, Backflip, Debilitating strikes
+4. feat: lv-1 style moves; move frequency is taken into account; guard-while-attacking mechanics (and corresponding techs); moves have up to 3 prefixes
+5. refactor: improved move generation; distances module
+6. feat[dev]: fight_ai_gen, _run_fight_ai_gen modules
+7. fix: learning specific style moves didn't work properly; learning style moves at lv 1; defense didn't work at the beginning of a fight
 
-- v0.5.0 "Another New System" — 2016-05-18
-- v0.5.1 "Move with Style" — 2016-06-26
-- v0.5.2 "Chatty" — 2016-07-22
-- v0.5.3 "ASCII-fu" — 2016-08-11
-- v0.5.4 "Epic Fights" — 2016-11-16 (re-released later with small changes)
-- v0.5.5 "No-Shadow Kick" — 2017-05-09 (re-released later with small changes and bug fixes)
-- v0.5.6 "2.5 Years Later" — 2020-01-07
-- v0.5.7 "It's Alive" — 2020-01-10
-- v0.5.8 "13.8K Moves and a Genetic Fight AI" — 2020-02-07
+---
+
+### v0.5.7 "It's Alive" — 2020-01-10
+
+1. **feat: IT'S ALIVE! — AI players manage to reach the end of the game** (hence the codename)
+2. feat: new sophisticated fight AI (which unfortunately loses to older AIs)
+3. feat: special technique: chance to resist KO; on success, the fighter is left with 1 HP
+4. feat: `rndint_2d` function simulating double dice rolls
+5. feat: moves: Leap Forward and Leap Back
+6. balance: worked on game balance
+7. refactor: reviewed the fight module and boosts (small fixes); major fight_ai clean-up; optimized the fight loop
+8. fix: pak() in RING; fall damage properly scaled; move-while-attacking works properly; fighters created at higher levels learn higher-tier moves (not tier 1); additional damage; time issues; defense didn't work properly
+9. feat: UI: better menu for choosing a new move to learn
+
+---
+
+### v0.5.6 "2.5 Years Later" — 2020-01-07
+
+1. **feat: new move system**
+2. feat: tournaments happen more often
+3. feat: UI: menu with pages; "boring" slideshow
+
+---
+
+### v0.5.5 "No-Shadow Kick" — 2017-05-09
+
+1. **feat: cool new moves: Energy Palm, Spin Kick To Body, Flying Spin Kick, No-Shadow Kick (!), Shove, Power Punch, Flying Punch, Power Palm, Fast Kick**
+2. feat: new move effects: additional qi-based damage; instant KO chance
+3. feat: rebalance and reorganize moves
+4. feat: dummy fighting
+5. feat: new encounters: FatGirl, LoseItem, FindItem
+6. feat: 60+ Bruce Lee quotes
+7. fix: BookSeller encounter wasn't properly introduced in the game
+8. feat: UI: number of steps knocked back is shown; save slideshow option; ASCII art for weapon strikes
+
+A "with small changes and bug fixes" re-release followed (same changelog file,
+same date): tournament chance 0.1 -> 0.15, boring-fight labeling
+(`check_epic` returns `' (epic!)'` / `' (boring...)'` instead of a bool), and
+the fight-end message (win quote + "The fight lasted ...") refactored into a
+`show_message()` method.
+
+---
+
+### v0.5.4 "Epic Fights" — 2016-11-16
+
+1. **feat: "epic fights" as determined by the percentage of unique ASCII "pictures"** (hence the codename)
+2. feat: new encounters: PrizeFighting, School Bullying, Book Seller
+3. feat: 'play indefinitely' option after winning
+4. feat: off-balance status when missing/failing a maneuver or taking damage
+5. feat: mobility damage caused by some moves ('slowed-down' status); all tier-2+ moves cost small amounts of qi; new techs improving Guard
+6. balance: more frequent tournaments; decreased exp if armed; Guard gives a 50% defense bonus (not 25%); tournament fee can be paid 'on credit'
+7. fix: KO stats were changed in sparrings
+8. feat: UI: stun/shock ASCII; lots of new or improved ASCII; post-fight slideshows; 'full contact' ASCII art concatenation
+
+The later "v0.5.4 release" folder is a code-identical redistribution with the
+dev/test harness stripped (no changelog of its own).
+
+---
+
+### v0.5.3 "ASCII-fu" — 2016-08-11
+
+1. **feat: ASCII art for fights (tens of items)** (hence the codename)
+2. feat: falling down is finally implemented, including fall damage; strong strikes result in falling; defense penalty while lying on the ground
+3. feat: new takedown moves: Throw, Trip; new moves: Body Palm, Kick to Knee, Jump Back, Rush Forward
+4. feat: dirty moves; anti-ground moves ("let's be realistic")
+5. feat: added Chinese wisdom (Confucius etc.) — not used in-game yet
+6. refactor: moved quotes to separate text files in a separate folder
+7. feat: UI: annotate move effects with '!', shock with '(!!)', stun with '(!)'
+
+---
+
+### v0.5.2 "Chatty" — 2016-07-22
+
+1. **feat: lots of quotes from kung-fu movies** (hence the codename)
+2. feat: teenage mutant ninja turtles mini-story for late game
+3. feat: implemented shocking moves
+4. feat: retreat move (backward handspring)
+5. feat: school and master challenges are now sparrings
+6. feat: renamed Magic Healer to Ginseng Root
+7. balance: no new tech at lv 9; slightly improved (~4%) fight AI (no longer steps back or catches breath at distance 4 with max stamina)
+8. feat: UI: display moves in the game status menu; visualize distance; stamina annotations for moves; visualize fight state (`1 /////////////\\\\\\\ 2`)
+
+---
+
+### v0.5.1 "Move with Style" — 2016-06-26
+
+1. **feat: style moves — at last — including 26 new moves** (hence the codename)
+2. feat: fight AI OptiWeightAI (square weights for the n best options); the CarefulManeuvers series — about 5% stronger
+3. feat: Guard move: restores less stamina than Catch Breath, but boosts defense
+4. feat: knockback distance depends on damage; some strikes damage the opponent's stamina
+5. feat: no learning new techs before mastering your style
+6. feat: a new formula for calculating exp
+7. fix: correctly implemented stamina change on maneuvers
+8. refactor: major overhaul of fight.py and fighter.py (most methods moved from the Fight classes to Fighter); overhaul of moves.py and techniques.py
+9. feat: UI: pretty tables when choosing the target and a new move to learn
+
+---
+
+### v0.5.0 "Another New System" — 2016-05-18
+
+1. **feat: new fighting system (yet another one!): automatic defense; new move system; distance to enemy; speed of attacks; stun handled automatically (dam >= hp_max/3); knockback; fight timer ('The fight lasted XX sec.'); move complexity and fight time limit (not fully implemented yet)**
+2. feat: 4 new styles: Centipede, Gecko, Scorpion, Toad
+3. feat: new exp bonus and accomplishment: "Quick Victory" / 'Split-Second Victory'
+4. feat: tournaments support any number of participants
+5. balance: minor tech rebalance
+6. refactor: HumanControlledFighter; HumanPlayer moved to player.py; `Fighter.current_fight`; `new_dummy_fighter`; `menu_weak`; utilities: ranked, median, summary, get_time, pretty_table, add_to_dict, dict_diff, dict_comp
+7. feat[dev]: new test_fight_balance; tools for analyzing attribute significance for winning; style, tech and move efficiency comparison
+8. feat: UI: post-fight menu with stats/timeline (not fully implemented yet); move tips when choosing a move
+9. feat: RING: choose start level
+
+---
+
+### v0.4.9 "New System" — 2015-10-04
+
+1. **feat: absolutely new fighting system: stamina factored in; repeated-attacks penalty; 6 basic + 47 advanced moves; defense moves; new moves every other level starting from lv 4; 14 -> 20 styles; new items; grab an improvised weapon in fight; 56 techniques total (42 standard, 14 weapon); stun; new weapon handling (weapon replaces LP/HP/block, each weapon attack has a range); style techs at different levels; bonus moves marked with asterisks when choosing**
+2. feat: Muay Thai style for certain NPCs
+3. feat: new fight AI WeightedAtkDfsAI that can choose defense moves intelligently (more or less)
+4. **feat: better estimates of fighters' strength**
+5. feat: guaranteed encounters when choosing certain day actions; fixed number of rounds with the gambler; school ranks go backwards (from last to first); monthly school reranking now affects players; grateful shop owners give rewards to all participating players; can refuse school challenges; can't feel too scared of robbers; tech: start fight with half/full qp
+6. balance: yet another tech rebalance; numbers of atts/techs/moves to choose from changed; increased story chance
+7. refactor: removed SimFight / .sim_fight (used to create confusion)
+8. fix: well-hidden school ranking bug (in crowd games, some AIPlayers fought themselves)
+9. feat: UI: short move descriptions (`3, 3, -2, (-3)`); short style descriptions; HP/SP/QP bars + numbers; cls on each attack; prompt which moves the player has bonuses for; school names shown in school-vs-school fights; more concise in-fight text; item effect descriptions
+
+---
+
+### v0.4.8 "Things To Do In Foshan" — 2015-06-15
+
+1. **feat: 5 new day actions that increase the probability of certain encounters: Buy items, Fight crime, Help the poor, Pick fights, Go to seedy places**
+2. feat: players actually open new schools, which become part of standard gameplay (challenges, school-vs-school fights); limited the number of students in the player's school
+3. feat: Thief can steal items, not only money; skewed Gambler (biased towards some options almost half of the time)
+4. feat: No-Shadow Kick: unblockable + critical
+5. feat: Super Herb and trait-change accomplishments ('Weird Item' and 'Personality Change'); 7 new item-related player stats
+6. feat: BaselineAIP class (random day actions); tests show SmartAIP is indeed the strongest AI player (average days to win)
+7. balance: redo criticals and evasion (independent of the atk/dfs stat); Gambler encounter chance 2% -> 5%; up to 7 days to recover by default; 'feel too scared' works only at low risk and higher; upper bound for NPC student level-ups; attacking a focusing fighter removes part of his focus; defend spends stamina when countered or damaged
+8. fix: could get two opposite traits at the beginning of the game; beggar friends were lost when saving; horrible well-hidden bug: Magic Healer usable in fights (list was referenced, not copied)
+9. refactor: player.py clean-up
+10. feat[dev]: 'silent' play mode and win-statistics collection; `_collect_AIP_data.py` and `_compare_AIPs.py` (AI player comparison by average days to win); 'testing' folder
+
+---
+
+### v0.4.7 "Nasty Bugs and Small Fixes" — 2015-05-17
+
+1. feat: new fight ability: total concentration (techs 'Six Harmonies' and 'Twelve Harmonies'); new fight ability: supreme defense ('Wall-like Protection' and 'Emperor's Fortress')
+2. feat: three tiers of tournaments; tournament chance tied to the town's kung-fu value
+3. feat: pay 1000 coins (debt allowed) to open your school
+4. feat: see opponents' stats when undergoing school trials
+5. feat: fight_ai: CoordinatingAI, CoordinatingAI2, CoordinatingAI3 (intelligent target selection — ganging up on the same target is, of course, effective)
+6. balance: payment to robbers no longer depends on their number; 'feel too scared' is now a fixed probability independent of the number of enemies
+7. feat: five robber lines; the PC may feel too greedy in more encounters (Craftsman, Merchant, StreetPerformer, WiseMan, even Extorters)
+8. fix: spectate fight bug (win_messages); fighters_list wasn't filled after loading a game; Super Herb obtainable like simple items; school reranking bug (top rank without the special tech); wrong school in the school-fight win message; strange dream turning into gossip; a NASTY well-hidden bug with master name clashes (same master for multiple schools)
+9. feat[dev]: fight_ai_test.CrowdVsCrowdFair; more convenient tech testing; tech testing with different fighters of the same level
+10. refactor: cleaned up fighter registering
+
+---
+
+### v0.4.6 "Four Encounters" — 2015-04-24
+
+1. feat: finished the Street Performer encounter at last (rewards: a basic weapon technique or exp; sells Gold Magnificent Elixir — can be a good item or a constipation medicine)
+2. feat: new Craftsman encounter: buy a wooden mannequin (on credit) to improve home training
+3. feat: new Weirdo encounter: trade a mock item for a Super Herb; Super Herb item (+3 to all, +2 stamina)
+4. feat: new WiseMan encounter: change your character
+5. feat: unique special NPCs for each game (beggar, drunkard, tough thief, criminals) — can be encountered multiple times, but defeated only once
+6. feat: new escaped convict every month; schoolmates can help the player in tough fights; school-vs-school fights and stories slightly more often; NPC school students have a 10% monthly level-up chance; poverty/crime/kung-fu values change at each game
+7. feat: fight AI uses fight items only when the opponents seem stronger
+8. fix: a funny bug where a weak drunkard could become the player's friend
+9. feat[dev]: NG autoplay single mode for testing
+10. feat: UI: challenger encounter shows the challenger's rank in school
+
+---
+
+### v0.4.5 "Best in Foshan!!!" — 2015-03-27
+
+1. **feat: persistent students in all schools; challengers are now students of other schools (persistent); school challenges advance school ranks; fights between schools!**
+2. **feat: new fight AIs: ExponentialCCDSAI (stronger than CrowdConsciousDSAI3 in 1x1), FocusAgainstDefenseAI (really tough in 1x1), FocusAgainstDefenseAI2; CalculatingAI wins group fights but loses miserably in 1x1**
+3. balance: Narrow Victory -> 5% hp instead of exactly 1 hp; defense doesn't use stamina unless countering; gain qi only when qi_full > damage taken; only known fighters (from schools) participate in tournaments
+4. fix: loading a game with saved traits; a well-hidden bug where known fighters changed their names after becoming friends
+5. refactor: keep only 3 AIPlayer varieties (LazyAIP, SmartAIP, VanillaAIP); win_messages argument for fights; weighted_rand_choice integer forcing
+6. feat: UI: swap sides when the player is in side_b with no players in side_a
+7. feat: RING: difficulty levels (affect enemy generation); display the level reached when losing
+
+---
+
+### v0.4.4 "Traits (At Last)" — 2015-03-04
+
+1. **feat: traits (x16)** (hence the codename)
+2. feat: gambling and drinking are no longer completely optional — they depend on the character's discipline; fear checks before dangerous fights; greediness checks
+3. balance: interest in kung-fu and poverty no longer change randomly; Challenger/Student encounter chances no longer depend on kung-fu interest; another tech rebalance
+4. fix: Fighter.choose_better_att depended on alphabet ordering; nasty well-hidden bugs in countering and display (dfs_when_fcs didn't work; silent multiple counterattacks were possible; .cdam miscounted in turn-line visualization); debugged tech_test.TechTester
+5. feat[dev]: more flexible tech_test.TechTester; 100-AIPlayer test game (~39 seconds; name generation could freeze the game — not enough Drunkard names)
+
+---
+
+### v0.4.3 "Major Gameplay Changes After a 6-Month Hiatus" — 2015-02-13
+
+1. **chore: started using Git**
+2. **balance: less steep exp curve; rebalanced encounters (crime-based ones happen less often); crime does not increase (for now)**
+3. **feat: better, more intelligent random attribute generation for fighters (style emphases taken into account); AI players use the best attribute-upgrade strategy (as tested: ~500 vs ~180, ~2.5 times better)**
+4. feat: new statistics: became_master_at_lv, friends, enemies, students
+5. feat: new encounter with stories about players (humiliating defeats and astonishing victories)
+6. **feat: UI: visualize turns**
+7. feat: UI: 'Save and Quit' option in the game menu; improved statistics output (blocks, names and styles inside columns)
+8. refactor: new convenient BaseStyle methods
+9. feat[dev]: count how many encounters of each type happen throughout the game; test_rand_att_schemes
+
+---
+
+### v0.4.2 "Balanced Techs and Mini-Game" — 2014-07-15
+
+1. **feat: mini-game: RING**
+2. **feat: dramatically rebalanced techniques**; stamina techs also increase the stamina restored with focus
+3. feat: new branching encounter: street performer
+4. **feat[dev]: new module tech_test for comparing technique efficiency (single/multiple opponents, armed fights)**; `_test_techs.py` shortcut; Tester.test_disarm()
+5. refactor: chances converted to floats (50 -> 0.5) throughout the code; utilities.rnd()/rndint() reworked; utilities.mean()/.percentage(); techniques.get_style_techs(); encounters.set_up_weapon_fight(); fighter_factory.from_exp_worth; fight.py spectate function
+
+---
+
+### v0.4.1 "Crowd AI and Crime" — 2014-06-29
+
+1. **feat: better vs-crowd fight AI (CrowdConsciousDSAI, 2, 3)**
+2. feat: crime rate grows steadily every month; players can decrease the crime rate
+3. feat: ForeignerStory: watch the foreigner fight
+4. balance: less exp for a defeated fighter's techs; increased 'qi when attacking' multiplier in the corresponding tech; tournaments organized more often; varying tournament participation fee
+5. fix: qi when attacking didn't work
+6. refactor: Tournament class (tournaments are independent events); Game.do_daily()/do_monthly(); Player.spectate(); fighter factory functions can return single or multiple fighters
+7. feat[dev]: improved fight_ai_test.FightAITest; introduced FightAITestCrowds
+
+---
+
+### v0.4.0 "Items and Gameplay" — 2014-06-25
+
+1. **feat: items usable in fights** (items module)
+2. **feat: automatic practice at home; exp gained depends on level, number of friends and multiplier**
+3. **feat: estimate fight outcomes (no SimFight)**
+4. **feat: maximum number of attackers (4 by default), other attacks fail; 2 new techniques decreasing it; bigger crowds of enemies**
+5. feat: 2 vs 2 coop game mode
+6. feat: weak drunkard fight in the Drunkard encounter; new encounters: match with a friend, robbery (help another person)
+7. feat: new stats: most humiliating defeat and most astonishing victory
+8. refactor: DataMiningFight class; SpectateFight; fight.py gather_fight_data; Fighter.get_features (for machine learning) and friends; fighter_factory.new_fighter; EncControl.runenc; try_enemy; level_up(times)
+
+---
+
+### v0.3.9 "Misc Tweaks" — 2014-05-10
+
+1. **feat: subclassed AIPlayer for various behaviors (cautious, reckless, gambler, etc.) via adjustable class parameters**
+2. **feat: new accomplishments: Lone Warrior (win alone against 5+ enemies), Narrow Victory (win with 1 hp), Against All Odds (win against very strong opponents); exp for each accomplishment**
+3. **balance: different level-up exp curve (steeper, 50x^2); only one counterattack allowed when defending; tech tweaks (counter +, critical chance +)**
+4. **feat: can have multiple meds**; randomized values: convict reward, gossip cost, med cost, robber money, breakages cost
+5. feat: record dates of accomplishments; 'Tournament Champion' now requires 3 tournaments (was 5)
+6. balance: changed Dragon and Xing Yi style techs; max 5 enemies in Ambush (was 6)
+7. refactor: Polish-notation renaming of the numerous encounters.py constants; Player inventory; get_p_info_verbose; fight.py optimization
+8. feat: UI: got rid of show/write with delay; cleaner counter display; more info in the status menu (friends, enemies); simple inventory screen
+
+---
+
+### v0.3.8 "Exp and Stories" — 2014-03-26
+
+1. **feat: exp bonuses: not a scratch, multi-knockout, strong enemy; exp bonuses stat; exp precalculated before a fight**
+2. **feat: each story now focuses on just one player**; maximum level for stories; stories start more often
+3. feat: monster in the dream story; Monster Kung-fu style; 'participated in stories' stat
+4. feat: removed the 'master challenge' encounter, added the RenownedMaster story
+5. feat: medicine as a reward from the shop owner (or pay for breakages); variable gambling bets; sparring now works only with computer players; master's various reactions to failures; new accomplishments (beggar/drunkard friend, beat thief, beat gambler, enemy repents)
+6. **refactor: fight, sim_fight and spar are Fighter methods now, called throughout the code**; story saving/mechanics rework; register/unregister_fighter Game methods; text alignment function; autoplay launcher for testing; g.show/g.pak/g.msg redirect to Player methods; safer loading (missing stats filled with defaults)
+7. feat: UI: rewrote story text (you -> name); aligned narrative text in encounters and stories; more compact statistics; some messages displayed with a small delay; no 'Round 1' display when human players don't participate
+
+---
+
+### v0.3.7 "Names and Styles" — 2014-03-21
+
+1. **feat: names module; new styles module; styles are now classes** (hence the codename)
+2. **feat: predefined styles to choose from at the beginning; standard styles have 3 emphases; style techniques (learned after passing all school challenges; some fighters have style techs, all masters do)**
+3. feat: defense bonus possible when attacking or focusing; qi bonus possible when attacking; unblockable attacks
+4. balance: Dirty Fighting and Police Kung-fu have only 1 bonus each; exp calculation takes the number of techs into account; evade tied to defense, critical chance to attack; lower exp for training
+5. fix: advanced techs were not applied properly when upgrading; fighters' random techs did not apply! (found by chance)
+6. refactor: removed the constants module; game roster (fighters_dict & fighters_list); optimized name collection; error reports have date and time; fight attributes and style bonuses no longer calculated every time
+7. feat: UI: improved critical attack display; removed skip_next_pak; "Thugs/Robbers win"; style info and date in the stat report
+
+---
+
+### v0.3.6 "Tougher Opponents" — 2014-01-15
+
+1. feat: new fight AIs: DeadlySimplisticFightAI 1-4 (checking for finishing blows, not defending when the enemy can't attack, not focusing with max qp); default AI = DeadlySimplisticAI2 (hence the codename)
+2. fix: fight AI didn't really consider the opponent's available fight action — it used the previous turn's info
+3. refactor: get_style_name Fighter method
+4. feat[dev]: new optimized FightAITest class
+
+---
+
+### v0.3.5 "16 Techniques" — 2014-01-06
+
+1. **feat: 16 new techniques: 18/36 Attack Forms, 18/36 Defense Forms, Lotus/Golden Lotus Stance, Horse-like Stamina/Strong as an Ox, Stinging Bee/Fist of Vengeance, Iron Fist/Cannon Fist, Iron Vest/Superior Iron Vest, Shadow Slips Away/Shadow of a Shadow** (hence the codename)
+2. feat: critical attacks; evade attacks
+3. feat: choose between 3 techniques (was 2); cooler names for some old techs
+4. balance: fewer robbers in groups and crowds; max level for tournaments; defense doesn't cost qp when not attacked
+5. refactor: fully rewrote the techniques module (much more general Tech class; techs stored with fighters as strings); Player.can_pay -> check_money; Fighter.check_lv; tech-related Fighter parameters
+6. feat: UI: display enemies' weapons and stamina in group fights; changed counterattack display; skip next pak() on level up
+
+---
+
+### v0.3.4 "Balanced Fighting" — 2014-01-02
+
+1. **feat: new fighting system with much better balance: counterattacks; defend costs stamina; focus restores stamina; qi not always lost when hit; no 'health' style emphasis; max qi is x2, not x3** (hence the codename)
+2. feat: new fight AIs: BaseAI, SimpleAI, RockPaperScissorsAI, AdvRockPaperScissorsAI, SimplisticAI
+3. feat: player is asked whether to use medicine; min player level for Beggar and Drunkard fights
+4. fix: horrible bug in fight_ai_test (reverse mode didn't work); test_fight_balance bug (wrote 'focus' instead of 'qi')
+5. refactor: Fighter.change_stamina; adjustable fighter parameters (atk_mult, dfs_mult, fcs_mult, ...) — item truncated in the source
+6. feat[dev]: test_fight_balance (very useful)
+7. feat: UI: slightly revamped fight UI
+
+---
+
+### v0.3.3 "Upgrade Your Kung-fu" — 2013-12-30
+
+1. **feat: 'upgrade' a technique at level 10; new advanced techniques (upgraded versions of regular ones)** (hence the codename)
+2. feat: new encounters: Brawler, PlayerMatch, MasterChallenge
+3. feat: new stats: money gave to robbers, days inactive, times KOed, when became master
+4. feat: AIPlayer is more efficient and can use the master's day actions
+5. refactor: set_stat/check_help Player methods; tourn_or_not/brawl_or_not/p_match_or_not/accept_master_chall_or_not; get_act_players/get_random_style/get_new_style Game methods; optimized techniques module; fighter.techs is a set; got rid of almost all constants in the constants module
+
+---
+
+### v0.3.2 "Den'gi" — 2013-12-07
+
+1. feat: gossipmonger encounter; medicine seller encounter (hence the codename — "money")
+2. feat: choose a weapon when fighting armed challengers; new weapon: piece of cloth
+3. feat: master gets 1/2 of the tuition fee for each student; new statistics: spent_on_training, fights_total
+4. balance: drunkards and beggars encountered more rarely
+5. fix: challenger fights without a weapon (pick_normal_weapon bug); Master Xue got reduplicated in a tournament (friend of two players)
+6. refactor: new Player methods; new handling of player statistics; more efficient Fight.give_exp; clearer saving code and save files; better testing facilities (incl. emergency save); better stats report generation
+
+---
+
+### v0.3.1 "Strange Dreams" — 2013-11-30
+
+1. **feat: Strange Dreams story** (hence the codename)
+2. feat: sparrings are possible (no injuries)
+3. feat: thief's success depends on the player's level
+4. feat: experimental fight AI — initially logged as a failure, but that turned out to be a horrible bug in fight_ai_test; Experimental is actually slightly stronger than Default
+5. fix: loading a game while playing no longer crashes the game
+6. refactor: Fighter arming methods (arm_improv, arm_police, arm_robber); weapons module get_rnd_*_wp functions; DefaultFightAI class (fight AI is no longer a function); Fighter.is_armed/get_init_atts/pick_normal_weapon; copy_fighter; class-based fight_ai_test; player logs cleared on save/load; coop/ai_only/auto_save_on configuration options; is_weapon_tech; WeaponTech.if_applies_to_weapon
+
+---
+
+### v0.3.0 "Superbug, Victory, Stats" — 2013-11-10
+
+1. **feat: 4 individual victory conditions — it is now actually possible to beat the game** ("Victory")
+2. **fix: the horrible (nastiest ever?) bug with occasional infinite loops in sim fights, caused by incorrect binding of Player and fight AI** ("Superbug")
+3. feat: the game can be played with AI players only (silently)
+4. feat: thief/convict encounter chance depends on the town crime level; lower Extorters and HelpPolice chance
+5. feat: accomplishments are more meaningful; 'win 5 tournaments' accomplishment; all players' statistics in one report ("Stats")
+6. feat: AI chooses the lower of two attributes at level-up (more balanced builds)
+7. refactor: statistics module; once again reorganized the fight/player/ai_player/human_player/fighter code; .show accepts multiple arguments; got rid of the get_full_pwr method (sometimes worked incorrectly)
+8. feat: UI: much more informative logs
+
+---
+
+### v0.2.9 "Others" — 2013-11-05
+
+1. **feat: AI players**
+2. feat: fight-or-run choice when an enemy attacks; the player can get help when fighting extorters
+3. balance: reputation gain from donations is relative to the donation size
+4. refactor: HumanPlayer and AIPlayer classes (with composites) in their own modules; players' logs saved to separate files in the new save folder and loaded with the game; RealFight and SimFight subclasses of a new BaseFight class; fighter factory functions moved to a separate module; f.is_human -> f.is_player; constants moved out of constants.py
+5. fix: Player methods were called instead of HumanPlayer methods (inheritance order issue); unexpected exp gains (turned out to be home training); partner didn't get half of the convict reward
+6. feat: new Player methods (e.g. donate)
+7. feat: UI: '<name> wins!' fight outcome; player logs; player first in the action display
+
+---
+
+### v0.2.8 "Classy Encounters" — 2013-09-21
+
+1. **refactor: encounters are now classes (subclasses of the generic Enc class) with factory functions: Ambush, Beggar, Challenger, ContinueStory, Convict, Drunkard, Extorters, Gambler, MasterTrial, HelpPolice, Robbers, SchoolChallenge, Students, Thief** (hence the codename)
+2. feat: gambler fights; new student challenges; ambush escape; see win chance for ambushes, helping police and extorters
+3. balance: triple encounter chance when going for a walk; defense penalty when fighting several opponents
+4. feat: slightly better anti-crowd AI; a bunch of new AI tests
+5. fix: ai_test conflict with the fight's simulation mode; horrible ai_test bug (all allies in group fights got the default AI)
+6. refactor: player.game hook; EncControl class; add_enemy/get_master Player methods; test_enemy Tester method
+7. feat: UI: player character's name instead of 'you'
+
+---
+
+### v0.2.7 "Kung-Fu Classes" — 2013-09-15
+
+1. **refactor: weapons are now Weapon class instances (new weapons module); techniques module with a Tech class and subclasses; game moved to a separate module; testing_tools module with a Tester class** (hence the codename)
+2. feat: earn_reward method (and a new stat for total rewards earned)
+3. feat: Thief encounter
+4. feat: auto save
+5. balance: convict reward multiplier decreased to 25; convict reward split with an ally; convict can be armed
+6. feat: show the approximate win chance when encountering extorters
+7. feat: UI: reordered practice/teach-students options; tournament winner announcement shows name, level and style ("Unknown (lv.10 Flying Elephant) wins the tournament"); gambler win message tweak
+
+---
+
+### v0.2.6 "Bug, Fun, Treasures" — 2013
+
+1. **feat: National Treasures story** ("Treasures")
+2. feat: the 'deadly' Flower Kung-fu style
+3. feat: new encounters: police fighting thugs, racketeers ("Fun")
+4. feat: accomplishments (like defeating the foreigner boss); randomized attack order (with ordered display); auto fight option in school challenges
+5. balance: fairer exp distribution in group fights; style bonus limited to max 50% per emphasis (reached at level 10); stories develop more slowly; rarer convict, beggar and drunkard encounters and school challenges; decreased tournament prize; more noticeable changes in crime, poverty and interest in kung-fu
+6. fix: state display raised an error when the player had no techniques; a fighter could get disarmed in simulation (fixed with fighter copies); challenger disarm bug at the beginning of a fight ("Bug")
+7. refactor: delete the foreigner boss after the story; Player.get_fame(); story module functions to classes; more readable save files; attack/defend/focus are Fighter methods now; test_story/quick_exp/quick_money testing functions
+8. feat: UI: more informative fight messages; enemy levels displayed when choosing a target in group fights
+
+---
+
+### v0.2.5 "Technical IOSMW" — 2013
+
+("Technical In Oh So Many Ways", per the source file's first line)
+
+1. **feat: weapon techniques (x7); learn a new technique every 3 levels (choose one of two, descriptions shown); Qi, Dragon and Warrior Breathing; Attack and Disarm / Defend and Disarm — actually work!**
+2. feat: NPCs get random techs (persistent — saved properly); challengers have fixed levels and can be armed; chance to grab an improvised weapon when attacked by an armed robber; tournament skipped if no players participate
+3. feat: new improvised weapon: hammer
+4. balance: gamblers encountered less frequently; similar style emphasis pairs (qi+health vs health+qi) are avoided
+5. fix: multiple weapon bonuses could apply; fighters weren't disarmed after fights; encounters on the day before full recovery; shifted fight UI lines
+6. refactor: all modules except kung_fu moved into a subfolder; error messages redirected to errors.txt; game_loop split into state_menu/show_turn_info/inact_check; new Fighter methods (breathe, gain_hp, gain_qp); improved Fighter/Player inheritance
+7. feat: UI: techniques shown in state; improved state display
+
+---
+
+### v0.2.4 "Sugar" — 2013
+
+1. feat: UI: save/load/quit and player info in the 'State' submenu; detailed player info available in-game; style emphases displayed pre-fight (and at level-up only when needed); better fighters' info before tournaments; better fight messages
+2. feat: to become a master, the player must complete a minimum of school challenges; no school challenges after 3; no tournaments if players aren't experienced enough; players' friends sometimes participate in tournaments; stories can't start until a player reaches TOURNAMENT_LV[0]
+3. fix: injured players can no longer participate in tournaments
+4. refactor: used names derived rather than saved; disarm moved into level_up; clearer fight code; calc_st_bonus/get_att_string/get_full_pwr are Fighter methods; get_fighters_info is a Player method
+
+---
+
+### v0.2.3 "First Story" — 2013
+
+1. **feat: the first story — the foreigner; 4 foreign countries and styles, a few names** (hence the codename)
+2. feat: no identical emphases when generating styles; escaped convicts are anonymous; new weapon: piece of rope
+3. feat: UI: fight messages display HP after all attacks; the game pauses when you can't pay for something; pak() is 'silent' by default
+4. fix: players are no longer occasionally greeted as masters during walks
+5. feat[dev]: post_mortem debugging function
+6. refactor: story module; __str__ for fighters/players (great for save_game); g.bosses dictionary
+
+---
+
+### v0.2.2 "Qi Machine" — 2013
+
+1. refactor: chi -> qi, cp -> qp throughout (hence the codename)
+2. feat: fight AI: attack an exhausted enemy only if some damage can be dealt; new AIs (ai_new2c/2d/2e/3a — 2d strongest but predictable and boring); DEFAULT_AI = ai_new2e
+3. feat: possible injuries during training
+4. balance: poverty-based encounters limited to 1 at a time
+5. feat: UI: marker for maxed-out qi points; improved school-practice output; fighters' stats properly hidden before fights
+6. fix: nasty bug in run_test3 (it was always ai_new3 vs ai_old!)
+7. feat[dev]: run_test4 (500,000 fights); some new name parts
+
+---
+
+### v0.2.1 "Wuxia" — June 2013
+
+1. **feat: weapons! Traditional (staff, sword etc.), improvised (broom, umbrella, chopsticks etc.), robber weapons and armed robbers; more exp for defeating armed fighters**
+2. feat: improved fight mechanics: limit qi; select target; better display; enemy stats hidden before fights
+3. feat: master joins some fights; school challenges; gambling reduces reputation; more realistic Chinese names
+4. feat: better AI (ai_new2b); gang leader instead of robber 1; anonymous tournament participants (Participant A, B etc.); y/n menu changed to 1/2
+5. refactor: reorganized fight and constants modules; improved robbers function; AI tests in a separate module
+
+---
+
+### v0.2.0 — 2013
+
+1. feat: improved display of fighters' info
+2. feat[dev]: fight AI test suite
+3. feat: improved fight AI
+
+---
+
+### v0.1.x (2013) — the pre-changelog era
+
+No changelogs were kept yet: v0.1.0 is a single-file-game snapshot with no
+notes at all, and v0.1.1–v0.1.9 contain only `to do.txt` files — flat todo
+lists with no done-marking. The entries below are **inferred** from items
+disappearing between consecutive versions' todo lists (and from new files
+appearing in the snapshots), so treat them as approximate.
+
+### v0.1.9 — 2013
+
+- (inferred) challenger friendship chance based on level and victory; thugs and robber groups nerfed to level 1; new-student encounter; gambler; conditional encounters
+
+### v0.1.8 — 2013
+
+- (inferred) money_earned statistic; tournaments; students
+
+### v0.1.7 — 2013
+
+- (inferred) friends join home training; town name; random events (`events.py` appears in this snapshot)
+
+### v0.1.6 — 2013
+
+- (inferred) full character info option (statistics, friends, enemies); character features (friendly/greedy, fast learner/hard worker); background features (rich/poor parents); events (crime/poverty/kung-fu rises and falls; enemies/friends grow stronger/weaker)
+
+### v0.1.5 — 2013
+
+- (inferred) style emphases factored in; can't join fights if injured; draws; statistics; exhaustion (to nerf attack)
+
+### v0.1.4 — 2013
+
+- (inferred) challenger looks tough or weak; fight() moved to the Fighter class (Player overloads it); load-game error fixed; beggar money tiers; auto-battle; beggar fights; drunkard; challenger; friends join fights
+- (inferred) refactor: code split into modules (constants, encounters, fight, fighter, player, utilities)
+
+### v0.1.3 — 2013
+
+- (no completions detectable — this version's todo list is a strict superset of v0.1.2's)
+
+### v0.1.2 — 2013
+
+- (inferred) defense chi bonus limited and no longer increasing until the next turn; better fight AI; auto-battle reviewed; friends
+
+### v0.1.1 — 2013
+
+- (no change info — the first `to do.txt` appears here)
+
+### v0.1.0 — 2013
+
+- The earliest snapshot: a single-file game (`kung_fu.py` + `interface.py`), no notes kept
