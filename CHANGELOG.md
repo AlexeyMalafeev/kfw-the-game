@@ -4,7 +4,18 @@ All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames
 because kung-fu movies.
 
-## [Unreleased] — post-hiatus modernization (September 2026)
+## [Unreleased]
+
+## [v0.7.0-beta "Secret Kung-Fu Manuscripts Don't Burn"] — 2026-09-07
+
+First release after a four-year hiatus (since v0.6.9-beta, 2022-11-20): a
+post-hiatus modernization cycle, and the first cycle developed with the aid
+of coding agents (previous releases were written fully manually). Highlights:
+JSON save format (with a legacy loader), secret style techniques with lv-10
+upgrades, in-fight stats, a pytest suite, per-system docs, and a pile of
+long-standing bug fixes (broken game loading, near-useless blocking, dead
+SmartAIP knobs, the default-styles startup crash, broken handcrafted style
+move strings).
 
 ### Added
 - **Secret style techniques**: the lv-7 tech of every tech style is now secret —
