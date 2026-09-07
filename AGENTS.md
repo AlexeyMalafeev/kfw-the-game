@@ -100,3 +100,11 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   on crashes/runs; don't commit them.
 - Terminal input goes through `kf_lib/ui/_keyboard.py` (msvcrt on Windows, termios
   elsewhere) — game scripts need a real TTY; piped stdin raises EOFError at prompts.
+
+## Dev memory
+
+`DEV_MEMORY.md` (gitignored, local-only) is a private diary of memorable dev
+moments shared with the user. Consult it when cross-session continuity matters;
+append short dated entries when a moment is worth keeping. Its contents are
+private — never quote them into the changelog, backlog, docs, or commit
+messages.

@@ -12,3 +12,4 @@ errors.txt
 kfw.log
 .pytest_cache/
 .DS_Store
+/DEV_MEMORY.md
