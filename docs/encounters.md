@@ -229,7 +229,7 @@ eligibility window; `state` is `None` (not started), `0..n` (current scene), or
   `fighter_factory.new_foreigner()`), so mid-story saves work. The
   `get_init_string` / `__repr__` machinery is the legacy exec-based save path.
 
-Six stories exist: `StrangeDreamsStory` (lv 6–8; dream spars incl. a copy of
+Eleven stories exist: `StrangeDreamsStory` (lv 6–8; dream spars incl. a copy of
 yourself, exp rewards), `BanditFianceStory` (6–9; two scenes, boss fight, +25
 rep), `StolenTreasuresStory` (8–10; four scenes, bribe-or-infiltrate choice,
 +30 rep), `ForeignerStory` (9–12; watch the foreign boss fight for exp, then
@@ -237,6 +237,36 @@ challenge him, +30 rep), `NinjaTurtlesStory` (12–15; one fight, reward is the
 full Turtle Nunjutsu tech line), `RenownedMasterStory` (14–16; defend your
 school's honor against a challenger master). Rewards are rep, exp,
 accomplishments, moves and techs.
+
+Five stories are built around free-for-all fights (`fighting/fight`):
+
+- `GrandMeleeStory` (3–6): a promoter stages a prize melee (FFA vs 5–7
+  brawlers, entry fee, purse); winning leads to the armed Night Melee (FFA vs
+  4–6 prize fighters). Fighting for money is against the wushu code — rep
+  penalties, and afterwards the hero's master delivers a reprimand scene with
+  a 0.2 chance of a school ban: while `banned_from_school` is set,
+  `practice_school` becomes `beg_master_for_mercy` (no tuition, no exp, 0.25
+  forgiveness chance, separate 0.2 chance of a forced `SchoolBullying`
+  episode). Scene branching is encoded in `state` (losing the day melee skips
+  the night scene) so mid-story saves work.
+- `SaintsDayRiotStory` (5–9): festival → optional wine (rolls
+  `drink_with_drunkard`; drinking costs a sick day) → a huge FFA riot with
+  school students and brawlers → an aftermath scene: take responsibility (fine
+  / rep penalty) or pin the blame on a rival school (rep up, but that school's
+  master becomes a persistent enemy — appended to `p.enemies` directly since
+  masters are already registered).
+- `JadeTableStory` (9–13): hired muscle at a crime-boss sit-down that explodes
+  into a **group free-for-all** (`group_free_for_all` — the hero alone vs each
+  boss with 1–2 bodyguards; groupmates never fight each other). Winning
+  decapitates the underworld (double `crime_down`, +30 rep); losing turns the
+  registered boss into a persistent enemy (`self.boss = None` before `end()`
+  so he stays registered).
+- `EightGatesStory` (11–14): gated on the 'Battle Royale Champion'
+  accomplishment (`test()` override) — an 8-disciple FFA trial with no
+  environment/items; the reward is a random learnable tech.
+- `WrongPouchStory` (4–8): comedy; a pickpocket who also robbed two gang
+  fences → a 6-way FFA over the loot pile; winning returns the stolen money
+  plus a random item.
 
 ## Scheduled events and town stats
 

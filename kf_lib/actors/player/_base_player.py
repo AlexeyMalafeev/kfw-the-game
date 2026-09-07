@@ -28,6 +28,10 @@ MASTER_GREETING_CHANCE = 0.1
 TUITION_FEE = 20
 WAGE = 50
 
+# banned from school (Grand Melee story)
+CH_MASTER_FORGIVES = 0.25
+CH_BEG_BULLIED = 0.2
+
 
 # todo Epic Gambler accomplishment
 
@@ -36,7 +40,7 @@ class BasePlayer(Fighter):
     is_player = True
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
-    move_usage'''.split()
+    move_usage banned_from_school'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
 
     exp = Integer(minvalue=0, action='raise')
@@ -103,6 +107,7 @@ class BasePlayer(Fighter):
         self.enemies = []
         self.accompl = []
         self.accompl_dates = []
+        self.banned_from_school = False
         self.move_usage = {}  # move name -> times used, accumulated over all fights
         self.is_master = False
         self.new_school_name = ''
@@ -178,6 +183,31 @@ class BasePlayer(Fighter):
                     trait, self.name, self.traits
                 )
             )
+
+    def beg_master_for_mercy(self):
+        """Banned from school (Grand Melee story): a practice visit becomes a begging
+        scene — no tuition, no exp, a chance of forgiveness and of being bullied."""
+        m = self.game.masters.get(self.style.name)
+        if m is None or self.is_master:
+            self.banned_from_school = False
+            return
+        self.show(f'{self.name} comes to school to beg {m.name} for forgiveness.')
+        if rnd() <= CH_MASTER_FORGIVES:
+            self.banned_from_school = False
+            self.show(
+                f'{m.name}: "Hmm... You do look sincere. Very well, I forgive you. '
+                f'But if I EVER hear about you fighting for money again...!"'
+            )
+            self.log(f'{m.name} forgives {self.name} and lifts the ban.')
+        else:
+            self.show(
+                f'{m.name}: "You still don\'t get it, do you? Come back when you have '
+                f'learned some humility!"'
+            )
+            self.log('Begs the master for forgiveness, in vain.')
+            if self.school_rank > 1 and rnd() <= CH_BEG_BULLIED:
+                encounters.SchoolBullying(self, check_if_happens=False)
+        self.pak()
 
     def buy_item(self, item, price):
         self.pay(price)
@@ -620,6 +650,9 @@ class BasePlayer(Fighter):
 
     def practice_school(self):
         self.log('Practices at school.')
+        if self.banned_from_school:
+            self.beg_master_for_mercy()
+            return True  # to end turn
         if self.check_money(TUITION_FEE):
             self.pay(TUITION_FEE)
             self.change_stat('spent_on_training', TUITION_FEE)

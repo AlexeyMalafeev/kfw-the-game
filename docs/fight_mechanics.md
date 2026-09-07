@@ -372,6 +372,12 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   and `handle_items`), which `BaseFreeForAll` overrides; the HP bar
   (`visualize_fight_state`) is built from `act_allies`/`act_targets`, so it
   shows "me vs the rest" in a melee.
+- Group free-for-all (`group_free_for_all(groups, ...)`,
+  `BaseGroupFreeForAll`): like FFA but participants fight in groups — no
+  infighting within a group, targets are all active fighters outside one's
+  group; the fight ends when a single group has anyone standing (`winners` is
+  that whole group, incl. downed members, matching two-sided side semantics;
+  `win` reports whether `groups[0]` won). Used by `JadeTableStory`.
 
 ## AI note
 

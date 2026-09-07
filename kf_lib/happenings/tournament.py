@@ -127,6 +127,8 @@ class Tournament(object):
         self.g.msg(f'{winner.name} wins the tournament!')
         if winner.is_player:
             winner.win_tourn(self.prize)
+            if self.ffa:
+                winner.add_accompl('Battle Royale Champion')
 
     def _place_bets(self):
         for p in self.g.get_act_players():

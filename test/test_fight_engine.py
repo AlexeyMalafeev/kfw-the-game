@@ -5,13 +5,13 @@ from kf_lib import game  # import first: avoids circular import via kf_lib.actor
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.player import SmartAIP
-from kf_lib.fighting.fight import AutoFight, free_for_all
+from kf_lib.fighting.fight import AutoFight, free_for_all, group_free_for_all
 from kf_lib.fighting.fight._base_fight import (
     ENVIRONMENT_BONUSES,
     LOSER_EXP_DIVISOR,
     BaseFight,
 )
-from kf_lib.fighting.fight._free_for_all import BaseFreeForAll
+from kf_lib.fighting.fight._free_for_all import BaseFreeForAll, BaseGroupFreeForAll
 from kf_lib.constants.experience import BASE_FIGHT_EXP, LOSER_EXP
 
 
@@ -446,3 +446,70 @@ class TestFreeForAll:
         for ff in fs:
             assert f.get_act_targets(ff) == [x for x in fs if x is not ff]
             assert f.get_act_allies(ff) == [ff]
+
+
+class TestGroupFreeForAll:
+    """Group free-for-all: groups fight each other, no infighting."""
+
+    def run_gffa(self, groups, seed=0):
+        random.seed(seed)
+        return group_free_for_all(groups, return_fight_obj=True)
+
+    def make_groups(self):
+        return [
+            [lv1_fighter('Hero')],
+            [lv1_fighter('Boss1'), lv1_fighter('Guard1')],
+            [lv1_fighter('Boss2'), lv1_fighter('Guard2')],
+        ]
+
+    def test_three_groups_end_with_at_most_one_winning_group(self):
+        groups = self.make_groups()
+        f = self.run_gffa(groups)
+        assert f.win in (True, False)
+        all_fs = [ff for grp in groups for ff in grp]
+        assert sorted(f.winners + f.losers, key=id) == sorted(all_fs, key=id)
+        # winners, if any, form exactly one whole group
+        if f.winners:
+            assert any(sorted(f.winners, key=id) == sorted(grp, key=id) for grp in groups)
+
+    def test_win_is_true_iff_protagonist_group_wins(self):
+        for seed in range(10):
+            groups = self.make_groups()
+            f = self.run_gffa(groups, seed=seed)
+            assert f.win == bool(f.winners and groups[0][0] in f.winners)
+
+    def test_no_infighting(self):
+        random.seed(0)
+        groups = self.make_groups()
+        f = BaseGroupFreeForAll(groups)
+        for grp in groups:
+            for ff in grp:
+                ff.hp = 10
+        assert not f.check_fight_over()
+        hero, boss1, guard1 = groups[0][0], groups[1][0], groups[1][1]
+        assert f.get_act_targets(boss1) == [hero] + groups[2]
+        assert f.get_act_allies(boss1) == [boss1, guard1]
+
+    def test_group_with_survivors_beats_stronger_half_dead_group(self):
+        random.seed(0)
+        groups = self.make_groups()
+        f = BaseGroupFreeForAll(groups)
+        groups[0][0].hp = 0  # protagonist down
+        groups[1][0].hp = 10  # boss1 standing
+        groups[1][1].hp = 0  # guard1 down
+        for ff in groups[2]:
+            ff.hp = 0
+        assert f.check_fight_over()
+        assert f.winners == groups[1]  # whole group, incl. the downed guard
+        assert f.win is False
+
+    def test_seeded_group_ffa_variants_terminate(self):
+        for seed in range(10):
+            random.seed(seed)
+            groups = [
+                [fighter_factory.new_thug()],
+                [fighter_factory.new_thug() for _ in range(2)],
+                [fighter_factory.new_thug() for _ in range(2)],
+            ]
+            f = self.run_gffa(groups, seed=seed)
+            assert len(f.winners) + len(f.losers) == 5

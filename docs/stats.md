@@ -94,7 +94,11 @@ Accomplishments come from three sources:
   'Fat Girl Defeated', 'Personality Change' (Wise Man changes a trait),
   'Gambler Beaten', 'Weird Item', 'Beat Tough Thief', 'Enemy Reformed', plus
   one per completed story ('Beat Self', 'National Treasures', 'TMNT',
-  'Renowned Master', 'Beat Bandit Fiance', 'Foreign Challenger').
+  'Renowned Master', 'Beat Bandit Fiance', 'Foreign Challenger', 'Grand Melee
+  Champion', 'King of the Night Ring', 'Riot Survivor', 'Jade Table',
+  'Eight Gates', 'Pouch Justice').
+- Tournament: 'Battle Royale Champion' (winning a battle-royale-format
+  tournament; gates the `EightGatesStory`).
 
 What they give: flat exp on earning; `len(p.accompl)` feeds the 'Kung-fu
 Legend' victory condition (≥ 8, `Playing.check_victory_conditions`) and

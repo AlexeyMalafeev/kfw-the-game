@@ -173,8 +173,11 @@ are unordered unless marked.
   weapon (Move), grab improvised weapons during fights (secret tech,
   automatic), interact with environment (esp. unblockables)
 - ~~free-for-all fights~~ ✅ Done 2026-09: `free_for_all()` /
-  `BaseFreeForAll` fight variant; battle-royale tournaments (25%), StreetBrawl
-  and GangWar encounters, FFA branches in Robbers/HelpPolice/Brawler
+  `BaseFreeForAll` + `group_free_for_all()` / `BaseGroupFreeForAll` fight
+  variants; battle-royale tournaments (25%), StreetBrawl and GangWar
+  encounters, FFA branches in Robbers/HelpPolice/Brawler, and five FFA stories
+  (GrandMelee incl. school-ban mechanic, SaintsDayRiot, JadeTable,
+  EightGates, WrongPouch)
 - ~~in-fight stats (strikes thrown/landed, accuracy, moves used, damage dealt)~~
   ✅ Done 2026-09: per-fight `fight_stats` on every fighter, post-fight "Stats"
   menu shows them, players accumulate all-time `strikes_thrown/landed`,

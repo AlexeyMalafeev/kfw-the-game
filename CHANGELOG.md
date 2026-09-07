@@ -7,6 +7,30 @@ because kung-fu movies.
 ## [Unreleased]
 
 ### Added
+- **Group free-for-all fights**: `group_free_for_all()` /
+  `BaseGroupFreeForAll` — several groups fight each other with no infighting
+  within a group, last group standing wins
+- **'Battle Royale Champion' accomplishment** for winning a battle-royale
+  tournament
+- **Five new story lines** built around the free-for-all mechanics:
+  - `GrandMeleeStory` (lv 3–6): a shady promoter's prize melee, then an armed
+    Night Melee for winners; rep penalties (fighting for money is against the
+    wushu code), a comic reprimand from the hero's master, and a 20% chance of
+    a school ban — while banned, school practice is a begging scene (no
+    tuition, no exp, 25% forgiveness chance, 20% bullying chance per visit)
+  - `SaintsDayRiotStory` (lv 5–9): a festival turns into a giant street riot
+    FFA; the aftermath lets you take responsibility or pin the blame on a
+    rival school (making its master your enemy)
+  - `JadeTableStory` (lv 9–13): hired muscle at a crime-boss sit-down that
+    explodes into a group free-for-all (hero vs each boss with bodyguards);
+    winning decapitates the underworld, losing makes the boss a persistent
+    enemy
+  - `EightGatesStory` (lv 11–14): gated on the 'Battle Royale Champion'
+    accomplishment; an 8-disciple FFA trial (no items/environment) with a
+    secret-technique reward
+  - `WrongPouchStory` (lv 4–8): a pickpocket who also robbed two gang fences;
+    a comedic 6-way FFA over the loot pile, winning returns the stolen money
+    plus a random item
 - **Free-for-all fights**: new fight variant (`fighting/fight/_free_for_all.py`,
   `free_for_all()` helper) — 3+ fighters, no teams, every fighter targets
   everyone else, last man standing wins (draws possible on double KO / time

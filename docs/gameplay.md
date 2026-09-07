@@ -60,7 +60,10 @@ masters (own school):
   is *not* consumed. Grants `SCHOOL_TRAINING_EXP` (10) ×
   `school_training_exp_mult` × rnd 0.8–1.2, silently. Then a school encounter
   sweep (`MasterTrial`×3, `SchoolChallenge`×3, `SchoolBullying`) and a 5%
-  training injury roll (`training_injury`; 1 inactive day).
+  training injury roll (`training_injury`; 1 inactive day). If the player is
+  `banned_from_school` (Grand Melee story), the visit is a begging scene
+  instead: no tuition, no exp, no encounters; 0.25 chance the master forgives
+  (lifts the ban) and a separate 0.2 chance of a `SchoolBullying` episode.
 - **Practice** (master): same exp formula (`MASTER_TRAINING_EXP`, also 10) but
   no tuition, no encounters, no injury roll. Strictly better than school
   practice.
