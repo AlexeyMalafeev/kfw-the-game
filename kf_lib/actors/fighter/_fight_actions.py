@@ -257,12 +257,8 @@ class FighterWithActions(FighterAPI, ABC):
 
     def start_fight_turn(self) -> None:
         cur_fight = self.current_fight
-        self.act_targets = (
-            cur_fight.active_side_b if self in cur_fight.active_side_a else cur_fight.active_side_a
-        )
-        self.act_allies = (
-            cur_fight.active_side_b if self in cur_fight.active_side_b else cur_fight.active_side_a
-        )
+        self.act_targets = cur_fight.get_act_targets(self)
+        self.act_allies = cur_fight.get_act_allies(self)
         self.action = None
         self.dfs_bonus = 1.0
         self.dfs_penalty_mult = 1.0
@@ -332,8 +328,7 @@ class FighterWithActions(FighterAPI, ABC):
                 self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
 
     def visualize_fight_state(self) -> str:
-        ft = self.current_fight
-        side_a, side_b = ft.active_side_a, ft.active_side_b
+        side_a, side_b = self.act_allies, self.act_targets
         n_a, n_b = len(side_a), len(side_b)
         hp_a, hp_b = sum((f.hp for f in side_a)), sum((f.hp for f in side_b))
         bar = get_bar(hp_a, hp_a + hp_b, '/', '\\', 20)

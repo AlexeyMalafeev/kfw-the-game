@@ -20,6 +20,7 @@ class Tournament(object):
             tourn_type: str = '',
             fee: int = 100,
             prize: str = 'auto',
+            ffa: bool = False,
     ):
         self.g = self.game = game  # todo decouple tournament from game
         self.num_participants = num_participants
@@ -28,6 +29,7 @@ class Tournament(object):
         self.tourn_type = tourn_type
         self.fee = fee
         self.prize = prize if prize != 'auto' else self._calc_prize()
+        self.ffa = ffa
         self.participants: list = []
         self.spectator: Optional[HumanControlledFighter] = None
         # player_obj: (who_will_win, money_bet)
@@ -39,7 +41,29 @@ class Tournament(object):
     def _calc_prize(self):
         return int(round(self.fee * self.num_participants / 2, -1))
 
+    def _do_battle_royale(self):
+        self.current_round = 1
+        if len(self.participants) < 2:
+            # no melee makes sense; the only participant (if any) wins by default
+            self.winner = self.participants[0] if self.participants else None
+            return
+        self.spectator.cls()
+        self.spectator.msg(
+            f'All {len(self.participants)} participants fight at once — last man standing wins!'
+        )
+        fight_obj = fight.free_for_all(
+            self.participants,
+            environment_allowed=False,
+            items_allowed=False,
+            return_fight_obj=True,
+        )
+        if fight_obj.winners:
+            self.winner = fight_obj.winners[0]
+
     def _do_rounds(self):
+        if self.ffa:
+            self._do_battle_royale()
+            return
         remaining_participants = self.participants[:]
         n_remaining_participants = len(remaining_participants)
         while n_remaining_participants > 1:
@@ -97,6 +121,9 @@ class Tournament(object):
 
     def _give_prize(self):
         winner = self.winner
+        if winner is None:
+            self.g.msg('The tournament ends with no winner!')
+            return
         self.g.msg(f'{winner.name} wins the tournament!')
         if winner.is_player:
             winner.win_tourn(self.prize)
@@ -127,8 +154,12 @@ class Tournament(object):
     def run(self):
         self.g.cls()
         tourn_type_str = f'({self.tourn_type} level)' if self.tourn_type else ''
+        format_str = (
+            ' It is a battle royale: all participants fight at once, last man standing wins!'
+            if self.ffa else ''
+        )
         self.g.msg(
-            f'A kung-fu tournament {tourn_type_str} is organized in {self.g.town_name}. '
+            f'A kung-fu tournament {tourn_type_str} is organized in {self.g.town_name}.{format_str} '
             f'The participation fee is {self.fee}.'
         )
 

@@ -359,6 +359,19 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   `players = []`, so no exp/injuries/stats; prints via plain `print`.
 - `fight()` helper (`_helpers.py`): builds sides, swaps them so a human is on
   side_a, optionally prompts "Auto fight?", picks Auto/Normal.
+- Free-for-all (`_free_for_all.py`): `free_for_all(fighters, ...)` builds
+  `AutoFreeForAll`/`NormalFreeForAll` — `BaseFreeForAll(BaseFight)` with every
+  fighter as their own side (all fighters passed as side_a, side_b empty;
+  `win` reports whether `fighters[0]` won). `get_act_targets` returns every
+  other active fighter, `get_act_allies` just the fighter themselves; the
+  fight ends when at most one fighter is standing (`winners` is that one
+  fighter or empty on a draw, e.g. double KO / time limit). Exp,
+  accomplishments (a solo FFA winner with 5+ losers gets 'Lone Warrior'),
+  gossip and injuries work unchanged. The targeting/allies logic lives in
+  `BaseFight.get_act_targets`/`get_act_allies` (used by `start_fight_turn`
+  and `handle_items`), which `BaseFreeForAll` overrides; the HP bar
+  (`visualize_fight_state`) is built from `act_allies`/`act_targets`, so it
+  shows "me vs the rest" in a melee.
 
 ## AI note
 

@@ -27,11 +27,13 @@ BUY_ITEMS_ENCS = (
         + [StreetPerformer] * 2
 )
 FIGHT_CRIME_ENCS = (
-    [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [HelpPolice] * 7 + [RobbingSomeone] * 7
+    [GRobbers] + [Criminal] * 4 + [Extorters] * 7 + [GangWar] * 2 + [HelpPolice] * 7
+    + [RobbingSomeone] * 7
 )
 HELP_POOR_ENCS = [GBeggar] * 3 + [Beggar] * 10 + [WiseMan] * 5
 PICK_FIGHTS_ENCS = (
         [Brawler] * 3 + [GChallenger] + [Challenger] * 3 + [FriendMatch] * 3 + [PlayerMatch] * 3
+        + [StreetBrawl] * 2
 )
 PRACTICE_SCHOOL_ENCS = [MasterTrial] * 3 + [SchoolChallenge] * 3 + [SchoolBullying]
 SEEDY_PLACES_ENCS = (

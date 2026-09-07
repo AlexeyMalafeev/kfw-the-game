@@ -1,6 +1,7 @@
 import random
 
 from kf_lib.actors import fighter_factory
+from kf_lib.fighting import fight
 from kf_lib.things import items
 from kf_lib.utils import add_article, rnd, rndint
 from ._base_encounter import BaseEncounter, Guaranteed
@@ -14,8 +15,10 @@ ENC_CH_CRIMINAL = 0.03
 
 # misc chances
 CH_CONVICT_ARMED = 0.35
+CH_POLICE_CHAOS = 0.25
 CH_ROBBER_ARMED = 0.35
 CH_ROBBER_ENEMY = 0.1
+CH_ROBBERS_SQUABBLE = 0.25
 CH_THIEF_ARMED = 0.3
 CH_THIEF_ESCAPES = 0.3
 CH_THIEF_TOUGH = 0.1
@@ -38,6 +41,8 @@ MONEY_THIEF_STEALS = (25, 50, 75, 100, 200)
 
 # numbers
 NUM_EXTORTERS = (2, 6)
+NUM_GANG_WAR = (2, 3)
+NUM_POLICE_CHAOS_GANG = (2, 3)
 NUM_POLICE_VS_THUGS = (2, 4)
 NUM_THUGS_VS_POLICE = (+1, +4)  # always more than the police
 NUM_ROBBERS_CROWD = (5, 8)
@@ -146,6 +151,40 @@ class Extorters(BaseEncounter):
 
 
 
+class GangWar(BaseEncounter):
+    def check_if_happens(self):
+        return rnd() <= self.player.game.crime / 4
+
+    def run(self):
+        p = self.player
+        num_a = rndint(*NUM_GANG_WAR)
+        num_b = rndint(*NUM_GANG_WAR)
+        p.show(
+            f'{p.name} walks right into a street war between two gangs, '
+            f'{num_a} against {num_b} — and both sides think {p.name} is with the enemy!'
+        )
+        p.log('Gets caught in a gang war.')
+        gang_a = fighter_factory.new_thug(n=num_a)
+        gang_b = fighter_factory.new_thug(n=num_b)
+        for e in gang_a + gang_b:
+            if random.choice((True, False)):
+                e.arm_robber()
+        opp = gang_a + gang_b
+        opp_strength = p.get_rel_strength(*opp)
+        esc_chance = get_escape_chance(p)
+        if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(
+                p, opp_to_self_pwr_ratio=opp_strength[0]):
+            if fight.free_for_all([p] + opp):
+                p.show(f'{p.name} is the last one standing!')
+                p.gain_rep(len(opp))
+                p.game.crime_down()
+                try_enemy(p, opp[0], CH_THUG_ENEMY)
+        else:
+            try_escape(p, esc_chance)
+        p.pak()
+
+
+
 class HelpPolice(BaseEncounter):
     def check_if_happens(self):
         return rnd() <= self.player.game.crime / 4
@@ -166,6 +205,9 @@ class HelpPolice(BaseEncounter):
                 e.arm_robber()
         opp_strength = p.get_rel_strength(*en, allies=al)
         if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
+            if rnd() <= CH_POLICE_CHAOS:
+                self.do_chaos(al, en)
+                return
             p.gain_rep(num_en - num_al)
             p.check_help(allies=False, master=False, school=False)
             if p.fight(en[0], al, en[1:]):
@@ -173,6 +215,22 @@ class HelpPolice(BaseEncounter):
                 p.pak()
         else:
             p.log("Does not help the police.")
+
+    def do_chaos(self, al, en):
+        p = self.player
+        newcomers = fighter_factory.new_thug(n=rndint(*NUM_POLICE_CHAOS_GANG))
+        for e in newcomers:
+            if random.choice((True, False)):
+                e.arm_robber()
+        p.show(
+            f'Suddenly, {len(newcomers)} more thugs arrive to rob both sides — '
+            f'the fight turns into a total free-for-all!'
+        )
+        p.log('The fight turns into a free-for-all.')
+        if fight.free_for_all([p] + al + en + newcomers):
+            p.show('Police Officer: "Thank you very much for your help!"')
+            p.gain_rep(len(en) + len(newcomers) - len(al))
+            p.pak()
 
 
 
@@ -184,6 +242,7 @@ class Robbers(BaseEncounter):
         self.sn = ""
         self.sv = ""
         self.escape_chance = 0
+        self.squabble = False
         self.money = random.choice(MONEY_GIVE_ROBBERS)
         BaseEncounter.__init__(self, player, check_if_happens)
 
@@ -204,6 +263,7 @@ class Robbers(BaseEncounter):
         self.sn = "s" if self.num_r > 1 else ""
         self.sv = "" if self.num_r > 1 else "s"
         self.escape_chance = get_escape_chance(self.p)
+        self.squabble = self.num_r >= NUM_ROBBERS_CROWD[0] and rnd() <= CH_ROBBERS_SQUABBLE
 
     def start_one(self):
         self.p.show(f"{self.p.name} encounters a robber.")
@@ -239,6 +299,17 @@ class Robbers(BaseEncounter):
 
     def do_fight(self):
         p = self.p
+        if self.squabble:
+            p.show(
+                'The robbers start arguing over how to split the loot... In the chaos, '
+                "it's everyone for themselves!"
+            )
+            p.log('The robbers squabble over the loot.')
+            if fight.free_for_all([p, self.r] + self.rs):
+                p.game.crime_down()
+                p.gain_rep(self.num_r)
+                try_enemy(p, self.r, CH_ROBBER_ENEMY)
+            return
         if self.num_r > 1:
             p.check_help()
             allies = p.allies

@@ -640,8 +640,9 @@ class BasePlayer(Fighter):
         super().prepare_for_fight()
         self.exp_bonuses = 0
         self.log('Fight:')
-        for ff in self.current_fight.side_a + self.current_fight.side_b:
-            if ff == self.current_fight.side_b[0]:
+        side_b = self.current_fight.side_b
+        for ff in self.current_fight.side_a + side_b:
+            if side_b and ff == side_b[0]:
                 self.log('vs')
             self.log(ff.get_f_info())
 

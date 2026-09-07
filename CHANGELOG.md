@@ -6,6 +6,29 @@ because kung-fu movies.
 
 ## [Unreleased]
 
+### Added
+- **Free-for-all fights**: new fight variant (`fighting/fight/_free_for_all.py`,
+  `free_for_all()` helper) — 3+ fighters, no teams, every fighter targets
+  everyone else, last man standing wins (draws possible on double KO / time
+  limit). Exp, accomplishments (incl. 'Lone Warrior'), gossip and injuries work
+  as in normal fights
+- **Battle-royale tournaments**: 25% of tournaments are now 8-man free-for-all
+  melees (`CH_TOURNAMENT_FFA`) instead of single elimination; a draw means no
+  winner, no prize and all bets lost
+- New encounters: `StreetBrawl` (jump into 3–5 brawlers already fighting each
+  other) and `GangWar` (caught between two warring gangs, everyone fights
+  everyone; boosted in `PICK_FIGHTS_ENCS` / `FIGHT_CRIME_ENCS`)
+- Free-for-all branches in existing encounters: `Robbers` crowds may squabble
+  over the loot (0.25), `HelpPolice` may draw a second gang into a three-way
+  melee (0.25), `Brawler` fights may spread to bystanders (0.25)
+
+### Changed
+- Targeting/ally logic in the fight engine is now dispatched through
+  `BaseFight.get_act_targets`/`get_act_allies` (used by `start_fight_turn` and
+  `handle_items`), and the in-fight HP bar is built from `act_allies`/
+  `act_targets` — two-sided behavior unchanged, free-for-all overrides the
+  hooks
+
 ## [v0.7.0-beta "Secret Kung-Fu Manuscripts Don't Burn"] — 2026-09-07
 
 First release after a four-year hiatus (since v0.6.9-beta, 2022-11-20): a

@@ -107,6 +107,9 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `Robbers` (chance = crime/2): 1, 2–4 or 5–8 robbers demand money;
   `fight_run_or_pay`. Winning vs a group lowers `game.crime`, grants rep per
   robber, and may create an enemy; paying records the `money_robbed` stat.
+  Against a crowd (5–8), there is a 0.25 chance the robbers squabble over the
+  loot first — if the player chooses to fight, it becomes a free-for-all
+  (`free_for_all`) with the same win rewards.
 - `Thief` (crime/3): pickpocketing vs `p.thief_steals`; steals a random item or
   cash. A caught thief fights back; 10% of the time (at the player's levels) it
   is the persistent named `game.thief`, whose defeat yields the 'Beat Tough
@@ -114,7 +117,14 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `Extorters` / `RobbingSomeone` / `HelpPolice` (crime/4 each): intervene in
   street crime alongside friends/schoolmates or the police; winning lowers
   crime. Extorters can end with a grateful shop owner's item gift or a bill for
-  breakages (refusing to pay costs rep).
+  breakages (refusing to pay costs rep). `HelpPolice` has a 0.25 chance that a
+  second gang piles in, turning the scene into a free-for-all melee (police,
+  thugs, newcomers and the player all fighting everyone).
+- `GangWar` (crime/4): the player walks into a street war between two gangs of
+  thugs (2–3 each, some armed) and both sides treat them as the enemy;
+  `fight_or_run` — fighting means a free-for-all against both gangs at once,
+  winning lowers crime and grants rep per thug. Boosted ×2 in
+  `FIGHT_CRIME_ENCS`.
 - `Criminal` (flat 0.03, needs `game.criminals`): fight a wanted convict; the
   reward is `criminal.level * random multiplier`, split with one helping ally.
   ⚠️ In `Criminal.reward` the ally gets the halved `rep_gain`, but the player
@@ -124,7 +134,13 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 ### Street people (`_people.py`)
 
 - `Brawler`: provoked in the street; brawling costs rep, apologizing gains a
-  little — but the brawler may attack anyway (0.2).
+  little — but the brawler may attack anyway (0.2). Either way, there is a 0.25
+  chance the commotion draws in 2–4 bystanders and the fight becomes a
+  free-for-all street melee.
+- `StreetBrawl` (0.03, non-masters): the player stumbles on 3–5 brawlers
+  already fighting each other and can jump in (`brawl_or_not`) — a
+  free-for-all; joining costs brawling rep, winning grants 2 rep per brawler.
+  Boosted ×2 in `PICK_FIGHTS_ENCS`.
 - `Drunkard`: drink (rep penalty, a sick day) or refuse and risk a fight. The
   persistent legendary `game.drunkard` (lv 8–12) can befriend the player and
   teach a move, then leaves the game.
@@ -256,6 +272,12 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
 - **Creation**: daily via `events.new_tournament` — a random level bracket from
   `TOURNAMENTS` (beginner 1–3 … master 11–14), participant count drawn by
   `random.choices` (heavily favors 8 or 16), fee from `TOURN_FEES` (50–150).
+  There is a 0.25 chance (`CH_TOURNAMENT_FFA`) the tournament is a **battle
+  royale** instead: always 8 participants, one free-for-all melee
+  (`_do_battle_royale` → `fight.free_for_all`), last man standing wins. A
+  battle-royale draw (everyone KO'd) ends the tournament with no winner, no
+  prize and all bets lost; the elimination format still raises
+  `NotImplementedError` on a drawn final.
 - **Gathering** (`_gather_participants`): active players in the level range are
   asked (`tourn_or_not`; AI always accepts) and pay the fee via `enter_tourn`.
   ⚠️ No money check — a broke player (human or AI) pays anyway and can go
@@ -263,7 +285,7 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
   range. ⚠️ `self.spectator = self.participants[0]` (used for round
   announcements) raises `IndexError` if the bracket ends up empty — latent
   crash for level ranges with no eligible fighters.
-- **Rounds** (`_do_rounds`): single elimination. Each round shuffles the
+- **Rounds** (`_do_rounds`): single elimination (the default format). Each round shuffles the
   remaining list and pairs fighters off; an odd one out gets a bye. Every match
   is a real `fight.fight(...)` (no environment, no items) — players' fights are
   interactive as usual, so tournament losses injure and wins grant exp exactly

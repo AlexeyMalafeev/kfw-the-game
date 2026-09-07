@@ -5,12 +5,13 @@ from kf_lib import game  # import first: avoids circular import via kf_lib.actor
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.player import SmartAIP
-from kf_lib.fighting.fight import AutoFight
+from kf_lib.fighting.fight import AutoFight, free_for_all
 from kf_lib.fighting.fight._base_fight import (
     ENVIRONMENT_BONUSES,
     LOSER_EXP_DIVISOR,
     BaseFight,
 )
+from kf_lib.fighting.fight._free_for_all import BaseFreeForAll
 from kf_lib.constants.experience import BASE_FIGHT_EXP, LOSER_EXP
 
 
@@ -387,3 +388,61 @@ class TestRelStrength:
         assert c.get_exp_worth() == f.get_exp_worth()
         assert c.weapon is not None and c.weapon.name == 'knife'
         assert [m.name for m in c.moves] == [m.name for m in f.moves]
+
+
+class TestFreeForAll:
+    """Free-for-all fights: everyone fights everyone, last man standing wins."""
+
+    def run_ffa(self, fighters, seed=0):
+        random.seed(seed)
+        return free_for_all(fighters, return_fight_obj=True)
+
+    def test_three_way_ffa_ends_with_at_most_one_winner(self):
+        fs = [lv1_fighter(name) for name in 'ABC']
+        f = self.run_ffa(fs)
+        assert len(f.winners) <= 1
+        assert sorted(f.winners + f.losers, key=id) == sorted(fs, key=id)
+        assert f.win == bool(f.winners and f.winners[0] is fs[0])
+
+    def test_eight_way_ffa_terminates(self):
+        fs = [fighter_factory.new_thug() for _ in range(8)]
+        f = self.run_ffa(fs)
+        assert len(f.winners) <= 1
+        assert len(f.winners) + len(f.losers) == len(fs)
+
+    def test_seeded_ffa_variants(self):
+        for seed in range(10):
+            fs = [fighter_factory.new_thug() for _ in range(4)]
+            f = self.run_ffa(fs, seed=seed)
+            assert len(f.winners) <= 1
+            assert f.win == bool(f.winners and f.winners[0] is fs[0])
+
+    def test_strongest_fighter_wins(self):
+        strong = fighter_factory.new_fighter(20)
+        weak1 = fighter_factory.new_fighter(1)
+        weak2 = fighter_factory.new_fighter(1)
+        f = self.run_ffa([strong, weak1, weak2])
+        assert f.winners == [strong]
+        assert f.win is True
+
+    def test_everybody_down_is_a_draw(self):
+        random.seed(0)
+        fs = [lv1_fighter(name) for name in 'ABC']
+        f = BaseFreeForAll(fs, [])
+        for ff in fs:
+            ff.hp = 0
+        assert f.check_fight_over()
+        assert f.winners == []
+        assert f.losers == fs
+        assert f.win is False
+
+    def test_ffa_targeting_excludes_self(self):
+        random.seed(0)
+        fs = [lv1_fighter(name) for name in 'ABC']
+        f = BaseFreeForAll(fs, [])
+        for ff in fs:
+            ff.hp = 10
+        assert not f.check_fight_over()
+        for ff in fs:
+            assert f.get_act_targets(ff) == [x for x in fs if x is not ff]
+            assert f.get_act_allies(ff) == [ff]

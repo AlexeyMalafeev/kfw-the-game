@@ -9,6 +9,7 @@ from .tournament import Tournament
 CH_SCHOOL_VS_SCHOOL = 0.04
 CH_STORY_BEGINS = 0.1
 CH_TOURNAMENT_BEGINS = 0.15
+CH_TOURNAMENT_FFA = 0.25
 
 # tournaments
 DEFAULT_TOURN_FEE = 100
@@ -103,11 +104,15 @@ def new_story(g):
 def new_tournament(g):
     # game, num_participants=8, min_lv=1, max_lv=5, tourn_type='?', fee='random', prize='auto'
     t = random.choice(TOURNAMENTS)
-    n = random.choices(
-        population=(8, 16, 12, 10, 14, 18, 20),
-        weights=(1.0, 0.5, 0.05, 0.05, 0.05, 0.025, 0.025),
-    )[0]
-    Tournament(game=g, num_participants=n, fee=random.choice(TOURN_FEES), **t)
+    ffa = rnd() <= CH_TOURNAMENT_FFA
+    if ffa:
+        n = 8
+    else:
+        n = random.choices(
+            population=(8, 16, 12, 10, 14, 18, 20),
+            weights=(1.0, 0.5, 0.05, 0.05, 0.05, 0.025, 0.025),
+        )[0]
+    Tournament(game=g, num_participants=n, fee=random.choice(TOURN_FEES), ffa=ffa, **t)
 
 
 def poverty_down(g):

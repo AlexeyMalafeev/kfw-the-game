@@ -1,7 +1,8 @@
 import random
 
 from kf_lib.actors import fighter_factory, traits
-from kf_lib.utils import enum_words, rnd
+from kf_lib.fighting import fight
+from kf_lib.utils import enum_words, rnd, rndint
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_escape
 
@@ -14,10 +15,12 @@ ENC_CH_FAT_GIRL = 0.02
 ENC_CH_GOSSIP = 0.03
 ENC_CH_OVERHEAR_CONVERSATION = 0.03
 ENC_CH_PLAYER_MATCH = 0.01
+ENC_CH_STREET_BRAWL = 0.03
 ENC_CH_WISE_MAN = 0.02
 
 # misc chances
 CH_BRAWLER_ATTACKS = 0.2
+CH_BRAWL_SPREADS = 0.25
 CH_CHANGE_TRAIT = 0.15
 CH_DRUNKARD_FIGHT_STRONG = 0.1
 CH_DRUNKARD_FIGHT_WEAK = 0.1
@@ -34,10 +37,15 @@ MONEY_WISE_MAN = 10
 DRUNKARD_LOSE_MOVE_TIERS = (2, 4)
 # DRUNKARD_WIN_MOVE_TIERS = (4, 6)  # decided not to implement
 
+# numbers
+NUM_BRAWL_BYSTANDERS = (2, 4)
+NUM_STREET_BRAWLERS = (3, 5)
+
 # reputation
 REP_PEN_BRAWL = -3
 REP_PEN_DRINK = -3
 REP_NOT_BRAWL = 1
+REP_WIN_BRAWL = 2
 
 
 class Brawler(BaseEncounter):
@@ -55,7 +63,7 @@ Man: "Hey you! Apologize or I'll beat you up!\"'''
         if p.brawl_or_not(opp_info):
             p.log("Is provoked.")
             p.gain_rep(REP_PEN_BRAWL)
-            p.fight(b)
+            self.do_fight(b)
             p.show('{}: "I shouldn\'t have been provoked so easily..."'.format(p.name))
             p.pak()
         else:
@@ -65,7 +73,22 @@ Man: "Hey you! Apologize or I'll beat you up!\"'''
                 p.log("The brawler won't let go.")
                 p.show('Brawler: "That\'s not good enough!"')
                 p.pak()
-                p.fight(b)
+                self.do_fight(b)
+
+    def do_fight(self, b):
+        p = self.player
+        if rnd() <= CH_BRAWL_SPREADS:
+            bystanders = [
+                fighter_factory.new_brawler() for _ in range(rndint(*NUM_BRAWL_BYSTANDERS))
+            ]
+            p.show(
+                f'The commotion draws in {len(bystanders)} more people — '
+                f'it turns into a full-blown street brawl!'
+            )
+            p.log('The brawl spreads to bystanders.')
+            fight.free_for_all([p, b] + bystanders)
+        else:
+            p.fight(b)
 
 
 
@@ -308,6 +331,31 @@ class PlayerMatch(BaseEncounter):
             p.pak()
         else:
             p.log("Refuses.")
+
+
+
+class StreetBrawl(BaseEncounter):
+    def check_if_happens(self):
+        return not self.player.is_master and rnd() <= ENC_CH_STREET_BRAWL
+
+    def run(self):
+        p = self.player
+        num_b = rndint(*NUM_STREET_BRAWLERS)
+        p.show(
+            f'{p.name} stumbles upon a street brawl — {num_b} men are fighting each other!'
+        )
+        p.log('Sees a street brawl.')
+        brawlers = [fighter_factory.new_brawler() for _ in range(num_b)]
+        opp_info = p.get_rel_strength(*brawlers)
+        if p.brawl_or_not(opp_info) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_info[0]):
+            p.log('Joins the brawl.')
+            p.gain_rep(REP_PEN_BRAWL)
+            if fight.free_for_all([p] + brawlers):
+                p.show(f'{p.name} is the last one standing!')
+                p.gain_rep(num_b * REP_WIN_BRAWL)
+            p.pak()
+        else:
+            p.log('Walks away from the brawl.')
 
 
 

@@ -162,6 +162,12 @@ class BaseFight(object):
                     f.set_ascii('Lying')
                 return
 
+    def get_act_allies(self, f):
+        return self.active_side_a if f in self.active_side_a else self.active_side_b
+
+    def get_act_targets(self, f):
+        return self.active_side_b if f in self.active_side_a else self.active_side_a
+
     def get_f_name_string(self, f):
         if self.school_display:
             return f'{f.name} ({f.get_displayed_style_name()})'
@@ -279,9 +285,9 @@ class BaseFight(object):
         if self.players and self.items_allowed:
             for p in self.players:
                 if p.check_fight_items():
-                    p.act_targets = self.side_b[:] if p in self.side_a else self.side_a[:]
+                    p.act_targets = self.get_act_targets(p)[:]
                     # todo consider removing p from p.act_allies
-                    p.act_allies = self.side_b[:] if p in self.side_b else self.side_a[:]
+                    p.act_allies = self.get_act_allies(p)[:]
                     choice = p.use_fight_item_or_not()
                     if choice:
                         p.used_item = choice
