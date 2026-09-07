@@ -64,7 +64,7 @@ class Fighter(
         self.health = 0
         self.health_full = 0
 
-        self.level = 1
+        self._level = 1
         self.num_atts_choose = 3
         self.rand_atts_mode = 0  # 0, 1, 2
 
@@ -77,7 +77,7 @@ class Fighter(
         self.init_fight_attributes()
 
         self.name = name
-        self.level = level
+        self._level = level
         self.rand_atts_mode = rand_atts_mode
         self.occupation = occupation  # determines which quotes the fighter says
         self.set_att_weights()
@@ -103,9 +103,15 @@ class Fighter(
             )
         return info
 
+    @property
+    def level(self) -> int:
+        """Read-only: use level_up() instead. Direct assignment (f.level = n) is
+        a bug — it leaves attributes, techs and moves under-leveled."""
+        return self._level
+
     def level_up(self, n=1):
         for i in range(n):
-            self.level += 1
+            self._level += 1
             self.upgrade_att()
             self.refresh_dependent_atts()
             self.resolve_techs_on_level_up()

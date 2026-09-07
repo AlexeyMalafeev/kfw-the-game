@@ -98,6 +98,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   from the wrong cwd fails or litters files.
 - Runtime artifacts at repo root (`debug.txt`, `errors.txt`, `kfw.log`) are generated
   on crashes/runs; don't commit them.
+- **`Fighter.level` is a read-only property** — direct assignment (`f.level = 5`)
+  raises `AttributeError` on purpose, because it leaves attributes/techs/moves
+  under-leveled. Use `f.level_up(n)` (also in tests and dev scripts).
 - Terminal input goes through `kf_lib/ui/_keyboard.py` (msvcrt on Windows, termios
   elsewhere) — game scripts need a real TTY; piped stdin raises EOFError at prompts.
 

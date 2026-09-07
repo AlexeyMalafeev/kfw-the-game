@@ -80,10 +80,11 @@ class TestVictoryConditions:
     def test_grandmaster_at_level_20(self):
         assert GRANDMASTER_LV == 20
         p = make_player()
-        p.level = GRANDMASTER_LV
+        p.level_up(GRANDMASTER_LV - 1)
         assert 'Grandmaster' in Playing.check_victory_conditions(p)
-        p.level = GRANDMASTER_LV - 1
-        assert 'Grandmaster' not in Playing.check_victory_conditions(p)
+        p2 = make_player()
+        p2.level_up(GRANDMASTER_LV - 2)
+        assert 'Grandmaster' not in Playing.check_victory_conditions(p2)
 
     def test_folk_hero_at_100_rep(self):
         p = make_player()
@@ -110,7 +111,7 @@ class TestVictoryConditions:
     def test_check_victory_sets_n_days_to_win(self):
         g = make_game()
         g.day, g.month, g.year = 15, 2, 1
-        g.players[0].level = GRANDMASTER_LV
+        g.players[0].level_up(GRANDMASTER_LV - 1)
         assert g.check_victory()
         # n_days = (year-1)*360 + (month-1)*30 + day
         assert g.n_days_to_win == 30 + 15
@@ -118,7 +119,7 @@ class TestVictoryConditions:
     def test_play_indefinitely_disables_victory(self):
         g = make_game()
         g.play_indefinitely = True
-        g.players[0].level = GRANDMASTER_LV
+        g.players[0].level_up(GRANDMASTER_LV - 1)
         assert g.check_victory() is False
 
 

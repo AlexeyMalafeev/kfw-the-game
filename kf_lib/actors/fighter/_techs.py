@@ -122,7 +122,12 @@ class TechMethods(FighterAPI, ABC):
                     self.techs.add(tech)
             # style tech upgrade
             if self.level >= self.STYLE_TECH_UPGRADE_AT_LV:
-                style_techs = [t for t in self.techs if t in self.style.techs.values()]
+                # sorted: self.techs is a set of id-hashed objects, so iterating it is
+                # nondeterministic across runs and breaks seeded determinism
+                style_techs = sorted(
+                    (t for t in self.techs if t in self.style.techs.values()),
+                    key=lambda t: t.name,
+                )
                 if style_techs:
                     t = random.choice(style_techs)
                     self.techs.remove(t)
@@ -132,7 +137,9 @@ class TechMethods(FighterAPI, ABC):
             if n:
                 self.techs |= set(random.sample(techniques.get_upgradable_techs(), n))
             if self.level >= self.ADVANCED_TECH_AT_LV:
-                t = random.choice(techniques.get_upgradable_techs(self))
+                t = random.choice(
+                    sorted(techniques.get_upgradable_techs(self), key=lambda t: t.name)
+                )
                 self.upgrade_tech(t)
 
     def set_techs(self, tech_names: List[Text]) -> None:

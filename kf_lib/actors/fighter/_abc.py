@@ -94,7 +94,8 @@ class FighterAPI(ABC):
     is_human: bool = None
     is_player: bool = None
     kos_this_fight: int = None
-    level: int = None
+    _level: int = None
+    level: int  # read-only property on Fighter; use level_up() to change
     lying_dfs_mult: float = None
     maneuver_time_cost_mult: float = None  # descriptor
     momentum: int = None

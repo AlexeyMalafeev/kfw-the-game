@@ -26,6 +26,14 @@ class TestLevelUp:
         f.level_up(3)
         assert f.level == 5
 
+    def test_direct_level_assignment_is_blocked(self):
+        # f.level = n leaves attributes/techs/moves under-leveled; the property
+        # guards against this easy mistake — use level_up() instead
+        f = bare_fighter('Drunken Boxing')
+        with pytest.raises(AttributeError):
+            f.level = 10
+        assert f.level == 1
+
     def test_level_up_increases_hp_max(self):
         f = bare_fighter('Drunken Boxing')
         hp_before = f.hp_max

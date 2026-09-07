@@ -47,6 +47,15 @@ because kung-fu movies.
   melee (0.25), `Brawler` fights may spread to bystanders (0.25)
 
 ### Changed
+- **`Fighter.level` is now a read-only property** — direct assignment
+  (`f.level = n`) raises `AttributeError`, because it silently leaves
+  attributes/techs/moves under-leveled; use `f.level_up(n)` everywhere
+  (tests and dev scripts included)
+- **Deterministic tech rolls**: `set_rand_techs` no longer picks from an
+  unordered set of id-hashed tech objects (the choice depended on process
+  allocation history, which made
+  `test_set_rand_techs_upgrades_a_style_tech_at_lv_10_plus` flaky); style-tech
+  upgrade and advanced-tech picks now sort candidates by name first
 - Targeting/ally logic in the fight engine is now dispatched through
   `BaseFight.get_act_targets`/`get_act_allies` (used by `start_fight_turn` and
   `handle_items`), and the in-fight HP bar is built from `act_allies`/
