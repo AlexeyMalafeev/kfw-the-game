@@ -344,3 +344,67 @@ move strings).
 22. fix: game loading didn't work after refactoring
 23. fix: "Ox Herb" and "Dragon Herb" now work properly
 24. feat: add version history
+
+---
+
+### v0.6.0 "I'll Be Watching You" — 2020-10-31
+
+Reconstructed from the `! development.txt` changelog file in git history (the
+old `docs/version_history.md` only went back to v0.6.1).
+
+1. **feat: ability to observe what AI players do during their turns** (hence the codename)
+2. **feat: machine learning-based prediction of fight outcomes, 90-91% accurate (LR, RF)**; the trained LR model's intercept and coefficients are usable without any heavy dependencies (`ml_fighter_pwr.py`)
+3. feat: `utilities.multiply(numbers)`, `experience.extract_features(side_a, side_b)`
+4. feat: style moves: Backfist (karate); default moves for some foreign styles
+5. feat: generated throws (15789 -> 15803 moves)
+6. feat: new style: Capoeira
+7. feat: a handful of Thai and Brazilian names
+8. feat: don't add random moves to choose from if there is at least one style string-based move -> more distinct styles
+9. feat: always try to learn a move with a bonus
+10. fix: evil crash in spectating fights
+11. fix: style generation used the same subset of strings
+12. fix: bug in learning new moves at level 10+
+13. feat[dev]: `_run_test_lv_vs_crowd.py` shortcut, `tests` folder, improved `Tester.test_level_vs_crowds`
+
+---
+
+### v0.5.9 "Thousands of Styles" — 2020-05-11
+
+The first version covered by the git repo (initial commit 2020-04-19 was an
+upload of the project mid-cycle); reconstructed from `! development.txt`.
+
+1. **feat: style generation**
+2. feat: new fight AI `GeneticAIAggro`, good at both 1-on-1 and crowd-vs-crowd fights (internal rankings at the time: GeneticAIAggro 7629, GeneticAIExtraRules4 6870, GeneticAITrainedParams8 6795, WeightedActionsAI 6206, BaseAI 862)
+3. feat: player confirms whether the randomly generated fighter is ok in RING
+4. feat: successful blocks and dodges increase qp
+5. feat: foreign styles have appropriate strikes and techs
+6. balance: nerfed weapons; reduced exp multiplier for weapons
+7. feat: moves: Charging and Onslaught elbow, claw and knee moves now possible (13803 -> 16125 moves)
+8. feat: move generation constraints: 'surprise', 'shocking' and 'debilitating' don't overlap in one move (16125 -> 16041); x-based damage functions don't overlap (16041 -> 15789)
+9. refactor: techniques.py, moves.py; removed `move_gen.modified_move` and `RING_debug.py`
+10. feat: Unix support — the game is playable, although with small UI issues
+11. fix: properly linked ASCII for weapon moves
+12. fix: don't get the same move more than once when leveling up
+13. fix: fight items are now canceled after exp earned is calculated
+14. fix: exp bonuses are now properly recorded in statistics
+15. feat: UI: move tier displayed in some situations; ASCII for all weapon moves; more ASCII art for old moves; more concise messages in fights
+16. feat[dev]: reworked test level significance
+
+---
+
+### Pre-git era (2016–2020)
+
+These releases predate the repository (the first git commit is 2020-04-19,
+already mid-v0.5.9), so only versions, codenames and dates survive, from the
+author's records. Note the codenames of v0.5.6/v0.5.7 — the v0.7.0 "comeback"
+theme has a precedent:
+
+- v0.5.0 "Another New System" — 2016-05-18
+- v0.5.1 "Move with Style" — 2016-06-26
+- v0.5.2 "Chatty" — 2016-07-22
+- v0.5.3 "ASCII-fu" — 2016-08-11
+- v0.5.4 "Epic Fights" — 2016-11-16 (re-released later with small changes)
+- v0.5.5 "No-Shadow Kick" — 2017-05-09 (re-released later with small changes and bug fixes)
+- v0.5.6 "2.5 Years Later" — 2020-01-07
+- v0.5.7 "It's Alive" — 2020-01-10
+- v0.5.8 "13.8K Moves and a Genetic Fight AI" — 2020-02-07
