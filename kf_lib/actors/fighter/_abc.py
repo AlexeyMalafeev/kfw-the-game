@@ -29,6 +29,7 @@ if TYPE_CHECKING:
 class FighterAPI(ABC):
     ADVANCED_TECH_AT_LV: Final[int] = 19
     LVS_GET_GENERAL_TECH: Final[Set[int]] = {13, 15, 17}
+    STYLE_TECH_UPGRADE_AT_LV: Final[int] = 10
 
     act_allies: List[FighterAPI] = None
     act_targets: List[FighterAPI] = None
@@ -90,6 +91,8 @@ class FighterAPI(ABC):
     hp_gain_mult: float = None
     in_fight_impro_wp_chance: float = None
     is_auto_fighting: bool = None
+    is_human: bool = None
+    is_player: bool = None
     kos_this_fight: int = None
     level: int = None
     lying_dfs_mult: float = None
@@ -332,6 +335,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def choose_style_tech_to_upgrade(self) -> None:
+        pass
+
+    @abstractmethod
     def cls(self):
         pass
 
@@ -522,6 +529,14 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_displayed_style_name(self) -> Text:
+        pass
+
+    @abstractmethod
+    def get_displayed_style_emph(self) -> Text:
+        pass
+
+    @abstractmethod
     def get_style_tech_if_any(self) -> Optional[Tech]:
         pass
 
@@ -572,6 +587,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def learn_random_new_tech(self) -> None:
+        pass
+
+    @abstractmethod
+    def learn_secret_style_tech(self, tech: Tech) -> None:
         pass
 
     @abstractmethod
@@ -783,6 +802,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def knows_style_secret(self) -> bool:
+        pass
+
+    @abstractmethod
     def unboost(self, **kwargs: Union[int, float]) -> None:
         pass
 
@@ -792,6 +815,10 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def upgrade_att(self) -> None:
+        pass
+
+    @abstractmethod
+    def upgrade_style_tech(self, tech: Tech) -> None:
         pass
 
     @abstractmethod

@@ -125,6 +125,20 @@ class HumanControlledFighter(Fighter):
         t = self.menu(av_techs, 'Choose a technique to improve:')
         self.upgrade_tech(t)
 
+    def choose_style_tech_to_upgrade(self):
+        av_techs = [t for t in self.techs if t in self.style.techs.values()]
+        if not av_techs:
+            return
+        self.show(
+            f'As {self.name} trains hard, delving deeper into the art of '
+            f'{self.get_displayed_style_name()}, he discovers a way to improve one of the '
+            f"style's techniques..."
+        )
+        self.pak()
+        options = [(f'{t.name} ({t.descr})', t) for t in av_techs]
+        t = self.menu(sorted(options), 'Choose a technique to improve:')
+        self.upgrade_style_tech(t)
+
     def cls(self):
         cls()
 
@@ -193,6 +207,47 @@ class HumanControlledFighter(Fighter):
         self.cls()
         self.show('*LEVEL UP*')
         Fighter.level_up(self, times)
+
+    def learn_secret_style_tech(self, tech):
+        style = self.style
+        master = None
+        get_master = getattr(self, 'get_master', None)
+        if get_master is not None:
+            try:
+                master = get_master()
+            except KeyError:
+                master = None
+        if master is not None and master is not self:
+            if style.public_name != style.name:
+                t = (
+                    f'{self.name} is practicing in the school\'s courtyard when '
+                    f'{master.name} calls him to the main hall.\n'
+                    f'{master.name}: "{self.name}, you have been most diligent. Few '
+                    f'students go as far as you have, so today I can trust you with the '
+                    f'inner teaching of our school. The style the outside world knows as '
+                    f'{style.public_name} has a true name, whispered only to the most '
+                    f'trusted disciples: {style.name}! And with it comes the secret '
+                    f'technique — {tech.name}. Guard this knowledge, and never speak of '
+                    f'it outside these walls."'
+                )
+            else:
+                t = (
+                    f'{self.name} is practicing in the school\'s courtyard when '
+                    f'{master.name} calls him to the main hall.\n'
+                    f'{master.name}: "{self.name}, you have been most diligent. Few '
+                    f'students go as far as you have. It is time you learned the secret '
+                    f'technique of {style.name} — {tech.name}. Guard this knowledge, and '
+                    f'never speak of it outside these walls."'
+                )
+        else:
+            t = (
+                f'Through countless hours of training, {self.name} finally grasps the '
+                f'deepest secret of {style.public_name} — {tech.name}.'
+            )
+        self.show(t)
+        self.log(f'Learns the secret technique of {style.name}.')
+        self.pak()
+        Fighter.learn_tech(self, tech)
 
     @staticmethod
     def menu(opt_list, *args, **kw_args):

@@ -46,7 +46,7 @@ class MasterTrial(BaseEncounter):
             '{0} meets his master. \n{1}: "{0}, you are one of my best students. '
             "You have made a lot of progress in {2}. But you might be ready to found your own "
             "kung-fu school... "
-            "Let's find that out!\"".format(p.name, m.name, p.style.name)
+            "Let's find that out!\"".format(p.name, m.name, p.get_displayed_style_name())
         )
         p.show(t)
         p.log("Is offered a trial to become a master.")
@@ -135,7 +135,7 @@ class SchoolChallenge(BaseEncounter):
                     t = (
                         '{}: "{}, I can see that you have mastered some aspects of {}. However, you must keep '
                         'practicing as you still have a long way to go."'.format(
-                            m.name, p.name, p.style.name
+                            m.name, p.name, p.get_displayed_style_name()
                         )
                     )
                     p.show(t)

@@ -84,6 +84,85 @@ class TestLevelUp:
             assert basic in names
 
 
+class TestSecretStyleTechs:
+    """Generated styles: public vs true name, secret tech last, lv-10 style tech upgrade."""
+    GEN_STYLE = 'Light-Footed Avalanche Leopard'  # W1 Light-Footed, W2 Avalanche, W3 Leopard
+
+    def gen_fighter(self, level=1):
+        from kf_lib.kung_fu import style_gen
+
+        random.seed(0)
+        style = style_gen.get_style_from_str(self.GEN_STYLE)
+        return Fighter('Test', style, level=level, tech_names=[], move_names=[])
+
+    def test_generated_style_tech_order_secret_last(self):
+        f = self.gen_fighter()
+        tech_names = lambda: {t.name for t in f.techs}
+        f.level_up(2)  # level 3: second word's tech
+        assert tech_names() == {'Avalanche Strikes'}
+        f.level_up(2)  # level 5: noun's tech
+        assert tech_names() == {'Avalanche Strikes', 'Hunting Leopard'}
+        f.level_up(2)  # level 7: the secret first adjective's tech
+        assert tech_names() == {'Avalanche Strikes', 'Hunting Leopard', 'Light Feet'}
+
+    def test_public_name_and_hidden_secret(self):
+        f = self.gen_fighter()
+        style = f.style
+        assert style.name == self.GEN_STYLE
+        assert style.public_name == 'Avalanche Leopard'
+        assert '???' in style.public_descr_short
+        assert style.get_secret_tech().name == 'Light Feet'
+        assert not f.knows_style_secret()
+        f.level_up(6)  # level 7
+        assert f.knows_style_secret()
+
+    def test_true_name_displayed_only_to_human_disciple_in_the_know(self):
+        f = self.gen_fighter()
+        assert f.get_displayed_style_name() == 'Avalanche Leopard'
+        f.level_up(6)  # knows the secret now, but is not human
+        assert f.get_displayed_style_name() == 'Avalanche Leopard'
+        f.is_human = True
+        assert f.get_displayed_style_name() == self.GEN_STYLE
+        assert '???' not in f.get_displayed_style_emph()
+
+    def test_style_tech_upgrade_at_lv_10(self):
+        f = self.gen_fighter()
+        f.level_up(9)  # level 10
+        names = {t.name for t in f.techs}
+        upgraded = [n for n in names if n.startswith('Advanced ')]
+        assert len(upgraded) == 1
+        assert len(f.techs) == 3  # still three style techs, one of them upgraded
+
+    def test_upgraded_style_tech_has_doubled_params(self):
+        from kf_lib.kung_fu import techniques
+
+        f = self.gen_fighter()
+        f.level_up(6)
+        secret = f.style.get_secret_tech()
+        f.upgrade_style_tech(secret)
+        upg = techniques.get_tech_obj('Advanced Light Feet')
+        assert upg in f.techs
+        assert secret not in f.techs
+        for p, v in secret.params.items():
+            assert upg.params[p] == v * 2
+        assert f.knows_style_secret()  # still knows after upgrading the secret tech
+
+    def test_upgraded_style_tech_resolves_lazily(self):
+        # saves hold tech names; a fresh session must resolve 'Advanced ...' style techs
+        from kf_lib.kung_fu import techniques
+
+        upg = techniques.get_tech_obj('Advanced Hunting Leopard')
+        assert upg.base_tech.name == 'Hunting Leopard'
+        with pytest.raises(ValueError):
+            techniques.get_tech_obj('Advanced No Such Tech')
+
+    def test_set_rand_techs_upgrades_a_style_tech_at_lv_10_plus(self):
+        f = self.gen_fighter(level=10)
+        f.set_rand_techs()
+        upgraded = [t for t in f.techs if getattr(t, 'is_upgraded_style_tech', False)]
+        assert len(upgraded) == 1
+
+
 class TestGainExp:
     def make_player(self, **kwargs):
         # empty traits: random traits can change next_lv_exp_mult etc.

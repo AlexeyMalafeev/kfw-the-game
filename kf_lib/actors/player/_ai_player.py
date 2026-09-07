@@ -207,7 +207,7 @@ class SmartAIPVisible(SmartAIP):
         cls()
         print(f'---{self.name}\'s turn---\n')
         print(
-            f'{self.style.name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
+            f'{self.style.public_name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
             f'money:{self.money}\n'
         )
 

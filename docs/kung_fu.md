@@ -139,12 +139,28 @@ strings and level-ups:
 ## Styles
 
 `Style` (`kung_fu/styles.py`): name + `techs_dict {level: Tech}` +
-`move_str_dict {level: move_string}`. A style with any techs is a
-"tech style" (`is_tech_style`) — this flag gates *all* tech progression on
-level-up, so the tech-less styles below get no techs at all. The style's
+`move_str_dict {level: move_string}` + `public_name`. A style with any techs
+is a "tech style" (`is_tech_style`) — this flag gates *all* tech progression
+on level-up, so the tech-less styles below get no techs at all. The style's
 displayed "emphases" (`descr_short`, shown by
 `get_style_string(show_emph=True)`) are just the deduped short descriptions
 of its techs. Every `Style` self-registers in `all_styles` at import.
+
+**Secret techniques and public/true names.** The lv-7 tech of every tech
+style (`SECRET_TECH_LV = 7`) is the school's *secret technique*: it is left
+out of `public_descr_short` (replaced by a `???` placeholder) and only
+revealed when a disciple learns it — for a human player, in a scene with the
+school master. Generated styles additionally hide the first adjective of
+their name: `public_name` is `"{w2} {w3}"` (e.g. "Avalanche Leopard") while
+`name` stays the true three-word name ("Light-Footed Avalanche Leopard"),
+which remains the save/load and `schools`/`masters` dict key. Display goes
+through `Fighter.get_displayed_style_name()` / `get_displayed_style_emph()`:
+the true name and full emphases are shown only to a human-controlled fighter
+who knows their own style's secret (`knows_style_secret()` — the secret tech
+or its upgraded twin is in `f.techs`); everything else (prefight tables,
+tournaments, gossip, encounters, stories, bios, AI-player info) uses the
+public name. Handcrafted and special styles have `public_name == name`, so
+only the hidden lv-7 tech description applies to them.
 
 - 24 handcrafted `default_styles` (Bagua Zhang … Xing Yi) — all are tech
   styles with techs at levels 3/5/7. 10 of them (Bagua Zhang, Choy Li Fut,
@@ -184,10 +200,12 @@ styles far outnumber the schools'.
 `kung_fu/style_gen.py`: three word lists — `W1` (37 descriptive words:
 Acrobatic…Vigorous), `W2` (33 elemental/atmospheric: Air…Wooden), `W3` (33
 animals: Bear…Wolf) — each word mapped to one `Tech`. A generated style is
-`"{w1} {w2} {w3}"` with techs `{3: W1[w1], 5: W2[w2], 7: W3[w3]}`;
-`get_n_possible_styles()` = 40,293. `Tech` objects are shared between
-styles (stateless param bags, applied additively — safe). Generated styles
-have no move strings (a todo), so they use `DEFAULT_STYLE_MOVE_DICT`.
+`"{w1} {w2} {w3}"` with techs `{3: W2[w2], 5: W3[w3], 7: W1[w1]}` — the first
+adjective's tech is the secret one (learned last, hidden from the public name
+and description; see Styles). `get_n_possible_styles()` = 40,293. `Tech`
+objects are shared between styles (stateless param bags, applied additively —
+safe). Generated styles have no move strings (a todo), so they use
+`DEFAULT_STYLE_MOVE_DICT`.
 
 `generate_new_styles(n, overlap=False)` samples without replacement per
 list (requires `n ≤ 33`); the `overlap=True` variant allows repeats and
@@ -226,6 +244,17 @@ advanced twin. `get_learnable_techs(f)` = all upgradable techs minus what
 ⚠️ `Lightning-Fast Strikes` (advanced) uses the same −0.3 as basic
 `Fast Strikes` instead of −0.6 — upgrading is a no-op (also flagged in
 [fight]).
+
+Style techs are upgraded separately at `STYLE_TECH_UPGRADE_AT_LV = 10`
+(`Fighter.choose_style_tech_to_upgrade`, overridden with a menu in
+`HumanControlledFighter`; random for AI/NPCs, also applied retroactively by
+`set_rand_techs`): one of the style's three techs — the secret one included —
+is replaced by a runtime-created twin (`techniques.get_upgraded_style_tech`)
+named `Advanced {tech.name}` with all params doubled, marked
+`is_upgraded_style_tech` / `base_tech` (deliberately *not* `is_advanced`, to
+keep it out of the general-tech pools). These twins are deterministic and
+cached; `get_tech_obj` reconstructs them lazily from the name on load, so
+saves stay compatible.
 
 Weapon techs: `WeaponTech` adds a `(atk, dfs)` pair into
 `f.weapon_bonus[wp_type]`, but all 7 declared `WeaponTech`s leave
@@ -280,8 +309,10 @@ Level-up pipeline (`fighter/__init__.py: level_up` →
   16, 18, 20}`, offer a choice at tier `ceil(level/2)` (6–10). (Misleading
   name: these "advanced moves" are unrelated to `Advanced`-prefixed moves
   or advanced techs.) Other levels grant no move.
-- Techs (tech styles only): style tech at the style's keyed levels (3/5/7);
-  one tech upgrade at `ADVANCED_TECH_AT_LV = 19`; a new general tech at
+- Techs (tech styles only): style tech at the style's keyed levels (3/5/7 —
+  the lv-7 one is the secret technique, with a master scene for human
+  players); a style tech upgrade at `STYLE_TECH_UPGRADE_AT_LV = 10`; one tech
+  upgrade at `ADVANCED_TECH_AT_LV = 19`; a new general tech at
   `LVS_GET_GENERAL_TECH = {13, 15, 17}`.
 - Choice sizes: `num_moves_choose = 3`, `num_techs_choose = 3`,
   `num_techs_choose_upgrade = 3` (`_fight_attributes.py`, `_abc.py`),
@@ -290,7 +321,8 @@ Level-up pipeline (`fighter/__init__.py: level_up` →
   (AI/NPC) implementations just `random.choice` from the same sample.
 
 Level-by-level view (default styles; generated styles use the default move
-dict at 2/4/6/8/10 and techs at 3/5/7 — `style_gen.py:187`):
+dict at 2/4/6/8/10 and techs at 3/5/7 — second word, noun, then the secret
+first adjective — `style_gen.py`):
 
 | Level | Move | Tech (tech styles only) |
 |-------|------|-------------------------|
@@ -300,10 +332,10 @@ dict at 2/4/6/8/10 and techs at 3/5/7 — `style_gen.py:187`):
 | 4 | style move (tier 2) | — |
 | 5 | — | style tech II |
 | 6 | style move (tier 3) | — |
-| 7 | — | style tech III |
+| 7 | — | secret style tech (master scene for humans) |
 | 8 | style move (tier 4) | — |
 | 9 | — | — |
-| 10 | style move, tier 5 (default-dict styles only) | — |
+| 10 | style move, tier 5 (default-dict styles only) | upgrade one of the three style techs (human picks, AI random) |
 | 11 | — | — |
 | 12 | "advanced" move choice, tier 6 | — |
 | 13 | — | new general tech, choice of 3 |

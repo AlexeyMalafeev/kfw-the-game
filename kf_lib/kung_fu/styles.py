@@ -8,6 +8,8 @@ from .techniques import Tech
 all_styles = {}
 
 DEFAULT_STYLE_MOVE_DICT = {2: '1', 4: '2', 6: '3', 8: '4', 10: '5'}
+SECRET_TECH_LV = 7
+SECRET_TECH_PLACEHOLDER = '???'
 
 
 class Style(object):
@@ -16,8 +18,12 @@ class Style(object):
             name: Text,
             techs_dict: Optional[Dict[int, Tech]],
             move_str_dict: Optional[Dict[int, Text]],
+            public_name: Optional[Text] = None,
     ):
         self.name = name
+        # the name known to outsiders; the true name is revealed to disciples at
+        # SECRET_TECH_LV (equals name for handcrafted/special styles)
+        self.public_name = public_name if public_name is not None else name
         self.techs = techs_dict
         if self.techs:
             self.is_tech_style = True
@@ -25,15 +31,27 @@ class Style(object):
             self.is_tech_style = False
         features = []
         self.features = features
+        public_features = []
+        secret_tech = self.get_secret_tech()
         for lv, t in self.techs.items():
             if t.descr_short not in features:
                 features.append(t.descr_short)
+            if t is not secret_tech and t.descr_short not in public_features:
+                public_features.append(t.descr_short)
+        if secret_tech is not None:
+            public_features.append(SECRET_TECH_PLACEHOLDER)
         self.descr = ''
         self.descr_short = f"({', '.join(features)})"
+        self.public_descr_short = f"({', '.join(public_features)})"
         all_styles[self.name] = self
         self.move_strings = (
             move_str_dict if move_str_dict is not None else DEFAULT_STYLE_MOVE_DICT.copy()
         )
+
+    def get_secret_tech(self) -> Optional[Tech]:
+        if self.is_tech_style:
+            return self.techs.get(SECRET_TECH_LV)
+        return None
 
     def __str__(self):
         return f'{self.name} ({self.descr})'

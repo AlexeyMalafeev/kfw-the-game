@@ -399,6 +399,23 @@ class TestLoading:
         for p in g2.players:
             assert p.plog == []
 
+    def test_upgraded_style_tech_roundtrip(self, temp_save_folder):
+        g = make_game()
+        p = g.players[0]
+        style_tech = p.style.techs[3]  # generated styles are tech styles
+        p.learn_tech(style_tech)
+        p.upgrade_style_tech(style_tech)
+        upg_name = f'Advanced {style_tech.name}'
+        assert upg_name in {t.name for t in p.techs}
+        g.save_game(SAVE_NAME)
+        snapshot = player_snapshot(g)
+
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        assert player_snapshot(g2) == snapshot
+        p2 = g2.players[0]
+        assert upg_name in {t.name for t in p2.techs}
+
     def test_move_usage_roundtrip(self, temp_save_folder):
         g = make_game()
         p = g.players[0]

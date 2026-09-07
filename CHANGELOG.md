@@ -7,7 +7,17 @@ because kung-fu movies.
 ## [Unreleased] — post-hiatus modernization (September 2026)
 
 ### Added
-- pytest suite in `test/` (200 tests): seeded deterministic fights, style/move
+- **Secret style techniques**: the lv-7 tech of every tech style is now secret —
+  hidden from style descriptions (`???` placeholder) until learned. Generated
+  styles also get a public name (`"{w2} {w3}"`, e.g. "Avalanche Leopard") shown
+  everywhere, while the true three-word name (with the first adjective granting
+  the secret tech) is revealed only to the style's disciples at lv 7 — for a
+  human player, in a scene with the school master. Generated-style tech order
+  changed accordingly: lv 3 second word, lv 5 noun, lv 7 first adjective
+- **Style tech upgrades at lv 10**: one of the style's three techs (the secret
+  one included) is upgraded to a doubled-effect `Advanced ...` version — the
+  human player chooses, AI/NPCs upgrade randomly
+- pytest suite in `test/` (230+ tests): seeded deterministic fights, style/move
   generation invariants, save/load roundtrips (both formats), leveling,
   economy, player AI, game mechanics, headless tournament, full-game
   integration tests

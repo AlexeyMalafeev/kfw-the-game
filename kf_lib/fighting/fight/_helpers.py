@@ -11,7 +11,7 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
     first_fighter = fs[0]
     size1 = max([len(s) for s in ['NAME '] + [f.name + '  ' for f in fs]])
     size2 = max([len(s) for s in ['LEV '] + [str(f.level) + ' ' for f in fs]])
-    size3 = max([len(s) for s in ['STYLE '] + [f.style.name + ' ' for f in fs]])
+    size3 = max([len(s) for s in ['STYLE '] + [f.get_displayed_style_name() + ' ' for f in fs]])
     att_names = ' '.join(first_fighter.att_names_short) if not basic_info_only else ''
     s += 'NAME'.ljust(size1) + 'LEV'.ljust(size2) + 'STYLE'.ljust(size3) + att_names
     if any([f.weapon for f in fs]) and not basic_info_only:
@@ -24,7 +24,7 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
             size1,
             f.level,
             size2,
-            f.style.name,
+            f.get_displayed_style_name(),
             size3,
         )
         if basic_info_only:
@@ -41,7 +41,7 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
         s += '{:<4}{:<4}{:<4}{:<4}'.format(*atts_wb)
         if f.weapon:
             s += f'{f.weapon.name} {f.weapon.descr_short}'
-        s += f"\n{' ' * (size1 + size2)}{f.style.descr_short}"
+        s += f"\n{' ' * (size1 + size2)}{f.get_displayed_style_emph()}"
     return s
 
 

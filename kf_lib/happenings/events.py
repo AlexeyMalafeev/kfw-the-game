@@ -144,8 +144,8 @@ def school_vs_school(g):
     a, b = random.sample([s for s in g.schools.values() if s], 2)  # avoid empty schools
     a = [f for f in a if not f.is_player or not f.inactive]
     b = [f for f in b if not f.is_player or not f.inactive]
-    style_a = a[0].style.name
-    style_b = b[0].style.name
+    style_a = a[0].style.public_name
+    style_b = b[0].style.public_name
     s = f'A fight breaks out between students of {style_a} and {style_b}!'
     g.msg(s)
     for f in a + b:

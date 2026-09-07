@@ -27,6 +27,12 @@ class TechMethods(FighterAPI, ABC):
             return
         self.upgrade_tech(random.choice(av_techs))
 
+    def choose_style_tech_to_upgrade(self) -> None:
+        av_techs = [t for t in self.techs if t in self.style.techs.values()]
+        if not av_techs:
+            return
+        self.upgrade_style_tech(random.choice(av_techs))
+
     def get_style_tech_if_any(self) -> Optional[Tech]:
         return self.style.techs.get(self.level)
 
@@ -70,6 +76,9 @@ class TechMethods(FighterAPI, ABC):
         else:
             print(f'warning: {self} cannot learn any more techs!')
 
+    def learn_secret_style_tech(self, tech: Tech) -> None:
+        self.learn_tech(tech)
+
     def learn_tech(self, *techs: Tech) -> None:
         for tech in techs:
             if tech not in self.techs:
@@ -78,12 +87,26 @@ class TechMethods(FighterAPI, ABC):
                 self.log(f'Learns {tech.name} ({tech.descr})')
                 self.pak()
 
+    def knows_style_secret(self) -> bool:
+        secret = self.style.get_secret_tech()
+        if secret is None:
+            return False
+        return secret in self.techs or any(
+            getattr(t, 'base_tech', None) is secret for t in self.techs
+        )
+
     def resolve_techs_on_level_up(self) -> None:
         if not self.style.is_tech_style:
             return
         # learn new style tech if possible
         if t := self.get_style_tech_if_any():
-            self.learn_tech(t)
+            if t is self.style.get_secret_tech():
+                self.learn_secret_style_tech(t)
+            else:
+                self.learn_tech(t)
+        # upgrade a style tech if possible
+        if self.level == self.STYLE_TECH_UPGRADE_AT_LV:
+            self.choose_style_tech_to_upgrade()
         # upgrade tech if possible
         if self.level == self.ADVANCED_TECH_AT_LV:
             self.choose_tech_to_upgrade()
@@ -97,6 +120,13 @@ class TechMethods(FighterAPI, ABC):
             for lv, tech in self.style.techs.items():
                 if self.level >= lv:
                     self.techs.add(tech)
+            # style tech upgrade
+            if self.level >= self.STYLE_TECH_UPGRADE_AT_LV:
+                style_techs = [t for t in self.techs if t in self.style.techs.values()]
+                if style_techs:
+                    t = random.choice(style_techs)
+                    self.techs.remove(t)
+                    self.techs.add(techniques.get_upgraded_style_tech(t))
             # general techs
             n = len([lv for lv in self.LVS_GET_GENERAL_TECH if lv <= self.level])
             if n:
@@ -120,4 +150,9 @@ class TechMethods(FighterAPI, ABC):
     def upgrade_tech(self, tech: Tech) -> None:
         self.unlearn_tech(tech)
         new_tech = techniques.reg_to_adv(tech)
+        self.learn_tech(new_tech)
+
+    def upgrade_style_tech(self, tech: Tech) -> None:
+        self.unlearn_tech(tech)
+        new_tech = techniques.get_upgraded_style_tech(tech)
         self.learn_tech(new_tech)

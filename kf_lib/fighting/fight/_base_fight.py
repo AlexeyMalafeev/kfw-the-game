@@ -164,7 +164,7 @@ class BaseFight(object):
 
     def get_f_name_string(self, f):
         if self.school_display:
-            return f'{f.name} ({f.style.name})'
+            return f'{f.name} ({f.get_displayed_style_name()})'
         else:
             return f.name
 

@@ -247,7 +247,10 @@ script: thresholds 100, 200, …, 1900, deltas all 100.
 Per level-up (`Fighter.level_up`): +1 to a chosen attribute (humans pick from
 3 randomly offered atts; AI uniform-random — all `att_weights` end up equal),
 plus style moves/techs at scripted levels, advanced-move choices at
-lv 12/14/16/18/20, general techs at 13/15/17, a tech upgrade at 19.
+lv 12/14/16/18/20, general techs at 13/15/17, a tech upgrade at 19. The last
+style tech (lv 7) is a secret technique revealed in a scene with the school
+master (see `docs/kung_fu.md`); at lv 10 one of the style's three techs is
+upgraded to a doubled-effect `Advanced ...` version (human picks, AI random).
 
 **Moves/techs outside level-ups:** `learn_move_from` after beating/befriending
 the beggar, drunkard, performer, or a lucky challenger win; books (50% move,
@@ -282,7 +285,8 @@ in `schools[style]` sorted monthly by `get_exp_worth()`; winning a
 SchoolChallenge spar swaps you up one rank. Rank 1 is required for the master
 trial. ⚠️ The commented-out code in `_school.py` shows reaching rank 1 was
 meant to teach the school's secret technique; it currently grants nothing but
-a compliment.
+a compliment (the actual secret technique is learned at lv 7 instead — see
+`docs/kung_fu.md`).
 
 ## The own-school loop
 

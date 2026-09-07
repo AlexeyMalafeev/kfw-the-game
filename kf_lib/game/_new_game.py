@@ -35,9 +35,9 @@ class NewGame(BaseGame):
             if yn('Is this character ok?'):
                 break
 
-        max_len = max((len(s.name) for s in self.style_list))
+        max_len = max((len(s.public_name) for s in self.style_list))
         legend = [
-            ('{:<{}} {}'.format(s.name, max_len, s.descr_short), s)
+            ('{:<{}} {}'.format(s.public_name, max_len, s.public_descr_short), s)
             for s in self.style_list
         ]
 
@@ -79,10 +79,10 @@ class NewGame(BaseGame):
             generated_styles = yn('Randomly generated styles?')
         if generated_styles:
             style_list = self.get_new_random_styles()
-            max_len = max((len(s.name) for s in style_list))
+            max_len = max((len(s.public_name) for s in style_list))
             if confirm_styles_with_player:
                 while True:
-                    pretty_styles = [f'{s.name:<{max_len}} {s.descr_short}'
+                    pretty_styles = [f'{s.public_name:<{max_len}} {s.public_descr_short}'
                                      for s in style_list]
                     cls()
                     print('\n'.join(pretty_styles))
@@ -90,7 +90,7 @@ class NewGame(BaseGame):
                         break
                     else:
                         style_list = self.get_new_random_styles()
-                        max_len = max((len(s.name) for s in style_list))
+                        max_len = max((len(s.public_name) for s in style_list))
             self.style_list = style_list
             # todo styles.py attributes shouldn't be modified from inside Game
             styles.default_styles = self.style_list

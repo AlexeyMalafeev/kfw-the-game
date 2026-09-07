@@ -152,9 +152,27 @@ class TestPrefightInfo:
         fb = fighter_factory.new_fighter(7)
         fa.name, fb.name = 'First Fighter', 'Second Fighter'
         info = get_prefight_info([fa], [fb], basic_info_only=True)
-        for token in ('First Fighter', '5', fa.style.name, 'Second Fighter', '7', fb.style.name):
+        for token in (
+            'First Fighter',
+            '5',
+            fa.style.public_name,
+            'Second Fighter',
+            '7',
+            fb.style.public_name,
+        ):
             assert token in info
         assert '-vs-' in info
+
+    def test_prefight_info_never_reveals_true_style_names_of_npcs(self):
+        from kf_lib.actors.fighter import Fighter
+        from kf_lib.kung_fu import style_gen
+
+        style = style_gen.get_style_from_str('Light-Footed Avalanche Leopard')
+        fa = Fighter('First Fighter', style=style, level=5)
+        assert style.public_name != style.name
+        info = get_prefight_info([fa], basic_info_only=True)
+        assert style.name not in info
+        assert style.public_name in info
 
 
 class TestQuotes:

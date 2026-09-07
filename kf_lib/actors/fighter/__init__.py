@@ -96,7 +96,7 @@ class Fighter(
         else:
             w_info = ''
         if short:
-            info = f'{s.name}, lv.{s.level} {s.style.name}{w_info}'
+            info = f'{s.name}, lv.{s.level} {s.get_displayed_style_name()}{w_info}'
         else:
             info = '{}, lv.{} {}{}\n{}'.format(
                 s.name, s.level, s.get_style_string(show_st_emph), w_info, s.get_all_atts_str()

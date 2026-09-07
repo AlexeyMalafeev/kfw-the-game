@@ -35,10 +35,10 @@ class Challenger(BaseEncounter):
         self.c_master = p.game.masters[school_name]
 
         rank = school_members.index(c) + 1
-        t = f'{c.name}, number {rank} in the {school_name} school, stops {p.name} in the street ' \
+        t = f'{c.name}, number {rank} in the {c.style.public_name} school, stops {p.name} in the street ' \
             f'and yells: "My kung-fu is {color}better than yours!!"'
         p.show(t)
-        p.log(f"Challenged by {c.name}, number {rank} in the {c.style.name} school.")
+        p.log(f"Challenged by {c.name}, number {rank} in the {c.style.public_name} school.")
         opp_strength = p.get_rel_strength(c)
         if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             if rnd() <= CH_CHALLENGER_ARMED:

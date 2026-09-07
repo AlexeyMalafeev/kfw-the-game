@@ -13,7 +13,7 @@ class RenownedMasterStory(BaseStory):
         b = self.boss = fighter_factory.new_master_challenger(p.level, name)
         g.register_fighter(b)
         t = (
-            f'{b.name}, a renowned master of {b.style.name} kung-fu from a remote province, '
+            f'{b.name}, a renowned master of {b.style.public_name} kung-fu from a remote province, '
             f'comes to {g.town_name} and stays at a local tavern.'
         )
         g.show(t)
@@ -33,9 +33,9 @@ class RenownedMasterStory(BaseStory):
         g, p, b = self.game, self.player, self.boss
         t = (
             f'{p.name} meets {b.name}. '
-            f'\n{b.name}: "I feel that I have reached perfection in my kung-fu, {b.style.name}. '
+            f'\n{b.name}: "I feel that I have reached perfection in my kung-fu, {b.style.public_name}. '
             f'I have been looking for a worthy opponent for a very, very long time. I will be '
-            f'honored to test your famous {p.style.name} kung-fu."'
+            f'honored to test your famous {p.get_displayed_style_name()} kung-fu."'
         )
         p.show(t)
         p.log(f'Challenged by {b.name}.')

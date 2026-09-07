@@ -184,7 +184,10 @@ def get_style_from_words(w1, w2, w3, style_name='') -> Style:
     t3 = W3[w3]
     if not style_name:
         style_name = ' '.join((w1, w2, w3))
-    return Style(style_name, {3: t1, 5: t2, 7: t3}, None)  # todo 3, 5, 7 are magic numbers
+    # the first adjective is the school's secret: its tech is learned last, and the
+    # outside world only knows the style as "{w2} {w3}"
+    # todo 3, 5, 7 are magic numbers
+    return Style(style_name, {3: t2, 5: t3, 7: t1}, None, public_name=f'{w2} {w3}')
 
 
 def get_styles_from_list(style_list: List[str]) -> List[Style]:

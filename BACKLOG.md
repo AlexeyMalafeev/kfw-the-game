@@ -189,8 +189,10 @@ are unordered unless marked.
 - moves for generated styles: "ferocious", "acrobatic", etc.
 - generate new maneuvers (fast charging step etc.); fixed chance of maneuvers
   when choosing new move
-- style's secret technique, learned at lv 10, unknown in advance
-  (e.g. snake fist: Weishen / false body); another advanced tech at lv 15?
+- ~~style's secret technique, learned at lv 10, unknown in advance~~
+  (implemented 2026-09: secret tech at lv 7 with a master scene and public/true
+  style names; at lv 10 one style tech is upgraded instead); another advanced
+  tech at lv 15?
 - style with head strikes (bull?); style move ideas: Rakshasa Palm, Bite,
   no-shadow headbutt, flying forehead, Shadowless Hand, Putting On Her Makeup,
   Pretty Girl Looks In Her Glass

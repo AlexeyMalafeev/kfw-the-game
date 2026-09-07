@@ -6,12 +6,24 @@ from kf_lib.kung_fu import styles
 
 
 class StyleMethods(FighterAPI, ABC):
+    def get_displayed_style_name(self) -> str:
+        """The style's true name is only shown to a human player who has learned the
+        secret technique of their own style; everyone else sees the public name."""
+        if self.is_human and self.knows_style_secret():
+            return self.style.name
+        return self.style.public_name
+
+    def get_displayed_style_emph(self) -> str:
+        if self.is_human and self.knows_style_secret():
+            return self.style.descr_short
+        return self.style.public_descr_short
+
     def get_style_string(self, show_emph: bool = False) -> str:
         if show_emph:
-            emph_info = f'\n {self.style.descr_short}'
+            emph_info = f'\n {self.get_displayed_style_emph()}'
         else:
             emph_info = ''
-        return f'{self.style.name}{emph_info}'
+        return f'{self.get_displayed_style_name()}{emph_info}'
 
     def set_style(self, style: Union[styles.Style, str]) -> None:
         if style is not None:

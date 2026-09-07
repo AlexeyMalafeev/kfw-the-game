@@ -25,6 +25,29 @@ class TestStyleGeneration:
         s = style_gen.get_new_randomly_generated_style()
         s2 = style_gen.get_style_from_str(s.name)
         assert s2.name == s.name
+        assert s2.public_name == s.public_name
+        assert set(s2.techs.values()) == set(s.techs.values())
+
+    def test_generated_style_public_name_hides_first_word(self):
+        s = style_gen.get_style_from_str('Light-Footed Avalanche Leopard')
+        assert s.name == 'Light-Footed Avalanche Leopard'
+        assert s.public_name == 'Avalanche Leopard'
+        # the first adjective's tech is the secret one, learned at SECRET_TECH_LV
+        assert s.techs[styles.SECRET_TECH_LV] is style_gen.W1['Light-Footed']
+        assert s.techs[3] is style_gen.W2['Avalanche']
+        assert s.techs[5] is style_gen.W3['Leopard']
+        assert '???' in s.public_descr_short
+        assert style_gen.W1['Light-Footed'].descr_short not in s.public_descr_short
+
+    def test_handcrafted_styles_have_no_public_name(self):
+        # NB: do not iterate styles.default_styles here — new_game replaces that
+        # module global when the generated_styles option is on
+        for sname in ('Drunken Boxing', 'Bagua Zhang', 'Wing Chun'):
+            s = styles.get_style_obj(sname)
+            assert s.public_name == s.name
+            # but their last style tech is still secret
+            assert s.get_secret_tech() is s.techs[styles.SECRET_TECH_LV]
+            assert '???' in s.public_descr_short
 
 
 class TestMoves:

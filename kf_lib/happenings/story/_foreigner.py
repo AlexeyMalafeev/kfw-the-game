@@ -19,7 +19,7 @@ class ForeignerStory(BaseStory):
         t = (
             f'Rumor has it that {b.name}, a renowned martial artist from {b.country}, has arrived '
             f'in {g.town_name} to defeat local masters and prove the superiority of his own '
-            f'fighting style, {b.style.name}.'
+            f'fighting style, {b.style.public_name}.'
         )
         g.show(t)
         g.pak()
@@ -65,7 +65,7 @@ class ForeignerStory(BaseStory):
             f_st = f'{p.name}\'s friend {f.name}'
         else:
             f = random.choice(list(g.masters.values()))
-            f_st = f'{f.name} of {f.style.name}'
+            f_st = f'{f.name} of {f.style.public_name}'
         t = (
             f'{p.name} finds out that {b.name} beat {f_st}! Can no one stop this arrogant '
             f'foreigner?'

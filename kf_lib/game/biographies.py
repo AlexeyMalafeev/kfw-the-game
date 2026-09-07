@@ -9,7 +9,7 @@ def generate_bio(player_instance) -> Text:
     bio: List[Text] = []
     victories = g.check_victory_conditions(p)
     bio.append(f'\n{p.name} was the renowned {enum_words(victories)} of {g.town_name}.')
-    bio.append(f'His kung-fu style was {p.style.name}.')
+    bio.append(f'His kung-fu style was {p.get_displayed_style_name()}.')
     if fav_move := p.get_favorite_move(attack_only=True):
         bio.append(f'His signature move was the {fav_move}.')
     full_atts = p.get_att_values_full()

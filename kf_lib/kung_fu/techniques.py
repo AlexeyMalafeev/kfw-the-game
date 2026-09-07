@@ -102,6 +102,11 @@ _advanced_techs: List[Tech] = []
 _style_techs: List[Tech] = []
 _weapon_techs: List[Tech] = []
 
+# style techs upgraded at STYLE_TECH_UPGRADE_AT_LV (see fighter/_techs.py); created lazily
+# (deterministic names and params, so saves holding them can be reconstructed on load)
+UPGRADED_STYLE_TECH_PREFIX = 'Advanced '
+_upgraded_style_techs: Dict[str, Tech] = {}
+
 
 # todo weapon techniques do nothing; implement
 _WEAPON_TECHS = [
@@ -297,9 +302,26 @@ def get_style_techs(fighter=None) -> List[Tech]:
 
 def get_tech_obj(tech_name: Text) -> Tech:
     if tech_name not in _all_techs:
+        if tech_name.startswith(UPGRADED_STYLE_TECH_PREFIX):
+            base_name = tech_name[len(UPGRADED_STYLE_TECH_PREFIX):]
+            if base_name in _all_techs:
+                return get_upgraded_style_tech(_all_techs[base_name])
         raise ValueError(f'unable to find tech name "{tech_name!r}" in all_techs (keys are tech '
                          f'names)')
     return _all_techs[tech_name]
+
+
+def get_upgraded_style_tech(tech: Tech) -> Tech:
+    """Return the upgraded version of a style tech (doubled params), creating it lazily."""
+    if tech.name not in _upgraded_style_techs:
+        upg_tech = Tech(
+            f'{UPGRADED_STYLE_TECH_PREFIX}{tech.name}',
+            **{p: v * 2 for p, v in tech.params.items()},
+        )
+        upg_tech.is_upgraded_style_tech = True
+        upg_tech.base_tech = tech
+        _upgraded_style_techs[tech.name] = upg_tech
+    return _upgraded_style_techs[tech.name]
 
 
 def get_upgradable_techs(fighter=None) -> List[Tech]:
