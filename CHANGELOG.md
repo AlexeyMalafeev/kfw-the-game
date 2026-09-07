@@ -7,6 +7,9 @@ because kung-fu movies.
 ## [Unreleased]
 
 ### Added
+- **Ctrl+C exits the game at any keypress prompt**: the raw-mode keyboard layer
+  translates the `'\x03'` byte into `KeyboardInterrupt`, caught gracefully in
+  `kfw.py`
 - **Group free-for-all fights**: `group_free_for_all()` /
   `BaseGroupFreeForAll` — several groups fight each other with no infighting
   within a group, last group standing wins

@@ -103,6 +103,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   under-leveled. Use `f.level_up(n)` (also in tests and dev scripts).
 - Terminal input goes through `kf_lib/ui/_keyboard.py` (msvcrt on Windows, termios
   elsewhere) — game scripts need a real TTY; piped stdin raises EOFError at prompts.
+  The terminal is raw while waiting for a key, so Ctrl+C arrives as a `'\x03'`
+  byte; `getch()` translates it into `KeyboardInterrupt`, which `kfw.py` catches
+  for a graceful exit.
 
 ## Dev memory
 

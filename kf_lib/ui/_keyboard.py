@@ -1,14 +1,14 @@
 try:
     import msvcrt
 
-    def getch():
+    def _getch():
         return msvcrt.getch().decode('ascii', errors='replace')
 except ImportError:
     import sys
     import termios
     import tty
 
-    def getch():
+    def _getch():
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
         try:
@@ -17,6 +17,13 @@ except ImportError:
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
+
+
+def getch():
+    ch = _getch()
+    if ch == '\x03':  # Ctrl+C: raw terminal mode delivers it as a byte, not SIGINT
+        raise KeyboardInterrupt
+    return ch
 
 
 def get_key():

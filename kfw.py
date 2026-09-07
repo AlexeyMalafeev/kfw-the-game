@@ -48,6 +48,8 @@ def main():
             DefaultAI = SmartAIPVisible if visible_ai else SmartAIP
             g.new_game(forced_aip_class=DefaultAI, confirm_styles_with_player=True, **kwargs)
         g.play()
+    except KeyboardInterrupt:
+        print('\nFarewell, brave warrior!')
     except Exception:  # noqa
         from kf_lib.testing.debug_tools import crash_report
         crash_report(g)
