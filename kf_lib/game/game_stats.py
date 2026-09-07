@@ -98,7 +98,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('Strikes landed', f"{gs('strikes_landed')}/{gs('strikes_thrown')}"),
         ('Damage dealt', gs('dam_dealt')),
         ('Crits,EPICs', '{},{}'.format(gs('criticals'), gs('epics'))),
-        ('Fav. move', p.get_favorite_move() or '-'),
+        ('Fav. move', p.get_favorite_move(attack_only=True) or '-'),
         ('Exp bonuses', gs('exp_bonuses')),
         ('KOed,days inac.', '{},{}'.format(gs('times_koed'), gs('days_inactive'))),
         ('Tourn.won', '{}/{}'.format(gs('tourn_won'), gs('num_tourn'))),

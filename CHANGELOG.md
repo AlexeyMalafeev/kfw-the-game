@@ -54,6 +54,9 @@ because kung-fu movies.
   "Randomly generated styles?" prompt is restored
 
 ### Fixed
+- **"Fav. move" stats row counted defensive moves**: the full stats report
+  showed e.g. Guard as the favorite move while the biography named a strike as
+  the signature move; both now use `get_favorite_move(attack_only=True)`
 - **Game loading was completely broken** (exec() namespace bug + missing AI
   classes in the loader namespace) — any save failed with `NameError`
 - macOS/Linux support: `msvcrt`-only keyboard input now falls back to

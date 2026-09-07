@@ -326,6 +326,15 @@ class TestInFightStats:
         if fav_strike:  # the player threw at least one strike
             assert f'signature move was the {fav_strike}' in generate_bio(p)
 
+    def test_stats_report_fav_move_is_attack_only(self):
+        # the "Fav. move" row must match the biography's signature move:
+        # Guard/maneuvers are recorded but never shown as the favorite
+        _, p, _, _ = self.fight_with_player()
+        p.move_usage = {'Guard': 100, 'Punch': 5}
+        from kf_lib.game.game_stats import get_player_data
+        rows = dict(get_player_data(p))
+        assert rows['Fav. move'] == 'Punch'
+
 
 class TestExpMath:
     def test_loser_exp_constant(self):

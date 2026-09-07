@@ -184,8 +184,9 @@ At fight end, `handle_player_stats` adds the numbers into the player's
 `epics`) and merges `moves_used` into the persistent `p.move_usage` dict
 (move name → count). `get_favorite_move(attack_only=...)` reads the all-time
 leader; the full report shows strikes landed, damage dealt, crits/EPICs and
-favorite move, and biographies use the favorite *strike* ("His signature
-move was the …").
+the favorite move, and biographies name the signature move — both filtered to
+strikes only (`attack_only=True`), since defensive moves like Guard otherwise
+dominate the usage counts.
 
 ## Biographies
 
