@@ -120,8 +120,9 @@ class Playing(BaseGame):
                     if rnd() <= CH_STUDENT_LV_UP and student.level < MAX_STUDENT_LEVEL:
                         student.level_up()
         self.rerank_schools()
-        # for p in self.players:
-        #     p.refresh_school_rank()
+        for p in self.players:
+            if p.is_master:
+                p.refresh_best_student()
 
     def game_loop(self):
         self.chosen_quit = False

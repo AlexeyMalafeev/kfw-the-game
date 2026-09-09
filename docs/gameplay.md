@@ -308,12 +308,17 @@ accomplishments, tournament wins or 10+ wins has fame 0 and **never** gets
 students until they build fame. Intake is either one student (AI always
 accepts) or a group of 2–5 that must be beaten in an items-off fight. Cap 8
 (`MAX_NUM_STUDENTS`); new students are random lv 1–10 and get +10%/month level
-ups below lv 8. Teaching yields 10 c/student/day. Your school joins the
+ups below lv 8. Teaching yields 10 c/student/day **and actually teaches**:
+every student has a 20% chance per lesson to level up
+(`CH_STUDENT_LV_UP_WHEN_TAUGHT`), up to master's level − 2
+(`TAUGHT_STUDENT_LV_GAP`) — above the NPC-school monthly cap of 8 — and the
+master is told who improved. Your school joins the
 `schools` dict, so it takes part in monthly re-ranking and the 4%/day
 school-vs-school brawl event.
 
-⚠️ `best_student` is saved/loaded and read by ForeignerStory but **never
-assigned** anywhere in gameplay — that story branch is dead code.
+`best_student` (saved as a fighter snapshot, read by ForeignerStory) is
+maintained by `refresh_best_student()`: the student with the highest
+`get_exp_worth()`, refreshed on intake, after every lesson and monthly.
 
 ## Random events
 

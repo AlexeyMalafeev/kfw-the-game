@@ -32,6 +32,10 @@ WAGE = 50
 CH_MASTER_FORGIVES = 0.25
 CH_BEG_BULLIED = 0.2
 
+# teaching students
+CH_STUDENT_LV_UP_WHEN_TAUGHT = 0.2
+TAUGHT_STUDENT_LV_GAP = 2  # a master can't teach students beyond (own level - gap)
+
 
 # todo Epic Gambler accomplishment
 
@@ -183,6 +187,7 @@ class BasePlayer(Fighter):
         else:
             self.log('A new student joins {}\'s school.'.format(self.name))
         self.log('\n'.join((str(s) for s in new_students)))
+        self.refresh_best_student()
 
     def add_trait(self, trait):
         """NB: differs from the activate_trait method.
@@ -720,6 +725,11 @@ class BasePlayer(Fighter):
         self.inactive = 0
         self.inact_status = ''
 
+    def refresh_best_student(self):
+        school = self.game.schools.get(self.new_school_name, [])
+        if school:
+            self.best_student = max(school, key=lambda s: s.get_exp_worth())
+
     def refresh_school_rank(self):
         if self.is_master:
             self.school_rank = 'n'
@@ -770,6 +780,17 @@ class BasePlayer(Fighter):
         else:
             self.log('Teaches his students.')
             self.earn_money(TUITION_FEE * self.students // 2)
+            school = self.game.schools.get(self.new_school_name, [])
+            max_student_lv = self.level - TAUGHT_STUDENT_LV_GAP
+            improved = []
+            for student in school:
+                if student.level < max_student_lv and rnd() <= CH_STUDENT_LV_UP_WHEN_TAUGHT:
+                    student.level_up()
+                    improved.append(student)
+                    self.log(f'{student.name} reaches lv.{student.level}.')
+            self.refresh_best_student()
+            if improved:
+                self.write('{} made great progress!'.format(enum_words([s.name for s in improved])))
             return True  # to end turn
 
     def use_med(self):

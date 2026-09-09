@@ -4,6 +4,17 @@ All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames
 because kung-fu movies.
 
+## [Unreleased]
+
+### Added
+- **Teaching students actually teaches**: `teach_students` now gives every
+  student a 20% chance to level up per lesson (up to the master's level − 2,
+  above the old NPC-student cap of 8) and reports who improved, on top of the
+  tuition income
+- **`best_student` is now maintained** (strongest student by exp worth,
+  refreshed on intake/teaching/monthly) — it was saved and read by the
+  Foreigner story but never assigned, so that story branch finally works
+
 ## [v0.7.1-beta "Eight Tigers in One Cage"] — 2026-09-10
 
 ### Added
