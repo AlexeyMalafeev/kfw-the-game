@@ -1,8 +1,8 @@
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
 from kf_lib.things.items import get_item_descr, MEDICINE
 from kf_lib.ui import cls, menu, yn
-from kf_lib.utils import float_to_pcnt
-from ._base_player import BasePlayer
+from kf_lib.utils import enum_words, float_to_pcnt
+from ._base_player import BasePlayer, NUM_SCHOOL_TECHS
 
 
 class HumanPlayer(HumanControlledFighter, BasePlayer):
@@ -43,6 +43,21 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
                 return school_name
             else:
                 self.show(f' A school with the name "{school_name}" already exists.')
+
+    def choose_school_techs(self):
+        av = [t for t in self.techs if not t.is_weapon_tech]
+        chosen = []
+        while av and len(chosen) < NUM_SCHOOL_TECHS:
+            options = [(f'{t.name} ({t.descr})', t) for t in av]
+            options.append(('(nothing else)', None))
+            t = self.menu(options, title='Choose the techniques your school will teach:')
+            if t is None:
+                break
+            chosen.append(t.name)
+            av.remove(t)
+        self.school_techs = chosen
+        if chosen:
+            self.write('Your school will teach {}.'.format(enum_words(chosen)))
 
     def donate_or_not(self, amount):
         """Return an amount or 0"""

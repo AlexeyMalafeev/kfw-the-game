@@ -15,6 +15,7 @@ from kf_lib.constants.experience import (
 )
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
+from kf_lib.kung_fu import techniques
 from kf_lib.things import items
 from kf_lib.ui import yn
 from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
@@ -36,6 +37,8 @@ CH_BEG_BULLIED = 0.2
 # teaching students
 CH_STUDENT_LV_UP_WHEN_TAUGHT = 0.2
 TAUGHT_STUDENT_LV_GAP = 2  # a master can't teach students beyond (own level - gap)
+NUM_SCHOOL_TECHS = 3  # how many techs a school teaches its students
+CH_STUDENT_LEARN_TECH = 0.25  # per lesson, per student missing a school tech
 
 # uniting the schools (kung-fu federation)
 UNITED_SCHOOL_REP = 5
@@ -50,7 +53,7 @@ class BasePlayer(Fighter):
     is_player = True
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
-    move_usage banned_from_school schools_allied'''.split()
+    move_usage banned_from_school schools_allied school_techs'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
 
     exp = Integer(minvalue=0, action='raise')
@@ -126,6 +129,7 @@ class BasePlayer(Fighter):
         self.students = 0
         self.best_student = None
         self.schools_allied = []  # school names whose masters joined the federation
+        self.school_techs = []  # names of the techs the player's school teaches
         self.current_story = None
         self.exp = 0
         self.next_level = self.get_next_lv_exp()
@@ -179,6 +183,16 @@ class BasePlayer(Fighter):
                 f'keep up with. {obj.name} remains a friendly acquaintance.'
             )
             self.log(f'Has too many friends already; {obj.name} stays an acquaintance.')
+
+    def choose_school_techs(self):
+        """Pick the techs the player's school will teach (AI default: random known
+        non-weapon techs). HumanPlayer overrides this with a menu."""
+        av = [t for t in self.techs if not t.is_weapon_tech]
+        self.school_techs = [
+            t.name for t in random.sample(av, min(NUM_SCHOOL_TECHS, len(av)))
+        ]
+        if self.school_techs:
+            self.log('Decides to teach {}.'.format(enum_words(self.school_techs)))
 
     def add_students(self, num_stud):
         self.students += num_stud
@@ -824,6 +838,17 @@ class BasePlayer(Fighter):
             self.refresh_best_student()
             if improved:
                 self.write('{} made great progress!'.format(enum_words([s.name for s in improved])))
+            school_techs = [techniques.get_tech_obj(name) for name in self.school_techs]
+            if school_techs:
+                learned = []
+                for student in school:
+                    missing = [t for t in school_techs if t not in student.techs]
+                    if missing and rnd() <= CH_STUDENT_LEARN_TECH:
+                        tech = random.choice(missing)
+                        student.learn_tech(tech)  # silent for NPC students
+                        learned.append(f'{student.name} learns {tech.name}.')
+                if learned:
+                    self.write('\n'.join(learned))
             return True  # to end turn
 
     def use_med(self):

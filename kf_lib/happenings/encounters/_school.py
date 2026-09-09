@@ -74,6 +74,7 @@ class MasterTrial(BaseEncounter):
                 p.game.schools[school_name] = []
                 p.game.masters[school_name] = p
                 p.new_school_name = school_name
+                p.choose_school_techs()
             else:
                 p.show(f'{m.name}: "No, you are not ready yet. Practice some more."')
             p.pak()

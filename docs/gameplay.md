@@ -306,7 +306,9 @@ Implemented via the MasterTrial encounter (`encounters/_school.py`): requires
 `not is_master`, school rank 1, and `level >= 11` (`fighter_factory.MASTER_LV[0]`),
 then 5% per `MasterTrial` entry per school-practice sweep (3 entries → ~14%/day).
 Beat your master in a spar, pay 1000 c (unconditionally — see ⚠️ above), pick a
-school name: you're removed from the old school, become `masters[your_school]`,
+school name, and **choose up to 3 school techs** from the techs you know
+(`choose_school_techs`; weapon techs excluded; AI masters pick randomly):
+you're removed from the old school, become `masters[your_school]`,
 and `is_master = True` permanently changes your action list (practice is free,
 pick-fights becomes teach-students) and locks you out of student-only
 encounters (Brawler, Challenger, SchoolChallenge/Bullying, Fat Girl).
@@ -321,7 +323,9 @@ ups below lv 8. Teaching yields 10 c/student/day **and actually teaches**:
 every student has a 20% chance per lesson to level up
 (`CH_STUDENT_LV_UP_WHEN_TAUGHT`), up to master's level − 2
 (`TAUGHT_STUDENT_LV_GAP`) — above the NPC-school monthly cap of 8 — and the
-master is told who improved. Your school joins the
+master is told who improved. Teaching also passes on the **school techs**
+chosen at founding: a student missing one has a 25% chance per lesson to
+learn it (`CH_STUDENT_LEARN_TECH`). Your school joins the
 `schools` dict, so it takes part in monthly re-ranking and the 4%/day
 school-vs-school brawl event.
 

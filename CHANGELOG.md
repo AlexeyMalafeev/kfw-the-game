@@ -7,6 +7,10 @@ because kung-fu movies.
 ## [Unreleased]
 
 ### Added
+- **Custom school techs at founding**: when a player founds a school, they
+  choose up to 3 techniques (from the ones they know) their school will
+  teach; students then have a 25% chance per lesson to learn a school tech
+  they're missing. AI masters pick randomly
 - **All-Schools Tournament**: a rare mega-event (2%/day) where every school
   fields its master and top 2 students in a group free-for-all between
   schools; the winning school's players get exp, reputation, a 200 c prize

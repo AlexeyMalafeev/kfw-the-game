@@ -6,10 +6,15 @@ from types import SimpleNamespace
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 import kf_lib.actors.player._base_player as _bp
 from kf_lib.actors.player import SmartAIP
-from kf_lib.actors.player._base_player import TAUGHT_STUDENT_LV_GAP, UNITED_SCHOOL_REP
+from kf_lib.actors.player._base_player import (
+    NUM_SCHOOL_TECHS,
+    TAUGHT_STUDENT_LV_GAP,
+    UNITED_SCHOOL_REP,
+)
 from kf_lib.fighting import fight
 from kf_lib.game._playing import check_united_schools
 from kf_lib.happenings import events
+from kf_lib.kung_fu import techniques
 from kf_lib.happenings.events import (
     ALL_SCHOOLS_TEAM_SIZE,
     ALL_SCHOOLS_PRIZE,
@@ -265,3 +270,62 @@ class TestUniteSchools:
         p.ally_school(sn, m)
         data = g._player_to_data(p)
         assert data['atts']['schools_allied'] == [sn]
+
+
+class TestSchoolTechs:
+    def test_ai_master_picks_known_techs(self):
+        g, p = make_game_and_player(seed=17, level=14)
+        p.learn_tech(techniques.get_learnable_techs(p)[0])
+        p.choose_school_techs()
+        assert 1 <= len(p.school_techs) <= NUM_SCHOOL_TECHS
+        known = [t.name for t in p.techs]
+        assert all(name in known for name in p.school_techs)
+
+    def test_weapon_techs_are_not_taught(self):
+        g, p = make_game_and_player(seed=18, level=14)
+        weapon_tech = techniques.get_weapon_techs()[0]
+        p.techs = [weapon_tech]  # knows nothing but a weapon tech
+        p.choose_school_techs()
+        assert p.school_techs == []
+
+    def test_teaching_passes_school_techs(self):
+        g, p = make_game_and_player(seed=19, level=14)
+        make_master(p, num_students=4)
+        tech = techniques.get_learnable_techs(p)[0]
+        p.learn_tech(tech)
+        p.school_techs = [tech.name]
+        school = g.schools[p.new_school_name]
+        orig_rnd = _bp.rnd
+        _bp.rnd = lambda: 0.0  # every roll succeeds
+        try:
+            p.teach_students()
+        finally:
+            _bp.rnd = orig_rnd
+        assert all(tech in s.techs for s in school)
+
+    def test_students_dont_learn_unrelated_techs(self):
+        g, p = make_game_and_player(seed=20, level=14)
+        make_master(p, num_students=3)
+        school = g.schools[p.new_school_name]
+        # level the students to the cap first, so no level-up style techs
+        # interfere with the count
+        for s in school:
+            while s.level < p.level - TAUGHT_STUDENT_LV_GAP:
+                s.level_up()
+        tech_counts_before = [len(s.techs) for s in school]
+        p.school_techs = []  # school teaches nothing
+        orig_rnd = _bp.rnd
+        _bp.rnd = lambda: 0.0
+        try:
+            p.teach_students()
+        finally:
+            _bp.rnd = orig_rnd
+        assert [len(s.techs) for s in school] == tech_counts_before
+
+    def test_school_techs_save_round_trip(self):
+        g, p = make_game_and_player(seed=21, level=14)
+        make_master(p)
+        p.learn_tech(techniques.get_learnable_techs(p)[0])
+        p.choose_school_techs()
+        data = g._player_to_data(p)
+        assert data['atts']['school_techs'] == p.school_techs

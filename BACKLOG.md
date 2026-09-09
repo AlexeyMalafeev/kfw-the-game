@@ -295,7 +295,9 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 ## Game systems & gameplay
 
 - **Late game / own school** (was top of todo.md):
-  - choose actual style techs (from what you know as a master)
+  - ~~choose actual style techs (from what you know as a master)~~ ✅ Done
+    2026-09: at founding, choose up to 3 school techs from known techs;
+    students learn them when taught (25%/lesson per missing tech)
   - ~~students participate in tournaments (collect stats + new
     accomplishments?)~~ ✅ Done 2026-09: student entries are logged; a student
     title gives the master +3 rep and a `students_tourn_won` stat, with the
