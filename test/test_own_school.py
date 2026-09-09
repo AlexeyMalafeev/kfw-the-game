@@ -14,6 +14,11 @@ from kf_lib.actors.player._base_player import (
 from kf_lib.fighting import fight
 from kf_lib.game._playing import check_united_schools
 from kf_lib.happenings import events
+from kf_lib.happenings.story import _student_rivalry as sr_mod
+from kf_lib.happenings.story._school_attack import (
+    SCHOOL_DEFENSE_LOSE_REP,
+    SCHOOL_DEFENSE_WIN_REP,
+)
 from kf_lib.kung_fu import techniques
 from kf_lib.happenings.events import (
     ALL_SCHOOLS_TEAM_SIZE,
@@ -329,3 +334,132 @@ class TestSchoolTechs:
         p.choose_school_techs()
         data = g._player_to_data(p)
         assert data['atts']['school_techs'] == p.school_techs
+
+
+def run_story(g, p, story_name, max_advances=4):
+    """Force-start a story and advance it to the end."""
+    s = g.stories[story_name]
+    assert s.test(p), f'{story_name} should be available to {p.name}'
+    s.start(p)
+    for _ in range(max_advances):
+        if p.current_story is None:
+            break
+        p.hp = p.hp_max
+        p.inactive = 0
+        s.advance()
+    assert p.current_story is None, f'{story_name} stuck at state {s.state}'
+    return s
+
+
+class TestSchoolAttackStory:
+    def test_gating(self):
+        g, p = make_game_and_player(seed=30, level=14)
+        s = g.stories['SchoolAttackStory']
+        assert not s.test(p)  # not a master
+        make_master(p, num_students=1)
+        assert not s.test(p)  # not enough students
+        p.add_students(1)
+        assert s.test(p)
+
+    def test_win_branch(self):
+        g, p = make_game_and_player(seed=31, level=14)
+        make_master(p, num_students=3)
+        p.fight = lambda *a, **kw: True
+        rep_before = p.reputation
+        run_story(g, p, 'SchoolAttackStory')
+        assert p.reputation == rep_before + SCHOOL_DEFENSE_WIN_REP
+        assert 'School Defender' in p.accompl
+
+    def test_lose_branch(self):
+        g, p = make_game_and_player(seed=32, level=14)
+        make_master(p, num_students=3)
+        p.fight = lambda *a, **kw: False
+        p.money = 500
+        rep_before = p.reputation
+        run_story(g, p, 'SchoolAttackStory')
+        assert p.reputation == rep_before + SCHOOL_DEFENSE_LOSE_REP
+        assert p.money < 500  # the school is ransacked
+        assert 'School Defender' not in p.accompl
+
+    def test_completes_for_real(self):
+        for seed in range(3):
+            g, p = make_game_and_player(seed=40 + seed, level=16)
+            make_master(p, num_students=4)
+            run_story(g, p, 'SchoolAttackStory')
+
+
+class TestStudentRivalryStory:
+    @staticmethod
+    def force_choice(choice, duel_anyway=False):
+        """Patch the story module's RNG so the AI player picks `choice`."""
+        orig_random, orig_rnd = sr_mod.random, sr_mod.rnd
+        sr_mod.random = SimpleNamespace(sample=random.sample, choice=lambda seq: choice)
+        sr_mod.rnd = lambda: 0.0 if duel_anyway else 1.0
+        return orig_random, orig_rnd
+
+    @staticmethod
+    def restore(orig_random, orig_rnd):
+        sr_mod.random, sr_mod.rnd = orig_random, orig_rnd
+
+    def make_master_with_students(self, seed):
+        g, p = make_game_and_player(seed=seed, level=14)
+        make_master(p, num_students=3)
+        return g, p
+
+    def test_gating(self):
+        g, p = make_game_and_player(seed=50, level=14)
+        s = g.stories['StudentRivalryStory']
+        assert not s.test(p)
+        make_master(p, num_students=2)
+        assert s.test(p)
+
+    def test_duel_branch(self):
+        g, p = self.make_master_with_students(51)
+        state = self.force_choice(sr_mod.DUEL)
+        rep_before = p.reputation
+        try:
+            run_story(g, p, 'StudentRivalryStory')
+        finally:
+            self.restore(*state)
+        assert p.reputation == rep_before + sr_mod.DUEL_REP
+        assert any('duel' in line for line in p.plog)
+
+    def test_spar_branches(self):
+        for spar_wins, expected_rep in (
+            (True, sr_mod.SPAR_WIN_REP),
+            (False, sr_mod.SPAR_LOSS_REP),
+        ):
+            g, p = self.make_master_with_students(52)
+            p.spar = lambda *a, **kw: spar_wins
+            state = self.force_choice(sr_mod.SPAR)
+            rep_before = p.reputation
+            try:
+                run_story(g, p, 'StudentRivalryStory')
+            finally:
+                self.restore(*state)
+            assert p.reputation == rep_before + expected_rep
+
+    def test_forbid_branches(self):
+        # obeyed: nothing happens
+        g, p = self.make_master_with_students(53)
+        state = self.force_choice(sr_mod.FORBID, duel_anyway=False)
+        rep_before = p.reputation
+        try:
+            run_story(g, p, 'StudentRivalryStory')
+        finally:
+            self.restore(*state)
+        assert p.reputation == rep_before
+        # disobeyed: they duel anyway, the master loses face
+        g, p = self.make_master_with_students(54)
+        state = self.force_choice(sr_mod.FORBID, duel_anyway=True)
+        rep_before = p.reputation
+        try:
+            run_story(g, p, 'StudentRivalryStory')
+        finally:
+            self.restore(*state)
+        assert p.reputation == rep_before + sr_mod.DISOBEYED_REP
+
+    def test_completes_for_real(self):
+        for seed in range(5):
+            g, p = self.make_master_with_students(60 + seed)
+            run_story(g, p, 'StudentRivalryStory')

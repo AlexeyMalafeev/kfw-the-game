@@ -312,9 +312,9 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
     (spar or reputation-scaled persuasion), 'Founder of the Federation'
     accomplishment
   - ~~encounters/stories about running your school, gaining recognition~~
-    partially done 2026-09: teaching levels students up, student tournament
-    titles reward the master, All-Schools Tournament event; standalone
-    school-management stories still open
+    ✅ Done 2026-09: teaching levels students up and passes on school techs,
+    student tournament titles reward the master, All-Schools Tournament event,
+    plus SchoolAttackStory / StudentRivalryStory school-management stories
 - exp/levels: all levels 100 exp (see Balance)
 - config file (not to choose every time); new game settings in a text file
 - **mod support**: world parameters (crime rate, kung-fu prevalence, etc.)

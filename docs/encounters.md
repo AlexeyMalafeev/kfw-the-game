@@ -266,6 +266,18 @@ Five stories are built around free-for-all fights (`fighting/fight`):
   fences → a 6-way FFA over the loot pile; winning returns the stolen money
   plus a random item.
 
+Two stories are gated on being a master with ≥ 2 students (school
+management):
+
+- `SchoolAttackStory` (11–20): hired thugs attack the player's school at
+  night; the master and the whole student roster defend it in one team fight.
+  Winning: +8 rep and the 'School Defender' accomplishment; losing: the school
+  is ransacked (100–300 c) and −5 rep.
+- `StudentRivalryStory` (11–20): two students quarrel over who is the best.
+  The master decides: let them duel (the winner may level up; +2 rep), spar
+  them both (win: +3 rep; lose: −2 rep), or forbid it (25% they sneak out and
+  duel anyway, −1 rep). AI masters pick at random.
+
 ## Scheduled events and town stats
 
 `events.randevent(g)` runs once per day from `Playing.next_day`

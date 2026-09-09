@@ -7,6 +7,14 @@ because kung-fu movies.
 ## [Unreleased]
 
 ### Added
+- **Two school-management story lines** (gated on being a master with ≥ 2
+  students):
+  - `SchoolAttackStory` (lv 11–20): hired thugs attack the school at night;
+    master and students defend it in a team fight — winning gives +8 rep and
+    the 'School Defender' accomplishment, losing costs 100–300 c and 5 rep
+  - `StudentRivalryStory` (lv 11–20): two students quarrel over who's the
+    best; the master lets them duel (winner may level up), spars them both
+    (±rep), or forbids it (25% they duel anyway)
 - **Custom school techs at founding**: when a player founds a school, they
   choose up to 3 techniques (from the ones they know) their school will
   teach; students then have a 25% chance per lesson to learn a school tech
