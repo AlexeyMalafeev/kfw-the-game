@@ -14,6 +14,10 @@ because kung-fu movies.
 - **`best_student` is now maintained** (strongest student by exp worth,
   refreshed on intake/teaching/monthly) — it was saved and read by the
   Foreigner story but never assigned, so that story branch finally works
+- **Masters share their students' tournament glory**: a student's tournament
+  appearance is logged; a student title earns the master +3 reputation and
+  a `students_tourn_won` stat point, with the new 'Master of Champions'
+  accomplishment at 3 student titles
 
 ## [v0.7.1-beta "Eight Tigers in One Cage"] — 2026-09-10
 

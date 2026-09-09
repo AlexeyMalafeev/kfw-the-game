@@ -296,7 +296,10 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 
 - **Late game / own school** (was top of todo.md):
   - choose actual style techs (from what you know as a master)
-  - students participate in tournaments (collect stats + new accomplishments?)
+  - ~~students participate in tournaments (collect stats + new
+    accomplishments?)~~ ✅ Done 2026-09: student entries are logged; a student
+    title gives the master +3 rep and a `students_tourn_won` stat, with the
+    'Master of Champions' accomplishment at 3 titles
   - mega-tournament where all schools fight (all fighters or top 3 + masters)
   - encounters/stories about running your school, gaining recognition
   - quest to unite all schools → new victory type (kung-fu federation /

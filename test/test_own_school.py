@@ -5,6 +5,11 @@ import random
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 from kf_lib.actors.player import SmartAIP
 from kf_lib.actors.player._base_player import TAUGHT_STUDENT_LV_GAP
+from kf_lib.happenings.tournament import (
+    STUDENT_TOURN_WIN_REP,
+    STUDENT_TOURN_WINS_ACCOMPL,
+    Tournament,
+)
 
 
 def make_game_and_player(seed=0, level=1):
@@ -83,3 +88,42 @@ class TestTeaching:
         data = g._player_to_data(p)
         assert data['best_student'] is not None
         assert data['best_student']['args'][0] == p.best_student.name
+
+
+class TestStudentsInTournaments:
+    @staticmethod
+    def run_rigged_tournament(g, forced_winner):
+        """Run a headless all-comers tournament with a forced winner."""
+        orig = Tournament._do_rounds
+        Tournament._do_rounds = lambda self: setattr(self, 'winner', forced_winner)
+        try:
+            # huge num_participants => every master/student gets in
+            return Tournament(g, num_participants=200, min_lv=1, max_lv=20, fee=0)
+        finally:
+            Tournament._do_rounds = orig
+
+    def test_student_participation_is_logged(self):
+        g, p = make_game_and_player(seed=5, level=14)
+        make_master(p, num_students=3)
+        self.run_rigged_tournament(g, forced_winner=None)
+        school = g.schools[p.new_school_name]
+        assert any(
+            f'{s.name} represents the school' in line for s in school for line in p.plog
+        )
+
+    def test_student_win_rewards_master(self):
+        g, p = make_game_and_player(seed=6, level=14)
+        make_master(p, num_students=3)
+        student = p.best_student
+        rep_before = p.reputation
+        self.run_rigged_tournament(g, forced_winner=student)
+        assert p.reputation == rep_before + STUDENT_TOURN_WIN_REP
+        assert p.get_stat('students_tourn_won') == 1
+
+    def test_master_of_champions_accomplishment(self):
+        g, p = make_game_and_player(seed=7, level=14)
+        make_master(p, num_students=3)
+        student = p.best_student
+        for _ in range(STUDENT_TOURN_WINS_ACCOMPL):
+            self.run_rigged_tournament(g, forced_winner=student)
+        assert 'Master of Champions' in p.accompl

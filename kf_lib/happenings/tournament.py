@@ -8,6 +8,8 @@ from kf_lib.fighting import fight
 
 
 BET_REPUTATION_PENALTY = -3
+STUDENT_TOURN_WIN_REP = 3
+STUDENT_TOURN_WINS_ACCOMPL = 3
 
 
 class Tournament(object):
@@ -141,6 +143,23 @@ class Tournament(object):
                 # if not p.is_human:
                 #     print(f'DEBUG: {p.name} doesn\'t bet')
 
+    def _reward_masters(self):
+        """A player-master shares the glory when his students fight in the tournament."""
+        for p in self.g.players:
+            if not p.is_master:
+                continue
+            school = self.g.schools.get(p.new_school_name, [])
+            for f in self.participants:
+                if not f.is_player and f in school:
+                    p.log(f'{f.name} represents the school at the tournament.')
+            winner = self.winner
+            if winner is not None and not winner.is_player and winner in school:
+                p.write(f'{p.name}\'s student {winner.name} wins the tournament!')
+                p.gain_rep(STUDENT_TOURN_WIN_REP)
+                p.change_stat('students_tourn_won', 1)
+                if p.get_stat('students_tourn_won') >= STUDENT_TOURN_WINS_ACCOMPL:
+                    p.add_accompl('Master of Champions')
+
     def _resolve_bets(self):
         for p in sorted(self.bets, key=self.g.players.index):
             bet_on, bet_amount = self.bets[p]
@@ -171,6 +190,7 @@ class Tournament(object):
         self._place_bets()
         self._do_rounds()
         self._give_prize()
+        self._reward_masters()
         self._resolve_bets()
 
     def _show_participants(self):

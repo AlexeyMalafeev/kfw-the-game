@@ -338,6 +338,11 @@ prize (see Economy). 3 wins → 'Tournament Champion' accomplishment. ⚠️ The
 no-winner case (mutual KO in the final) raises `NotImplementedError` — nearly
 unreachable, but a real crash path.
 
+Player-masters share their students' tournament glory (`_reward_masters`):
+every student entered is noted in the master's log; a student **winning**
+earns the master +3 rep and a `students_tourn_won` stat point, with the
+'Master of Champions' accomplishment at 3 student titles.
+
 ## Strategic trade-offs the numbers imply
 
 - **Time is the only real currency.** Everything is exp/day, money/day or

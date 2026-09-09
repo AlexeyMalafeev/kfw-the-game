@@ -30,7 +30,8 @@ Tracked stats (defaults in `DEFAULT_STATS`, names self-explanatory): fight
 counters (`num_fights`, `fights_won`, `num_kos`, `times_koed`,
 `exp_bonuses` — a count of *bonuses earned*, not exp), life counters
 (`days_inactive`, `got_drunk`, `became_master`, `became_master_at_lv`,
-`num_stories`, `num_tourn`, `tourn_won`), money sums (`money_earned`,
+`num_stories`, `num_tourn`, `tourn_won`, `students_tourn_won` — tournaments
+won by the player's *students*), money sums (`money_earned`,
 `rew_money_earned`, `prize_money_earned`, `spent_on_training`, `donated`,
 `gamb_won`, `gamb_lost`, `money_robbed`, `stolen_from`), item counters
 (`items_bought`, `items_obtained`, `items_found`, `items_lost`,

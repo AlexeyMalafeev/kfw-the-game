@@ -41,6 +41,7 @@ DEFAULT_STATS = (
     ('criticals', 0),
     ('epics', 0),
     ('super_herbs_obtained', 0),
+    ('students_tourn_won', 0),
     ('times_koed', 0),
     ('tourn_won', 0),
 )
@@ -108,6 +109,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('Friends', str(len(p.friends))),
         ('Enemies', str(len(p.enemies))),
         ('Students', str(p.students)),
+        ('Stud.tourn.won', gs('students_tourn_won')),
         ('Accomp,stories', '{},{}'.format(len(p.accompl), gs('num_stories'))),
         ('Got drunk', gs('got_drunk')),
         ('Reputation', p.reputation),
