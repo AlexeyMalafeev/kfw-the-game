@@ -174,9 +174,7 @@ Effect`. Each `Move` caches its pair at construction (`Move.set_ascii` →
 - `cause_shock` / `cause_slow_down` / `cause_stun`
   (`_strike_mechanics.py`) apply the `'Lying '` prefix when the fighter is
   down, so a shocked/stunned/slowed *lying* fighter shows the `Lying Hit
-  Effect` picture. (Before 2026-09 the prefix check used lowercase
-  `startswith('lying')`, which never matched the stored `'Lying …'` names, so
-  the standing `'Hit Effect'` art always showed instead.)
+  Effect` picture.
 - `show_ascii()` picks `ascii_l` vs `ascii_r` by which side the fighter is on
   (side_a faces right), joins the two pictures with
   `ascii_art.concat(a, b, buffer)` where `buffer = max(self.ascii_buffer,

@@ -78,12 +78,22 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   `## [vX.Y.Z-beta "Codename"] — YYYY-MM-DD`, commit with
   `RELEASE: vX.Y.Z-beta "Codename"` (changelog-only commit), tag `vX.Y.Z-beta`,
   push with tags. No version string exists in code — the changelog and the git
-  tag are the release.
+  tag are the release. Before tagging, re-read the section being released and
+  prune entries describing mid-cycle states that never shipped (workarounds
+  that were reverted in the same cycle etc.) — the Fixed entries already tell
+  that story.
 - Release codenames: kung-fu flavored but **not necessarily movie references** —
   most are puns or literal winks at the release's own content ('ASCII-fu',
   'Superbug, Victory, Stats', 'Den'gi', 'Nasty Bugs and Small Fixes',
   'Bet on Tournaments'), some are sayings ('Not Fail, But Experience').
-  Suggest a few variants and let the user pick — never choose one unilaterally.
+  The codename should headline the **whole** release (its most notable
+  feature), not just the latest batch of changes. Suggest a few variants and
+  let the user pick — never choose one unilaterally.
+- Balance-affecting changes: any edit to boost/tech/strike values
+  (`kung_fu/boosts.py`, `boost_combos.py`, technique definitions, move data)
+  shifts fight balance even when it's a one-word fix — note the change as
+  balance-affecting and queue a `dev_scripts/testing/run_test_fb.py` re-run
+  (in the commit message or BACKLOG.md) so the snapshot stays current.
 - Docs rule: `docs/` holds one file per game system (mechanics/pipelines, not
   constant tables — values live in code). A behavior change isn't done until
   the matching doc paragraph is updated in the same commit.

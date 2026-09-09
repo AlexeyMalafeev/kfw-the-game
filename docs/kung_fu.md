@@ -242,8 +242,7 @@ between them. `upgrade_tech` = unlearn (subtract deltas) + learn the
 advanced twin. `get_learnable_techs(f)` = all upgradable techs minus what
 `f` has, including the regular twin of any advanced tech `f` holds.
 `Lightning-Fast Strikes` (advanced) doubles the basic `Fast Strikes` effect
-(−0.6 vs −0.3). (Before 2026-09 it reused the basic value — upgrading was a
-no-op.)
+(−0.6 vs −0.3).
 
 Style techs are upgraded separately at `STYLE_TECH_UPGRADE_AT_LV = 10`
 (`Fighter.choose_style_tech_to_upgrade`, overridden with a menu in

@@ -17,10 +17,7 @@ Items marked ⚠️ look unintentional or surprising — verify before building 
 
 - `add_friend(obj)`: appends only if `len(friends) < self.max_num_friends`
   (default 8, ±2 from the (un)friendly trait). Over-cap additions are dropped
-  with an on-screen note and a log line ("stays an acquaintance") — before
-  2026-09 they were silently dropped, so a caller's "let's be friends" line
-  could announce a friendship that never happened (`_challenger.py:54-55`,
-  `_school.py:57`, `_people.py:120`, `_beggar.py:44`).
+  with an on-screen note and a log line ("stays an acquaintance").
 - `add_enemy(enemy)`: appends and `game.register_fighter(enemy)` — enemies
   become persistent world fighters. No cap and no duplicate check.
 - `remove_enemy(enemy)`: removes and unregisters (only used by the Ambush

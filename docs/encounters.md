@@ -94,8 +94,7 @@ displayed anywhere — write-only statistics.
 
 `EncControl.run_enc(name, test)` (`encounters/__init__.py:77`) is a dev hook that
 `exec()`s `"{name}(p, check_if_happens={not test})"` — `test=True` forces the
-encounter to run, skipping the chance roll. (Before 2026-09 it passed a
-nonexistent `test=` kwarg and raised `TypeError`.) Passing the flag
+encounter to run, skipping the chance roll. Passing the flag
 positionally, as `testing_tools.test_enemy` does with `Ambush(p, False)`, works.
 
 ## Encounter categories

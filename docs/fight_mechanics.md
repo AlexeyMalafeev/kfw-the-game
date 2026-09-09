@@ -298,14 +298,12 @@ learning). Values live in `kung_fu/boosts.py` / `boost_combos.py`.
 ⚠️ Dead/unused boosts: `GRAB_CH1/2` (`grab_chance` unused), `QI_WHEN_ATK`,
 `HP_MULT`, `epic_chance_mult`, all `WeaponTech`s ("weapon techniques do
 nothing; implement"). The advanced 'Lightning-Fast Strikes' tech doubles the
-basic 'Fast Strikes' effect (`STRIKE_TIME_COST_MULT2` = −0.6 vs −0.3) — before
-2026-09 it mistakenly reused the basic value, making the upgrade a no-op.
+basic 'Fast Strikes' effect (`STRIKE_TIME_COST_MULT2` = −0.6 vs −0.3).
 
 `kung_fu/moves.py` loads `moves/all_moves.txt` at import (each line `eval()`d
 into a `Move`). `get_rand_moves` filters by tier and `fav_move_features`, sorts
 by feature overlap, weights by `freq`. An empty pool falls back to the whole
-tier (with a warning in `kfw.log`) — before 2026-09 `random.choice(pool)` ran
-*before* the empty-pool check, raising `IndexError` instead.
+tier (with a warning in `kfw.log`).
 
 ## End of fight
 
