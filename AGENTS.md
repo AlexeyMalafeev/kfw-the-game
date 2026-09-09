@@ -73,7 +73,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   convention, there are no cycle guards
 - Commit messages: conventional commits (`fix:`, `docs:`, `refactor:`, `chore:`, `RELEASE:`)
 - Git workflow: commit **and push** without asking once the work is verified; only ask
-  about releases / tags
+  about releases / tags. Push directly to `master` — GitHub warns "Changes must be
+  made through a pull request" but the repo owner's bypass makes the push succeed;
+  this is expected, don't worry about it and don't open PRs
 - Releases: rename the `## [Unreleased]` section of `CHANGELOG.md` to
   `## [vX.Y.Z-beta "Codename"] — YYYY-MM-DD`, commit with
   `RELEASE: vX.Y.Z-beta "Codename"` (changelog-only commit), tag `vX.Y.Z-beta`,
