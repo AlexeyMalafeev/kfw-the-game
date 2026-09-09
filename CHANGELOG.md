@@ -4,7 +4,7 @@ All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames
 because kung-fu movies.
 
-## [Unreleased]
+## [v0.7.1-beta "Eight Tigers in One Cage"] — 2026-09-10
 
 ### Added
 - **Ctrl+C exits the game at any keypress prompt**: the raw-mode keyboard layer
