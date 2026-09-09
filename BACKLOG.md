@@ -300,7 +300,10 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
     accomplishments?)~~ ✅ Done 2026-09: student entries are logged; a student
     title gives the master +3 rep and a `students_tourn_won` stat, with the
     'Master of Champions' accomplishment at 3 titles
-  - mega-tournament where all schools fight (all fighters or top 3 + masters)
+  - ~~mega-tournament where all schools fight (all fighters or top 3 +
+    masters)~~ ✅ Done 2026-09: the All-Schools Tournament event (2%/day) —
+    master + top 2 students per school, group free-for-all, 'All-Schools
+    Champion' accomplishment
   - encounters/stories about running your school, gaining recognition
   - quest to unite all schools → new victory type (kung-fu federation /
     association); reputation could influence creating it

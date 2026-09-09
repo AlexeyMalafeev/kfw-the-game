@@ -1,10 +1,18 @@
 """Own-school late-game mechanics: teaching, best student, students in
 tournaments, the all-schools tournament and the schools-unification victory."""
 import random
+from types import SimpleNamespace
 
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 from kf_lib.actors.player import SmartAIP
 from kf_lib.actors.player._base_player import TAUGHT_STUDENT_LV_GAP
+from kf_lib.fighting import fight
+from kf_lib.happenings import events
+from kf_lib.happenings.events import (
+    ALL_SCHOOLS_TEAM_SIZE,
+    ALL_SCHOOLS_PRIZE,
+    ALL_SCHOOLS_WIN_REP,
+)
 from kf_lib.happenings.tournament import (
     STUDENT_TOURN_WIN_REP,
     STUDENT_TOURN_WINS_ACCOMPL,
@@ -127,3 +135,63 @@ class TestStudentsInTournaments:
         for _ in range(STUDENT_TOURN_WINS_ACCOMPL):
             self.run_rigged_tournament(g, forced_winner=student)
         assert 'Master of Champions' in p.accompl
+
+
+class TestAllSchoolsTournament:
+    @staticmethod
+    def run_rigged(g, winners):
+        """Run the event with the group FFA replaced by a stub."""
+        orig = fight.group_free_for_all
+        fight.group_free_for_all = lambda groups, **kw: SimpleNamespace(winners=winners)
+        try:
+            events.all_schools_tournament(g)
+        finally:
+            fight.group_free_for_all = orig
+
+    def test_teams_are_master_plus_top_students(self):
+        g, p = make_game_and_player(seed=8, level=14)
+        make_master(p, num_students=4)
+        captured = {}
+        orig = fight.group_free_for_all
+
+        def fake_gffa(groups, **kw):
+            captured['groups'] = groups
+            return SimpleNamespace(winners=[])
+
+        fight.group_free_for_all = fake_gffa
+        try:
+            events.all_schools_tournament(g)
+        finally:
+            fight.group_free_for_all = orig
+        teams = captured['groups']
+        assert len(teams) >= 2
+        for team in teams:
+            assert 2 <= len(team) <= ALL_SCHOOLS_TEAM_SIZE
+        # the player's school fields the player-master + its top 2 students
+        p_team = next(t for t in teams if p in t)
+        school = g.schools[p.new_school_name]
+        top2 = sorted(school, key=lambda f: -f.get_exp_worth())[:2]
+        assert p_team == [p] + top2
+
+    def test_draw_gives_no_rewards(self):
+        g, p = make_game_and_player(seed=9, level=14)
+        make_master(p, num_students=3)
+        exp_before, rep_before, money_before = p.exp, p.reputation, p.money
+        self.run_rigged(g, winners=[])
+        assert (p.exp, p.reputation, p.money) == (exp_before, rep_before, money_before)
+        assert 'All-Schools Champion' not in p.accompl
+
+    def test_player_win_rewards(self):
+        g, p = make_game_and_player(seed=10, level=14)
+        make_master(p, num_students=3)
+        rep_before, money_before = p.reputation, p.money
+        self.run_rigged(g, winners=[p])  # the player's team wins
+        assert p.reputation == rep_before + ALL_SCHOOLS_WIN_REP
+        assert p.money == money_before + ALL_SCHOOLS_PRIZE
+        assert 'All-Schools Champion' in p.accompl
+
+    def test_runs_headless_for_real(self):
+        for seed in range(3):
+            g, p = make_game_and_player(seed=20 + seed, level=14)
+            make_master(p, num_students=3)
+            events.all_schools_tournament(g)  # must not crash

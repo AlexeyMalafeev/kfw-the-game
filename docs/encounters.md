@@ -269,13 +269,24 @@ Five stories are built around free-for-all fights (`fighting/fight`):
 ## Scheduled events and town stats
 
 `events.randevent(g)` runs once per day from `Playing.next_day`
-(`_playing.py:192`), after all players have acted. It shuffles three
+(`_playing.py:192`), after all players have acted. It shuffles four
 independent rolls: new story (0.1), school-vs-school brawl (0.04), new
-tournament (0.15) — so zero to three events per day.
+tournament (0.15), all-schools tournament (0.02) — so zero to four events per
+day.
 
 `school_vs_school(g)` picks two random non-empty schools, drops inactive
 players from the rosters, and runs one NPC fight (`fight.fight(...)`) between
 them with school names displayed; participants just log the event.
+
+`all_schools_tournament(g)` is the mega-tournament: every school with at
+least 2 fighters fields a team — its master plus the top 2 students by
+`get_exp_worth()` (inactive players are dropped; player-run schools included,
+teams with players fight first for the protagonist perspective). The teams
+clash in one group free-for-all (`fight.group_free_for_all`, no
+items/environment, school names displayed), last school standing wins. A
+draw means no winner and no rewards. Winners log the victory; players on the
+winning team also get +20 exp, +5 rep, a 200 c prize and the 'All-Schools
+Champion' accomplishment.
 
 Town stats (`game.crime`, `game.poverty`, `game.kung_fu`) are rolled once at
 `BaseGame.__init__` from `(0.05, 0.1, 0.15, 0.2)`. `crime` is read by the crime

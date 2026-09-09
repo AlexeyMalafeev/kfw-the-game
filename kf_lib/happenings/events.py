@@ -10,6 +10,13 @@ CH_SCHOOL_VS_SCHOOL = 0.04
 CH_STORY_BEGINS = 0.1
 CH_TOURNAMENT_BEGINS = 0.15
 CH_TOURNAMENT_FFA = 0.25
+CH_ALL_SCHOOLS_TOURN = 0.02
+
+# all-schools tournament
+ALL_SCHOOLS_TEAM_SIZE = 3  # master + top students
+ALL_SCHOOLS_PRIZE = 200
+ALL_SCHOOLS_WIN_EXP = 20
+ALL_SCHOOLS_WIN_REP = 5
 
 # tournaments
 DEFAULT_TOURN_FEE = 100
@@ -58,7 +65,57 @@ MIN_POVERTY = 0.05
 POVERTY_CHANGE = 0.05
 
 
-# todo show message (g.msg) when crime/kungfu/poverty reaches minimum/maximum
+def all_schools_tournament(g):
+    """Mega-tournament: every school fields a team (master + top students),
+    resolved as a group free-for-all between schools."""
+    teams = []
+    for school_name, roster in g.schools.items():
+        team = []
+        master = g.masters.get(school_name)
+        if master is not None and not (master.is_player and master.inactive):
+            team.append(master)
+        students = sorted(
+            (f for f in roster if not (f.is_player and f.inactive)),
+            key=lambda f: -f.get_exp_worth(),
+        )
+        team += students[: ALL_SCHOOLS_TEAM_SIZE - 1]
+        if len(team) >= 2:
+            teams.append(team)
+    if len(teams) < 2:
+        return
+    # teams with players come first (protagonist perspective in the fight)
+    teams.sort(key=lambda team: not any(f.is_player for f in team))
+    g.cls()
+    g.msg(
+        f'The masters of {g.town_name} gather for the All-Schools Tournament! Every school '
+        'fields its master and best students — last school standing wins!'
+    )
+    fight_obj = fight.group_free_for_all(
+        teams,
+        environment_allowed=False,
+        items_allowed=False,
+        school_display=True,
+        return_fight_obj=True,
+    )
+    if not fight_obj.winners:
+        g.msg('The All-Schools Tournament ends in a draw — no school prevails!')
+        return
+    win_team = next(team for team in teams if fight_obj.winners[0] in team)
+    win_school = None
+    for school_name, roster in g.schools.items():
+        if any(f in roster or g.masters.get(school_name) is f for f in win_team):
+            win_school = school_name
+            break
+    g.msg(f'{win_school} wins the All-Schools Tournament!')
+    for f in win_team:
+        f.log(f'Wins the All-Schools Tournament with {win_school}.')
+    for p in (f for f in win_team if f.is_player):
+        p.gain_exp(ALL_SCHOOLS_WIN_EXP)
+        p.gain_rep(ALL_SCHOOLS_WIN_REP)
+        p.earn_prize(ALL_SCHOOLS_PRIZE)
+        p.add_accompl('All-Schools Champion')
+
+
 def crime_down(g, rate=CRIME_DECREASE, mult=1.0):
     g.crime = max(round((g.crime - rate * mult), 3), MIN_CRIME)
 
@@ -137,6 +194,7 @@ def randevent(g):
         (CH_STORY_BEGINS, new_story),
         (CH_SCHOOL_VS_SCHOOL, school_vs_school),
         (CH_TOURNAMENT_BEGINS, new_tournament),
+        (CH_ALL_SCHOOLS_TOURN, all_schools_tournament),
     ]
     random.shuffle(order)
     for chance, func in order:

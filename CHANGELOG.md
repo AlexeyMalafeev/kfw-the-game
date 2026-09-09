@@ -7,6 +7,10 @@ because kung-fu movies.
 ## [Unreleased]
 
 ### Added
+- **All-Schools Tournament**: a rare mega-event (2%/day) where every school
+  fields its master and top 2 students in a group free-for-all between
+  schools; the winning school's players get exp, reputation, a 200 c prize
+  and the new 'All-Schools Champion' accomplishment
 - **Teaching students actually teaches**: `teach_students` now gives every
   student a 20% chance to level up per lesson (up to the master's level − 2,
   above the old NPC-student cap of 8) and reports who improved, on top of the
