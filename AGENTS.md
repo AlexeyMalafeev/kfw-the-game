@@ -74,6 +74,16 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - Commit messages: conventional commits (`fix:`, `docs:`, `refactor:`, `chore:`, `RELEASE:`)
 - Git workflow: commit **and push** without asking once the work is verified; only ask
   about releases / tags
+- Releases: rename the `## [Unreleased]` section of `CHANGELOG.md` to
+  `## [vX.Y.Z-beta "Codename"] — YYYY-MM-DD`, commit with
+  `RELEASE: vX.Y.Z-beta "Codename"` (changelog-only commit), tag `vX.Y.Z-beta`,
+  push with tags. No version string exists in code — the changelog and the git
+  tag are the release.
+- Release codenames: kung-fu flavored but **not necessarily movie references** —
+  most are puns or literal winks at the release's own content ('ASCII-fu',
+  'Superbug, Victory, Stats', 'Den'gi', 'Nasty Bugs and Small Fixes',
+  'Bet on Tournaments'), some are sayings ('Not Fail, But Experience').
+  Suggest a few variants and let the user pick — never choose one unilaterally.
 - Docs rule: `docs/` holds one file per game system (mechanics/pipelines, not
   constant tables — values live in code). A behavior change isn't done until
   the matching doc paragraph is updated in the same commit.
