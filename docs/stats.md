@@ -190,7 +190,8 @@ At fight end, `handle_player_stats` adds the numbers into the player's
 leader; the full report shows strikes landed, damage dealt, crits/EPICs and
 the favorite move, and biographies name the signature move — both filtered to
 strikes only (`attack_only=True`), since defensive moves like Guard otherwise
-dominate the usage counts.
+dominate the usage counts. `get_most_feared_move()` ranks strikes by times
+used × move power (total raw damage output) and is used in biographies.
 
 ## Biographies
 
@@ -198,7 +199,9 @@ dominate the usage counts.
 (`_playing.py`) collects players who met a victory condition and calls
 `show_bio(winners)`, which prints the bios and writes `save/bio.txt`. The
 generated text covers: the victory title(s), the style name, the signature
-move (most-used strike, from `move_usage`, since 2026-09), and a
+move (most-used strike, from `move_usage`, since 2026-09), the most feared
+move (strike with the highest times-used × power, when different from the
+signature move), and a
 3-sentence attribute-spread blurb derived from the gap between the player's
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
 "almost inhuman ... at the cost of ..."). Other stats, accomplishments, traits

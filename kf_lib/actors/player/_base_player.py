@@ -58,6 +58,7 @@ class BasePlayer(Fighter):
         traits_list=None,
     ):
         self.plog = []
+        self.traits = []  # initialized early so repr() works during super().__init__()
         super().__init__(
             name=name,
             style=style,
@@ -88,7 +89,6 @@ class BasePlayer(Fighter):
         self.max_days_to_recover = 7
         self.max_num_friends = 8
         self.next_lv_exp_mult = 1.0
-        self.traits = []
         self.school_training_exp_mult = 1.0
         self.schoolmates_help = 0.5
         self.thief_steals = 0.3
@@ -149,10 +149,25 @@ class BasePlayer(Fighter):
         self.game.register_fighter(enemy)
         self.log('{} is now {}\' enemy.'.format(enemy.name, self.name))
 
+    def get_accompl_info(self):
+        if not self.accompl:
+            return f'{self.name} has no accomplishments yet.'
+        lines = ['{}\'s accomplishments:'.format(self.name)]
+        lines += [
+            f'{label} ({date})' for label, date in zip(self.accompl, self.accompl_dates)
+        ]
+        return '\n'.join(lines)
+
     def add_friend(self, obj):
         if len(self.friends) < self.max_num_friends:
             self.friends.append(obj)
             self.log('{} is now {}\' friend.'.format(obj.name, self.name))
+        else:
+            self.show(
+                f'{self.name} already has {self.max_num_friends} friends — too many to '
+                f'keep up with. {obj.name} remains a friendly acquaintance.'
+            )
+            self.log(f'Has too many friends already; {obj.name} stays an acquaintance.')
 
     def add_students(self, num_stud):
         self.students += num_stud
@@ -550,6 +565,20 @@ class BasePlayer(Fighter):
         if usage:
             return max(usage.items(), key=lambda kv: kv[1])[0]
         return ''
+
+    def get_most_feared_move(self):
+        """Strike with the highest total raw damage output across all fights
+        (times used x move power); '' if none."""
+        from kf_lib.kung_fu.moves import ALL_MOVES_DICT
+        feared, best_score = '', 0
+        for name, cnt in self.move_usage.items():
+            m = ALL_MOVES_DICT.get(name)
+            if m is None or not m.power:
+                continue
+            score = cnt * m.power
+            if score > best_score:
+                feared, best_score = name, score
+        return feared
 
     def get_stat(self, stat_name):
         return self.stats_dict[stat_name]

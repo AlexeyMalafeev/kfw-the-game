@@ -15,13 +15,18 @@ class StateMenu(BaseGame):
         print()
         # add move screen with more detailed descriptions
         choice = menu(
-            ('Items', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu'),
-            keys='ibslqxd',
+            ('Items', 'Accomplishments', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit',
+             'Debug Menu'),
+            keys='iabslqxd',
             new_line=False,
         )
         if choice == 'Items':
             cls()
             print(p.get_inventory_info())
+            pak()
+        elif choice == 'Accomplishments':
+            cls()
+            print(p.get_accompl_info())
             pak()
         elif choice == 'Save':
             self.save_game('save.txt')

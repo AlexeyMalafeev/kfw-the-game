@@ -48,6 +48,12 @@ because kung-fu movies.
 - Free-for-all branches in existing encounters: `Robbers` crowds may squabble
   over the loot (0.25), `HelpPolice` may draw a second gang into a three-way
   melee (0.25), `Brawler` fights may spread to bystanders (0.25)
+- **'Accomplishments' option in the State menu** — lists all of the player's
+  accomplishments with dates (the data was already stored, just never shown)
+- **Biographies name the player's most feared move** — the strike with the
+  highest times-used × power — when it differs from the signature move
+- Trying to befriend someone over the friend cap now shows a note and logs
+  "stays an acquaintance" instead of silently dropping the friendship
 
 ### Changed
 - **`Fighter.level` is now a read-only property** — direct assignment
@@ -64,6 +70,27 @@ because kung-fu movies.
   `handle_items`), and the in-fight HP bar is built from `act_allies`/
   `act_targets` — two-sided behavior unchanged, free-for-all overrides the
   hooks
+
+### Fixed
+- **'Lightning-Fast Strikes' advanced tech was a no-op**: it reused the basic
+  tech's `STRIKE_TIME_COST_MULT1` (−0.3) instead of `STRIKE_TIME_COST_MULT2`
+  (−0.6), so upgrading 'Fast Strikes' changed nothing
+- **`get_rand_moves` crashed on an empty move pool**: `random.choice(pool)` ran
+  before the empty-pool check, raising `IndexError` instead of the documented
+  fallback to the whole tier
+- **`OverhearConversation` log lines were swapped** — the humiliating-defeat
+  branch logged "astonishing victory" and vice versa
+- **Lying fighters showed standing 'Hit Effect' art** on shock/stun/slow-down:
+  the `'Lying '` prefix check used lowercase `startswith('lying')`, which never
+  matched the stored `'Lying …'` names; the same typo in the KO path could show
+  'Falling' art for an already-lying fighter
+- **`repr()` of a player during `Fighter.__init__` crashed** with
+  `AttributeError: ... no attribute 'traits'` on any warning path during
+  construction (`BasePlayer` set `traits` only after `super().__init__()`);
+  `traits` is now initialized before the super call
+- **`EncControl.run_enc` dev hook raised `TypeError`**: it passed a nonexistent
+  `test=` kwarg to encounters; it now maps `test` to `check_if_happens`
+  (`test=True` forces the encounter, skipping the chance roll)
 
 ## [v0.7.0-beta "Secret Kung-Fu Manuscripts Don't Burn"] — 2026-09-07
 
@@ -116,12 +143,6 @@ move strings).
 - `encounters/__init__.py` (1353 lines) split into thematic modules
 - `Challenger`/`Master`/`Thug` fighter subclasses replaced by a
   `Fighter.occupation` attribute; old saves keep loading via factory shims
-- **New games always use randomly generated styles for now** (`kfw.py` forces
-  `generated_styles=True`, interactive path included): 6 handcrafted style
-  move strings are broken and silently degrade to random picks (Hung Ga lv8,
-  Wing Chun lv2, White Crane lv6, Xing Yi lv2/4/8). ~~Revert once the strings
-  are fixed~~ — fixed within the same release cycle (see Fixed); the startup
-  "Randomly generated styles?" prompt is restored
 
 ### Fixed
 - **"Fav. move" stats row counted defensive moves**: the full stats report

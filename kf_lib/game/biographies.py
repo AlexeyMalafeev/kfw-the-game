@@ -12,6 +12,8 @@ def generate_bio(player_instance) -> Text:
     bio.append(f'His kung-fu style was {p.get_displayed_style_name()}.')
     if fav_move := p.get_favorite_move(attack_only=True):
         bio.append(f'His signature move was the {fav_move}.')
+        if (feared_move := p.get_most_feared_move()) and feared_move != fav_move:
+            bio.append(f'But his most feared move was the {feared_move}.')
     full_atts = p.get_att_values_full()
     max_att, min_att = max(full_atts), min(full_atts)
     att_diff = max_att - min_att
@@ -33,7 +35,6 @@ def generate_bio(player_instance) -> Text:
             )
 
     # undefeated, founded school or not, spent vs earned, gambled, popular with people,
-    # most feared move, notable fights, unwrap accomplishments into
-    # short stories
+    # notable fights, unwrap accomplishments into short stories
 
     return ' '.join(bio)

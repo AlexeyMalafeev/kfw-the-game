@@ -23,8 +23,7 @@ An encounter is a class, not an instance registry: `BaseEncounter`
 
 ⚠️ The `__init__` parameter is named `check_if_happens`, shadowing the abstract
 method it gates. It works (the parameter is local, `self.check_if_happens` still
-resolves to the method) but is confusing, and the leftover `test=` kwarg in
-`EncControl.run_enc` suggests it was renamed at some point.
+resolves to the method) but is confusing.
 
 `__init_subclass__` auto-registers every concrete subclass into
 `all_random_encounter_classes` — unless the class has `guaranteed = True`, which
@@ -80,10 +79,12 @@ Trigger points (`game/_playing.py:126` `game_loop`):
 - If `p.inactive` becomes true mid-cascade (e.g. an injury from a lost fight),
   `random_encounters` aborts the remaining classes.
 
-⚠️ The duplication-as-weights scheme misfires for *guaranteed* classes: each
-duplicate fires unconditionally, so `BUY_ITEMS_ENCS` (`[GMerchant] * 5`) forces
-five merchant offers in a single 'Buy items' action, and `HELP_POOR_ENCS`
-(`[GBeggar] * 3`) three beggars per 'Help the poor'. The `# todo reimplement enc
+The duplication-as-weights scheme fires *guaranteed* classes once per
+duplicate, so `BUY_ITEMS_ENCS` (`[GMerchant] * 5`) means five merchant offers
+in a single 'Buy items' action, and `HELP_POOR_ENCS` (`[GBeggar] * 3`) three
+beggars per 'Help the poor'. This is INTENDED (author, 2026-09): the market
+sequence is a mini-game of "buy now or wait for a better offer from the next
+merchant". The `# todo reimplement enc
 extra chances with random.choices` comment suggests lists were meant as weights
 for a single pick, not independent rolls.
 
@@ -91,10 +92,10 @@ for a single pick, not independent rolls.
 with all random classes) and is persisted in saves. ⚠️ It is never read or
 displayed anywhere — write-only statistics.
 
-`EncControl.run_enc(name, test)` (`encounters/__init__.py:75`) is a dev hook that
-`exec()`s `"{name}(p, test={test})"`. ⚠️ Broken: no encounter `__init__` accepts
-a `test` kwarg (the second parameter is `check_if_happens`), so calling it — e.g.
-from `kf_lib/testing/testing_tools.py:50` — raises `TypeError`. Passing the flag
+`EncControl.run_enc(name, test)` (`encounters/__init__.py:77`) is a dev hook that
+`exec()`s `"{name}(p, check_if_happens={not test})"` — `test=True` forces the
+encounter to run, skipping the chance roll. (Before 2026-09 it passed a
+nonexistent `test=` kwarg and raised `TypeError`.) Passing the flag
 positionally, as `testing_tools.test_enemy` does with `Ambush(p, False)`, works.
 
 ## Encounter categories
@@ -147,9 +148,7 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `WiseMan`: pay 10 c. for a conversation; 0.15 chance to gain a positive trait
   (or lose its opposite) — the only encounter that changes traits.
 - `Gossip` (pay to see game stats), `OverhearConversation` (relays recorded
-  `aston_victory` / `humil_defeat` facts about players). ⚠️
-  `OverhearConversation.run` swaps the log lines: the humiliating-defeat branch
-  logs "astonishing victory" and vice versa (`_people.py:269,276`).
+  `aston_victory` / `humil_defeat` facts about players).
 - `FriendMatch` / `PlayerMatch`: friendly spars with friends or other AI
   players, chance scaling with friend count.
 

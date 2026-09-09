@@ -206,7 +206,6 @@ def get_rand_moves(
     pool = [m for m in MOVES_BY_TIERS[tier]
             if m not in known_moves
             and not (m.special_features - f.fav_move_features)]
-    random_move = random.choice(pool)
     if not pool:
         logger.warning(
             f'The pool in get_rand_moves is empty: '
@@ -217,6 +216,7 @@ def get_rand_moves(
             f'\nSetting pool to all moves at tier'
         )
         pool = MOVES_BY_TIERS[tier]
+    random_move = random.choice(pool)
     random.shuffle(pool)
     pool.sort(
         key=lambda m: len([feat for feat in features if feat in m.features]),

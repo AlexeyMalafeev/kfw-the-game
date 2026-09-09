@@ -239,7 +239,7 @@ LINKED_TECHS = [
     (
         Tech('Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1,
              is_upgradable=True),
-        Tech('Lightning-Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT1,
+        Tech('Lightning-Fast Strikes', strike_time_cost_mult=b.STRIKE_TIME_COST_MULT2,
              is_advanced=True),
     ),
     (

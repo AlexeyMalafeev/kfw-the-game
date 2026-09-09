@@ -134,7 +134,7 @@ class StrikeMechanics(FighterAPI, ABC):
         shock_dur = rndint_2d(self.DUR_SHOCK_MIN, self.DUR_SHOCK_MAX) // self.speed_full
         self.add_status('shocked', shock_dur)
         self.add_status('skip', shock_dur)
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
+        prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' shocked!', align=False)
 
@@ -142,7 +142,7 @@ class StrikeMechanics(FighterAPI, ABC):
         slow_dur = rndint_2d(self.DUR_SLOW_MIN, self.DUR_SLOW_MAX) // self.speed_full
         self.add_status('slowed down', slow_dur)
         # todo do not repeat this line in all functions, use helper
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
+        prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' slowed down!', align=False)
 
@@ -151,7 +151,7 @@ class StrikeMechanics(FighterAPI, ABC):
         stun_dur = rndint_2d(self.DUR_STUN_MIN, self.DUR_STUN_MAX) // self.speed_full
         self.add_status('stunned', stun_dur)
         self.add_status('skip', stun_dur)
-        prefix = 'Lying ' if self.ascii_name.startswith('lying') else ''
+        prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(' stunned!', align=False)
 

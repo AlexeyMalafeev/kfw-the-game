@@ -171,12 +171,12 @@ Effect`. Each `Move` caches its pair at construction (`Move.set_ascii` →
 - During resolution the target's picture is swapped by events: `defend()` sets
   `['Lying ']Dodge/Block/Hit`; knockdown → `'Falling'`; knockback →
   `'Knockback'` and `ascii_buffer += dist` (the horizontal gap).
-- ⚠️ `cause_shock` / `cause_slow_down` / `cause_stun`
-  (`_strike_mechanics.py`) compute the lying prefix with
-  `self.ascii_name.startswith('lying')` — lowercase. Stored names are
-  `'Lying …'` (capital L), so the prefix is never applied and a
-  shocked/stunned/slowed *lying* fighter shows the standing `'Hit Effect'`
-  art; the `Lying Hit Effect` picture is unreachable through this path.
+- `cause_shock` / `cause_slow_down` / `cause_stun`
+  (`_strike_mechanics.py`) apply the `'Lying '` prefix when the fighter is
+  down, so a shocked/stunned/slowed *lying* fighter shows the `Lying Hit
+  Effect` picture. (Before 2026-09 the prefix check used lowercase
+  `startswith('lying')`, which never matched the stored `'Lying …'` names, so
+  the standing `'Hit Effect'` art always showed instead.)
 - `show_ascii()` picks `ascii_l` vs `ascii_r` by which side the fighter is on
   (side_a faces right), joins the two pictures with
   `ascii_art.concat(a, b, buffer)` where `buffer = max(self.ascii_buffer,

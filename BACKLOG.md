@@ -95,13 +95,17 @@ are unordered unless marked.
   - ~~crime encounters grant reputation *before* the fight → rep farmable by
     losing~~ INTENDED (author, 2026-09): standing up for the weak earns love
     even in defeat; injuries + poor exp make it non-viable as a strategy
-  - `EncControl.run_enc` execs `{name}(p, test=...)` but no encounter accepts
-    `test` → TypeError when used (`encounters/__init__.py:75`)
-  - `Guaranteed` encounters duplicated in category lists fire once per
-    duplicate (e.g. `[GMerchant]*5` → 5 merchant encounters per Buy items)
-  - `repr()` of a player mid-`Fighter.__init__` crashes (`traits` set only
+  - ~~`EncControl.run_enc` execs `{name}(p, test=...)` but no encounter accepts
+    `test` → TypeError when used (`encounters/__init__.py:75`)~~ ✅ Fixed
+    2026-09: it now passes `check_if_happens={not test}`
+  - ~~`Guaranteed` encounters duplicated in category lists fire once per
+    duplicate (e.g. `[GMerchant]*5` → 5 merchant encounters per Buy items)~~
+    INTENDED (author, 2026-09): the market sequence is a mini-game of "buy now
+    or wait for a better offer from the next merchant"
+  - ~~`repr()` of a player mid-`Fighter.__init__` crashes (`traits` set only
     after `super().__init__()` in `BasePlayer`) — any `{self}` warning path
-    during construction triggers it
+    during construction triggers it~~ ✅ Fixed 2026-09: `BasePlayer.__init__`
+    now initializes `self.traits = []` before `super().__init__()`
   - ~~style move strings reference nonexistent moves and nonexistent features
     that silently fall through to random picks~~ ✅ Fixed 2026-09: Hung Ga
     lv8 (move renamed `No-Shadow_Kick` → `No-Shadow Kick` + `MOVE_ALIASES`
@@ -114,10 +118,12 @@ are unordered unless marked.
     reserved for future content, author 2026-09)
   - tournament crash paths: zero participants → IndexError; winnerless final
     → NotImplementedError
-  - `OverhearConversation` log lines swapped (astonishing victory ↔
+  - ~~`OverhearConversation` log lines swapped (astonishing victory ↔
     humiliating defeat); lying-hit ASCII art unreachable (`startswith('lying')`
-    vs `'Lying Hit'`)
-  - `add_friend` over-cap drops are silent; `get_new_name` loops forever
+    vs `'Lying Hit'`)~~ ✅ Fixed 2026-09 (the same lowercase typo also hid the
+    'Falling'→lying logic at KOs in `_fight_actions.py`)
+  - ~~`add_friend` over-cap drops are silent~~ ✅ Fixed 2026-09: an on-screen
+    note + log line ("stays an acquaintance"); `get_new_name` loops forever
     after 1000 collisions; `new_foreigner` skips the collision check
 - ~~**BLOCK_POWER MRO shadowing**~~ ✅ Fixed 2026-09: the per-fighter hook in
   `_fight_actions.py` was renamed to `BLOCK_DEFAULT_POWER` (1.0); the global
@@ -127,12 +133,14 @@ are unordered unless marked.
 - ~~**draw crashes `give_exp`**~~ ✅ Fixed 2026-09: draws now give every player
   a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (12) instead of raising
   `ZeroDivisionError` (pinned in `test/test_fight_engine.py::TestDraw`).
-- 'Lightning-Fast Strikes' advanced tech reuses `STRIKE_TIME_COST_MULT1` —
-  identical to the basic tech, upgrading is a no-op
+- ~~'Lightning-Fast Strikes' advanced tech reuses `STRIKE_TIME_COST_MULT1` —
+  identical to the basic tech, upgrading is a no-op~~ ✅ Fixed 2026-09: now
+  uses `STRIKE_TIME_COST_MULT2` (−0.6)
 - dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
   `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
-- `get_rand_moves` empty-pool: `random.choice(pool)` runs before the empty
-  check → `IndexError` instead of the documented fallback
+- ~~`get_rand_moves` empty-pool: `random.choice(pool)` runs before the empty
+  check → `IndexError` instead of the documented fallback~~ ✅ Fixed 2026-09:
+  the empty-pool check now runs first
 
 ## Fight mechanics
 
@@ -260,8 +268,9 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   (defense, guard, blocks, counters all ≈ −9…−10%; bottom techs are
   Wall-like Protection, Fast Movement, Horse-like Stamina). Offense wins
   mirror matches; blocking well doesn't deal damage.
-- 'Lightning-Fast Strikes' is at −13.5% in advanced techs — consistent with
-  its known no-op bug (uses the basic-tech mult), a wasted tech slot.
+- ~~'Lightning-Fast Strikes' is at −13.5% in advanced techs — consistent with
+  its known no-op bug (uses the basic-tech mult), a wasted tech slot.~~ Fixed
+  2026-09 (now −0.6); re-run the harness to see where it lands.
 - Suspicious: `unblock.` got *worse* (−3.7→−9.8) after blocking became 400×
   stronger — unblockable strikes should benefit. Investigate (confounded by
   boost combos? weak unblockable moves?).
@@ -350,7 +359,8 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 - display hp as percentage/string?
 - donate to friends / to charity
 - ~~biographies: favorite strike (most feared / most used move)~~ ✅ Done
-  2026-09 (most-used strike = "signature move"; "most feared" still open)
+  2026-09 (most-used strike = "signature move"; most feared = highest
+  times-used × power, shown when different from the signature move)
 
 ## Content: encounters, events, stories
 
@@ -414,6 +424,7 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 - display all player fighter atts in state menu (suboption?)
 - generate player description in text (style, strong points, everything)
 - game beginning text
-- show accomplishments in options (dates and types already stored)
+- ~~show accomplishments in options (dates and types already stored)~~ ✅ Done
+  2026-09: 'Accomplishments' option in the State menu (`get_accompl_info`)
 - common log for all players; get verbose fighter info
 - add timer to fight screens?

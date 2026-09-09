@@ -323,7 +323,7 @@ class FighterWithActions(FighterAPI, ABC):
                 self.kos_this_fight += 1
                 self.log(f'Knocks out {tgt.name}.')
                 tgt.log(f'Knocked out by {self.name}.')
-                if not tgt.ascii_name.startswith('lying'):
+                if not tgt.ascii_name.startswith('Lying'):
                     tgt.set_ascii('Falling')
                 self.current_fight.display(' KNOCK-OUT!'.format(tgt.name), align=False)
 

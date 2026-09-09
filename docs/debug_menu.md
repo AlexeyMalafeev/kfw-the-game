@@ -16,8 +16,9 @@ option of the status screen, available in every build.
   `State` (key `s`).
 - `State` calls `Game.state_menu` (`kf_lib/game/_state_menu.py`), which prints the
   current player's full info and offers
-  `Items / Back / Save / Load / Quit / Save and Quit / Debug Menu`
-  with keys `ibslqxd`. Pressing `d` runs `self.debug_menu()`.
+  `Items / Accomplishments / Back / Save / Load / Quit / Save and Quit / Debug Menu`
+  with keys `iabslqxd`. Pressing `d` runs `self.debug_menu()`; `a` lists the
+  player's accomplishments with dates (`get_accompl_info`).
 - `Game.debug_menu` is a `DebugMenu(self)` instance created in
   `BaseGame.__init__` (`kf_lib/game/_base_game.py`); `DebugMenu.__call__` shows
   the 12-option menu and invokes the chosen bound method.

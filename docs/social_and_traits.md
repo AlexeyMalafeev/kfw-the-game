@@ -16,9 +16,10 @@ Items marked ⚠️ look unintentional or surprising — verify before building 
 `self.enemies = []`. Both hold fighter objects, not names.
 
 - `add_friend(obj)`: appends only if `len(friends) < self.max_num_friends`
-  (default 8, ±2 from the (un)friendly trait). Over-cap additions are **silently
-  dropped** — callers print their "let's be friends" line first, so the message
-  can announce a friendship that never happened ⚠️ (`_challenger.py:54-55`,
+  (default 8, ±2 from the (un)friendly trait). Over-cap additions are dropped
+  with an on-screen note and a log line ("stays an acquaintance") — before
+  2026-09 they were silently dropped, so a caller's "let's be friends" line
+  could announce a friendship that never happened (`_challenger.py:54-55`,
   `_school.py:57`, `_people.py:120`, `_beggar.py:44`).
 - `add_enemy(enemy)`: appends and `game.register_fighter(enemy)` — enemies
   become persistent world fighters. No cap and no duplicate check.

@@ -289,14 +289,14 @@ kung-fu!"'''.format(
                     person.name, lv, opp_str
                 )
                 p.show(t)
-                p.log(f"Something about {person.name}'s astonishing victory.")
+                p.log(f"Something about {person.name}'s humiliating defeat.")
             elif fact == "aston_victory":
                 t = '''One of them says: "Haven't you heard? {} at lv.{} beat {}. What an astonishing \
 victory!"'''.format(
                     person.name, lv, opp_str
                 )
                 p.show(t)
-                p.log(f"Something about {person.name}'s humiliating defeat.")
+                p.log(f"Something about {person.name}'s astonishing victory.")
         p.pak()
 
 

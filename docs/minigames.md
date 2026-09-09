@@ -91,12 +91,11 @@ running under a pty, the next crash is in the constructor:
 - ⚠️ `Zen.set_rand_moves` learns all `moves.BASIC_MOVES`, but
   `Fighter.set_moves` (`_moves.py`) already learns all basic moves *before*
   calling `set_rand_moves()`. Every learn attempt hits the "already known"
-  warning, which interpolates `repr(self)` — and repr-ing a player inside
-  `Fighter.__init__` crashes with `AttributeError: 'Zen' object has no
-  attribute 'traits'`, because `BasePlayer.__init__` sets `traits` (and the
-  other player attributes) only *after* `super().__init__()` returns. This is
-  a latent kf_lib bug, not just a Chocolate one: any `repr()` of a player
-  during `Fighter.__init__` raises.
+  warning, which interpolates `repr(self)`. (This used to crash with
+  `AttributeError: ... no attribute 'traits'`, because `BasePlayer.__init__`
+  set `traits` only *after* `super().__init__()` returned — fixed in kf_lib
+  2026-09 by initializing `traits` before the `super().__init__()` call, so
+  repr-ing a player mid-construction is now safe.)
 
 Further staleness, established by reading the current APIs (the script can't
 be run far enough to hit these without fixing the two bugs above):
