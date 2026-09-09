@@ -304,9 +304,15 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
     masters)~~ ✅ Done 2026-09: the All-Schools Tournament event (2%/day) —
     master + top 2 students per school, group free-for-all, 'All-Schools
     Champion' accomplishment
-  - encounters/stories about running your school, gaining recognition
-  - quest to unite all schools → new victory type (kung-fu federation /
-    association); reputation could influence creating it
+  - ~~quest to unite all schools → new victory type (kung-fu federation /
+    association); reputation could influence creating it~~ ✅ Done 2026-09:
+    'Uniter of Schools' victory — master-only "Visit other masters" day action
+    (spar or reputation-scaled persuasion), 'Founder of the Federation'
+    accomplishment
+  - ~~encounters/stories about running your school, gaining recognition~~
+    partially done 2026-09: teaching levels students up, student tournament
+    titles reward the master, All-Schools Tournament event; standalone
+    school-management stories still open
 - exp/levels: all levels 100 exp (see Balance)
 - config file (not to choose every time); new game settings in a text file
 - **mod support**: world parameters (crime rate, kung-fu prevalence, etc.)

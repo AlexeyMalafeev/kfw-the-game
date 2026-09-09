@@ -16,6 +16,7 @@ from kf_lib.constants.experience import (
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.things import items
+from kf_lib.ui import yn
 from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
 
 
@@ -36,6 +37,11 @@ CH_BEG_BULLIED = 0.2
 CH_STUDENT_LV_UP_WHEN_TAUGHT = 0.2
 TAUGHT_STUDENT_LV_GAP = 2  # a master can't teach students beyond (own level - gap)
 
+# uniting the schools (kung-fu federation)
+UNITED_SCHOOL_REP = 5
+PERSUADE_REP_DIVISOR = 150  # persuade chance = reputation / this
+MAX_PERSUADE_CH = 0.75
+
 
 # todo Epic Gambler accomplishment
 
@@ -44,7 +50,7 @@ class BasePlayer(Fighter):
     is_player = True
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
-    move_usage banned_from_school'''.split()
+    move_usage banned_from_school schools_allied'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
 
     exp = Integer(minvalue=0, action='raise')
@@ -119,6 +125,7 @@ class BasePlayer(Fighter):
         self.max_school_rank = None
         self.students = 0
         self.best_student = None
+        self.schools_allied = []  # school names whose masters joined the federation
         self.current_story = None
         self.exp = 0
         self.next_level = self.get_next_lv_exp()
@@ -188,6 +195,22 @@ class BasePlayer(Fighter):
             self.log('A new student joins {}\'s school.'.format(self.name))
         self.log('\n'.join((str(s) for s in new_students)))
         self.refresh_best_student()
+
+    def ally_school(self, school_name, master):
+        """A master agrees to join the player's kung-fu federation."""
+        self.schools_allied.append(school_name)
+        self.add_friend(master)
+        self.gain_rep(UNITED_SCHOOL_REP)
+        self.show(f'{master.name}: "From this day, {school_name} stands with you!"')
+        self.log(f'{master.name} of {school_name} joins the federation.')
+        self.pak()
+        if not self.get_unallied_masters():
+            self.show(
+                f'All the schools of {self.game.town_name} are now united under '
+                f'{self.name}\'s kung-fu federation!'
+            )
+            self.log('Founds the kung-fu federation.')
+            self.add_accompl('Founder of the Federation')
 
     def add_trait(self, trait):
         """NB: differs from the activate_trait method.
@@ -480,6 +503,8 @@ class BasePlayer(Fighter):
             ('Go for a walk', self.go_walk),
             # ('Dummy', self.fight_dummy)
         ]
+        if self.is_master:
+            ops.append(('Visit other masters', self.visit_masters))
         return ops
 
     def get_fame(self):
@@ -498,6 +523,14 @@ class BasePlayer(Fighter):
         )
         self.log(s)
         return s
+
+    def get_unallied_masters(self):
+        """NPC masters whose schools haven't joined the player's federation yet."""
+        return [
+            (school_name, m)
+            for school_name, m in self.game.masters.items()
+            if not m.is_player and school_name not in self.schools_allied
+        ]
 
     def get_init_atts(self):
         """Return tuple of attributes used by __init__"""
@@ -805,6 +838,43 @@ class BasePlayer(Fighter):
         items.use_item(item, self)
         if item in items.FIGHT_ITEMS:
             self.change_stat('fight_items_used', 1)
+
+    def visit_masters(self):
+        """Master-only day action: convince another school's master to join the
+        kung-fu federation — by persuasion (reputation) or in a spar."""
+        g = self.game
+        av = self.get_unallied_masters()
+        if not av:
+            self.msg(f'All the masters of {g.town_name} already acknowledge {self.name}.')
+            return  # the turn is not consumed
+        self.log('Visits other masters to promote the idea of a kung-fu federation.')
+        school_name, m = random.choice(av)
+        self.show(
+            f'{self.name} visits {m.name}, the master of {m.get_displayed_style_name()}, '
+            f'to discuss uniting the schools of {g.town_name}.'
+        )
+        persuade_chance = min(self.reputation / PERSUADE_REP_DIVISOR, MAX_PERSUADE_CH)
+        if self.is_human:
+            challenge = yn(
+                f'Challenge {m.name} to a spar? ("No" = try to persuade him; '
+                f'persuasion chance: {persuade_chance:.0%})'
+            )
+        else:
+            challenge = self.fight_or_not(self.get_rel_strength(m))
+        if challenge:
+            self.show(f'{m.name}: "Words are wind. Show me your kung-fu!"')
+            if self.spar(m, hide_stats=False):
+                self.ally_school(school_name, m)
+            else:
+                self.show(f'{m.name}: "Come back when you are stronger."')
+                self.pak()
+        elif rnd() <= persuade_chance:
+            self.show(f'{m.name}: "Your reputation precedes you... Let the schools unite."')
+            self.ally_school(school_name, m)
+        else:
+            self.show(f'{m.name}: "Why should the schools follow you? Prove yourself first."')
+            self.pak()
+        return True  # to end turn
 
     def win_tourn(self, prize):
         self.earn_prize(prize)

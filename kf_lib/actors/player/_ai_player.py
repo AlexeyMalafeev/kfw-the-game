@@ -20,6 +20,7 @@ class AIPlayer(BasePlayer):
     min_master_money = 150
     min_students_to_teach = 5
     non_master_practice_chance = 0.9
+    visit_masters_chance = 0.1
 
     def bet_on_tourn_or_not(self):
         return rnd() <= self.gamble_chance
@@ -46,6 +47,8 @@ class AIPlayer(BasePlayer):
                 else:
                     return self.go_work
             else:
+                if rnd() <= self.visit_masters_chance and self.get_unallied_masters():
+                    return self.visit_masters
                 if rnd() <= self.master_practice_chance:
                     return self.practice_master
                 else:

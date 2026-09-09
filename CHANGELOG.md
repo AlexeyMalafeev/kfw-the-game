@@ -22,6 +22,12 @@ because kung-fu movies.
   appearance is logged; a student title earns the master +3 reputation and
   a `students_tourn_won` stat point, with the new 'Master of Champions'
   accomplishment at 3 student titles
+- **New victory type — Uniter of Schools**: masters get a new day action,
+  "Visit other masters" — convince every NPC school in town to join your
+  kung-fu federation, either by beating the master in a spar or by persuading
+  him (chance scales with reputation, capped at 75%). Each alliance gives +5
+  rep; completing the federation awards the 'Founder of the Federation'
+  accomplishment and wins the game. AI masters pursue the federation too
 
 ## [v0.7.1-beta "Eight Tigers in One Cage"] — 2026-09-10
 

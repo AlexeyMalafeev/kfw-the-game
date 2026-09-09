@@ -125,19 +125,28 @@ Common machinery (`encounters/_utils.py`):
 ## Victory
 
 `Playing.check_victory_conditions` (`_playing.py`), checked once per day after
-all players have acted. Four types, all independent and combinable:
+all players have acted. Five types, all independent and combinable:
 
 - **Grandmaster**: `level >= 20` (`GRANDMASTER_LV`).
 - **Folk Hero**: `reputation >= 100` (`FOLK_HERO_REP`).
 - **Kung-fu Legend**: `len(accompl) >= 8` unique accomplishments
-  (`KFLEGEND_ACCOMPL`). 21 labels exist: 6 story rewards, 8 encounter ones
+  (`KFLEGEND_ACCOMPL`). 24 labels exist: 6 story rewards, 8 encounter ones
   (Beggar's Friend, Drunkard's Friend, Fat Girl Defeated, Gambler Beaten, Beat
   Tough Thief, Enemy Reformed, Weird Item, Personality Change), 4 fight ones
-  (see fight doc), Tournament Champion (3 wins), Lucky/Unlucky Devil (10
+  (see fight doc), Tournament Champion (3 wins), Master of Champions (3
+  student titles), All-Schools Champion, Founder of the Federation,
+  Lucky/Unlucky Devil (10
   extreme luck rolls of the same kind, 5% each per `check_luck`).
 - **Greatest Fighter**: `fights_won >= 75` **and** `num_kos >= 100`
   (`GT_FIGHTER_FIGHTS`). Sparring doesn't count (`BaseSparring.handle_player_stats`
   is a no-op); crowd fights do — KOs, not fights, are the binding constraint.
+- **Uniter of Schools**: a master whose federation includes every NPC school
+  (`check_united_schools`). Progress comes from the master-only day action
+  **Visit other masters**: meet a random unallied NPC master and either beat
+  him in a spar or persuade him (chance = `reputation / 150`, capped at 0.75).
+  Each alliance gives +5 rep and a friend; the last one founds the federation
+  ('Founder of the Federation' accomplishment) and wins the game on the next
+  daily check. AI masters visit too (`visit_masters_chance` 0.1).
 
 Any player meeting any condition ends the game for everyone (hot-seat race).
 On victory: the day count is recorded (`n_days_to_win`), stats and a generated
@@ -163,7 +172,7 @@ path. The punishments for losing are:
   enemy who later ambushes you with 2–4 thugs (2% per enemy per global sweep);
   winning the ambush has a 50% chance to reform them (+10 rep, accomplishment).
 
-The only true "endings" are the four victories and quitting.
+The only true "endings" are the five victories and quitting.
 
 ## Economy
 

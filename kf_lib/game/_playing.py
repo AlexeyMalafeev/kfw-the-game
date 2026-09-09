@@ -25,6 +25,14 @@ KFLEGEND_ACCOMPL = 8
 GT_FIGHTER_FIGHTS = (75, 100)  # fights_won, num_kos
 
 
+def check_united_schools(p):
+    """Uniter of Schools: a master whose federation includes every NPC school."""
+    if not p.is_master:
+        return False
+    npc_schools = sum(1 for m in p.game.masters.values() if not m.is_player)
+    return npc_schools > 0 and len(p.schools_allied) >= npc_schools
+
+
 class Playing(BaseGame):
     @staticmethod
     def check_inactive_player(p):
@@ -87,6 +95,7 @@ class Playing(BaseGame):
                     p.get_stat('fights_won') >= GT_FIGHTER_FIGHTS[0]
                     and p.get_stat('num_kos') >= GT_FIGHTER_FIGHTS[1]
             ),
+            'Uniter of Schools': check_united_schools(p),
         }
         for victory_type in victory_conditions:
             if victory_conditions[victory_type]:

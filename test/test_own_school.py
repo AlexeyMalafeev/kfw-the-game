@@ -4,9 +4,11 @@ import random
 from types import SimpleNamespace
 
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
+import kf_lib.actors.player._base_player as _bp
 from kf_lib.actors.player import SmartAIP
-from kf_lib.actors.player._base_player import TAUGHT_STUDENT_LV_GAP
+from kf_lib.actors.player._base_player import TAUGHT_STUDENT_LV_GAP, UNITED_SCHOOL_REP
 from kf_lib.fighting import fight
+from kf_lib.game._playing import check_united_schools
 from kf_lib.happenings import events
 from kf_lib.happenings.events import (
     ALL_SCHOOLS_TEAM_SIZE,
@@ -195,3 +197,71 @@ class TestAllSchoolsTournament:
             g, p = make_game_and_player(seed=20 + seed, level=14)
             make_master(p, num_students=3)
             events.all_schools_tournament(g)  # must not crash
+
+
+class TestUniteSchools:
+    def test_day_action_is_master_only(self):
+        g, p = make_game_and_player(seed=11, level=14)
+        labels = [a[0] for a in p.get_day_actions()]
+        assert 'Visit other masters' not in labels
+        make_master(p)
+        labels = [a[0] for a in p.get_day_actions()]
+        assert 'Visit other masters' in labels
+
+    def test_ally_school_and_victory(self):
+        g, p = make_game_and_player(seed=12, level=14)
+        make_master(p)
+        assert not check_united_schools(p)
+        assert 'Uniter of Schools' not in g.check_victory_conditions(p)
+        rep_before = p.reputation
+        npc_schools = [(sn, m) for sn, m in g.masters.items() if not m.is_player]
+        for sn, m in npc_schools:
+            p.ally_school(sn, m)
+        assert len(p.schools_allied) == len(npc_schools)
+        assert p.reputation == rep_before + UNITED_SCHOOL_REP * len(npc_schools)
+        assert 'Founder of the Federation' in p.accompl
+        assert check_united_schools(p)
+        assert 'Uniter of Schools' in g.check_victory_conditions(p)
+
+    def test_visit_masters_persuasion(self):
+        g, p = make_game_and_player(seed=13, level=14)
+        make_master(p)
+        p.reputation = 1000  # persuasion chance at its cap
+        p.fight_or_not = lambda opp_info: False  # AI chooses persuasion
+        orig_rnd = _bp.rnd
+        _bp.rnd = lambda: 0.0  # force the persuasion roll to succeed
+        try:
+            assert p.visit_masters() is True
+        finally:
+            _bp.rnd = orig_rnd
+        assert len(p.schools_allied) == 1
+
+    def test_visit_masters_challenge(self):
+        g, p = make_game_and_player(seed=14, level=14)
+        make_master(p)
+        p.fight_or_not = lambda opp_info: True  # AI chooses the spar
+        p.spar = lambda opp, **kw: True
+        assert p.visit_masters() is True
+        assert len(p.schools_allied) == 1
+        # losing the spar: no alliance, but the turn is still consumed
+        p2 = g.players[1]
+        make_master(p2)
+        p2.fight_or_not = lambda opp_info: True
+        p2.spar = lambda opp, **kw: False
+        assert p2.visit_masters() is True
+        assert not p2.schools_allied
+
+    def test_no_unallied_masters_doesnt_consume_turn(self):
+        g, p = make_game_and_player(seed=15, level=14)
+        make_master(p)
+        for sn, m in [(sn, m) for sn, m in g.masters.items() if not m.is_player]:
+            p.ally_school(sn, m)
+        assert p.visit_masters() is None
+
+    def test_schools_allied_save_round_trip(self):
+        g, p = make_game_and_player(seed=16, level=14)
+        make_master(p)
+        sn, m = p.get_unallied_masters()[0]
+        p.ally_school(sn, m)
+        data = g._player_to_data(p)
+        assert data['atts']['schools_allied'] == [sn]
