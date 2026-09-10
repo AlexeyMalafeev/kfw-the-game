@@ -46,12 +46,17 @@ class ExpMethods(FighterAPI, ABC):
         self,
         *opp: FighterAPI,
         allies: Optional[Iterable[FighterAPI]] = None,
+        mean: bool = False,
     ) -> Tuple[float, str]:
         """
         Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend
-        (string, e.g. 'very risky')
+        (string, e.g. 'very risky'). With mean=True, compare against the average
+        opponent's power instead of the sum — used for free-for-all fights,
+        where the opponents also fight each other.
         """
         pwr = sum([op.get_exp_worth() for op in opp])
+        if mean:
+            pwr /= len(opp)
         own_pwr = self.get_exp_worth()
         if allies is not None:
             own_pwr += sum([al.get_exp_worth() for al in allies])

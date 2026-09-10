@@ -43,6 +43,9 @@ encounter code serves humans (menus with risk legends, `HumanPlayer` in
 `_ai_player.py`). Risk display comes from `p.get_rel_strength(*opp)`
 (`fighter/_exp_worth.py`): the ratio of summed enemy `exp_yield` to own (plus
 allies'), mapped through `RISK_DESCR_TABLE` to a legend like 'very risky'.
+Encounters that are known to be free-for-all up front (StreetBrawl, GangWar)
+pass `mean=True` — the ratio then compares own power against the *average*
+enemy, since the enemies will also fight each other.
 
 Shared helpers live in `encounters/_utils.py`: escape rolls
 (`get_escape_chance` = a random base from 0.3–0.7 plus the trait-driven
@@ -120,9 +123,10 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   breakages (refusing to pay costs rep). `HelpPolice` has a 0.25 chance that a
   second gang piles in, turning the scene into a free-for-all melee (police,
   thugs, newcomers and the player all fighting everyone).
-- `GangWar` (crime/4): the player walks into a street war between two gangs of
+- `GangWar` (crime/8): the player walks into a street war between two gangs of
   thugs (2–3 each, some armed) and both sides treat them as the enemy;
-  `fight_or_run` — fighting means a free-for-all against both gangs at once,
+  `fight_or_run` — fighting means a free-for-all against both gangs at once
+  (the risk estimate compares against the average thug, `mean=True`),
   winning lowers crime and grants rep per thug. Boosted ×2 in
   `FIGHT_CRIME_ENCS`.
 - `Criminal` (flat 0.03, needs `game.criminals`): fight a wanted convict; the
@@ -134,13 +138,14 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 ### Street people (`_people.py`)
 
 - `Brawler`: provoked in the street; brawling costs rep, apologizing gains a
-  little — but the brawler may attack anyway (0.2). Either way, there is a 0.25
+  little — but the brawler may attack anyway (0.2). Either way, there is a 0.125
   chance the commotion draws in 2–4 bystanders and the fight becomes a
   free-for-all street melee.
-- `StreetBrawl` (0.03, non-masters): the player stumbles on 3–5 brawlers
-  already fighting each other and can jump in (`brawl_or_not`) — a
-  free-for-all; joining costs brawling rep, winning grants 2 rep per brawler.
-  Boosted ×2 in `PICK_FIGHTS_ENCS`.
+- `StreetBrawl` (0.015, non-masters): the player stumbles on 3–5 brawlers
+  already fighting each other (street brawl or tavern brawl flavor) and can
+  jump in (`brawl_or_not`) — a free-for-all, with the risk estimate against
+  the average brawler (`mean=True`); joining costs brawling rep, winning
+  grants 2 rep per brawler. Boosted ×2 in `PICK_FIGHTS_ENCS`.
 - `Drunkard`: drink (rep penalty, a sick day) or refuse and risk a fight. The
   persistent legendary `game.drunkard` (lv 8–12) can befriend the player and
   teach a move, then leaves the game.

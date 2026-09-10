@@ -15,12 +15,12 @@ ENC_CH_FAT_GIRL = 0.02
 ENC_CH_GOSSIP = 0.03
 ENC_CH_OVERHEAR_CONVERSATION = 0.03
 ENC_CH_PLAYER_MATCH = 0.01
-ENC_CH_STREET_BRAWL = 0.03
+ENC_CH_STREET_BRAWL = 0.015
 ENC_CH_WISE_MAN = 0.02
 
 # misc chances
 CH_BRAWLER_ATTACKS = 0.2
-CH_BRAWL_SPREADS = 0.25
+CH_BRAWL_SPREADS = 0.125
 CH_CHANGE_TRAIT = 0.15
 CH_DRUNKARD_FIGHT_STRONG = 0.1
 CH_DRUNKARD_FIGHT_WEAK = 0.1
@@ -341,12 +341,18 @@ class StreetBrawl(BaseEncounter):
     def run(self):
         p = self.player
         num_b = rndint(*NUM_STREET_BRAWLERS)
-        p.show(
-            f'{p.name} stumbles upon a street brawl — {num_b} men are fighting each other!'
-        )
-        p.log('Sees a street brawl.')
+        if random.choice((True, False)):
+            p.show(
+                f'{p.name} stumbles upon a street brawl — {num_b} men are fighting each other!'
+            )
+            p.log('Sees a street brawl.')
+        else:
+            p.show(
+                f'{p.name} stumbles into a tavern brawl — {num_b} drunkards are fighting each other!'
+            )
+            p.log('Sees a tavern brawl.')
         brawlers = [fighter_factory.new_brawler() for _ in range(num_b)]
-        opp_info = p.get_rel_strength(*brawlers)
+        opp_info = p.get_rel_strength(*brawlers, mean=True)
         if p.brawl_or_not(opp_info) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_info[0]):
             p.log('Joins the brawl.')
             p.gain_rep(REP_PEN_BRAWL)

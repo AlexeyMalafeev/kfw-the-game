@@ -153,7 +153,7 @@ class Extorters(BaseEncounter):
 
 class GangWar(BaseEncounter):
     def check_if_happens(self):
-        return rnd() <= self.player.game.crime / 4
+        return rnd() <= self.player.game.crime / 8
 
     def run(self):
         p = self.player
@@ -170,7 +170,7 @@ class GangWar(BaseEncounter):
             if random.choice((True, False)):
                 e.arm_robber()
         opp = gang_a + gang_b
-        opp_strength = p.get_rel_strength(*opp)
+        opp_strength = p.get_rel_strength(*opp, mean=True)
         esc_chance = get_escape_chance(p)
         if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(
                 p, opp_to_self_pwr_ratio=opp_strength[0]):

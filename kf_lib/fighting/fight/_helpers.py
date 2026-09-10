@@ -3,10 +3,19 @@ from ._normal_fight import NormalFight
 from kf_lib.ui import cls, pak, yn
 
 
-def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_only=False):
+def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_only=False,
+                      groups=None):
     fs = side_a[:]
     if side_b:
         fs.extend(side_b)
+    group_labels = {}
+    if groups:
+        for i, group in enumerate(groups):
+            if group:
+                label = f'--- Group {i + 1} ---'
+                if any(f.is_human for f in group):
+                    label = f'--- Group {i + 1} (your group) ---'
+                group_labels[id(group[0])] = label
     s = ''
     first_fighter = fs[0]
     size1 = max([len(s) for s in ['NAME '] + [f.name + '  ' for f in fs]])
@@ -17,6 +26,8 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
     if any([f.weapon for f in fs]) and not basic_info_only:
         s += ' WEAPON'
     for f in fs:
+        if id(f) in group_labels:
+            s += f'\n{group_labels[id(f)]}'
         if side_b and f == side_b[0]:
             s += '\n-vs-'
         s += '\n{:<{}}{:<{}}{:<{}}'.format(

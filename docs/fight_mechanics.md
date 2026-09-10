@@ -315,7 +315,11 @@ Everyone down → draw: `winners = []`, `losers = all`, `win = False`.
 
 - `winners_diff = (Σ losers' exp_yield / Σ winners' exp_yield) ** 1.5`;
   `winners_gain = winners_diff * BASE_FIGHT_EXP` (25). Beating stronger
-  opposition scales exp superlinearly; beating weaker gives little.
+  opposition scales exp superlinearly; beating weaker gives little. In
+  free-for-all fights (incl. group FFA) both sums are replaced by per-capita
+  averages (`aggregate_exp_yield`, overridden in `BaseFreeForAll`) — the
+  losers were fighting each other too, so the difficulty anchor is the
+  average opponent, not the whole pile.
 - Losers get a flat `LOSER_EXP` (2 = 10% of base) regardless of difficulty.
 - `handle_exp_bonuses`: +25% per bonus — quick victory (≤ 10 s), "Not a
   scratch" (`not took_damage`), multi-knockout (`kos_this_fight >= 3`).
@@ -331,9 +335,12 @@ why the crash survived.) `DRAW_EXP_DIVISOR` is still duplicated in
 
 `handle_accompl` (single winner only): 'Lone Warrior' (≥ 5 losers), 'Narrow
 Victory' (winner hp ≤ 5% of max), 'Against All Odds' (losers' yield ≥ 1.5×
-winner's), 'Split-Second Victory' (≤ 1 s). `handle_gossip` records personal-best
-`aston_victory` (lone win vs yield ratio ≥ 1.2) / `humil_defeat` (lone loss vs
-ratio ≤ 0.8). `handle_injuries`: players at `hp == 0` → `injure()` → inactive
+winner's), 'Split-Second Victory' (≤ 1 s). 'Lone Warrior' and 'Against All
+Odds' are not awarded in free-for-all fights — winning a melee is not
+comparable to beating a united group. `handle_gossip` records personal-best
+`aston_victory` (lone win vs yield ratio ≥ 1.2) / `humil_defeat` (lone loss
+vs ratio ≤ 0.8), using the same `aggregate_exp_yield` as `give_exp` (FFA
+ratios are per-capita too). `handle_injuries`: players at `hp == 0` → `injure()` → inactive
 days. `handle_player_stats`: fights, wins, KOs, times KO'd, exp bonuses — plus
 the in-fight stats: each fighter's `fight_stats` (strikes thrown/landed,
 damage dealt, criticals/EPICs, per-move usage — collected in
@@ -363,9 +370,10 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   `win` reports whether `fighters[0]` won). `get_act_targets` returns every
   other active fighter, `get_act_allies` just the fighter themselves; the
   fight ends when at most one fighter is standing (`winners` is that one
-  fighter or empty on a draw, e.g. double KO / time limit). Exp,
-  accomplishments (a solo FFA winner with 5+ losers gets 'Lone Warrior'),
-  gossip and injuries work unchanged. The targeting/allies logic lives in
+  fighter or empty on a draw, e.g. double KO / time limit). Exp uses
+  per-capita yields (see `give_exp` above), the crowd accomplishments
+  ('Lone Warrior', 'Against All Odds') are skipped, and injuries work
+  unchanged. The targeting/allies logic lives in
   `BaseFight.get_act_targets`/`get_act_allies` (used by `start_fight_turn`
   and `handle_items`), which `BaseFreeForAll` overrides; the HP bar
   (`visualize_fight_state`) is built from `act_allies`/`act_targets`, so it
@@ -375,7 +383,9 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   infighting within a group, targets are all active fighters outside one's
   group; the fight ends when a single group has anyone standing (`winners` is
   that whole group, incl. downed members, matching two-sided side semantics;
-  `win` reports whether `groups[0]` won). Used by `JadeTableStory`.
+  `win` reports whether `groups[0]` won). The prefight screen labels each
+  group (`--- Group N ---`, marking the human's). Used by `JadeTableStory`
+  and the All-Schools Tournament event.
 
 ## AI note
 

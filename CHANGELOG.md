@@ -40,6 +40,16 @@ because kung-fu movies.
   him (chance scales with reputation, capped at 75%). Each alliance gives +5
   rep; completing the federation awards the 'Founder of the Federation'
   accomplishment and wins the game. AI masters pursue the federation too
+- **Tavern brawls**: the StreetBrawl encounter has a 50/50 flavor variant —
+  stumbling into a tavern brawl between drunkards (same mechanics, Dirty
+  Fighting style)
+- **Group labels in group-FFA prefight screens**: each group is listed under
+  a `--- Group N ---` separator with the human's group marked, so a 3v3 gang
+  war no longer looks like "you vs 6 thugs"
+- **FFA win-rate harness**: `dev_scripts/testing/run_test_ffa.py`
+  (`Tester.test_ffa_win_rates`) measures plain-FFA / united-group / group-FFA
+  win rates at equal levels; first report committed
+  (`tests/ffa win rates lv=10 n=100.txt`)
 
 ### Changed
 - **Reaching school rank 1 earns a reward**: the master's praise, +25 exp and
@@ -52,8 +62,26 @@ because kung-fu movies.
   (the long-dormant `BET_REPUTATION_PENALTY`), win or lose — gambling is not
   honorable by wuxia morals
 - **The State menu shows the master's best student**
+- **Free-for-all rebalancing**: FFA fights paid exp for the *sum* of all
+  losers, so e.g. an 8-man Battle Royale win could grant 500+ exp and several
+  levels at once. Now FFA exp (incl. group FFA) is per-capita — based on the
+  *average* opponent's yield — since the losers were fighting each other too.
+  Alongside: the pre-fight risk estimate for encounters known to be FFA up
+  front (StreetBrawl, GangWar) compares against the average enemy instead of
+  the pile (`get_rel_strength(..., mean=True)`), and the crowd accomplishments
+  'Lone Warrior' / 'Against All Odds' are no longer awarded for FFA wins
+  (astonishing-victory gossip uses the same per-capita ratio). The new
+  `run_test_ffa.py` harness shows why: P(win FFA) ≈ 1/n while
+  P(beat a united n−1) ≈ 0. Balance-affecting; `run_test_fb.py` re-run
+  stays queued
+- **FFA street encounters are ~2× rarer**: StreetBrawl 0.03 → 0.015,
+  brawl-spreads-to-bystanders 0.25 → 0.125, GangWar crime/4 → crime/8
 
 ### Fixed
+- **End-of-FFA picture showed two lying fighters**: the final screen drew the
+  viewer's *last target* (often another KO'd loser) while the win quote came
+  from the actual winner; a losing viewer now faces `winners[0]` in the `Win`
+  stance
 - **AI attribute growth had no build logic**: the `random.randint(1, 2)` line
   in `set_att_weights` was commented out, so `rand_atts_mode` 1/2 set every
   weight to 1 and AI fighters grew attributes uniform-randomly. Restored —

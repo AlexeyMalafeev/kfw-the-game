@@ -59,7 +59,7 @@ def group_free_for_all(
     fighters = [f for group in groups for f in group]
     if any((f.is_human for f in fighters)):
         cls()
-        print(get_prefight_info(fighters, hide_enemy_stats=hide_stats))
+        print(get_prefight_info(fighters, hide_enemy_stats=hide_stats, groups=groups))
         if af_option:
             auto_fight = yn('\nAuto fight?')
         else:
@@ -85,6 +85,14 @@ class BaseFreeForAll(BaseFight):
 
     All fighters are passed as side_a (side_b is empty); the protagonist whose
     perspective `win` reports is the first fighter in the list."""
+
+    is_free_for_all = True
+
+    def aggregate_exp_yield(self, fighters):
+        # in a free-for-all the opposition is not united — everyone fights
+        # everyone — so the fair difficulty measure is the average exp yield,
+        # not the total
+        return sum(f.exp_yield for f in fighters) / len(fighters)
 
     def check_fight_over(self):
         self.active_fighters = [f for f in self.all_fighters if f.hp > 0]

@@ -68,6 +68,62 @@ class Tester(object):
             results.append(v)
         return results
 
+    def test_ffa_win_rates(self, n_min=2, n_max=8, lv=10, n_fights=100):
+        """Compare win rates in free-for-all vs united-group fights at equal levels.
+        In a plain FFA of n equal fighters, fighter 1 should win ~1/n of the time;
+        against a united group of n-1 the win rate should be much lower; in a group
+        FFA of g groups, group 1 should win ~1/g."""
+        lines = [['n', 'FFA', 'expected 1/n', 'vs united n-1']]
+        for n in range(n_min, n_max + 1):
+            ffa_wins = united_wins = 0
+            for _ in trange(n_fights):
+                fs = ff.new_fighter(lv=lv, n=n)
+                if fight.free_for_all(fs):
+                    ffa_wins += 1
+                f1 = ff.new_fighter(lv=lv)
+                enemies = ff.new_fighter(lv=lv, n=n - 1)
+                if not isinstance(enemies, list):
+                    enemies = [enemies]
+                if f1.fight(enemies[0], en_allies=enemies[1:]):
+                    united_wins += 1
+            lines.append([
+                str(n),
+                pcnt(ffa_wins, n_fights, as_string=True),
+                pcnt(1, n, as_string=True),
+                pcnt(united_wins, n_fights, as_string=True),
+            ])
+        table1 = pretty_table(lines, sep='\t')
+        group_lines = [['groups', 'group size', 'win rate', 'expected 1/g']]
+        for n_groups in range(2, 5):
+            for group_size in (2, 3):
+                wins = 0
+                for _ in trange(n_fights):
+                    groups = [ff.new_fighter(lv=lv, n=group_size) for _ in range(n_groups)]
+                    if fight.group_free_for_all(groups):
+                        wins += 1
+                group_lines.append([
+                    str(n_groups),
+                    str(group_size),
+                    pcnt(wins, n_fights, as_string=True),
+                    pcnt(1, n_groups, as_string=True),
+                ])
+        table2 = pretty_table(group_lines, sep='\t')
+        legend = f'free-for-all win rates, all fighters lv.{lv}, {n_fights} fights per cell'
+        print(f'\n{legend}\n')
+        print('plain FFA vs united group:\n')
+        print(table1)
+        print('\ngroup FFA:\n')
+        print(table2)
+        file_path = Path(TESTS_FOLDER, f'ffa win rates lv={lv} n={n_fights}.txt')
+        with open(file_path, 'w', encoding='utf-8') as f:
+            print(get_time(), file=f)
+            print(f'\n{legend}\n', file=f)
+            print('plain FFA vs united group:\n', file=f)
+            print(table1, file=f)
+            print('\ngroup FFA:\n', file=f)
+            print(table2, file=f)
+        print(f'\nSaved results to "{file_path}"')
+
     def test_fight(self, num_fighters1=1, num_fighters2=1, armed=False):
         p = self.g.current_player
         allies = []

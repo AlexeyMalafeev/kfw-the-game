@@ -182,7 +182,10 @@ Effect`. Each `Move` caches its pair at construction (`Move.set_ascii` →
   `fight.cartoon`.
 - At fight end, winners get `set_ascii('Win')`, losers `set_ascii('Lying')`;
   `show_win_message` draws one final picture via
-  `main_player.show_ascii()`.
+  `main_player.show_ascii()`. If the viewer lost, the picture is pointed at
+  the actual winner (`winners[0]`, forced to the `Win` stance) — otherwise a
+  free-for-all would show the viewer's last target, which is often another
+  loser (two lying fighters and the winner's quote).
 - ⚠️ `concat` is only correct with `BUFFER_WIDTH = 1`; the code carries
   `todo if you set buffer width to >=2, there is a bug in concat`.
 - ⚠️ `show_ascii` catches `AttributeError` around the side lookup and dumps

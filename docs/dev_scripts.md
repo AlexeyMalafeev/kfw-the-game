@@ -300,6 +300,19 @@ Works: verified — all five tables completed within a 280 s timeout (the
 committed samples match this shape); all five overwritten reports were
 restored.
 
+### run_test_ffa.py
+
+`test_ffa_win_rates(n_fights=100)`: win rates in free-for-all formats at
+equal levels (lv 10), 100 fights per cell. Table 1: plain FFA of n = 2–8
+fighters — fighter 1's win rate next to the expected 1/n and next to the
+same fighter facing a *united* group of n−1 (win rate ≪ 1/n, 0% already at
+n ≥ 4). This is the evidence that FFA wins are far easier than crowd wins
+and why FFA exp is awarded per-capita. Table 2: group FFA of 2–4 groups of
+2–3 — group 1's win rate vs the expected 1/g. Output:
+`tests/ffa win rates lv=10 n=100.txt` (tracked).
+
+Works: verified — both tables ran to completion; sample report committed.
+
 ### run_test_level_sign.py
 
 `test_level_significance(rep=100)`: the full 20×20 level-vs-level 1v1
@@ -329,4 +342,5 @@ tracked report was restored.
 | `ml/ML_learn.py` | No — `'../../ml/...'` resolves outside the repo | ran, `FileNotFoundError` |
 | `testing/run_test_fb.py` | Yes | n=10000 ran to completion; report restored |
 | `testing/run_test_lv_vs_crowds.py` | Yes | all 5 tables ran to completion; reports restored |
+| `testing/run_test_ffa.py` | Yes | both tables ran to completion; report committed |
 | `testing/run_test_level_sign.py` | Yes | full 20×20 matrix ran to completion; report restored |

@@ -18,6 +18,8 @@ TIME_TO_SEC_DIVISOR = 2
 
 
 class BaseFight(object):
+    is_free_for_all = False
+
     def __init__(self, side_a, side_b, environment_allowed=True):
         # fight participants
         self.side_a = side_a
@@ -183,6 +185,11 @@ class BaseFight(object):
         n_sec_left = n_sec % 60
         return n_min, n_sec_left
 
+    def aggregate_exp_yield(self, fighters):
+        """Total exp yield of a group of fighters; free-for-all fights override
+        this to use the average, since there the losers also fight each other."""
+        return sum(f.exp_yield for f in fighters)
+
     def give_exp(self):
         if not self.winners:
             # draw: everyone gets a fixed, reduced amount of exp
@@ -193,8 +200,8 @@ class BaseFight(object):
             return
         n_winners = len(self.winners)
         n_losers = len(self.losers)
-        winners_yield = sum(f.exp_yield for f in self.winners)
-        losers_yield = sum(f.exp_yield for f in self.losers)
+        winners_yield = self.aggregate_exp_yield(self.winners)
+        losers_yield = self.aggregate_exp_yield(self.losers)
         winners_diff = (losers_yield / winners_yield) ** 1.5
         winners_gain = winners_diff * BASE_FIGHT_EXP
         losers_gain = LOSER_EXP
@@ -214,13 +221,16 @@ class BaseFight(object):
         # single winner only
         if len(self.winners) == 1:
             w = self.winners[0]
-            # win against 5 enemies
-            if len(self.losers) >= 5:
-                w.add_accompl('Lone Warrior')
+            if not self.is_free_for_all:
+                # in a free-for-all the losers also fight each other, so winning
+                # one is not comparable to beating a united group
+                # win against 5 enemies
+                if len(self.losers) >= 5:
+                    w.add_accompl('Lone Warrior')
+                if sum([f.exp_yield for f in self.losers]) >= w.exp_yield * 1.5:
+                    w.add_accompl('Against All Odds')
             if w.hp <= w.hp_max * NARROW_VICTORY_HP_PCNT:
                 w.add_accompl('Narrow Victory')
-            if sum([f.exp_yield for f in self.losers]) >= w.exp_yield * 1.5:
-                w.add_accompl('Against All Odds')
             if self.timer / TIME_TO_SEC_DIVISOR <= 1:
                 w.add_accompl('Split-Second Victory')
 
@@ -244,7 +254,7 @@ class BaseFight(object):
         for p in self.players:
             if self.winners:  # not draw
                 if p in self.winners and len(self.winners) == 1:
-                    ratio = round(sum([f.exp_yield for f in self.losers]) / p.exp_yield, 2)
+                    ratio = round(self.aggregate_exp_yield(self.losers) / p.exp_yield, 2)
                     curr_stat = p.get_stat(
                         'aston_victory'
                     )  # tuple: (date, p.level, [enemies], big opp_to_self_pwr_ratio)
@@ -260,7 +270,7 @@ class BaseFight(object):
                         p.write_stat('aston_victory', tup)
                         p.log(f'What an astonishing victory! ({tup[-1]})')
                 elif p in self.losers and len(self.losers) == 1:
-                    ratio = round(sum([f.exp_yield for f in self.winners]) / p.exp_yield, 2)
+                    ratio = round(self.aggregate_exp_yield(self.winners) / p.exp_yield, 2)
                     curr_stat = p.get_stat(
                         'humil_defeat'
                     )  # tuple: (date, p.level, [enemies], small opp_to_self_pwr_ratio)
@@ -412,6 +422,11 @@ class BaseFight(object):
         self.cls()
         if who_shows_ascii is None:
             who_shows_ascii = self.main_player
+        if self.winners and who_shows_ascii not in self.winners:
+            # the viewer lost: in a free-for-all their last target is often not the
+            # winner, so point them at the actual winner for the final picture
+            who_shows_ascii.target = self.winners[0]
+            self.winners[0].set_ascii('Win')
         who_shows_ascii.show_ascii()
         s = self._resolve_winner_name()
         n_min, n_sec_left = self.get_time()

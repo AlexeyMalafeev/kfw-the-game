@@ -380,6 +380,16 @@ class TestRelStrength:
         with_ally, _ = fa.get_rel_strength(fb, allies=[fighter_factory.copy_fighter(fa)])
         assert with_ally < alone
 
+    def test_mean_flag_averages_multiple_opponents(self):
+        # free-for-all estimate: average opponent power, not the sum
+        random.seed(0)
+        fa = fighter_factory.new_fighter(5)
+        fb = fighter_factory.copy_fighter(fa)
+        fc = fighter_factory.copy_fighter(fa)
+        ratio, legend = fa.get_rel_strength(fb, fc, mean=True)
+        assert ratio == 1.0
+        assert legend == 'fair fight'
+
     def test_copy_fighter_preserves_combat_relevant_atts(self):
         random.seed(0)
         f = fighter_factory.new_fighter(8)
@@ -446,6 +456,47 @@ class TestFreeForAll:
         for ff in fs:
             assert f.get_act_targets(ff) == [x for x in fs if x is not ff]
             assert f.get_act_allies(ff) == [ff]
+
+    def run_player_ffa(self, n_enemies, player_wins, lv_up=0):
+        g = make_game()
+        p = g.players[0]
+        if lv_up:
+            p.level_up(lv_up)
+        for seed in range(50):
+            random.seed(seed)
+            enemies = fighter_factory.new_thug(n=n_enemies)
+            f = free_for_all([p] + enemies, return_fight_obj=True)
+            if bool(f.winners) and (f.winners[0] is p) == player_wins:
+                return f, p
+            p.hp = p.hp_max  # revive for the next attempt
+        raise AssertionError(f'no suitable FFA outcome within 50 seeds')
+
+    def test_ffa_winner_exp_uses_average_not_sum(self):
+        # an FFA win pays per-capita exp: the losers were fighting each other too
+        f, p = self.run_player_ffa(n_enemies=5, player_wins=True, lv_up=19)
+        exp_gains = []
+        p.gain_exp = lambda n, **kw: exp_gains.append(n)
+        f.give_exp()
+        exp_gained = exp_gains[-1]
+        losers_yield = sum(e.exp_yield for e in f.losers)
+        mean_based = round((losers_yield / len(f.losers) / p.exp_yield) ** 1.5 * BASE_FIGHT_EXP)
+        sum_based = round((losers_yield / p.exp_yield) ** 1.5 * BASE_FIGHT_EXP)
+        assert exp_gained <= round(mean_based * 1.75)  # up to three +25% exp bonuses
+        assert exp_gained < sum_based  # the old, sum-based behavior
+
+    def test_ffa_win_grants_no_crowd_accomplishments(self):
+        # beating five separate enemies in an FFA is not beating a united group
+        f, p = self.run_player_ffa(n_enemies=5, player_wins=True, lv_up=19)
+        assert len(f.losers) >= 5  # sanity: would be 'Lone Warrior' in a normal fight
+        assert 'Lone Warrior' not in p.accompl
+        assert 'Against All Odds' not in p.accompl
+
+    def test_win_message_shows_actual_winner_to_losing_viewer(self):
+        f, p = self.run_player_ffa(n_enemies=3, player_wins=False)
+        p.target = f.losers[-1]  # stale last target, not the winner
+        f.show_win_message()
+        assert p.target is f.winners[0]
+        assert f.winners[0].ascii_name == 'Win'
 
 
 class TestGroupFreeForAll:

@@ -514,6 +514,7 @@ class FighterAPI(ABC):
         self,
         *opp: FighterAPI,
         allies: Optional[Iterable[FighterAPI]] = None,
+        mean: bool = False,
     ) -> Tuple[float, str]:
         pass
 
