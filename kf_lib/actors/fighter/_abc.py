@@ -145,7 +145,7 @@ class FighterAPI(ABC):
     toughness: int = None
     unblock_chance: float = None
     weapon: Optional[Weapon] = None
-    weapon_bonus: Dict[str, List[float, float]] = None
+    weapon_bonus: Dict[str, List[float]] = None
     wp_dfs_bonus: float = None
 
     # noinspection PyUnusedLocal
@@ -666,6 +666,7 @@ class FighterAPI(ABC):
     def set_distance(self, targ: FighterAPI, dist: int) -> None:
         pass
 
+    @abstractmethod
     def set_distances_before_fight(self) -> None:
         pass
 

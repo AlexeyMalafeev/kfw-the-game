@@ -89,12 +89,10 @@ versions:
 
 - Attributes: `upgrade_att` samples `num_atts_choose` (3) of the four stats and
   `choose_better_att` picks one from the highest-weighted group in
-  `att_weights`. With `rand_atts_mode` 1 or 2 every weight is set to 1, so the
-  choice is uniform random among the three. ⚠️ The mode-1/2 code sets
-  `att_weights[att] = 1` unconditionally — the `random.randint(1, 2)` line that
-  would differentiate modes is commented out (`_basic_attributes.py`), so
-  `rand_atts_mode` 1 and 2 are identical and AI attribute growth has no
-  build logic at all.
+  `att_weights`. With `rand_atts_mode` 0 all weights stay 0, so the choice is
+  uniform random; with modes 1 and 2 each attribute's weight is randomly 1 or
+  2 (`_basic_attributes.py`), so AI fighters develop mild build
+  specialization, preferring their weight-2 attributes whenever sampled.
 - Techs (`_techs.py`): style techs are automatic at their levels; at
   `ADVANCED_TECH_AT_LV` a random upgradable tech is upgraded
   (`choose_tech_to_upgrade`); at `LVS_GET_GENERAL_TECH` levels a random tech

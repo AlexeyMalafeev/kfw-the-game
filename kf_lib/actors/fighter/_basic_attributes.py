@@ -52,7 +52,7 @@ class BasicAttributes(FighterAPI, ABC):
 
     def get_att_str(self, att: Text) -> Text:
         base, full = self.get_base_att_value(att), self.get_full_att_value(att)
-        return f'{full}({base})' if full > base else str(base)
+        return f'{full}({base})' if full != base else str(base)
 
     def get_att_str_prefight(
             self,
@@ -104,8 +104,7 @@ class BasicAttributes(FighterAPI, ABC):
         # random weights
         elif self.rand_atts_mode in {1, 2}:
             for att in self.att_names:
-                # self.att_weights[att] = random.randint(1, 2)
-                self.att_weights[att] = 1
+                self.att_weights[att] = random.randint(1, 2)
         # TODO: more intelligent att selection depending on the style perks
 
     def set_atts(

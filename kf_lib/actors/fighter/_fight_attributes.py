@@ -166,7 +166,7 @@ class FightAttributes(FighterAPI, ABC):
         self.hp += amount
         if self.hp > self.hp_max:
             self.hp = self.hp_max
-        elif self.hp < 0:
+        elif self.hp <= 0:
             self.hp = 0
             # set qp to zero too
             self.qp = 0
@@ -245,6 +245,10 @@ class FightAttributes(FighterAPI, ABC):
             * self.epic_chance_mult
         )
         self.toughness = (self.level - 1) * self.TOUGHNESS_PER_LV
+        # re-clamp pools in case their maxes just shrank (e.g. an item effect expiring)
+        self.hp = min(self.hp, self.hp_max)
+        self.stamina = min(self.stamina, self.stamina_max)
+        self.qp = min(self.qp, self.qp_max)
 
     def unboost(self, **kwargs: Union[int, float]) -> None:
         """'Unboost' fighter's attributes: k = att_name, v = quantity."""
@@ -252,5 +256,3 @@ class FightAttributes(FighterAPI, ABC):
         for k, v in kwargs.items():
             kwargs_copy[k] = -v
         self.boost(**kwargs_copy)
-        self.refresh_full_atts()
-        self.refresh_dependent_atts()

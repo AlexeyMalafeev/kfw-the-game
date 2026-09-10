@@ -54,6 +54,21 @@ because kung-fu movies.
 - **The State menu shows the master's best student**
 
 ### Fixed
+- **AI attribute growth had no build logic**: the `random.randint(1, 2)` line
+  in `set_att_weights` was commented out, so `rand_atts_mode` 1/2 set every
+  weight to 1 and AI fighters grew attributes uniform-randomly. Restored —
+  mode-1/2 fighters (AI heroes, some NPCs) now mildly specialize
+  (balance-affecting; queue a `dev_scripts/testing/run_test_fb.py` re-run)
+- **Exact-damage KOs kept qi points**: `change_hp` only zeroed qp when damage
+  overshot the remaining hp; an exact-to-zero hit left qp intact
+- **Pools stayed above shrunken maxes after item expiry**: e.g. cancelling an
+  Elephant Herb left hp above the restored `hp_max`;
+  `refresh_dependent_atts` now re-clamps hp/stamina/qp
+- `FighterAPI`: `set_distances_before_fight` was missing `@abstractmethod`
+  (a `Fighter` composed without `DistanceMethods` would instantiate and only
+  crash later); fixed the invalid `weapon_bonus` type annotation
+- Debuffed attributes now display as `full(base)` instead of silently showing
+  the base value (`get_att_str`)
 - **Masters were helped by the wrong school in street fights**: `get_school()`
   returned the master's *old* style school, so help came from ex-schoolmates
   and the old master. Now the master's own students come to help (the master

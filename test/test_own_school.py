@@ -573,6 +573,7 @@ class TestRank1Reward:
         p.refresh_school_rank()
         assert p.school_rank == 2
         p.spar = lambda opp, **kw: True
+        p.fight_or_not = lambda *a, **kw: True
         exp_gains = []
         p.gain_exp = lambda n, **kw: exp_gains.append(n)
         rep_before = p.reputation
