@@ -104,7 +104,10 @@ def all_schools_tournament(g):
         if any(f in roster or g.masters.get(school_name) is f for f in win_team):
             win_school = school_name
             break
-    g.msg(f'{win_school} wins the All-Schools Tournament!')
+    # don't leak the style's secret true name to a player who hasn't learned it
+    viewer = next((f for f in win_team if f.is_player), win_team[0])
+    displayed_school = viewer.get_displayed_style_name()
+    g.msg(f'{displayed_school} wins the All-Schools Tournament!')
     for f in win_team:
         f.log(f'Wins the All-Schools Tournament with {win_school}.')
     for p in (f for f in win_team if f.is_player):

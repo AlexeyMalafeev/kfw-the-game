@@ -303,7 +303,9 @@ least 2 fighters fields a team — its master plus the top 2 students by
 teams with players fight first for the protagonist perspective). The teams
 clash in one group free-for-all (`fight.group_free_for_all`, no
 items/environment, school names displayed), last school standing wins. A
-draw means no winner and no rewards. Winners log the victory; players on the
+draw means no winner and no rewards. The winner is announced under the
+style's displayed (public unless known) name, so the school's secret true
+name is not leaked. Winners log the victory; players on the
 winning team also get +20 exp, +5 rep, a 200 c prize and the 'All-Schools
 Champion' accomplishment.
 

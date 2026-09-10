@@ -78,6 +78,9 @@ because kung-fu movies.
   brawl-spreads-to-bystanders 0.25 → 0.125, GangWar crime/4 → crime/8
 
 ### Fixed
+- **All-Schools Tournament leaked secret style names**: the winner
+  announcement used the school's true style name (the `game.schools` key);
+  it now uses the displayed (public) name
 - **End-of-FFA picture showed two lying fighters**: the final screen drew the
   viewer's *last target* (often another KO'd loser) while the win quote came
   from the actual winner; a losing viewer now faces `winners[0]` in the `Win`
