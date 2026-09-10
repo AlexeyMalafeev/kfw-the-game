@@ -29,6 +29,10 @@ MONEY_OPEN_SCHOOL = 1000
 # numbers
 NUM_STUD_CHALLENGERS = (2, 5)
 
+# rewards for reaching school rank 1
+RANK1_EXP = 25
+RANK1_REP = 2
+
 
 class MasterTrial(BaseEncounter):
     def check_if_happens(self):
@@ -143,11 +147,15 @@ class SchoolChallenge(BaseEncounter):
                     )
                     p.show(t)
                 else:
-                    # t = ('{}: "Well done, {}. Now it is time you learned the secret technique of our school, '
-                    #      '"{}".'.format(m.name, p.name, m.style.tech.name))
-                    t = f'{m.name}: "Well done, {p.name}."'
+                    t = (
+                        f'{m.name}: "Well done, {p.name}. You are now the best student of '
+                        f'our school. You make me proud — but remember, there is always '
+                        f'more to learn."'
+                    )
                     p.show(t)
-                    # p.learn_tech(m.style.tech.name)
+                    p.log('Becomes the best student of his school.')
+                    p.gain_exp(RANK1_EXP)
+                    p.gain_rep(RANK1_REP)
             else:
                 react = random.choice(quotes.MASTER_CRITICISM)
                 p.show(f"{m.name}: {react}")

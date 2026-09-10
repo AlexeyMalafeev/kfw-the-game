@@ -178,12 +178,14 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 ### School and mastership (`_school.py`)
 
 - `SchoolChallenge` / `SchoolBullying`: rank up (or be ambushed) within your
-  school; chances scale with school size.
+  school; chances scale with school size. Reaching rank 1 earns the master's
+  praise, +25 exp and +2 rep.
 - `MasterTrial`: at rank 1 and `MASTER_LV` (11+), beat your master in a spar,
   pay 1000 c., and found a school — flips `is_master`, which changes the day
   action list and excludes the player from many encounters.
-- `Students` (masters only): applicants arrive at rate `min(fame, 0.07)`;
-  groups must be beaten first. AI masters auto-accept single applicants.
+- `Students` (masters only): applicants arrive at rate `min(0.01 + fame,
+  0.07)`; groups must be beaten first. AI masters auto-accept single
+  applicants.
 
 ### Story hook (`_story.py`)
 

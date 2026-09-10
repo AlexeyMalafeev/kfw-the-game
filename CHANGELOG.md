@@ -42,6 +42,9 @@ because kung-fu movies.
   accomplishment and wins the game. AI masters pursue the federation too
 
 ### Changed
+- **Reaching school rank 1 earns a reward**: the master's praise, +25 exp and
+  +2 rep (replacing a fossil of the pre-v0.7.0 design, where rank 1 was meant
+  to teach the secret technique — that has lived at lv 7 since)
 - **Even unknown masters attract students**: the Students encounter now has a
   1% base chance (`BASE_STUDENT_CH`) before fame is added — a fresh master no
   longer needs fame to ever get applicants

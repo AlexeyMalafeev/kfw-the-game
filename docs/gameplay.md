@@ -295,10 +295,8 @@ and enable FriendMatch spars; co-op players are pre-friended at game start
 (`_new_game.py`). Enemies trigger ambushes (above). School rank is the position
 in `schools[style]` sorted monthly by `get_exp_worth()`; winning a
 SchoolChallenge spar swaps you up one rank. Rank 1 is required for the master
-trial. ⚠️ The commented-out code in `_school.py` shows reaching rank 1 was
-meant to teach the school's secret technique; it currently grants nothing but
-a compliment (the actual secret technique is learned at lv 7 instead — see
-`docs/kung_fu.md`).
+trial, and reaching it earns the master's praise, +25 exp and +2 rep
+(`RANK1_EXP`/`RANK1_REP`).
 
 ## The own-school loop
 

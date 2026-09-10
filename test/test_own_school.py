@@ -15,7 +15,7 @@ from kf_lib.fighting import fight
 from kf_lib.game._playing import check_united_schools
 from kf_lib.happenings import events
 from kf_lib.happenings.encounters import _school as school_mod
-from kf_lib.happenings.encounters._school import Students
+from kf_lib.happenings.encounters._school import RANK1_EXP, RANK1_REP, SchoolChallenge, Students
 from kf_lib.happenings.story import _student_rivalry as sr_mod
 from kf_lib.happenings.story._school_attack import (
     SCHOOL_DEFENSE_LOSE_REP,
@@ -562,3 +562,21 @@ class TestStudentIntake:
         g, p = make_game_and_player(seed=91, level=14)
         make_master(p, num_students=2)
         assert f'best: {p.best_student.name}' in p.get_p_info_verbose()
+
+
+class TestRank1Reward:
+    def test_reaching_rank1_rewards(self):
+        g, p = make_game_and_player(seed=95, level=10)
+        school = g.schools[p.style.name]
+        school.remove(p)
+        school.insert(1, p)  # rank 2, one win away from the top
+        p.refresh_school_rank()
+        assert p.school_rank == 2
+        p.spar = lambda opp, **kw: True
+        exp_gains = []
+        p.gain_exp = lambda n, **kw: exp_gains.append(n)
+        rep_before = p.reputation
+        SchoolChallenge(p, check_if_happens=False)
+        assert p.school_rank == 1
+        assert exp_gains == [RANK1_EXP]
+        assert p.reputation == rep_before + RANK1_REP
