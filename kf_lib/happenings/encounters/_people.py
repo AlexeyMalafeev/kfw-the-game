@@ -1,4 +1,5 @@
 import random
+import re
 
 from kf_lib.actors import fighter_factory, traits
 from kf_lib.fighting import fight
@@ -19,6 +20,29 @@ ENC_CH_STREET_BRAWL = 0.015
 ENC_CH_WISE_MAN = 0.02
 
 # misc chances
+_NUMBERED_NAME = re.compile(r'^(.*\S)\s+\d+$')
+
+
+def group_same_fighters(opp_strs):
+    """Condense 'Thug 1, lv.1 Dirty Fighting' x5 into '5 Thugs'; singles keep full info."""
+    groups = {}
+    order = []
+    for s in opp_strs:
+        name = s.split(', lv.', 1)[0]
+        m = _NUMBERED_NAME.match(name)
+        base = m.group(1) if m else name
+        if base not in groups:
+            groups[base] = []
+            order.append(base)
+        groups[base].append(s)
+    parts = []
+    for base in order:
+        group = groups[base]
+        if len(group) > 1:
+            parts.append(f'{len(group)} {base}s')
+        else:
+            parts.append(group[0])
+    return parts
 CH_BRAWLER_ATTACKS = 0.2
 CH_BRAWL_SPREADS = 0.125
 CH_CHANGE_TRAIT = 0.15
@@ -278,11 +302,7 @@ class OverhearConversation(BaseEncounter):
             random.shuffle(self.facts)
             person, fact, result = self.facts[0]
             date, lv, opps, ratio = result
-            n_opp = len(opps)
-            if n_opp == 1:
-                opp_str = opps[0]
-            else:
-                opp_str = enum_words(opps)
+            opp_str = enum_words(group_same_fighters(opps))
             if fact == "humil_defeat":
                 t = '''One of them says: "Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to \
 kung-fu!"'''.format(

@@ -52,6 +52,9 @@ because kung-fu movies.
   (`tests/ffa win rates lv=10 n=100.txt`)
 
 ### Changed
+- **Overheard gossip condenses same-type opponents**: the OverhearConversation
+  narration now says "beat 5 Thugs" instead of listing "Thug 1, ..., Thug 5,
+  ..." (mixed groups are grouped too: "3 Thugs, Zhao Liao and 2 Robbers")
 - **Reaching school rank 1 earns a reward**: the master's praise, +25 exp and
   +2 rep (replacing a fossil of the pre-v0.7.0 design, where rank 1 was meant
   to teach the secret technique — that has lived at lv 7 since)

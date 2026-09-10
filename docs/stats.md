@@ -140,7 +140,9 @@ Two systems share the theme and are easily confused:
     the full report before the ending.
   - `OverhearConversation` — collects every player's non-`None`
     `aston_victory`/`humil_defeat` records and narrates one at random
-    ("Haven't you heard? X at lv.N beat Y..."). ⚠️ The log lines are swapped:
+    ("Haven't you heard? X at lv.N beat Y..."). Same-type numbered opponents
+    are condensed in the narration ("beat 5 Thugs" instead of listing
+    "Thug 1, ..., Thug 5, ..."). ⚠️ The log lines are swapped:
     the `humil_defeat` branch logs "astonishing victory" and vice versa
     (`_people.py:269,276`). The shown text is correct; only `p.log` is wrong.
     The records are otherwise never shown to the owning player — the stats
