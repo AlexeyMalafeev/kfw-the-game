@@ -30,7 +30,8 @@ def group_same_fighters(opp_strs):
     for s in opp_strs:
         name = s.split(', lv.', 1)[0]
         m = _NUMBERED_NAME.match(name)
-        base = m.group(1) if m else name
+        # only numbered names group; an unnumbered name stays unique to its string
+        base = m.group(1) if m else s
         if base not in groups:
             groups[base] = []
             order.append(base)

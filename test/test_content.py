@@ -10,6 +10,7 @@ from kf_lib.happenings import encounters, events, story
 from kf_lib.happenings.encounters._base_encounter import BaseEncounter
 from kf_lib.happenings.story._base_story import BaseStory
 from kf_lib.happenings.tournament import Tournament
+from kf_lib.utils import enum_words
 
 
 def make_game(seed=0, num_players=2):
@@ -340,3 +341,33 @@ class TestMoveLookup:
                         tier = int(parts[0]) if parts[0].isdigit() else 10
                         feats = parts[1:] if parts[0].isdigit() else parts
                         assert get_rand_moves(probe, 3, tier, feats), f'{s.name} lv{lv}: {e!r}'
+
+
+class TestGossipOpponentGrouping:
+    def test_all_same_type_condensed(self):
+        from kf_lib.happenings.encounters._people import group_same_fighters
+
+        opps = [f'Thug {i}, lv.{i} Dirty Fighting' for i in (1, 2, 3, 4, 5)]
+        assert enum_words(group_same_fighters(opps)) == '5 Thugs'
+
+    def test_mixed_groups_and_singles(self):
+        from kf_lib.happenings.encounters._people import group_same_fighters
+
+        opps = [f'Thug {i}, lv.{i} Dirty Fighting' for i in (1, 2, 3)]
+        opps += ['Zhao Liao, lv.5 Water Viper']
+        opps += [f'Robber {i}, lv.{i + 1} Drunken Boxing' for i in (1, 2)]
+        assert enum_words(group_same_fighters(opps)) == (
+            '3 Thugs, Zhao Liao, lv.5 Water Viper and 2 Robbers'
+        )
+
+    def test_single_opponent_unchanged(self):
+        from kf_lib.happenings.encounters._people import group_same_fighters
+
+        opps = ['Qiu Cao, lv.3 Monkey Fist']
+        assert group_same_fighters(opps) == opps
+
+    def test_unnumbered_names_not_grouped(self):
+        from kf_lib.happenings.encounters._people import group_same_fighters
+
+        opps = ['Qiu Cao, lv.3 Monkey Fist', 'Qiu Cao, lv.4 Monkey Fist']
+        assert group_same_fighters(opps) == opps
