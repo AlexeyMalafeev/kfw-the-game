@@ -19,9 +19,7 @@ ALL_SCHOOLS_WIN_EXP = 20
 ALL_SCHOOLS_WIN_REP = 5
 
 # tournaments
-DEFAULT_TOURN_FEE = 100
 TOURN_FEES = (50, 75, 100, 125, 150)
-TOURN_PRIZE_MULT = 4
 TOURN_TYPES = (
     'beginner',
     'intermediate',

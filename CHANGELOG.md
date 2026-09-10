@@ -41,6 +41,28 @@ because kung-fu movies.
   rep; completing the federation awards the 'Founder of the Federation'
   accomplishment and wins the game. AI masters pursue the federation too
 
+### Changed
+- **Even unknown masters attract students**: the Students encounter now has a
+  1% base chance (`BASE_STUDENT_CH`) before fame is added — a fresh master no
+  longer needs fame to ever get applicants
+- **Betting on tournaments costs reputation**: placing a bet applies −3 rep
+  (the long-dormant `BET_REPUTATION_PENALTY`), win or lose — gambling is not
+  honorable by wuxia morals
+- **The State menu shows the master's best student**
+
+### Fixed
+- **Masters were helped by the wrong school in street fights**: `get_school()`
+  returned the master's *old* style school, so help came from ex-schoolmates
+  and the old master. Now the master's own students come to help (the master
+  branch brings the strongest student); also fixed a crash when a school had
+  fewer than 2 members available to help
+- **Tournament crash paths**: nobody eligible showing up crashed with
+  `IndexError` (the tournament is now canceled instead), and a drawn final
+  raised `NotImplementedError` (now ends with no winner and all bets lost,
+  like a battle-royale draw)
+- Removed unused tournament leftovers (`TOURN_PRIZE_MULT`,
+  `DEFAULT_TOURN_FEE`)
+
 ## [v0.7.1-beta "Eight Tigers in One Cage"] — 2026-09-10
 
 ### Added

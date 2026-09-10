@@ -327,8 +327,7 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
   royale** instead: always 8 participants, one free-for-all melee
   (`_do_battle_royale` → `fight.free_for_all`), last man standing wins. A
   battle-royale draw (everyone KO'd) ends the tournament with no winner, no
-  prize and all bets lost; the elimination format still raises
-  `NotImplementedError` on a drawn final.
+  prize and all bets lost; a drawn elimination final ends it the same way.
 - **Gathering** (`_gather_participants`): active players in the level range are
   asked (`tourn_or_not`; AI always accepts) and pay the fee via `enter_tourn`.
   ⚠️ No money check — a broke player (human or AI) pays anyway and can go
@@ -340,21 +339,22 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
   remaining list and pairs fighters off; an odd one out gets a bye. Every match
   is a real `fight.fight(...)` (no environment, no items) — players' fights are
   interactive as usual, so tournament losses injure and wins grant exp exactly
-  like street fights. A final with both fighters KO'd raises
-  `NotImplementedError` (draws can't produce a winner).
+  like street fights. A final with both fighters KO'd ends the tournament with
+  no winner (same as a battle-royale draw); if nobody eligible shows up at all,
+  the tournament is canceled.
 - **Prize** (`_calc_prize`): `fee * num_participants / 2`, rounded to tens —
   i.e. the organizer pockets half the fees. Only a *player* winner is paid
   (`win_tourn`: prize money, `tourn_won` stat, 'Tournament Champion'
-  accomplishment at 3 wins); an NPC winner gets nothing. ⚠️ `TOURN_PRIZE_MULT`
-  and `DEFAULT_TOURN_FEE` in `events.py` are unused leftovers.
+  accomplishment at 3 wins); an NPC winner gets nothing.
 - **Betting**: after the participant list is shown, every active player may
   bet (`bet_on_tourn_or_not`, AI: `gamble_chance` roll; AI picks a random
   highest-level participant). The stake (10/25/50/100) is paid up front in
-  `place_bet_on_tourn`. In `_resolve_bets` a winning bet pays
+  `place_bet_on_tourn`. Placing a bet costs reputation
+  (`BET_REPUTATION_PENALTY` −3, win or lose — gambling is dishonorable). In
+  `_resolve_bets` a winning bet pays
   `stake * max(current_round, 1.5)` (the 1.5 floor covers one-round
   tournaments) and is recorded as gambling income; losers have already lost
-  their stake. ⚠️ `BET_REPUTATION_PENALTY = -3` is defined but never applied —
-  betting is reputation-free.
+  their stake.
 
 ## How outcomes feed back into the sim
 

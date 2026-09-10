@@ -67,13 +67,15 @@ uniformly at random:
   `friend_joins_fight` (0.3) for NPC friends. `max_num_allies` defaults to
   `max_num_friends`, so effectively uncapped here; `Criminal` caps it at 1 and
   only calls it when the convict outlevels the player (`_crime.py:66-67`).
-- `'m'` master → `master_joins_fight` (0.5), your style's master joins.
+- `'m'` master → `master_joins_fight` (0.5), your style's master joins. For
+  player-masters, their strongest student joins instead ("Let me help,
+  Master!").
 - `'w'` improvised weapon → `grab_improvised_weapon` (0.5; +0.1 broad-minded).
   Distinct from the *in-fight* `in_fight_impro_wp_chance`, which is
   technique-based (see `docs/fight_mechanics.md`) — the similar names cover two
   different rolls.
-- `'s'` schoolmates → `schoolmates_help` (0.5), 2–3 random non-player members
-  of `get_school()`.
+- `'s'` schoolmates → `schoolmates_help` (0.5), up to 2–3 random non-player
+  members of `get_school()` (the player's own school for masters).
 
 ⚠️ The single-pick design means friends get rolled only when the `'a'` channel
 is picked (1/4 with all channels on), and a failed roll on the chosen channel

@@ -116,8 +116,10 @@ are unordered unless marked.
     `test_all_default_style_move_strings_are_valid` guards against
     regressions. (Move tiers 11–14 being unreachable is INTENDED for now —
     reserved for future content, author 2026-09)
-  - tournament crash paths: zero participants → IndexError; winnerless final
-    → NotImplementedError
+  - ~~tournament crash paths: zero participants → IndexError; winnerless final
+    → NotImplementedError~~ ✅ Fixed 2026-09: nobody showing up cancels the
+    tournament; a drawn final ends it with no winner (like a battle-royale
+    draw), bets lost
   - ~~`OverhearConversation` log lines swapped (astonishing victory ↔
     humiliating defeat); lying-hit ASCII art unreachable (`startswith('lying')`
     vs `'Lying Hit'`)~~ ✅ Fixed 2026-09 (the same lowercase typo also hid the
@@ -246,7 +248,9 @@ are unordered unless marked.
 - different AIs for common fighters vs masters/bosses; difficulty levels via AI choice
 - online learning?
 - AI players: choose techniques to match style; target enemies wisely; buy
-  Magic Healers more; use fight items more (they buy but don't use)
+  Magic Healers more; ~~use fight items more (they buy but don't use)~~ —
+  stale: AI does use fight items when outpowered
+  (`AIPlayer.use_fight_item_or_not`, `_ai_player.py`)
 - generic AI player decision function: money, rep, risk, exp (stakes dict),
   sum of feature-weight products
 - intelligent but non-deterministic move/tech selection; att selection

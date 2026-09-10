@@ -17,6 +17,7 @@ ENC_CH_STUDENT = 0.07
 # misc chances
 CH_SCHOOL_CHALLENGER_ARMED = 0.3
 CH_STUDENT_CHALLENGE = 0.25
+BASE_STUDENT_CH = 0.01  # even a completely unknown master attracts some applicants
 
 # levels
 LV_STUD_CHALLENGERS = (1, 3)
@@ -62,12 +63,13 @@ class MasterTrial(BaseEncounter):
                     )
                 )
                 p.pay(outlay)
+                # grab the old school before is_master flips get_school()
+                school = p.game.schools[p.style.name]
+                school.remove(p)
                 p.is_master = True
                 p.log("Becomes a master and founds his own school.")
                 p.set_stat("became_master", p.game.get_date())
                 p.set_stat("became_master_at_lv", p.level)
-                school = p.get_school()
-                school.remove(p)
                 for a_player in p.game.players:
                     a_player.refresh_school_rank()  # in case there are other players in the same school
                 school_name = p.choose_school_name()
@@ -158,7 +160,7 @@ class Students(BaseEncounter):
         return (
             self.p.is_master
             and self.p.students < self.p.game.MAX_NUM_STUDENTS
-            and rnd() <= min(self.p.get_fame(), ENC_CH_STUDENT)
+            and rnd() <= min(BASE_STUDENT_CH + self.p.get_fame(), ENC_CH_STUDENT)
         )
 
     def run(self):

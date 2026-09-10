@@ -337,11 +337,22 @@ class BasePlayer(Fighter):
             p.allies = p.check_allies()
         elif x == 'm':
             if rnd() <= self.master_joins_fight:
-                m = p.get_master()
-                p.show('{}: "What\'s going on here?"'.format(m.name))
-                p.log(f"{m.name} joins the fight on {p.name}'s side.")
-                p.allies = [m]
-                p.pak()
+                if p.is_master:
+                    # a master is helped by his best student, not his old master
+                    school = p.get_school()
+                    if not school:
+                        return
+                    helper = max(school, key=lambda f: f.get_exp_worth())
+                    p.show(f'{helper.name}: "Let me help, Master!"')
+                    p.log(f"{helper.name} joins the fight on {p.name}'s side.")
+                    p.allies = [helper]
+                    p.pak()
+                else:
+                    m = p.get_master()
+                    p.show('{}: "What\'s going on here?"'.format(m.name))
+                    p.log(f"{m.name} joins the fight on {p.name}'s side.")
+                    p.allies = [m]
+                    p.pak()
         elif x == 'w':
             if rnd() <= self.grab_improvised_weapon:
                 p.arm_improv()
@@ -350,16 +361,17 @@ class BasePlayer(Fighter):
                 p.pak()
         elif x == 's':
             if rnd() <= self.schoolmates_help:
-                n = random.choice((2, 3))
                 av_mates = [f for f in self.get_school() if not f.is_player]
-                mates = random.sample(av_mates, n)
-                a_str = enum_words([f.name for f in mates])
-                p.allies = mates
-                self.msg(
-                    '{}, who were passing by, join the fight on {}\'s side.'.format(
-                        a_str, self.name
+                if av_mates:
+                    n = min(random.choice((2, 3)), len(av_mates))
+                    mates = random.sample(av_mates, n)
+                    a_str = enum_words([f.name for f in mates])
+                    p.allies = mates
+                    self.msg(
+                        '{}, who were passing by, join the fight on {}\'s side.'.format(
+                            a_str, self.name
+                        )
                     )
-                )
 
     def check_injured(self):
         return self.inact_status == 'injured'
@@ -589,6 +601,8 @@ class BasePlayer(Fighter):
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
         en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
         stud_info = f'students:{self.students}' if self.students else ''
+        if self.is_master and self.best_student is not None:
+            stud_info += f' (best: {self.best_student.name})'
         lines.append(' '.join(w for w in (fr_info, en_info, stud_info) if w))
         lines.append(self.get_fight_statistics())
         return '\n'.join([line for line in lines if line])
@@ -601,6 +615,8 @@ class BasePlayer(Fighter):
         return random.choice(schools)  # returns a tuple!
 
     def get_school(self):
+        if self.is_master:
+            return self.game.schools[self.new_school_name]
         return self.game.schools[self.style.name]
 
     def get_favorite_move(self, attack_only=False):

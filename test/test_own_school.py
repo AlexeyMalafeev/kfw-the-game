@@ -14,6 +14,8 @@ from kf_lib.actors.player._base_player import (
 from kf_lib.fighting import fight
 from kf_lib.game._playing import check_united_schools
 from kf_lib.happenings import events
+from kf_lib.happenings.encounters import _school as school_mod
+from kf_lib.happenings.encounters._school import Students
 from kf_lib.happenings.story import _student_rivalry as sr_mod
 from kf_lib.happenings.story._school_attack import (
     SCHOOL_DEFENSE_LOSE_REP,
@@ -25,7 +27,9 @@ from kf_lib.happenings.events import (
     ALL_SCHOOLS_PRIZE,
     ALL_SCHOOLS_WIN_REP,
 )
+import kf_lib.happenings.tournament as tourn_mod
 from kf_lib.happenings.tournament import (
+    BET_REPUTATION_PENALTY,
     STUDENT_TOURN_WIN_REP,
     STUDENT_TOURN_WINS_ACCOMPL,
     Tournament,
@@ -463,3 +467,98 @@ class TestStudentRivalryStory:
         for seed in range(5):
             g, p = self.make_master_with_students(60 + seed)
             run_story(g, p, 'StudentRivalryStory')
+
+
+class TestMastersHelp:
+    @staticmethod
+    def force_rnd_zero():
+        orig_rnd = _bp.rnd
+        _bp.rnd = lambda: 0.0  # every chance roll succeeds
+        return orig_rnd
+
+    def test_get_school_for_masters_and_students(self):
+        g, p = make_game_and_player(seed=70, level=14)
+        style_school = g.schools[p.style.name]
+        assert p.get_school() is style_school
+        make_master(p, num_students=2)
+        assert p.get_school() is g.schools[p.new_school_name]
+
+    def test_master_helped_by_best_student(self):
+        g, p = make_game_and_player(seed=71, level=14)
+        make_master(p, num_students=3)
+        orig_rnd = self.force_rnd_zero()
+        try:
+            p.check_help(allies=False, master=True, impr_wp=False, school=False)
+        finally:
+            _bp.rnd = orig_rnd
+        school = g.schools[p.new_school_name]
+        assert p.allies == [max(school, key=lambda f: f.get_exp_worth())]
+
+    def test_non_master_helped_by_master(self):
+        g, p = make_game_and_player(seed=72, level=5)
+        orig_rnd = self.force_rnd_zero()
+        try:
+            p.check_help(allies=False, master=True, impr_wp=False, school=False)
+        finally:
+            _bp.rnd = orig_rnd
+        assert p.allies == [p.get_master()]
+
+    def test_school_help_with_a_single_student(self):
+        g, p = make_game_and_player(seed=73, level=14)
+        make_master(p, num_students=1)
+        orig_rnd = self.force_rnd_zero()
+        try:
+            # must not crash on random.sample with fewer mates than requested
+            p.check_help(allies=False, master=False, impr_wp=False, school=True)
+        finally:
+            _bp.rnd = orig_rnd
+        school = g.schools[p.new_school_name]
+        assert p.allies == school
+
+
+class TestTournamentEdgeCases:
+    def test_zero_participants_cancels(self):
+        g, p = make_game_and_player(seed=80)
+        t = Tournament(g, num_participants=8, min_lv=100, max_lv=200, fee=0)
+        assert t.winner is None  # canceled, no crash
+
+    def test_drawn_final_gives_no_winner(self):
+        g, p = make_game_and_player(seed=81)
+        orig = tourn_mod.fight.fight
+        tourn_mod.fight.fight = lambda *a, **kw: SimpleNamespace(winners=[])
+        try:
+            t = Tournament(g, num_participants=200, min_lv=1, max_lv=20, fee=0)
+        finally:
+            tourn_mod.fight.fight = orig
+        assert t.winner is None  # drawn final, no NotImplementedError
+
+    def test_bet_rep_penalty_on_placement(self):
+        g, p = make_game_and_player(seed=82)
+        g.players[1].bet_on_tourn_or_not = lambda: False
+        p.bet_on_tourn_or_not = lambda: True
+        p.place_bet_on_tourn = lambda t: (t.participants[0], 10)
+        rep_before = p.reputation
+        Tournament(g, num_participants=4, min_lv=1, max_lv=20, fee=0)
+        assert p.reputation == rep_before + BET_REPUTATION_PENALTY
+
+
+class TestStudentIntake:
+    def test_fresh_master_has_base_chance(self):
+        g, p = make_game_and_player(seed=90, level=14)
+        make_master(p, num_students=0)
+        assert p.get_fame() == 0
+        enc = Students.__new__(Students)
+        enc.p = enc.player = p
+        orig_rnd = school_mod.rnd
+        try:
+            school_mod.rnd = lambda: 0.005  # below the 0.01 base chance
+            assert enc.check_if_happens()
+            school_mod.rnd = lambda: 0.02  # above it
+            assert not enc.check_if_happens()
+        finally:
+            school_mod.rnd = orig_rnd
+
+    def test_best_student_in_verbose_info(self):
+        g, p = make_game_and_player(seed=91, level=14)
+        make_master(p, num_students=2)
+        assert f'best: {p.best_student.name}' in p.get_p_info_verbose()

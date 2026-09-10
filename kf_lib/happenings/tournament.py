@@ -95,8 +95,7 @@ class Tournament(object):
             n_remaining_participants = len(remaining_participants)
         if remaining_participants:
             self.winner = remaining_participants[0]
-        else:
-            raise NotImplementedError('The no-winner case in tournaments is not implemented')
+        # else: a drawn final (mutual KO) — no winner, like a battle-royale draw
 
     def _gather_participants(self):
         # player participants
@@ -138,6 +137,8 @@ class Tournament(object):
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
                 self.bets[p] = bet_on, bet_amount
                 self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
+                # gambling is not honorable (wuxia morals) — win or lose
+                p.gain_rep(BET_REPUTATION_PENALTY)
             else:
                 pass
                 # if not p.is_human:
@@ -185,6 +186,9 @@ class Tournament(object):
         )
 
         self._gather_participants()
+        if not self.participants:
+            self.g.msg('...but nobody shows up, so the tournament is canceled.')
+            return
         self.spectator = self.participants[0]
         self._show_participants()
         self._place_bets()

@@ -118,9 +118,9 @@ Common machinery (`encounters/_utils.py`):
 - Before group/street fights, `check_help` picks one of four help sources:
   friends (`friend_joins_fight` 30% each, `coop_joins_fight` 50% for players),
   your master (50%), an improvised weapon (50%), or 2–3 schoolmates (50%).
-  ⚠️ For masters the schoolmate branch still pulls from their *old* school
-  (`get_school()` returns `schools[self.style.name]`, which the master was
-  removed from when founding their own).
+  For player-masters `get_school()` returns their *own* school: the master
+  branch brings their strongest student ("Let me help, Master!") and the
+  schoolmate branch pulls their students.
 
 ## Victory
 
@@ -130,7 +130,7 @@ all players have acted. Five types, all independent and combinable:
 - **Grandmaster**: `level >= 20` (`GRANDMASTER_LV`).
 - **Folk Hero**: `reputation >= 100` (`FOLK_HERO_REP`).
 - **Kung-fu Legend**: `len(accompl) >= 8` unique accomplishments
-  (`KFLEGEND_ACCOMPL`). 24 labels exist: 6 story rewards, 8 encounter ones
+  (`KFLEGEND_ACCOMPL`). 25 labels exist: 7 story rewards, 8 encounter ones
   (Beggar's Friend, Drunkard's Friend, Fat Girl Defeated, Gambler Beaten, Beat
   Tough Thief, Enemy Reformed, Weird Item, Personality Change), 4 fight ones
   (see fight doc), Tournament Champion (3 wins), Master of Champions (3
@@ -205,9 +205,9 @@ donation 10, opening your school 1000.
 `check_money`, but the school founding and the gambler's revenge clawback
 (`p.money -= self.won`) don't.
 
-⚠️ Dead constants: `TOURN_PRIZE_MULT` and `DEFAULT_TOURN_FEE` (`events.py`),
-`BET_REPUTATION_PENALTY` (`tournament.py`) are defined but never used — betting
-carries no rep cost.
+Betting on tournaments carries a reputation cost: placing a bet applies
+`BET_REPUTATION_PENALTY` (−3) regardless of the outcome — gambling is not
+honorable by wuxia morals.
 
 ### Town stats
 
@@ -314,9 +314,10 @@ pick-fights becomes teach-students) and locks you out of student-only
 encounters (Brawler, Challenger, SchoolChallenge/Bullying, Fat Girl).
 
 Students arrive through the `Students` encounter (any non-rest day action):
-chance `min(get_fame(), 0.07)` per global sweep — so a fresh master with no
-accomplishments, tournament wins or 10+ wins has fame 0 and **never** gets
-students until they build fame. Intake is either one student (AI always
+chance `min(0.01 + get_fame(), 0.07)` per global sweep — the 0.01 base
+(`BASE_STUDENT_CH`) lets even a fresh, unknown master slowly attract
+applicants, and fame (accomplishments, tournament wins, 10+ wins) raises it
+toward the cap. Intake is either one student (AI always
 accepts) or a group of 2–5 that must be beaten in an items-off fight. Cap 8
 (`MAX_NUM_STUDENTS`); new students are random lv 1–10 and get +10%/month level
 ups below lv 8. Teaching yields 10 c/student/day **and actually teaches**:
@@ -341,15 +342,18 @@ player in its level window; a started story then advances via the
 ContinueStory encounter, 7% per encounter sweep), 4% school-vs-school brawl
 (the top fighter of each of two random schools, rest as allies — a real fight,
 so players involved get exp, stats and can be injured; nothing else about the
-schools changes), 15% a tournament starts.
+schools changes), 15% a tournament starts, 2% an All-Schools Tournament
+(master + top 2 students per school, group free-for-all between schools;
+players on the winning team get exp, rep, a prize and the 'All-Schools
+Champion' accomplishment).
 
 Tournaments (`happenings/tournament.py`): random level band (1–3/4–6/7–10/
 11–14), 8 participants usually, single elimination with byes on odd counts,
 fights are items-off/no-environment but otherwise real (injuries, stats,
 accomplishments, exp all apply). Entry fee paid up front; winner takes the
-prize (see Economy). 3 wins → 'Tournament Champion' accomplishment. ⚠️ The
-no-winner case (mutual KO in the final) raises `NotImplementedError` — nearly
-unreachable, but a real crash path.
+prize (see Economy). 3 wins → 'Tournament Champion' accomplishment. A mutual
+KO in the final (or nobody eligible showing up) ends the tournament with no
+winner. Placing a bet costs 3 rep (wuxia morals).
 
 Player-masters share their students' tournament glory (`_reward_masters`):
 every student entered is noted in the master's log; a student **winning**
