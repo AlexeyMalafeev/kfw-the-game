@@ -315,6 +315,12 @@ you're removed from the old school, become `masters[your_school]`,
 and `is_master = True` permanently changes your action list (practice is free,
 pick-fights becomes teach-students) and locks you out of student-only
 encounters (Brawler, Challenger, SchoolChallenge/Bullying, Fat Girl).
+The chosen school name also becomes the master's (and their students')
+**displayed style name** (`custom_style_name`, checked first by
+`get_displayed_style_name`, so it shows in pre-fight screens, stats, bios,
+etc.); the underlying style object is unchanged. Since fighters are rebuilt
+from constructor args on load, `LoadGame._refresh_custom_style_names`
+re-derives it from the saved `new_school_name` and school rosters.
 
 Students arrive through the `Students` encounter (any non-rest day action):
 chance `min(0.01 + get_fame(), 0.07)` per global sweep — the 0.01 base

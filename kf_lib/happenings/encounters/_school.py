@@ -80,6 +80,11 @@ class MasterTrial(BaseEncounter):
                 p.game.schools[school_name] = []
                 p.game.masters[school_name] = p
                 p.new_school_name = school_name
+                p.custom_style_name = school_name
+                p.show(
+                    f'From now on, {p.name}\'s kung-fu style will be known as {school_name}.'
+                )
+                p.log(f'Founds the {school_name} school and style.')
                 p.choose_school_techs()
             else:
                 p.show(f'{m.name}: "No, you are not ready yet. Practice some more."')

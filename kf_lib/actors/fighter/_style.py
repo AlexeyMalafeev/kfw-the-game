@@ -8,7 +8,10 @@ from kf_lib.kung_fu import styles
 class StyleMethods(FighterAPI, ABC):
     def get_displayed_style_name(self) -> str:
         """The style's true name is only shown to a human player who has learned the
-        secret technique of their own style; everyone else sees the public name."""
+        secret technique of their own style; everyone else sees the public name.
+        A master who founded a school displays the school's name as their style."""
+        if self.custom_style_name:
+            return self.custom_style_name
         if self.is_human and self.knows_style_secret():
             return self.style.name
         return self.style.public_name

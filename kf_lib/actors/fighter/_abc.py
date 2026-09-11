@@ -58,6 +58,7 @@ class FighterAPI(ABC):
     critical_chance_mult: float = None
     critical_dam_mult: float = None
     current_fight: Optional[BaseFight] = None
+    custom_style_name: Text = None
     dam: int = None
     dam_reduc: float = None
     defended: bool = None

@@ -187,7 +187,9 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   praise, +25 exp and +2 rep.
 - `MasterTrial`: at rank 1 and `MASTER_LV` (11+), beat your master in a spar,
   pay 1000 c., and found a school — flips `is_master`, which changes the day
-  action list and excludes the player from many encounters.
+  action list and excludes the player from many encounters. The school name
+  also becomes the master's/students' displayed style name
+  (`custom_style_name`).
 - `Students` (masters only): applicants arrive at rate `min(0.01 + fame,
   0.07)`; groups must be beaten first. AI masters auto-accept single
   applicants.

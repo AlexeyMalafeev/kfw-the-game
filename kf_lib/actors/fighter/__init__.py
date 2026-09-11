@@ -72,6 +72,7 @@ class Fighter(
         self.moves = []
         self.fav_move_features: Set[Text] = set()
         self.style = None
+        self.custom_style_name = ''  # a player master's school name doubles as the style name
         self.techs = set()
 
         self.init_fight_attributes()

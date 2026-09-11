@@ -58,6 +58,18 @@ class LoadGame(BaseGame):
             for sname, sval in game_stats.DEFAULT_STATS:
                 if sname not in player.stats_dict:
                     player.stats_dict[sname] = sval
+        self._refresh_custom_style_names()
+
+    def _refresh_custom_style_names(self):
+        """Re-derive custom style names after loading: fighters are rebuilt from
+        constructor args, so the display-only school/style name must be restored
+        from the saved master and school structure."""
+        for p in self.players:
+            if p.is_master and p.new_school_name:
+                p.custom_style_name = p.new_school_name
+                for s in self.schools.get(p.new_school_name, []):
+                    if s is not p:
+                        s.custom_style_name = p.new_school_name
 
     def _load_legacy(self, text):
         """Load a save in the legacy format: executable Python lines, exec()ed

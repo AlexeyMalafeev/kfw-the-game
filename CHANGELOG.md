@@ -58,11 +58,19 @@ because kung-fu movies.
 - **State menu: Finish Game** (`F`, only after winning and choosing to keep
   playing indefinitely) — reruns the victory routine (victory message, stats,
   bio, `game over.txt` save) and then quits
+- **The school name becomes the style name**: when a player founds a school,
+  the chosen name is now displayed as the master's (and their students')
+  kung-fu style everywhere — pre-fight screens, stats, bios — with a warning
+  at naming time (implemented as the display-only `custom_style_name`;
+  restored from the saved school structure on load)
 
 ### Changed
 - **State menu keys**: Save, Load, Quit, Save and Quit and Debug Menu moved
   to uppercase (`S`, `L`, `Q`, `X`, `D`) to free lowercase `s` for the new
   Students screen
+- **Master's verbose info**: the meaningless "rank in school: n/a" line is no
+  longer shown for masters; the students line (with best student) comes first,
+  then friends/enemies
 - **Overheard gossip condenses same-type opponents**: the OverhearConversation
   narration now says "beat 5 Thugs" instead of listing "Thug 1, ..., Thug 5,
   ..." (mixed groups are grouped too: "3 Thugs, Zhao Liao and 2 Robbers")

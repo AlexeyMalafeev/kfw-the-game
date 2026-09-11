@@ -200,6 +200,7 @@ class BasePlayer(Fighter):
         school = self.game.schools[self.new_school_name]
         for i in range(num_stud):
             new_student = self.game.get_new_student(self.style.name)
+            new_student.custom_style_name = self.custom_style_name
             new_students.append(new_student)
             school.append(new_student)
             self.game.register_fighter(new_student)
@@ -596,14 +597,18 @@ class BasePlayer(Fighter):
             self.get_f_info(),
             f'exp:{self.exp}/{self.next_level} money:{self.money}',
             f'traits: {enum_words(self.traits)}',
-            f'rank in school: {self.school_rank}/{self.max_school_rank}',
         ]
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
         en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
         stud_info = f'students:{self.students}' if self.students else ''
         if self.is_master and self.best_student is not None:
             stud_info += f' (best: {self.best_student.name})'
-        lines.append(' '.join(w for w in (fr_info, en_info, stud_info) if w))
+        if self.is_master:
+            lines.append(stud_info)
+            lines.append(' '.join(w for w in (fr_info, en_info) if w))
+        else:
+            lines.append(f'rank in school: {self.school_rank}/{self.max_school_rank}')
+            lines.append(' '.join(w for w in (fr_info, en_info, stud_info) if w))
         lines.append(self.get_fight_statistics())
         return '\n'.join([line for line in lines if line])
 
