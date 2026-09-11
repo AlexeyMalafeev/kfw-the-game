@@ -56,7 +56,9 @@ class HumanControlledFighter(Fighter):
             (
                 f'{m.name}{self.get_move_stars(m)}',
                 roman(m.tier),
-                f'{m.distance}({m.dist_change})' if m.dist_change else str(m.distance),
+                f'{m.distance}->{m.distance + m.dist_change}'
+                if m.dist_change
+                else str(m.distance),
                 str(m.power),
                 str(m.accuracy),
                 str(m.complexity),
