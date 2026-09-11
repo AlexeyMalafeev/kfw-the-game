@@ -19,7 +19,7 @@ class StateMenu(BaseGame):
             options.append('Finish Game')
             keys += 'F'
         options += ['Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu']
-        keys += 'SlQXd'
+        keys += 'SLQXD'
         choice = menu(options, keys=keys, new_line=False)
         if choice == 'Items':
             cls()

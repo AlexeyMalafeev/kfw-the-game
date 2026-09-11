@@ -60,8 +60,9 @@ because kung-fu movies.
   bio, `game over.txt` save) and then quits
 
 ### Changed
-- **State menu keys**: Save, Quit and Save and Quit moved to uppercase
-  (`S`, `Q`, `X`) to free lowercase `s` for the new Students screen
+- **State menu keys**: Save, Load, Quit, Save and Quit and Debug Menu moved
+  to uppercase (`S`, `L`, `Q`, `X`, `D`) to free lowercase `s` for the new
+  Students screen
 - **Overheard gossip condenses same-type opponents**: the OverhearConversation
   narration now says "beat 5 Thugs" instead of listing "Thug 1, ..., Thug 5,
   ..." (mixed groups are grouped too: "3 Thugs, Zhao Liao and 2 Robbers")
