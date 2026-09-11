@@ -4,7 +4,7 @@ All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames
 because kung-fu movies.
 
-## [Unreleased]
+## [v0.7.2-beta "All Schools Under Heaven"] — 2026-09-11
 
 ### Added
 - **New-game settings menu**: at the start of a new interactive game you can
@@ -65,6 +65,10 @@ because kung-fu movies.
 - **State menu: Finish Game** (`F`, only after winning and choosing to keep
   playing indefinitely) — reruns the victory routine (victory message, stats,
   bio, `game over.txt` save) and then quits
+- **'Most feared move' and 'Max single blow' stats**: the feared move is the
+  highest-tier attack move used (ties broken by usage), the max blow records
+  the biggest single-strike damage and the move; both are shown in the full
+  stats report, and the feared move appears in gossip and biographies
 - **The school name becomes the style name**: when a player founds a school,
   the chosen name is now displayed as the master's (and their students')
   kung-fu style everywhere — pre-fight screens, stats, bios — with a warning
@@ -99,7 +103,6 @@ because kung-fu movies.
 - **Betting on tournaments costs reputation**: placing a bet applies −3 rep
   (the long-dormant `BET_REPUTATION_PENALTY`), win or lose — gambling is not
   honorable by wuxia morals
-- **The State menu shows the master's best student**
 - **Free-for-all rebalancing**: FFA fights paid exp for the *sum* of all
   losers, so e.g. an 8-man Battle Royale win could grant 500+ exp and several
   levels at once. Now FFA exp (incl. group FFA) is per-capita — based on the
@@ -114,6 +117,8 @@ because kung-fu movies.
   stays queued
 - **FFA street encounters are ~2× rarer**: StreetBrawl 0.03 → 0.015,
   brawl-spreads-to-bystanders 0.25 → 0.125, GangWar crime/4 → crime/8
+- **Learn-move menu shows the strike's distance change as `start->end`** (e.g.
+  `1->2` for a retreating strike instead of `1(1)`)
 
 ### Fixed
 - **All-Schools Tournament leaked secret style names**: the winner
@@ -147,6 +152,8 @@ because kung-fu movies.
   `IndexError` (the tournament is now canceled instead), and a drawn final
   raised `NotImplementedError` (now ends with no winner and all bets lost,
   like a battle-royale draw)
+- **Missing keypress pauses**: the teach-students results and the human ally's
+  criminal reward were shown without a `pak()`, scrolling by unread
 - Removed unused tournament leftovers (`TOURN_PRIZE_MULT`,
   `DEFAULT_TOURN_FEE`)
 
