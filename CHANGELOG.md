@@ -13,7 +13,7 @@ because kung-fu movies.
   The Classic Path 20 / Crash Course 30; saved as `game.base_exp` and restored
   on load), crime (Peaceful Town / Rough Edges / Gang-Ridden), poverty
   (Prosperous / Getting By / Hard Times) and kung-fu enthusiasm (Kung-Fu
-  Backwater / Martial Town / Kung-Fu Craze), each 0.05/0.1/0.2
+  Backwater / Martial Town / Kung-Fu Craze), each 0.05/0.125/0.2
 - **Two school-management story lines** (gated on being a master with ≥ 2
   students):
   - `SchoolAttackStory` (lv 11–20): hired thugs attack the school at night;
@@ -79,8 +79,8 @@ because kung-fu movies.
   `dev_scripts/testing/run_test_fb.py` re-run is queued to refresh the
   fight-balance snapshot
 - **Town stats are no longer randomized** at new-game start: `poverty`,
-  `crime` and `kung_fu` all start fixed at 0.1 instead of a random draw from
-  (0.05, 0.1, 0.15, 0.2); the new settings menu offers 0.05/0.1/0.2 per stat
+  `crime` and `kung_fu` all start fixed at 0.125 instead of a random draw from
+  (0.05, 0.1, 0.15, 0.2); the new settings menu offers 0.05/0.125/0.2 per stat
 - **State menu keys**: Save, Load, Quit, Save and Quit and Debug Menu moved
   to uppercase (`S`, `L`, `Q`, `X`, `D`) to free lowercase `s` for the new
   Students screen

@@ -12,8 +12,7 @@ from ._game_io import GameIO
 
 NUM_CONVICTS = 5
 NUM_STYLES = 10
-TOWN_STAT_VALUES = (0.05, 0.1, 0.15, 0.2)
-DEFAULT_TOWN_STAT = 0.1
+DEFAULT_TOWN_STAT = 0.125
 
 
 class BaseGame(GameIO):

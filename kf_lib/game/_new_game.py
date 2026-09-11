@@ -10,7 +10,7 @@ from kf_lib.happenings import story
 from kf_lib.kung_fu import styles
 from kf_lib.ui import cls, get_int_from_user, menu, yn
 from kf_lib.utils import rndint
-from ._base_game import BaseGame
+from ._base_game import BaseGame, DEFAULT_TOWN_STAT
 
 
 MAX_NUM_PLAYERS = 6
@@ -131,7 +131,7 @@ class NewGame(BaseGame):
         self.crime = menu(
             (
                 ('Peaceful Town (low crime)', 0.05),
-                ('Rough Edges (default crime)', 0.1),
+                ('Rough Edges (default crime)', DEFAULT_TOWN_STAT),
                 ('Gang-Ridden (high crime)', 0.2),
             ),
             title='Crime rate?',
@@ -139,7 +139,7 @@ class NewGame(BaseGame):
         self.poverty = menu(
             (
                 ('Prosperous (low poverty)', 0.05),
-                ('Getting By (default poverty)', 0.1),
+                ('Getting By (default poverty)', DEFAULT_TOWN_STAT),
                 ('Hard Times (high poverty)', 0.2),
             ),
             title='Poverty?',
@@ -147,7 +147,7 @@ class NewGame(BaseGame):
         self.kung_fu = menu(
             (
                 ('Kung-Fu Backwater (low enthusiasm)', 0.05),
-                ('Martial Town (default enthusiasm)', 0.1),
+                ('Martial Town (default enthusiasm)', DEFAULT_TOWN_STAT),
                 ('Kung-Fu Craze (high enthusiasm)', 0.2),
             ),
             title='Kung-fu enthusiasm?',

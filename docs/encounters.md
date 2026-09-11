@@ -312,8 +312,8 @@ winning team also get +20 exp, +5 rep, a 200 c prize and the 'All-Schools
 Champion' accomplishment.
 
 Town stats (`game.crime`, `game.poverty`, `game.kung_fu`) are set once at
-`BaseGame.__init__` — fixed at 0.1 by default, or chosen by the player in the
-optional new-game settings menu (0.05/0.1/0.2 per stat; see `docs/gameplay.md`).
+`BaseGame.__init__` — fixed at 0.125 by default, or chosen by the player in the
+optional new-game settings menu (0.05/0.125/0.2 per stat; see `docs/gameplay.md`).
 `crime` is read by the crime
 encounters and lowered by `crime_down` (called after crime-fight wins); it is
 also 'raised' monthly by `do_monthly` → `events.crime_up`. ⚠️

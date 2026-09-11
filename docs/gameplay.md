@@ -19,7 +19,7 @@ condition — the game ends only when some player meets a victory condition or
 everyone quits.
 
 World state held by the game: `day/month/year` (30-day months, 12-month years),
-town stats `poverty`, `crime`, `kung_fu` (each fixed at 0.1 by default), `schools`
+town stats `poverty`, `crime`, `kung_fu` (each fixed at 0.125 by default), `schools`
 (dict style name → list of fighters), `masters` (style name → NPC master), a
 `criminals` list (5 wanted convicts + 1 new per month), and four one-shot
 special NPCs (`beggar`, `drunkard`, `thief`, `fat_girl`) that are consumed
@@ -32,7 +32,7 @@ menu (`NewGame._customize_settings`, skipped in AI-only games) lets the player
 tweak four things, each a 3-way choice with flavor names: level progression
 (sets the exp base via `experience.set_base_exp` — The Long Road 15 / The
 Classic Path 20 / Crash Course 30), crime (Peaceful Town 0.05 / Rough Edges
-0.1 / Gang-Ridden 0.2), poverty (Prosperous / Getting By / Hard Times) and
+0.125 / Gang-Ridden 0.2), poverty (Prosperous / Getting By / Hard Times) and
 kung-fu enthusiasm (Kung-Fu Backwater / Martial Town / Kung-Fu Craze). The
 chosen exp base is stored as `game.base_exp` and restored on load (the
 constants are read as module attributes at runtime so the tweak takes effect);

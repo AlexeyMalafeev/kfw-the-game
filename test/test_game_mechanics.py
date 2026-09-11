@@ -177,7 +177,9 @@ class TestGameSetup:
             assert g.enc_count_dict[cls.__name__] == 0
 
     def test_town_stats_in_range(self):
+        from kf_lib.game._base_game import DEFAULT_TOWN_STAT
+
         for seed in range(10):
             g = make_game(seed=seed)
             for stat in (g.poverty, g.crime, g.kung_fu):
-                assert stat in (0.05, 0.1, 0.15, 0.2)
+                assert stat == DEFAULT_TOWN_STAT
