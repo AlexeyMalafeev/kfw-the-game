@@ -1,29 +1,19 @@
 # KFW Backlog
 
 Consolidated from the old `docs/todo.md` and `docs/backlog.md` idea dumps.
-Sections are ordered roughly by priority within each category; individual items
-are unordered unless marked.
+Items are ordered roughly by priority within each section (higher first).
+Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
-## Engineering (tech debt) — do these first
+## Engineering (tech debt)
 
-1. ~~**Automated tests.**~~ ✅ Done (initial suite): `test/` has seeded
-   deterministic `AutoFight` tests, generation invariants, and a full headless
-   autoplay game. Next: broaden coverage (saves, encounters, stories).
-2. ~~**Replace exec-based saves with JSON.**~~ ✅ Done: `save_game()` writes
-   JSON; `load_game()` auto-detects the format and falls back to a legacy
-   exec()-based loader (`LoadGame._load_legacy`) for old saves. While that
-   shim exists, class names, `Fighter.__init__` argument order, and
-   `savable_atts` are still frozen.
-3. ~~**Hygiene:**~~ ✅ Done: `numpy`/`tqdm` in `requirements_dev.txt`;
-   `pyproject.toml` with black config; root scripts deduplicated into
-   `kfw.py` (argparse entry point) with thin legacy wrappers.
-4. **Structural refactors:** ✅ Done 2026-09. `encounters/__init__.py` (1353
-   lines) split into thematic modules; `Challenger`/`Master`/`Thug` replaced
-   by `Fighter.occupation` (old saves load via factory shims in `LoadGame`).
-   The 17-mixin `Fighter` was assessed and left as-is: mixins are small and
-   focused, the `FighterAPI` ABC (153 abstract methods) is fully in sync with
-   the implementations (audited), and flattening would make things worse.
-5. Smaller code items from the old backlog:
+1. **Broaden test coverage**: the initial suite (`test/`: seeded deterministic
+   `AutoFight` tests, generation invariants, headless autoplay) is in place;
+   next targets are saves, encounters, stories.
+2. **Retire the legacy save loader** (`LoadGame._load_legacy`): while the
+   exec()-based shim exists, class names, `Fighter.__init__` argument order,
+   and `savable_atts` remain frozen. Drop it once old-save support is
+   abandoned.
+3. Smaller code items from the old backlog:
    - subclass `Fight` more (spectator/no spectator; exp/no exp; stats/no stats)
    - `.__repr__`/`.__str__` in all classes instead of `get_init_string()`
    - generic Saver component saving relevant atts
@@ -39,20 +29,28 @@ are unordered unless marked.
 
 ## Bugs / known issues
 
-- ~~Game loading is broken~~ ✅ Fixed 2026-09 (minimal fix: shared exec namespace
-  in `LoadGame.load_game`, incl. all AI player classes). Superseded by the JSON
-  save migration (Engineering #2): the exec path remains only as the legacy
-  loader for old saves.
+- **Explicitly address every remaining ⚠️ point across `docs/*.md`** (HIGH
+  priority): the user confirmed only 2-3 of them are intended behavior, the
+  rest are bugs. Go through them one by one, fix or document as intended.
+  ~10 remain in `fight_mechanics.md` — environment_bonus = 0.0,
+  dodge-checked-before-block, `do_mob_dam` naming, stun having no defense
+  penalty, free counters, dead boosts/techs — plus ~50 more across
+  encounters/gameplay/ai_players/items/kung_fu/minigames/stats/debug_menu/
+  social_and_traits/text_content.
+- weapon techs don't do anything — reintroduce them
+- dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
+  `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
 - trait selection iterates unsorted collections, so even with `random.seed()`
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
   `traits_list=[]`). Consider sorting pools before sampling.
-- ~~'Eagle Claw III' tech crashes default-styles games~~ ✅ Fixed 2026-09: it
-  passed `critical_mult` (nonexistent) instead of `critical_dam_mult`; any
-  Eagle Claw fighter reaching lv 7 (masters at game start!) crashed
-  `_init_schools`. Hidden since 2022 because tests/autoplay use
-  `generated_styles=True`. Pinned by
-  `test_game_integration.py::test_default_styles_new_game_boots`.
+- possible bug in exp progression in lazy/hardworking players
+- y defense buff not working?
+- bug in careless inactive time?
+- fix style moves; "couldn't find any moves for move string 3,shocking;1,flying;2,flying"
+- some upgradable techs shouldn't be upgradable
+- double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
+  last!)" — verify whether it regressed or the todo entry was stale)
 - several dev scripts are broken (details + per-script verdicts in
   `docs/dev_scripts.md`): `count_lines.py` (UnicodeDecodeError walking
   `.venv`), `try_rich.py` (`rich` not installed; abandoned), `compare_AIPs.py`
@@ -61,91 +59,20 @@ are unordered unless marked.
   never created), `ML_learn.py` (output path resolves outside the repo);
   several scripts write outputs outside the repo via post-chdir `'../../'`
   paths
-- double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
-  last!)" — verify whether it regressed or the todo entry was stale)
-- possible bug in exp progression in lazy/hardworking players
-- flower kung-fu has only weak and pathetic moves (intended?)
-- y defense buff not working?
-- bug in careless inactive time?
-- weapon techs don't do anything — reintroduce them
-- fix style moves; "couldn't find any moves for move string 3,shocking;1,flying;2,flying"
-- organize move list, remove unused moves
-- weapons are OP? / remove weapon atk bonus
-- wtf is STAMINA_FACTOR_BIAS in fighter.py?
-- some upgradable techs shouldn't be upgradable
 - `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
   (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
   tech/move names no longer in the data files, `learn_tech` now takes Tech
   objects. RING works (needs a TTY; run from `minigames/`).
-- **Explicitly address every remaining ⚠️ point across `docs/*.md`** (HIGH
-  priority): the user confirmed only 2-3 of them are intended behavior, the
-  rest are bugs. Go through them one by one, fix or document as intended.
-  (The BLOCK_POWER shadowing and the draw crash were already fixed 2026-09;
-  ~10 remain in `fight_mechanics.md` — environment_bonus = 0.0,
-  dodge-checked-before-block, `do_mob_dam` naming, stun having no defense
-  penalty, free counters, dead boosts/techs, `get_rand_moves` empty-pool
-  IndexError — plus ~50 more across encounters/gameplay/ai_players/items/
-  kung_fu/minigames/stats/debug_menu/social_and_traits/text_content.)
-  The most significant confirmed ones from the 2026-09 docs sweep:
-  - ~~`Weapon.get_exp_mult` double-counts the 1.0 base → ~1.8–2.0× exp~~
-    INTENDED (author, 2026-09): armed opponents are meant to be ~2× as hard
-  - ~~`SmartAIP` sets nonexistent attrs (`drink_chance`, …)~~ ✅ Fixed 2026-09:
-    real knobs (`drink_with_drunkard`, `gamble_continue`) now set post-init
-    (pinned in `test/test_player_ai.py::TestSmartAIPKnobs`)
-  - ~~crime encounters grant reputation *before* the fight → rep farmable by
-    losing~~ INTENDED (author, 2026-09): standing up for the weak earns love
-    even in defeat; injuries + poor exp make it non-viable as a strategy
-  - ~~`EncControl.run_enc` execs `{name}(p, test=...)` but no encounter accepts
-    `test` → TypeError when used (`encounters/__init__.py:75`)~~ ✅ Fixed
-    2026-09: it now passes `check_if_happens={not test}`
-  - ~~`Guaranteed` encounters duplicated in category lists fire once per
-    duplicate (e.g. `[GMerchant]*5` → 5 merchant encounters per Buy items)~~
-    INTENDED (author, 2026-09): the market sequence is a mini-game of "buy now
-    or wait for a better offer from the next merchant"
-  - ~~`repr()` of a player mid-`Fighter.__init__` crashes (`traits` set only
-    after `super().__init__()` in `BasePlayer`) — any `{self}` warning path
-    during construction triggers it~~ ✅ Fixed 2026-09: `BasePlayer.__init__`
-    now initializes `self.traits = []` before `super().__init__()`
-  - ~~style move strings reference nonexistent moves and nonexistent features
-    that silently fall through to random picks~~ ✅ Fixed 2026-09: Hung Ga
-    lv8 (move renamed `No-Shadow_Kick` → `No-Shadow Kick` + `MOVE_ALIASES`
-    shim), Wing Chun lv2 (`Short Fast Punch` added to the data, combining
-    Short Punch + Fast Punch perks), White Crane lv6 and Xing Yi lv2/4/8
-    (`close-range`→`dist1`, `mid-range`→`dist2`). The generated-styles-only
-    workaround in `kfw.py` was reverted (the startup prompt is back), and
-    `test_all_default_style_move_strings_are_valid` guards against
-    regressions. (Move tiers 11–14 being unreachable is INTENDED for now —
-    reserved for future content, author 2026-09)
-  - ~~tournament crash paths: zero participants → IndexError; winnerless final
-    → NotImplementedError~~ ✅ Fixed 2026-09: nobody showing up cancels the
-    tournament; a drawn final ends it with no winner (like a battle-royale
-    draw), bets lost
-  - ~~`OverhearConversation` log lines swapped (astonishing victory ↔
-    humiliating defeat); lying-hit ASCII art unreachable (`startswith('lying')`
-    vs `'Lying Hit'`)~~ ✅ Fixed 2026-09 (the same lowercase typo also hid the
-    'Falling'→lying logic at KOs in `_fight_actions.py`)
-  - ~~`add_friend` over-cap drops are silent~~ ✅ Fixed 2026-09: an on-screen
-    note + log line ("stays an acquaintance"); `get_new_name` loops forever
-    after 1000 collisions; `new_foreigner` skips the collision check
-- ~~**BLOCK_POWER MRO shadowing**~~ ✅ Fixed 2026-09: the per-fighter hook in
-  `_fight_actions.py` was renamed to `BLOCK_DEFAULT_POWER` (1.0); the global
-  `BLOCK_POWER` (20) in `_strike_mechanics.py` now actually applies in
-  `dfs_pwr`, so blocking absorbs meaningful damage again (pinned in
-  `test/test_fight_engine.py::TestBlocking`).
-- ~~**draw crashes `give_exp`**~~ ✅ Fixed 2026-09: draws now give every player
-  a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (12) instead of raising
-  `ZeroDivisionError` (pinned in `test/test_fight_engine.py::TestDraw`).
-- ~~'Lightning-Fast Strikes' advanced tech reuses `STRIKE_TIME_COST_MULT1` —
-  identical to the basic tech, upgrading is a no-op~~ ✅ Fixed 2026-09: now
-  uses `STRIKE_TIME_COST_MULT2` (−0.6)
-- dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
-  `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
-- ~~`get_rand_moves` empty-pool: `random.choice(pool)` runs before the empty
-  check → `IndexError` instead of the documented fallback~~ ✅ Fixed 2026-09:
-  the empty-pool check now runs first
+- weapons are OP? / remove weapon atk bonus
+- flower kung-fu has only weak and pathetic moves (intended?)
+- organize move list, remove unused moves
+- wtf is STAMINA_FACTOR_BIAS in fighter.py?
 
 ## Fight mechanics
 
+- qi rethink: shouldn't increase by default (maybe decrease unless focused);
+  increase on successful defense/attack; modify qi_when_atk; lose qi when defend?
+- penalize repeated actions more, for more interesting fights
 - rage: fixed chance (higher for thugs), taunts increase it; keep only
   step/rush forward and strikes. Some opponents enter fury spontaneously.
 - fury: when hp low, increase atk_pwr & to_hit
@@ -165,56 +92,41 @@ are unordered unless marked.
 - more defense: grabs, counters, side-steps?, acrobatics?
 - disarm opponent as a Move; disarm-and-snatch-weapon tech; grab enemy's
   weapon; supreme control — against disarming
-- qi rethink: shouldn't increase by default (maybe decrease unless focused);
-  increase on successful defense/attack; modify qi_when_atk; lose qi when defend?
 - reflexes: compute to_block and to_dodge differently
 - better defense move that requires qi
 - moves like 'overdrives' that require lots of qp
 - series of strikes as one move?
 - turn numbers — another tactical dimension
-- penalize repeated actions more, for more interesting fights
 - knockback against a wall (connected with environment use?)
-- nerve blocking
-- multishadow kick (attack several enemies at once)
-- catch breath & others restore stamina relatively?
 - pain resistance technique: immune to shock/stun and debilitating strikes
 - techniques triggered on dodge/block/hit/fall
 - impro weapons: break chance on each hit (techs that reduce it), grab a
   weapon (Move), grab improvised weapons during fights (secret tech,
   automatic), interact with environment (esp. unblockables)
-- ~~free-for-all fights~~ ✅ Done 2026-09: `free_for_all()` /
-  `BaseFreeForAll` + `group_free_for_all()` / `BaseGroupFreeForAll` fight
-  variants; battle-royale tournaments (25%), StreetBrawl and GangWar
-  encounters, FFA branches in Robbers/HelpPolice/Brawler, and five FFA stories
-  (GrandMelee incl. school-ban mechanic, SaintsDayRiot, JadeTable,
-  EightGates, WrongPouch)
-- ~~in-fight stats (strikes thrown/landed, accuracy, moves used, damage dealt)~~
-  ✅ Done 2026-09: per-fight `fight_stats` on every fighter, post-fight "Stats"
-  menu shows them, players accumulate all-time `strikes_thrown/landed`,
-  `dam_dealt` and `move_usage`; biographies name the signature move
+- nerve blocking
+- multishadow kick (attack several enemies at once)
+- catch breath & others restore stamina relatively?
 - yell (as a move function?)
 - tests of strength/speed/health/agility in encounters and stories — new
   mechanics beyond fighting
 
 ## Moves, styles, techniques, weapons
 
-- upgrade moves from pathetic to ultimate; complex moves as upgrades/modifications
-- more moves (higher tiers, handle tiers)
+- more moves (higher tiers, handle tiers); upgrade moves from pathetic to
+  ultimate; complex moves as upgrades/modifications
+- boosts: to dict and auto-adjust; boost reducing move complexity (Air style
+  tech); boost reducing fall damage; add straight/circular/shocking/stam_dam/
+  mob_dam to boosts and techniques
 - use `|` in style move strings (e.g. `short-range,punch|kick`)
 - moves for generated styles: "ferocious", "acrobatic", etc.
 - generate new maneuvers (fast charging step etc.); fixed chance of maneuvers
   when choosing new move
-- ~~style's secret technique, learned at lv 10, unknown in advance~~
-  (implemented 2026-09: secret tech at lv 7 with a master scene and public/true
-  style names; at lv 10 one style tech is upgraded instead); another advanced
-  tech at lv 15?
+- another advanced tech at lv 15? (secret tech at lv 7 and one style-tech
+  upgrade at lv 10 shipped 2026-09)
 - style with head strikes (bull?); style move ideas: Rakshasa Palm, Bite,
   no-shadow headbutt, flying forehead, Shadowless Hand, Putting On Her Makeup,
   Pretty Girl Looks In Her Glass
 - named opponents: Iron Bullet, Bamboo King & other weapon masters, Thunderleg
-- boosts: to dict and auto-adjust; boost reducing move complexity (Air style
-  tech); boost reducing fall damage; add straight/circular/shocking/stam_dam/
-  mob_dam to boosts and techniques
 - tech ideas: Light Body (cheaper jumps, less fall damage); knockback/stun/
   shock resistance; powerful attack when hp < 10%; stronger attacks when low
   on hp (Sekibayashi Jun); analyze (atk/dfs vs same opponent improve);
@@ -240,17 +152,15 @@ are unordered unless marked.
 
 ## AI
 
+- different fight AI behaviors: aggressive, defensive, cautious, sneaky, erratic
+- different AIs for common fighters vs masters/bosses; difficulty levels via AI choice
 - style-specific AI retraining pipeline
 - more complex genetic fight AI: thresholds (focus when qp < x), group
   advantage, stamina weight, consider enemy dfs/criticals
+- fight AI rule: hurry and finish off knocked-down opponents
 - compute distance change by efficiency of strikes, not sheer number
-- different fight AI behaviors: aggressive, defensive, cautious, sneaky, erratic
-- different AIs for common fighters vs masters/bosses; difficulty levels via AI choice
-- online learning?
 - AI players: choose techniques to match style; target enemies wisely; buy
-  Magic Healers more; ~~use fight items more (they buy but don't use)~~ —
-  stale: AI does use fight items when outpowered
-  (`AIPlayer.use_fight_item_or_not`, `_ai_player.py`)
+  Magic Healers more
 - generic AI player decision function: money, rep, risk, exp (stakes dict),
   sum of feature-weight products
 - intelligent but non-deterministic move/tech selection; att selection
@@ -258,7 +168,7 @@ are unordered unless marked.
 - subclass Fighter for different enemies (Robber, Thug etc. — collective
   names, styles — instead of ugly style.name)
 - new AI players; simulating AI (when choosing upgrades/techs)
-- fight AI rule: hurry and finish off knocked-down opponents
+- online learning?
 
 ## Balance & analysis
 
@@ -272,98 +182,70 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   (defense, guard, blocks, counters all ≈ −9…−10%; bottom techs are
   Wall-like Protection, Fast Movement, Horse-like Stamina). Offense wins
   mirror matches; blocking well doesn't deal damage.
-- ~~'Lightning-Fast Strikes' is at −13.5% in advanced techs — consistent with
-  its known no-op bug (uses the basic-tech mult), a wasted tech slot.~~ Fixed
-  2026-09 (now −0.6); re-run the harness to see where it lands.
 - Suspicious: `unblock.` got *worse* (−3.7→−9.8) after blocking became 400×
   stronger — unblockable strikes should benefit. Investigate (confounded by
   boost combos? weak unblockable moves?).
 - dist4/flying/ultra-long moves win; ultra short/vanishing/trick/power lose;
   range advantage is monotonic (dist1 −1.2 … dist4 +7.4).
+- Re-run `dev_scripts/testing/run_test_fb.py` to refresh the snapshot: queued
+  re-runs cover the 'Lightning-Fast Strikes' fix, the exp-base change and the
+  AI attribute-growth fix (see CHANGELOG v0.7.2).
 
-- evolutionary algorithm for balancing boosts
 - exp: all levels are 100 exp; calc win exp relative to difficulty (+bonuses);
   exponential exp?; reduce/rewrite trait exp bonuses; test exp bonuses, reweigh
+- speed up early progress / slow down late progress (progressive exp step)
+- evolutionary algorithm for balancing boosts
 - which traits result in winning more often?; trait-related stats
 - compare styles in 1on1 and 1 vs 3 fights
 - new AI testing routine: one vs big crowd
-- move filtering with pandas, save as csv, collect useful stats
-- a simple utility to count total moves, styles, techs, etc.
-- speed up early progress / slow down late progress (progressive exp step)
 - compute crowd exp worth differently?
 - further reduce dist3/dist2 bonuses?
 - nerf guard while attacking
 - buff attribute-based damage for strikes
 - come back to experiments with level significance
+- move filtering with pandas, save as csv, collect useful stats
+- a simple utility to count total moves, styles, techs, etc.
 
 ## Game systems & gameplay
 
-- **Late game / own school** (was top of todo.md):
-  - ~~choose actual style techs (from what you know as a master)~~ ✅ Done
-    2026-09: at founding, choose up to 3 school techs from known techs;
-    students learn them when taught (25%/lesson per missing tech)
-  - ~~students participate in tournaments (collect stats + new
-    accomplishments?)~~ ✅ Done 2026-09: student entries are logged; a student
-    title gives the master +3 rep and a `students_tourn_won` stat, with the
-    'Master of Champions' accomplishment at 3 titles
-  - ~~mega-tournament where all schools fight (all fighters or top 3 +
-    masters)~~ ✅ Done 2026-09: the All-Schools Tournament event (2%/day) —
-    master + top 2 students per school, group free-for-all, 'All-Schools
-    Champion' accomplishment
-  - ~~quest to unite all schools → new victory type (kung-fu federation /
-    association); reputation could influence creating it~~ ✅ Done 2026-09:
-    'Uniter of Schools' victory — master-only "Visit other masters" day action
-    (spar or reputation-scaled persuasion), 'Founder of the Federation'
-    accomplishment
-  - ~~encounters/stories about running your school, gaining recognition~~
-    ✅ Done 2026-09: teaching levels students up and passes on school techs,
-    student tournament titles reward the master, All-Schools Tournament event,
-    plus SchoolAttackStory / StudentRivalryStory school-management stories
-- exp/levels: all levels 100 exp (see Balance)
-- config file (not to choose every time); new game settings in a text file
+- config file (not to choose every time); new game settings in a text file —
+  partially addressed 2026-09 by the new-game settings menu (level
+  progression, crime, poverty, kung-fu enthusiasm), but there is still no
+  persistent config file
 - **mod support**: world parameters (crime rate, kung-fu prevalence, etc.)
   fixed at their current defaults, but overridable by mods the player picks
   at the start of a new game via a new "advanced settings" menu (builds on
-  the config-file idea above; defines a mod = named bundle of stat/constant
-  overrides)
-- save winner fighters at end of game; fight players from past games
-  (legendary/story?)
+  the config-file idea above and the v0.7.2 settings menu; defines a mod =
+  named bundle of stat/constant overrides)
 - custom player creation option
-- join a school early in the game? beg the master?
-- on defeating your master: become head of your school instead of opening a
-  new one?; master retires?; create a new style?
-- school life: really teach students (fewer of them, simulate structure);
-  best student you can train; arguments between students; masters have an
-  argument (students fight); school challenges only when you go to school /
-  sequential challenges; more interactive school training (disobey master,
-  practice aspects, injury risk); fight master when disobeying
 - **Romance system** (added 2026-09): none exists in code — the only trace is
   the one-off FatGirl forced-marriage encounter. Ideas: dating/relationship
   progression (a new social track next to friends/enemies), marriage with
   gameplay effects (spouse as ally, household economy), romance-driven
   stories/encounters (jealous rival → duels, bandit fiance ties in),
   family/children as late-game legacy content.
+- remove tedious routines — work/training as resources, not events
+- days → weeks; work and training automatic? or choose focus (two actions/week)
+- school life: really teach students (fewer of them, simulate structure);
+  best student you can train; arguments between students; masters have an
+  argument (students fight); school challenges only when you go to school /
+  sequential challenges; more interactive school training (disobey master,
+  practice aspects, injury risk); fight master when disobeying
+- on defeating your master: become head of your school instead of opening a
+  new one?; master retires?; create a new style?
+- join a school early in the game? beg the master?
 - more life sim: tavern day action (get quests?); persuade/talk checks
   (trait-dependent); depression (after important loss, or small chance);
   values/tenets; debt collectors; rich boy (monthly allowance) / prodigy
   (starting level); learn medicine, help the sick; work: promotion, run your
   business?; choice: extra money but get tired; work encounters
-- days → weeks; work and training automatic? or choose focus (two actions/week)
-- remove tedious routines — work/training as resources, not events
+- save winner fighters at end of game; fight players from past games
+  (legendary/story?)
 - money victory: become governor?
-- luck: increase evasion and critical chances?
-- coach mode
-- (earn) nicknames; make it possible to change names
 - clear town of crime; gangs (join one?)
 - players learn moves used against them (special attribute/traits, small
   chance by default)
 - accumulate wisdom instead of random chance for personality change
-- item bundles; other interesting ways to lose items
-- always get reward for helping people?
-- if negative money, don't start some encounters
-- get help: check impro weapon and walk-ins separately; always get help
-  against crowds?
-- ambush: never feel too scared? run away (some fights; secret tech?)
 - enemy becomes friend (story?) — "changed my ways"; challengers become
   friends more often?; when a friend challenges you, he becomes stronger
 - tournament improvements: store upcoming Tournament, start 3 days later;
@@ -371,14 +253,22 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   generate strong fighters); large tournaments (128 participants);
   spectate tournaments; underground tournaments; advanced tournaments with
   super fighters; all appropriate-level fighters can take part (even enemies)
-- collect stats: most damage in one blow, biggest gambling loss/win, most
-  drinking player; summarize the player's career, highlight interesting things
+- exp/levels: all levels 100 exp (see Balance)
+- coach mode
+- luck: increase evasion and critical chances?
+- (earn) nicknames; make it possible to change names
+- collect stats: biggest gambling loss/win, most drinking player; summarize
+  the player's career, highlight interesting things ('Max single blow' and
+  'Most feared move' shipped in v0.7.2)
+- item bundles; other interesting ways to lose items
+- always get reward for helping people?
+- if negative money, don't start some encounters
+- get help: check impro weapon and walk-ins separately; always get help
+  against crowds?
+- ambush: never feel too scared? run away (some fights; secret tech?)
 - accompl: Crime Fighter; 3 exp bonuses at a time → accomplishment?
 - display hp as percentage/string?
 - donate to friends / to charity
-- ~~biographies: favorite strike (most feared / most used move)~~ ✅ Done
-  2026-09 (most-used strike = "signature move"; most feared = highest
-  times-used × power, shown when different from the signature move)
 
 ## Content: encounters, events, stories
 
@@ -391,9 +281,6 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   of robbers attacks Foshan; strong robber + accomplishment; criminal
   protected by thugs; more rare things (suddenly a very strong robber);
   unique encounters per location (school, walk, etc.)
-- events: kung-fu festival
-- societies: bandits, sects (Righteous, White Lotus)
-- school practice encounter: improve a move
 - stories: righteous sect vs evil sect, triads; thugs burn down school;
   arrest gang leader to prove innocence; school attacked; 10 masters from the
   North; powerful item; style stories (drunken, Wong Fei-Hung master of fan);
@@ -408,6 +295,9 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   mannequin?; seven Japanese masters; martial arts spirit/world
 - better story rewards: lots of rep/exp/money, special techs/items, remove
   character flaw, special friend, move, 100 magic healers
+- societies: bandits, sects (Righteous, White Lotus)
+- events: kung-fu festival
+- school practice encounter: improve a move
 - mind training — fight enemies in your mind; time travel item; secrets of
   kung-fu book
 - mine more quotes; use phrases from unused files (friends, never repay);
@@ -439,10 +329,8 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 ## UI / UX
 
 - use a custom console (colors at least); revisit the abandoned rich stub
-- display all player fighter atts in state menu (suboption?)
-- generate player description in text (style, strong points, everything)
 - game beginning text
-- ~~show accomplishments in options (dates and types already stored)~~ ✅ Done
-  2026-09: 'Accomplishments' option in the State menu (`get_accompl_info`)
+- generate player description in text (style, strong points, everything)
+- display all player fighter atts in state menu (suboption?)
 - common log for all players; get verbose fighter info
 - add timer to fight screens?
