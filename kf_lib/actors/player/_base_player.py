@@ -873,8 +873,8 @@ class BasePlayer(Fighter):
             if improved:
                 self.write('{} made great progress!'.format(enum_words([s.name for s in improved])))
             school_techs = [techniques.get_tech_obj(name) for name in self.school_techs]
+            learned = []
             if school_techs:
-                learned = []
                 for student in school:
                     missing = [t for t in school_techs if t not in student.techs]
                     if missing and rnd() <= CH_STUDENT_LEARN_TECH:
@@ -883,6 +883,8 @@ class BasePlayer(Fighter):
                         learned.append(f'{student.name} learns {tech.name}.')
                 if learned:
                     self.write('\n'.join(learned))
+            if improved or learned:
+                self.pak()
             return True  # to end turn
 
     def use_med(self):

@@ -96,6 +96,7 @@ class Criminal(BaseEncounter):
             if ally.is_player:
                 ally.gain_rep(rep_gain)
                 ally.earn_reward(reward)
+                ally.pak()
         p.gain_rep(c.level)
         p.earn_reward(reward)
         p.pak()
