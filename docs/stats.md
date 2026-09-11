@@ -196,8 +196,9 @@ leader; the full report shows strikes landed, damage dealt, crits/EPICs, the
 favorite move, the most feared move and the max single blow (damage and move),
 and biographies name the signature move — both filtered to
 strikes only (`attack_only=True`), since defensive moves like Guard otherwise
-dominate the usage counts. `get_most_feared_move()` ranks strikes by times
-used × move power (total raw damage output) and is used in biographies.
+dominate the usage counts. `get_most_feared_move()` returns the highest-tier
+attack move the player has (ties broken by times used) and is shown in the
+full report and used in biographies.
 
 ## Biographies
 
@@ -206,8 +207,9 @@ used × move power (total raw damage output) and is used in biographies.
 `show_bio(winners)`, which prints the bios and writes `save/bio.txt`. The
 generated text covers: the victory title(s), the style name, the signature
 move (most-used strike, from `move_usage`, since 2026-09), the most feared
-move (strike with the highest times-used × power, excluding the signature
-move so a distinct feared move is always named when another strike exists), and a
+move (highest-tier attack move, ties broken by times used; the signature move
+is excluded so a distinct feared move is always named when another strike
+exists), and a
 3-sentence attribute-spread blurb derived from the gap between the player's
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
 "almost inhuman ... at the cost of ..."). Other stats, accomplishments, traits

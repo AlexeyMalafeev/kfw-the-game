@@ -653,21 +653,16 @@ class BasePlayer(Fighter):
         return ''
 
     def get_most_feared_move(self, exclude=''):
-        """Strike with the highest total raw damage output across all fights
-        (times used x move power); '' if none. `exclude` skips a move name
-        (e.g. the signature move) so the bio can name a distinct feared move."""
-        from kf_lib.kung_fu.moves import ALL_MOVES_DICT
-        feared, best_score = '', 0
-        for name, cnt in self.move_usage.items():
-            if name == exclude:
-                continue
-            m = ALL_MOVES_DICT.get(name)
-            if m is None or not m.power:
-                continue
-            score = cnt * m.power
-            if score > best_score:
-                feared, best_score = name, score
-        return feared
+        """Highest-tier attack move the player has; ties (same tier) are broken
+        by times used across all fights. `exclude` skips a move name (e.g. the
+        signature move) so the bio can name a distinct feared move. '' if the
+        player has no attack moves (other than the excluded one)."""
+        strikes = [m for m in self.moves if m.power and m.name != exclude]
+        if not strikes:
+            return ''
+        max_tier = max(m.tier for m in strikes)
+        top = [m for m in strikes if m.tier == max_tier]
+        return max(top, key=lambda m: self.move_usage.get(m.name, 0)).name
 
     def get_stat(self, stat_name):
         return self.stats_dict[stat_name]
