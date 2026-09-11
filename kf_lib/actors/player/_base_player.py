@@ -6,13 +6,8 @@ from kf_lib.actors.fighter import Fighter
 # todo refactor importing get_rand_traits
 # have to import separately or .set_rand_traits doesn't work
 from kf_lib.actors.traits import get_rand_traits
-from kf_lib.constants.experience import (
-    ACCOMPL_EXP,
-    EXP_PER_LEVEL,
-    HOME_TRAINING_EXP,
-    MASTER_TRAINING_EXP,
-    SCHOOL_TRAINING_EXP,
-)
+from kf_lib.constants import experience
+from kf_lib.constants.experience import EXP_PER_LEVEL
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.kung_fu import techniques
@@ -156,7 +151,7 @@ class BasePlayer(Fighter):
             self.accompl.append(label)
             self.accompl_dates.append(self.game.get_date())
             self.write(f'Accomplishment: {label}')
-            self.gain_exp(ACCOMPL_EXP)
+            self.gain_exp(experience.ACCOMPL_EXP)
             self.pak()
 
     def add_enemy(self, enemy):
@@ -749,11 +744,11 @@ class BasePlayer(Fighter):
     def practice_home(self, suppress_log=False):
         if not suppress_log:
             self.log('Practices at home.')
-        self.gain_exp(HOME_TRAINING_EXP, silent=True)
+        self.gain_exp(experience.HOME_TRAINING_EXP, silent=True)
 
     def practice_master(self):
         self.log('Practices at his school.')
-        base_exp = MASTER_TRAINING_EXP
+        base_exp = experience.MASTER_TRAINING_EXP
         base_exp = round(base_exp * self.school_training_exp_mult)
         min_exp = round(base_exp * 0.8)
         max_exp = round(base_exp * 1.2)
@@ -769,7 +764,7 @@ class BasePlayer(Fighter):
         if self.check_money(TUITION_FEE):
             self.pay(TUITION_FEE)
             self.change_stat('spent_on_training', TUITION_FEE)
-            base_exp = SCHOOL_TRAINING_EXP
+            base_exp = experience.SCHOOL_TRAINING_EXP
             base_exp = round(base_exp * self.school_training_exp_mult)
             min_exp = round(base_exp * 0.8)
             max_exp = round(base_exp * 1.2)

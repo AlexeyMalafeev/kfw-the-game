@@ -525,11 +525,17 @@ class TestTournamentEdgeCases:
     def test_drawn_final_gives_no_winner(self):
         g, p = make_game_and_player(seed=81)
         orig = tourn_mod.fight.fight
+        orig_gather = Tournament._gather_participants
         tourn_mod.fight.fight = lambda *a, **kw: SimpleNamespace(winners=[])
+        # force a two-man bracket: no byes, so a drawn final means no winner
+        Tournament._gather_participants = lambda self: setattr(
+            self, 'participants', g.fighters_list[:2]
+        )
         try:
             t = Tournament(g, num_participants=200, min_lv=1, max_lv=20, fee=0)
         finally:
             tourn_mod.fight.fight = orig
+            Tournament._gather_participants = orig_gather
         assert t.winner is None  # drawn final, no NotImplementedError
 
     def test_bet_rep_penalty_on_placement(self):

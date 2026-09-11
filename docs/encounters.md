@@ -311,8 +311,10 @@ name is not leaked. Winners log the victory; players on the
 winning team also get +20 exp, +5 rep, a 200 c prize and the 'All-Schools
 Champion' accomplishment.
 
-Town stats (`game.crime`, `game.poverty`, `game.kung_fu`) are rolled once at
-`BaseGame.__init__` from `(0.05, 0.1, 0.15, 0.2)`. `crime` is read by the crime
+Town stats (`game.crime`, `game.poverty`, `game.kung_fu`) are set once at
+`BaseGame.__init__` — fixed at 0.1 by default, or chosen by the player in the
+optional new-game settings menu (0.05/0.1/0.2 per stat; see `docs/gameplay.md`).
+`crime` is read by the crime
 encounters and lowered by `crime_down` (called after crime-fight wins); it is
 also 'raised' monthly by `do_monthly` → `events.crime_up`. ⚠️
 `CRIME_INCREASE_MONTHLY = 0.00`, so the monthly raise is a no-op — crime only

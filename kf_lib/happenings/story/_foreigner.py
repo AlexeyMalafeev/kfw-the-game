@@ -2,7 +2,7 @@ import random
 
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
-from kf_lib.constants.experience import SPECTATE_FOREIGNER_EXP
+from kf_lib.constants import experience
 
 
 class ForeignerStory(BaseStory):
@@ -51,7 +51,7 @@ class ForeignerStory(BaseStory):
             f'foreigner\'s technique.'
         )
         p.show(t)
-        p.gain_exp(random.randint(*SPECTATE_FOREIGNER_EXP))
+        p.gain_exp(random.randint(*experience.SPECTATE_FOREIGNER_EXP))
         p.pak()
 
     def scene3(self):

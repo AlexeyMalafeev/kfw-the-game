@@ -7,6 +7,13 @@ because kung-fu movies.
 ## [Unreleased]
 
 ### Added
+- **New-game settings menu**: at the start of a new interactive game you can
+  optionally customize the world (skippable — defaults apply, AI-only games
+  never ask): level progression (sets the global exp base — The Long Road 15 /
+  The Classic Path 20 / Crash Course 30; saved as `game.base_exp` and restored
+  on load), crime (Peaceful Town / Rough Edges / Gang-Ridden), poverty
+  (Prosperous / Getting By / Hard Times) and kung-fu enthusiasm (Kung-Fu
+  Backwater / Martial Town / Kung-Fu Craze), each 0.05/0.1/0.2
 - **Two school-management story lines** (gated on being a master with ≥ 2
   students):
   - `SchoolAttackStory` (lv 11–20): hired thugs attack the school at night;
@@ -65,6 +72,15 @@ because kung-fu movies.
   restored from the saved school structure on load)
 
 ### Changed
+- **Balance: global exp base lowered 25 → 20** (`BASE_FIGHT_EXP` in
+  `kf_lib/constants/experience.py`): all exp sources scale ~20% down (fight
+  wins, training, books, dreams, accomplishments); the level cost is unchanged
+  (100 exp/level), so leveling is slower by default. Balance-affecting — a
+  `dev_scripts/testing/run_test_fb.py` re-run is queued to refresh the
+  fight-balance snapshot
+- **Town stats are no longer randomized** at new-game start: `poverty`,
+  `crime` and `kung_fu` all start fixed at 0.1 instead of a random draw from
+  (0.05, 0.1, 0.15, 0.2); the new settings menu offers 0.05/0.1/0.2 per stat
 - **State menu keys**: Save, Load, Quit, Save and Quit and Debug Menu moved
   to uppercase (`S`, `L`, `Q`, `X`, `D`) to free lowercase `s` for the new
   Students screen

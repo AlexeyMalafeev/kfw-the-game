@@ -19,13 +19,24 @@ condition — the game ends only when some player meets a victory condition or
 everyone quits.
 
 World state held by the game: `day/month/year` (30-day months, 12-month years),
-town stats `poverty`, `crime`, `kung_fu` (each starts at 0.05–0.2), `schools`
+town stats `poverty`, `crime`, `kung_fu` (each fixed at 0.1 by default), `schools`
 (dict style name → list of fighters), `masters` (style name → NPC master), a
 `criminals` list (5 wanted convicts + 1 new per month), and four one-shot
 special NPCs (`beggar`, `drunkard`, `thief`, `fat_girl`) that are consumed
 (`= None`) for everyone once their unique fight is won — in multiplayer, the
 first player to beat the Beggar/Tough Thief/strong Drunkard/Fat Girl takes
 that accomplishment off the table.
+
+At the start of a new interactive game, an optional "Customize game settings?"
+menu (`NewGame._customize_settings`, skipped in AI-only games) lets the player
+tweak four things, each a 3-way choice with flavor names: level progression
+(sets the exp base via `experience.set_base_exp` — The Long Road 15 / The
+Classic Path 20 / Crash Course 30), crime (Peaceful Town 0.05 / Rough Edges
+0.1 / Gang-Ridden 0.2), poverty (Prosperous / Getting By / Hard Times) and
+kung-fu enthusiasm (Kung-Fu Backwater / Martial Town / Kung-Fu Craze). The
+chosen exp base is stored as `game.base_exp` and restored on load (the
+constants are read as module attributes at runtime so the tweak takes effect);
+skipping the menu keeps the defaults.
 
 ## A game day
 
@@ -57,14 +68,14 @@ convict, 10% chance for each NPC school student below lv 8 to level up,
 masters (own school):
 
 - **Practice at school** (non-master): costs 20 c tuition; if broke, the turn
-  is *not* consumed. Grants `SCHOOL_TRAINING_EXP` (10) ×
+  is *not* consumed. Grants `SCHOOL_TRAINING_EXP` (8) ×
   `school_training_exp_mult` × rnd 0.8–1.2, silently. Then a school encounter
   sweep (`MasterTrial`×3, `SchoolChallenge`×3, `SchoolBullying`) and a 5%
   training injury roll (`training_injury`; 1 inactive day). If the player is
   `banned_from_school` (Grand Melee story), the visit is a begging scene
   instead: no tuition, no exp, no encounters; 0.25 chance the master forgives
   (lifts the ban) and a separate 0.2 chance of a `SchoolBullying` episode.
-- **Practice** (master): same exp formula (`MASTER_TRAINING_EXP`, also 10) but
+- **Practice** (master): same exp formula (`MASTER_TRAINING_EXP`, also 8) but
   no tuition, no encounters, no injury roll. Strictly better than school
   practice.
 - **Go to work**: earn `WAGE` (50) × `wage_mult`. No targeted encounters
@@ -250,11 +261,13 @@ attracts students just fine.
 
 ## Progression levers
 
-**Exp and levels.** Exp sources: fights (winner `25 × (losers' yield / winners'
+**Exp and levels.** Exp sources: fights (winner `20 × (losers' yield / winners'
 yield)^1.5`, loser flat 2, sparring included — see fight doc), school/master
-practice ≈ 10/day, mannequin 4/day, books 6–25 (×3 on lucky), story dreams
-12/25/38, spectating the foreigner 6–19, accomplishments +62 each
-(`ACCOMPL_EXP`). Level thresholds are `EXP_PER_LEVEL × next_lv_exp_mult × level`
+practice ≈ 8/day, mannequin 3/day, books 5–20 (×3 on lucky), story dreams
+10/20/30, spectating the foreigner 5–15, accomplishments +50 each
+(`ACCOMPL_EXP`). All of these scale from `BASE_FIGHT_EXP` (default 20;
+tweakable at new-game setup — see above). Level thresholds are
+`EXP_PER_LEVEL × next_lv_exp_mult × level`
 (100 × level by default), but exp is **cumulative** and never reset on level-up,
 so each level-up effectively costs a flat 100 exp (90 for 'quick-witted');
 reaching lv 20 needs 1900 total. ⚠️ The `× level` in the formula looks like an
@@ -283,8 +296,8 @@ pre-fight (`handle_items`, at most one per fight via `use_fight_item_or_not`)
 and canceled after. Ginseng Root cancels injury. Mock items (bought from shady
 performers 50% of the time) do nothing except feed the Weirdo, who trades one
 for a Super Mega Herb (all tier-2 boosts at once). The wooden mannequin (500 c,
-Craftsman) makes `do_daily` call `practice_home` for a silent +4 exp every day,
-forever — worth ~8 c/day at the school rate (10 exp per 20 c), so it pays for
+Craftsman) makes `do_daily` call `practice_home` for a silent +3 exp every day,
+forever — worth ~7.5 c/day at the school rate (8 exp per 20 c), so it pays for
 itself in about two months of training and stacks with everything. ⚠️ Its description says "allows home training", but there is
 no home-training day action; it's a passive trickle, which the text doesn't
 convey.
@@ -375,8 +388,8 @@ earns the master +3 rep and a `students_tourn_won` stat point, with the
   rep/day, and nothing punishes slowness except rival players racing to a
   victory. Rest/walk/actions differ mainly in encounter exposure.
 - **Work ↔ practice:** one work day (50 c) funds 2.5 school days (20 c each,
-  ~10 exp). Sustainable pure training ≈ 7 exp/day average, so lv 20 by
-  training alone takes ~270 days; mixing in winnable fights (25+ exp each, no
+  ~8 exp). Sustainable pure training ≈ 5–6 exp/day average, so lv 20 by
+  training alone takes ~340 days; mixing in winnable fights (20+ exp each, no
   fee, but injury risk and robbery exposure) roughly halves that. The
   mannequin is the best early purchase.
 - **Victory paths overlap deliberately:** fight exp feeds Grandmaster and

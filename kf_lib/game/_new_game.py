@@ -5,6 +5,7 @@ from kf_lib.actors.player import (
     HumanPlayer,
     ALL_AI_PLAYERS,
 )
+from kf_lib.constants import experience
 from kf_lib.happenings import story
 from kf_lib.kung_fu import styles
 from kf_lib.ui import cls, get_int_from_user, menu, yn
@@ -61,11 +62,22 @@ class NewGame(BaseGame):
         generated_styles='?',
         confirm_styles_with_player=False,
         silent_ending=False,
+        customize_settings='?',
     ):
         self.silent_ending = silent_ending
         # options
         if not num_players:
             num_players = get_int_from_user('Number of players?', 1, MAX_NUM_PLAYERS)
+        if customize_settings == '?':
+            customize_settings = not ai_only and yn(
+                'Customize game settings? (choose "no" to keep the defaults)'
+            )
+        if customize_settings:
+            self._customize_settings()
+        else:
+            # reset in case a previous game in this process tweaked the base
+            experience.set_base_exp(experience.DEFAULT_BASE_EXP)
+            self.base_exp = experience.DEFAULT_BASE_EXP
         if auto_save_on == '?':
             self.auto_save_on = yn('Auto save?')
         elif auto_save_on in (True, False):
@@ -103,6 +115,43 @@ class NewGame(BaseGame):
                     p.get_school().index(p) + 1
             )  # for the subsequent rerank to work properly
         self.rerank_schools()
+
+    def _customize_settings(self):
+        cls()
+        base_exp = menu(
+            (
+                ('The Long Road (slower level progression)', 15),
+                ('The Classic Path (default progression)', 20),
+                ('Crash Course (faster level progression)', 30),
+            ),
+            title='Level progression?',
+        )
+        experience.set_base_exp(base_exp)
+        self.base_exp = base_exp
+        self.crime = menu(
+            (
+                ('Peaceful Town (low crime)', 0.05),
+                ('Rough Edges (default crime)', 0.1),
+                ('Gang-Ridden (high crime)', 0.2),
+            ),
+            title='Crime rate?',
+        )
+        self.poverty = menu(
+            (
+                ('Prosperous (low poverty)', 0.05),
+                ('Getting By (default poverty)', 0.1),
+                ('Hard Times (high poverty)', 0.2),
+            ),
+            title='Poverty?',
+        )
+        self.kung_fu = menu(
+            (
+                ('Kung-Fu Backwater (low enthusiasm)', 0.05),
+                ('Martial Town (default enthusiasm)', 0.1),
+                ('Kung-Fu Craze (high enthusiasm)', 0.2),
+            ),
+            title='Kung-fu enthusiasm?',
+        )
 
     def _init_players(self, num_players, coop, ai_only, forced_aip_class):
         coop_mode = False

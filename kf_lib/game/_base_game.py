@@ -2,6 +2,7 @@ import random
 import sys
 
 from kf_lib.actors import fighter_factory, names
+from kf_lib.constants import experience
 from kf_lib.happenings import encounters, events
 from kf_lib.kung_fu import styles, style_gen
 from kf_lib.utils import rndint
@@ -12,6 +13,7 @@ from ._game_io import GameIO
 NUM_CONVICTS = 5
 NUM_STYLES = 10
 TOWN_STAT_VALUES = (0.05, 0.1, 0.15, 0.2)
+DEFAULT_TOWN_STAT = 0.1
 
 
 class BaseGame(GameIO):
@@ -50,11 +52,10 @@ class BaseGame(GameIO):
         self.month = 1
         self.year = 1
         self.town_name = 'Foshan'
-        self.poverty = random.choice(TOWN_STAT_VALUES)
-        self.crime = random.choice(TOWN_STAT_VALUES)
-        self.kung_fu = random.choice(
-            TOWN_STAT_VALUES
-        )  # todo g.kung_fu is used only for tournaments
+        self.base_exp = experience.BASE_FIGHT_EXP
+        self.poverty = DEFAULT_TOWN_STAT
+        self.crime = DEFAULT_TOWN_STAT
+        self.kung_fu = DEFAULT_TOWN_STAT  # todo g.kung_fu is used only for tournaments
         self.fights_total = 0
         self.chosen_quit = False
         self.chosen_load = False
@@ -69,7 +70,7 @@ class BaseGame(GameIO):
         self.debug_menu = DebugMenu(self)
 
         self.savable_atts = '''town_name poverty crime kung_fu day month year auto_save_on 
-            play_indefinitely fights_total enc_count_dict'''.split()
+            play_indefinitely fights_total enc_count_dict base_exp'''.split()
 
     def crime_down(self):
         events.crime_down(self)

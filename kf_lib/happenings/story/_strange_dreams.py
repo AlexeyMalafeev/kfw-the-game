@@ -1,6 +1,6 @@
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
-from kf_lib.constants.experience import DREAM1_EXP, DREAM2_EXP, DREAM3_EXP
+from kf_lib.constants import experience
 
 
 class StrangeDreamsStory(BaseStory):
@@ -16,7 +16,7 @@ class StrangeDreamsStory(BaseStory):
     def reward(self):
         p = self.player
         p.add_accompl('Beat Self')
-        p.gain_exp(DREAM3_EXP)
+        p.gain_exp(experience.DREAM3_EXP)
         p.pak()
 
     def scene1(self):
@@ -27,7 +27,7 @@ class StrangeDreamsStory(BaseStory):
         for en in ens:
             en.arm('chopsticks')
         if p.spar(ens[0], en_allies=ens[1:]):
-            p.gain_exp(DREAM1_EXP)
+            p.gain_exp(experience.DREAM1_EXP)
             p.pak()
 
     def scene2(self):
@@ -37,7 +37,7 @@ class StrangeDreamsStory(BaseStory):
         en = fighter_factory.new_monster(lv=p.level)
         en.name = 'Weird ' + en.name
         if p.spar(en):
-            p.gain_exp(DREAM2_EXP)
+            p.gain_exp(experience.DREAM2_EXP)
             p.pak()
 
     def scene3(self):

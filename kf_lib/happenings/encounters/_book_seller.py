@@ -3,7 +3,7 @@ import random
 from kf_lib.happenings.encounters._base_encounter import BaseEncounter
 from kf_lib.happenings.encounters._utils import check_feeling_greedy
 from kf_lib.kung_fu import moves
-from kf_lib.constants.experience import BOOK_EXP
+from kf_lib.constants import experience
 from kf_lib.utils import rnd
 
 
@@ -49,7 +49,7 @@ class BookSeller(BaseEncounter):
                         move = moves.get_rand_move(f=p, tier=tier)
                         p.learn_move(move)
                     else:
-                        exp = random.randint(*BOOK_EXP)
+                        exp = random.randint(*experience.BOOK_EXP)
                         if luck == 1:
                             exp *= EXP_LUCKY_MULT
                         p.gain_exp(exp)

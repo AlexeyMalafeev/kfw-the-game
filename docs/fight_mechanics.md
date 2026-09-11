@@ -314,7 +314,7 @@ Everyone down → draw: `winners = []`, `losers = all`, `win = False`.
 `give_exp` (only players get exp):
 
 - `winners_diff = (Σ losers' exp_yield / Σ winners' exp_yield) ** 1.5`;
-  `winners_gain = winners_diff * BASE_FIGHT_EXP` (25). Beating stronger
+  `winners_gain = winners_diff * BASE_FIGHT_EXP` (20). Beating stronger
   opposition scales exp superlinearly; beating weaker gives little. In
   free-for-all fights (incl. group FFA) both sums are replaced by per-capita
   averages (`aggregate_exp_yield`, overridden in `BaseFreeForAll`) — the
@@ -327,7 +327,7 @@ Everyone down → draw: `winners = []`, `losers = all`, `win = False`.
   (`_exp_worth.py`).
 
 On a draw there are no winners, so the ratio formula above doesn't apply:
-every player gets a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (25 / 2 = 12)
+every player gets a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (20 / 2 = 10)
 instead. (Before 2026-09 this path raised `ZeroDivisionError`; draws are nearly
 unreachable in normal play — mutual KO or the 500000-unit time limit — which is
 why the crash survived.) `DRAW_EXP_DIVISOR` is still duplicated in

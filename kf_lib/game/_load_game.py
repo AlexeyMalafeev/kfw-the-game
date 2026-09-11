@@ -4,6 +4,7 @@ from pathlib import Path
 # used with exec by the legacy loader, do not delete
 from kf_lib.actors.player import ALL_AI_PLAYERS, HumanPlayer, SmartAIP, SmartAIPVisible
 from kf_lib.actors.fighter import Fighter
+from kf_lib.constants import experience
 from kf_lib.happenings import story
 from kf_lib.utils import SAVE_FOLDER
 from ._base_game import BaseGame
@@ -51,6 +52,8 @@ class LoadGame(BaseGame):
             self._load_json(text)
         else:
             self._load_legacy(text)
+        # restore the exp base tweak (old saves lack base_exp; the default applies)
+        experience.set_base_exp(self.base_exp)
         # loading clears logs
         for player in self.players:
             player.plog = []
