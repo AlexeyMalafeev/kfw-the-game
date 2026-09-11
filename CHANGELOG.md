@@ -1,8 +1,7 @@
 # Changelog
 
 All notable changes to KFW are documented here. Format loosely follows
-[Keep a Changelog](https://keepachangelog.com/); releases have codenames
-because kung-fu movies.
+[Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
 ## [v0.7.2-beta "All Schools Under Heaven"] — 2026-09-11
 
