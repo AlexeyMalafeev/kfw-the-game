@@ -652,12 +652,15 @@ class BasePlayer(Fighter):
             return max(usage.items(), key=lambda kv: kv[1])[0]
         return ''
 
-    def get_most_feared_move(self):
+    def get_most_feared_move(self, exclude=''):
         """Strike with the highest total raw damage output across all fights
-        (times used x move power); '' if none."""
+        (times used x move power); '' if none. `exclude` skips a move name
+        (e.g. the signature move) so the bio can name a distinct feared move."""
         from kf_lib.kung_fu.moves import ALL_MOVES_DICT
         feared, best_score = '', 0
         for name, cnt in self.move_usage.items():
+            if name == exclude:
+                continue
             m = ALL_MOVES_DICT.get(name)
             if m is None or not m.power:
                 continue

@@ -201,8 +201,8 @@ used × move power (total raw damage output) and is used in biographies.
 `show_bio(winners)`, which prints the bios and writes `save/bio.txt`. The
 generated text covers: the victory title(s), the style name, the signature
 move (most-used strike, from `move_usage`, since 2026-09), the most feared
-move (strike with the highest times-used × power, when different from the
-signature move), and a
+move (strike with the highest times-used × power, excluding the signature
+move so a distinct feared move is always named when another strike exists), and a
 3-sentence attribute-spread blurb derived from the gap between the player's
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
 "almost inhuman ... at the cost of ..."). Other stats, accomplishments, traits
