@@ -50,8 +50,18 @@ because kung-fu movies.
   (`Tester.test_ffa_win_rates`) measures plain-FFA / united-group / group-FFA
   win rates at equal levels; first report committed
   (`tests/ffa win rates lv=10 n=100.txt`)
+- **State menu: Moves and Techniques screens** — moves/techs are no longer
+  printed on the State menu's main screen; they get their own detailed screens
+  (`m`, `t`), like Items and Accomplishments
+- **State menu: Students screen** (`s`, masters only) — lists your school's
+  students sorted by level, marking the best one
+- **State menu: Finish Game** (`F`, only after winning and choosing to keep
+  playing indefinitely) — reruns the victory routine (victory message, stats,
+  bio, `game over.txt` save) and then quits
 
 ### Changed
+- **State menu keys**: Save, Quit and Save and Quit moved to uppercase
+  (`S`, `Q`, `X`) to free lowercase `s` for the new Students screen
 - **Overheard gossip condenses same-type opponents**: the OverhearConversation
   narration now says "beat 5 Thugs" instead of listing "Thug 1, ..., Thug 5,
   ..." (mixed groups are grouped too: "3 Thugs, Zhao Liao and 2 Robbers")

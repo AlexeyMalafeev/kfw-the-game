@@ -14,6 +14,14 @@ class MoveMethods(FighterAPI, ABC):
     def choose_new_move(self, sample: List[moves.Move]) -> None:
         self.learn_move(random.choice(sample))
 
+    def get_moves_string(self, header: str = 'Moves:') -> str:
+        known = [m for m in self.moves if not m.is_basic]
+        if not known:
+            return ''
+        align = max(len(m.name) for m in known) + 1
+        lines = [f'{m.name:<{align}}{m.descr}' for m in known]
+        return '\n'.join([header] + sorted(lines))
+
     def get_moves_to_choose(self, tier: int) -> List[moves.Move]:
         return moves.get_rand_moves(self, self.num_moves_choose, tier)
 

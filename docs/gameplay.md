@@ -86,7 +86,11 @@ masters (own school):
   roughly tripling generic encounter exposure (including thieves and ambushes).
 - **Rest** / **State** (human menu only): rest ends the turn safely; State is
   the info/save/load/quit/debug screen (`_state_menu.py`) and doesn't consume
-  the turn.
+  the turn. The main screen shows only the verbose player info; items,
+  accomplishments, moves, techniques and (for masters) students each have
+  their own screen. After winning and continuing (`play_indefinitely`), a
+  **Finish Game** option appears that reruns the victory routine (message,
+  stats, bio, `game over.txt` save) and quits.
 
 `fight_dummy` (spar vs a lv-1 punching bag) exists in `_base_player.py` but is
 commented out of the menu ⚠️ — dead code, and would be a zero-risk exp trickle.
@@ -153,7 +157,8 @@ On victory: the day count is recorded (`n_days_to_win`), stats and a generated
 biography (`biographies.py`) are shown and dumped into the save folder along
 with a `game over.txt` save, and the player is asked "Keep playing
 indefinitely?" — which sets `play_indefinitely` so `check_victory` never fires
-again. ⚠️ `Playing.play()` then re-invokes itself recursively, growing the
+again; the State menu then offers **Finish Game** (`F`), which reruns the
+victory routine via `StateMenu.finish_game` and quits. ⚠️ `Playing.play()` then re-invokes itself recursively, growing the
 stack by one frame per victory-and-continue.
 
 ## Defeat

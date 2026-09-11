@@ -75,11 +75,7 @@ class Playing(BaseGame):
             n_days = (years - 1) * 360 + (months - 1) * 30 + days
             self.n_days_to_win = n_days
             if not self.silent_ending:
-                print('\n'.join(wins))
-                input('Press Enter to see stats.')
-                self.save_game('game over.txt')
-                self.show_stats(do_cls=False, do_pak=False)
-                self.show_bio(winners)
+                self.show_victory(wins, winners)
                 self.play_indefinitely = yn('Keep playing indefinitely?')
             return True
 
@@ -222,6 +218,13 @@ class Playing(BaseGame):
         # the default for self.spectator is None (in __init__)
         self.hook_up_players()
         self.collect_used_names()
+
+    def show_victory(self, wins: List[Text], winners: List):
+        print('\n'.join(wins))
+        input('Press Enter to see stats.')
+        self.save_game('game over.txt')
+        self.show_stats(do_cls=False, do_pak=False)
+        self.show_bio(winners)
 
     @staticmethod
     def show_bio(winners: List):

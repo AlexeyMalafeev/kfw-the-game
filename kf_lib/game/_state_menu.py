@@ -8,18 +8,19 @@ class StateMenu(BaseGame):
         cls()
         print(p.get_p_info_verbose())
         print()
-        p.show(p.get_techs_string())
-        print()
-        p.show('Moves:')
-        print(', '.join([str(m) for m in p.moves if not m.is_basic]))
-        print()
-        # add move screen with more detailed descriptions
-        choice = menu(
-            ('Items', 'Accomplishments', 'Back', 'Save', 'Load', 'Quit', 'Save and Quit',
-             'Debug Menu'),
-            keys='iabslqxd',
-            new_line=False,
-        )
+        options = ['Items', 'Accomplishments', 'Moves', 'Techniques']
+        keys = 'iamt'
+        if p.is_master:
+            options.append('Students')
+            keys += 's'
+        options.append('Back')
+        keys += 'b'
+        if self.play_indefinitely:
+            options.append('Finish Game')
+            keys += 'F'
+        options += ['Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu']
+        keys += 'SlQXd'
+        choice = menu(options, keys=keys, new_line=False)
         if choice == 'Items':
             cls()
             print(p.get_inventory_info())
@@ -28,6 +29,20 @@ class StateMenu(BaseGame):
             cls()
             print(p.get_accompl_info())
             pak()
+        elif choice == 'Moves':
+            cls()
+            p.show(p.get_moves_string())
+            pak()
+        elif choice == 'Techniques':
+            cls()
+            p.show(p.get_techs_string())
+            pak()
+        elif choice == 'Students':
+            cls()
+            print(p.get_students_info())
+            pak()
+        elif choice == 'Finish Game':
+            self.finish_game()
         elif choice == 'Save':
             self.save_game('save.txt')
         elif choice == 'Load':
@@ -41,3 +56,11 @@ class StateMenu(BaseGame):
             self.chosen_quit = True
         elif choice == 'Debug Menu':
             self.debug_menu()
+
+    def finish_game(self):
+        """Voluntarily end the game after winning and continuing: rerun the
+        victory routine (message, stats, bio) and quit."""
+        p = self.current_player
+        wins = [f'{p.name} becomes {v}!' for v in self.check_victory_conditions(p)]
+        self.show_victory(wins, [p])
+        self.chosen_quit = True

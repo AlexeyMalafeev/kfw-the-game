@@ -489,6 +489,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def get_moves_string(self, header: Text = 'Moves:') -> Text:
+        pass
+
+    @abstractmethod
     def get_moves_to_choose(self, tier: int) -> List[Move]:
         pass
 

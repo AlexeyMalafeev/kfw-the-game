@@ -607,6 +607,19 @@ class BasePlayer(Fighter):
         lines.append(self.get_fight_statistics())
         return '\n'.join([line for line in lines if line])
 
+    def get_students_info(self):
+        school = self.get_school()
+        students = sorted(
+            (f for f in school if f is not self), key=lambda f: f.level, reverse=True
+        )
+        lines = ['{}\'s students ({}):'.format(self.name, len(students))]
+        for s in students:
+            line = s.get_f_info(short=True)
+            if s is self.best_student:
+                line += ' (best student)'
+            lines.append(line)
+        return '\n'.join(lines)
+
     def get_random_other_school(self):
         # avoid empty schools
         schools = [
