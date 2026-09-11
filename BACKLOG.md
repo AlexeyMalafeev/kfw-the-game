@@ -208,6 +208,9 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 
 ## Game systems & gameplay
 
+- **Refine game victory balance**: review the victory conditions (incl. the
+  new 'Uniter of Schools') for relative difficulty, pacing and how long a
+  typical winning run takes
 - config file (not to choose every time); new game settings in a text file —
   partially addressed 2026-09 by the new-game settings menu (level
   progression, crime, poverty, kung-fu enthusiasm), but there is still no
