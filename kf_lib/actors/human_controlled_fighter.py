@@ -6,6 +6,12 @@ ALIGN = 60
 INDENT = 0
 
 
+def format_move_distance(m):
+    if m.dist_change:
+        return f'{m.distance}->{m.distance + m.dist_change}'
+    return str(m.distance)
+
+
 # todo break HCF into submodules like Fighter
 class HumanControlledFighter(Fighter):
     is_human = True
@@ -56,9 +62,7 @@ class HumanControlledFighter(Fighter):
             (
                 f'{m.name}{self.get_move_stars(m)}',
                 roman(m.tier),
-                f'{m.distance}->{m.distance + m.dist_change}'
-                if m.dist_change
-                else str(m.distance),
+                format_move_distance(m),
                 str(m.power),
                 str(m.accuracy),
                 str(m.complexity),
