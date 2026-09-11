@@ -154,7 +154,11 @@ class FighterWithActions(FighterAPI, ABC):
         self.hit_or_miss()
         if not self.target.defended and self.dam > 0:
             fs['landed'] += 1
-        fs['dam_dealt'] += max(hp_before - self.target.hp, 0)
+        blow = max(hp_before - self.target.hp, 0)
+        fs['dam_dealt'] += blow
+        if blow > fs['max_blow']:
+            fs['max_blow'] = blow
+            fs['max_blow_move'] = m.name
         self.target.apply_dfs_penalty()
         if m.dist_change:
             self.change_distance(m.dist_change, self.target)
@@ -249,7 +253,7 @@ class FighterWithActions(FighterAPI, ABC):
         self.kos_this_fight = 0
         self.momentum = 0
         self.fight_stats = {'thrown': 0, 'landed': 0, 'dam_dealt': 0, 'criticals': 0, 'epics': 0,
-                            'moves_used': {}}
+                            'moves_used': {}, 'max_blow': 0, 'max_blow_move': ''}
 
     def set_target(self, target: FighterAPI) -> None:
         self.target = target

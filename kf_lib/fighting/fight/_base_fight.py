@@ -327,6 +327,9 @@ class BaseFight(object):
                 p.change_stat('dam_dealt', fs['dam_dealt'])
                 p.change_stat('criticals', fs['criticals'])
                 p.change_stat('epics', fs['epics'])
+                if fs['max_blow'] > p.get_stat('max_blow_dam'):
+                    p.set_stat('max_blow_dam', fs['max_blow'])
+                    p.set_stat('max_blow_move', fs['max_blow_move'])
                 for mv, cnt in fs['moves_used'].items():
                     p.move_usage[mv] = p.move_usage.get(mv, 0) + cnt
 

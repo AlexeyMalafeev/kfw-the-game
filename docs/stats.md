@@ -187,9 +187,14 @@ and fall damage caused by the strike (measured as the target's hp delta).
 At fight end, `handle_player_stats` adds the numbers into the player's
 `stats_dict` (`strikes_thrown`/`strikes_landed`/`dam_dealt`/`criticals`/
 `epics`) and merges `moves_used` into the persistent `p.move_usage` dict
-(move name → count). `get_favorite_move(attack_only=...)` reads the all-time
-leader; the full report shows strikes landed, damage dealt, crits/EPICs and
-the favorite move, and biographies name the signature move — both filtered to
+(move name → count). `do_strike` also tracks the biggest single blow of the
+fight (`max_blow` / `max_blow_move` in `fight_stats`, measured as the target's
+hp delta, criticals and EPICs included); at fight end it replaces the
+persistent `max_blow_dam` / `max_blow_move` stats if larger.
+`get_favorite_move(attack_only=...)` reads the all-time
+leader; the full report shows strikes landed, damage dealt, crits/EPICs, the
+favorite move, the most feared move and the max single blow (damage and move),
+and biographies name the signature move — both filtered to
 strikes only (`attack_only=True`), since defensive moves like Guard otherwise
 dominate the usage counts. `get_most_feared_move()` ranks strikes by times
 used × move power (total raw damage output) and is used in biographies.
