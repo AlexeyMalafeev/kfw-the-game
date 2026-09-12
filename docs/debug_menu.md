@@ -19,7 +19,10 @@ option of the status screen, available in every build.
   `i a m t [s] b` (`Items / Accomplishments / Moves / Techniques / [Students] /
   Back`) on the first line and `S L Q X D [F]` (`Save / Load / Quit / Save and
   Quit / Debug Menu / [Finish Game]`) on the second. Moves, techniques and
-  accomplishments are listed enumerated (`1.`, `2.`, …). Pressing `D` runs
+  accomplishments are listed enumerated (`1.`, `2.`, …). After viewing items,
+  accomplishments, moves, techniques or students (and after saving or leaving
+  the debug menu) the state menu is shown again; only `Back`, `Load`, `Quit`,
+  `Save and Quit` and `Finish Game` exit it. Pressing `D` runs
   `self.debug_menu()`; `a` lists the player's accomplishments with dates
   (`get_accompl_info`).
 - `Game.debug_menu` is a `DebugMenu(self)` instance created in

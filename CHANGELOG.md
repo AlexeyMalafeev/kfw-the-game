@@ -9,7 +9,9 @@ All notable changes to KFW are documented here. Format loosely follows
 - State-menu hotkeys are now shown on two rows — info options
   (`Items/Accomplishments/Moves/Techniques/[Students]/Back`) on the first,
   system options (`Save/Load/Quit/Save and Quit/Debug Menu/[Finish Game]`) on
-  the second
+  the second; after viewing items/accomplishments/moves/techniques/students
+  (or saving, or leaving the debug menu) you return to the state menu instead
+  of the day-action prompt
 - Moves, techniques and accomplishments listed from the state menu are now
   enumerated
 - Stats report: "Strikes landed" now shows accuracy
