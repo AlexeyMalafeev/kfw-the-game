@@ -164,7 +164,8 @@ class BasePlayer(Fighter):
             return f'{self.name} has no accomplishments yet.'
         lines = ['{}\'s accomplishments:'.format(self.name)]
         lines += [
-            f'{label} ({date})' for label, date in zip(self.accompl, self.accompl_dates)
+            f'{i}. {label} ({date})'
+            for i, (label, date) in enumerate(zip(self.accompl, self.accompl_dates), 1)
         ]
         return '\n'.join(lines)
 

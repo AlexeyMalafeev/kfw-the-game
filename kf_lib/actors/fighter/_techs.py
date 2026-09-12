@@ -46,7 +46,8 @@ class TechMethods(FighterAPI, ABC):
                 output.append(f'{t.name:<{align}}{t.descr}')
             else:
                 output.append(f'{t.name:<{align}}')
-        output = [header] + sorted(output)
+        output = [f'{i}. {line}' for i, line in enumerate(sorted(output), 1)]
+        output = [header] + output
         return '\n'.join(output)
 
     def get_techs_to_choose(self, annotated: bool = False, for_upgrade: bool = False) -> List[Tech]:

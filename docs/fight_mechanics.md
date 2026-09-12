@@ -218,7 +218,9 @@ In order:
     `>= 25%` → `cause_off_balance()`. `cause_fall` also deals fall damage
     (`rndint(25, 50) * fall_damage_mult`) and zeroes momentum.
 11. `try_ko()`: if target's `hp == 0`, a `resist_ko` roll (tech, max 0.5) sets
-    `hp = 1`; otherwise the attacker logs the KO (`kos_this_fight += 1`).
+    `hp = 1` and displays "<name> resists being knocked out!" (shown on screen
+    in `NormalFight`, recorded in the fight `timeline` in all fight types);
+    otherwise the attacker logs the KO (`kos_this_fight += 1`).
 
 Steps 8–10 still run when the hit already reduced the target to 0 hp — a KO'd
 fighter can be shown stunned/knocked back/falling before the KNOCK-OUT line;

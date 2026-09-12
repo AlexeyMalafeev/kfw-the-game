@@ -20,7 +20,8 @@ class MoveMethods(FighterAPI, ABC):
             return ''
         align = max(len(m.name) for m in known) + 1
         lines = [f'{m.name:<{align}}{m.descr}' for m in known]
-        return '\n'.join([header] + sorted(lines))
+        lines = [f'{i}. {line}' for i, line in enumerate(sorted(lines), 1)]
+        return '\n'.join([header] + lines)
 
     def get_moves_to_choose(self, tier: int) -> List[moves.Move]:
         return moves.get_rand_moves(self, self.num_moves_choose, tier)

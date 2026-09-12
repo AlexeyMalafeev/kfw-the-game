@@ -3,6 +3,23 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
+## [Unreleased]
+
+### Changed
+- State-menu hotkeys are now shown on two rows — info options
+  (`Items/Accomplishments/Moves/Techniques/[Students]/Back`) on the first,
+  system options (`Save/Load/Quit/Save and Quit/Debug Menu/[Finish Game]`) on
+  the second
+- Moves, techniques and accomplishments listed from the state menu are now
+  enumerated
+- Stats report: "Strikes landed" now shows accuracy
+  (`landed/thrown (acc%)`), and a Fame row (masters only, blank otherwise)
+  was added right after Reputation
+
+### Added
+- The debug menu now has a **Back** option that returns to the state menu
+  without activating any debug tool
+
 ## [v0.7.2-beta "All Schools Under Heaven"] — 2026-09-11
 
 ### Added

@@ -155,8 +155,10 @@ dumped to `save/<name>'s log.txt` on each save (`SaveGame._dump_player_logs`)
 - Full report: `game_stats.get_full_report_string(game)` builds a fixed-label
   multi-column table (one column per player) mixing stats with live
   attributes (level, atts, friends/enemies/students counts, money,
-  reputation). `Playing.show_stats` prints it and writes it to
-  `save/stats.txt`. Called from the Gossip encounter and at victory
+  reputation, fame). "Strikes landed" is shown as `landed/thrown (acc%)`;
+  the Fame row (right after Reputation) shows `p.get_fame()` as a percentage
+  for masters and is blank for non-masters. `Playing.show_stats` prints it
+  and writes it to `save/stats.txt`. Called from the Gossip encounter and at victory
   (`check_victory`); with `--silent-ending` the ending never shows it.
 - The per-day header shows a short Fights/Wins/KOs line
   (`get_fight_statistics`, in `get_p_info_verbose`).

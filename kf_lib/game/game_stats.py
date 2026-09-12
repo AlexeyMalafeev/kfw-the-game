@@ -84,6 +84,9 @@ def get_player_data(p, labels_only=False, data_only=False):
     ft = p.game.fights_total
     nf = gs('num_fights')
     fpcnt = round(nf / ft * 100) if ft > 0 else '-'
+    sl = gs('strikes_landed')
+    st = gs('strikes_thrown')
+    slpcnt = round(sl / st * 100) if st else '-'
     full = [
         ('\n*GENERAL*', ''),
         ('Name', p.name),
@@ -98,7 +101,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('\n*FIGHTING*', ''),
         (f'Fights ({ft})', f'{nf} ({fpcnt}%)'),
         ('Wins,KOs', '{},{}'.format(gs('fights_won'), gs('num_kos'))),
-        ('Strikes landed', f"{gs('strikes_landed')}/{gs('strikes_thrown')}"),
+        ('Strikes landed', f'{sl}/{st} ({slpcnt}%)'),
         ('Damage dealt', gs('dam_dealt')),
         ('Crits,EPICs', '{},{}'.format(gs('criticals'), gs('epics'))),
         ('Fav. move', p.get_favorite_move(attack_only=True) or '-'),
@@ -117,6 +120,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('Accomp,stories', '{},{}'.format(len(p.accompl), gs('num_stories'))),
         ('Got drunk', gs('got_drunk')),
         ('Reputation', p.reputation),
+        ('Fame', f'{p.get_fame():.0%}' if p.is_master else ''),
         ('\n*MONEY*', ''),
         ('Money', p.money),
         ('Money earned', gs('money_earned')),

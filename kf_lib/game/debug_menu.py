@@ -30,9 +30,11 @@ class DebugMenu:
                 ('Inspect Player', self.debug_inspect_player),
                 ('Set Attribute', self.debug_set_att),
                 ('PvP', self.debug_pvp),
+                ('Back', None),
             )
         )
-        choice()
+        if choice is not None:
+            choice()
 
     def debug_encounter(self):
         enc_class = menu(

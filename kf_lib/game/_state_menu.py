@@ -1,4 +1,4 @@
-from kf_lib.ui import cls, menu, pak
+from kf_lib.ui import cls, get_key, pak
 from ._base_game import BaseGame
 
 
@@ -15,12 +15,20 @@ class StateMenu(BaseGame):
             keys += 's'
         options.append('Back')
         keys += 'b'
+        print(' ' + '  '.join(f'{k} - {o}' for k, o in zip(keys, options)))
+        sys_options = ['Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu']
+        sys_keys = 'SLQXD'
         if self.play_indefinitely:
-            options.append('Finish Game')
-            keys += 'F'
-        options += ['Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu']
-        keys += 'SLQXD'
-        choice = menu(options, keys=keys, new_line=False)
+            sys_options.append('Finish Game')
+            sys_keys += 'F'
+        print(' ' + '  '.join(f'{k} - {o}' for k, o in zip(sys_keys, sys_options)))
+        options += sys_options
+        keys += sys_keys
+        while True:
+            key = get_key()
+            if key in keys:
+                choice = options[keys.index(key)]
+                break
         if choice == 'Items':
             cls()
             print(p.get_inventory_info())

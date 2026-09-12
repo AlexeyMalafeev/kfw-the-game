@@ -15,15 +15,16 @@ option of the status screen, available in every build.
   `kf_lib/actors/player/_human_player.py`) always ends with `Rest` (key `r`) and
   `State` (key `s`).
 - `State` calls `Game.state_menu` (`kf_lib/game/_state_menu.py`), which prints the
-  current player's full info and offers
-  `Items / Accomplishments / Moves / Techniques / [Students] / Back /
-  [Finish Game] / Save / Load / Quit / Save and Quit / Debug Menu`
-  with keys `iamt`, `s` (masters only), `b`, `F` (post-victory only), `SLQXD`.
-  Pressing `D` runs `self.debug_menu()`; `a` lists the
-  player's accomplishments with dates (`get_accompl_info`).
+  current player's full info and offers two rows of hotkeys:
+  `i a m t [s] b` (`Items / Accomplishments / Moves / Techniques / [Students] /
+  Back`) on the first line and `S L Q X D [F]` (`Save / Load / Quit / Save and
+  Quit / Debug Menu / [Finish Game]`) on the second. Moves, techniques and
+  accomplishments are listed enumerated (`1.`, `2.`, …). Pressing `D` runs
+  `self.debug_menu()`; `a` lists the player's accomplishments with dates
+  (`get_accompl_info`).
 - `Game.debug_menu` is a `DebugMenu(self)` instance created in
   `BaseGame.__init__` (`kf_lib/game/_base_game.py`); `DebugMenu.__call__` shows
-  the 12-option menu and invokes the chosen bound method.
+  the menu and invokes the chosen bound method.
 
 The menu operates on `game.current_player` — the player whose turn it is
 (hot-seat: each human gets it on their own turn). AI-only autoplay games never
@@ -33,13 +34,12 @@ reach it, since `choose_day_action` is a `HumanPlayer` method.
 `kf_lib/game/_playing.py`) the day action is *not* consumed: after any debug
 option you land back at the day-action prompt with the day still unspent.
 
-⚠️ The debug menu itself has no Back/cancel: `menu()` is called with the default
-`weak=False`, so an unrecognized key just re-prompts. Once opened, the only way
-out is to pick one of the 12 options (or kill the process).
+The debug menu ends with a **Back** option that returns to the state menu
+without activating any debug tool.
 
 ## Menu options
 
-All twelve options, in menu order (`DebugMenu.__call__`). None of them sets any
+Thirteen options, in menu order (`DebugMenu.__call__`). None of them sets any
 "cheated" flag on the game or the save.
 
 - **Get Money** — `get_int_from_user` for 1–10⁹, then `p.earn_money(amount)`
@@ -113,6 +113,7 @@ All twelve options, in menu order (`DebugMenu.__call__`). None of them sets any
   ⚠️ Misleadingly named: this is *sparring* (`fighting/fight/_sparring.py`),
   not a real fight — injuries, gossip, stats and accomplishments are disabled,
   but exp is still awarded (sparring gives exp by design).
+- **Back** — returns to the state menu without doing anything.
 
 ## Crash reports
 
