@@ -171,6 +171,11 @@ def new_sweetheart(name, gender, level):
     return f
 
 
+def new_love_rival(name, gender, level):
+    """A jealous rival suitor: same mold as a love-interest NPC."""
+    return new_sweetheart(name, gender, level)
+
+
 def new_fighter(lv=0, n=1):
     fs = []
     for i in range(n):

@@ -208,6 +208,7 @@ def game_snapshot(g):
             p.sweetheart.name if p.sweetheart is not None else None,
             p.romance_progress,
             p.is_married,
+            p.children_ages,
             p.students,
             fighter_snapshot(p.best_student) if p.best_student else None,
             p.current_story.name if p.current_story else None,
@@ -365,6 +366,7 @@ class TestLoading:
         p.sweetheart = sw
         p.romance_progress = 7
         p.is_married = True
+        p.children_ages = [3, 8]
         p.best_student = fighter_factory.new_student('Test Stud', p.style.name)
         s = g.stories['ForeignerStory']
         s.player = p
@@ -390,6 +392,7 @@ class TestLoading:
         assert p2.sweetheart is g2.fighters_dict['Test Love']
         assert p2.sweetheart.gender == 'f'
         assert (p2.romance_progress, p2.is_married) == (7, True)
+        assert p2.children_ages == [3, 8]
 
     def test_loaded_game_continues_playing(self, temp_save_folder):
         g = make_game()
@@ -468,6 +471,7 @@ class TestLoading:
             del pdata['sweetheart_gender']
             del pdata['atts']['romance_progress']
             del pdata['atts']['is_married']
+            del pdata['atts']['children_ages']
         (temp_save_folder / SAVE_NAME).write_text(json.dumps(data))
         g2 = game.Game()
         g2.load_game(SAVE_NAME)
@@ -475,6 +479,7 @@ class TestLoading:
         assert p2.sweetheart is None
         assert p2.romance_progress == 0
         assert p2.is_married is False
+        assert p2.children_ages == []
 
     def test_occupation_json_roundtrip_is_stable(self, temp_save_folder):
         g = make_game()

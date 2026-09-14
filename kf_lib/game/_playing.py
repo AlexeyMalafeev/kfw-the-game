@@ -132,6 +132,7 @@ class Playing(BaseGame):
         for p in self.players:
             if p.is_master:
                 p.refresh_best_student()
+            p.check_family_monthly()
 
     def game_loop(self):
         self.chosen_quit = False

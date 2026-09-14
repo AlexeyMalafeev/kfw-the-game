@@ -34,6 +34,16 @@ def generate_bio(player_instance) -> Text:
                 f'perhaps, at the cost of {enum_words(worst_atts)}.'
             )
 
+    if p.is_married and p.sweetheart is not None:
+        n_children = len(p.children_ages)
+        if n_children:
+            bio.append(
+                f'He married the love of his life, {p.sweetheart.name}, and they '
+                f'raised {n_children} wonderful children, who carry on his kung-fu.'
+            )
+        else:
+            bio.append(f'He married the love of his life, {p.sweetheart.name}.')
+
     # undefeated, founded school or not, spent vs earned, gambled, popular with people,
     # notable fights, unwrap accomplishments into short stories
 

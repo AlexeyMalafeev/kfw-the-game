@@ -221,12 +221,15 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   the config-file idea above and the v0.7.2 settings menu; defines a mod =
   named bundle of stat/constant overrides)
 - custom player creation option
-- **Romance system** (added 2026-09): the core shipped 2026-09 — meeting a
-  gendered love-interest NPC (NewRomance encounter), courtship via dates and
-  the Visit-sweetheart day action, marriage with gameplay effects (spouse as
-  fight ally via a new check_help channel, small daily household income).
-  Remaining ideas: romance-driven stories/encounters (jealous rival → duels,
-  bandit fiance ties in), family/children as late-game legacy content.
+- **Romance system** (added 2026-09): shipped 2026-09 in two batches — meeting
+  a gendered love-interest NPC (NewRomance encounter), courtship via dates and
+  the Visit-sweetheart day action, marriage (spouse as fight ally via a
+  check_help channel, small daily household income); jealous-rival duels
+  (defeated rivals can become persistent enemies, losing can end the
+  courtship), the KidnappedSweetheartStory quest line, and family/children
+  (births, small expenses, kung-fu practice with a grown child, family
+  mentioned in the ending biography). Remaining ideas: deeper legacy content
+  (children as full fighters / school students, playing as the heir).
 - remove tedious routines — work/training as resources, not events
 - days → weeks; work and training automatic? or choose focus (two actions/week)
 - school life: really teach students (fewer of them, simulate structure);

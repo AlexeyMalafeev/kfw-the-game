@@ -54,6 +54,7 @@ WALK_ENCS = (
     + [Weirdo] * 3
     + [NewRomance] * 2
     + [RomanticDate] * 3
+    + [JealousRival] * 2
 )
 WORK_ENCS = []
 

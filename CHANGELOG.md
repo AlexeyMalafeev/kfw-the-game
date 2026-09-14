@@ -6,6 +6,24 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Romance system, part 2 — rivals, kidnapping and family**:
+  - **Jealous rivals** (`JealousRival` encounter, courting only): a rival
+    suitor of at least the player's level demands a duel. Winning impresses
+    the sweetheart (+2 progress) and has a 30% chance the rival becomes a
+    persistent enemy (returning via the usual Ambush encounter); losing costs
+    3 progress, and at progress ≤ 0 the sweetheart breaks up with the player
+  - **Kidnapped sweetheart story** (levels 3–20, starts only for players with
+    a sweetheart): a bandit boss kidnaps the player's beloved for ransom;
+    after a clue-gathering scene the player storms the fish-market hideout
+    (boss + two thugs, help channels apply). Winning grants +25 rep, the
+    'Rescued Sweetheart' accomplishment and +5 romance progress; losing has
+    the sweetheart — a martial artist herself — break free on her own
+  - **Family/children**: married players can now have children (20% monthly,
+    up to 3; the first grants the 'Proud Parent' accomplishment). Children
+    cost a few coins now and then; a grown child (≥ 12 months) can practice
+    kung-fu with the player on the 'Visit spouse' day action (+10 exp).
+    Children appear in the stats report, and the winner's biography mentions
+    the spouse and children as the player's legacy
 - **Romance system**: players can now meet a love interest (the `NewRomance`
   encounter, only while single), court them via `RomanticDate` encounters and
   the new **Visit sweetheart** day action (small gifts speed things up), and

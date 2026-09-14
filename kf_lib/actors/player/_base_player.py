@@ -46,6 +46,14 @@ ROMANCE_GIFT_COST = 10
 CH_PROPOSAL_ACCEPT = 0.5  # + reputation / 500, capped at 0.9
 CH_SPOUSE_GIFT = 0.1  # daily chance the spouse brings home some money
 
+# family
+MAX_CHILDREN = 3
+CHILD_GROWN_AGE = 12  # months; a grown child can practice kung-fu with the player
+CHILD_EXP = 10  # exp for practicing kung-fu with a grown child
+CHILD_PRACTICE_CHANCE = 0.3  # on the 'Visit spouse' day action
+CH_CHILD_BORN = 0.2  # monthly chance for a married player
+CH_CHILD_COST = 0.05  # daily per-child chance of a small expense
+
 
 # todo Epic Gambler accomplishment
 
@@ -55,7 +63,7 @@ class BasePlayer(Fighter):
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
     move_usage banned_from_school schools_allied school_techs
-    romance_progress is_married'''.split()
+    romance_progress is_married children_ages'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
 
     exp = Integer(minvalue=0, action='raise')
@@ -126,6 +134,7 @@ class BasePlayer(Fighter):
         self.sweetheart = None  # love interest / spouse (a Fighter)
         self.romance_progress = 0
         self.is_married = False
+        self.children_ages = []  # months old, one entry per child
         self.accompl = []
         self.accompl_dates = []
         self.banned_from_school = False
@@ -450,13 +459,39 @@ class BasePlayer(Fighter):
             self.injure(1)
 
     def check_spouse_daily(self):
-        """Married player's spouse occasionally contributes to the household."""
-        if self.is_married and self.sweetheart is not None and rnd() <= CH_SPOUSE_GIFT:
+        """Married life: the spouse contributes to the household, the children cost."""
+        if not (self.is_married and self.sweetheart is not None):
+            return
+        if rnd() <= CH_SPOUSE_GIFT:
             amount = rndint(5, 20)
             self.show(
                 f'{self.sweetheart.name} brings home some money. (+{amount} coins)'
             )
             self.earn_money(amount)
+        if self.children_ages and self.money > 0:
+            if rnd() <= CH_CHILD_COST * len(self.children_ages):
+                amount = min(self.money, rndint(1, 5))
+                self.pay(amount)
+                self.show(f'Children grow so fast — new clothes. (-{amount} coins)')
+
+    def check_family_monthly(self):
+        """Monthly family events: children grow; a new child may be born."""
+        if not (self.is_married and self.sweetheart is not None):
+            return
+        self.children_ages = [age + 1 for age in self.children_ages]
+        if len(self.children_ages) < MAX_CHILDREN and rnd() <= CH_CHILD_BORN:
+            self.children_ages.append(0)
+            son_or_daughter = random.choice(('son', 'daughter'))
+            self.show(
+                f'{self.name} and {self.sweetheart.name} welcome a baby '
+                f'{son_or_daughter}!'
+            )
+            self.log(f'A baby {son_or_daughter} is born.')
+            if len(self.children_ages) == 1:
+                self.add_accompl('Proud Parent')
+
+    def get_grown_children(self):
+        return [age for age in self.children_ages if age >= CHILD_GROWN_AGE]
 
     def cls(self):
         raise Exception('Not implemented.')
@@ -636,6 +671,8 @@ class BasePlayer(Fighter):
         if self.sweetheart is not None:
             rel = 'spouse' if self.is_married else 'sweetheart'
             love_info = f'{rel}:{self.sweetheart.name}'
+            if self.children_ages:
+                love_info += f' children:{len(self.children_ages)}'
         stud_info = f'students:{self.students}' if self.students else ''
         if self.is_master and self.best_student is not None:
             stud_info += f' (best: {self.best_student.name})'
@@ -976,8 +1013,13 @@ class BasePlayer(Fighter):
         p = self
         sw = p.sweetheart
         if p.is_married:
-            p.show(f'{p.name} spends a quiet day at home with {sw.name}.')
-            p.log(f'Spends the day with {sw.name}.')
+            if p.get_grown_children() and rnd() <= CHILD_PRACTICE_CHANCE:
+                p.show(f'{p.name} spends the day practicing kung-fu with the child.')
+                p.log('Practices kung-fu with the child.')
+                p.gain_exp(CHILD_EXP)
+            else:
+                p.show(f'{p.name} spends a quiet day at home with {sw.name}.')
+                p.log(f'Spends the day with {sw.name}.')
         else:
             p.show(f'{p.name} spends the day with {sw.name}.')
             p.log(f'Goes on a date with {sw.name}.')
@@ -991,6 +1033,21 @@ class BasePlayer(Fighter):
                 p.propose_marriage()
         p.pak()
         return True  # to end turn
+
+    def check_romance_breakup(self):
+        """Courting only: at romance_progress <= 0 the sweetheart leaves."""
+        if (
+            self.sweetheart is not None
+            and not self.is_married
+            and self.romance_progress <= 0
+        ):
+            sw = self.sweetheart
+            self.show(
+                f'{sw.name} is not impressed and decides to see {self.name} no more.'
+            )
+            self.log(f'{sw.name} breaks up with {self.name}.')
+            self.sweetheart = None
+            self.romance_progress = 0
 
     def propose_marriage(self):
         p = self

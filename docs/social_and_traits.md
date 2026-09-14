@@ -4,6 +4,8 @@ Friends, enemies, romance, co-op bonds and personality traits, as implemented.
 Source files: `kf_lib/actors/player/_base_player.py` (the lists, help channels,
 romance state, trait (de)activation), `kf_lib/actors/traits.py` (trait
 definitions), `kf_lib/happenings/encounters/_romance.py` (romance encounters),
+`kf_lib/happenings/story/_sweetheart_kidnapped.py` (the romance story line),
+`kf_lib/game/biographies.py` (family legacy in the ending bio),
 `kf_lib/actors/names.py` + `kf_lib/game/_base_game.py` (gendered name
 generation), `kf_lib/game/_new_game.py` (co-op setup), `kf_lib/game/_save_game.py` /
 `_load_game.py` (persistence), `kf_lib/happenings/encounters/` (`_challenger.py`,
@@ -150,10 +152,37 @@ pre-romance saves load with defaults) and appended to the save roster in
   `check_spouse_daily` (called from `Playing.do_daily`) gives a 10% daily
   chance the spouse brings home 5–20 coins. The spouse shows up in the stats
   report (`*LIFE*` section) and in `get_p_info_verbose`. The day action label
-  becomes 'Visit spouse' after marriage and the visit is then flavor-only.
+  becomes 'Visit spouse' after marriage and the visit is then flavor-only
+  (unless there are grown children — see Family below).
+- **Jealous rivals**: `JealousRival` (0.02, courting only; ×2 in `WALK_ENCS`)
+  — a rival suitor of level ≥ the player's challenges the player to a duel
+  (`fight_or_run` flow like `FatGirl`). Winning adds 2 progress and has a 0.3
+  chance the rival becomes a persistent enemy (entering the usual `Ambush`
+  channel); losing costs 3 progress, and at progress ≤ 0
+  `check_romance_breakup()` ends the courtship (married players can't break
+  up this way — the encounter doesn't fire for them).
+- **Kidnapped sweetheart story**: `KidnappedSweetheartStory`
+  (`story/_sweetheart_kidnapped.py`, levels 3–20) starts via the usual
+  `events.new_story` event only for players who have a sweetheart (`test()`
+  override). The bandit boss demands a ransom; after a clue scene the player
+  storms the fish-market hideout (`check_help` applies, the boss has two
+  thugs). Winning grants 25 rep, the 'Rescued Sweetheart' accomplishment and
+  +5 progress; losing has the sweetheart — a martial artist herself — break
+  free unimpressed (no reward, no penalty). If the romance ended mid-story,
+  the story fizzles out quietly.
+- **Family/children** (late-game legacy): `p.children_ages` (months, one entry
+  per child) is in `savable_atts`. `check_family_monthly` (from
+  `Playing.do_monthly`, married only) ages the children and rolls a 0.2 birth
+  chance (max 3); the first child grants the 'Proud Parent' accomplishment.
+  Daily, each child has a 5% chance of a 1–5 coin expense (folded into
+  `check_spouse_daily`). A grown child (≥ 12 months) adds a 0.3 chance the
+  'Visit spouse' action becomes kung-fu practice with the child (+10 exp).
+  Children show up in the stats report and `get_p_info_verbose`, and the
+  winner's biography (`game/biographies.py`) mentions the spouse and
+  children as the player's legacy.
 
-Not implemented (backlog): jealous-rival duels, romance-driven stories, and
-family/children legacy content.
+Not implemented (backlog): deeper legacy content (children as full fighters /
+school students, playing as the heir).
 
 ## What enemies do
 

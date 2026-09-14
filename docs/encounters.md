@@ -163,8 +163,11 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   decides whether the romance begins (sets `p.sweetheart`, progress 1).
 - `RomanticDate` (0.05, requires a sweetheart and not married; ×3 in
   `WALK_ENCS`): a date adding 1–3 `romance_progress`.
+- `JealousRival` (0.02, courting only; ×2 in `WALK_ENCS`): a rival suitor
+  duels the player — winning raises progress (and may make a persistent
+  enemy), losing lowers it and can end the courtship.
 - See `docs/social_and_traits.md` (Romance) for the full progression model and
-  marriage effects.
+  marriage/family effects.
 
 ### Gambling and seedy places (`_gambling.py`)
 
@@ -246,7 +249,8 @@ eligibility window; `state` is `None` (not started), `0..n` (current scene), or
   `fighter_factory.new_foreigner()`), so mid-story saves work. The
   `get_init_string` / `__repr__` machinery is the legacy exec-based save path.
 
-Eleven stories exist: `StrangeDreamsStory` (lv 6–8; dream spars incl. a copy of
+Six quest-style stories exist: `StrangeDreamsStory` (lv 6–8; dream spars incl.
+a copy of
 yourself, exp rewards), `BanditFianceStory` (6–9; two scenes, boss fight, +25
 rep), `StolenTreasuresStory` (8–10; four scenes, bribe-or-infiltrate choice,
 +30 rep), `ForeignerStory` (9–12; watch the foreign boss fight for exp, then
@@ -254,6 +258,16 @@ challenge him, +30 rep), `NinjaTurtlesStory` (12–15; one fight, reward is the
 full Turtle Nunjutsu tech line), `RenownedMasterStory` (14–16; defend your
 school's honor against a challenger master). Rewards are rep, exp,
 accomplishments, moves and techs.
+
+One story is gated on having a sweetheart (`test()` override; see the Romance
+section in `docs/social_and_traits.md`):
+
+- `KidnappedSweetheartStory` (3–20): the bandit boss kidnaps the player's
+  sweetheart for ransom; a clue scene leads to a hideout fight (boss + two
+  thugs, `check_help` applies). Winning: +25 rep, the 'Rescued Sweetheart'
+  accomplishment, +5 romance progress. Losing: the sweetheart — a martial
+  artist herself — breaks free unimpressed (no reward, no penalty). If the
+  romance ends mid-story, it fizzles out quietly.
 
 Five stories are built around free-for-all fights (`fighting/fight`):
 

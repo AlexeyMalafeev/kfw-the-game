@@ -117,6 +117,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('Friends', str(len(p.friends))),
         ('Enemies', str(len(p.enemies))),
         ('Spouse', p.sweetheart.name if p.is_married else '-'),
+        ('Children', str(len(p.children_ages)) if p.children_ages else '-'),
         ('Students', str(p.students)),
         ('Stud.tourn.won', gs('students_tourn_won')),
         ('A.-S.tourn.won', gs('all_schools_tourn_won')),

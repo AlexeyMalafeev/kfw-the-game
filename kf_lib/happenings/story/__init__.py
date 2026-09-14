@@ -17,6 +17,7 @@ from ._school_attack import SchoolAttackStory
 from ._stolen_treasures import StolenTreasuresStory
 from ._strange_dreams import StrangeDreamsStory
 from ._student_rivalry import StudentRivalryStory
+from ._sweetheart_kidnapped import KidnappedSweetheartStory
 from ._wrong_pouch import WrongPouchStory
 
 

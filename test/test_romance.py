@@ -1,13 +1,16 @@
-"""Romance system tests: meeting a sweetheart, dating, marriage, spouse effects."""
+"""Romance system tests: meeting a sweetheart, dating, marriage, spouse effects,
+jealous rivals, the kidnapped-sweetheart story, and family/children."""
 import random
 
 import pytest
 
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 import kf_lib.actors.player._base_player as base_player_mod
+import kf_lib.happenings.encounters._romance as romance_mod
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.player import SmartAIP
-from kf_lib.actors.player._base_player import ROMANCE_PROPOSE_THRESHOLD
+from kf_lib.actors.player._base_player import CHILD_EXP, ROMANCE_PROPOSE_THRESHOLD
+from kf_lib.game import biographies
 from kf_lib.happenings import encounters
 
 
@@ -174,3 +177,164 @@ class TestSweetheartFactory:
         assert sw.level == 5
         assert sw.gender == 'f'
         assert sw.occupation == 'fighter'
+
+
+class TestJealousRival:
+    def make_rival(self, g, p):
+        return fighter_factory.new_love_rival(g.get_new_name(gender='m'), 'm', p.level)
+
+    def test_fires_only_while_courting(self):
+        g = make_game()
+        p = g.players[0]
+        enc = encounters.JealousRival.__new__(encounters.JealousRival)
+        enc.p = enc.player = p
+        assert enc.check_if_happens() is False  # single
+        make_sweetheart(g, p)
+        p.is_married = True
+        assert enc.check_if_happens() is False  # married
+
+    def test_win_raises_progress_and_can_make_enemy(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        progress_before = p.romance_progress
+        rival = self.make_rival(g, p)
+        monkeypatch.setattr(p, 'fight', lambda *a, **k: True)
+        monkeypatch.setattr(romance_mod, 'rnd', lambda: 0.0)  # enemy roll succeeds
+        enc = encounters.JealousRival.__new__(encounters.JealousRival)
+        enc.p = enc.player = p
+        enc.do_fight(rival)
+        assert p.romance_progress == progress_before + romance_mod.RIVAL_WIN_PROGRESS
+        assert rival in p.enemies
+        assert g.fighters_dict[rival.name] is rival  # registered, hence saved
+
+    def test_loss_lowers_progress_and_can_break_up(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        p.romance_progress = 1
+        rival = self.make_rival(g, p)
+        monkeypatch.setattr(p, 'fight', lambda *a, **k: False)
+        enc = encounters.JealousRival.__new__(encounters.JealousRival)
+        enc.p = enc.player = p
+        enc.do_fight(rival)
+        assert p.sweetheart is None  # the sweetheart leaves
+        assert p.romance_progress == 0
+
+    def test_no_breakup_while_married(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        p.is_married = True
+        p.romance_progress = 0
+        p.check_romance_breakup()
+        assert p.sweetheart is not None
+
+
+class TestKidnappedSweetheartStory:
+    def make_story(self, g, p):
+        s = g.stories['KidnappedSweetheartStory']
+        assert s.check_hasnt_started()
+        return s
+
+    def test_requires_sweetheart(self):
+        g = make_game()
+        p = g.players[0]
+        p.level_up(2)  # the story's min_level is 3
+        s = self.make_story(g, p)
+        assert s.test(p) is False
+        make_sweetheart(g, p)
+        assert s.test(p) is True
+
+    def test_rescue_success(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        sw = make_sweetheart(g, p)
+        progress_before = p.romance_progress
+        s = self.make_story(g, p)
+        s.start(p)
+        assert p.current_story is s
+        assert s.boss is not None
+        monkeypatch.setattr(p, 'fight', lambda *a, **k: True)
+        s.advance()  # scene1
+        s.advance()  # scene2
+        assert 'Rescued Sweetheart' in p.accompl
+        assert p.romance_progress == progress_before + s.progress_reward
+        assert p.current_story is None
+        assert s.state == -1
+        assert s.boss is None
+
+    def test_rescue_failure_twist(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        s = self.make_story(g, p)
+        s.start(p)
+        monkeypatch.setattr(p, 'fight', lambda *a, **k: False)
+        s.advance()
+        s.advance()
+        assert 'Rescued Sweetheart' not in p.accompl
+        assert p.sweetheart is not None  # she frees herself; the romance survives
+        assert p.current_story is None
+
+    def test_sweetheart_gone_mid_story(self):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        s = self.make_story(g, p)
+        s.start(p)
+        p.sweetheart = None  # e.g. a breakup via a lost rival duel
+        s.advance()
+        assert p.current_story is None
+        assert s.state == -1
+
+
+class TestFamily:
+    def test_child_birth_and_growth(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        p.check_family_monthly()
+        assert p.children_ages == []  # not married yet
+        p.is_married = True
+        monkeypatch.setattr(base_player_mod, 'rnd', lambda: 0.0)  # birth roll succeeds
+        p.check_family_monthly()
+        assert p.children_ages == [0]
+        assert 'Proud Parent' in p.accompl
+        monkeypatch.setattr(base_player_mod, 'rnd', lambda: 1.0)  # no birth
+        p.check_family_monthly()
+        assert p.children_ages == [1]
+
+    def test_child_daily_expense(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        p.is_married = True
+        p.children_ages = [3]
+        p.money = 10
+        monkeypatch.setattr(base_player_mod, 'rnd', lambda: 0.0)  # gift and expense
+        monkeypatch.setattr(base_player_mod, 'rndint', lambda a, b: a)
+        p.check_spouse_daily()
+        assert p.money == 10 + 5 - 1  # +5 spouse gift, -1 child expense
+
+    def test_practice_with_grown_child(self, monkeypatch):
+        g = make_game()
+        p = g.players[0]
+        make_sweetheart(g, p)
+        p.is_married = True
+        p.children_ages = [12]
+        assert p.get_grown_children() == [12]
+        exp_before = p.exp
+        monkeypatch.setattr(base_player_mod, 'rnd', lambda: 0.0)  # practice roll
+        assert p.visit_sweetheart() is True
+        assert p.exp == exp_before + CHILD_EXP
+
+    def test_bio_mentions_family(self):
+        g = make_game()
+        p = g.players[0]
+        sw = make_sweetheart(g, p)
+        p.is_married = True
+        p.children_ages = [3, 15]
+        bio = biographies.generate_bio(p)
+        assert sw.name in bio
+        assert '2 wonderful children' in bio

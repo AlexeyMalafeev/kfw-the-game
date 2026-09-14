@@ -215,7 +215,9 @@ is excluded so a distinct feared move is always named when another strike
 exists), and a
 3-sentence attribute-spread blurb derived from the gap between the player's
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
-"almost inhuman ... at the cost of ..."). Other stats, accomplishments, traits
+"almost inhuman ... at the cost of ..."), and — for married winners — a family
+line naming the spouse and the number of children ("who carry on his
+kung-fu"). Other stats, accomplishments, traits
 and the gossip records are **not** used ⚠️ — the module docstring-comment lists
 planned content (undefeated record, money habits, notable
 fights, "unwrap accomplishments into short stories") that was never
