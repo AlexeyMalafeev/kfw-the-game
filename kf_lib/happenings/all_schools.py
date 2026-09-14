@@ -2,6 +2,7 @@ import random
 from collections import deque
 
 from kf_lib.fighting import fight
+from kf_lib.ui import yn
 
 
 ALL_SCHOOLS_PART_EXP = 20  # small exp for winning-roster players who were not the final winner
@@ -166,6 +167,20 @@ class AllSchoolsTournament:
             'fields its students, weakest first — a knocked-out fighter is replaced by the '
             'next one in rank. Last school standing wins!'
         )
-        self._do_rounds()
-        self._give_rewards()
+        # human participants may opt to skip all their bouts: they are then
+        # auto-fought without the per-fight display and prompt; declining
+        # keeps the usual "Auto fight?" option for every bout
+        skippers = [
+            f for roster in self.rosters.values() for f in roster if f.is_human
+        ]
+        for h in skippers:
+            h.auto_fight_all = yn(
+                f'{h.name}: auto-fight all your bouts in this tournament?'
+            )
+        try:
+            self._do_rounds()
+            self._give_rewards()
+        finally:
+            for h in skippers:
+                h.auto_fight_all = False
         self._heal_npcs()

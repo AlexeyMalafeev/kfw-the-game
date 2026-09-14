@@ -17,7 +17,10 @@ All notable changes to KFW are documented here. Format loosely follows
   the Strongest School in town — prestige only: a player who was the final
   standing fighter gets the 'All-Schools Champion' accomplishment, other
   players on the winning roster get +20 exp, and a player-master of the
-  winning school gets +10 rep and an `all_schools_tourn_won` stat point
+  winning school gets +10 rep and an `all_schools_tourn_won` stat point.
+  Human participants are asked at the start whether to auto-fight all their
+  bouts (skipping the per-fight display and prompts); declining keeps the
+  usual per-fight 'Auto fight?' option
 - The debug menu now has a **Back** option that returns to the state menu
   without activating any debug tool
 

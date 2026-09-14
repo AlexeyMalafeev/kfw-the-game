@@ -21,7 +21,12 @@ class AutoFight(BaseFight):
         self.school_display = school_display
         self.players = [f for f in self.all_fighters if f.is_player]
         humans = [f for f in self.all_fighters if f.is_human]
-        if humans:
+        # prefer a human who didn't opt to auto-fight all his bouts, so he
+        # still gets the win message and the post-fight menu
+        non_auto_humans = [f for f in humans if not f.auto_fight_all]
+        if non_auto_humans:
+            self.main_player = non_auto_humans[0]
+        elif humans:
             self.main_player = humans[0]
         elif self.players:
             self.main_player = self.players[0]
@@ -33,7 +38,7 @@ class AutoFight(BaseFight):
         self.fight_loop()
         self.disarm_all()
         self.cancel_items_for_all()
-        if self.main_player.is_human:
+        if self.main_player.is_human and not self.main_player.auto_fight_all:
             self.show_win_message()
             self.post_fight_menu()
         if self.main_player.is_player:

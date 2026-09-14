@@ -310,7 +310,12 @@ higher-ranking student of his school takes his place; a school that runs out
 of students is eliminated from the match. With an odd number of schools, one
 randomly chosen match per round is a three-school free-for-all with the same
 substitution rules. Damage carries over within a match (`hp_carry`), but
-everyone heals between matches. A match (and the final) where everyone is
+everyone heals between matches. Human participants are asked at the start
+whether to auto-fight all their bouts; opting in skips the prefight display,
+the per-fight 'Auto fight?' prompt and the post-fight menu for them (the
+transient `auto_fight_all` flag), while other human players still fight
+their own bouts and keep the per-fight prompt either way. A match (and the
+final) where everyone is
 KO'd with no reserves left is a draw — no winner, no rewards. The winner is
 announced under the style's displayed (public unless known) name, so the
 school's secret true name is not leaked, and declared the Strongest School in

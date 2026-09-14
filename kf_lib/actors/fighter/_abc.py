@@ -124,6 +124,7 @@ class FighterAPI(ABC):
     speed: int = None
     speed_mult: float = None
     speed_full: int = None
+    auto_fight_all: bool = None  # transient: auto-fight without prompting (tournaments)
     stamina: int = None  # descriptor
     stamina_factor: float = None
     stamina_gain: int = None

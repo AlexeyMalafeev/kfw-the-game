@@ -21,7 +21,8 @@ def free_for_all(
 ):
     """Everyone fights everyone, last man standing wins.
     Return True if fighters[0] wins, False otherwise (including draw)."""
-    if any((f.is_human for f in fighters)):
+    humans = [f for f in fighters if f.is_human and not f.auto_fight_all]
+    if humans:
         cls()
         print(get_prefight_info(fighters, hide_enemy_stats=hide_stats))
         if af_option:
@@ -60,7 +61,8 @@ def group_free_for_all(
     """Groups fight each other (no infighting), last group standing wins.
     Return True if groups[0] wins, False otherwise (including draw)."""
     fighters = [f for group in groups for f in group]
-    if any((f.is_human for f in fighters)):
+    humans = [f for f in fighters if f.is_human and not f.auto_fight_all]
+    if humans:
         cls()
         print(get_prefight_info(fighters, hide_enemy_stats=hide_stats, groups=groups))
         if af_option:

@@ -22,6 +22,7 @@ from kf_lib.happenings.story._school_attack import (
     SCHOOL_DEFENSE_WIN_REP,
 )
 from kf_lib.kung_fu import techniques
+import kf_lib.happenings.all_schools as as_mod
 from kf_lib.happenings.all_schools import (
     ALL_SCHOOLS_MASTER_REP,
     ALL_SCHOOLS_PART_EXP,
@@ -359,6 +360,37 @@ class TestAllSchoolsTournament:
             g, p = make_game_and_player(seed=20 + seed, level=10)
             make_master(p, num_students=3)
             AllSchoolsTournament(g)  # must not crash
+
+    def test_auto_fight_all_asked_and_reset(self):
+        g, p = make_game_and_player(seed=14, level=5)
+        p.is_human = True  # fake hot-seat human
+        g.schools[p.style.name] = [p]  # make sure p fights in every match
+        asked = []
+        orig_yn = as_mod.yn
+        as_mod.yn = lambda text: asked.append(text) or True
+        flags = []
+        orig_fight, orig_ffa = fight.fight, fight.free_for_all
+
+        def fake_fight(a, b, **kw):
+            if p in (a, b):
+                flags.append(p.auto_fight_all)
+            b.hp = 0
+
+        def fake_ffa(fighters, **kw):
+            if p in fighters:
+                flags.append(p.auto_fight_all)
+            for f in fighters[1:]:
+                f.hp = 0
+
+        fight.fight, fight.free_for_all = fake_fight, fake_ffa
+        try:
+            AllSchoolsTournament(g)
+        finally:
+            as_mod.yn = orig_yn
+            fight.fight, fight.free_for_all = orig_fight, orig_ffa
+        assert len(asked) == 1  # only p is human
+        assert flags and all(flags)  # the flag was on during p's bouts
+        assert p.auto_fight_all is False  # reset after the tournament
 
 
 class TestUniteSchools:

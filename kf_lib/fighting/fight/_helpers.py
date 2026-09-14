@@ -74,7 +74,10 @@ def fight(
     """Return True if f1 wins, False otherwise (including draw)."""
     side_a, side_b = get_sides(f1, f2, f1_allies, f2_allies)
     all_fighters = side_a + side_b
-    if any((f.is_human for f in all_fighters)):
+    # humans who opted to auto-fight all their bouts (tournaments) don't get
+    # the prefight display and the 'Auto fight?' prompt
+    humans = [f for f in all_fighters if f.is_human and not f.auto_fight_all]
+    if humans:
         if not any((f.is_human for f in side_a)):
             side_a, side_b = (
                 side_b,

@@ -5,7 +5,10 @@ from kf_lib import game  # import first: avoids circular import via kf_lib.actor
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.player import SmartAIP
+import kf_lib.fighting.fight._free_for_all as ffa_mod
+import kf_lib.fighting.fight._helpers as helpers_mod
 from kf_lib.fighting.fight import AutoFight, free_for_all, group_free_for_all
+from kf_lib.fighting.fight import fight as fight_helper
 from kf_lib.fighting.fight._base_fight import (
     ENVIRONMENT_BONUSES,
     LOSER_EXP_DIVISOR,
@@ -575,3 +578,94 @@ class TestGroupFreeForAll:
             ]
             f = self.run_gffa(groups, seed=seed)
             assert len(f.winners) + len(f.losers) == 5
+
+
+class TestAutoFightAll:
+    """The tournament 'auto-fight all your bouts' option: humans who opted in
+    skip the prefight display, the 'Auto fight?' prompt and the post-fight
+    menu; humans who opted out keep the per-fight prompt."""
+
+    @staticmethod
+    def make_fake_humans(n=2, auto_all=True):
+        fs = fighter_factory.new_fighter(5, n=n)
+        for f in fs:
+            f.is_human = True  # fake hot-seat humans
+            f.auto_fight_all = auto_all
+        return fs
+
+    @staticmethod
+    def patch_ui(mod, yn_ret=None):
+        """Patch a fight helper module's yn/pak; return (yn_calls, restore)."""
+        yn_calls = []
+        orig_yn, orig_pak = mod.yn, mod.pak
+        mod.yn = lambda *a: yn_calls.append(a) or yn_ret
+        mod.pak = lambda *a: None
+
+        def restore():
+            mod.yn, mod.pak = orig_yn, orig_pak
+
+        return yn_calls, restore
+
+    def test_opted_in_humans_get_no_prompt(self):
+        random.seed(0)
+        fa, fb = self.make_fake_humans()
+        yn_calls, restore = self.patch_ui(helpers_mod)
+        try:
+            f = fight_helper(fa, fb, return_fight_obj=True)
+        finally:
+            restore()
+        assert not yn_calls
+        assert f.winners is not None
+
+    def test_opted_in_humans_skip_win_message_and_menu(self):
+        # if not skipped, post_fight_menu would block waiting for a keypress
+        random.seed(0)
+        fa, fb = self.make_fake_humans()
+        f = AutoFight([fa], [fb])
+        assert f.winners is not None
+
+    def test_opted_out_human_still_gets_prompt(self):
+        random.seed(0)
+        fa, fb = self.make_fake_humans(auto_all=False)
+        yn_calls, restore = self.patch_ui(helpers_mod, yn_ret=True)
+        orig_menu = BaseFight.post_fight_menu
+        orig_show = BaseFight.show_win_message
+        BaseFight.post_fight_menu = lambda self: None
+        BaseFight.show_win_message = lambda self: None
+        try:
+            f = fight_helper(fa, fb, return_fight_obj=True)
+        finally:
+            restore()
+            BaseFight.post_fight_menu = orig_menu
+            BaseFight.show_win_message = orig_show
+        assert len(yn_calls) == 1
+        assert f.winners is not None
+
+    def test_ffa_opted_in_humans_get_no_prompt(self):
+        random.seed(0)
+        fs = self.make_fake_humans(n=3)
+        yn_calls, restore = self.patch_ui(ffa_mod)
+        try:
+            f = free_for_all(fs, return_fight_obj=True)
+        finally:
+            restore()
+        assert not yn_calls
+        assert len(f.winners) + len(f.losers) == 3
+
+    def test_ffa_mixed_humans_still_prompt(self):
+        random.seed(0)
+        fs = self.make_fake_humans(n=3)
+        fs[2].auto_fight_all = False  # one human didn't opt in
+        yn_calls, restore = self.patch_ui(ffa_mod, yn_ret=True)
+        orig_menu = BaseFight.post_fight_menu
+        orig_show = BaseFight.show_win_message
+        BaseFight.post_fight_menu = lambda self: None
+        BaseFight.show_win_message = lambda self: None
+        try:
+            f = free_for_all(fs, return_fight_obj=True)
+        finally:
+            restore()
+            BaseFight.post_fight_menu = orig_menu
+            BaseFight.show_win_message = orig_show
+        assert len(yn_calls) == 1
+        assert len(f.winners) + len(f.losers) == 3

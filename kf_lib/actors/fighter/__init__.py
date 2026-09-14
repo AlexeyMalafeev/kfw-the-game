@@ -41,6 +41,7 @@ class Fighter(
 ):
     is_human = False
     is_player = False
+    auto_fight_all = False
 
     # the order of arguments should not be changed, or saving will break
     def __init__(
