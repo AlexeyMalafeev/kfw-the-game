@@ -290,26 +290,35 @@ management):
 ## Scheduled events and town stats
 
 `events.randevent(g)` runs once per day from `Playing.next_day`
-(`_playing.py:192`), after all players have acted. It shuffles four
+(`_playing.py:192`), after all players have acted. It shuffles three
 independent rolls: new story (0.1), school-vs-school brawl (0.04), new
-tournament (0.15), all-schools tournament (0.02) — so zero to four events per
-day.
+tournament (0.15) — so zero to three events per day.
 
 `school_vs_school(g)` picks two random non-empty schools, drops inactive
 players from the rosters, and runs one NPC fight (`fight.fight(...)`) between
 them with school names displayed; participants just log the event.
 
-`all_schools_tournament(g)` is the mega-tournament: every school with at
-least 2 fighters fields a team — its master plus the top 2 students by
-`get_exp_worth()` (inactive players are dropped; player-run schools included,
-teams with players fight first for the protagonist perspective). The teams
-clash in one group free-for-all (`fight.group_free_for_all`, no
-items/environment, school names displayed), last school standing wins. A
-draw means no winner and no rewards. The winner is announced under the
-style's displayed (public unless known) name, so the school's secret true
-name is not leaked. Winners log the victory; players on the
-winning team also get +20 exp, +5 rep, a 200 c prize and the 'All-Schools
-Champion' accomplishment.
+`all_schools_tournament(g)` (`happenings/all_schools.py`,
+`AllSchoolsTournament`) is the scheduled mega-tournament: it runs once per
+month from `Playing.do_monthly` (i.e. at the end of the last day of the
+month), with a heads-up message on day 25. Every school with at least one
+available student takes part (masters never fight; inactive players sit it
+out). It is a single-elimination bracket of school-vs-school **gauntlet
+matches**, re-paired randomly every round: each school fields its
+lowest-ranking student first, and whenever a fighter is knocked out, the next
+higher-ranking student of his school takes his place; a school that runs out
+of students is eliminated from the match. With an odd number of schools, one
+randomly chosen match per round is a three-school free-for-all with the same
+substitution rules. Damage carries over within a match (`hp_carry`), but
+everyone heals between matches. A match (and the final) where everyone is
+KO'd with no reserves left is a draw — no winner, no rewards. The winner is
+announced under the style's displayed (public unless known) name, so the
+school's secret true name is not leaked, and declared the Strongest School in
+town — prestige only, no money prize. Roster members log the victory; a
+player who was the final standing fighter gets the 'All-Schools Champion'
+accomplishment, other players on the winning roster (fought-and-KO'd or never
+called upon) get +20 exp, and a player-master of the winning school gets +10
+rep and an `all_schools_tourn_won` stat point.
 
 Town stats (`game.crime`, `game.poverty`, `game.kung_fu`) are set once at
 `BaseGame.__init__` — fixed at 0.125 by default, or chosen by the player in the

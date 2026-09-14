@@ -12,9 +12,11 @@ class AutoFight(BaseFight):
         items_allowed=True,
         win_messages=None,
         school_display=False,
+        hp_carry=None,
     ):
         super().__init__(side_a, side_b, environment_allowed=environment_allowed)
         self.items_allowed = items_allowed
+        self.hp_carry = hp_carry
         self.win_messages = win_messages
         self.school_display = school_display
         self.players = [f for f in self.all_fighters if f.is_player]

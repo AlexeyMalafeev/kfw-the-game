@@ -111,6 +111,8 @@ class Playing(BaseGame):
 
     def do_monthly(self):
         """This is guaranteed to execute only once per month"""
+        # the All-Schools Tournament is held on the last day of every month
+        events.all_schools_tournament(self)
         # increase crime
         events.crime_up(self)
         # add new escaped convict
@@ -186,6 +188,8 @@ class Playing(BaseGame):
         s = self
         s.day += 1
         s.do_daily()
+        if s.day == 25:
+            s.msg('The All-Schools Tournament will be held at the end of the month.')
         if s.day == 31:
             s.month += 1
             s.day = 1

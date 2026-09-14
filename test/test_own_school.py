@@ -22,10 +22,10 @@ from kf_lib.happenings.story._school_attack import (
     SCHOOL_DEFENSE_WIN_REP,
 )
 from kf_lib.kung_fu import techniques
-from kf_lib.happenings.events import (
-    ALL_SCHOOLS_TEAM_SIZE,
-    ALL_SCHOOLS_PRIZE,
-    ALL_SCHOOLS_WIN_REP,
+from kf_lib.happenings.all_schools import (
+    ALL_SCHOOLS_MASTER_REP,
+    ALL_SCHOOLS_PART_EXP,
+    AllSchoolsTournament,
 )
 import kf_lib.happenings.tournament as tourn_mod
 from kf_lib.happenings.tournament import (
@@ -154,63 +154,211 @@ class TestStudentsInTournaments:
 
 
 class TestAllSchoolsTournament:
-    @staticmethod
-    def run_rigged(g, winners):
-        """Run the event with the group FFA replaced by a stub."""
-        orig = fight.group_free_for_all
-        fight.group_free_for_all = lambda groups, **kw: SimpleNamespace(winners=winners)
-        try:
-            events.all_schools_tournament(g)
-        finally:
-            fight.group_free_for_all = orig
+    """Scheduled monthly tournament: single-elimination bracket of school-vs-school
+    gauntlet matches (weakest student first, KO'd fighters replaced by rank)."""
 
-    def test_teams_are_master_plus_top_students(self):
+    @staticmethod
+    def make_tournament(g):
+        """An AllSchoolsTournament instance without running anything."""
+        t = AllSchoolsTournament.__new__(AllSchoolsTournament)
+        t.g = t.game = g
+        t.rosters = {}
+        t.last_standing = {}
+        t.champion = None
+        return t
+
+    @staticmethod
+    def school_of(g, f):
+        for name, roster in g.schools.items():
+            if f in roster:
+                return name
+
+    @classmethod
+    def run_rigged(cls, g, champion_school=None, mutual_ko=False):
+        """Run the whole tournament with fight.fight/free_for_all stubbed.
+        champion_school's representative always stays up; with mutual_ko every
+        bout ends with everybody down."""
+
+        def resolve(fighters):
+            if mutual_ko:
+                for f in fighters:
+                    f.hp = 0
+                return
+            champion_reps = [
+                f for f in fighters
+                if champion_school is not None
+                and cls.school_of(g, f) == champion_school
+            ]
+            if champion_reps:
+                for f in fighters:
+                    if f not in champion_reps:
+                        f.hp = 0
+            else:
+                for f in fighters[1:]:
+                    f.hp = 0
+
+        def fake_fight(a, b, **kw):
+            resolve([a, b])
+
+        def fake_ffa(fighters, **kw):
+            resolve(list(fighters))
+
+        orig_fight, orig_ffa = fight.fight, fight.free_for_all
+        fight.fight, fight.free_for_all = fake_fight, fake_ffa
+        try:
+            return AllSchoolsTournament(g)
+        finally:
+            fight.fight, fight.free_for_all = orig_fight, orig_ffa
+
+    def test_rosters_are_students_only_weakest_first(self):
         g, p = make_game_and_player(seed=8, level=14)
         make_master(p, num_students=4)
-        captured = {}
-        orig = fight.group_free_for_all
+        t = self.make_tournament(g)
+        t._gather_rosters()
+        assert len(t.rosters) == len(g.schools)  # no school is empty here
+        for name, roster in t.rosters.items():
+            assert g.masters.get(name) not in roster  # masters don't fight
+            assert roster == sorted(roster, key=lambda f: f.get_exp_worth())
+        assert p not in t.rosters[p.new_school_name]  # the player-master doesn't fight
 
-        def fake_gffa(groups, **kw):
-            captured['groups'] = groups
-            return SimpleNamespace(winners=[])
+    def test_inactive_players_are_excluded(self):
+        g, p = make_game_and_player(seed=8, level=14)
+        p.inactive = 3  # injured
+        t = self.make_tournament(g)
+        t._gather_rosters()
+        assert all(p not in roster for roster in t.rosters.values())
 
-        fight.group_free_for_all = fake_gffa
+    def test_odd_school_count_yields_one_three_way_per_round(self):
+        g, p = make_game_and_player(seed=8, level=14)
+        make_master(p, num_students=3)  # 11 schools: rounds of 11 -> 5 -> 2 -> 1
+        t = self.make_tournament(g)
+        t._gather_rosters()
+        captured = []
+
+        def fake_match(self_, school_names):
+            captured.append(list(school_names))
+            return school_names[0], self_.rosters[school_names[0]][0]
+
+        orig = AllSchoolsTournament._do_match
+        AllSchoolsTournament._do_match = fake_match
         try:
-            events.all_schools_tournament(g)
+            t._do_rounds()
         finally:
-            fight.group_free_for_all = orig
-        teams = captured['groups']
-        assert len(teams) >= 2
-        for team in teams:
-            assert 2 <= len(team) <= ALL_SCHOOLS_TEAM_SIZE
-        # the player's school fields the player-master + its top 2 students
-        p_team = next(t for t in teams if p in t)
-        school = g.schools[p.new_school_name]
-        top2 = sorted(school, key=lambda f: -f.get_exp_worth())[:2]
-        assert p_team == [p] + top2
+            AllSchoolsTournament._do_match = orig
+        sizes = [len(m) for m in captured]
+        assert sizes == [3, 2, 2, 2, 2, 3, 2, 2]  # one 3-way per odd round
+        assert t.champion in t.rosters
 
-    def test_draw_gives_no_rewards(self):
-        g, p = make_game_and_player(seed=9, level=14)
+    def test_gauntlet_substitution(self):
+        g, p = make_game_and_player(seed=9, level=1)
+        t = self.make_tournament(g)
+        names = list(g.schools)[:2]
+        t.rosters = {
+            n: sorted(g.schools[n], key=lambda f: f.get_exp_worth()) for n in names
+        }
+        ordered = sorted(
+            names, key=lambda n: not any(f.is_player for f in t.rosters[n])
+        )
+        for n in names:  # _do_rounds heals everyone before a match
+            for f in t.rosters[n]:
+                f.hp = f.hp_max
+        calls = []
+
+        def fake_fight(a, b, **kw):
+            calls.append((a, b))
+            b.hp = 0
+
+        orig = fight.fight
+        fight.fight = fake_fight
+        try:
+            winner, final_fighter = t._do_match(names)
+        finally:
+            fight.fight = orig
+        assert winner == ordered[0]
+        assert final_fighter is t.rosters[ordered[0]][0]
+        # the weakest student of the winning school beats the other school's
+        # students one by one, weakest first
+        assert calls == [(final_fighter, f) for f in t.rosters[ordered[1]]]
+
+    def test_drawn_match_when_everyone_down_with_no_reserves(self):
+        g, p = make_game_and_player(seed=9, level=1)
+        t = self.make_tournament(g)
+        names = list(g.schools)[:2]
+        t.rosters = {n: g.schools[n][:1] for n in names}
+
+        def fake_fight(a, b, **kw):
+            a.hp = b.hp = 0
+
+        orig = fight.fight
+        fight.fight = fake_fight
+        try:
+            winner, final_fighter = t._do_match(names)
+        finally:
+            fight.fight = orig
+        assert winner is None and final_fighter is None
+
+    def test_final_winner_player_gets_accomplishment(self):
+        g, p = make_game_and_player(seed=10, level=5)
+        school_name = p.style.name
+        assert p in g.schools[school_name]
+        g.schools[school_name] = [p]  # p is the school's only student
+        t = self.run_rigged(g, champion_school=school_name)
+        assert t.champion == school_name
+        assert 'All-Schools Champion' in p.accompl
+
+    def test_non_final_roster_player_gets_part_exp(self):
+        g, p = make_game_and_player(seed=11, level=8)
+        school_name = p.style.name
+        others = [f for f in g.schools[school_name] if f is not p]
+        weakest = min(others, key=lambda f: f.get_exp_worth())
+        assert weakest.get_exp_worth() < p.get_exp_worth()  # sanity: p fights last
+        g.schools[school_name] = [weakest, p]
+        exp_before = p.exp
+        t = self.run_rigged(g, champion_school=school_name)
+        assert t.champion == school_name
+        assert t.last_standing[school_name] is weakest  # p never had to fight
+        assert 'All-Schools Champion' not in p.accompl
+        assert p.exp == exp_before + ALL_SCHOOLS_PART_EXP
+
+    def test_master_of_champion_school_gets_rep(self):
+        g, p = make_game_and_player(seed=12, level=14)
         make_master(p, num_students=3)
-        exp_before, rep_before, money_before = p.exp, p.reputation, p.money
-        self.run_rigged(g, winners=[])
-        assert (p.exp, p.reputation, p.money) == (exp_before, rep_before, money_before)
+        rep_before, exp_before, money_before = p.reputation, p.exp, p.money
+        t = self.run_rigged(g, champion_school=p.new_school_name)
+        assert t.champion == p.new_school_name
+        assert p.reputation == rep_before + ALL_SCHOOLS_MASTER_REP
+        assert p.get_stat('all_schools_tourn_won') == 1
+        # prestige only: no exp (masters don't fight) and no money prize
+        assert p.exp == exp_before
+        assert p.money == money_before
         assert 'All-Schools Champion' not in p.accompl
 
-    def test_player_win_rewards(self):
-        g, p = make_game_and_player(seed=10, level=14)
-        make_master(p, num_students=3)
-        rep_before, money_before = p.reputation, p.money
-        self.run_rigged(g, winners=[p])  # the player's team wins
-        assert p.reputation == rep_before + ALL_SCHOOLS_WIN_REP
-        assert p.money == money_before + ALL_SCHOOLS_PRIZE
-        assert 'All-Schools Champion' in p.accompl
+    def test_drawn_tournament_gives_no_rewards(self):
+        g, p = make_game_and_player(seed=13, level=5)
+        for name, roster in g.schools.items():
+            g.schools[name] = [p] if p in roster else roster[:1]
+        exp_before, rep_before = p.exp, p.reputation
+        t = self.run_rigged(g, mutual_ko=True)
+        assert t.champion is None
+        assert (p.exp, p.reputation) == (exp_before, rep_before)
+        assert 'All-Schools Champion' not in p.accompl
+
+    def test_scheduled_monthly(self):
+        g, p = make_game_and_player(seed=30, level=5)
+        calls = []
+        orig = events.all_schools_tournament
+        events.all_schools_tournament = calls.append
+        try:
+            g.do_monthly()
+        finally:
+            events.all_schools_tournament = orig
+        assert calls == [g]
 
     def test_runs_headless_for_real(self):
         for seed in range(3):
-            g, p = make_game_and_player(seed=20 + seed, level=14)
+            g, p = make_game_and_player(seed=20 + seed, level=10)
             make_master(p, num_students=3)
-            events.all_schools_tournament(g)  # must not crash
+            AllSchoolsTournament(g)  # must not crash
 
 
 class TestUniteSchools:

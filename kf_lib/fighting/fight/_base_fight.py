@@ -35,6 +35,7 @@ class BaseFight(object):
         self.win = None
 
         # fight settings
+        self.hp_carry = None  # {fighter: hp} to start the fight with instead of full hp
         self.environment_allowed = environment_allowed
         self.environment_bonus = self.environment_allowed * random.choice(ENVIRONMENT_BONUSES)
         self.items_allowed = False
@@ -387,6 +388,8 @@ class BaseFight(object):
         for f in self.all_fighters:
             f.current_fight = self
             f.prepare_for_fight()
+            if self.hp_carry and f in self.hp_carry:
+                f.hp = min(self.hp_carry[f], f.hp_max)
 
     def queue(self, f, i):
         if i not in self.order:

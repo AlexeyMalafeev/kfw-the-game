@@ -17,6 +17,7 @@ def free_for_all(
     win_messages=None,
     school_display=False,
     return_fight_obj=False,
+    hp_carry=None,
 ):
     """Everyone fights everyone, last man standing wins.
     Return True if fighters[0] wins, False otherwise (including draw)."""
@@ -32,11 +33,13 @@ def free_for_all(
         auto_fight = True
     if auto_fight:
         f = AutoFreeForAll(
-            fighters, [], environment_allowed, items_allowed, win_messages, school_display
+            fighters, [], environment_allowed, items_allowed, win_messages, school_display,
+            hp_carry=hp_carry,
         )
     else:
         f = NormalFreeForAll(
-            fighters, [], environment_allowed, items_allowed, win_messages, school_display
+            fighters, [], environment_allowed, items_allowed, win_messages, school_display,
+            hp_carry=hp_carry,
         )
     if return_fight_obj:
         return f

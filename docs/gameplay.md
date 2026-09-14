@@ -364,10 +364,19 @@ player in its level window; a started story then advances via the
 ContinueStory encounter, 7% per encounter sweep), 4% school-vs-school brawl
 (the top fighter of each of two random schools, rest as allies — a real fight,
 so players involved get exp, stats and can be injured; nothing else about the
-schools changes), 15% a tournament starts, 2% an All-Schools Tournament
-(master + top 2 students per school, group free-for-all between schools;
-players on the winning team get exp, rep, a prize and the 'All-Schools
-Champion' accomplishment).
+schools changes), 15% a tournament starts.
+
+The All-Schools Tournament is not random: it is scheduled on the last day of
+every month (run from `do_monthly`, announced on day 25). Every school's
+students fight in a single-elimination bracket of gauntlet matches — weakest
+student first, a KO'd fighter is replaced by the next one in rank, a school
+with no students left is eliminated, and odd rounds have one three-school
+free-for-all match; damage carries over within a match, everyone heals
+between matches. Masters don't fight. The prize is prestige: the winner is
+declared the Strongest School in town; a player who was the final standing
+fighter gets the 'All-Schools Champion' accomplishment, other players on the
+winning roster get +20 exp, and a player-master of the winning school gets
++10 rep and an `all_schools_tourn_won` stat point.
 
 Tournaments (`happenings/tournament.py`): random level band (1–3/4–6/7–10/
 11–14), 8 participants usually, single elimination with byes on odd counts,

@@ -99,6 +99,17 @@ class TestFightSettings:
         assert fight.get_seconds() == 125
         assert fight.get_time() == (2, 5)
 
+    def test_hp_carry_applied_on_prepare(self):
+        # gauntlet matches (all-schools tournament): a survivor starts the next
+        # bout with his carried hp instead of full hp
+        random.seed(0)
+        fa, fb = lv1_fighter('A'), lv1_fighter('B')
+        fight = BaseFight([fa], [fb])
+        fight.hp_carry = {fa: 5}
+        fight.prepare_fighters()
+        assert fa.hp == 5
+        assert fb.hp == fb.hp_max
+
 
 class TestCrowdFights:
     def test_one_vs_many_terminates(self):

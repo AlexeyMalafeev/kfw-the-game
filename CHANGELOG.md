@@ -5,6 +5,22 @@ All notable changes to KFW are documented here. Format loosely follows
 
 ## [Unreleased]
 
+### Added
+- **The All-Schools Tournament is now a scheduled monthly event** held on the
+  last day of every month (announced on day 25), with a new format: a
+  single-elimination bracket of school-vs-school gauntlet matches. Every
+  school fields all its students, weakest first (masters don't fight);
+  whenever a fighter is knocked out, the next higher-ranking student takes
+  his place, and a school that runs out of students is eliminated. Odd rounds
+  have one randomly chosen three-school free-for-all match; damage carries
+  over within a match, everyone heals between matches. The winner is declared
+  the Strongest School in town — prestige only: a player who was the final
+  standing fighter gets the 'All-Schools Champion' accomplishment, other
+  players on the winning roster get +20 exp, and a player-master of the
+  winning school gets +10 rep and an `all_schools_tourn_won` stat point
+- The debug menu now has a **Back** option that returns to the state menu
+  without activating any debug tool
+
 ### Changed
 - State-menu hotkeys are now shown on two rows — info options
   (`Items/Accomplishments/Moves/Techniques/[Students]/Back`) on the first,
@@ -17,10 +33,6 @@ All notable changes to KFW are documented here. Format loosely follows
 - Stats report: "Strikes landed" now shows accuracy
   (`landed/thrown (acc%)`), and a Fame row (masters only, blank otherwise)
   was added right after Reputation
-
-### Added
-- The debug menu now has a **Back** option that returns to the state menu
-  without activating any debug tool
 
 ## [v0.7.2-beta "All Schools Under Heaven"] — 2026-09-11
 

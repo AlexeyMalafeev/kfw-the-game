@@ -4,6 +4,7 @@ COLUMN_INTERVAL = 2
 # it is safe to add new stats - that won't break the saved games
 
 DEFAULT_STATS = (
+    ('all_schools_tourn_won', 0),
     ('aston_victory', None),  # tuple: (date, p.level, [enemies], big opp_to_self_pwr_ratio)
     ('bad_luck', 0),
     ('became_master', '--'),
@@ -117,6 +118,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('Enemies', str(len(p.enemies))),
         ('Students', str(p.students)),
         ('Stud.tourn.won', gs('students_tourn_won')),
+        ('A.-S.tourn.won', gs('all_schools_tourn_won')),
         ('Accomp,stories', '{},{}'.format(len(p.accompl), gs('num_stories'))),
         ('Got drunk', gs('got_drunk')),
         ('Reputation', p.reputation),

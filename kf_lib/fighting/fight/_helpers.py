@@ -69,6 +69,7 @@ def fight(
     win_messages=None,
     school_display=False,
     return_fight_obj=False,
+    hp_carry=None,
 ):
     """Return True if f1 wins, False otherwise (including draw)."""
     side_a, side_b = get_sides(f1, f2, f1_allies, f2_allies)
@@ -93,11 +94,13 @@ def fight(
         auto_fight = True
     if auto_fight:
         f = AutoFight(
-            side_a, side_b, environment_allowed, items_allowed, win_messages, school_display
+            side_a, side_b, environment_allowed, items_allowed, win_messages, school_display,
+            hp_carry=hp_carry,
         )
     else:
         f = NormalFight(
-            side_a, side_b, environment_allowed, items_allowed, win_messages, school_display
+            side_a, side_b, environment_allowed, items_allowed, win_messages, school_display,
+            hp_carry=hp_carry,
         )
     if return_fight_obj:
         return f
