@@ -121,6 +121,10 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
     def p_match_or_not():
         return yn('')
 
+    @staticmethod
+    def pursue_romance_or_not():
+        return yn('')
+
     def refresh_screen(self):
         cls()
         self.show(self.get_p_info())

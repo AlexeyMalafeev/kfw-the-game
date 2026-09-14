@@ -1,9 +1,11 @@
 # Social graph and traits
 
-Friends, enemies, co-op bonds and personality traits, as implemented. Source
-files: `kf_lib/actors/player/_base_player.py` (the lists, help channels, trait
-(de)activation), `kf_lib/actors/traits.py` (trait definitions),
-`kf_lib/game/_new_game.py` (co-op setup), `kf_lib/game/_save_game.py` /
+Friends, enemies, romance, co-op bonds and personality traits, as implemented.
+Source files: `kf_lib/actors/player/_base_player.py` (the lists, help channels,
+romance state, trait (de)activation), `kf_lib/actors/traits.py` (trait
+definitions), `kf_lib/happenings/encounters/_romance.py` (romance encounters),
+`kf_lib/actors/names.py` + `kf_lib/game/_base_game.py` (gendered name
+generation), `kf_lib/game/_new_game.py` (co-op setup), `kf_lib/game/_save_game.py` /
 `_load_game.py` (persistence), `kf_lib/happenings/encounters/` (`_challenger.py`,
 `_ambush.py`, `_crime.py`, `_people.py`, `_gambling.py`, `_utils.py`). For the
 encounter-level narrative see `docs/encounters.md`; for where the numbers sit in
@@ -76,10 +78,13 @@ uniformly at random:
   different rolls.
 - `'s'` schoolmates → `schoolmates_help` (0.5), up to 2–3 random non-player
   members of `get_school()` (the player's own school for masters).
+- `'sp'` spouse → `spouse_joins_fight` (0.6), married players only; the
+  sweetheart joins as an ally. See the Romance section.
 
 ⚠️ The single-pick design means friends get rolled only when the `'a'` channel
-is picked (1/4 with all channels on), and a failed roll on the chosen channel
-produces no help at all — there is no fallback to the other channels.
+is picked (1/4 with all channels on, 1/5 once married), and a failed roll on
+the chosen channel produces no help at all — there is no fallback to the other
+channels.
 
 ⚠️ The `'a'` branch assigns `p.allies = p.check_allies()`, and `check_allies`
 returns `None` (not `[]`) when the player has no friends — overwriting the
@@ -107,9 +112,48 @@ bonus; the two attributes and the method are dead code.
 
 Very little. `ForeignerStory.scene3` (`story/_foreigner.py:59`) picks a
 non-player friend as the NPC the foreigner "beat" — flavor only; nothing
-happens to the friend. Everything else is display. There is no romance system:
-the Fat Girl encounter (`_people.py`) is a fight with a marriage *threat*, and
-the wedding in `BanditFianceStory` is an NPC's.
+happens to the friend. Everything else is display. (For the romance side of
+social life, see the Romance section below.)
+
+## Romance
+
+Player-side state (all post-init in `BasePlayer.__init__`; the constructor
+signature is frozen): `sweetheart` (a Fighter ref, None while single),
+`romance_progress` (int), `is_married` (bool), plus the policy knobs
+`romance_pursuit_chance` (0.5), `visit_sweetheart_chance` (0.2, AI day-action
+choice) and `spouse_joins_fight` (0.6). `romance_progress` and `is_married`
+are in `savable_atts`; the sweetheart is saved by name (`sweetheart` +
+`sweetheart_gender` keys in `_player_to_data`, both read back with `.get()` so
+pre-romance saves load with defaults) and appended to the save roster in
+`_refresh_roster`.
+
+- **Meeting**: `NewRomance` (`encounters/_romance.py`, chance 0.03, extra
+  weight in `WALK_ENCS`) fires only while `p.sweetheart is None`. The player
+  decides via `pursue_romance_or_not()` (AI: `romance_pursuit_chance` roll;
+  human: `yn`). On yes, a gendered NPC is generated: gender is a coin flip,
+  the name comes from `game.get_new_name(gender=...)` ('f' draws from
+  `names.FEMALE_FIRST_NAME_PARTS`), level ≈ player level ±2
+  (`fighter_factory.new_sweetheart`), and the fighter is registered with the
+  game so it persists. `Fighter.gender` is a class-level `None` set post-init
+  only on love interests — the rest of the game is genderless.
+- **Courting**: `RomanticDate` (chance 0.05, requires sweetheart and not
+  married) adds 1–3 progress; the 'Visit sweetheart' day action adds 1–2, +2
+  more with a 10-coin gift (50% chance of buying one if affordable).
+- **Marriage**: at `romance_progress >= ROMANCE_PROPOSE_THRESHOLD` (10),
+  `visit_sweetheart` offers a proposal (same pursue-or-not choice). Acceptance
+  chance is `min(0.9, 0.5 + reputation / 500)`; on success `is_married` flips,
+  granting the 'Got Married' accomplishment. A rejection drops progress to
+  threshold − 4.
+- **Effects**: a new `'sp'` channel in `check_help` (married only; 60% roll,
+  spouse joins as ally with a flavor line) — it extends the existing
+  single-pick list, so it slightly dilutes the other four channels; and
+  `check_spouse_daily` (called from `Playing.do_daily`) gives a 10% daily
+  chance the spouse brings home 5–20 coins. The spouse shows up in the stats
+  report (`*LIFE*` section) and in `get_p_info_verbose`. The day action label
+  becomes 'Visit spouse' after marriage and the visit is then flavor-only.
+
+Not implemented (backlog): jealous-rival duels, romance-driven stories, and
+family/children legacy content.
 
 ## What enemies do
 

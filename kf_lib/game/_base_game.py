@@ -84,13 +84,18 @@ class BaseGame(GameIO):
     def get_fighter_ref(fighter):
         return f'g.fighters_dict[{fighter.name!r}]'
 
-    def get_new_name(self, prefix=''):
+    def get_new_name(self, prefix='', gender=None):
         while True:
             for i in range(1000):
                 sur = random.choice(names.SURNAME_PARTS)
                 if not prefix:
                     nf = rndint(1, 2)
-                    fir = ''.join(random.sample(names.FIRST_NAME_PARTS, nf))
+                    first_name_parts = (
+                        names.FEMALE_FIRST_NAME_PARTS
+                        if gender == 'f'
+                        else names.FIRST_NAME_PARTS
+                    )
+                    fir = ''.join(random.sample(first_name_parts, nf))
                     name = f'{sur} {fir}'.title()
                 else:
                     name = f'{prefix} {sur}'.title()

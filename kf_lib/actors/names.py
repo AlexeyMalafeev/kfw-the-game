@@ -216,6 +216,39 @@ FIRST_NAME_PARTS = [
     'zou',
 ]
 
+# used only for generated love interests (the rest of the game is genderless)
+FEMALE_FIRST_NAME_PARTS = [
+    'chun',
+    'fang',
+    'fei',
+    'gui',
+    'hong',
+    'hua',
+    'jiao',
+    'jing',
+    'juan',
+    'lan',
+    'li',
+    'lian',
+    'ling',
+    'mei',
+    'min',
+    'na',
+    'ping',
+    'qiao',
+    'shu',
+    'su',
+    'ting',
+    'xia',
+    'xiang',
+    'xiu',
+    'xue',
+    'yan',
+    'yin',
+    'ying',
+    'yu',
+]
+
 FOREIGN_COUNTRIES = 'England Germany Japan Korea Thailand Brazil'.split()
 FOREIGN_NAMES = {
     'England': 'Smith Jones Taylor Brown Williams Wilson \

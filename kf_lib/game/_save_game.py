@@ -28,6 +28,7 @@ class SaveGame(BaseGame):
             + special_npcs
             + self.criminals
             + [en for p in self.players for en in p.enemies]
+            + [p.sweetheart for p in self.players if p.sweetheart is not None]
         )
         for p in self.players:
             for fr in p.friends:
@@ -64,6 +65,8 @@ class SaveGame(BaseGame):
             'current_story': p.current_story.name if p.current_story else None,
             'friends': [f.name for f in p.friends],
             'enemies': [en.name for en in p.enemies],
+            'sweetheart': self._name_or_none(p.sweetheart),
+            'sweetheart_gender': getattr(p.sweetheart, 'gender', None),
             'students': p.students,
             'best_student': self._fighter_to_data(p.best_student) if p.best_student else None,
         }

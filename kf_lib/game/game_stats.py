@@ -116,6 +116,7 @@ def get_player_data(p, labels_only=False, data_only=False):
         ('...at lv.', gs('became_master_at_lv')),
         ('Friends', str(len(p.friends))),
         ('Enemies', str(len(p.enemies))),
+        ('Spouse', p.sweetheart.name if p.is_married else '-'),
         ('Students', str(p.students)),
         ('Stud.tourn.won', gs('students_tourn_won')),
         ('A.-S.tourn.won', gs('all_schools_tourn_won')),

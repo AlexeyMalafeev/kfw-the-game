@@ -117,6 +117,7 @@ class FighterAPI(ABC):
     qp_max: int = None
     qp_max_mult: float = None
     qp_start: float = None  # descriptor
+    gender: str = None  # None/'f'/'m'; only generated love interests are gendered
     occupation: str = None
     quotes: str = None  # property derived from occupation
     rand_atts_mode: Literal[0, 1, 2] = None

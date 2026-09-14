@@ -108,6 +108,8 @@ class Playing(BaseGame):
             p.log_new_day()
             if not p.inactive and p.check_item(items.MANNEQUIN):
                 p.practice_home(suppress_log=True)
+            if not p.inactive and p.is_married:
+                p.check_spouse_daily()
 
     def do_monthly(self):
         """This is guaranteed to execute only once per month"""

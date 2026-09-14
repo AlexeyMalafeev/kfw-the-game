@@ -205,6 +205,9 @@ def game_snapshot(g):
             p.stats_dict,
             [f.name for f in p.friends],
             [en.name for en in p.enemies],
+            p.sweetheart.name if p.sweetheart is not None else None,
+            p.romance_progress,
+            p.is_married,
             p.students,
             fighter_snapshot(p.best_student) if p.best_student else None,
             p.current_story.name if p.current_story else None,
@@ -356,6 +359,12 @@ class TestLoading:
         assert friend is not p
         p.friends.append(friend)
         p.enemies.append(g.criminals[0])
+        # a sweetheart (married): saved by name, gender as a separate key
+        sw = fighter_factory.new_sweetheart('Test Love', 'f', 3)
+        g.register_fighter(sw)
+        p.sweetheart = sw
+        p.romance_progress = 7
+        p.is_married = True
         p.best_student = fighter_factory.new_student('Test Stud', p.style.name)
         s = g.stories['ForeignerStory']
         s.player = p
@@ -378,6 +387,9 @@ class TestLoading:
         assert p2.current_story is g2.stories['ForeignerStory']
         assert p2.friends[0] is g2.fighters_dict[friend.name]
         assert p2.enemies[0] is g2.criminals[0]
+        assert p2.sweetheart is g2.fighters_dict['Test Love']
+        assert p2.sweetheart.gender == 'f'
+        assert (p2.romance_progress, p2.is_married) == (7, True)
 
     def test_loaded_game_continues_playing(self, temp_save_folder):
         g = make_game()
@@ -444,6 +456,25 @@ class TestLoading:
         p2 = g2.players[0]
         assert p2.move_usage == {}
         assert p2.get_stat('strikes_thrown') == 0
+
+    def test_old_saves_without_romance_keys_load(self, temp_save_folder):
+        # pre-romance saves lack the sweetheart keys and the new atts;
+        # the __init__ defaults must survive
+        g = make_game()
+        g.save_game(SAVE_NAME)
+        data = json.loads((temp_save_folder / SAVE_NAME).read_text())
+        for pdata in data['players']:
+            del pdata['sweetheart']
+            del pdata['sweetheart_gender']
+            del pdata['atts']['romance_progress']
+            del pdata['atts']['is_married']
+        (temp_save_folder / SAVE_NAME).write_text(json.dumps(data))
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        p2 = g2.players[0]
+        assert p2.sweetheart is None
+        assert p2.romance_progress == 0
+        assert p2.is_married is False
 
     def test_occupation_json_roundtrip_is_stable(self, temp_save_folder):
         g = make_game()

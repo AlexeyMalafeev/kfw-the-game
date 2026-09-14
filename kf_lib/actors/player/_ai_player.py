@@ -32,6 +32,8 @@ class AIPlayer(BasePlayer):
         return rnd() <= self.buy_item_chance
 
     def choose_day_action(self):
+        if self.sweetheart is not None and rnd() <= self.visit_sweetheart_chance:
+            return self.visit_sweetheart
         if not self.is_master:
             if self.money < self.min_non_master_money:
                 return self.go_work
@@ -100,6 +102,9 @@ class AIPlayer(BasePlayer):
     @staticmethod
     def p_match_or_not():
         return True
+
+    def pursue_romance_or_not(self):
+        return rnd() <= self.romance_pursuit_chance
 
     def pak(self):
         pass

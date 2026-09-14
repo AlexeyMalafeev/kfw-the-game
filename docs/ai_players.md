@@ -62,13 +62,16 @@ sick-from-drinking days are never medicated.
 
 `AIPlayer.choose_day_action` is a fixed decision tree — no scoring, no memory:
 
+- first, if the player has a sweetheart: `visit_sweetheart_chance` (0.2) →
+  `visit_sweetheart` (see the Romance section in `docs/social_and_traits.md`).
 - not a master: `money < min_non_master_money` (175) → `go_work`; else
   `non_master_practice_chance` (0.9) → `practice_school`, else `go_walk`.
 - master: `money < min_master_money` (150) → `teach_students` if
   `students >= min_students_to_teach` (5) else `go_work`; else
   `master_practice_chance` (0.6) → `practice_master`, else `go_walk`.
 
-So a standard AI player only ever works, practices, or walks. `buy_items`,
+So a standard AI player only ever visits their sweetheart, works, practices,
+or walks. `buy_items`,
 `fight_crime`, `help_poor`, `pick_fights`, `go_seedy` exist in
 `get_day_actions()` (`_base_player.py`) but are only reachable by humans and by
 `BaselineAIP`, whose `choose_day_action` is `random.choice` over that list.

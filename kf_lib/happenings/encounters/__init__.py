@@ -11,6 +11,7 @@ from ._gambling import *
 from ._items import *
 from ._people import *
 from ._performer import *
+from ._romance import *
 from ._school import *
 from ._story import *
 from ._utils import FAILED_ESCAPE_BEATING, check_feeling_greedy, check_scary_fight, \
@@ -51,6 +52,8 @@ WALK_ENCS = (
     + [Merchant] * 3
     + [Gossip] * 3
     + [Weirdo] * 3
+    + [NewRomance] * 2
+    + [RomanticDate] * 3
 )
 WORK_ENCS = []
 

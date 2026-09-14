@@ -6,6 +6,18 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Romance system**: players can now meet a love interest (the `NewRomance`
+  encounter, only while single), court them via `RomanticDate` encounters and
+  the new **Visit sweetheart** day action (small gifts speed things up), and
+  eventually propose — acceptance scales with reputation. Marriage gives the
+  'Got Married' accomplishment and two gameplay effects: the spouse can join
+  street fights on the player's side (a new `check_help` channel, 60% roll)
+  and occasionally brings home some money (10% daily). Sweethearts are
+  gendered NPCs with proper names (a new female first-name pool; the rest of
+  the game stays genderless), martial artists near the player's level. AI
+  players court with a 50% pursuit chance and visit their sweetheart with a
+  20% daily chance. Romance state survives save/load (old saves load with
+  defaults)
 - **The All-Schools Tournament is now a scheduled monthly event** held on the
   last day of every month (announced on day 25), with a new format: a
   single-elimination bracket of school-vs-school gauntlet matches. Every

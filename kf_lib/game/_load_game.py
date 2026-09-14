@@ -137,6 +137,10 @@ class LoadGame(BaseGame):
                 p.current_story = self.stories[pdata['current_story']]
             p.friends = [fsd[name] for name in pdata['friends']]
             p.enemies = [fsd[name] for name in pdata['enemies']]
+            # optional keys, absent in pre-romance saves
+            p.sweetheart = fsd.get(pdata.get('sweetheart'))
+            if p.sweetheart is not None:
+                p.sweetheart.gender = pdata.get('sweetheart_gender', 'f')
             p.students = pdata['students']
             if pdata['best_student'] is not None:
                 p.best_student = self._fighter_from_data(pdata['best_student'])

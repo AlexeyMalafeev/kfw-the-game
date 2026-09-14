@@ -40,6 +40,12 @@ UNITED_SCHOOL_REP = 5
 PERSUADE_REP_DIVISOR = 150  # persuade chance = reputation / this
 MAX_PERSUADE_CH = 0.75
 
+# romance
+ROMANCE_PROPOSE_THRESHOLD = 10  # romance_progress needed for a proposal
+ROMANCE_GIFT_COST = 10
+CH_PROPOSAL_ACCEPT = 0.5  # + reputation / 500, capped at 0.9
+CH_SPOUSE_GIFT = 0.1  # daily chance the spouse brings home some money
+
 
 # todo Epic Gambler accomplishment
 
@@ -48,7 +54,8 @@ class BasePlayer(Fighter):
     is_player = True
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
-    move_usage banned_from_school schools_allied school_techs'''.split()
+    move_usage banned_from_school schools_allied school_techs
+    romance_progress is_married'''.split()
     possible_tournament_bets = (10, 25, 50, 100)
 
     exp = Integer(minvalue=0, action='raise')
@@ -97,10 +104,13 @@ class BasePlayer(Fighter):
         self.max_days_to_recover = 7
         self.max_num_friends = 8
         self.next_lv_exp_mult = 1.0
+        self.romance_pursuit_chance = 0.5
         self.school_training_exp_mult = 1.0
         self.schoolmates_help = 0.5
+        self.spouse_joins_fight = 0.6
         self.thief_steals = 0.3
         self.training_injury = 0.05
+        self.visit_sweetheart_chance = 0.2
         self.wage_mult = 1.0
         if traits_list is None:
             self.set_rand_traits()
@@ -113,6 +123,9 @@ class BasePlayer(Fighter):
         self.game = None
         self.friends = []
         self.enemies = []
+        self.sweetheart = None  # love interest / spouse (a Fighter)
+        self.romance_progress = 0
+        self.is_married = False
         self.accompl = []
         self.accompl_dates = []
         self.banned_from_school = False
@@ -317,7 +330,9 @@ class BasePlayer(Fighter):
             if k in items.FIGHT_ITEMS and v > 0:
                 return True
 
-    def check_help(self, allies=True, master=True, impr_wp=True, school=True):
+    def check_help(
+        self, allies=True, master=True, impr_wp=True, school=True, spouse=True
+    ):
         p = self
         p.allies = []
         hlp = []
@@ -329,6 +344,8 @@ class BasePlayer(Fighter):
             hlp.append('w')
         if school:
             hlp.append('s')
+        if spouse and self.is_married and self.sweetheart is not None:
+            hlp.append('sp')
         x = random.choice(hlp)
         if x == 'a':
             p.allies = p.check_allies()
@@ -369,6 +386,13 @@ class BasePlayer(Fighter):
                             a_str, self.name
                         )
                     )
+        elif x == 'sp':
+            if p.sweetheart is not None and rnd() <= self.spouse_joins_fight:
+                sw = p.sweetheart
+                p.show(f'{sw.name}: "Let me help you, dear!"')
+                p.log(f"{sw.name} joins the fight on {p.name}'s side.")
+                p.allies = [sw]
+                p.pak()
 
     def check_injured(self):
         return self.inact_status == 'injured'
@@ -424,6 +448,15 @@ class BasePlayer(Fighter):
             self.show(f'{self.name}: "{q}"')
             self.msg(f'{self.name} gets injured during training.')
             self.injure(1)
+
+    def check_spouse_daily(self):
+        """Married player's spouse occasionally contributes to the household."""
+        if self.is_married and self.sweetheart is not None and rnd() <= CH_SPOUSE_GIFT:
+            amount = rndint(5, 20)
+            self.show(
+                f'{self.sweetheart.name} brings home some money. (+{amount} coins)'
+            )
+            self.earn_money(amount)
 
     def cls(self):
         raise Exception('Not implemented.')
@@ -528,6 +561,9 @@ class BasePlayer(Fighter):
         ]
         if self.is_master:
             ops.append(('Visit other masters', self.visit_masters))
+        if self.sweetheart is not None:
+            label = 'Visit spouse' if self.is_married else 'Visit sweetheart'
+            ops.append((label, self.visit_sweetheart))
         return ops
 
     def get_fame(self):
@@ -596,15 +632,19 @@ class BasePlayer(Fighter):
         ]
         fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
         en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
+        love_info = ''
+        if self.sweetheart is not None:
+            rel = 'spouse' if self.is_married else 'sweetheart'
+            love_info = f'{rel}:{self.sweetheart.name}'
         stud_info = f'students:{self.students}' if self.students else ''
         if self.is_master and self.best_student is not None:
             stud_info += f' (best: {self.best_student.name})'
         if self.is_master:
             lines.append(stud_info)
-            lines.append(' '.join(w for w in (fr_info, en_info) if w))
+            lines.append(' '.join(w for w in (fr_info, en_info, love_info) if w))
         else:
             lines.append(f'rank in school: {self.school_rank}/{self.max_school_rank}')
-            lines.append(' '.join(w for w in (fr_info, en_info, stud_info) if w))
+            lines.append(' '.join(w for w in (fr_info, en_info, love_info, stud_info) if w))
         lines.append(self.get_fight_statistics())
         return '\n'.join([line for line in lines if line])
 
@@ -930,6 +970,47 @@ class BasePlayer(Fighter):
             self.show(f'{m.name}: "Why should the schools follow you? Prove yourself first."')
             self.pak()
         return True  # to end turn
+
+    def visit_sweetheart(self):
+        """Day action: court the sweetheart / spend time with the spouse."""
+        p = self
+        sw = p.sweetheart
+        if p.is_married:
+            p.show(f'{p.name} spends a quiet day at home with {sw.name}.')
+            p.log(f'Spends the day with {sw.name}.')
+        else:
+            p.show(f'{p.name} spends the day with {sw.name}.')
+            p.log(f'Goes on a date with {sw.name}.')
+            progress = rndint(1, 2)
+            if p.check_money(ROMANCE_GIFT_COST) and rnd() <= 0.5:
+                p.pay(ROMANCE_GIFT_COST)
+                progress += 2
+                p.show(f'{p.name} brings a small gift. {sw.name} is delighted!')
+            p.romance_progress += progress
+            if p.romance_progress >= ROMANCE_PROPOSE_THRESHOLD:
+                p.propose_marriage()
+        p.pak()
+        return True  # to end turn
+
+    def propose_marriage(self):
+        p = self
+        sw = p.sweetheart
+        p.show(f'Propose to {sw.name}?')
+        if not p.pursue_romance_or_not():
+            p.show(f'{p.name} decides to wait a little longer.')
+            p.log(f'Is about to propose to {sw.name}, but gets cold feet.')
+            return
+        p.show(f'{p.name}: "{sw.name}, will you marry me?"')
+        accept_chance = min(0.9, CH_PROPOSAL_ACCEPT + p.reputation / 500)
+        if rnd() <= accept_chance:
+            p.is_married = True
+            p.show(f'{sw.name}: "Yes! Yes, a thousand times yes!"')
+            p.log(f'Marries {sw.name}.')
+            p.add_accompl('Got Married')
+        else:
+            p.show(f'{sw.name}: "I... I am not ready yet. Give me some more time."')
+            p.log(f'{sw.name} turns down the proposal, for now.')
+            p.romance_progress = ROMANCE_PROPOSE_THRESHOLD - 4
 
     def win_tourn(self, prize):
         self.earn_prize(prize)

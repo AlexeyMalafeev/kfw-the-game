@@ -156,6 +156,16 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `FriendMatch` / `PlayerMatch`: friendly spars with friends or other AI
   players, chance scaling with friend count.
 
+### Romance (`_romance.py`)
+
+- `NewRomance` (0.03, only while `p.sweetheart is None`; ×2 in `WALK_ENCS`):
+  meet-cute with a gendered martial-artist NPC; `pursue_romance_or_not`
+  decides whether the romance begins (sets `p.sweetheart`, progress 1).
+- `RomanticDate` (0.05, requires a sweetheart and not married; ×3 in
+  `WALK_ENCS`): a date adding 1–3 `romance_progress`.
+- See `docs/social_and_traits.md` (Romance) for the full progression model and
+  marriage effects.
+
 ### Gambling and seedy places (`_gambling.py`)
 
 - `Gambler`: rock-paper-scissors for escalating bets; the gambler's throws are

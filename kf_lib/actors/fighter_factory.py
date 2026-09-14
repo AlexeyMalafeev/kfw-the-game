@@ -161,6 +161,16 @@ def new_fat_girl():
     return f
 
 
+def new_sweetheart(name, gender, level):
+    """A love-interest NPC: a named martial artist near the player's level."""
+    level = max(1, level)
+    style = style_gen.get_new_randomly_generated_style()
+    f = Fighter(name, style, level=1)
+    f.level_up(level - 1)
+    f.gender = gender
+    return f
+
+
 def new_fighter(lv=0, n=1):
     fs = []
     for i in range(n):
