@@ -18,7 +18,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
    - `.__repr__`/`.__str__` in all classes instead of `get_init_string()`
    - generic Saver component saving relevant atts
    - stats class/component; Event class
-   - rewrite the ugly `get_prefight_info` Fighter method
+   - rewrite the ugly `get_prefight_info` (`fighting/fight/_helpers.py`)
    - normalize values in uneven prob distributions
    - generate important fighters considering style emphases
    - `BasePlayer.get_name_as_master`; clear personal log method
@@ -172,8 +172,11 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Balance & analysis
 
-**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`, first run
-after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
+**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; the file
+was refreshed after the v0.7.2 balance changes — 'Lightning-Fast Strikes'
+fix, exp-base change, AI attribute-growth fix — but the Diff% analysis below
+is from the first run after the BLOCK_POWER fix; a fresh analysis is pending;
+Diff% = winner-vs-loser correlation):
 - Fixing blocks compressed the spread: defensive buffs lost less badly
   (blocks −12.3→−10.1, guard −11.5→−9.5, resist KO −12.3→−5.5, close-range
   −19.9→−14.2, grappling −16.3→−7.3), offensive buffs dominate less
@@ -187,9 +190,6 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
   boost combos? weak unblockable moves?).
 - dist4/flying/ultra-long moves win; ultra short/vanishing/trick/power lose;
   range advantage is monotonic (dist1 −1.2 … dist4 +7.4).
-- Re-run `dev_scripts/testing/run_test_fb.py` to refresh the snapshot: queued
-  re-runs cover the 'Lightning-Fast Strikes' fix, the exp-base change and the
-  AI attribute-growth fix (see CHANGELOG v0.7.2).
 
 - exp: all levels are 100 exp; calc win exp relative to difficulty (+bonuses);
   exponential exp?; reduce/rewrite trait exp bonuses; test exp bonuses, reweigh
@@ -198,7 +198,9 @@ after the BLOCK_POWER fix; Diff% = winner-vs-loser correlation):
 - which traits result in winning more often?; trait-related stats
 - compare styles in 1on1 and 1 vs 3 fights
 - new AI testing routine: one vs big crowd
-- compute crowd exp worth differently?
+- compute crowd exp worth differently? — group-FFA exp/risk addressed in
+  v0.7.3 (RMS of per-group sums, `BaseGroupFreeForAll.aggregate_exp_yield`);
+  plain FFA deliberately keeps the per-capita average
 - further reduce dist3/dist2 bonuses?
 - nerf guard while attacking
 - buff attribute-based damage for strikes
