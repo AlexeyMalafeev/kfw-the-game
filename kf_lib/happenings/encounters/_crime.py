@@ -175,7 +175,7 @@ class GangWar(BaseEncounter):
         esc_chance = get_escape_chance(p)
         if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(
                 p, opp_to_self_pwr_ratio=opp_strength[0]):
-            if fight.free_for_all([p] + opp):
+            if fight.group_free_for_all([[p], gang_a, gang_b]):
                 p.show(f'{p.name} is the last one standing!')
                 p.gain_rep(len(opp))
                 p.game.crime_down()

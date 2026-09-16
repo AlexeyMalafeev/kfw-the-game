@@ -66,6 +66,10 @@ All notable changes to KFW are documented here. Format loosely follows
 - Stats report: "Strikes landed" now shows accuracy
   (`landed/thrown (acc%)`), and a Fame row (masters only, blank otherwise)
   was added right after Reputation
+- The Gang War encounter is now a proper **group free-for-all**: the prefight
+  preview delineates the sides (the player alone vs gang A vs gang B), and
+  thugs no longer attack their own gangmates (slightly harder for the player
+  — balance-affecting)
 
 ## [v0.7.2-beta "All Schools Under Heaven"] — 2026-09-11
 

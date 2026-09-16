@@ -125,10 +125,11 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   thugs, newcomers and the player all fighting everyone).
 - `GangWar` (crime/8): the player walks into a street war between two gangs of
   thugs (2–3 each, some armed) and both sides treat them as the enemy;
-  `fight_or_run` — fighting means a free-for-all against both gangs at once
-  (the risk estimate compares against the average thug, `mean=True`),
-  winning lowers crime and grants rep per thug. Boosted ×2 in
-  `FIGHT_CRIME_ENCS`.
+  `fight_or_run` — fighting means a **group free-for-all**
+  (`group_free_for_all`, previewed side by side: the player alone vs gang A vs
+  gang B, no infighting within a gang; the risk estimate compares against the
+  average thug, `mean=True`), winning lowers crime and grants rep per thug.
+  Boosted ×2 in `FIGHT_CRIME_ENCS`.
 - `Criminal` (flat 0.03, needs `game.criminals`): fight a wanted convict; the
   reward is `criminal.level * random multiplier`, split with one helping ally.
   ⚠️ In `Criminal.reward` the ally gets the halved `rep_gain`, but the player
