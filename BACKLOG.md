@@ -172,24 +172,33 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Balance & analysis
 
-**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; the file
-was refreshed after the v0.7.2 balance changes — 'Lightning-Fast Strikes'
-fix, exp-base change, AI attribute-growth fix — but the Diff% analysis below
-is from the first run after the BLOCK_POWER fix; a fresh analysis is pending;
-Diff% = winner-vs-loser correlation):
-- Fixing blocks compressed the spread: defensive buffs lost less badly
-  (blocks −12.3→−10.1, guard −11.5→−9.5, resist KO −12.3→−5.5, close-range
-  −19.9→−14.2, grappling −16.3→−7.3), offensive buffs dominate less
-  (punches +16.2→+9.1, strength +11.9→+7.9).
-- Still true: **all defense-oriented buffs/techs correlate with losing**
-  (defense, guard, blocks, counters all ≈ −9…−10%; bottom techs are
-  Wall-like Protection, Fast Movement, Horse-like Stamina). Offense wins
-  mirror matches; blocking well doesn't deal damage.
-- Suspicious: `unblock.` got *worse* (−3.7→−9.8) after blocking became 400×
-  stronger — unblockable strikes should benefit. Investigate (confounded by
-  boost combos? weak unblockable moves?).
-- dist4/flying/ultra-long moves win; ultra short/vanishing/trick/power lose;
-  range advantage is monotonic (dist1 −1.2 … dist4 +7.4).
+**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`, refreshed
+after the v0.7.2 balance changes; analysis updated 2026-09-17, old→new =
+first post-BLOCK_POWER run → current run; Diff% = winner-vs-loser
+correlation):
+- **Offense wins mirror matches; all defense-oriented buffs correlate with
+  losing — true in both runs**: blocks −10.1→−14.7, defense −8.5→−12.5,
+  counters −9.7→−10.0, guard −9.5→−9.3, close-range −14.2→−14.8; punches
+  +9.1→+15.0, strength +7.9→+12.8, attack +10.1→+12.4, guard-while-atk
+  +12.3→+10.4. Bottom techs: 36 Defense Forms −30.3, Emperor's Fortress
+  −31.0, Advanced Guard −12.9. Blocking well doesn't deal damage.
+- **'Lightning-Fast Strikes' after its no-op fix: −13.5 → +2.6** —
+  directionally consistent with the tech now actually working, but n ≈ 76,
+  so within noise; keep watching.
+- **The AI attribute-growth fix is NOT exercised by this harness**:
+  `test_fight_balance` uses `new_fighter()` = `rand_atts_mode=0`, so the
+  restored mode-1/2 specialization has no effect here. Its balance impact is
+  unmeasured — needs a dedicated test (e.g. mode-1/2 mirror matches).
+- `unblock.` −9.8→−5.8 (n ≈ 1400): still losing in both runs, so the
+  suspicion stands, but milder — the −9.8 was probably amplified by noise.
+- Range/mobility hierarchy holds in both runs: flying +6.2→+6.7, dist4
+  +7.4→+4.8, long +1.0→+4.1 win; ultra short −5.4→−5.1, vanishing
+  −5.2→−4.0, power −4.2→−4.0 lose.
+- **Caveat / action item — the harness is unseeded**: styles are generated
+  randomly per run, so run-to-run drift is ±5–8 Diff% points even at
+  n ≈ 1600 (e.g. lethal +3.5→−4.8, grappling-buff −7.3→−17.4 at n ≈ 373);
+  techs 2 have n ≈ 50–85 each, so their ±20–30 swings are pure noise. For
+  comparable snapshots, seed the harness or pin a fixed style pool.
 
 - exp: all levels are 100 exp; calc win exp relative to difficulty (+bonuses);
   exponential exp?; reduce/rewrite trait exp bonuses; test exp bonuses, reweigh
