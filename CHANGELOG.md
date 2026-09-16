@@ -3,7 +3,7 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
-## [Unreleased]
+## [v0.7.3-beta "Love at First Fight"] — 2026-09-16
 
 ### Added
 - **Romance system, part 2 — rivals, kidnapping and family**:
