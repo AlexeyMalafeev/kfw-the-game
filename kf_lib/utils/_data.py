@@ -4,8 +4,9 @@ from ._numbers import mean, pcnt, median
 def compare_dicts(d1, d2, sort_col_index=0, descending=True):
     """Return a list of tuples"""
     tups = []
-    keys = set(d1.keys()) | set(d2.keys())
-    for k in keys:
+    # sorted: set iteration order is PYTHONHASHSEED-dependent, which leaks into
+    # tie ordering after the stable sort below and breaks reproducible reports
+    for k in sorted(set(d1.keys()) | set(d2.keys())):
         if k not in d1:
             d1[k] = 0
         elif k not in d2:
@@ -24,8 +25,7 @@ def compare_dicts(d1, d2, sort_col_index=0, descending=True):
 def dict_diff(d1, d2):
     """Return a dict"""
     d = {}
-    keys = set(d1.keys()) | set(d2.keys())
-    for k in keys:
+    for k in sorted(set(d1.keys()) | set(d2.keys())):
         if k not in d1:
             d1[k] = 0
         elif k not in d2:

@@ -45,7 +45,7 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
                 self.show(f' A school with the name "{school_name}" already exists.')
 
     def choose_school_techs(self):
-        av = [t for t in self.techs if not t.is_weapon_tech]
+        av = sorted((t for t in self.techs if not t.is_weapon_tech), key=lambda t: t.name)
         chosen = []
         while av and len(chosen) < NUM_SCHOOL_TECHS:
             options = [(f'{t.name} ({t.descr})', t) for t in av]

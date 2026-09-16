@@ -22,7 +22,7 @@ class FighterRepr(FighterAPI, ABC):
             self.style.name,
             self.level,
             self.get_base_atts_tup(),
-            [t.name for t in self.techs],
+            sorted(t.name for t in self.techs),
             [m.name for m in self.moves if not m.is_basic],
         )
 

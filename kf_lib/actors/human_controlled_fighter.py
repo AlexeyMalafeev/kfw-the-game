@@ -132,7 +132,10 @@ class HumanControlledFighter(Fighter):
         self.upgrade_tech(t)
 
     def choose_style_tech_to_upgrade(self):
-        av_techs = [t for t in self.techs if t in self.style.techs.values()]
+        av_techs = sorted(
+            (t for t in self.techs if t in self.style.techs.values()),
+            key=lambda t: t.name,
+        )
         if not av_techs:
             return
         self.show(

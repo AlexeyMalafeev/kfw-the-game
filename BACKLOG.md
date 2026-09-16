@@ -43,7 +43,12 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 - trait selection iterates unsorted collections, so even with `random.seed()`
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
-  `traits_list=[]`). Consider sorting pools before sampling.
+  `traits_list=[]`). Consider sorting pools before sampling. Update
+  2026-09-17: the analogous object-set sites in move/tech generation
+  (`get_rand_moves`, `self.techs` iteration, tech selection pools) and the
+  string-set tie-ordering in `compare_dicts` are fixed — the seeded
+  fight-balance harness is now byte-reproducible across PYTHONHASHSEEDs;
+  trait selection itself is still open.
 - possible bug in exp progression in lazy/hardworking players
 - y defense buff not working?
 - bug in careless inactive time?
@@ -172,33 +177,37 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Balance & analysis
 
-**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`, refreshed
-after the v0.7.2 balance changes; analysis updated 2026-09-17, old→new =
-first post-BLOCK_POWER run → current run; Diff% = winner-vs-loser
-correlation):
+**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; refreshed
+2026-09-17 with the now-**seeded** harness, `seed=42` — the report is
+byte-reproducible, so future diffs against this file reflect real balance
+changes, not run noise; Diff% = winner-vs-loser correlation):
 - **Offense wins mirror matches; all defense-oriented buffs correlate with
-  losing — true in both runs**: blocks −10.1→−14.7, defense −8.5→−12.5,
-  counters −9.7→−10.0, guard −9.5→−9.3, close-range −14.2→−14.8; punches
-  +9.1→+15.0, strength +7.9→+12.8, attack +10.1→+12.4, guard-while-atk
-  +12.3→+10.4. Bottom techs: 36 Defense Forms −30.3, Emperor's Fortress
-  −31.0, Advanced Guard −12.9. Blocking well doesn't deal damage.
-- **'Lightning-Fast Strikes' after its no-op fix: −13.5 → +2.6** —
-  directionally consistent with the tech now actually working, but n ≈ 76,
-  so within noise; keep watching.
+  losing**: agility +16.8, strength +12.4, guard-while-atk +9.0, attack +8.8,
+  punches +8.6 win; close-range −14.0, defense −13.3, counters −11.2,
+  unblock. −7.4 (n ≈ 1400), guard −7.3, blocks −6.1 lose. Blocking well
+  doesn't deal damage.
+- **'Lightning-Fast Strikes' after its no-op fix: +29.8** — top of techs 2,
+  directionally consistent with the tech now actually working, but n = 57,
+  so within noise; keep watching. (Unseeded runs had it anywhere from
+  −13.5 to +2.6.)
 - **The AI attribute-growth fix is NOT exercised by this harness**:
   `test_fight_balance` uses `new_fighter()` = `rand_atts_mode=0`, so the
   restored mode-1/2 specialization has no effect here. Its balance impact is
   unmeasured — needs a dedicated test (e.g. mode-1/2 mirror matches).
-- `unblock.` −9.8→−5.8 (n ≈ 1400): still losing in both runs, so the
-  suspicion stands, but milder — the −9.8 was probably amplified by noise.
-- Range/mobility hierarchy holds in both runs: flying +6.2→+6.7, dist4
-  +7.4→+4.8, long +1.0→+4.1 win; ultra short −5.4→−5.1, vanishing
-  −5.2→−4.0, power −4.2→−4.0 lose.
-- **Caveat / action item — the harness is unseeded**: styles are generated
-  randomly per run, so run-to-run drift is ±5–8 Diff% points even at
-  n ≈ 1600 (e.g. lethal +3.5→−4.8, grappling-buff −7.3→−17.4 at n ≈ 373);
-  techs 2 have n ≈ 50–85 each, so their ±20–30 swings are pure noise. For
-  comparable snapshots, seed the harness or pin a fixed style pool.
+- Range/mobility hierarchy holds: flying +8.8, dist4 +6.3 win; vanishing
+  −6.0, ultra short −3.1 lose; lethal −1.4 (n ≈ 1600) and power −1.3 sit at
+  neutral — earlier swings (lethal +3.5→−4.8) were unseeded-harness noise.
+- Bottom techs: 18 Defense Forms −12.8 (techs 1, n = 546), Retaliative Blows
+  −12.6; grappling buff −12.2 (n = 376) persists in the seeded run, so it's
+  probably real, not noise. Techs 2 have n ≈ 50–85 each, so even seeded
+  their ±20–30 spreads (Advanced Blood Strikes −22.6, Hero's Resilience
+  −25.6) are largely small-sample noise.
+- **Resolved — the harness is seeded and deterministic**: earlier run-to-run
+  drift of ±5–8 Diff% points came from unseeded style generation plus
+  PYTHONHASHSEED-dependent iteration of id-hashed object sets in fighter
+  generation (`get_rand_moves`' move pool, `self.techs`) and of the string
+  set in `compare_dicts` (tie ordering); fixed 2026-09-17, same `seed=42`
+  now gives byte-identical reports across processes.
 
 - exp: all levels are 100 exp; calc win exp relative to difficulty (+bonuses);
   exponential exp?; reduce/rewrite trait exp bonuses; test exp bonuses, reweigh

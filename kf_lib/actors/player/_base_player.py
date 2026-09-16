@@ -205,7 +205,7 @@ class BasePlayer(Fighter):
     def choose_school_techs(self):
         """Pick the techs the player's school will teach (AI default: random known
         non-weapon techs). HumanPlayer overrides this with a menu."""
-        av = [t for t in self.techs if not t.is_weapon_tech]
+        av = sorted((t for t in self.techs if not t.is_weapon_tech), key=lambda t: t.name)
         self.school_techs = [
             t.name for t in random.sample(av, min(NUM_SCHOOL_TECHS, len(av)))
         ]

@@ -47,7 +47,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   hack, so run them from their own directory). Includes `testing/` balance
   harnesses: `run_test_fb.py` (fight balance: N mirror matches at random levels
   with the default fight AI, tallying winner/loser attributes, buffs, techs and
-  moves into `tests/test f.b. *.txt`), `run_test_lv_vs_crowds.py`,
+  moves into `tests/test f.b. *.txt`; seeded with `seed=42`, so reports are
+  reproducible), `run_test_lv_vs_crowds.py`,
   `run_test_level_sign.py`; also `sim_group_ffa.py` (group-FFA effective
   opposition experiment, stdout only — the evidence behind the RMS-of-group-
   sums exp/risk formula)

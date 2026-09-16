@@ -3,6 +3,21 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
+## [Unreleased]
+
+### Fixed
+- **Seeded determinism for fighter generation and the fight-balance harness**:
+  `test_fight_balance` now takes a `seed` parameter (default 42, recorded in
+  the report header) and produces byte-identical reports across runs and
+  processes. Two hidden nondeterminism sources were fixed along the way:
+  fighter generation iterated id-hashed object sets whose order depends on
+  ASLR (`get_rand_moves`' move pool — the main bug, since pool order feeds
+  `random.choice` — plus tech selection/upgrade pools, now name-sorted; tech
+  names in `get_init_atts` are also sorted for stable saves), and
+  `compare_dicts`/`dict_diff` iterated a string set, leaking PYTHONHASHSEED
+  into tie ordering. No statistical/balance impact — RNG stream order only.
+  The tracked n=10000 snapshot was refreshed with the seeded harness.
+
 ## [v0.7.3-beta "Love at First Fight"] — 2026-09-16
 
 ### Added

@@ -297,7 +297,10 @@ def get_style_techs(fighter=None) -> List[Tech]:
     if fighter is None:
         return _style_techs
     else:
-        return [t for t in fighter.techs if t in _style_techs]
+        # sorted: fighter.techs is a set of id-hashed objects (see _techs.py)
+        return sorted(
+            (t for t in fighter.techs if t in _style_techs), key=lambda t: t.name
+        )
 
 
 def get_tech_obj(tech_name: Text) -> Tech:
@@ -330,7 +333,10 @@ def get_upgradable_techs(fighter=None) -> List[Tech]:
     if fighter is None:
         return _upgradable_techs
     else:
-        return [t for t in fighter.techs if t.is_upgradable]
+        # sorted: fighter.techs is a set of id-hashed objects (see _techs.py)
+        return sorted(
+            (t for t in fighter.techs if t.is_upgradable), key=lambda t: t.name
+        )
 
 
 def get_upgraded_techs(fighter=None) -> List[Tech]:
@@ -348,7 +354,10 @@ def get_weapon_techs(fighter=None) -> List[Tech]:
     if fighter is None:
         return _weapon_techs
     else:
-        return [t for t in fighter.techs if t.is_weapon_tech]
+        # sorted: fighter.techs is a set of id-hashed objects (see _techs.py)
+        return sorted(
+            (t for t in fighter.techs if t.is_weapon_tech), key=lambda t: t.name
+        )
 
 
 def reg_to_adv(tech: Tech) -> Tech:

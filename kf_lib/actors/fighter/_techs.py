@@ -28,7 +28,12 @@ class TechMethods(FighterAPI, ABC):
         self.upgrade_tech(random.choice(av_techs))
 
     def choose_style_tech_to_upgrade(self) -> None:
-        av_techs = [t for t in self.techs if t in self.style.techs.values()]
+        # sorted: self.techs is a set of id-hashed objects, so iterating it is
+        # nondeterministic across runs and breaks seeded determinism
+        av_techs = sorted(
+            (t for t in self.techs if t in self.style.techs.values()),
+            key=lambda t: t.name,
+        )
         if not av_techs:
             return
         self.upgrade_style_tech(random.choice(av_techs))
@@ -149,7 +154,9 @@ class TechMethods(FighterAPI, ABC):
             self.set_rand_techs()
         else:
             self.techs = set(techniques.get_tech_obj(tn) for tn in tech_names)
-        self.apply_tech(*self.techs)
+        # sorted: self.techs is a set of id-hashed objects, so iterating it is
+        # nondeterministic across runs and breaks seeded determinism
+        self.apply_tech(*sorted(self.techs, key=lambda t: t.name))
 
     def unlearn_tech(self, tech: Tech) -> None:
         self.techs.remove(tech)

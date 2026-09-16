@@ -142,14 +142,18 @@ class Tester(object):
                 f.arm('chopsticks')
         p.fight(enemies[0], allies, en_allies, hide_stats=False)
 
-    def test_fight_balance(self, rand_actions=True, n=1000, file_name_prefix='test f.b.'):
+    def test_fight_balance(self, rand_actions=True, n=1000, seed=42,
+                           file_name_prefix='test f.b.'):
+        random.seed(seed)  # reproducible snapshots: same styles, levels, fights
         file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
         file_path = Path(TESTS_FOLDER, file_name)
         print(get_time(), file=open(file_path, 'w', encoding='utf-8'))
         output = '-' * 40 + '\n\n'
         if not rand_actions:
             output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
-        output += f'rand_actions={rand_actions}\n\n'
+        output += f'rand_actions={rand_actions}\nseed={seed}\nn={n}\n\n'
+        print(output, end='')
+        print(output, end='', file=open(file_path, 'a', encoding='utf-8'))
 
         dummy = ff.new_dummy_fighter(1)
         att_names = dummy.att_names

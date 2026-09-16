@@ -244,7 +244,10 @@ def get_rand_moves(
         choice = random.choice(weighted_pool)
         if choice not in selected:
             selected.add(choice)
-    selected = list(selected)
+    # sorted: selected is a set of id-hashed objects, so list(selected) has a
+    # nondeterministic order across processes; the shuffle (and thus which move
+    # gets learned downstream) would differ even under the same random seed
+    selected = sorted(selected, key=lambda m: m.name)
     random.shuffle(selected)
     return selected
 

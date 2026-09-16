@@ -269,10 +269,12 @@ committed logs, not test code). Run from `dev_scripts/testing/`.
 
 ### run_test_fb.py — fight balance
 
-`test_fight_balance(rand_actions=False, n=10000)`: 10,000 mirror matches —
+`test_fight_balance(rand_actions=False, n=10000, seed=42)`: 10,000 mirror matches —
 two fresh random fighters at the *same* random level (1–20), both driven by
 the default fight AI (`rand_actions=False`; `True` would use uniform-random
-`BaseAI`). For winners vs losers separately it tallies: sums of the four
+`BaseAI`). The harness seeds `random` (`seed=42` by default, recorded in the
+report header), so repeated runs produce byte-identical reports (modulo the
+timestamp line). For winners vs losers separately it tallies: sums of the four
 base atts and full atts, a histogram of att spread (max − min), tech
 description features ("style buffs"), upgradable techs, advanced techs, and
 move features. Each category is emitted as a `compare_dicts` table —
@@ -280,8 +282,8 @@ move features. Each category is emitted as a `compare_dicts` table —
 and appended to `tests/test f.b. rand.act.=False n=10000.txt` (tracked).
 
 How to read: in a balanced game every `Diff%` hovers near 0; a persistent
-bias marks things that win or lose fights (the verified run:
-`'ultra short'` moves at −13.5%, `'takedown'` at −5.6%, i.e. losers had them
+bias marks things that win or lose fights (the seeded n=10000 snapshot:
+`'close-range'` buffs at −14.0%, `'defense'` at −13.3%, i.e. losers had them
 more often). Committed samples exist for n = 50…50000.
 
 Works: verified — ran to completion within a 280 s timeout; the
