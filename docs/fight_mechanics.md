@@ -318,10 +318,14 @@ Everyone down → draw: `winners = []`, `losers = all`, `win = False`.
 - `winners_diff = (Σ losers' exp_yield / Σ winners' exp_yield) ** 1.5`;
   `winners_gain = winners_diff * BASE_FIGHT_EXP` (20). Beating stronger
   opposition scales exp superlinearly; beating weaker gives little. In
-  free-for-all fights (incl. group FFA) both sums are replaced by per-capita
+  free-for-all fights both sums are replaced by per-capita
   averages (`aggregate_exp_yield`, overridden in `BaseFreeForAll`) — the
   losers were fighting each other too, so the difficulty anchor is the
-  average opponent, not the whole pile.
+  average opponent, not the whole pile. In a *group* FFA
+  (`BaseGroupFreeForAll`) the anchor is instead the **RMS of per-group
+  sums**: win-rate simulations (`dev_scripts/testing/sim_group_ffa.py`)
+  show the effective opposition is dominated by the strongest groups,
+  since they tend to survive to the endgame.
 - Losers get a flat `LOSER_EXP` (2 = 10% of base) regardless of difficulty.
 - `handle_exp_bonuses`: +25% per bonus — quick victory (≤ 10 s), "Not a
   scratch" (`not took_damage`), multi-knockout (`kos_this_fight >= 3`).
@@ -386,8 +390,9 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   group; the fight ends when a single group has anyone standing (`winners` is
   that whole group, incl. downed members, matching two-sided side semantics;
   `win` reports whether `groups[0]` won). The prefight screen labels each
-  group (`--- Group N ---`, marking the human's). Used by `JadeTableStory`
-  and the All-Schools Tournament event.
+  group (`--- Group N ---`, marking the human's), and exp uses the RMS of
+  per-group yields (see `give_exp` above). Used by `JadeTableStory` and the
+  GangWar encounter.
 
 ## AI note
 

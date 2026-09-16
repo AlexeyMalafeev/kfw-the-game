@@ -522,6 +522,7 @@ class FighterAPI(ABC):
         *opp: FighterAPI,
         allies: Optional[Iterable[FighterAPI]] = None,
         mean: bool = False,
+        groups: Optional[List[List[FighterAPI]]] = None,
     ) -> Tuple[float, str]:
         pass
 

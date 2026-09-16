@@ -70,6 +70,13 @@ All notable changes to KFW are documented here. Format loosely follows
   preview delineates the sides (the player alone vs gang A vs gang B), and
   thugs no longer attack their own gangmates (slightly harder for the player
   — balance-affecting)
+- **Group free-for-all exp and risk estimation are now group-aware**
+  (balance-affecting): instead of anchoring difficulty to the *average
+  fighter* (which made winning a 25-man melee pay like a fair 1v1), exp
+  yields and the GangWar risk estimate use the RMS of per-group power sums —
+  bigger groups count for more than their linear share, and a bigger winning
+  group gets less exp per member. Formula validated against win-rate
+  simulations (`dev_scripts/testing/sim_group_ffa.py`)
 
 ## [v0.7.2-beta "All Schools Under Heaven"] — 2026-09-11
 

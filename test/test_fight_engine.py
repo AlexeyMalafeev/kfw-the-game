@@ -404,6 +404,19 @@ class TestRelStrength:
         assert ratio == 1.0
         assert legend == 'fair fight'
 
+    def test_groups_flag_uses_rms_of_per_group_sums(self):
+        # group free-for-all estimate: RMS of per-group power sums
+        random.seed(0)
+        fa = fighter_factory.new_fighter(5)
+        copies = [fighter_factory.copy_fighter(fa) for _ in range(4)]
+        # two even pairs: RMS of (2, 2) = 2
+        ratio, _ = fa.get_rel_strength(groups=[copies[:2], copies[2:]])
+        assert ratio == 2.0
+        # uneven groups (1, 3): RMS of (1, 3) = sqrt(5) ≈ 2.24, above the
+        # arithmetic mean of sums (2.0)
+        ratio, _ = fa.get_rel_strength(groups=[copies[:1], copies[1:]])
+        assert ratio == round(5 ** 0.5, 2)
+
     def test_copy_fighter_preserves_combat_relevant_atts(self):
         random.seed(0)
         f = fighter_factory.new_fighter(8)
@@ -554,6 +567,24 @@ class TestGroupFreeForAll:
         hero, boss1, guard1 = groups[0][0], groups[1][0], groups[1][1]
         assert f.get_act_targets(boss1) == [hero] + groups[2]
         assert f.get_act_allies(boss1) == [boss1, guard1]
+
+    def test_aggregate_exp_yield_is_rms_of_per_group_sums(self):
+        random.seed(0)
+        groups = self.make_groups()
+        f = BaseGroupFreeForAll(groups)
+        hero = groups[0][0]
+        hero.exp_yield = 10
+        for ff, y in zip(groups[1], (20, 40)):
+            ff.exp_yield = y
+        for ff, y in zip(groups[2], (30, 60)):
+            ff.exp_yield = y
+        # enemy groups sum to 60 and 90: RMS = sqrt((60² + 90²) / 2) ≈ 76.5
+        # (arithmetic mean of sums would be 75, per-fighter mean 37.5)
+        enemies = groups[1] + groups[2]
+        assert abs(f.aggregate_exp_yield(enemies) - 76.5) < 0.1
+        # the winners side anchors on the whole own group
+        assert f.aggregate_exp_yield([hero]) == 10
+        assert f.aggregate_exp_yield([]) == 0
 
     def test_group_with_survivors_beats_stronger_half_dead_group(self):
         random.seed(0)

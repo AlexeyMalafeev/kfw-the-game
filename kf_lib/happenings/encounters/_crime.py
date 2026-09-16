@@ -171,7 +171,7 @@ class GangWar(BaseEncounter):
             if random.choice((True, False)):
                 e.arm_robber()
         opp = gang_a + gang_b
-        opp_strength = p.get_rel_strength(*opp, mean=True)
+        opp_strength = p.get_rel_strength(groups=[gang_a, gang_b])
         esc_chance = get_escape_chance(p)
         if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(
                 p, opp_to_self_pwr_ratio=opp_strength[0]):

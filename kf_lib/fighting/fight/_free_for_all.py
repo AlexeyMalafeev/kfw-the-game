@@ -1,3 +1,4 @@
+import math
 import random
 
 from ._auto_fight import AutoFight
@@ -144,6 +145,22 @@ class BaseGroupFreeForAll(BaseFreeForAll):
         self.groups = groups
         fighters = [f for group in groups for f in group]
         super().__init__(fighters, [], *args, **kwargs)
+
+    def aggregate_exp_yield(self, fighters):
+        """RMS of per-group exp yield sums: simulations of group free-for-alls
+        (dev_scripts/testing/sim_group_ffa.py) show that the effective
+        opposition is dominated by the strongest groups — bigger groups count
+        for more than their linear share, as they tend to survive to the
+        endgame. Applied to the winners too, so a bigger winning group gets
+        less exp per member."""
+        group_sums = [
+            sum(f.exp_yield for f in group if f in fighters)
+            for group in self.groups
+        ]
+        group_sums = [s for s in group_sums if s]
+        if not group_sums:
+            return 0
+        return math.sqrt(sum(s * s for s in group_sums) / len(group_sums))
 
     def _get_own_group(self, f):
         for group in self.groups:

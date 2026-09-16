@@ -43,9 +43,12 @@ encounter code serves humans (menus with risk legends, `HumanPlayer` in
 `_ai_player.py`). Risk display comes from `p.get_rel_strength(*opp)`
 (`fighter/_exp_worth.py`): the ratio of summed enemy `exp_yield` to own (plus
 allies'), mapped through `RISK_DESCR_TABLE` to a legend like 'very risky'.
-Encounters that are known to be free-for-all up front (StreetBrawl, GangWar)
+Encounters that are known to be free-for-all up front (StreetBrawl)
 pass `mean=True` — the ratio then compares own power against the *average*
-enemy, since the enemies will also fight each other.
+enemy, since the enemies will also fight each other. GangWar, a *group*
+free-for-all, instead passes `groups=[...]` — the ratio uses the RMS of
+per-group power sums, since the strongest group tends to survive the melee
+(see `dev_scripts/testing/sim_group_ffa.py`).
 
 Shared helpers live in `encounters/_utils.py`: escape rolls
 (`get_escape_chance` = a random base from 0.3–0.7 plus the trait-driven
@@ -127,9 +130,9 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   thugs (2–3 each, some armed) and both sides treat them as the enemy;
   `fight_or_run` — fighting means a **group free-for-all**
   (`group_free_for_all`, previewed side by side: the player alone vs gang A vs
-  gang B, no infighting within a gang; the risk estimate compares against the
-  average thug, `mean=True`), winning lowers crime and grants rep per thug.
-  Boosted ×2 in `FIGHT_CRIME_ENCS`.
+  gang B, no infighting within a gang; the risk estimate uses the RMS of
+  per-group power sums, `groups=[...]`), winning lowers crime and grants rep
+  per thug. Boosted ×2 in `FIGHT_CRIME_ENCS`.
 - `Criminal` (flat 0.03, needs `game.criminals`): fight a wanted convict; the
   reward is `criminal.level * random multiplier`, split with one helping ally.
   ⚠️ In `Criminal.reward` the ally gets the halved `rep_gain`, but the player

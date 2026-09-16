@@ -1,5 +1,6 @@
+import math
 from abc import ABC
-from typing import Iterable, Optional, Tuple
+from typing import Iterable, List, Optional, Tuple
 
 from kf_lib.actors.fighter._abc import FighterAPI
 
@@ -47,16 +48,26 @@ class ExpMethods(FighterAPI, ABC):
         *opp: FighterAPI,
         allies: Optional[Iterable[FighterAPI]] = None,
         mean: bool = False,
+        groups: Optional[List[List[FighterAPI]]] = None,
     ) -> Tuple[float, str]:
         """
         Return opp_to_self_pwr_ratio (number, the lower the weaker) and legend
         (string, e.g. 'very risky'). With mean=True, compare against the average
         opponent's power instead of the sum — used for free-for-all fights,
-        where the opponents also fight each other.
+        where the opponents also fight each other. With groups=[...] (a group
+        free-for-all, opp ignored), compare against the RMS of per-group power
+        sums — bigger groups count for more than their linear share
+        (see dev_scripts/testing/sim_group_ffa.py).
         """
-        pwr = sum([op.get_exp_worth() for op in opp])
-        if mean:
-            pwr /= len(opp)
+        if groups:
+            group_sums = [
+                sum(op.get_exp_worth() for op in group) for group in groups if group
+            ]
+            pwr = math.sqrt(sum(s * s for s in group_sums) / len(group_sums))
+        else:
+            pwr = sum([op.get_exp_worth() for op in opp])
+            if mean:
+                pwr /= len(opp)
         own_pwr = self.get_exp_worth()
         if allies is not None:
             own_pwr += sum([al.get_exp_worth() for al in allies])

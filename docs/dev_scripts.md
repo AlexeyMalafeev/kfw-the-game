@@ -313,6 +313,21 @@ and why FFA exp is awarded per-capita. Table 2: group FFA of 2–4 groups of
 
 Works: verified — both tables ran to completion; sample report committed.
 
+### sim_group_ffa.py — group FFA effective opposition
+
+Standalone experiment (not a `Tester` wrapper; prints to stdout, no report
+file). Measures how hard a group free-for-all actually is for the protagonist
+group: win rate of group 1 over 300 runs per config, mapped onto an
+equivalent *united* enemy group size k via a calibration curve (my group vs
+k united enemies). Runs three tiers — equal levels (lv 10) and the player
+side at +3/+4 levels — since equal-level big configs saturate at 0% win.
+This is the evidence behind the group-FFA exp/risk formula (RMS of per-group
+sums, `BaseGroupFreeForAll.aggregate_exp_yield` and
+`get_rel_strength(groups=...)`): RMS tracks the measured effective opposition
+across configs, while the old per-capita average badly underestimates it.
+
+Works: verified — full three-tier run completed (~27 min).
+
 ### run_test_level_sign.py
 
 `test_level_significance(rep=100)`: the full 20×20 level-vs-level 1v1
@@ -343,4 +358,5 @@ tracked report was restored.
 | `testing/run_test_fb.py` | Yes | n=10000 ran to completion; report restored |
 | `testing/run_test_lv_vs_crowds.py` | Yes | all 5 tables ran to completion; reports restored |
 | `testing/run_test_ffa.py` | Yes | both tables ran to completion; report committed |
+| `testing/sim_group_ffa.py` | Yes | full three-tier run to completion (~27 min); stdout only, no report file |
 | `testing/run_test_level_sign.py` | Yes | full 20×20 matrix ran to completion; report restored |
