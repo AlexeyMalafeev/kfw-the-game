@@ -19,7 +19,7 @@ def set_base_exp(value):
     DREAM1_EXP = round(_BASE * 0.5)
     DREAM2_EXP = _BASE
     DREAM3_EXP = round(_BASE * 1.5)
-    HOME_TRAINING_EXP = round(_BASE * 0.15)
+    HOME_TRAINING_EXP = max(1, round(_BASE * 0.05))
     LOSER_EXP = round(_BASE * 0.1)
     MASTER_TRAINING_EXP = round(_BASE * 0.4)
     SCHOOL_TRAINING_EXP = round(_BASE * 0.4)

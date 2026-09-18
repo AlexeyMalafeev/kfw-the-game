@@ -141,7 +141,10 @@ the inventory directly instead of via `lose_item` (no item log line).
 ### Mannequin
 
 Passive, permanent: `Playing.do_daily` (`game/_playing.py:104`) grants
-`HOME_TRAINING_EXP` (4 exp) every non-inactive day if the player owns one.
+`HOME_TRAINING_EXP` (1 exp at the default base; `max(1, base × 0.05)`) every
+non-inactive day if the player owns one, modified by the lazy/hardworking
+trait (`home_training_exp_bonus` ∓1, floored at 0 — lazy players get nothing
+until they shed the trait).
 Cannot be lost or stolen — `get_items()` never includes it, so `LoseItem` and
 the thief can't take it; the only way to lose it is the bad-luck breakage at
 purchase.

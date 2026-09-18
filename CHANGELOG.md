@@ -5,6 +5,16 @@ All notable changes to KFW are documented here. Format loosely follows
 
 ## [Unreleased]
 
+### Changed
+- **Wooden mannequin nerfed**: daily home-training exp reduced from 3 to 1
+  (`HOME_TRAINING_EXP` is now `max(1, base × 0.05)` instead of `base × 0.15`),
+  and the lazy/hardworking trait now modifies it by ∓1 exp (floored at 0) via
+  a new `home_training_exp_bonus` player attribute — so a hardworking player
+  gets 2 exp/day, a lazy one gets nothing until the trait is removed. The
+  mannequin was the best early purchase by a wide margin (free, riskless exp
+  stacking with everything); it now pays for itself in ~200 days instead of
+  ~65. Economy-affecting, not fight-balance-affecting.
+
 ### Fixed
 - **Seeded determinism for fighter generation and the fight-balance harness**:
   `test_fight_balance` now takes a `seed` parameter (default 42, recorded in

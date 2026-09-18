@@ -31,7 +31,7 @@ _TRAITS_TUP = (
     (
         'lazy',
         'hardworking',
-        {'wage_mult': 0.2, 'school_training_exp_mult': 0.2},
+        {'wage_mult': 0.2, 'school_training_exp_mult': 0.2, 'home_training_exp_bonus': 1},
     ),
     ('cowardly', 'brave', {'feel_too_scared': -0.3}),
     (

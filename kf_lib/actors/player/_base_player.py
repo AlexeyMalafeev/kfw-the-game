@@ -106,6 +106,7 @@ class BasePlayer(Fighter):
         self.gamble_continue = 0.4
         self.gamble_with_gambler = 0.3
         self.grab_improvised_weapon = 0.5
+        self.home_training_exp_bonus = 0
         self.item_is_found = 0.01
         self.item_is_lost = 0.01
         self.master_joins_fight = 0.5
@@ -822,7 +823,8 @@ class BasePlayer(Fighter):
     def practice_home(self, suppress_log=False):
         if not suppress_log:
             self.log('Practices at home.')
-        self.gain_exp(experience.HOME_TRAINING_EXP, silent=True)
+        exp = experience.HOME_TRAINING_EXP + self.home_training_exp_bonus
+        self.gain_exp(max(exp, 0), silent=True)
 
     def practice_master(self):
         self.log('Practices at his school.')

@@ -265,7 +265,8 @@ trait has an effect beyond its `TRAIT_EFFECTS` deltas.
 - `feel_too_scared` → `check_scary_fight` (cancels agreed fights), × opponent
   ratio; see the 'cowardly' name check above.
 - `wage_mult` → `go_work`; `school_training_exp_mult` → `practice_school` and
-  `practice_master`.
+  `practice_master`; `home_training_exp_bonus` (±1) → `practice_home` (the
+  mannequin's daily exp, floored at 0).
 - `num_techs_choose` / `num_techs_choose_upgrade` → tech pick pool sizes
   (`fighter/_techs.py`); `num_moves_choose` → move learning pool
   (`fighter/_moves.py`, `kung_fu/moves.py`); `num_atts_choose` → attributes
