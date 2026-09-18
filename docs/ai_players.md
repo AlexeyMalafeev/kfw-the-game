@@ -8,7 +8,6 @@ contrast), `kf_lib/game/_playing.py` (day loop), `kf_lib/game/_new_game.py`
 `kf_lib/happenings/encounters/` (decision call sites). In-fight AI is a
 separate system — see `docs/fight_mechanics.md` ("AI note"); despite the
 package name, nothing in `kf_lib/ai/` makes day-level decisions.
-Items marked ⚠️ look unintentional or surprising — verify before building on them.
 
 ## Overview
 
@@ -124,9 +123,7 @@ only the number:
   trials, master trial, prize-fighting stages after the first.
 - `fight_or_run`: fight if `ratio <= threshold` **or** `esc_chance <
   acceptable_escape_risk` — the same escape standard `run_or_not` uses, so
-  `fight_or_run` and `fight_run_or_pay` are consistent. (Before 2026-09 the
-  0.5 was hardcoded and ignored `acceptable_escape_risk`; fixed, pinned in
-  `test/test_player_ai.py`.)
+  `fight_or_run` and `fight_run_or_pay` are consistent.
 - `fight_run_or_pay` (robbers): if the money can't be paid, reduce to
   fight-or-run; otherwise prefer fight, then run (`run_or_not`: `esc_chance >=
   acceptable_escape_risk`), then pay. Escape chances are
@@ -166,9 +163,7 @@ described above.
   `drink_with_drunkard = 0.0` and `gamble_continue = 0.0` in `__init__`
   (post-`super()`, because these are instance attributes that traits adjust)
   — so unlike VanillaAIP it never drinks with the drunkard and never chases
-  gambling losses. (Before 2026-09 these were dead class attributes named
-  `drink_chance` / `continue_gambling_chance` that nothing read, shadowed by
-  the instance defaults; fixed, pinned in `test/test_player_ai.py`.)
+  gambling losses.
 - Fixed answers: `hear_rumors_or_not` → False (AI never buys gossip),
   `talk_wise_or_not` → True, `p_match_or_not` → True (all friendly
   friend/player spars accepted), `tourn_or_not` → True (every tournament and
