@@ -61,6 +61,19 @@ All notable changes to KFW are documented here. Format loosely follows
   0.7. And SmartAIP's redundant redeclarations of `min_non_master_money`,
   `min_master_money` and `min_students_to_teach` (values identical to the base
   class) were removed. Pinned in `test/test_player_ai.py`.
+- **Debug menu hardened**: Learn Move now prints `No such move: ...` when the
+  input is neither a move name, a tier, a feature list nor blank, instead of
+  silently falling back to a random pool; Set Attribute parses values with
+  `ast.literal_eval` instead of raw `eval()` and refuses to overwrite methods;
+  the misleadingly named PvP option is now called Spar (it always was
+  sparring); and Story runs the registered `game.stories` instance instead of
+  a detached copy, refuses to re-run an already-started story, and on a
+  mid-run crash detaches the player, deletes the boss and resets the story
+  state before re-raising — so a failed debug story no longer poisons the
+  save's story links.
+- **Crash reports keep history**: `errors.txt` and `debug.txt` are now
+  appended to (timestamp-separated) instead of truncated to the latest crash,
+  and the files are properly closed (`with` blocks) instead of relying on GC.
 
 ## [v0.7.3-beta "Love at First Fight"] — 2026-09-16
 

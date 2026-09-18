@@ -50,11 +50,12 @@ Thirteen options, in menu order (`DebugMenu.__call__`). None of them sets any
   `money_earned` stat and writes `Earns N c.` to the player log.
 - **Get Item** — pick from all real item names (`sorted(items.all_items)`) plus
   `items.MOCK_ITEMS`, quantity 1–10⁹, then `p.obtain_item(name, qty)` (updates
-  `inventory`, logs, bumps `items_obtained` stat). ⚠️ The three mock items
-  (`constipation medicine` etc., `kf_lib/things/items.py`) are plain flavor
-  strings: they are not in `all_items`/`EFFECTS`, so they can never be used
-  (fight-item selection filters `FIGHT_ITEMS`) — they sit in the inventory
-  forever. Harmless: `get_inventory_info` only prints name and count.
+  `inventory`, logs, bumps `items_obtained` stat). The three mock items
+  (`constipation medicine` etc., `kf_lib/things/items.py`) cannot be used
+  directly — they are not in `all_items`/`EFFECTS`, and fight-item selection
+  filters `FIGHT_ITEMS` — but they are not useless: the `Weirdo` encounter
+  (`kf_lib/happenings/encounters/_items.py`) asks for a random mock item and
+  trades it for a Super Booster.
 - **Level up** — 1–100 levels via `p.level_up(n)`. This is the real level-up
   path (`HumanPlayer.level_up` → `BasePlayer.level_up` → `Fighter.level_up`):
   per level it runs `upgrade_att` (interactive for humans),
@@ -63,14 +64,15 @@ Thirteen options, in menu order (`DebugMenu.__call__`). None of them sets any
 - **Learn Move** — free-form string fed to `resolve_move_string(move_s, p)`
   (`kf_lib/kung_fu/moves.py`): a digit means "random pool of that tier", an
   exact move name learns it directly, a comma list means `[tier,] features…`
-  (tier defaults to the player's current tier), anything else/blank means a
-  random pool of the player's tier. Pool cases go through the normal
+  (tier defaults to the player's current tier), a blank string means a random
+  pool of the player's tier. Pool cases go through the normal
   `choose_new_move` selection menu; `IndexError` (e.g. empty pool) is caught
   and only logged to `kfw.log` — from the user's seat the option silently does
-  nothing. ⚠️ No validation feedback on typos: a misspelled move name falls
-  into the "random pool" branch instead of raising `MoveNotFoundError` (that
-  exception is raised only by `get_move_obj`, which `resolve_move_string`
-  does not use).
+  nothing. Input that is neither blank, a tier digit, a comma-separated
+  feature list nor an exact move name (i.e. a typo) is rejected up front with
+  `No such move: ...` instead of silently falling into the "random pool"
+  branch (`MoveNotFoundError` itself is raised only by `get_move_obj`, which
+  `resolve_move_string` does not use).
 - **Learn Tech** — pick from `techniques.get_all_techs_dict()` (all techs in
   the game, alphabetically), then `p.learn_tech(tech)` (`fighter/_techs.py`):
   applies the tech's attribute deltas immediately; already-known techs are
@@ -84,38 +86,38 @@ Thirteen options, in menu order (`DebugMenu.__call__`). None of them sets any
   range, then constructs `tournament.Tournament(...)`, which runs the entire
   tournament inside `__init__` (`self.run()`): all active players are asked to
   join and pay the fee, brackets are fought, bets placed and resolved.
-  ⚠️ If nobody joins (level range matches no one and the players decline),
-  `run()` does `self.spectator = self.participants[0]` on an empty list —
-  `IndexError`, straight to the crash hook.
+  If nobody joins (the level range matches no one and the players decline),
+  `run()` prints `...but nobody shows up, so the tournament is canceled.` and
+  aborts cleanly.
 - **Encounter** — pick any class from `all_random_encounter_classes`, run as
   `enc_class(p, check_if_happens=False)`: `BaseEncounter.__init__` skips the
   trigger conditions and runs the encounter immediately, also incrementing
   `game.enc_count_dict` (a saved attribute, so debug encounters pollute the
   encounter statistics in saves).
-- **Story** — pick from `get_all_stories()`, then
-  `story_class(self.g)` + `start(current_player)` + `advance()` in a loop until
-  `state == -1` (i.e. until some scene calls `story.end()`). ⚠️ The story is a
-  *new, detached instance* — it is not the registered instance in
-  `game.stories` (created by `_init_stories`), and the level gate
-  (`story.test()`) is never checked. If the story crashes mid-run,
-  `p.current_story` still points at the detached instance: the save then
-  records `current_story: <name>` while `stories` lacks that entry's state,
-  and the loader's `self.stories[pdata['current_story']]` re-links to the
-  *pristine* registered instance (state `None`) — the player is attached to a
-  story that never started, with the boss gone.
+- **Story** — pick from `get_all_stories()`, then run the *registered*
+  instance from `game.stories` (created by `_init_stories`):
+  `start(current_player)` + `advance()` in a loop until `state == -1` (i.e.
+  until some scene calls `story.end()`). A story that has already started is
+  refused. The level gate (`story.test()`) is intentionally not checked —
+  testing stories off-level is the point of the debug option. If the story
+  crashes mid-run, the player is detached (`p.current_story = None`), the
+  boss is deleted and the story state is reset to `None` before the exception
+  propagates, so the save's story links stay consistent and the story can
+  trigger normally later.
 - **Inspect Player** — type an attribute name to `pprint` its value and type,
   or `all` to dump `vars(p)`. Read-only; unknown names just print
   `No such attribute!`.
-- **Set Attribute** — type an attribute name; if `hasattr(p, att)` passes, the
-  value is read with `input()` and stored as `setattr(p, att, eval(val))`.
-  ⚠️ Raw `eval()` on user input — arbitrary code execution by design, and any
-  existing attribute (including methods) can be overwritten with anything.
-  A wrong-typed value (e.g. a string into `money`, an int into `moves`)
-  corrupts state silently and typically crashes later or poisons the save.
-- **PvP** — pick any other player (human or AI), then `p.spar(opp)`.
-  ⚠️ Misleadingly named: this is *sparring* (`fighting/fight/_sparring.py`),
-  not a real fight — injuries, gossip, stats and accomplishments are disabled,
-  but exp is still awarded (sparring gives exp by design).
+- **Set Attribute** — type an attribute name; if `hasattr(p, att)` passes and
+  the attribute is not callable (methods are refused), the value is read with
+  `input()`, parsed with `ast.literal_eval` (literals only, so no arbitrary
+  code execution; unparseable input is rejected with a message) and stored
+  with `setattr`. A wrong-typed literal (e.g. a string into `money`, an int
+  into `moves`) still corrupts state silently and typically crashes later or
+  poisons the save — it is a debug tool, not a validator.
+- **Spar** — pick any other player (human or AI), then `p.spar(opp)`. This is
+  *sparring* (`fighting/fight/_sparring.py`), not a real fight — injuries,
+  gossip, stats and accomplishments are disabled, but exp is still awarded
+  (sparring gives exp by design).
 - **Back** — returns to the state menu without doing anything.
 
 ## Crash reports
@@ -125,22 +127,23 @@ Thirteen options, in menu order (`DebugMenu.__call__`). None of them sets any
 (`kf_lib/testing/debug_tools.py`; added in v0.6.1 per CHANGELOG). On any
 uncaught exception it:
 
-1. Truncates `errors.txt` (cwd-relative → repo root in normal use) to the
-   current timestamp, prints the traceback to the console, then appends the
-   traceback to `errors.txt`. ⚠️ The truncate-then-append means only the
-   *latest* crash is kept, and the file objects are never closed (CPython GC
-   closes them; contents can be lost if the process is killed first).
+1. Prints the traceback to the console and appends it to `errors.txt`
+   (cwd-relative → repo root in normal use), preceded by a timestamp — crash
+   history is kept across runs instead of keeping only the latest crash. All
+   files are written inside `with` blocks.
 2. Writes `debug.txt` the same way: timestamp plus `pprint(vars(game_inst))` —
    a full dump of the `Game` god-object, relying on everything in it being
    printable.
 3. Attempts `game_inst.save_game('emergency_save.txt')` (into the `save/`
    folder). A failure is swallowed by a bare `except` that only shows
-   `-FAILED TO SAVE GAME-`. ⚠️ Since the save runs *after* the crash, whatever
-   corruption caused the crash is baked into the emergency save.
+   `-FAILED TO SAVE GAME-`. Since the save runs *after* the crash, whatever
+   corruption caused the crash may be baked into the emergency save — a
+   possibly-tainted save is still considered better than no save.
 4. Waits for Enter, then returns — the exception is never re-raised, so the
-   process exits with status 0 after a crash. ⚠️ Scripts/CI checking the exit
-   code cannot tell a crash from a clean exit. `KeyboardInterrupt` (Ctrl-C) is
-   not an `Exception`, so it bypasses the crash report entirely.
+   process exits with status 0 after a crash (deliberate: a crashed game
+   session should still feel like a graceful exit to the player).
+   `KeyboardInterrupt` (Ctrl-C) is not an `Exception`, so it bypasses the
+   crash report entirely.
 
 ## Related: get_key debug mode
 

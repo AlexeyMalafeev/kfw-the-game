@@ -1,10 +1,11 @@
+import ast
 import pprint
 
 from kf_lib.actors import fighter_factory
 from kf_lib.happenings.encounters import all_random_encounter_classes
 from kf_lib.happenings import tournament
 from kf_lib.kung_fu import techniques
-from kf_lib.kung_fu.moves import resolve_move_string
+from kf_lib.kung_fu.moves import ALL_MOVES_DICT, resolve_move_string
 from kf_lib.happenings.story import get_all_stories
 from kf_lib.things import items
 from kf_lib.ui import cls, get_int_from_user, get_str_from_user, menu, pak
@@ -29,7 +30,7 @@ class DebugMenu:
                 ('Story', self.debug_story),
                 ('Inspect Player', self.debug_inspect_player),
                 ('Set Attribute', self.debug_set_att),
-                ('PvP', self.debug_pvp),
+                ('Spar', self.debug_spar),
                 ('Back', None),
             )
         )
@@ -80,6 +81,10 @@ class DebugMenu:
     def debug_learn_move(self):
         p = self.g.current_player
         move_s = get_str_from_user('Enter move string (move name / tier / features, etc.):')
+        if move_s and not move_s.isdigit() and ',' not in move_s and move_s not in ALL_MOVES_DICT:
+            print(f'No such move: {move_s!r}')
+            pak()
+            return
         resolve_move_string(move_s, p)
 
     def debug_learn_tech(self):
@@ -93,7 +98,7 @@ class DebugMenu:
         n = get_int_from_user('How many levels up?', 1, 100)
         p.level_up(n)
 
-    def debug_pvp(self):
+    def debug_spar(self):
         p = self.g.current_player
         opp = menu([pp for pp in self.g.players if not (pp is p)])
         p.spar(opp)
@@ -104,19 +109,43 @@ class DebugMenu:
         if not hasattr(p, att):
             print('No such attribute!')
             pak()
-        else:
-            val = input('Enter value:\n > ')
-            setattr(p, att, eval(val))
+            return
+        if callable(getattr(p, att)):
+            print(f'{att!r} is a method, not overwriting it!')
+            pak()
+            return
+        val = input('Enter value:\n > ')
+        try:
+            val = ast.literal_eval(val)
+        except (ValueError, SyntaxError):
+            print(f'Cannot parse {val!r} as a Python literal, not setting anything!')
+            pak()
+            return
+        setattr(p, att, val)
 
     def debug_story(self):
         story_class = menu(
             [(story_cls.__name__, story_cls) for story_cls in get_all_stories()],
             title="Choose a story",
         )
-        story_obj = story_class(self.g)
-        story_obj.start(self.g.current_player)
-        while story_obj.state != -1:
-            story_obj.advance()
+        story_obj = self.g.stories[story_class.__name__]
+        if not story_obj.check_hasnt_started():
+            print(f'{story_obj.name} has already started!')
+            pak()
+            return
+        p = self.g.current_player
+        try:
+            story_obj.start(p)
+            while story_obj.state != -1:
+                story_obj.advance()
+        except Exception:
+            # detach the player and reset the story so that the save stays consistent
+            p.current_story = None
+            story_obj.player = None
+            if story_obj.boss:
+                story_obj.delete_boss()
+            story_obj.state = None
+            raise
 
     def debug_tournament(self):
         n = get_int_from_user('How many participants?', 2, 20)

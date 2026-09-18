@@ -4,12 +4,15 @@ import traceback
 
 
 def crash_report(game_inst):
-    print(time.ctime(), file=open('errors.txt', 'w'))
+    now = time.ctime()
     traceback.print_exc()
-    traceback.print_exc(file=open('errors.txt', 'a'))
-    print(time.ctime(), file=open('debug.txt', 'w'))
-    if game_inst is not None:
-        pprint.pprint(vars(game_inst), stream=open('debug.txt', 'a'))
+    with open('errors.txt', 'a') as f:
+        print(f'\n\n{now}\n', file=f)
+        traceback.print_exc(file=f)
+    with open('debug.txt', 'a') as f:
+        print(f'\n\n{now}\n', file=f)
+        if game_inst is not None:
+            pprint.pprint(vars(game_inst), stream=f)
     print('debugging info saved to "debug.txt"')
     if game_inst is not None:
         try:
