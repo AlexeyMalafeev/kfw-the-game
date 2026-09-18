@@ -10,6 +10,11 @@ if lib_path not in sys.path:
 from kf_lib.ai import fight_ai_gen
 
 
+# GeneticAlgorithm.output() writes per-generation files to tests/genetic/;
+# the dir is gitignored, so create it here
+Path('tests', 'genetic').mkdir(parents=True, exist_ok=True)
+
+
 try:
     ga = fight_ai_gen.GeneticAlgorithm(
         pop_size=16,

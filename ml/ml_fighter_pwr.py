@@ -1,4 +1,5 @@
 import os
+import random
 
 import numpy as np
 import pandas as pd
@@ -8,7 +9,9 @@ from kf_lib.fighting.fight import AutoFight
 from kf_lib.utils import mean, multiply, rnd, rndint
 
 
+# the fight RNG is the random module (kf_lib/utils/_random.py); seed both
 np.random.seed(0)
+random.seed(0)
 
 feature_labels_str = 'lv1,lv2,lvrel,att1,att2,attrel,tech1,tech2,techrel,n1,n2,nrel,wp1,wp2,wprel,y'
 feature_labels = feature_labels_str.split(',')

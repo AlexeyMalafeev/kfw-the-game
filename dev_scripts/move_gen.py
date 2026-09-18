@@ -20,6 +20,16 @@ QI_COST_PER_TIER = 5
 module_vars = vars()
 
 
+def repr_deterministic(value):
+    """repr() that is stable across processes: set elements are sorted, so the
+    output does not depend on PYTHONHASHSEED."""
+    if isinstance(value, (set, frozenset)):
+        if not value:
+            return repr(set())
+        return '{' + ', '.join(repr(v) for v in sorted(value)) + '}'
+    return repr(value)
+
+
 def read_move_word_combinations() -> Dict[Callable, List[Callable]]:
     result = {}
     with open(Path(MOVES_FOLDER, 'move_word_combinations.csv'), 'r', encoding='utf-8') as f:
@@ -50,7 +60,7 @@ def save_moves(moves, keys, file_name, sort_alph=False):
             col_lens = []
             batch_vals = []
             for m in batch:
-                batch_vals.append([repr(m[k]) for k in keys])
+                batch_vals.append([repr_deterministic(m[k]) for k in keys])
             legend = keys[:]
             legend[0] = '# ' + legend[0]
             batch_vals = [legend] + batch_vals
@@ -598,6 +608,7 @@ def main():
     moves += extra_moves + style_moves
     save_moves(moves, keys, Path(MOVES_FOLDER, 'all_moves.txt'), sort_alph=True)
     df = pd.DataFrame(moves, columns=keys)
+    df['features'] = df['features'].map(repr_deterministic)
     df.to_csv(Path(MOVES_FOLDER, 'all_moves.csv'), sep=';')
     print(f'generated {len(moves)} moves')
     input('Press Enter to exit')

@@ -146,6 +146,11 @@ class GeneticAlgorithm(object):
             top_res_lines.append(f'{self.fit_values_sorted[i]} {self.fittest[i]}')
         top_res = '\n'.join(top_res_lines)
         pcnt = round(self.all_time_record / self.max_possible_fit_value * 100)
+        if self.record_generation is None:
+            # no record yet (e.g. every fitness score was 0 in generation 0)
+            record_s = ''
+        else:
+            record_s = f' @ generation {self.record_generation + 1}'
         out_s = f'''{time_s}
 Generation {self.curr_generation + 1} of {self.n_generations}
 Mutations: {self.mutations_occurred} (prob {self.mutation_prob})
@@ -153,7 +158,7 @@ Gene names: {self.gene_names}
 Top fit values / individuals:
 {top_res}
 Max possible fit value for one individual: {self.max_possible_fit_value}
-All-time record: {self.all_time_record} ({pcnt}%) @ generation {self.record_generation + 1}
+All-time record: {self.all_time_record} ({pcnt}%){record_s}
 Record holder: {self.record_holder}
 '''
         infight_s = ' infight' if self.infighting else ''

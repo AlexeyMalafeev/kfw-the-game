@@ -28,9 +28,9 @@ try:
 
 except Exception:
     import traceback, time
-    print(time.ctime(), file=open('../../errors.txt', 'w'))
+    print(time.ctime(), file=open('errors.txt', 'w'))
     traceback.print_exc()
-    traceback.print_exc(file=open('../../errors.txt', 'a'))
+    traceback.print_exc(file=open('errors.txt', 'a'))
     try:
         g.save_game('emergency_save.txt')
     except:

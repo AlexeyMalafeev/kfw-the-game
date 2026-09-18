@@ -6,22 +6,23 @@ lib_path = Path('..').resolve()
 os.chdir(lib_path)
 if lib_path not in sys.path:
     sys.path.append(str(lib_path))
-print(os.getcwd())
 
-files = os.listdir('.')
+SKIP_DIRS = {'.git', '.venv', '__pycache__', '.pytest_cache'}
+
 count = 0
 n_files = 0
-while files:
-    for fn in files[:]:
-        files.remove(fn)
-        if fn.endswith('.py'):
-            n_files += 1
-            with open(fn, 'r', encoding='utf-8') as f:
-                s = f.read()
-                count += len([ss for ss in s.split('\n') if ss.strip()])
-        if os.path.isdir(fn):
-            files.extend([os.path.join(fn, ffn) for ffn in os.listdir(fn)])
-    
+for root, dirs, files in os.walk('.'):
+    dirs[:] = [d for d in dirs if d not in SKIP_DIRS and not d.startswith('.')]
+    for fn in files:
+        if not fn.endswith('.py'):
+            continue
+        n_files += 1
+        with open(
+            os.path.join(root, fn), 'r', encoding='utf-8', errors='ignore'
+        ) as f:
+            s = f.read()
+        count += len([ss for ss in s.split('\n') if ss.strip()])
+
 print(count, 'non-empty lines of code')
 print(n_files, 'files with code')
 input('Press Enter to exit')

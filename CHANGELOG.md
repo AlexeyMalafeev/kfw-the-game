@@ -74,6 +74,25 @@ All notable changes to KFW are documented here. Format loosely follows
 - **Crash reports keep history**: `errors.txt` and `debug.txt` are now
   appended to (timestamp-separated) instead of truncated to the latest crash,
   and the files are properly closed (`with` blocks) instead of relying on GC.
+- **Dev-script fixes** (verdicts in `docs/dev_scripts.md` updated
+  accordingly): the `except` handlers of `dev_scripts/ai/collect_AIP_data.py`
+  and `compare_AIPs.py` now write `errors.txt` at the repo root instead of
+  the repo's parent (post-chdir `'../../'` slip), `compare_AIPs.py`'s output
+  and `run_fight_ai_test.py`'s final comparison write now land in `tests/`
+  where the committed samples live, `run_fight_ai_gen.py` and
+  `run_fight_ai_test.py` mkdir the gitignored output dirs (`tests/genetic/`,
+  `tests/AI actions/`) they used to crash on, and
+  `kf_lib/ai/fight_ai_gen.py`'s `output()` no longer raises `TypeError` when
+  an all-zero generation 0 leaves `record_generation` unset.
+  `dev_scripts/move_gen.py` output is now byte-deterministic: feature sets
+  are repr'd in sorted order, so a no-change regeneration no longer rewrites
+  the tracked move files with pure hash-ordering churn (the moves files
+  themselves are deliberately untouched). `ml/ml_fighter_pwr.py` now also
+  seeds the `random` module (the fight RNG), making `ML_gen_data.py` runs
+  reproducible. `dev_scripts/count_lines.py` works again — it skips `.venv/`,
+  `.git/`, `__pycache__` and other hidden dirs and tolerates non-UTF-8 files.
+  `dev_scripts/profile_game.py`'s docstring no longer claims it runs from
+  anywhere.
 
 ## [v0.7.3-beta "Love at First Fight"] — 2026-09-16
 

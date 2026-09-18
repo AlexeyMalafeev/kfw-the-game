@@ -13,6 +13,11 @@ from kf_lib.ui import pretty_table
 from kf_lib.utils import get_time
 
 
+# BaseAI.__init__ appends to tests/AI actions/<Class>.txt when write_log is on;
+# the dir is gitignored, so create it here
+Path('tests', 'AI actions').mkdir(parents=True, exist_ok=True)
+
+
 try:
     write_log = True
     same_class_fights = False
@@ -66,7 +71,7 @@ try:
         print(pretty_table(tups))
         print(
             '{}\n\n{}'.format(get_time(), pretty_table(tups)),
-            file=open(Path('../../tests', 'fight AI comparison.txt'), 'w', encoding='utf-8'))
+            file=open(Path('tests', 'fight AI comparison.txt'), 'w', encoding='utf-8'))
     input('Press Enter to exit')
 
 

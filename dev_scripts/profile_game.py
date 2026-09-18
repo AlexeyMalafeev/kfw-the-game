@@ -1,6 +1,7 @@
 """Profile a headless autoplay game with cProfile.
 
-Run from anywhere:  python dev_scripts/profile_game.py
+Run from dev_scripts/ (the chdir hack below assumes it):
+    cd dev_scripts && ../.venv/bin/python profile_game.py
 Output goes to tests/profile_<sorting>.txt
 """
 import os

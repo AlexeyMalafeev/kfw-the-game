@@ -56,14 +56,16 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 - some upgradable techs shouldn't be upgradable
 - double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
   last!)" — verify whether it regressed or the todo entry was stale)
-- several dev scripts are broken (details + per-script verdicts in
-  `docs/dev_scripts.md`): `count_lines.py` (UnicodeDecodeError walking
-  `.venv`), `try_rich.py` (`rich` not installed; abandoned), `compare_AIPs.py`
-  (stale `game.BaselineAIP` import), `run_fight_ai_gen.py` /
-  `run_test_fight_ai` (gitignored `tests/genetic/`, `tests/AI actions/` dirs
-  never created), `ML_learn.py` (output path resolves outside the repo);
-  several scripts write outputs outside the repo via post-chdir `'../../'`
-  paths
+- some dev scripts remain broken (details + per-script verdicts in
+  `docs/dev_scripts.md`; the output-path, missing-dir, determinism and
+  `count_lines.py` defects were fixed 2026-09):
+  `try_rich.py` (`rich` not installed; abandoned experiment),
+  `compare_AIPs.py` (stale import — `game.BaselineAIP` doesn't exist, the
+  AIP classes live in `kf_lib/actors/player`),
+  `collect_AIP_data.py` (per-game styles prompt — `new_game` called without
+  `generated_styles=` → 100 interactive prompts; also persists nothing
+  despite the name),
+  `ML_learn.py` (input path `'../../ml/...'` resolves outside the repo)
 - `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
   (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
   tech/move names no longer in the data files, `learn_tech` now takes Tech

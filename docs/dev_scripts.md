@@ -30,32 +30,32 @@ left behind (`git status` clean).
   Run from the repo root they chdir one level too far up and die with
   `ModuleNotFoundError: No module named 'kf_lib'` (verified for
   `profile_game.py`).
-- ⚠️ The chdir happens *before* the script body, so any `'../../...'` path
-  written later resolves against the repo root, not the script's directory —
-  several scripts therefore aim their outputs *outside* the repo (details per
-  script).
+- ⚠️ The chdir happens *before* the script body, so any relative path in a
+  script resolves against the repo root, not the script's directory —
+  `'../../...'` literals in the script body therefore point *outside* the
+  repo. The concrete instances of this bug found in 2026-09 were fixed, but
+  keep the gotcha in mind when adding paths to these scripts.
 - Most scripts end with `input('Press Enter to exit')` — harmless with piped
   stdin if you send one newline (`echo | ...`), an EOFError otherwise.
 - Interactive prompts (`ui.menu`/`ui.yn`) go through termios
   (`kf_lib/ui/_keyboard.py`) and need a real TTY, same TTY pitfall as the
   minigames.
-- ⚠️ The output dirs `tests/genetic/` and `tests/AI actions/` are gitignored
-  and never created by any code (`kf_lib/utils/_folders.py` mkdirs only
-  `moves/` and `tests/`) — two scripts below crash on exactly this.
+- The output dirs `tests/genetic/` and `tests/AI actions/` are gitignored and
+  not created by `kf_lib/utils/_folders.py` (which mkdirs only `moves/` and
+  `tests/`), so the two scripts that need them
+  (`ai/run_fight_ai_gen.py`, `ai/run_fight_ai_test.py`) mkdir them themselves
+  before running.
 
 ## count_lines.py
 
 Counts non-empty lines in every `.py` file under the repo and prints the
 totals. Run: `cd dev_scripts && ../.venv/bin/python count_lines.py`.
 
-**Broken.** It walks *every* directory at the repo root with no filtering —
-including `.venv/` — and dies with `UnicodeDecodeError` on the first
-non-UTF-8 file (verified: exits 1 at line 20 on
-`.venv/.../joblib/test/test_func_inspect_special_encoding.py` and friends).
-⚠️ Even with the encoding fixed, the count would include `.venv/`, `.git/`
-and any other stray directory, so the number was never meaningful since the
-venv moved inside the repo. The leading `print(os.getcwd())` is a debug
-leftover.
+Works: verified — walks the repo with `os.walk`, skipping `.venv/`, `.git/`,
+`__pycache__` and other hidden dirs, and tolerates non-UTF-8 files
+(`errors='ignore'`). (Before the 2026-09 fix it walked *every* directory,
+including `.venv/`, and died with `UnicodeDecodeError` on the first
+non-UTF-8 file.)
 
 ## move_gen.py
 
@@ -72,16 +72,15 @@ running it.
   `move_word_combinations.csv`. Writes `moves/all_moves.txt`,
   `moves/all_moves.csv` — and also **rewrites the three source files in
   place** (reformatting them through `save_moves`).
-- ⚠️ Output is not byte-deterministic: feature sets are `repr()`'d in hash
-  order, so a no-change regeneration rewrites all four tracked files with
-  pure set-ordering churn (`{'charging', 'acrobatic'}` →
-  `{'acrobatic', 'charging'}`, ~25k diff lines, varies with
-  `PYTHONHASHSEED`). Verified 2026-09; the files were restored with
-  `git checkout`. Don't commit a regeneration unless the content actually
-  changed.
-- Works: ran to completion, exit 0 (`generated 13844 moves`). Note the
-  footer count (13,844 rows) vs `ALL_MOVES_DICT` (13,841 entries) — three
-  generated names collide and overwrite on registration.
+- Output is byte-deterministic: `save_moves` and the CSV dump repr feature
+  sets in sorted order (`repr_deterministic`), so a no-change regeneration
+  produces identical files regardless of `PYTHONHASHSEED` (verified 2026-09
+  with two runs at different hash seeds). Don't commit a regeneration unless
+  the content actually changed.
+- Works: ran to completion, exit 0 (`generated 13845 moves`). Note the
+  footer count (13,845 rows) vs `ALL_MOVES_DICT` (13,842 entries) — three
+  generated names (`Sweep`, `Throw`, `Trip`) collide with the takedown moves
+  from `extra_moves.txt` and overwrite on registration.
 
 ## profile_game.py
 
@@ -91,11 +90,9 @@ cProfile wrapper around a headless autoplay game. Shows a two-option menu
 and saves to `tests/profile_<sorting>.txt`.
 
 - Run: `cd dev_scripts && ../.venv/bin/python profile_game.py`. The menu
-  needs a real TTY (termios).
-- ⚠️ The module docstring says "Run from anywhere: `python
-  dev_scripts/profile_game.py`" — false: it has the same `Path('..')` hack
-  as the rest, and from the repo root it dies with `ModuleNotFoundError:
-  kf_lib` (verified).
+  needs a real TTY (termios). From the repo root it dies with
+  `ModuleNotFoundError: kf_lib` (the `Path('..')` hack lands outside the
+  repo) — the module docstring says so; run it from its own directory.
 - `tests/profile_calls.txt` is a committed sample; `profile_cumulative.txt`
   is untracked — don't commit either blindly.
 - Works: verified via a pty-driven run (answered the menu, full profile
@@ -118,13 +115,10 @@ commented-out `from rich import print` in
 ## ai/ — fight-AI and AI-player runners
 
 Thin wrappers over `kf_lib/ai/` and `kf_lib/game`; all use the
-`Path('..', '..')` version of the chdir hack.
-
-⚠️ Shared defect: the `except` handlers in `collect_AIP_data.py` and
-`compare_AIPs.py` write `'../../errors.txt'` — post-chdir that is the repo's
-*grandparent* directory, i.e. outside the repo (verified: running
-`collect_AIP_data.py` created `~/errors.txt`; removed). On crash they also
-try `g.save_game('emergency_save.txt')`.
+`Path('..', '..')` version of the chdir hack. On crash,
+`collect_AIP_data.py` and `compare_AIPs.py` write the traceback to
+`errors.txt` (repo root, post-chdir) and also try
+`g.save_game('emergency_save.txt')`.
 
 ### collect_AIP_data.py
 
@@ -142,17 +136,6 @@ output is `i / 100` progress lines.
 - Under a TTY it *runs*, but you must answer the styles prompt 100 times
   (verified via pty: answering "yes" lets games complete, one prompt per
   game).
-- ⚠️ Answering "no" (the 20 default styles) crashes game 1 during worldgen:
-  `AttributeError: 'Fighter' object has no attribute 'critical_mult'`. Root
-  cause is a latent kf_lib content bug, not the script: the 'Eagle Claw III'
-  tech (`kf_lib/kung_fu/styles.py:114`) passes `critical_mult=b.CRIT_M1`,
-  but the Fighter attribute is named `critical_dam_mult`
-  (`fighter/_abc.py`); stale since commit `78cf89a` (2022-02). Because
-  school masters are level 11–14 and learn style techs at creation
-  (`fighter_factory.new_master`), **any new game with default styles crashes
-  in `_init_schools`** (verified: `new_game(generated_styles=False)` and
-  `new_master(..., 'Eagle Claw')` both raise). Autoplay and the pytest suite
-  never see it because `kfw.py --autoplay` passes `generated_styles=True`.
 
 ### compare_AIPs.py
 
@@ -163,14 +146,13 @@ Would play 100 AI-only games for each of `BaselineAIP`, `SmartAIP`,
 **Broken at line 14** (verified by running): `game.BaselineAIP` doesn't
 exist — `kf_lib/game/__init__.py` re-exports only `Game`; the AIP classes
 live in `kf_lib/actors/player`. The `AttributeError` fires inside the `try`,
-so the handler runs and writes its traceback outside the repo (see above;
-cleaned up after verification).
+so the handler runs and writes its traceback to `errors.txt`.
 
-- ⚠️ Even with the import fixed, the output would land in the repo root
-  (post-chdir cwd), not in `tests/` where the committed sample
-  `tests/AI players comparison.txt` lives.
-- Also inherits both problems of `collect_AIP_data.py` (per-game styles
-  prompt; Eagle Claw crash on default styles).
+- With the import fixed, the output would land in
+  `tests/AI players comparison.txt` (post-chdir-relative path fixed
+  2026-09), where the committed sample lives.
+- Also inherits the per-game styles prompt problem of
+  `collect_AIP_data.py`.
 
 ### run_fight_ai_gen.py
 
@@ -185,16 +167,10 @@ Trains fight-AI weights with the hand-rolled genetic algorithm
 
 `output()` dumps the top half of each generation (fit values, gene vectors,
 all-time record) to `tests/genetic/pop=... fights=... n_gen=... gen=N.txt`.
+The dir is gitignored, so the script creates it (`mkdir`) before the runs;
+`output()` also tolerates an all-zero generation 0 (no record set yet —
+`record_generation` stays `None` and the generation suffix is omitted).
 
-**Broken at the end of generation 1** (verified end-to-end: generation 1
-completed within a 280 s timeout, then crashed): `tests/genetic/` is
-gitignored and never created, so `output()` raises `FileNotFoundError`.
-`mkdir tests/genetic` would unblock it (not done — no code changes).
-
-- ⚠️ `output()` also assumes a record was set in generation 0: if every
-  fitness score is 0, `record_generation` stays `None` and `output()` raises
-  `TypeError: ... NoneType + int` before even reaching the file write (found
-  with a synthetic 2-individual run).
 - The committed `tests/fight_ai_gen output*.txt` logs predate the current
   per-generation file naming.
 - Budget note: nothing here is interrupt-safe — a crash loses all
@@ -211,18 +187,13 @@ doubled by swapping which fighter uses which AI (~144k fights in total).
 Per-pair results are appended to `tests/fight ai test.txt` (tracked); the
 final sorted tables are meant to overwrite `tests/fight AI comparison.txt`.
 
-**Broken on the first fight** (verified): it runs with `write_log=True`, and
-`BaseAI.__init__` then opens `tests/AI actions/<AIClass>.txt` for append —
-`tests/AI actions/` is gitignored and never created → `FileNotFoundError`.
-Setting `write_log = False` (line 17) would presumably unblock the run (not
-verified end-to-end; not changed).
+It runs with `write_log=True`, and `BaseAI.__init__` then opens
+`tests/AI actions/<AIClass>.txt` for append — the dir is gitignored, so the
+script creates it (`mkdir`) before the runs.
 
-- ⚠️ The final comparison write uses `Path('../../tests', 'fight AI
-  comparison.txt')`, which post-chdir resolves *outside* the repo — the
-  tracked `tests/fight AI comparison.txt` would not be updated even if the
-  run completed.
-- Verification run appended 3 header lines to the tracked
-  `tests/fight ai test.txt`; restored with `git checkout`.
+- The final comparison write goes to `tests/fight AI comparison.txt`
+  (post-chdir-relative path fixed 2026-09), overwriting the tracked sample
+  as intended.
 
 ## ml/ — ML fight-outcome prediction runners
 
@@ -244,9 +215,10 @@ script truncates on startup**.
 
 Works: verified — ran to completion in under two minutes ("Successfully
 generated 10000 examples"), then the CSV was restored with `git checkout`.
-⚠️ Runs are not reproducible: `ml_fighter_pwr` sets `np.random.seed(0)`, but
-the fight RNG is the `random` module (`kf_lib/utils/_random.py`), so each
-run produces a different dataset.
+Runs are reproducible: `ml_fighter_pwr` seeds both `numpy`
+(`np.random.seed(0)`) and the fight RNG (`random.seed(0)` —
+`kf_lib/utils/_random.py` wraps the `random` module), so repeated runs
+produce byte-identical datasets (verified with two 50-example runs).
 
 ### ML_learn.py
 
@@ -347,15 +319,15 @@ tracked report was restored.
 
 | Script | Runs today | Verified by |
 |---|---|---|
-| `count_lines.py` | No — `UnicodeDecodeError` walking `.venv/` | ran, crashed at line 20 |
-| `move_gen.py` | Yes — but nondeterministic churn in 4 tracked files | ran to completion, exit 0; restored |
-| `profile_game.py` | Yes — from `dev_scripts/`, needs a TTY | pty-driven run to completion; also verified it fails from repo root despite its docstring |
+| `count_lines.py` | Yes | ran to completion (19,123 lines in 165 files) |
+| `move_gen.py` | Yes — byte-deterministic across `PYTHONHASHSEED`s | ran to completion, exit 0; two runs at different hash seeds byte-identical; restored |
+| `profile_game.py` | Yes — from `dev_scripts/`, needs a TTY | pty-driven run to completion; verified it fails from repo root (docstring now says so) |
 | `try_rich.py` | No — `rich` not installed | ran, `ModuleNotFoundError` |
-| `ai/collect_AIP_data.py` | Only interactively ("yes" × 100); persists nothing; default styles crash | headless `termios.error`; pty runs both ways (game completes / `critical_mult` crash) |
+| `ai/collect_AIP_data.py` | Only interactively ("yes" × 100); persists nothing | headless `termios.error`; pty run (game completes) |
 | `ai/compare_AIPs.py` | No — `game.BaselineAIP` doesn't exist | ran, `AttributeError` at line 14 |
-| `ai/run_fight_ai_gen.py` | No — crashes after generation 1 (`tests/genetic/` missing) | full generation 1, then `FileNotFoundError` |
-| `ai/run_fight_ai_test.py` | No — crashes on first fight (`tests/AI actions/` missing) | `FileNotFoundError` on startup; `tests/fight ai test.txt` append restored |
-| `ml/ML_gen_data.py` | Yes | ran to completion (10,000 rows, < 2 min); CSV restored |
+| `ai/run_fight_ai_gen.py` | Should run — creates `tests/genetic/` itself; not re-run end-to-end (hours-scale) | `output()` verified on a synthetic all-zero generation (no `TypeError`) |
+| `ai/run_fight_ai_test.py` | Should run — creates `tests/AI actions/` itself; not re-run end-to-end (hours-scale) | short `FightAITest` with `write_log=True` completed after the mkdir |
+| `ml/ML_gen_data.py` | Yes — reproducible (`random` seeded) | two 50-example runs byte-identical; full 10,000-row run earlier restored |
 | `ml/ML_learn.py` | No — `'../../ml/...'` resolves outside the repo | ran, `FileNotFoundError` |
 | `testing/run_test_fb.py` | Yes | n=10000 ran to completion; report restored |
 | `testing/run_test_lv_vs_crowds.py` | Yes | all 5 tables ran to completion; reports restored |
