@@ -16,6 +16,13 @@ All notable changes to KFW are documented here. Format loosely follows
   ~65. Economy-affecting, not fight-balance-affecting.
 
 ### Fixed
+- **Injured players no longer fight friendly matches**: the `FriendMatch`
+  encounter never checked the friend's condition, so an injured AI-player
+  friend (e.g. a co-op teammate) could "challenge" you and spar while still
+  officially injured. `FriendMatch` now skips player-friends with a non-zero
+  `inactive` counter or a lingering `inact_status`, and `PlayerMatch`
+  additionally skips opponents whose `inact_status` hasn't cleared yet
+  (previously possible on the day their recovery counter reached zero).
 - **Seeded determinism for fighter generation and the fight-balance harness**:
   `test_fight_balance` now takes a `seed` parameter (default 42, recorded in
   the report header) and produces byte-identical reports across runs and

@@ -158,7 +158,10 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `Gossip` (pay to see game stats), `OverhearConversation` (relays recorded
   `aston_victory` / `humil_defeat` facts about players).
 - `FriendMatch` / `PlayerMatch`: friendly spars with friends or other AI
-  players, chance scaling with friend count.
+  players, chance scaling with friend count. Injured/sick friends and AI
+  players are never picked: `FriendMatch` skips player-friends with a non-zero
+  `inactive` counter or a lingering `inact_status`, and `PlayerMatch` draws
+  from `get_act_players()` while also skipping anyone with an `inact_status`.
 
 ### Romance (`_romance.py`)
 

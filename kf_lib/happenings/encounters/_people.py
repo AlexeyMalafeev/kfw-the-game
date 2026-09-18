@@ -226,7 +226,10 @@ class FriendMatch(BaseEncounter):
         BaseEncounter.__init__(self, player, check_if_happens)
 
     def check_if_happens(self):
-        self.av_fr = self.player.get_nonhuman_friends()
+        self.av_fr = [
+            f for f in self.player.get_nonhuman_friends()
+            if not (f.is_player and (f.inactive or f.inact_status))
+        ]
         return rnd() <= len(self.av_fr) * 0.01
 
     def run(self):
@@ -331,7 +334,10 @@ class PlayerMatch(BaseEncounter):
 
     def set_available_players(self):
         p, g = self.player, self.player.game
-        self.av_p = [pp for pp in g.get_act_players() if not pp.is_human and not pp == p]
+        self.av_p = [
+            pp for pp in g.get_act_players()
+            if not pp.is_human and not pp == p and not pp.inact_status
+        ]
 
     def check_if_happens(self):
         self.set_available_players()

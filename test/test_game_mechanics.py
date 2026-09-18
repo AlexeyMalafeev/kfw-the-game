@@ -183,3 +183,45 @@ class TestGameSetup:
             g = make_game(seed=seed)
             for stat in (g.poverty, g.crime, g.kung_fu):
                 assert stat == DEFAULT_TOWN_STAT
+
+
+class TestFriendlyMatches:
+    @staticmethod
+    def _bare_enc(cls, player):
+        # bypass __init__ so the encounter never actually runs
+        enc = cls.__new__(cls)
+        enc.p = enc.player = player
+        return enc
+
+    def test_friend_match_excludes_injured_friend(self):
+        from kf_lib.happenings.encounters import FriendMatch
+
+        g = make_game()
+        p1, p2 = g.players
+        p1.add_friend(p2)
+        p2.injure(3)
+        enc = self._bare_enc(FriendMatch, p1)
+        enc.check_if_happens()
+        assert enc.av_fr == []
+
+    def test_friend_match_includes_healthy_friend(self):
+        from kf_lib.happenings.encounters import FriendMatch
+
+        g = make_game()
+        p1, p2 = g.players
+        p1.add_friend(p2)
+        enc = self._bare_enc(FriendMatch, p1)
+        enc.check_if_happens()
+        assert enc.av_fr == [p2]
+
+    def test_player_match_excludes_lingering_injured_status(self):
+        from kf_lib.happenings.encounters import PlayerMatch
+
+        g = make_game()
+        p1, p2 = g.players
+        # the recovery counter has run out, but inact_status only clears on
+        # p2's next turn — p2 must still not be challenged
+        p2.inact_status = 'injured'
+        enc = self._bare_enc(PlayerMatch, p1)
+        enc.set_available_players()
+        assert p2 not in enc.av_p
