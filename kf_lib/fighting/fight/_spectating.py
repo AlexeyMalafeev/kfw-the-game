@@ -1,7 +1,7 @@
 from ._base_fight import BaseFight
 from ._helpers import get_prefight_info, get_sides
 from ._normal_fight import NormalFight
-from kf_lib.ui import cls, pak
+from kf_lib.ui import cls, pak, rprint
 
 
 def spectate(f1, f2, f1_allies=None, f2_allies=None, environment_allowed=True, win_messages=None):
@@ -34,10 +34,10 @@ class SpectateFight(NormalFight):
         cls()
 
     def show(self, text, **kwargs):
-        print(text)
+        rprint(text)
 
     def show_win_message(self, who_shows_ascii=None, alternative_printing_fn=None):
-        super().show_win_message(who_shows_ascii=self.side_a[0], alternative_printing_fn=print)
+        super().show_win_message(who_shows_ascii=self.side_a[0], alternative_printing_fn=rprint)
 
     def pak(self):
         pak()

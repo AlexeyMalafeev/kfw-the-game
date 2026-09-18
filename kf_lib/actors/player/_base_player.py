@@ -12,7 +12,7 @@ from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
 from kf_lib.kung_fu import techniques
 from kf_lib.things import items
-from kf_lib.ui import yn
+from kf_lib.ui import green, strip_tags, yellow, yn
 from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
 
 
@@ -528,12 +528,12 @@ class BasePlayer(Fighter):
     def earn_prize(self, amount):
         self.money += amount
         self.change_stat('prize_money_earned', amount)
-        self.write(f'{self.name} earns a {amount}-coin prize.')
+        self.write(f'{self.name} earns a {yellow(f"{amount}-coin")} prize.')
 
     def earn_reward(self, amount):
         self.money += amount
         self.change_stat('rew_money_earned', amount)
-        self.write(f'{self.name} earns a {amount}-coin reward.')
+        self.write(f'{self.name} earns a {yellow(f"{amount}-coin")} reward.')
 
     def end_turn(self):
         pass
@@ -557,7 +557,7 @@ class BasePlayer(Fighter):
 
     def gain_exp(self, amount, silent=False):
         if not silent:
-            self.show(f'{self.name} gains {amount} exp.')
+            self.show(f'{self.name} {green(f"gains {amount} exp.")}')
             self.log(f'Gains {amount} exp.')
         self.exp += amount
         while self.exp >= self.next_level:
@@ -786,7 +786,7 @@ class BasePlayer(Fighter):
         self.next_level = self.get_next_lv_exp()
 
     def log(self, text):
-        self.plog.append(text)
+        self.plog.append(strip_tags(text))
 
     def log_new_day(self):
         self.log('\n\n*NEW DAY*')

@@ -5,6 +5,22 @@ All notable changes to KFW are documented here. Format loosely follows
 
 ## [Unreleased]
 
+### Added
+- **Terminal colors**: the game is no longer monochrome. A hand-rolled,
+  dependency-free markup engine (`kf_lib/ui/_rich_format.py`) lets call sites
+  wrap text in rich-style tags (`[red]...[/red]`, `style(s, 'bold red')`),
+  resolved to ANSI codes at the output funnels (`show()`, `menu()`, spectate
+  and visible-AI output) and stripped everywhere else — so player logs and
+  piped output stay clean. Semantic palette: red damage, bold-red crits/KOs,
+  cyan dodges/blocks, yellow status effects and money, green exp/victories,
+  dim quotes, bold names and menu titles, and HP bars that go
+  green → yellow → red as they drain. All alignment code (`align_text`,
+  `pretty_table`, the fight-info header) measures visible width, so colors
+  never skew layout. Colors auto-disable when stdout is not a TTY or
+  `NO_COLOR`/`KFW_COLOR=never`/`TERM=dumb` says so, can be forced off with the
+  new `--no-color` flag, and work on Windows 10+ (VT mode enabled at startup).
+  ASCII art frames are deliberately left uncolored (see `docs/ui.md`).
+
 ### Changed
 - **Wooden mannequin nerfed**: daily home-training exp reduced from 3 to 1
   (`HOME_TRAINING_EXP` is now `max(1, base × 0.05)` instead of `base × 0.15`),

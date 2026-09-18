@@ -1,8 +1,11 @@
 # I considered replacing this with built-in textwrap, but textwrap doesn't seem to be able to do
 # text justification out of the box.
+from ._rich_format import visible_len
+
+
 # todo refactor align_text
 def align_text(text, indent, align):
-    """This function ignores \n and \t."""
+    """This function ignores \n and \t. Color markup tags don't count toward width."""
     # split text into lines
     # align += 1
     words = text.split()
@@ -12,7 +15,7 @@ def align_text(text, indent, align):
     words_len = 0  # length of all words in a line, no spaces
     int_spaces = -1  # spaces between words in a line
     for word in words:
-        wlen = len(word)
+        wlen = visible_len(word)
         if wlen + words_len + int_spaces < align:
             curr_line.append(word)
             words_len += wlen
@@ -49,12 +52,14 @@ def pretty_table(table, sep='  ', as_list=False):
     for line in table:
         for i, elt in enumerate(line):
             columns[i].append(elt)
-    max_lens = [max([len(str(elt)) for elt in col]) for col in columns]
+    max_lens = [max([visible_len(str(elt)) for elt in col]) for col in columns]
     new_lines = []
     for line in table:
-        new_lines.append(
-            sep.join(('{:<{}}'.format(elt, max_lens[i]) for i, elt in enumerate(line)))
-        )
+        padded = []
+        for i, elt in enumerate(line):
+            s = str(elt)
+            padded.append(s + ' ' * (max_lens[i] - visible_len(s)))
+        new_lines.append(sep.join(padded))
     if as_list:
         return new_lines
     else:

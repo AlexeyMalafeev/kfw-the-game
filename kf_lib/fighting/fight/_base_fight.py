@@ -2,7 +2,7 @@ import random
 
 from kf_lib.actors.names import GROUP_NAMES
 from kf_lib.constants import experience
-from kf_lib.ui import cls, menu, pak
+from kf_lib.ui import cls, menu, pak, style, yellow
 
 
 ASTON_VICTORY_MIN_RATIO = 1.2
@@ -411,8 +411,9 @@ class BaseFight(object):
                 else:
                     s = f'{wnr.name} wins.'
             self.handle_win_quote()
+            s = style(s, 'bold green')
         else:
-            s = 'Draw!'
+            s = yellow('Draw!')
         return s
 
     def save_slideshow(self):

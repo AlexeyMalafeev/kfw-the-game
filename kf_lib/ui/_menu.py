@@ -1,6 +1,7 @@
 import string
 
 from ._keyboard import get_key
+from ._rich_format import render
 from ._screen import cls
 
 
@@ -38,12 +39,12 @@ def menu(
             curr_keys += '<>'
             has_pages = True
         if title:
-            print(title)
+            print(render(f'[bold]{title}[/bold]'))
         if new_line:
             st = '\n'
         else:
             st = '; '
-        print(st.join([f' {curr_keys[j]} - {curr_options[j]}' for j in range(len(curr_keys))]))
+        print(render(st.join([f' {curr_keys[j]} - {curr_options[j]}' for j in range(len(curr_keys))])))
         while True:
             choice = get_key()
             if has_pages and choice in '<>':

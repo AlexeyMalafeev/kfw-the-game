@@ -1,6 +1,6 @@
 import random
 
-from kf_lib.ui import cls, pak
+from kf_lib.ui import cls, pak, render, strip_tags
 from kf_lib.utils import rnd
 from ._base_player import BasePlayer
 
@@ -202,8 +202,8 @@ class SmartAIPVisible(SmartAIP):
         pak()
 
     def log(self, text):
-        self.plog.append(text)
-        print(text)
+        self.plog.append(strip_tags(text))
+        print(render(text))
         pak()
 
     def log_new_day(self):

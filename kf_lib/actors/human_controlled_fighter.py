@@ -1,4 +1,18 @@
-from kf_lib.ui import align_text, cls, get_bar, menu, pak, pretty_table
+from kf_lib.ui import (
+    align_text,
+    bold,
+    cls,
+    get_bar,
+    green,
+    magenta,
+    menu,
+    pak,
+    pretty_table,
+    red,
+    render,
+    visible_len,
+    yellow,
+)
 from kf_lib.utils import roman
 from .fighter import Fighter
 
@@ -279,35 +293,37 @@ class HumanControlledFighter(Fighter):
             if len(lines_a[0]) == 1:
                 return [line[0] for line in lines_a]
             else:
-                line_len = max([len(a) + len(b) for a, b in lines_a])
+                line_len = max([visible_len(a) + visible_len(b) for a, b in lines_a])
                 min_len = 26
                 if line_len < min_len:
                     line_len = min_len
                 for i, line in enumerate(lines_a):
                     a, b = line
-                    pad = line_len - (len(a) + len(b)) + 1
+                    pad = line_len - (visible_len(a) + visible_len(b)) + 1
                     lines_a[i] = f"{a}{' ' * pad}{b}"
                 return lines_a
 
         def fill_lines(lines_to_be_filled, f, right=False):
             lines_f = lines_to_be_filled
             marks = f.get_status_marks(right=right)
-            lines_f[0].append(f.name + marks)
+            lines_f[0].append(bold(f.name) + marks)
 
             health_bar = get_bar(f.hp, f.hp_max, '%', '.', 10, mirror=right)
-            elt1, elt2, elt3 = 'HP', health_bar, f.hp
+            hp_ratio = f.hp / f.hp_max if f.hp_max else 0
+            hp_color = green if hp_ratio > 0.5 else (yellow if hp_ratio > 0.25 else red)
+            elt1, elt2, elt3 = 'HP', hp_color(health_bar), f.hp
             if right:
                 elt1, elt3 = elt3, elt1
             lines_f[1].append(f'{elt1} {elt2} {elt3}')
 
             stamina_bar = get_bar(f.stamina, f.stamina_max, '#', '-', 10, mirror=right)
-            elt1, elt2, elt3 = 'SP', stamina_bar, f.stamina
+            elt1, elt2, elt3 = 'SP', yellow(stamina_bar), f.stamina
             if right:
                 elt1, elt3 = elt3, elt1
             lines_f[2].append(f'{elt1} {elt2} {elt3}')
 
             qi_bar = get_bar(f.qp, f.qp_max, '@', '~', 10, mirror=right)
-            elt1, elt2, elt3 = 'QP', qi_bar, f.qp
+            elt1, elt2, elt3 = 'QP', magenta(qi_bar), f.qp
             if right:
                 elt1, elt3 = elt3, elt1
             lines_f[3].append(f'{elt1} {elt2} {elt3}')
@@ -331,14 +347,13 @@ class HumanControlledFighter(Fighter):
         # todo show standing fighters with distance?
 
     def show(self, text, align=True):
-        """Print aligned text in paragraphs."""
-        # from rich import print
+        """Print aligned text in paragraphs (markup tags resolved to colors)."""
         if align:
             pars = [align_text(t, INDENT, ALIGN) for t in text.split('\n')]
             for p in pars:
-                print(p)
+                print(render(p))
         else:
-            print(text)
+            print(render(text))
 
     @staticmethod
     def spectate(side_a, side_b, environment_allowed=True):

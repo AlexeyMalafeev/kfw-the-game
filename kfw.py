@@ -7,10 +7,12 @@ Usage examples:
     python kfw.py --autoplay --autosave  AI-only game with auto save
     python kfw.py --load save.txt        load a saved game
     python kfw.py --load "auto save.txt"
+    python kfw.py --no-color             play without terminal colors
 """
 import argparse
 
 from kf_lib import game
+from kf_lib import ui
 from kf_lib.actors.player import SmartAIP, SmartAIPVisible
 from kf_lib.ui import yn
 
@@ -23,7 +25,10 @@ def main():
     parser.add_argument('--autosave', action='store_true', help='turn auto save on')
     parser.add_argument('--silent-ending', action='store_true',
                         help='no interactive prompts at the end of the game')
+    parser.add_argument('--no-color', action='store_true', help='disable terminal colors')
     args = parser.parse_args()
+
+    ui.init_colors(no_color_flag=args.no_color)
 
     g = game.Game()
     try:

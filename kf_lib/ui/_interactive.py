@@ -1,4 +1,5 @@
 from ._keyboard import get_key
+from ._rich_format import rprint
 
 
 def get_int_from_user(message, min_, max_) -> int:
@@ -7,7 +8,7 @@ def get_int_from_user(message, min_, max_) -> int:
     """
     error_msg = 'invalid input, try again'
     while True:
-        print(message)
+        rprint(message)
         inp = input(f' ({min_}-{max_})>')
         try:
             inp = int(inp)
@@ -23,7 +24,7 @@ def get_int_from_user(message, min_, max_) -> int:
 def get_str_from_user(message, can_be_empty=False) -> str:
     error_msg = 'invalid input, try again'
     while True:
-        print(message)
+        rprint(message)
         inp = input(f' > ')
         if not inp and not can_be_empty:
             print(error_msg)
@@ -32,7 +33,7 @@ def get_str_from_user(message, can_be_empty=False) -> str:
 
 
 def msg(message):
-    print(message)
+    rprint(message)
     pak()
 
 

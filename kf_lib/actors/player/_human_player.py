@@ -1,6 +1,6 @@
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
 from kf_lib.things.items import get_item_descr, MEDICINE
-from kf_lib.ui import cls, menu, yn
+from kf_lib.ui import cls, menu, style, yn
 from kf_lib.utils import enum_words, float_to_pcnt
 from ._base_player import BasePlayer, NUM_SCHOOL_TECHS
 
@@ -101,9 +101,9 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         return yn('')
 
     def level_up(self, times=1):
-        self.msg(f'{self.name}: *LEVEL UP*')
+        self.msg(f'{self.name}: {style("*LEVEL UP*", "bold green")}')
         cls()
-        self.show('*LEVEL UP*')
+        self.show(style('*LEVEL UP*', 'bold green'))
         # do not change BasePlayer to super(), will cause bugs; todo investigate this
         BasePlayer.level_up(self, times)
 
