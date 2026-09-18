@@ -23,7 +23,9 @@ class AIPlayer(BasePlayer):
     visit_masters_chance = 0.1
 
     def bet_on_tourn_or_not(self):
-        return rnd() <= self.gamble_chance
+        return rnd() <= self.gamble_chance and self.check_money(
+            min(self.possible_tournament_bets)
+        )
 
     def brawl_or_not(self, opp_info):
         return rnd() <= self.brawl_chance and opp_info[0] <= self.acceptable_fight_threshold
@@ -64,7 +66,7 @@ class AIPlayer(BasePlayer):
 
     def donate_or_not(self, amount):
         """Return an amount or 0"""
-        if rnd() <= self.donate_chance:
+        if rnd() <= self.donate_chance and self.check_money(amount):
             return amount
         else:
             return 0
@@ -75,7 +77,10 @@ class AIPlayer(BasePlayer):
 
     def fight_or_run(self, opp_info, esc_chance):
         """Return True if fight is chosen"""
-        return opp_info[0] <= self.acceptable_fight_threshold or esc_chance < 0.5
+        return (
+            opp_info[0] <= self.acceptable_fight_threshold
+            or esc_chance < self.acceptable_escape_risk
+        )
 
     def fight_run_or_pay(self, opp_info, esc_chance, money):
         """Return 'f', 'r' or 'p'"""
@@ -113,7 +118,8 @@ class AIPlayer(BasePlayer):
         max_lv = max(f.level for f in tourn_obj.participants)
         choose_from = [f for f in tourn_obj.participants if f.level == max_lv]
         bet_on = random.choice(choose_from)
-        bet_amount = random.choice(self.possible_tournament_bets)
+        affordable_bets = [b for b in self.possible_tournament_bets if self.check_money(b)]
+        bet_amount = random.choice(affordable_bets)
         self.pay(bet_amount)
         return bet_on, bet_amount
 
@@ -176,9 +182,6 @@ class SmartAIP(AIPlayer):
     gamble_chance = 0.2
     master_practice_chance = 0.5
     min_days_use_med = 3
-    min_non_master_money = 175
-    min_master_money = 150
-    min_students_to_teach = 5
     non_master_practice_chance = 0.8
 
     def __init__(self, *args, **kwargs):

@@ -122,10 +122,11 @@ only the number:
 - `fight_or_not`: `ratio <= acceptable_fight_threshold` (1.2; SmartAIP 1.1).
   Used for optional fights: crime-fighting encounters, challengers, school
   trials, master trial, prize-fighting stages after the first.
-- `fight_or_run`: fight if `ratio <= threshold` **or** `esc_chance < 0.5`.
-  ⚠️ The 0.5 is hardcoded and ignores `acceptable_escape_risk` (0.6; SmartAIP
-  0.7), which is only consulted by `run_or_not` — so `fight_or_run` and
-  `fight_run_or_pay` apply different escape standards.
+- `fight_or_run`: fight if `ratio <= threshold` **or** `esc_chance <
+  acceptable_escape_risk` — the same escape standard `run_or_not` uses, so
+  `fight_or_run` and `fight_run_or_pay` are consistent. (Before 2026-09 the
+  0.5 was hardcoded and ignored `acceptable_escape_risk`; fixed, pinned in
+  `test/test_player_ai.py`.)
 - `fight_run_or_pay` (robbers): if the money can't be paid, reduce to
   fight-or-run; otherwise prefer fight, then run (`run_or_not`: `esc_chance >=
   acceptable_escape_risk`), then pay. Escape chances are
@@ -156,9 +157,7 @@ described above.
 ## Money, gambling and social choices
 
 - Donations (Beggar): `donate_or_not` returns the full amount on a
-  `donate_chance` 0.5 roll, else 0. ⚠️ It never checks `check_money` (the
-  human version only offers what the player has), so a broke AI player donates
-  into negative money.
+  `donate_chance` 0.5 roll if the player can afford it (`check_money`), else 0.
 - Gambling (Gambler encounter): `gamble_or_not` = `gamble_chance` roll (0.5;
   LazyAIP 0.7, SmartAIP 0.2), but the encounter also rolls
   `gamble_with_gambler` (0.3) as an independent temptation. Rock-paper-scissors
@@ -175,10 +174,11 @@ described above.
   friend/player spars accepted), `tourn_or_not` → True (every tournament and
   prize-fighting entry).
 - Tournaments (`happenings/tournament.py`): `bet_on_tourn_or_not` reuses
-  `gamble_chance`; `place_bet_on_tourn` picks a random participant among those
-  at the max level and a random bet from `possible_tournament_bets`. ⚠️ The bet
-  is paid with no `check_money` — another negative-money path (the human menu
-  version doesn't check either).
+  `gamble_chance` and also requires having at least the minimum bet in cash;
+  `place_bet_on_tourn` picks a random participant among those at the max level
+  and a random bet among the affordable `possible_tournament_bets`. The human
+  menu version still doesn't check money — a human can deliberately bet into
+  debt.
 
 ## School and mastery
 
@@ -188,8 +188,9 @@ roll per encounter check (it sits in `PRACTICE_SCHOOL_ENCS` and the generic
 random-encounter pool). The AI's only say is `fight_or_not` against its master; winning
 the spar founds a school named `'{name}'s school'` (`choose_school_name` — no
 collision check, unlike the human prompt) and pays `MONEY_OPEN_SCHOOL`.
-⚠️ That payment has no `check_money` — the AI never saves up for it and can go
-deeply negative the day it wins the trial.
+That payment deliberately has no `check_money` — winning the trial is a
+milestone worth going into debt for, so the AI never saves up for it and can
+go negative the day it wins.
 
 As a master: the Students encounter (`get_fame()`-gated) asks a human whether
 to accept a single applicant but hardcodes `choice = True` for AI, and the
@@ -205,10 +206,8 @@ monthly on their own (`do_monthly`).
   0.9/0.6, money floors 175/150, 5 students to teach, medicine at 2 days.
 - `LazyAIP`: practices less (0.3/0.2), gambles more (0.7).
 - `SmartAIP`: tighter threshold 1.1, higher escape standard 0.7, never brawls,
-  gambles less (0.2), practices 0.8/0.5, waits 3 days before medicine. It also
-  redeclares `min_non_master_money`, `min_master_money` and
-  `min_students_to_teach` with values identical to the base — reads like
-  tuning, changes nothing ⚠️ — plus the three dead attributes flagged above.
+  gambles less (0.2), practices 0.8/0.5, waits 3 days before medicine, plus the
+  post-init `drink_with_drunkard`/`gamble_continue` overrides described above.
 - `BaselineAIP`: same decision hooks as `AIPlayer`, but `choose_day_action` is
   a uniform random pick over `get_day_actions()` — the "monkey" baseline. It
   can pick `practice_school` without the fee; the action returns falsy and the

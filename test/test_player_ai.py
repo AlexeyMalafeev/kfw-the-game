@@ -1,5 +1,6 @@
 """Player AI decision logic characterization (headless, seeded)."""
 import random
+from types import SimpleNamespace
 
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 from kf_lib.actors.player import AIPlayer, BaselineAIP, LazyAIP, SmartAIP, VanillaAIP
@@ -93,6 +94,15 @@ class TestFightDecisions:
         assert p.run_or_not(0.6) is True
         assert p.run_or_not(0.59) is False
 
+    def test_fight_or_run_uses_acceptable_escape_risk(self):
+        # the escape standard is the class attribute, not a hardcoded 0.5
+        p = make_player(cls=VanillaAIP)  # acceptable_escape_risk = 0.6
+        assert p.fight_or_run((2.0,), esc_chance=0.59) is True
+        assert p.fight_or_run((2.0,), esc_chance=0.6) is False
+        p = make_player(cls=SmartAIP)  # acceptable_escape_risk = 0.7
+        assert p.fight_or_run((2.0,), esc_chance=0.69) is True
+        assert p.fight_or_run((2.0,), esc_chance=0.7) is False
+
     def test_fight_run_or_pay_matrix(self):
         p = make_player(cls=VanillaAIP)
         # not enough money -> fight or run only
@@ -136,6 +146,47 @@ class TestFightDecisions:
         assert AIPlayer.talk_wise_or_not() is True
         assert AIPlayer.tourn_or_not() is True
         assert AIPlayer.p_match_or_not() is True
+
+
+class TestMoneyChecks:
+    """AI players never spend money they don't have (no negative-money paths
+    via donations or tournament bets; the school-founding fee is exempt)."""
+
+    def test_donate_or_not_respects_money(self):
+        p = make_player(cls=VanillaAIP)  # donate_chance = 0.5
+        p.money = 0
+        for seed in range(20):
+            random.seed(seed)
+            assert p.donate_or_not(50) == 0
+        p.money = 50
+        seen = set()
+        for seed in range(20):
+            random.seed(seed)
+            seen.add(p.donate_or_not(50))
+        assert seen == {0, 50}  # both outcomes happen when affordable
+
+    def test_bet_on_tourn_requires_min_bet(self):
+        p = make_player(cls=LazyAIP)  # gamble_chance = 0.7
+        p.money = min(p.possible_tournament_bets) - 1
+        for seed in range(50):
+            random.seed(seed)
+            assert p.bet_on_tourn_or_not() is False
+        p.money = min(p.possible_tournament_bets)
+        seen = set()
+        for seed in range(50):
+            random.seed(seed)
+            seen.add(p.bet_on_tourn_or_not())
+        assert seen == {True, False}
+
+    def test_place_bet_on_tourn_only_bets_affordable(self):
+        p = make_player(cls=VanillaAIP)
+        opp = make_player(cls=SmartAIP, seed=1)
+        tourn = SimpleNamespace(participants=[p, opp])
+        for seed in range(50):
+            random.seed(seed)
+            p.money = 25  # can afford 10 and 25 out of (10, 25, 50, 100)
+            _, bet_amount = p.place_bet_on_tourn(tourn)
+            assert bet_amount in (10, 25)
 
 
 class TestDayActionList:
@@ -198,3 +249,8 @@ class TestSmartAIPKnobs:
     def test_dead_attribute_names_are_gone(self):
         for dead in ('drink_chance', 'continue_gambling_chance', 'buy_med_chance'):
             assert not hasattr(SmartAIP, dead)
+
+    def test_no_redundant_base_value_redeclarations(self):
+        # SmartAIP used to redeclare these with values identical to AIPlayer's
+        for attr in ('min_non_master_money', 'min_master_money', 'min_students_to_teach'):
+            assert attr not in SmartAIP.__dict__

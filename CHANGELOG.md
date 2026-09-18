@@ -50,6 +50,17 @@ All notable changes to KFW are documented here. Format loosely follows
   `compare_dicts`/`dict_diff` iterated a string set, leaking PYTHONHASHSEED
   into tie ordering. No statistical/balance impact — RNG stream order only.
   The tracked n=10000 snapshot was refreshed with the seeded harness.
+- **AI players no longer spend money they don't have**: `donate_or_not` and
+  tournament betting (`bet_on_tourn_or_not` / `place_bet_on_tourn`) now check
+  `check_money`, so broke AI players skip donations and bets instead of going
+  into negative money (the school-founding fee after winning the MasterTrial
+  deliberately stays unchecked — a milestone worth going into debt for). Also
+  `fight_or_run` now uses each class's `acceptable_escape_risk` instead of a
+  hardcoded 0.5, so both fight/run decisions apply the same escape standard —
+  VanillaAIP fights when escape chance is under 0.6 (was 0.5), SmartAIP under
+  0.7. And SmartAIP's redundant redeclarations of `min_non_master_money`,
+  `min_master_money` and `min_students_to_teach` (values identical to the base
+  class) were removed. Pinned in `test/test_player_ai.py`.
 
 ## [v0.7.3-beta "Love at First Fight"] — 2026-09-16
 
