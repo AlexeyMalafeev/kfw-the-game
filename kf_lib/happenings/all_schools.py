@@ -10,18 +10,22 @@ ALL_SCHOOLS_MASTER_REP = 10  # significant fame for the player-master of the win
 
 
 class AllSchoolsTournament:
-    """Scheduled mega-tournament held on the last day of every month: every school
-    fields its students (weakest first, masters don't fight) in a single-elimination
-    bracket of school-vs-school gauntlet matches. Whenever a fighter is knocked out,
-    the next higher-ranking student of his school takes his place; a school with no
-    students left is eliminated. With an odd number of schools, one randomly chosen
-    match per round is a three-school free-for-all (same substitution rules).
-    HP carries over within a match; everyone heals between matches."""
+    """Scheduled mega-tournament held on the last day of every month: a
+    single-elimination bracket fought by school representatives. Each round,
+    every school still in the running fields one fighter — the survivor of its
+    previous bout, or, if he was knocked out, the next higher-ranking student
+    (schools field their students weakest first; masters don't fight). A
+    knocked-out fighter is out for the whole tournament; a school with no
+    students left is eliminated. With an odd number of participants, one
+    randomly chosen bout per round is a three-way free-for-all. A drawn bout
+    (everyone KO'd) knocks out everyone involved. Everyone heals between
+    rounds — nobody fights twice in a round. The last fighter standing wins
+    the tournament for his school."""
 
     def __init__(self, game):
         self.g = self.game = game
         self.rosters = {}  # {school_name: [fighters weakest first]}
-        self.last_standing = {}  # {school_name: fighter who won its latest match}
+        self.final_fighter = None  # the last fighter standing
         self.champion = None
         self.run()
 
@@ -46,79 +50,63 @@ class AllSchoolsTournament:
             )
         )
 
-    def _do_match(self, school_names):
-        """Run one gauntlet match between 2 or 3 schools.
-        Return (winning_school, final_standing_fighter) or (None, None) if the match
-        ends in a draw (everyone KO'd with no reserves left)."""
-        school_names = sorted(
-            school_names,
-            key=lambda n: not any(f.is_player for f in self.rosters[n]),
-        )
-        queues = {name: deque(self.rosters[name]) for name in school_names}
-        reps = {name: queues[name].popleft() for name in school_names}
-        while len(reps) > 1:
-            fighters = list(reps.values())
-            # damage carries over within the match
-            carry = {f: f.hp for f in fighters if 0 < f.hp < f.hp_max} or None
-            if len(fighters) == 2:
-                fight.fight(
-                    fighters[0], fighters[1],
-                    environment_allowed=False, items_allowed=False,
-                    school_display=True, return_fight_obj=True,
-                    hp_carry=carry,
-                )
-            else:
-                fight.free_for_all(
-                    fighters,
-                    environment_allowed=False, items_allowed=False,
-                    school_display=True, return_fight_obj=True,
-                    hp_carry=carry,
-                )
-            for name in list(reps):
-                if reps[name].hp <= 0:  # knocked out — the next student steps in
-                    if queues[name]:
-                        reps[name] = queues[name].popleft()
-                    else:
-                        del reps[name]  # the school is eliminated from the match
-        if not reps:
-            return None, None
-        winner = next(iter(reps))
-        return winner, reps[winner]
+    def _do_bout(self, fighters):
+        """Run one bout between 2 or 3 fighters (one per school)."""
+        if len(fighters) == 2:
+            fight.fight(
+                fighters[0], fighters[1],
+                environment_allowed=False, items_allowed=False,
+                school_display=True, return_fight_obj=True,
+            )
+        else:
+            fight.free_for_all(
+                fighters,
+                environment_allowed=False, items_allowed=False,
+                school_display=True, return_fight_obj=True,
+            )
 
     def _do_rounds(self):
         g = self.g
-        schools = list(self.rosters)
+        reserves = {name: deque(roster) for name, roster in self.rosters.items()}
+        # every school fields its lowest-ranking student
+        active = {name: reserves[name].popleft() for name in self.rosters}
         current_round = 0
-        while len(schools) > 1:
+        while len(active) > 1:
             current_round += 1
-            random.shuffle(schools)
-            matches = []
-            if len(schools) % 2:
-                matches.append(schools[:3])
-                rest = schools[3:]
+            # nobody fights twice in a round, so everyone heals between rounds
+            for f in active.values():
+                f.hp = f.hp_max
+            entries = list(active.items())
+            random.shuffle(entries)
+            if len(entries) % 2:
+                bouts, rest = [entries[:3]], entries[3:]
             else:
-                rest = schools
-            matches += [rest[i: i + 2] for i in range(0, len(rest), 2)]
-            pairings = '; '.join(' vs '.join(m) for m in matches)
+                bouts, rest = [], entries
+            bouts += [rest[i: i + 2] for i in range(0, len(rest), 2)]
+            pairings = '; '.join(
+                ' vs '.join(f'{f.name} ({name})' for name, f in bout)
+                for bout in bouts
+            )
             g.cls()
             g.msg(f'All-Schools Tournament, round {current_round}:\n{pairings}')
-            winners = []
-            for match in matches:
-                # everyone heals between matches
-                for name in match:
-                    for f in self.rosters[name]:
-                        f.hp = f.hp_max
-                winner, final_fighter = self._do_match(match)
-                if winner is None:
-                    g.msg(f'{" vs ".join(match)}: all fighters are down — a draw!')
-                else:
-                    self.last_standing[winner] = final_fighter
-                    winners.append(winner)
-                    g.msg(f'{winner} defeats {" and ".join(n for n in match if n != winner)}!')
-            if not winners:
-                return  # every match drawn — the tournament fizzles out
-            schools = winners
-        self.champion = schools[0]
+            still_active = {}
+            for bout in bouts:
+                # player fighters first (protagonist perspective in fights)
+                bout.sort(key=lambda entry: not entry[1].is_player)
+                self._do_bout([f for _, f in bout])
+                for name, f in bout:
+                    if f.hp > 0:
+                        still_active[name] = f  # survives to the next round
+                    elif reserves[name]:
+                        # knocked out for good — the next student steps in
+                        still_active[name] = reserves[name].popleft()
+                    else:
+                        g.msg(f'{name} is out of students and leaves the tournament!')
+            active = still_active
+        if active:
+            self.champion, self.final_fighter = next(iter(active.items()))
+        # else: the final bout(s) knocked everyone out with no reserves left —
+        # the tournament ends in a draw
 
     def _give_rewards(self):
         g = self.g
@@ -135,7 +123,7 @@ class AllSchoolsTournament:
         )
         for f in roster:
             f.log(f'Wins the All-Schools Tournament with {self.champion}.')
-        final_fighter = self.last_standing.get(self.champion)
+        final_fighter = self.final_fighter
         for p in (f for f in roster if f.is_player):
             if p is final_fighter:
                 p.add_accompl('All-Schools Champion')
@@ -164,8 +152,9 @@ class AllSchoolsTournament:
         g.cls()
         g.msg(
             f'The masters of {g.town_name} gather for the All-Schools Tournament! Every school '
-            'fields its students, weakest first — a knocked-out fighter is replaced by the '
-            'next one in rank. Last school standing wins!'
+            'fields its students, weakest first — a knocked-out fighter is out for the whole '
+            'tournament, replaced by the next one in rank. Last fighter standing wins the '
+            'title for his school!'
         )
         # human participants may opt to skip all their bouts: they are then
         # auto-fought without the per-fight display and prompt; declining

@@ -368,14 +368,15 @@ so players involved get exp, stats and can be injured; nothing else about the
 schools changes), 15% a tournament starts.
 
 The All-Schools Tournament is not random: it is scheduled on the last day of
-every month (run from `do_monthly`, announced on day 25). Every school's
-students fight in a single-elimination bracket of gauntlet matches — weakest
-student first, a KO'd fighter is replaced by the next one in rank, a school
-with no students left is eliminated, and odd rounds have one three-school
-free-for-all match; damage carries over within a match, everyone heals
-between matches. Human participants can opt to auto-fight all their bouts at
+every month (run from `do_monthly`, announced on day 25). Every school
+fields one fighter per round in a fighter-centric bracket — the survivor of
+the school's previous bout, or, after a KO, the next higher-ranking student
+(weakest first); a KO'd fighter is out for the whole tournament, a school
+with no students left is eliminated, and odd rounds have one three-way
+free-for-all; everyone heals between rounds. Human participants can opt to auto-fight all their bouts at
 the start (skipping the per-fight display and prompts); declining keeps the
-usual per-fight 'Auto fight?' option. Masters don't fight. The prize is prestige: the winner is
+usual per-fight 'Auto fight?' option. Masters don't fight. The prize is prestige: the last fighter
+standing wins for his school, which is
 declared the Strongest School in town; a player who was the final standing
 fighter gets the 'All-Schools Champion' accomplishment, other players on the
 winning roster get +20 exp, and a player-master of the winning school gets

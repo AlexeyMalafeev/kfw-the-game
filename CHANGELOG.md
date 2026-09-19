@@ -22,6 +22,16 @@ All notable changes to KFW are documented here. Format loosely follows
   ASCII art frames are deliberately left uncolored (see `docs/ui.md`).
 
 ### Changed
+- **All-Schools Tournament reworked into a fighter-centric bracket**: instead
+  of school-vs-school gauntlet matches (damage carrying over within a match,
+  the whole roster coming back healed every round), each round every school
+  now fields exactly one fighter — the survivor of its previous bout or,
+  after a KO, its next higher-ranking student. Knockouts are permanent for
+  the tournament, a school is eliminated only when its roster is exhausted,
+  everyone heals between rounds (nobody fights twice in a round), a drawn
+  bout knocks out everyone involved, and the last fighter standing wins the
+  title for his school. Odd rounds still feature one three-way free-for-all;
+  rewards are unchanged.
 - **Wooden mannequin nerfed**: daily home-training exp reduced from 3 to 1
   (`HOME_TRAINING_EXP` is now `max(1, base × 0.05)` instead of `base × 0.15`),
   and the lazy/hardworking trait now modifies it by ∓1 exp (floored at 0) via

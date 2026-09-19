@@ -155,8 +155,9 @@ class TestStudentsInTournaments:
 
 
 class TestAllSchoolsTournament:
-    """Scheduled monthly tournament: single-elimination bracket of school-vs-school
-    gauntlet matches (weakest student first, KO'd fighters replaced by rank)."""
+    """Scheduled monthly tournament: a fighter-centric bracket — each round
+    every school fields one fighter (the previous survivor or, after a KO,
+    the next higher-ranking student); KO'd fighters are out for good."""
 
     @staticmethod
     def make_tournament(g):
@@ -164,7 +165,7 @@ class TestAllSchoolsTournament:
         t = AllSchoolsTournament.__new__(AllSchoolsTournament)
         t.g = t.game = g
         t.rosters = {}
-        t.last_standing = {}
+        t.final_fighter = None
         t.champion = None
         return t
 
@@ -229,59 +230,79 @@ class TestAllSchoolsTournament:
         t._gather_rosters()
         assert all(p not in roster for roster in t.rosters.values())
 
-    def test_odd_school_count_yields_one_three_way_per_round(self):
+    def test_odd_fighter_count_yields_one_three_way_per_round(self):
         g, p = make_game_and_player(seed=8, level=14)
-        make_master(p, num_students=3)  # 11 schools: rounds of 11 -> 5 -> 2 -> 1
+        make_master(p, num_students=3)
         t = self.make_tournament(g)
         t._gather_rosters()
         captured = []
 
-        def fake_match(self_, school_names):
-            captured.append(list(school_names))
-            return school_names[0], self_.rosters[school_names[0]][0]
+        def fake_bout(self_, fighters):
+            captured.append(len(fighters))
+            for f in fighters:  # everyone down — full replacement next round
+                f.hp = 0
 
-        orig = AllSchoolsTournament._do_match
-        AllSchoolsTournament._do_match = fake_match
+        orig = AllSchoolsTournament._do_bout
+        AllSchoolsTournament._do_bout = fake_bout
         try:
             t._do_rounds()
         finally:
-            AllSchoolsTournament._do_match = orig
-        sizes = [len(m) for m in captured]
-        assert sizes == [3, 2, 2, 2, 2, 3, 2, 2]  # one 3-way per odd round
-        assert t.champion in t.rosters
+            AllSchoolsTournament._do_bout = orig
+        # every school loses exactly one student per round, so a school is
+        # still active in round r iff it has at least r students
+        roster_sizes = sorted(len(roster) for roster in t.rosters.values())
+        expected = []
+        r = 1
+        while True:
+            n_active = sum(1 for s in roster_sizes if s >= r)
+            if n_active <= 1:
+                break
+            if n_active % 2:
+                expected.append(3)
+                expected += [2] * ((n_active - 3) // 2)
+            else:
+                expected += [2] * (n_active // 2)
+            r += 1
+        assert captured == expected  # one 3-way per odd round, pairs otherwise
 
-    def test_gauntlet_substitution(self):
+    def test_kod_fighter_replaced_survivor_heals(self):
         g, p = make_game_and_player(seed=9, level=1)
         t = self.make_tournament(g)
-        names = list(g.schools)[:2]
+        names = [n for n in g.schools if len(g.schools[n]) >= 2][:2]
+        assert len(names) == 2
         t.rosters = {
             n: sorted(g.schools[n], key=lambda f: f.get_exp_worth()) for n in names
         }
-        ordered = sorted(
-            names, key=lambda n: not any(f.is_player for f in t.rosters[n])
-        )
-        for n in names:  # _do_rounds heals everyone before a match
-            for f in t.rosters[n]:
-                f.hp = f.hp_max
+        win_school, lose_school = names
         calls = []
 
+        def school_of(f):
+            return next(n for n in names if f in t.rosters[n])
+
         def fake_fight(a, b, **kw):
-            calls.append((a, b))
-            b.hp = 0
+            win_f, lose_f = (a, b) if school_of(b) == lose_school else (b, a)
+            calls.append((win_f, lose_f, win_f.hp))
+            lose_f.hp = 0  # knocked out
+            win_f.hp = 1  # the winner is left battered
 
         orig = fight.fight
         fight.fight = fake_fight
         try:
-            winner, final_fighter = t._do_match(names)
+            t._do_rounds()
         finally:
             fight.fight = orig
-        assert winner == ordered[0]
-        assert final_fighter is t.rosters[ordered[0]][0]
-        # the weakest student of the winning school beats the other school's
-        # students one by one, weakest first
-        assert calls == [(final_fighter, f) for f in t.rosters[ordered[1]]]
+        assert t.champion == win_school
+        # the weakest student of the winning school survives every round
+        winner = t.rosters[win_school][0]
+        assert t.final_fighter is winner
+        assert [w for w, l, hp in calls] == [winner] * len(calls)
+        # the losing school fields its students weakest-first, and a KO'd
+        # fighter never comes back
+        assert [l for w, l, hp in calls] == t.rosters[lose_school]
+        # nobody fights twice in a round: the survivor starts every bout healed
+        assert all(hp == winner.hp_max for w, l, hp in calls)
 
-    def test_drawn_match_when_everyone_down_with_no_reserves(self):
+    def test_drawn_final_with_no_reserves_is_a_draw(self):
         g, p = make_game_and_player(seed=9, level=1)
         t = self.make_tournament(g)
         names = list(g.schools)[:2]
@@ -293,10 +314,10 @@ class TestAllSchoolsTournament:
         orig = fight.fight
         fight.fight = fake_fight
         try:
-            winner, final_fighter = t._do_match(names)
+            t._do_rounds()
         finally:
             fight.fight = orig
-        assert winner is None and final_fighter is None
+        assert t.champion is None and t.final_fighter is None
 
     def test_final_winner_player_gets_accomplishment(self):
         g, p = make_game_and_player(seed=10, level=5)
@@ -317,7 +338,7 @@ class TestAllSchoolsTournament:
         exp_before = p.exp
         t = self.run_rigged(g, champion_school=school_name)
         assert t.champion == school_name
-        assert t.last_standing[school_name] is weakest  # p never had to fight
+        assert t.final_fighter is weakest  # p never had to fight
         assert 'All-Schools Champion' not in p.accompl
         assert p.exp == exp_before + ALL_SCHOOLS_PART_EXP
 

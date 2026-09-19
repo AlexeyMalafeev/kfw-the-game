@@ -334,20 +334,22 @@ them with school names displayed; participants just log the event.
 month from `Playing.do_monthly` (i.e. at the end of the last day of the
 month), with a heads-up message on day 25. Every school with at least one
 available student takes part (masters never fight; inactive players sit it
-out). It is a single-elimination bracket of school-vs-school **gauntlet
-matches**, re-paired randomly every round: each school fields its
-lowest-ranking student first, and whenever a fighter is knocked out, the next
-higher-ranking student of his school takes his place; a school that runs out
-of students is eliminated from the match. With an odd number of schools, one
-randomly chosen match per round is a three-school free-for-all with the same
-substitution rules. Damage carries over within a match (`hp_carry`), but
-everyone heals between matches. Human participants are asked at the start
+out). It is a fighter-centric single-elimination bracket, re-paired randomly
+every round: each round, every school still in the running fields exactly one
+fighter — the survivor of its previous bout, or, if he was knocked out, its
+next higher-ranking student (students fight weakest first). A knocked-out
+fighter is out for the whole tournament; a school that runs out of students
+is eliminated. With an odd number of participants, one randomly chosen bout
+per round is a three-way free-for-all with the same substitution rules.
+Everyone heals between rounds — nobody fights twice in a round. A drawn bout
+(everyone KO'd) knocks out everyone involved; if the final bout leaves
+nobody standing and no school has reserves left, the tournament is a draw —
+no winner, no rewards. Human participants are asked at the start
 whether to auto-fight all their bouts; opting in skips the prefight display,
 the per-fight 'Auto fight?' prompt and the post-fight menu for them (the
 transient `auto_fight_all` flag), while other human players still fight
-their own bouts and keep the per-fight prompt either way. A match (and the
-final) where everyone is
-KO'd with no reserves left is a draw — no winner, no rewards. The winner is
+their own bouts and keep the per-fight prompt either way. The last fighter
+standing wins the tournament for his school. The winner is
 announced under the style's displayed (public unless known) name, so the
 school's secret true name is not leaked, and declared the Strongest School in
 town — prestige only, no money prize. Roster members log the victory; a
