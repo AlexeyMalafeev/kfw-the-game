@@ -75,7 +75,7 @@ option).
 | fighter names (fight-info header) | bold |
 | menu titles | bold (applied globally in `menu()`) |
 | menu option keys | cyan (applied globally in `menu()`) |
-| style-selection menu options | white style names, grey short descriptions |
+| menu option text | white (applied globally in `menu()`); style-selection descriptions additionally grey |
 | quotes / flavor text | dim |
 | HP bar | green → yellow → red by fill %; SP bar yellow; QP bar magenta |
 

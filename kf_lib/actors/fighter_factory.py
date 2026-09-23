@@ -1,7 +1,7 @@
 import random
 
 from kf_lib.kung_fu import styles, style_gen
-from kf_lib.ui import get_int_from_user, grey, menu, white
+from kf_lib.ui import get_int_from_user, grey, menu
 from kf_lib.utils import rnd, rndint
 from . import names
 from .fighter import Fighter
@@ -108,10 +108,7 @@ def new_custom_hcf():
     name = input('Name: ')
     max_len = max((len(s.name) for s in styles.default_styles))
     legend = [
-        (
-            white('{:<{}}'.format(s.name, max_len)) + ' ' + grey(s.descr_short),
-            s,
-        )
+        ('{:<{}} {}'.format(s.name, max_len, grey(s.descr_short)), s)
         for s in styles.default_styles
     ]
     # todo select starting atts

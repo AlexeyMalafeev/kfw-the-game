@@ -1,7 +1,7 @@
 import string
 
 from ._keyboard import get_key
-from ._rich_format import cyan, render
+from ._rich_format import cyan, render, white
 from ._screen import cls
 
 
@@ -44,7 +44,7 @@ def menu(
             st = '\n'
         else:
             st = '; '
-        print(render(st.join([f' {cyan(curr_keys[j])} - {curr_options[j]}' for j in range(len(curr_keys))])))
+        print(render(st.join([f' {cyan(curr_keys[j])} - {white(curr_options[j])}' for j in range(len(curr_keys))])))
         while True:
             choice = get_key()
             if has_pages and choice in '<>':
