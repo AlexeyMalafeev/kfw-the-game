@@ -376,6 +376,25 @@ class TestAllSchoolsTournament:
             events.all_schools_tournament = orig
         assert calls == [g]
 
+    def test_announcements_never_leak_secret_style_names(self):
+        """Round pairings, elimination notices and the winner announcement must
+        show the displayed (public) style name, never the g.schools key — the
+        style's secret true name."""
+        g, p = make_game_and_player(seed=31, level=1)
+        secret_names = {s.name for s in g.style_list if s.name != s.public_name}
+        assert secret_names  # sanity: the fixture generates 3-word styles
+        captured = []
+        orig_msg = g.msg
+        g.msg = lambda text, align=True: captured.append(text)
+        try:
+            self.run_rigged(g)
+        finally:
+            g.msg = orig_msg
+        shown = '\n'.join(captured)
+        assert 'All-Schools Tournament, round' in shown  # sanity: msgs captured
+        for name in secret_names:
+            assert name not in shown
+
     def test_runs_headless_for_real(self):
         for seed in range(3):
             g, p = make_game_and_player(seed=20 + seed, level=10)

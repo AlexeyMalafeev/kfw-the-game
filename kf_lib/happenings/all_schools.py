@@ -50,6 +50,14 @@ class AllSchoolsTournament:
             )
         )
 
+    def _displayed_school_name(self, school_name):
+        """Public-facing school name: the roster fighters' displayed style name —
+        the style's public name, unless a player on the roster has learned its
+        secret. Never the g.schools key itself, which is the secret true name."""
+        roster = self.rosters[school_name]
+        viewer = next((f for f in roster if f.is_player), roster[0])
+        return viewer.get_displayed_style_name()
+
     def _do_bout(self, fighters):
         """Run one bout between 2 or 3 fighters (one per school)."""
         if len(fighters) == 2:
@@ -84,7 +92,9 @@ class AllSchoolsTournament:
                 bouts, rest = [], entries
             bouts += [rest[i: i + 2] for i in range(0, len(rest), 2)]
             pairings = '; '.join(
-                ' vs '.join(f'{f.name} ({name})' for name, f in bout)
+                ' vs '.join(
+                    f'{f.name} ({self._displayed_school_name(name)})' for name, f in bout
+                )
                 for bout in bouts
             )
             g.cls()
@@ -101,7 +111,10 @@ class AllSchoolsTournament:
                         # knocked out for good — the next student steps in
                         still_active[name] = reserves[name].popleft()
                     else:
-                        g.msg(f'{name} is out of students and leaves the tournament!')
+                        g.msg(
+                            f'{self._displayed_school_name(name)} is out of students '
+                            'and leaves the tournament!'
+                        )
             active = still_active
         if active:
             self.champion, self.final_fighter = next(iter(active.items()))
@@ -114,9 +127,7 @@ class AllSchoolsTournament:
             g.msg('The All-Schools Tournament ends in a draw — no school prevails!')
             return
         roster = self.rosters[self.champion]
-        # don't leak the style's secret true name to a player who hasn't learned it
-        viewer = next((f for f in roster if f.is_player), roster[0])
-        displayed_school = viewer.get_displayed_style_name()
+        displayed_school = self._displayed_school_name(self.champion)
         g.msg(
             f'{displayed_school} wins the All-Schools Tournament and is declared '
             f'the Strongest School in {g.town_name}!'

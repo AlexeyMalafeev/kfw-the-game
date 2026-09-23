@@ -57,6 +57,11 @@ All notable changes to KFW are documented here. Format loosely follows
   ~65. Economy-affecting, not fight-balance-affecting.
 
 ### Fixed
+- **All-Schools Tournament round pairings and elimination announcements leaked
+  secret style names** (again): they interpolated the `game.schools` key — the
+  style's secret true name — while the fights themselves already showed the
+  public name; both now use the roster's displayed style name (public unless
+  the player knows the secret), same as the winner announcement
 - **Injured players no longer fight friendly matches**: the `FriendMatch`
   encounter never checked the friend's condition, so an injured AI-player
   friend (e.g. a co-op teammate) could "challenge" you and spar while still

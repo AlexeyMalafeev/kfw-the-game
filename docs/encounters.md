@@ -363,9 +363,11 @@ whether to auto-fight all their bouts; opting in skips the prefight display,
 the per-fight 'Auto fight?' prompt and the post-fight menu for them (the
 transient `auto_fight_all` flag), while other human players still fight
 their own bouts and keep the per-fight prompt either way. The last fighter
-standing wins the tournament for his school. The winner is
-announced under the style's displayed (public unless known) name, so the
-school's secret true name is not leaked, and declared the Strongest School in
+standing wins the tournament for his school. School names in round pairings,
+elimination announcements and the final winner announcement are the styles'
+displayed (public unless known) names, never the `g.schools` keys — so the
+schools' secret true names are not leaked. The winner is declared the
+Strongest School in
 town — prestige only, no money prize. Roster members log the victory; a
 player who was the final standing fighter gets the 'All-Schools Champion'
 accomplishment, other players on the winning roster (fought-and-KO'd or never
