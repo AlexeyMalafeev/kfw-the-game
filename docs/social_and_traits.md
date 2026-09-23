@@ -127,17 +127,19 @@ choice) and `spouse_joins_fight` (0.6). `romance_progress` and `is_married`
 are in `savable_atts`; the sweetheart is saved by name (`sweetheart` +
 `sweetheart_gender` keys in `_player_to_data`, both read back with `.get()` so
 pre-romance saves load with defaults) and appended to the save roster in
-`_refresh_roster`.
+`_refresh_roster`. The player's own gender is saved the same way, as a
+separate `gender` key (see `docs/gameplay.md`, new-game setup).
 
 - **Meeting**: `NewRomance` (`encounters/_romance.py`, chance 0.03, extra
   weight in `WALK_ENCS`) fires only while `p.sweetheart is None`. The player
   decides via `pursue_romance_or_not()` (AI: `romance_pursuit_chance` roll;
-  human: `yn`). On yes, a gendered NPC is generated: gender is a coin flip,
-  the name comes from `game.get_new_name(gender=...)` ('f' draws from
+  human: `yn`). On yes, a gendered NPC is generated: gender is the opposite
+  of the player's (a coin flip when `p.gender` is None, i.e. pre-gender
+  saves), the name comes from `game.get_new_name(gender=...)` ('f' draws from
   `names.FEMALE_FIRST_NAME_PARTS`), level ≈ player level ±2
   (`fighter_factory.new_sweetheart`), and the fighter is registered with the
   game so it persists. `Fighter.gender` is a class-level `None` set post-init
-  only on love interests — the rest of the game is genderless.
+  on players and love interests — the rest of the game is genderless.
 - **Courting**: `RomanticDate` (chance 0.05, requires sweetheart and not
   married) adds 1–3 progress; the 'Visit sweetheart' day action adds 1–2, +2
   more with a 10-coin gift (50% chance of buying one if affordable).

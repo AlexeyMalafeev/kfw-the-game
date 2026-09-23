@@ -28,7 +28,11 @@ class NewRomance(BaseEncounter):
     def run(self):
         p = self.player
         g = p.game
-        gender = random.choice(('f', 'm'))
+        # opposite-sex love interests only; p.gender is None in pre-gender saves
+        gender = (
+            random.choice(('f', 'm')) if p.gender is None
+            else 'f' if p.gender == 'm' else 'm'
+        )
         name = g.get_new_name(gender=gender)
         who = 'a young woman' if gender == 'f' else 'a young man'
         p.show(

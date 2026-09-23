@@ -166,8 +166,9 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 ### Romance (`_romance.py`)
 
 - `NewRomance` (0.03, only while `p.sweetheart is None`; ×2 in `WALK_ENCS`):
-  meet-cute with a gendered martial-artist NPC; `pursue_romance_or_not`
-  decides whether the romance begins (sets `p.sweetheart`, progress 1).
+  meet-cute with a martial-artist NPC of the opposite gender;
+  `pursue_romance_or_not` decides whether the romance begins (sets
+  `p.sweetheart`, progress 1).
 - `RomanticDate` (0.05, requires a sweetheart and not married; ×3 in
   `WALK_ENCS`): a date adding 1–3 `romance_progress`.
 - `JealousRival` (0.02, courting only; ×2 in `WALK_ENCS`): a rival suitor

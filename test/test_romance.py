@@ -46,9 +46,19 @@ class TestNewRomance:
         sw = p.sweetheart
         assert sw is not None
         assert g.fighters_dict[sw.name] is sw  # registered, hence saved
-        assert sw.gender in ('f', 'm')
+        assert p.gender in ('f', 'm')  # all players are gendered since character creation
+        assert sw.gender == {'f': 'm', 'm': 'f'}[p.gender]
         assert p.romance_progress == 1
         assert 1 <= sw.level <= p.level + 2
+
+    def test_genderless_player_gets_random_sweetheart_gender(self):
+        # players from pre-gender saves have gender None
+        g = make_game()
+        p = g.players[0]
+        p.gender = None
+        p.romance_pursuit_chance = 1.0
+        encounters.NewRomance(p, check_if_happens=False)
+        assert p.sweetheart.gender in ('f', 'm')
 
     def test_declined_romance_leaves_no_sweetheart(self):
         g = make_game()

@@ -391,6 +391,7 @@ class TestLoading:
         assert p2.enemies[0] is g2.criminals[0]
         assert p2.sweetheart is g2.fighters_dict['Test Love']
         assert p2.sweetheart.gender == 'f'
+        assert p2.gender == p.gender
         assert (p2.romance_progress, p2.is_married) == (7, True)
         assert p2.children_ages == [3, 8]
 

@@ -38,6 +38,17 @@ chosen exp base is stored as `game.base_exp` and restored on load (the
 constants are read as module attributes at runtime so the tweak takes effect);
 skipping the menu keeps the defaults.
 
+Each human player then picks a gender ('Play as a man or a woman?'), gets a
+randomly generated character — name drawn from the matching gendered pool in
+`actors/names.py` (male from `FIRST_NAME_PARTS`, female from
+`FEMALE_FIRST_NAME_PARTS`), re-rollable via 'Is this character ok?' — and
+chooses a style. AI players get a random gender with a matching name. The
+player's gender lives on the fighter (`Fighter.gender`, a class-level `None`
+set post-init) and is saved as a separate `gender` key in `_player_to_data`,
+read back with `.get()` so pre-gender saves load as `None`. It gates romance:
+love interests are always of the opposite gender (see the Romance section in
+`docs/social_and_traits.md`).
+
 ## A game day
 
 `game_loop` per player, in order:

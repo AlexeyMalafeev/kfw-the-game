@@ -216,7 +216,7 @@ FIRST_NAME_PARTS = [
     'zou',
 ]
 
-# used only for generated love interests (the rest of the game is genderless)
+# used for players and generated love interests (the rest of the game is genderless)
 FEMALE_FIRST_NAME_PARTS = [
     'chun',
     'fang',

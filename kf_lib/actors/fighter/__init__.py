@@ -42,7 +42,7 @@ class Fighter(
     is_human = False
     is_player = False
     auto_fight_all = False
-    gender = None  # set post-init; only generated love interests are gendered
+    gender = None  # set post-init; only players and generated love interests are gendered
 
     # the order of arguments should not be changed, or saving will break
     def __init__(

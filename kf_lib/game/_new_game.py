@@ -26,12 +26,17 @@ class NewGame(BaseGame):
         style = random.choice(self.style_list)
         if klass is None:
             klass = random.choice(ALL_AI_PLAYERS)
-        return klass(name=self.get_new_name(), style=style)
+        gender = random.choice(('f', 'm'))
+        p = klass(name=self.get_new_name(gender=gender), style=style)
+        p.gender = gender
+        return p
 
     def _get_new_human_player(self):
+        gender = menu((('Man', 'm'), ('Woman', 'f')), title='Play as a man or a woman?')
         while True:
             cls()
-            p = HumanPlayer(name=self.get_new_name())
+            p = HumanPlayer(name=self.get_new_name(gender=gender))
+            p.gender = gender
             print(p.get_f_info())
             if yn('Is this character ok?'):
                 break

@@ -61,6 +61,7 @@ class SaveGame(BaseGame):
     def _player_to_data(self, p):
         return {
             'name': p.name,
+            'gender': p.gender,
             'atts': {att: getattr(p, att) for att in p.savable_atts},
             'current_story': p.current_story.name if p.current_story else None,
             'friends': [f.name for f in p.friends],

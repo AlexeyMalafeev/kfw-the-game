@@ -137,7 +137,8 @@ class LoadGame(BaseGame):
                 p.current_story = self.stories[pdata['current_story']]
             p.friends = [fsd[name] for name in pdata['friends']]
             p.enemies = [fsd[name] for name in pdata['enemies']]
-            # optional keys, absent in pre-romance saves
+            # optional keys, absent in pre-romance/pre-gender saves
+            p.gender = pdata.get('gender')
             p.sweetheart = fsd.get(pdata.get('sweetheart'))
             if p.sweetheart is not None:
                 p.sweetheart.gender = pdata.get('sweetheart_gender', 'f')

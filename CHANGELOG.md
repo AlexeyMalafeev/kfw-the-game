@@ -6,6 +6,12 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Player gender**: a new game now starts with 'Play as a man or a woman?';
+  the character's name is drawn from the matching gendered name pool, and
+  generated love interests always have the opposite gender. AI players get a
+  random gender with a matching name. The gender is stored as a separate save
+  key, so older saves keep working (genderless players meet love interests of
+  a random gender, as before).
 - **Terminal colors**: the game is no longer monochrome. A hand-rolled,
   dependency-free markup engine (`kf_lib/ui/_rich_format.py`) lets call sites
   wrap text in rich-style tags (`[red]...[/red]`, `style(s, 'bold red')`),
