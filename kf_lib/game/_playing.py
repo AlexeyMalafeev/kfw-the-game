@@ -8,7 +8,7 @@ from kf_lib.game import game_stats
 from kf_lib.game._base_game import BaseGame
 from kf_lib.happenings import events
 from kf_lib.things import items
-from kf_lib.ui import cls, pak, yn
+from kf_lib.ui import cls, grey, pak, render, yn
 from kf_lib.utils import rnd, SAVE_FOLDER
 
 
@@ -228,7 +228,7 @@ class Playing(BaseGame):
 
     def show_victory(self, wins: List[Text], winners: List):
         print('\n'.join(wins))
-        input('Press Enter to see stats.')
+        input(render(grey('Press Enter to see stats.')))
         self.save_game('game over.txt')
         self.show_stats(do_cls=False, do_pak=False)
         self.show_bio(winners)

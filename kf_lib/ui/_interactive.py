@@ -1,5 +1,5 @@
 from ._keyboard import get_key
-from ._rich_format import rprint
+from ._rich_format import grey, render, rprint
 
 
 def get_int_from_user(message, min_, max_) -> int:
@@ -43,9 +43,9 @@ def pak(silent=True):
     Wait for user to press any key.
     """
     if not silent:
-        print('(Press any key)')
+        print(render(grey('(Press any key)')))
     get_key()
 
 
 def pe():
-    input('Press Enter')
+    input(render(grey('Press Enter')))

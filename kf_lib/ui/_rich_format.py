@@ -9,9 +9,12 @@ print choke points (``show()``, ``menu()``, ...) and stripped everywhere else
 Supported tags: red green yellow blue magenta cyan white grey, bold dim italic;
 compound tags like ``[bold red]``; closing is ``[/tag]`` or just ``[/]``.
 
-``render()`` also auto-colors money (``100 coins``, ``100-coin`` → yellow) and
-exp amounts (``100 exp`` → green) in any text it processes, so call sites do
-not have to mark those up by hand.
+``render()`` also auto-colors systematic patterns in any text it processes:
+quoted speech (dim), levels ``lv.5`` (cyan), percentages (yellow), ``HP:`` /
+``SP:`` / ``QP:`` stat tokens (green/yellow/magenta), ``Round N`` / ``Day N``
+headers (bold), healing ``+N HP`` (green), money (``100 coins``, ``100-coin`` →
+yellow) and exp amounts (``100 exp`` → green) — so call sites do not have to
+mark those up by hand.
 """
 
 import os
@@ -56,9 +59,19 @@ _ANSI_CODES = {
 
 _TAG_RE = re.compile(r'\[(/?)([^\[\]]*)\]')
 
-# money/exp amounts are colored automatically at render time, so every message
-# gets them without call sites having to wrap anything
+# systematic coloring applied at render time, so every message gets it without
+# call sites having to wrap anything; order matters — quoted speech is wrapped
+# first so that amounts inside quotes still get their own colors
 _AUTO_COLOR_RES = (
+    (re.compile(r'"[^"]*"'), 'dim'),  # quoted speech
+    (re.compile(r'\blv\.?\s?\d+'), 'cyan'),  # levels: lv.5, lv 10
+    (re.compile(r'\d+(?:\.\d+)?%'), 'yellow'),  # percentages: 40%
+    (re.compile(r'\bHP(?=:)'), 'green'),  # stat tokens (colon guards against -N HP damage text)
+    (re.compile(r'\bSP(?=:)'), 'yellow'),
+    (re.compile(r'\bQP(?=:)'), 'magenta'),
+    (re.compile(r'\b(?:Round|Day) \d+'), 'bold'),  # headers: Round 3, Day 12
+    (re.compile(r'(?<![\w+])\+\d+ HP\b'), 'green'),  # healing: +5 HP
+    # money/exp amounts
     (re.compile(r'(?<![\w+-])[+-]?\d[\d,]*(?: coins?|-coins?)\b'), 'yellow'),
     (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* exp\b'), 'green'),
 )
@@ -127,8 +140,9 @@ def _resolve(tags):
 
 
 def _auto_color(text):
-    """Wrap money ('100 coins', '100-coin') and exp ('100 exp') amounts in
-    color tags; existing tags are unaffected (digits never appear in them)."""
+    """Wrap systematic patterns (quoted speech, levels, percentages, stat
+    tokens, round/day headers, healing, money/exp amounts) in color tags;
+    existing tags are unaffected (digits never appear in them)."""
     for pattern, tag in _AUTO_COLOR_RES:
         text = pattern.sub(f'[{tag}]\\g<0>[/{tag}]', text)
     return text

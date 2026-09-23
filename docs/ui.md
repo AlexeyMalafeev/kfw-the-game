@@ -49,10 +49,15 @@ self.show(style('CRITICAL!', 'bold red'))
 - `render(text)` — tags → ANSI codes (or stripped when colors are off);
   `rprint(text)` — print with `render`; `strip_tags(text)` — remove tags;
   `visible_len(text)` — on-screen length (tags not counted).
-- `render()` also auto-wraps money amounts (`N coins`, `N-coin`, optional
-  `+`/`-` sign) in yellow and exp amounts (`N exp`) in green, so every message
-  gets these colors without call-site markup. Width math and logs operate on
-  the original text, so they are unaffected.
+- `render()` also auto-wraps systematic patterns, so every message gets these
+  colors without call-site markup: quoted speech `"..."` (dim), levels `lv.5`
+  (cyan), percentages `40%` (yellow), `HP:`/`SP:`/`QP:` stat tokens
+  (green/yellow/magenta — the colon is required, so `-N HP` damage text is not
+  affected), `Round N`/`Day N` headers (bold), healing `+N HP` (green), money
+  amounts (`N coins`, `N-coin`, optional `+`/`-` sign; yellow) and exp amounts
+  (`N exp`; green). Quoted speech is wrapped first so amounts inside quotes
+  still get their own colors. Width math and logs operate on the original
+  text, so they are unaffected.
 
 ### When colors are on
 
@@ -75,11 +80,20 @@ option).
 | status effects (stun, shock, off-balance, slow), misses/fails, counters, preemptives, draws | yellow |
 | money amounts (`N coins`, `N-coin`) | yellow — automatic in `render()`, no call-site markup needed |
 | exp amounts (`N exp`) | green — automatic in `render()` |
+| quoted speech `"..."` | dim — automatic in `render()` |
+| levels (`lv.5`) | cyan — automatic in `render()` |
+| percentages (`40%`) | yellow — automatic in `render()` |
+| `HP:`/`SP:`/`QP:` stat tokens (with colon) | green / yellow / magenta — automatic in `render()`, matching the bars |
+| `Round N` / `Day N` headers | bold — automatic in `render()` |
+| healing (`+N HP`) | green — automatic in `render()` |
 | victory message, level-ups, resisting KO | bold green / green |
 | fighter names (fight-info header) | bold |
 | menu titles | bold (applied globally in `menu()`) |
 | menu option keys | cyan (applied globally in `menu()`) |
-| menu option text | white (applied globally in `menu()`); style-selection descriptions additionally grey |
+| menu option text | white (applied globally in `menu()`); style-selection descriptions additionally grey; `yes`/`no` green/red; page navigation grey |
+| press-key prompts (`(Press any key)`, `Press Enter`) | grey |
+| distance visualization (`OX` … `O...X`) | red → yellow → green → cyan as distance grows (close = dangerous, far = safe) |
+| move stars (feature bonuses in fight/learn-move menus) | yellow |
 | quotes / flavor text | dim |
 | HP bar | green → yellow → red by fill %; SP bar yellow; QP bar magenta |
 

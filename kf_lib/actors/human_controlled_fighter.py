@@ -59,10 +59,13 @@ class HumanControlledFighter(Fighter):
                 f'{m.name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}'
                 for m in self.av_moves
             ]
-            max_len = max((len(m_name) for m_name in m_names))
+            max_len = max((visible_len(m_name) for m_name in m_names))
             m_hints = [self.get_move_hints(m) for m in self.av_moves]
             options = [
-                ('{:<{}} {}'.format(m_names[i], max_len, m_hints[i]), m)
+                (
+                    m_names[i] + ' ' * (max_len - visible_len(m_names[i])) + ' ' + m_hints[i],
+                    m,
+                )
                 for i, m in enumerate(self.av_moves)
             ]
             options.sort(key=lambda x: not x[1].power)
@@ -223,7 +226,7 @@ class HumanControlledFighter(Fighter):
             val = getattr(self, feature + '_strike_mult', 1.0)
             if val > 1.0:
                 n += 1
-        return '*' * n
+        return yellow('*' * n) if n else ''
 
     def level_up(self, times=1):
         self.msg(f'{self.name}: *LEVEL UP*')

@@ -1,5 +1,7 @@
 import random
 
+from kf_lib.ui import style
+
 
 DISTANCE_FEATURES = {
     1: 'dist1',
@@ -8,6 +10,8 @@ DISTANCE_FEATURES = {
     4: 'dist4',
 }
 DISTANCES_VISUALIZATION = {1: 'OX', 2: 'O.X', 3: 'O..X', 4: 'O...X'}
+# close = hot/dangerous (red) -> far = cold/safe (cyan)
+DISTANCE_COLORS = {1: 'red', 2: 'yellow', 3: 'green', 4: 'cyan'}
 VALID_DISTANCES = DISTANCES_VISUALIZATION.keys()
 VALID_DISTANCES_MAX = max(VALID_DISTANCES)
 VALID_DISTANCES_MIN = min(VALID_DISTANCES)
@@ -18,4 +22,4 @@ def get_random_distance():
 
 
 def visualize_distance(dist: int):
-    return DISTANCES_VISUALIZATION[dist]
+    return style(DISTANCES_VISUALIZATION[dist], DISTANCE_COLORS[dist])

@@ -1,7 +1,7 @@
 import string
 
 from ._keyboard import get_key
-from ._rich_format import cyan, render, white
+from ._rich_format import cyan, green, grey, red, render, white
 from ._screen import cls
 
 
@@ -35,7 +35,7 @@ def menu(
         curr_returnables = returnables[i: i + options_per_page]
         curr_keys = keys[: len(curr_options)]
         if len(opt_list) > options_per_page:
-            curr_options += ['Previous page', 'Next page']
+            curr_options += [grey('Previous page'), grey('Next page')]
             curr_keys += '<>'
             has_pages = True
         if title:
@@ -61,4 +61,4 @@ def menu(
 
 
 def yn(message):
-    return menu((('yes', True), ('no', False)), message)
+    return menu(((green('yes'), True), (red('no'), False)), message)

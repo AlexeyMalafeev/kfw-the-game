@@ -63,6 +63,47 @@ class TestAutoColor:
         rf.set_colors_enabled(False)
         assert rf.render('pays 100 coins, gains 10 exp') == 'pays 100 coins, gains 10 exp'
 
+    def test_quoted_speech_dim(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('say "hi there" now') == 'say \x1b[2m"hi there"\x1b[0m now'
+
+    def test_money_inside_quotes_still_yellow(self):
+        rf.set_colors_enabled(True)
+        out = rf.render('"I need 50 coins"')
+        assert out == '\x1b[2m"I need \x1b[33m50 coins\x1b[0m\x1b[2m"\x1b[0m'
+
+    def test_level(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('Sam lv.5') == 'Sam \x1b[36mlv.5\x1b[0m'
+
+    def test_percentage(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('Run! (40%)') == 'Run! (\x1b[33m40%\x1b[0m)'
+
+    def test_stat_tokens(self):
+        rf.set_colors_enabled(True)
+        assert (
+            rf.render('HP:10 SP:5 QP:2')
+            == '\x1b[32mHP\x1b[0m:10 \x1b[33mSP\x1b[0m:5 \x1b[35mQP\x1b[0m:2'
+        )
+
+    def test_damage_hp_not_colored(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('hit (-7 HP)') == 'hit (-7 HP)'
+
+    def test_round_day_headers(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('Round 3 of Day 12') == '\x1b[1mRound 3\x1b[0m of \x1b[1mDay 12\x1b[0m'
+
+    def test_healing(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('recovers +5 HP.') == 'recovers \x1b[32m+5 HP\x1b[0m.'
+
+    def test_colors_off_strips_all_auto_tags(self):
+        rf.set_colors_enabled(False)
+        s = '"Pay 100 coins," lv.5, 40%, HP:10, Round 3, +5 HP, 10 exp'
+        assert rf.render(s) == s
+
 
 class TestStripAndMeasure:
     def test_strip_tags(self):
