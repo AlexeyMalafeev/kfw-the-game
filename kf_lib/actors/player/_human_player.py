@@ -28,7 +28,7 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         # what player can do (option lists)
         options = self.get_day_actions()
         n = len(options)
-        keys = ''.join([str(x) for x in list(range(1, n + 1))])
+        keys = '1234567890'[:n]
         options.extend(
             [('Rest', self.rest), ('State', self.game.state_menu)]
         )
