@@ -383,14 +383,17 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   `BaseFight.get_act_targets`/`get_act_allies` (used by `start_fight_turn`
   and `handle_items`), which `BaseFreeForAll` overrides; the HP bar
   (`visualize_fight_state`) is built from `act_allies`/`act_targets`, so it
-  shows "me vs the rest" in a melee.
+  shows "me vs the rest" in a melee. The prefight screen is titled
+  `Free for all!` to distinguish it from a regular fight against an allied
+  group (which shows `-vs-` between the sides instead).
 - Group free-for-all (`group_free_for_all(groups, ...)`,
   `BaseGroupFreeForAll`): like FFA but participants fight in groups — no
   infighting within a group, targets are all active fighters outside one's
   group; the fight ends when a single group has anyone standing (`winners` is
   that whole group, incl. downed members, matching two-sided side semantics;
-  `win` reports whether `groups[0]` won). The prefight screen labels each
-  group (`--- Group N ---`, marking the human's), and exp uses the RMS of
+  `win` reports whether `groups[0]` won). The prefight screen is titled
+  `Group free for all!` and labels each group (`--- Group N ---`, marking
+  the human's), and exp uses the RMS of
   per-group yields (see `give_exp` above). Used by `JadeTableStory` and the
   GangWar encounter.
 
