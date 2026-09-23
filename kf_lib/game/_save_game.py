@@ -77,6 +77,7 @@ class SaveGame(BaseGame):
             'state': s.state,
             'player': self._name_or_none(s.player),
             'boss': self._name_or_none(s.boss),
+            'atts': {att: getattr(s, att) for att in s.savable_atts},
         }
 
     def get_save_data(self):

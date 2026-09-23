@@ -254,8 +254,13 @@ eligibility window; `state` is `None` (not started), `0..n` (current scene), or
 - **Persistence**: `SaveGame._story_to_data` stores `state` plus player/boss by
   name; `LoadGame` re-links them to the loaded fighters (`_load_game.py:101`).
   Bosses are real registered fighters (`ForeignerStory.intro` creates one via
-  `fighter_factory.new_foreigner()`), so mid-story saves work. The
-  `get_init_string` / `__repr__` machinery is the legacy exec-based save path.
+  `fighter_factory.new_foreigner()`), so mid-story saves work. Extra runtime
+  state survives too: a story class declares `savable_atts` (e.g.
+  `WrongPouchStory.stolen` — the pickpocketed amount set in `intro()` and
+  refunded in `scene1()`), serialized under an `'atts'` key and re-applied
+  after construction; old saves lack the key and keep the constructor
+  defaults. The `get_init_string` / `__repr__` machinery is the legacy
+  exec-based save path (it stores only state/player/boss).
 
 Six quest-style stories exist: `StrangeDreamsStory` (lv 6–8; dream spars incl.
 a copy of

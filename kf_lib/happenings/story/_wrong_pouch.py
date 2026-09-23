@@ -17,9 +17,10 @@ class WrongPouchStory(BaseStory):
 
     money_stolen = (30, 150)
     num_thugs = (2, 3)
+    savable_atts = ('stolen',)
 
     def __init__(self, g, state=None, player=None, boss=None):
-        # not saved mid-story; 0 is a safe fallback after loading
+        # default for saves from before story atts were persisted
         self.stolen = 0
         super().__init__(g, state=state, player=player, boss=boss)
 

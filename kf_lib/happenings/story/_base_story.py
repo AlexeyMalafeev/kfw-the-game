@@ -4,6 +4,8 @@ _all_stories = []
 class BaseStory:
     min_level = None
     max_level = None
+    # extra attributes to persist in saves (beyond state/player/boss)
+    savable_atts = ()
 
     def __init__(self, g, state=None, player=None, boss=None):
         self.game = g

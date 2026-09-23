@@ -117,12 +117,16 @@ class LoadGame(BaseGame):
         for sname, sdata in data['stories'].items():
             story_cls = getattr(story, sname)
             # player/boss are stored by name; re-link them to the loaded fighters
-            self.stories[sname] = story_cls(
+            story_obj = story_cls(
                 self,
                 state=sdata['state'],
                 player=fsd.get(sdata['player']),
                 boss=fsd.get(sdata['boss']),
             )
+            # optional key, absent in saves from before story atts were persisted
+            for att, val in sdata.get('atts', {}).items():
+                setattr(story_obj, att, val)
+            self.stories[sname] = story_obj
         for att, val in data['game_atts'].items():
             setattr(self, att, val)
         self.players = []

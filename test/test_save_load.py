@@ -230,6 +230,7 @@ def game_snapshot(g):
                 s.state,
                 s.player.name if s.player else None,
                 s.boss.name if s.boss else None,
+                {att: getattr(s, att) for att in s.savable_atts},
             )
             for name, s in g.stories.items()
         },
@@ -394,6 +395,25 @@ class TestLoading:
         assert p2.gender == p.gender
         assert (p2.romance_progress, p2.is_married) == (7, True)
         assert p2.children_ages == [3, 8]
+
+    def test_story_atts_roundtrip(self, temp_save_folder):
+        # WrongPouchStory.stolen is set in intro() and read in scene1(); a
+        # mid-story save must preserve it (it used to be lost, refunding 0 coins)
+        g = make_game()
+        p = g.players[0]
+        s = g.stories['WrongPouchStory']
+        s.player = p
+        s.state = 0
+        s.stolen = 120
+        p.current_story = s
+        g.save_game(SAVE_NAME)
+
+        g2 = game.Game()
+        g2.load_game(SAVE_NAME)
+        s2 = g2.stories['WrongPouchStory']
+        assert s2.stolen == 120
+        assert s2.player is g2.players[0]
+        assert g2.players[0].current_story is s2
 
     def test_loaded_game_continues_playing(self, temp_save_folder):
         g = make_game()
