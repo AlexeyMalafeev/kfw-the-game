@@ -133,7 +133,9 @@ class AllSchoolsTournament:
             f'the Strongest School in {g.town_name}!'
         )
         for f in roster:
-            f.log(f'Wins the All-Schools Tournament with {self.champion}.')
+            # each fighter logs the name as they know it — a student who hasn't
+            # learned the style's secret must not find its true name in his log
+            f.log(f'Wins the All-Schools Tournament with {f.get_displayed_style_name()}.')
         final_fighter = self.final_fighter
         for p in (f for f in roster if f.is_player):
             if p is final_fighter:

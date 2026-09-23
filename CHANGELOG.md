@@ -57,6 +57,13 @@ All notable changes to KFW are documented here. Format loosely follows
   ~65. Economy-affecting, not fight-balance-affecting.
 
 ### Fixed
+- **More secret-style-name leaks plugged**: the All-Schools Tournament victory
+  was logged to each roster member's diary under the school's true name (a
+  low-level student doesn't know his own style's secret yet — and AI players
+  print their log lines live); it now logs the name as each fighter knows it.
+  The kung-fu federation alliance announcement/log in `ally_school` also used
+  the `game.masters` key (the true name) while `visit_masters` introduced the
+  same master by his public name; it now uses the displayed (public) name
 - **All-Schools Tournament round pairings and elimination announcements leaked
   secret style names** (again): they interpolated the `game.schools` key — the
   style's secret true name — while the fights themselves already showed the

@@ -377,23 +377,27 @@ class TestAllSchoolsTournament:
         assert calls == [g]
 
     def test_announcements_never_leak_secret_style_names(self):
-        """Round pairings, elimination notices and the winner announcement must
-        show the displayed (public) style name, never the g.schools key — the
-        style's secret true name."""
+        """Round pairings, elimination notices, the winner announcement and
+        roster members' own logs must show the displayed (public) style name,
+        never the g.schools key — the style's secret true name."""
         g, p = make_game_and_player(seed=31, level=1)
         secret_names = {s.name for s in g.style_list if s.name != s.public_name}
         assert secret_names  # sanity: the fixture generates 3-word styles
+        assert p.style.name in secret_names  # sanity: p's own style has a secret
         captured = []
         orig_msg = g.msg
         g.msg = lambda text, align=True: captured.append(text)
         try:
-            self.run_rigged(g)
+            self.run_rigged(g, champion_school=p.style.name)
         finally:
             g.msg = orig_msg
         shown = '\n'.join(captured)
         assert 'All-Schools Tournament, round' in shown  # sanity: msgs captured
         for name in secret_names:
             assert name not in shown
+        # a winning player's own log must not leak the secret either (a
+        # low-level student doesn't know his style's true name yet)
+        assert p.style.name not in '\n'.join(p.plog)
 
     def test_runs_headless_for_real(self):
         for seed in range(3):
@@ -484,6 +488,23 @@ class TestUniteSchools:
         p2.spar = lambda opp, **kw: False
         assert p2.visit_masters() is True
         assert not p2.schools_allied
+
+    def test_ally_school_uses_public_name(self):
+        """The alliance announcement/log must not leak the allied style's
+        secret true name (the g.masters key) — masters guard their secrets."""
+        g, p = make_game_and_player(seed=15, level=14)
+        make_master(p)
+        # an unallied master of a different style than p's own (p's plog
+        # legitimately mentions his own style's true name via student reprs)
+        sn, m = next(
+            (sn, m) for sn, m in p.get_unallied_masters() if sn != p.style.name
+        )
+        assert sn != m.style.public_name  # sanity: this style has a secret
+        plog_before = len(p.plog)
+        p.ally_school(sn, m)
+        new_lines = '\n'.join(p.plog[plog_before:])
+        assert sn not in new_lines
+        assert m.style.public_name in new_lines
 
     def test_no_unallied_masters_doesnt_consume_turn(self):
         g, p = make_game_and_player(seed=15, level=14)

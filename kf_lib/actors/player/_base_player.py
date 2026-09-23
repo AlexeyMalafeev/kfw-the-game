@@ -235,8 +235,11 @@ class BasePlayer(Fighter):
         self.schools_allied.append(school_name)
         self.add_friend(master)
         self.gain_rep(UNITED_SCHOOL_REP)
-        self.show(f'{master.name}: "From this day, {school_name} stands with you!"')
-        self.log(f'{master.name} of {school_name} joins the federation.')
+        # the school key is the style's secret true name — a master wouldn't
+        # reveal it, so announce/log the displayed (public) name instead
+        displayed_school = master.get_displayed_style_name()
+        self.show(f'{master.name}: "From this day, {displayed_school} stands with you!"')
+        self.log(f'{master.name} of {displayed_school} joins the federation.')
         self.pak()
         if not self.get_unallied_masters():
             self.show(

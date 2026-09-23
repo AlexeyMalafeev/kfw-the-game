@@ -368,7 +368,9 @@ elimination announcements and the final winner announcement are the styles'
 displayed (public unless known) names, never the `g.schools` keys — so the
 schools' secret true names are not leaked. The winner is declared the
 Strongest School in
-town — prestige only, no money prize. Roster members log the victory; a
+town — prestige only, no money prize. Roster members log the victory, each
+under the name as he knows it (a student who hasn't learned the style's
+secret doesn't find its true name in his log); a
 player who was the final standing fighter gets the 'All-Schools Champion'
 accomplishment, other players on the winning roster (fought-and-KO'd or never
 called upon) get +20 exp, and a player-master of the winning school gets +10

@@ -172,7 +172,9 @@ all players have acted. Five types, all independent and combinable:
   him in a spar or persuade him (chance = `reputation / 150`, capped at 0.75).
   Each alliance gives +5 rep and a friend; the last one founds the federation
   ('Founder of the Federation' accomplishment) and wins the game on the next
-  daily check. AI masters visit too (`visit_masters_chance` 0.1).
+  daily check. Alliances are announced under the style's displayed (public)
+  name, never the `game.masters` key, so the secret true name is not leaked.
+  AI masters visit too (`visit_masters_chance` 0.1).
 
 Any player meeting any condition ends the game for everyone (hot-seat race).
 On victory: the day count is recorded (`n_days_to_win`), stats and a generated
