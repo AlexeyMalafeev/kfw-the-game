@@ -10,7 +10,9 @@ class ContinueStory(BaseEncounter):
     def check_if_happens(self):
         p = self.player
         s = p.current_story
-        return s and rnd() <= CH_STORY_DEVELOPS
+        # never advance a story while the player is KO'd/inactive; the story
+        # just waits (random_encounters also skips inactive players outright)
+        return s and not p.inactive and rnd() <= CH_STORY_DEVELOPS
 
     def run(self):
         s = self.player.current_story

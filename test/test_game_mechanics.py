@@ -154,6 +154,61 @@ class TestSchoolsAndRanks:
         assert g.get_act_players() == g.players[1:]
 
 
+class TestStoryTriggering:
+    """A KO'd/inactive player must not get story scenes — the story just waits
+    and can start/continue for the same player after recovery."""
+
+    def _some_available_story(self, g, p):
+        return next(
+            s
+            for s in g.stories.values()
+            if s.check_hasnt_started() and s.min_level <= p.level <= s.max_level
+        )
+
+    def test_story_test_excludes_inactive(self):
+        g = make_game()
+        p = g.players[0]
+        p.level_up(5)  # lv 6: in range for several stories
+        s = self._some_available_story(g, p)
+        assert s.test(p)
+        p.inactive = 2
+        assert not s.test(p)
+
+    def test_new_story_never_starts_for_inactive_players(self):
+        from kf_lib.happenings import events
+
+        for seed in range(8):
+            g = make_game(seed=seed)
+            for p in g.players:
+                p.level_up(7)  # in range for most stories
+                p.inactive = 3
+            for _ in range(20):
+                events.new_story(g)
+            assert all(s.check_hasnt_started() for s in g.stories.values())
+
+    def test_continue_story_waits_for_inactive_player(self):
+        from unittest.mock import patch
+
+        from kf_lib.happenings.encounters import _story as story_enc_mod
+        from kf_lib.happenings.encounters._story import ContinueStory
+
+        g = make_game()
+        p = g.players[0]
+        p.level_up(5)
+        s = self._some_available_story(g, p)
+        s.start(p)
+        # check the gate without running the encounter (constructing it could
+        # advance the story)
+        enc = ContinueStory.__new__(ContinueStory)
+        enc.player = p
+        with patch.object(story_enc_mod, 'rnd', return_value=0.0):
+            assert enc.check_if_happens()  # active story, active player
+            p.inactive = 2
+            assert not enc.check_if_happens()  # KO'd: the story waits
+            p.inactive = 0
+            assert enc.check_if_happens()  # recovered: can continue again
+
+
 class TestGameSetup:
     def test_special_npcs_exist(self):
         g = make_game()

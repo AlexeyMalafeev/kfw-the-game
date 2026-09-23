@@ -241,12 +241,17 @@ eligibility window; `state` is `None` (not started), `0..n` (current scene), or
   whose level passes `story.test()`. `start(player)` sets `p.current_story`,
   bumps the `num_stories` stat, sets `state = 0`, and runs `intro()`. If the
   chosen story has no eligible player, nothing happens that day; a story that
-  the player outlevels before it starts never starts.
+  the player outlevels before it starts never starts. `test()` also refuses
+  inactive (KO'd) players — an inactive player is simply not eligible, so the
+  story stays unstarted and can begin for the same player after recovery.
 - **Advancing**: the `ContinueStory` encounter calls `advance()`, which
   increments `state` and runs the scene via
   `exec(f'self.scene{self.state}()')`. ⚠️ Dynamic dispatch by string `exec` —
   a `state` with no matching `sceneN` method crashes with `AttributeError`
   instead of ending cleanly; scenes must call `self.end()` themselves.
+  `ContinueStory.check_if_happens` additionally requires the player to not be
+  inactive (on top of `random_encounters` skipping inactive players
+  outright), so a story started before a KO simply waits for recovery.
 - **Ending**: `end()` sets `state = -1`, unregisters the `boss` fighter (if
   any), and clears `p.current_story`. Ended stories never restart
   (`state == -1` fails `check_hasnt_started`), so each story happens at most

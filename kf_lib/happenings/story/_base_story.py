@@ -66,4 +66,6 @@ class BaseStory:
 
     def test(self, player):
         p = player
-        return self.min_level <= p.level <= self.max_level
+        # a KO'd/inactive player must not get story scenes; the story stays
+        # available and can start for the same player once they recover
+        return not p.inactive and self.min_level <= p.level <= self.max_level
