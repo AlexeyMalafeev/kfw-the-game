@@ -204,7 +204,10 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 ### School and mastership (`_school.py`)
 
 - `SchoolChallenge` / `SchoolBullying`: rank up (or be ambushed) within your
-  school; chances scale with school size. Reaching rank 1 earns the master's
+  school; chances scale with school size. The challenge skips inactive (KO'd)
+  schoolmates above you — if everyone above is inactive it doesn't happen —
+  and a win moves you to the defeated opponent's slot (see School rank in
+  `docs/gameplay.md`). Reaching rank 1 earns the master's
   praise, +25 exp and +2 rep.
 - `MasterTrial`: at rank 1 and `MASTER_LV` (11+), beat your master in a spar,
   pay 1000 c., and found a school — flips `is_master`, which changes the day

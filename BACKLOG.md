@@ -49,6 +49,12 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   string-set tie-ordering in `compare_dicts` are fixed — the seeded
   fight-balance harness is now byte-reproducible across PYTHONHASHSEEDs;
   trait selection itself is still open.
+- `TestJadeTableStory.test_completes_and_lose_branch_makes_enemy` is flaky
+  across processes: with fixed `random.seed`s per run it still passes/fails
+  depending on PYTHONHASHSEED (verified 2026-09-24: stable per hash seed,
+  ~15–20% of seeds fail with `saw_win=False`). Some set-iteration site in
+  game generation or the story/fight path is still hash-order dependent —
+  same family as the trait-selection entry above.
 - possible bug in exp progression in lazy/hardworking players
 - y defense buff not working?
 - bug in careless inactive time?

@@ -788,3 +788,67 @@ class TestRank1Reward:
         assert p.school_rank == 1
         assert exp_gains == [RANK1_EXP]
         assert p.reputation == rep_before + RANK1_REP
+
+
+class TestSchoolChallenge:
+    """A school-rank challenge must skip inactive (KO'd) schoolmates: the
+    challenger fights the next active one above, leapfrogging the skipped
+    ones in the ranking on a win."""
+
+    def _setup_same_school(self, seed=97, level=8):
+        """Two players in one school (like a hot-seat game sharing a style),
+        ranked [npc1, npc2, p2, p]."""
+        g, p = make_game_and_player(seed=seed, level=level)
+        p2 = g.players[1]
+        own = g.schools[p2.style.name]
+        if p2 in own:
+            own.remove(p2)
+        p2.style = p.style
+        school = g.schools[p.style.name]
+        npcs = [f for f in school if f is not p][:2]
+        school[:] = [npcs[0], npcs[1], p2, p]
+        for pl in g.players:
+            pl.refresh_school_rank()
+        return g, p, p2, npcs
+
+    def test_challenge_skips_inactive_and_leapfrogs_ranks(self):
+        g, p, p2, npcs = self._setup_same_school()
+        assert (p.school_rank, p2.school_rank) == (4, 3)
+        p2.inactive = 3  # KO'd: cannot be challenged
+        sparred = []
+        p.spar = lambda opp, **kw: sparred.append(opp) or True
+        p.fight_or_not = lambda *a, **kw: True
+        orig_rnd = school_mod.rnd
+        try:
+            school_mod.rnd = lambda: 0.99  # no arming
+            SchoolChallenge(p, check_if_happens=False)
+        finally:
+            school_mod.rnd = orig_rnd
+        # the challenge goes past the KO'd p2 to the next active one above
+        assert sparred == [npcs[1]]
+        # the winner takes the defeated's slot; everyone passed drops a rank
+        p.refresh_school_rank()
+        p2.refresh_school_rank()
+        assert p.school_rank == 2  # +2
+        assert p2.school_rank == 4  # skipped while KO'd: -1 (was 3)
+        school = g.schools[p.style.name]
+        assert school.index(npcs[1]) == 2  # defeated: rank 3
+        assert school.index(npcs[0]) == 0  # rank 1 untouched
+
+    def test_no_challenge_when_everyone_above_is_inactive(self):
+        g, p, p2, npcs = self._setup_same_school()
+        school = g.schools[p.style.name]
+        school.remove(npcs[0])
+        school.remove(npcs[1])  # only the KO'd p2 is above p
+        p.refresh_school_rank()
+        assert p.school_rank == 2
+        p2.inactive = 3
+        # check the gate without running the encounter
+        enc = SchoolChallenge.__new__(SchoolChallenge)
+        enc.p = p
+        orig_rnd = school_mod.rnd
+        try:
+            school_mod.rnd = lambda: 0.0  # chance is not the blocker here
+            assert not enc.check_if_happens()
+        finally:
+            school_mod.rnd = orig_rnd

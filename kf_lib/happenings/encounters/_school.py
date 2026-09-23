@@ -119,10 +119,27 @@ class SchoolBullying(BaseEncounter):
 class SchoolChallenge(BaseEncounter):
     def check_if_happens(self):
         p = self.p
-        return not p.is_master and p.school_rank > 1 and rnd() <= ((len(p.get_school()) - 1) / 100)
+        return (
+            not p.is_master
+            and p.school_rank > 1
+            and self._get_target() is not None
+            and rnd() <= ((len(p.get_school()) - 1) / 100)
+        )
+
+    def _get_target(self):
+        """The nearest active schoolmate above the player; inactive (KO'd)
+        schoolmates can't be challenged and are skipped."""
+        p = self.p
+        for f in reversed(p.get_school()[: p.school_rank - 1]):
+            if not (f.is_player and f.inactive):
+                return f
+        return None
 
     def run(self):
         p = self.player
+        opp = self._get_target()
+        if opp is None:
+            return
         m = self.player.get_master()
         t = '''{0} meets his master.
 {1}: "{0}, you have been practicing hard. It is now time to test your kung-fu!"'''.format(
@@ -131,18 +148,19 @@ class SchoolChallenge(BaseEncounter):
         p.show(t)
         p.log("Is offered a trial at his school.")
         school = p.get_school()
-        opp = school[p.school_rank - 2]  # adjusts for Python indexing and skips self
         opp_strength = p.get_rel_strength(opp)
         if p.fight_or_not(opp_strength):
             if rnd() < CH_SCHOOL_CHALLENGER_ARMED:
                 p.arm_normal()
                 opp.arm_normal()
             if p.spar(opp, hide_stats=False):
+                # take the defeated opponent's slot, leapfrogging any skipped
+                # inactive schoolmates: everyone passed shifts one rank down
+                opp_idx = school.index(opp)
                 school.remove(p)
-                school.insert(
-                    p.school_rank - 2, p
-                )  # adjusts for Python indexing and skips defeated fighter
-                p.refresh_school_rank()
+                school.insert(opp_idx, p)
+                for a_player in p.game.players:
+                    a_player.refresh_school_rank()  # other players' ranks may have shifted
                 if p.school_rank > 1:
                     t = (
                         '{}: "{}, I can see that you have mastered some aspects of {}. However, you must keep '

@@ -323,8 +323,11 @@ extra tech from the beggar vs injury, challenger's master shows up, ...).
 Friends (max 8, +2 for 'friendly') join fights/training with per-friend dice
 and enable FriendMatch spars; co-op players are pre-friended at game start
 (`_new_game.py`). Enemies trigger ambushes (above). School rank is the position
-in `schools[style]` sorted monthly by `get_exp_worth()`; winning a
-SchoolChallenge spar swaps you up one rank. Rank 1 is required for the master
+in `schools[style]` sorted monthly by `get_exp_worth()`; a SchoolChallenge
+spar targets the nearest *active* schoolmate above — inactive (KO'd)
+schoolmates can't be challenged and are skipped — and winning takes the
+defeated opponent's slot, so leapfrogged schoolmates (incl. the skipped
+ones) each drop one rank. Rank 1 is required for the master
 trial, and reaching it earns the master's praise, +25 exp and +2 rep
 (`RANK1_EXP`/`RANK1_REP`).
 
