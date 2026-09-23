@@ -38,7 +38,11 @@ reach it, since `choose_day_action` is a `HumanPlayer` method.
 option you land back at the day-action prompt with the day still unspent.
 
 The debug menu ends with a **Back** option that returns to the state menu
-without activating any debug tool.
+without activating any debug tool. Every sub-screen reached from a debug
+option also offers a way back without committing to the action: option-list
+menus are called with `back=True` (a persistent grey `B - Back` entry on
+every page, returns `None`), and numeric prompts are called with
+`can_cancel=True` (entering `b` aborts and returns `None`).
 
 ## Menu options
 

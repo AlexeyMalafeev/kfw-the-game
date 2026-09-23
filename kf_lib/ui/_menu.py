@@ -5,6 +5,9 @@ from ._rich_format import cyan, green, grey, red, render, white
 from ._screen import cls
 
 
+BACK_KEY = 'B'
+
+
 def menu(
     opt_list,
     title='',
@@ -12,6 +15,7 @@ def menu(
     new_line=True,
     weak=False,
     options_per_page=20,
+    back=False,
 ):
     """
     Ask the user to choose one of the options from the option list.
@@ -19,6 +23,8 @@ def menu(
     (then return the selected option string on user choice),
     or a list of tuples (string, object),
     (then return the object matching the choice).
+    If back is True, show a persistent "Back" option (key 'B') on every page
+    and return None when it is chosen.
     """
     if isinstance(opt_list[0], tuple) and len(opt_list[0]) == 2:
         options = []
@@ -38,6 +44,9 @@ def menu(
             curr_options += [grey('Previous page'), grey('Next page')]
             curr_keys += '<>'
             has_pages = True
+        if back:
+            curr_options = curr_options + [grey('Back')]
+            curr_keys += BACK_KEY
         if title:
             print(render(f'[bold]{title}[/bold]'))
         if new_line:
@@ -47,6 +56,8 @@ def menu(
         print(render(st.join([f' {cyan(curr_keys[j])} - {white(curr_options[j])}' for j in range(len(curr_keys))])))
         while True:
             choice = get_key()
+            if back and choice == BACK_KEY:
+                return None
             if has_pages and choice in '<>':
                 cls()
                 if choice == '<':

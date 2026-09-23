@@ -90,7 +90,7 @@ option).
 | fighter names (fight-info header) | bold |
 | menu titles | bold (applied globally in `menu()`) |
 | menu option keys | cyan (applied globally in `menu()`) |
-| menu option text | white (applied globally in `menu()`); style-selection descriptions additionally grey; `yes`/`no` green/red; page navigation grey |
+| menu option text | white (applied globally in `menu()`); style-selection descriptions additionally grey; `yes`/`no` green/red; page navigation and the optional `B - Back` entry grey |
 | press-key prompts (`(Press any key)`, `Press Enter`) | grey |
 | distance visualization (`OX` … `O...X`) | red → yellow → green → cyan as distance grows (close = dangerous, far = safe) |
 | move stars (feature bonuses in fight/learn-move menus) | yellow |

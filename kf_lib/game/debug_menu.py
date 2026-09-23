@@ -41,12 +41,17 @@ class DebugMenu:
         enc_class = menu(
             [(enc_cls.__name__, enc_cls) for enc_cls in all_random_encounter_classes],
             title="Choose an encounter",
+            back=True,
         )
+        if enc_class is None:
+            return
         enc_class(self.g.current_player, check_if_happens=False)
 
     def debug_fight_thugs(self):
         p = self.g.current_player
-        n = get_int_from_user('How many thugs?', 1, 20)
+        n = get_int_from_user('How many thugs?', 1, 20, can_cancel=True)
+        if n is None:
+            return
         thugs = fighter_factory.new_thug(n=n)
         if n == 1:
             p.fight(thugs)
@@ -55,13 +60,23 @@ class DebugMenu:
 
     def debug_get_item(self):
         p = self.g.current_player
-        item = menu(sorted(items.all_items, key=str.lower) + items.MOCK_ITEMS, title='Which item?')
-        quantity = get_int_from_user(f'How many {item}s?', 1, 1000000000)
+        item = menu(
+            sorted(items.all_items, key=str.lower) + items.MOCK_ITEMS,
+            title='Which item?',
+            back=True,
+        )
+        if item is None:
+            return
+        quantity = get_int_from_user(f'How many {item}s?', 1, 1000000000, can_cancel=True)
+        if quantity is None:
+            return
         p.obtain_item(item, quantity)
 
     def debug_get_money(self):
         p = self.g.current_player
-        amount = get_int_from_user('How much money?', 1, 1000000000)
+        amount = get_int_from_user('How much money?', 1, 1000000000, can_cancel=True)
+        if amount is None:
+            return
         p.earn_money(amount)
 
     def debug_inspect_player(self):
@@ -89,18 +104,24 @@ class DebugMenu:
 
     def debug_learn_tech(self):
         p = self.g.current_player
-        tech_name = menu(sorted(techniques.get_all_techs_dict()), title='Choose a tech:')
+        tech_name = menu(sorted(techniques.get_all_techs_dict()), title='Choose a tech:', back=True)
+        if tech_name is None:
+            return
         tech = techniques.get_tech_obj(tech_name)
         p.learn_tech(tech)
 
     def debug_level_up(self):
         p = self.g.current_player
-        n = get_int_from_user('How many levels up?', 1, 100)
+        n = get_int_from_user('How many levels up?', 1, 100, can_cancel=True)
+        if n is None:
+            return
         p.level_up(n)
 
     def debug_spar(self):
         p = self.g.current_player
-        opp = menu([pp for pp in self.g.players if not (pp is p)])
+        opp = menu([pp for pp in self.g.players if not (pp is p)], back=True)
+        if opp is None:
+            return
         p.spar(opp)
 
     def debug_set_att(self):
@@ -127,7 +148,10 @@ class DebugMenu:
         story_class = menu(
             [(story_cls.__name__, story_cls) for story_cls in get_all_stories()],
             title="Choose a story",
+            back=True,
         )
+        if story_class is None:
+            return
         story_obj = self.g.stories[story_class.__name__]
         if not story_obj.check_hasnt_started():
             print(f'{story_obj.name} has already started!')
@@ -148,10 +172,18 @@ class DebugMenu:
             raise
 
     def debug_tournament(self):
-        n = get_int_from_user('How many participants?', 2, 20)
-        fee = get_int_from_user('Fee?', 0, 10000)
-        min_lv = get_int_from_user('Min level?', 1, 20)
-        max_lv = get_int_from_user('Max level?', min_lv, 20)
+        n = get_int_from_user('How many participants?', 2, 20, can_cancel=True)
+        if n is None:
+            return
+        fee = get_int_from_user('Fee?', 0, 10000, can_cancel=True)
+        if fee is None:
+            return
+        min_lv = get_int_from_user('Min level?', 1, 20, can_cancel=True)
+        if min_lv is None:
+            return
+        max_lv = get_int_from_user('Max level?', min_lv, 20, can_cancel=True)
+        if max_lv is None:
+            return
         tournament.Tournament(
             game=self.g,
             num_participants=n,
