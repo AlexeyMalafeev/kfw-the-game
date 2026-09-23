@@ -49,6 +49,10 @@ self.show(style('CRITICAL!', 'bold red'))
 - `render(text)` — tags → ANSI codes (or stripped when colors are off);
   `rprint(text)` — print with `render`; `strip_tags(text)` — remove tags;
   `visible_len(text)` — on-screen length (tags not counted).
+- `render()` also auto-wraps money amounts (`N coins`, `N-coin`, optional
+  `+`/`-` sign) in yellow and exp amounts (`N exp`) in green, so every message
+  gets these colors without call-site markup. Width math and logs operate on
+  the original text, so they are unaffected.
 
 ### When colors are on
 
@@ -69,8 +73,8 @@ option).
 | epic strikes | bold magenta |
 | dodges, blocks, disarms, environment use, improvised weapons | cyan |
 | status effects (stun, shock, off-balance, slow), misses/fails, counters, preemptives, draws | yellow |
-| money amounts | yellow |
-| exp gains | green |
+| money amounts (`N coins`, `N-coin`) | yellow — automatic in `render()`, no call-site markup needed |
+| exp amounts (`N exp`) | green — automatic in `render()` |
 | victory message, level-ups, resisting KO | bold green / green |
 | fighter names (fight-info header) | bold |
 | menu titles | bold (applied globally in `menu()`) |

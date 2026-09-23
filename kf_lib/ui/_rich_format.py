@@ -8,6 +8,10 @@ print choke points (``show()``, ``menu()``, ...) and stripped everywhere else
 
 Supported tags: red green yellow blue magenta cyan white grey, bold dim italic;
 compound tags like ``[bold red]``; closing is ``[/tag]`` or just ``[/]``.
+
+``render()`` also auto-colors money (``100 coins``, ``100-coin`` → yellow) and
+exp amounts (``100 exp`` → green) in any text it processes, so call sites do
+not have to mark those up by hand.
 """
 
 import os
@@ -51,6 +55,13 @@ _ANSI_CODES = {
 }
 
 _TAG_RE = re.compile(r'\[(/?)([^\[\]]*)\]')
+
+# money/exp amounts are colored automatically at render time, so every message
+# gets them without call sites having to wrap anything
+_AUTO_COLOR_RES = (
+    (re.compile(r'(?<![\w+-])[+-]?\d[\d,]*(?: coins?|-coins?)\b'), 'yellow'),
+    (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* exp\b'), 'green'),
+)
 
 _colors_enabled = False
 
@@ -115,8 +126,17 @@ def _resolve(tags):
     return '\x1b[' + ';'.join(str(_ANSI_CODES[t]) for t in tags.split()) + 'm'
 
 
+def _auto_color(text):
+    """Wrap money ('100 coins', '100-coin') and exp ('100 exp') amounts in
+    color tags; existing tags are unaffected (digits never appear in them)."""
+    for pattern, tag in _AUTO_COLOR_RES:
+        text = pattern.sub(f'[{tag}]\\g<0>[/{tag}]', text)
+    return text
+
+
 def render(text):
     """Replace markup tags with ANSI codes (or strip them if colors are off)."""
+    text = _auto_color(text)
     if '[' not in text:
         return text
     if not _colors_enabled:

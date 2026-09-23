@@ -38,6 +38,32 @@ class TestRender:
         assert rf.render('plain text') == 'plain text'
 
 
+class TestAutoColor:
+    def test_coins(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('pays 100 coins') == 'pays \x1b[33m100 coins\x1b[0m'
+
+    def test_hyphenated_coin(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('a 50-coin prize') == 'a \x1b[33m50-coin\x1b[0m prize'
+
+    def test_signed_amount(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('(-30 coins)') == '(\x1b[33m-30 coins\x1b[0m)'
+
+    def test_exp(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('gains 10 exp.') == 'gains \x1b[32m10 exp\x1b[0m.'
+
+    def test_bare_words_not_colored(self):
+        rf.set_colors_enabled(True)
+        assert rf.render('fights for coins, no exp') == 'fights for coins, no exp'
+
+    def test_colors_off_no_tags_left(self):
+        rf.set_colors_enabled(False)
+        assert rf.render('pays 100 coins, gains 10 exp') == 'pays 100 coins, gains 10 exp'
+
+
 class TestStripAndMeasure:
     def test_strip_tags(self):
         assert rf.strip_tags('[red]a[bold]b[/bold]c[/]') == 'abc'

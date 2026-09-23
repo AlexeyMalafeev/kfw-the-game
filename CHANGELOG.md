@@ -14,9 +14,11 @@ All notable changes to KFW are documented here. Format loosely follows
   piped output stay clean. Semantic palette: red damage, bold-red crits/KOs,
   cyan dodges/blocks, yellow status effects and money, green exp/victories,
   dim quotes, bold names and menu titles, and HP bars that go
-  green → yellow → red as they drain. All menus show cyan option keys and
-  white option text; the style-selection menu adds grey short descriptions.
-  All alignment code (`align_text`,
+  green → yellow → red as they drain. Money amounts (`N coins`, `N-coin`) and
+  exp amounts (`N exp`) are colored yellow/green automatically by the render
+  engine, so every message gets them with no call-site markup. All menus show
+  cyan option keys and white option text; the style-selection menu adds grey
+  short descriptions. All alignment code (`align_text`,
   `pretty_table`, the fight-info header) measures visible width, so colors
   never skew layout. Colors auto-disable when stdout is not a TTY or
   `NO_COLOR`/`KFW_COLOR=never`/`TERM=dumb` says so, can be forced off with the
