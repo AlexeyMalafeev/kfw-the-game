@@ -8,7 +8,7 @@ from kf_lib.actors.player import (
 from kf_lib.constants import experience
 from kf_lib.happenings import story
 from kf_lib.kung_fu import styles
-from kf_lib.ui import cls, get_int_from_user, menu, yn
+from kf_lib.ui import cls, get_int_from_user, grey, menu, white, yn
 from kf_lib.utils import rndint
 from ._base_game import BaseGame, DEFAULT_TOWN_STAT
 
@@ -38,7 +38,12 @@ class NewGame(BaseGame):
 
         max_len = max((len(s.public_name) for s in self.style_list))
         legend = [
-            ('{:<{}} {}'.format(s.public_name, max_len, s.public_descr_short), s)
+            (
+                white('{:<{}}'.format(s.public_name, max_len))
+                + ' '
+                + grey(s.public_descr_short),
+                s,
+            )
             for s in self.style_list
         ]
 

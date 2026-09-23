@@ -74,6 +74,8 @@ option).
 | victory message, level-ups, resisting KO | bold green / green |
 | fighter names (fight-info header) | bold |
 | menu titles | bold (applied globally in `menu()`) |
+| menu option keys | cyan (applied globally in `menu()`) |
+| style-selection menu options | white style names, grey short descriptions |
 | quotes / flavor text | dim |
 | HP bar | green → yellow → red by fill %; SP bar yellow; QP bar magenta |
 
