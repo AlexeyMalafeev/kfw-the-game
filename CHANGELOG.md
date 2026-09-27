@@ -6,6 +6,16 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Free-for-all prefight titles**: a plain free-for-all showed the same
+  bare fighter table as a regular fight against an allied group, with
+  nothing marking it as every-man-for-himself; a bold title now heads the
+  prefight table — 'Free for all!' for FFA and 'Group free for all!' for
+  the group variant (which already labels each group)
+- **A way back from every debug-menu sub-screen**: `menu()` gains a
+  persistent grey 'B - Back' entry (shown on every page, returns `None`),
+  and `get_int_from_user()` accepts 'b' to cancel; all debug sub-menus and
+  numeric prompts opt in and bail out on `None`, so no debug option forces
+  you to commit to an action
 - **Player gender**: a new game now starts with 'Play as a man or a woman?';
   the character's name is drawn from the matching gendered name pool, and
   generated love interests always have the opposite gender. AI players get a
@@ -57,6 +67,31 @@ All notable changes to KFW are documented here. Format loosely follows
   ~65. Economy-affecting, not fight-balance-affecting.
 
 ### Fixed
+- **School challenge could target a KO'd schoolmate**: `SchoolChallenge`
+  always picked the fighter directly above in rank, even a KO'd player who
+  couldn't fight back; it now targets the nearest active schoolmate above
+  (and doesn't happen at all if everyone above is inactive). A win takes
+  the defeated opponent's slot — the challenger leapfrogs any skipped
+  inactive schoolmates, who each drop one rank along with the defeated
+  opponent — and all players' school ranks are refreshed after the swap,
+  not just the challenger's
+- **Stories no longer start for KO'd/inactive players**:
+  `events.new_story` picked any player passing `story.test()`, which only
+  checked level — a KO'd player could get a story intro (e.g. being
+  pickpocketed in `WrongPouchStory`) while unconscious. `BaseStory.test()`
+  now refuses inactive players, so the story stays unstarted and can begin
+  for the same player after recovery
+- **`WrongPouchStory` stolen amount lost on mid-story save/load**: stories
+  persisted only state/player/boss, so the pickpocketed amount set in
+  `intro()` reset to 0 after a reload and `scene1()` refunded '0 coins';
+  story classes can now declare `savable_atts` (serialized under an
+  `'atts'` key and re-applied on load), and `WrongPouchStory` declares
+  `('stolen',)`. Additive optional key — old saves load unchanged
+- **Day-action menu keys broke with 10+ options**: `str(10)` is two chars,
+  so the 10th action ('Visit sweetheart') was labeled '1' (a duplicate of
+  Practice, unselectable) and Rest/State shifted to '0'/'r' with a dead
+  's' key; the menu now uses '1234567890' + 'rs', matching `menu()`'s
+  default single-char key scheme
 - **More secret-style-name leaks plugged**: the All-Schools Tournament victory
   was logged to each roster member's diary under the school's true name (a
   low-level student doesn't know his own style's secret yet — and AI players
