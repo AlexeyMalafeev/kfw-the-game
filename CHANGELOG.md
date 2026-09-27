@@ -3,7 +3,7 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
-## [Unreleased]
+## [v0.7.4-beta "Rainbow Fist"] — 2026-09-27
 
 ### Added
 - **Free-for-all prefight titles**: a plain free-for-all showed the same
@@ -99,11 +99,6 @@ All notable changes to KFW are documented here. Format loosely follows
   The kung-fu federation alliance announcement/log in `ally_school` also used
   the `game.masters` key (the true name) while `visit_masters` introduced the
   same master by his public name; it now uses the displayed (public) name
-- **All-Schools Tournament round pairings and elimination announcements leaked
-  secret style names** (again): they interpolated the `game.schools` key — the
-  style's secret true name — while the fights themselves already showed the
-  public name; both now use the roster's displayed style name (public unless
-  the player knows the secret), same as the winner announcement
 - **Injured players no longer fight friendly matches**: the `FriendMatch`
   encounter never checked the friend's condition, so an injured AI-player
   friend (e.g. a co-op teammate) could "challenge" you and spar while still
