@@ -4,6 +4,7 @@ import random
 import re
 from typing import Dict, List, Literal, Text, Union
 
+from kf_lib import i18n
 from kf_lib.fighting.distances import DISTANCE_FEATURES
 from kf_lib.utils import roman
 from .ascii_art import get_ascii
@@ -56,6 +57,12 @@ class Move:
     def __repr__(self):
         # return '{}'.format(self.name)
         return f'{self.name} ({self.tier})'
+
+    @property
+    def display_name(self):
+        """Name translated for display; self.name stays the English identifier
+        (save files, ALL_MOVES_DICT and ASCII-art lookup use it)."""
+        return i18n.tr_name(self.name)
 
     def set_ascii(self):
         self.ascii_l, self.ascii_r = get_ascii(self.name)

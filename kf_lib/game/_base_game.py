@@ -4,6 +4,7 @@ import sys
 from kf_lib.actors import fighter_factory, names
 from kf_lib.constants import experience
 from kf_lib.happenings import encounters, events
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.kung_fu import styles, style_gen
 from kf_lib.utils import rndint
 from .debug_menu import DebugMenu
@@ -127,7 +128,11 @@ class BaseGame(GameIO):
                 if p in school:
                     new_rank = school.index(p) + 1
                     if p.school_rank != new_rank:
-                        p.msg(f'{p.name} is now number {new_rank} at his school.')
+                        p.msg(
+                            _('{name} is now number {rank} at his school.').format(
+                                name=tr_fighter_name(p.name), rank=new_rank
+                            )
+                        )
                         p.school_rank = new_rank
 
     def unregister_fighter(self, f):

@@ -1,5 +1,6 @@
 import random
 
+from kf_lib import i18n
 from kf_lib.kung_fu import boosts
 
 
@@ -60,6 +61,12 @@ class Item(object):
         self.descr_short = ''
         boosts.set_descr(self)
         all_items[self.name] = self
+
+    @property
+    def display_name(self):
+        """Name translated for display; self.name stays the English identifier
+        (inventories and EFFECTS are keyed by it)."""
+        return i18n.tr_name(self.name)
 
 
 # todo improve mannequin instantiation

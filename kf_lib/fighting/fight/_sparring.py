@@ -2,6 +2,7 @@ from ._auto_fight import AutoFight
 from ._base_fight import BaseFight
 from ._helpers import get_prefight_info, get_sides
 from ._normal_fight import NormalFight
+from kf_lib.i18n import _
 from kf_lib.ui import cls, pak, yn
 
 
@@ -23,7 +24,7 @@ def spar(
         cls()
         print(get_prefight_info(side_a, side_b, hide_stats))
         if af_option:
-            auto_fight = yn('\nAuto fight?')
+            auto_fight = yn(_('\nAuto fight?'))
         else:
             pak()
             cls()

@@ -1,3 +1,4 @@
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import (
     align_text,
     bold,
@@ -34,7 +35,14 @@ class HumanControlledFighter(Fighter):
         self.show('')
         self.show(self.get_f_info(show_st_emph=True))
         options = self.get_atts_to_choose()
-        att = menu(options, 'Improve:')
+        labels = {
+            'strength': _('Strength'),
+            'agility': _('Agility'),
+            'speed': _('Speed'),
+            'health': _('Health'),
+        }
+        options = [(labels[att], att) for att in options]
+        att = menu(options, _('Improve:'))
         self.change_att(att, 1)
 
     # def choose_best_norm_wp(self):
@@ -56,7 +64,7 @@ class HumanControlledFighter(Fighter):
             # print('opp status', self.target.status)
             # print(self.dfs_bonus)
             m_names = [
-                f'{m.name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}'
+                f'{m.display_name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}'
                 for m in self.av_moves
             ]
             max_len = max((visible_len(m_name) for m_name in m_names))
@@ -74,10 +82,21 @@ class HumanControlledFighter(Fighter):
             self.action = menu(options, title=f' {d}')
 
     def choose_new_move(self, sample):
-        first_line = ('Move', 'Tier', 'Dist', 'Pwr', 'Acc', 'Cmpl', 'Sta', 'Time', 'Qi', 'Func')
+        first_line = (
+            _('Move'),
+            _('Tier'),
+            _('Dist'),
+            _('Pwr'),
+            _('Acc'),
+            _('Cmpl'),
+            _('Sta'),
+            _('Time'),
+            _('Qi'),
+            _('Func'),
+        )
         options = [
             (
-                f'{m.name}{self.get_move_stars(m)}',
+                f'{m.display_name}{self.get_move_stars(m)}',
                 roman(m.tier),
                 format_move_distance(m),
                 str(m.power),
@@ -97,7 +116,7 @@ class HumanControlledFighter(Fighter):
         options = list(zip(options, [m for m in sample]))
         mn = menu(
             options,
-            title='Choose a move to learn:\n     ' + first_line,
+            title=_('Choose a move to learn:') + '\n     ' + first_line,
         )
         self.learn_move(mn)
 
@@ -105,7 +124,7 @@ class HumanControlledFighter(Fighter):
         sample = self.get_techs_to_choose(annotated=True)
         if not sample:
             return
-        choice = self.menu(sample, 'Choose a technique to learn:')
+        choice = self.menu(sample, _('Choose a technique to learn:'))
         self.learn_tech(choice)
 
     def choose_target(self):
@@ -122,30 +141,30 @@ class HumanControlledFighter(Fighter):
                     dist = self.get_vis_distance(self.distances[f])
                     n, lev, hp, stam, qi = f.name, f.level, f.hp, f.stamina, f.qp
                     if f.weapon:
-                        wp_info = f' {f.weapon.name}'
+                        wp_info = f' {f.weapon.display_name}'
                     else:
                         wp_info = ''
                     marks = f.get_status_marks(right=True)
                     options.append(
                         (
                             f'{dist}',
-                            f'{n}{marks}',
-                            f'(lv.{lev}',
-                            f'HP:{hp}',
-                            f'SP:{stam}',
-                            f'QP:{qi}{wp_info})',
+                            f'{tr_fighter_name(n)}{marks}',
+                            '(' + _('lv.{}').format(lev),
+                            _('HP:{}').format(hp),
+                            _('SP:{}').format(stam),
+                            _('QP:{}').format(qi) + wp_info + ')',
                         )
                     )
                 options = pretty_table(options, sep='  ', as_list=True)
                 options = list(zip(options, self.act_targets))
-                tgt = self.menu(options, title='Choose target:')
+                tgt = self.menu(options, title=_('Choose target:'))
                 self.set_target(tgt)
 
     def choose_tech_to_upgrade(self):
         av_techs = self.get_techs_to_choose(annotated=True, for_upgrade=True)
         if not av_techs:
             return
-        t = self.menu(av_techs, 'Choose a technique to improve:')
+        t = self.menu(av_techs, _('Choose a technique to improve:'))
         self.upgrade_tech(t)
 
     def choose_style_tech_to_upgrade(self):
@@ -156,13 +175,17 @@ class HumanControlledFighter(Fighter):
         if not av_techs:
             return
         self.show(
-            f'As {self.name} trains hard, delving deeper into the art of '
-            f'{self.get_displayed_style_name()}, he discovers a way to improve one of the '
-            f"style's techniques..."
+            _(
+                'As {name} trains hard, delving deeper into the art of {style}, he '
+                "discovers a way to improve one of the style's techniques..."
+            ).format(
+                name=tr_fighter_name(self.name),
+                style=self.get_displayed_style_name(),
+            )
         )
         self.pak()
-        options = [(f'{t.name} ({t.descr})', t) for t in av_techs]
-        t = self.menu(sorted(options), 'Choose a technique to improve:')
+        options = [(f'{t.display_name} ({t.descr})', t) for t in av_techs]
+        t = self.menu(sorted(options), _('Choose a technique to improve:'))
         self.upgrade_style_tech(t)
 
     def cls(self):
@@ -229,9 +252,9 @@ class HumanControlledFighter(Fighter):
         return yellow('*' * n) if n else ''
 
     def level_up(self, times=1):
-        self.msg(f'{self.name}: *LEVEL UP*')
+        self.msg(_('{name}: *LEVEL UP*').format(name=tr_fighter_name(self.name)))
         self.cls()
-        self.show('*LEVEL UP*')
+        self.show(_('*LEVEL UP*'))
         Fighter.level_up(self, times)
 
     def learn_secret_style_tech(self, tech):
@@ -245,30 +268,45 @@ class HumanControlledFighter(Fighter):
                 master = None
         if master is not None and master is not self:
             if style.public_name != style.name:
-                t = (
-                    f'{self.name} is practicing in the school\'s courtyard when '
-                    f'{master.name} calls him to the main hall.\n'
-                    f'{master.name}: "{self.name}, you have been most diligent. Few '
-                    f'students go as far as you have, so today I can trust you with the '
-                    f'inner teaching of our school. The style the outside world knows as '
-                    f'{style.public_name} has a true name, whispered only to the most '
-                    f'trusted disciples: {style.name}! And with it comes the secret '
-                    f'technique — {tech.name}. Guard this knowledge, and never speak of '
-                    f'it outside these walls."'
+                t = _(
+                    "{name} is practicing in the school's courtyard when {master} "
+                    'calls him to the main hall.\n'
+                    '{master}: "{name}, you have been most diligent. Few students '
+                    'go as far as you have, so today I can trust you with the inner '
+                    'teaching of our school. The style the outside world knows as '
+                    '{public_style} has a true name, whispered only to the most '
+                    'trusted disciples: {style}! And with it comes the secret '
+                    'technique — {tech}. Guard this knowledge, and never speak of '
+                    'it outside these walls."'
+                ).format(
+                    name=tr_fighter_name(self.name),
+                    master=tr_fighter_name(master.name),
+                    public_style=style.display_public_name,
+                    style=style.display_name,
+                    tech=tech.display_name,
                 )
             else:
-                t = (
-                    f'{self.name} is practicing in the school\'s courtyard when '
-                    f'{master.name} calls him to the main hall.\n'
-                    f'{master.name}: "{self.name}, you have been most diligent. Few '
-                    f'students go as far as you have. It is time you learned the secret '
-                    f'technique of {style.name} — {tech.name}. Guard this knowledge, and '
-                    f'never speak of it outside these walls."'
+                t = _(
+                    "{name} is practicing in the school's courtyard when {master} "
+                    'calls him to the main hall.\n'
+                    '{master}: "{name}, you have been most diligent. Few students '
+                    'go as far as you have. It is time you learned the secret '
+                    'technique of {style} — {tech}. Guard this knowledge, and '
+                    'never speak of it outside these walls."'
+                ).format(
+                    name=tr_fighter_name(self.name),
+                    master=tr_fighter_name(master.name),
+                    style=style.display_name,
+                    tech=tech.display_name,
                 )
         else:
-            t = (
-                f'Through countless hours of training, {self.name} finally grasps the '
-                f'deepest secret of {style.public_name} — {tech.name}.'
+            t = _(
+                'Through countless hours of training, {name} finally grasps the '
+                'deepest secret of {style} — {tech}.'
+            ).format(
+                name=tr_fighter_name(self.name),
+                style=style.display_public_name,
+                tech=tech.display_name,
             )
         self.show(t)
         self.log(f'Learns the secret technique of {style.name}.')
@@ -309,30 +347,30 @@ class HumanControlledFighter(Fighter):
         def fill_lines(lines_to_be_filled, f, right=False):
             lines_f = lines_to_be_filled
             marks = f.get_status_marks(right=right)
-            lines_f[0].append(bold(f.name) + marks)
+            lines_f[0].append(bold(tr_fighter_name(f.name)) + marks)
 
             health_bar = get_bar(f.hp, f.hp_max, '%', '.', 10, mirror=right)
             hp_ratio = f.hp / f.hp_max if f.hp_max else 0
             hp_color = green if hp_ratio > 0.5 else (yellow if hp_ratio > 0.25 else red)
-            elt1, elt2, elt3 = 'HP', hp_color(health_bar), f.hp
+            elt1, elt2, elt3 = _('HP'), hp_color(health_bar), f.hp
             if right:
                 elt1, elt3 = elt3, elt1
             lines_f[1].append(f'{elt1} {elt2} {elt3}')
 
             stamina_bar = get_bar(f.stamina, f.stamina_max, '#', '-', 10, mirror=right)
-            elt1, elt2, elt3 = 'SP', yellow(stamina_bar), f.stamina
+            elt1, elt2, elt3 = _('SP'), yellow(stamina_bar), f.stamina
             if right:
                 elt1, elt3 = elt3, elt1
             lines_f[2].append(f'{elt1} {elt2} {elt3}')
 
             qi_bar = get_bar(f.qp, f.qp_max, '@', '~', 10, mirror=right)
-            elt1, elt2, elt3 = 'QP', magenta(qi_bar), f.qp
+            elt1, elt2, elt3 = _('QP'), magenta(qi_bar), f.qp
             if right:
                 elt1, elt3 = elt3, elt1
             lines_f[3].append(f'{elt1} {elt2} {elt3}')
 
             if f.weapon:
-                lines_f[4].append(f'({f.weapon.name})')
+                lines_f[4].append(f'({f.weapon.display_name})')
             else:
                 lines_f[4].append('')
 

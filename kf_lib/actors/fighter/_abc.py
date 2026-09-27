@@ -551,7 +551,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def get_techs_string(self, show_descr: bool = True, header: Text = 'Techniques:') -> Text:
+    def get_techs_string(self, show_descr: bool = True, header: Optional[Text] = None) -> Text:
         pass
 
     @abstractmethod

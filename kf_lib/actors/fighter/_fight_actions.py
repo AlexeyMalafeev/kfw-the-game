@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from kf_lib.kung_fu.moves import Move
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import cyan, get_bar, green, red, style, yellow
 from kf_lib.utils import choose_adverb, rnd, rndint_2d
 
@@ -24,7 +25,12 @@ class FighterWithActions(FighterAPI, ABC):
         if self.bleeding:
             self.change_hp(-self.bleeding)
             if self.hp <= 0:
-                self.current_fight.display(f'{self.name} {red("passes out because of bleeding!")}')
+                self.current_fight.display(
+                    _('{name} {msg}').format(
+                        name=tr_fighter_name(self.name),
+                        msg=red(_('passes out because of bleeding!')),
+                    )
+                )
                 self.current_fight.pak()
 
     def apply_dfs_penalty(self) -> None:
@@ -39,12 +45,14 @@ class FighterWithActions(FighterAPI, ABC):
 
     def attack(self) -> None:
         n1 = self.current_fight.get_f_name_string(self)
-        fury = ' *FURY*' if self.check_status('fury') else ''
+        fury = _(' *FURY*') if self.check_status('fury') else ''
         n2 = self.current_fight.get_f_name_string(self.target)
-        s = f'{n1}{fury}: {self.action.name} @ {n2}'
+        s = _('{n1}{fury}: {move} @ {n2}').format(
+            n1=n1, fury=fury, move=self.action.display_name, n2=n2
+        )
         self.current_fight.display(s)
         if self.guard_while_attacking:
-            self.current_fight.display(f' (guarding while attacking)')
+            self.current_fight.display(_(' (guarding while attacking)'))
             self.dfs_bonus *= self.GUARD_POWER * (1.0 + self.guard_while_attacking)
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
@@ -60,10 +68,10 @@ class FighterWithActions(FighterAPI, ABC):
             if self.action.power:
                 self.to_hit = 0
                 if compl >= 1:
-                    self.current_fight.display(yellow('Miss!'))
+                    self.current_fight.display(yellow(_('Miss!')))
                     self.cause_off_balance()
             if self.action.dist_change:
-                self.current_fight.display(yellow('Fail!'))
+                self.current_fight.display(yellow(_('Fail!')))
                 if compl >= 3:
                     self.cause_fall()
                 else:
@@ -96,8 +104,13 @@ class FighterWithActions(FighterAPI, ABC):
         if roll <= dodge_chance:
             atkr.dam = 0
             self.change_qp(self.qp_gain)
+            adv = choose_adverb(dodge_chance, _('barely'), _('easily'))
             self.current_fight.display(
-                cyan('{} {}dodges!'.format(self.name, choose_adverb(dodge_chance, 'barely', 'easily')))
+                cyan(
+                    _('{name} {adv}dodges!').format(
+                        name=tr_fighter_name(self.name), adv=adv
+                    )
+                )
             )
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
@@ -105,8 +118,14 @@ class FighterWithActions(FighterAPI, ABC):
             self.dfs_pwr = round(self.dfs_pwr)
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
-            adv = choose_adverb(block_chance, 'barely', 'easily')
-            self.current_fight.display(cyan(f'{self.name} {adv}blocks! ({self.dfs_pwr})'))
+            adv = choose_adverb(block_chance, _('barely'), _('easily'))
+            self.current_fight.display(
+                cyan(
+                    _('{name} {adv}blocks! ({pwr})').format(
+                        name=tr_fighter_name(self.name), adv=adv, pwr=self.dfs_pwr
+                    )
+                )
+            )
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()
             self.defended = True
@@ -119,21 +138,29 @@ class FighterWithActions(FighterAPI, ABC):
     def do_counter(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
-            self.current_fight.display(yellow('+COUNTER!+'))
+            self.current_fight.display(yellow(_('+COUNTER!+')))
             new_action = random.choice(cand_moves)
             self.action = new_action
-            s = f'{self.name}: {self.action.name} @ {self.target.name}'
+            s = _('{n1}: {move} @ {n2}').format(
+                n1=tr_fighter_name(self.name),
+                move=self.action.display_name,
+                n2=tr_fighter_name(self.target.name),
+            )
             self.current_fight.display(s)
             self.try_strike()
 
     def do_preemptive(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
-            self.current_fight.display(yellow('<-PREEMPTIVE!-<'))
+            self.current_fight.display(yellow(_('<-PREEMPTIVE!-<')))
             new_action = random.choice(cand_moves)
             self.action = new_action
             self.refresh_ascii()
-            s = f'{self.name}: {self.action.name} @ {self.target.name}'
+            s = _('{n1}: {move} @ {n2}').format(
+                n1=tr_fighter_name(self.name),
+                move=self.action.display_name,
+                n2=tr_fighter_name(self.target.name),
+            )
             self.current_fight.display(s)
             self.try_strike()
             # this is by design separate from actually performing the strike
@@ -214,9 +241,13 @@ class FighterWithActions(FighterAPI, ABC):
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)
                 self.dam = round(self.dam)
-                self.current_fight.display(yellow('damage is reduced!'))
+                self.current_fight.display(yellow(_('damage is reduced!')))
             tgt.take_damage(self.dam)
-            self.current_fight.display(f'hit: {red(f"-{self.dam} HP")} ({tgt.hp})')
+            self.current_fight.display(
+                _('hit: {dmg} ({hp})').format(
+                    dmg=red(_('-{dam} HP').format(dam=self.dam)), hp=tgt.hp
+                )
+            )
             self.try_cause_bleeding()
             self.try_hit_disarm()
             self.do_move_functions(self.action)
@@ -229,7 +260,7 @@ class FighterWithActions(FighterAPI, ABC):
         m = self.action
         self.fight_stats['moves_used'][m.name] = self.fight_stats['moves_used'].get(m.name, 0) + 1
         n = self.current_fight.get_f_name_string(self)
-        s = f'{n}: {m.name}'
+        s = _('{name}: {move}').format(name=n, move=m.display_name)
         self.current_fight.display(s)
         self.current_fight.display('=' * len(s))
         if m.dist_change:
@@ -284,7 +315,13 @@ class FighterWithActions(FighterAPI, ABC):
         atkr = self.target
         if atkr.weapon and self.block_disarm and rnd() <= self.block_disarm:
             atkr.disarm()
-            self.current_fight.display(f'{self.name} {cyan("disarms")} {atkr.name} while blocking')
+            self.current_fight.display(
+                _('{n1} {verb} {n2} while blocking').format(
+                    n1=tr_fighter_name(self.name),
+                    verb=cyan(_('disarms')),
+                    n2=tr_fighter_name(atkr.name),
+                )
+            )
 
     def try_counter(self) -> None:
         # print(f'{self.name}: {self.counter_chance=}')
@@ -300,7 +337,11 @@ class FighterWithActions(FighterAPI, ABC):
             fury_dur = rndint_2d(self.DUR_FURY_MIN, self.DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
             s = self.current_fight.get_f_name_string(self)
-            self.current_fight.display(f'{s} {style("is in FURY!", "bold red")}')
+            self.current_fight.display(
+                _('{name} {msg}').format(
+                    name=s, msg=style(_('is in FURY!'), 'bold red')
+                )
+            )
             self.current_fight.pak()
 
     def try_in_fight_impro_wp(self) -> None:
@@ -312,7 +353,11 @@ class FighterWithActions(FighterAPI, ABC):
         ):
             self.arm_improv()
             s = self.current_fight.get_f_name_string(self)
-            self.current_fight.display(f'{s} {cyan("grabs an improvised weapon!")}')
+            self.current_fight.display(
+                _('{name} {msg}').format(
+                    name=s, msg=cyan(_('grabs an improvised weapon!'))
+                )
+            )
             self.current_fight.pak()
 
     def try_ko(self) -> None:
@@ -322,14 +367,19 @@ class FighterWithActions(FighterAPI, ABC):
                 tgt.hp = 1
                 # self.log(f'{tgt.name} resists being knocked out.')
                 # tgt.log('Resists being knocked out.')
-                self.current_fight.display(f'{tgt.name} {green("resists being knocked out!")}')
+                self.current_fight.display(
+                    _('{name} {msg}').format(
+                        name=tr_fighter_name(tgt.name),
+                        msg=green(_('resists being knocked out!')),
+                    )
+                )
             else:
                 self.kos_this_fight += 1
                 self.log(f'Knocks out {tgt.name}.')
                 tgt.log(f'Knocked out by {self.name}.')
                 if not tgt.ascii_name.startswith('Lying'):
                     tgt.set_ascii('Falling')
-                self.current_fight.display(style(' KNOCK-OUT!', 'bold red'), align=False)
+                self.current_fight.display(style(_(' KNOCK-OUT!'), 'bold red'), align=False)
 
     def visualize_fight_state(self) -> str:
         side_a, side_b = self.act_allies, self.act_targets

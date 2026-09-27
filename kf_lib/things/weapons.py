@@ -1,5 +1,6 @@
 import random
 
+from kf_lib import i18n
 from kf_lib.kung_fu import moves
 from kf_lib.utils import float_to_pcnt, mean
 
@@ -41,6 +42,12 @@ class Weapon(object):
 
     def __str__(self):
         return f'{self.name} {self.descr}'
+
+    @property
+    def display_name(self):
+        """Name translated for display; self.name stays the English identifier
+        (saves and all_weapons are keyed by it)."""
+        return i18n.tr_name(self.name)
 
     def get_exp_mult(self):
         return 1.0 + mean((self.dfs_bonus, self.atk_mean))

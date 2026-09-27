@@ -7,6 +7,7 @@ from kf_lib.actors.player import (
 )
 from kf_lib.constants import experience
 from kf_lib.happenings import story
+from kf_lib.i18n import _
 from kf_lib.kung_fu import styles
 from kf_lib.ui import cls, get_int_from_user, grey, menu, yn
 from kf_lib.utils import rndint
@@ -32,25 +33,30 @@ class NewGame(BaseGame):
         return p
 
     def _get_new_human_player(self):
-        gender = menu((('Man', 'm'), ('Woman', 'f')), title='Play as a man or a woman?')
+        gender = menu(
+            ((_('Man'), 'm'), (_('Woman'), 'f')),
+            title=_('Play as a man or a woman?'),
+        )
         while True:
             cls()
             p = HumanPlayer(name=self.get_new_name(gender=gender))
             p.gender = gender
             print(p.get_f_info())
-            if yn('Is this character ok?'):
+            if yn(_('Is this character ok?')):
                 break
 
-        max_len = max((len(s.public_name) for s in self.style_list))
+        max_len = max((len(s.display_public_name) for s in self.style_list))
         legend = [
             (
-                '{:<{}} {}'.format(s.public_name, max_len, grey(s.public_descr_short)),
+                '{:<{}} {}'.format(
+                    s.display_public_name, max_len, grey(s.public_descr_short)
+                ),
                 s,
             )
             for s in self.style_list
         ]
 
-        style = menu(legend, 'Choose a style')
+        style = menu(legend, _('Choose a style'))
         p.set_style(style.name)
         # p.set_moves(None)  # to properly add lv1 style moves
         return p
@@ -75,10 +81,10 @@ class NewGame(BaseGame):
         self.silent_ending = silent_ending
         # options
         if not num_players:
-            num_players = get_int_from_user('Number of players?', 1, MAX_NUM_PLAYERS)
+            num_players = get_int_from_user(_('Number of players?'), 1, MAX_NUM_PLAYERS)
         if customize_settings == '?':
             customize_settings = not ai_only and yn(
-                'Customize game settings? (choose "no" to keep the defaults)'
+                _('Customize game settings? (choose "no" to keep the defaults)')
             )
         if customize_settings:
             self._customize_settings()
@@ -87,7 +93,7 @@ class NewGame(BaseGame):
             experience.set_base_exp(experience.DEFAULT_BASE_EXP)
             self.base_exp = experience.DEFAULT_BASE_EXP
         if auto_save_on == '?':
-            self.auto_save_on = yn('Auto save?')
+            self.auto_save_on = yn(_('Auto save?'))
         elif auto_save_on in (True, False):
             self.auto_save_on = auto_save_on
         assert generated_styles in {
@@ -96,21 +102,23 @@ class NewGame(BaseGame):
             False,
         }, 'generated_styles option must be in (True, False, "?")'
         if generated_styles == '?':
-            generated_styles = yn('Randomly generated styles?')
+            generated_styles = yn(_('Randomly generated styles?'))
         if generated_styles:
             style_list = self.get_new_random_styles()
-            max_len = max((len(s.public_name) for s in style_list))
+            max_len = max((len(s.display_public_name) for s in style_list))
             if confirm_styles_with_player:
                 while True:
-                    pretty_styles = [f'{s.public_name:<{max_len}} {s.public_descr_short}'
-                                     for s in style_list]
+                    pretty_styles = [
+                        f'{s.display_public_name:<{max_len}} {s.public_descr_short}'
+                        for s in style_list
+                    ]
                     cls()
                     print('\n'.join(pretty_styles))
-                    if yn('Are these styles ok?'):
+                    if yn(_('Are these styles ok?')):
                         break
                     else:
                         style_list = self.get_new_random_styles()
-                        max_len = max((len(s.public_name) for s in style_list))
+                        max_len = max((len(s.display_public_name) for s in style_list))
             self.style_list = style_list
             # todo styles.py attributes shouldn't be modified from inside Game
             styles.default_styles = self.style_list
@@ -128,48 +136,53 @@ class NewGame(BaseGame):
         cls()
         base_exp = menu(
             (
-                ('The Long Road (slower level progression)', 15),
-                ('The Classic Path (default progression)', 20),
-                ('Crash Course (faster level progression)', 30),
+                (_('The Long Road (slower level progression)'), 15),
+                (_('The Classic Path (default progression)'), 20),
+                (_('Crash Course (faster level progression)'), 30),
             ),
-            title='Level progression?',
+            title=_('Level progression?'),
         )
         experience.set_base_exp(base_exp)
         self.base_exp = base_exp
         self.crime = menu(
             (
-                ('Peaceful Town (low crime)', 0.05),
-                ('Rough Edges (default crime)', DEFAULT_TOWN_STAT),
-                ('Gang-Ridden (high crime)', 0.2),
+                (_('Peaceful Town (low crime)'), 0.05),
+                (_('Rough Edges (default crime)'), DEFAULT_TOWN_STAT),
+                (_('Gang-Ridden (high crime)'), 0.2),
             ),
-            title='Crime rate?',
+            title=_('Crime rate?'),
         )
         self.poverty = menu(
             (
-                ('Prosperous (low poverty)', 0.05),
-                ('Getting By (default poverty)', DEFAULT_TOWN_STAT),
-                ('Hard Times (high poverty)', 0.2),
+                (_('Prosperous (low poverty)'), 0.05),
+                (_('Getting By (default poverty)'), DEFAULT_TOWN_STAT),
+                (_('Hard Times (high poverty)'), 0.2),
             ),
-            title='Poverty?',
+            title=_('Poverty?'),
         )
         self.kung_fu = menu(
             (
-                ('Kung-Fu Backwater (low enthusiasm)', 0.05),
-                ('Martial Town (default enthusiasm)', DEFAULT_TOWN_STAT),
-                ('Kung-Fu Craze (high enthusiasm)', 0.2),
+                (_('Kung-Fu Backwater (low enthusiasm)'), 0.05),
+                (_('Martial Town (default enthusiasm)'), DEFAULT_TOWN_STAT),
+                (_('Kung-Fu Craze (high enthusiasm)'), 0.2),
             ),
-            title='Kung-fu enthusiasm?',
+            title=_('Kung-fu enthusiasm?'),
         )
 
     def _init_players(self, num_players, coop, ai_only, forced_aip_class):
         coop_mode = False
         if num_players > 1 and coop == '?':
             coop_mode = menu(
-                (('Full co-op', 'full'), ('2x2', '2x2'), ('3x3', '3x3'), ('No co-op', 'no')),
-                title='Co-op mode?',
+                (
+                    (_('Full co-op'), 'full'),
+                    ('2x2', '2x2'),
+                    ('3x3', '3x3'),
+                    (_('No co-op'), 'no'),
+                ),
+                title=_('Co-op mode?'),
             )
         for i in range(num_players):
-            if not ai_only and yn(f'Player {i + 1} -- human player?'):
+            if not ai_only and yn(_('Player {n} -- human player?').format(n=i + 1)):
                 pp = self._get_new_human_player()
             else:
                 pp = self._get_new_ai_player(forced_aip_class)

@@ -19,6 +19,15 @@ Items marked ⚠️ look unintentional or surprising — verify before building 
 Nine files are loaded; `quotes/_unused.txt` exists in the folder but is never
 read, and `MISC = ''` is a dead leftover ⚠️.
 
+When the game language is non-English (see `docs/i18n.md`), `load_quotes`
+prefers `quotes/<lang>/<file_name>` if it exists, falling back to the English
+file per file. The pools are (re)bound by `reload_quotes()`, which runs at
+import and again from `i18n.set_language()` if the language changes
+mid-process. `quotes/ru/` holds a full Russian translation of all nine
+loaded files; a translated file should preserve the English line structure
+(pools are `random.choice`d, so extra/missing lines only shrink or grow the
+pool — but a trailing newline adds an empty quote).
+
 Pool sizes (lines per file): hero prefight 211 / hero win 130, thug prefight
 126 / thug win 48, challenger prefight 53 / challenger win 40, wisdom 133,
 master criticism 23, training injury 21. No blank lines, so pool size == line
@@ -97,7 +106,11 @@ for special cases.
 
 Names matter beyond display: `register_fighter` raises on a duplicate name,
 and JSON saves cross-reference fighters *by name* — uniqueness is a save-format
-invariant, which is what the collision loop protects.
+invariant, which is what the collision loop protects. For the same reason
+fighter names are never translated in storage: under `--lang ru` UI output
+goes through `tr_fighter_name()`, which translates only the descriptive
+prefix ('Beggar Wang' → 'Нищий Wang') or a known group name, leaving the
+proper-name parts untouched (see `docs/i18n.md`).
 
 ### Fixed-name content
 

@@ -5,6 +5,7 @@ from ._auto_fight import AutoFight
 from ._base_fight import BaseFight
 from ._helpers import get_prefight_info
 from ._normal_fight import NormalFight
+from kf_lib.i18n import _
 from kf_lib.ui import cls, pak, render, yn
 
 
@@ -25,10 +26,10 @@ def free_for_all(
     humans = [f for f in fighters if f.is_human and not f.auto_fight_all]
     if humans:
         cls()
-        print(render('[bold]Free for all![/bold]'))
+        print(render(_('[bold]Free for all![/bold]')))
         print(get_prefight_info(fighters, hide_enemy_stats=hide_stats))
         if af_option:
-            auto_fight = yn('\nAuto fight?')
+            auto_fight = yn(_('\nAuto fight?'))
         else:
             pak()
             cls()
@@ -66,10 +67,10 @@ def group_free_for_all(
     humans = [f for f in fighters if f.is_human and not f.auto_fight_all]
     if humans:
         cls()
-        print(render('[bold]Group free for all![/bold]'))
+        print(render(_('[bold]Group free for all![/bold]')))
         print(get_prefight_info(fighters, hide_enemy_stats=hide_stats, groups=groups))
         if af_option:
-            auto_fight = yn('\nAuto fight?')
+            auto_fight = yn(_('\nAuto fight?'))
         else:
             pak()
             cls()

@@ -7,6 +7,7 @@ from kf_lib.game import biographies
 from kf_lib.game import game_stats
 from kf_lib.game._base_game import BaseGame
 from kf_lib.happenings import events
+from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.things import items
 from kf_lib.ui import cls, grey, pak, render, yn
 from kf_lib.utils import rnd, SAVE_FOLDER
@@ -69,14 +70,18 @@ class Playing(BaseGame):
             if victories:
                 winners.append(p)
             for victory_type in victories:
-                wins.append(f'{p.name} becomes {victory_type}!')
+                wins.append(
+                    _('{name} becomes {victory}!').format(
+                        name=tr_fighter_name(p.name), victory=tr_name(victory_type)
+                    )
+                )
         if wins:
             days, months, years = [int(x) for x in self.get_date().split('/')]
             n_days = (years - 1) * 360 + (months - 1) * 30 + days
             self.n_days_to_win = n_days
             if not self.silent_ending:
                 self.show_victory(wins, winners)
-                self.play_indefinitely = yn('Keep playing indefinitely?')
+                self.play_indefinitely = yn(_('Keep playing indefinitely?'))
             return True
 
     @staticmethod
@@ -192,7 +197,7 @@ class Playing(BaseGame):
         s.day += 1
         s.do_daily()
         if s.day == 25:
-            s.msg('The All-Schools Tournament will be held at the end of the month.')
+            s.msg(_('The All-Schools Tournament will be held at the end of the month.'))
         if s.day == 31:
             s.month += 1
             s.day = 1
@@ -228,7 +233,7 @@ class Playing(BaseGame):
 
     def show_victory(self, wins: List[Text], winners: List):
         print('\n'.join(wins))
-        input(render(grey('Press Enter to see stats.')))
+        input(render(grey(_('Press Enter to see stats.'))))
         self.save_game('game over.txt')
         self.show_stats(do_cls=False, do_pak=False)
         self.show_bio(winners)

@@ -100,7 +100,9 @@ def get_rand_traits(n=1, player=None, negative=True, positive=True):
         av_traits = set(traits) - set(player.traits)
         opp_p_traits = set([get_opposite_trait(t) for t in player.traits])
         av_traits -= opp_p_traits
-        result = random.sample(list(av_traits), n)
+        # sorted: list(set-of-str) order is nondeterministic across processes
+        # (string hash randomization), which breaks seeded determinism
+        result = random.sample(sorted(av_traits), n)
     if len(result) == 1:
         return result[0]
     else:

@@ -3,6 +3,7 @@ import random
 from typing import Dict, List, Optional, Text, Tuple
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import _
 
 
 class BasicAttributes(FighterAPI, ABC):
@@ -43,9 +44,15 @@ class BasicAttributes(FighterAPI, ABC):
         return att
 
     def get_all_atts_str(self) -> Text:
+        short_names_tr = {
+            'Str': _('Str'),
+            'Agi': _('Agi'),
+            'Spd': _('Spd'),
+            'Hlt': _('Hlt'),
+        }
         atts_info: List[Text] = []
         for i, att in enumerate(self.att_names):
-            short = self.att_names_short[i]
+            short = short_names_tr[self.att_names_short[i]]
             v = self.get_att_str(att)
             atts_info.append(f'{short}:{v}')
         return ' '.join(atts_info)

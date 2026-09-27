@@ -1,5 +1,6 @@
 import string
 
+from kf_lib.i18n import _
 from ._keyboard import get_key
 from ._rich_format import cyan, green, grey, red, render, white
 from ._screen import cls
@@ -41,11 +42,11 @@ def menu(
         curr_returnables = returnables[i: i + options_per_page]
         curr_keys = keys[: len(curr_options)]
         if len(opt_list) > options_per_page:
-            curr_options += [grey('Previous page'), grey('Next page')]
+            curr_options += [grey(_('Previous page')), grey(_('Next page'))]
             curr_keys += '<>'
             has_pages = True
         if back:
-            curr_options = curr_options + [grey('Back')]
+            curr_options = curr_options + [grey(_('Back'))]
             curr_keys += BACK_KEY
         if title:
             print(render(f'[bold]{title}[/bold]'))
@@ -72,4 +73,4 @@ def menu(
 
 
 def yn(message):
-    return menu(((green('yes'), True), (red('no'), False)), message)
+    return menu(((green(_('yes')), True), (red(_('no')), False)), message)

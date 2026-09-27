@@ -3,6 +3,46 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
+## [Unreleased]
+
+### Added
+- **Russian localization** (`python kfw.py --lang ru`, or `KFW_LANG=ru`) —
+  first slice of an optional full translation, English remaining the source
+  language and the unchanged default. Covered: all menus and meta UI, all
+  fight text, the quote pools (translated `quotes/ru/*.txt`), and every name
+  catalog — moves, techniques, styles, items, traits, weapons, group names —
+  plus the `boosts.PMAP` technique descriptions. A new leaf package
+  `kf_lib/i18n/` wraps stdlib gettext with two domains: `kfw` (prose
+  templates, `_()` / `ngettext()` with Russian 3-form plurals) and
+  `kfw_names` (name catalogs). Internal names stay English identifiers — they
+  are dict keys, save keys and ASCII-art lookups — while a display layer
+  (`display_name` properties on Move/Tech/Item/Weapon/Style,
+  `tr_fighter_name` for NPC-name prefixes) translates at render time, so
+  saves are fully cross-language: an English save loads under `--lang ru`
+  and displays translated. Generated three-word style names are reassembled
+  in Russian with adjective-noun gender agreement
+  (`kf_lib/i18n/_ru_words.py`). Grammar helpers (`add_article`,
+  `enum_words`) dispatch on language, and the auto-coloring engine learned
+  the Russian output shapes (ур.5, `N монет`, `N опыта`, Раунд/День N), so
+  the Russian game is colored exactly like the English one. `kfw.py` defers
+  all `kf_lib` imports until after the language is set. Catalogs live in
+  `locale/ru/LC_MESSAGES/` (committed `.po` + compiled `.mo` — no gettext
+  tooling needed to play), maintained with new dev scripts
+  (`i18n_extract.py`, `translate_names.py`, `compile_locale.py`,
+  `i18n_coverage.py`); the machine-filled Russian is a draft meant for human
+  review. Encounter/story/event prose and biographies are deliberately not
+  translated yet (see BACKLOG.md). New test module `test/test_i18n.py`; full
+  autoplay games verified to complete in both languages.
+
+### Fixed
+- **Trait selection no longer hash-seed dependent**:
+  `get_rand_traits(player=...)` sampled from a `list(set-of-str)`, whose
+  order varies with `PYTHONHASHSEED` across processes, making seeded runs
+  (and the test suite) flaky — it now samples from the sorted pool, closing
+  the last known site of this bug family. This also cures the long-standing
+  flaky `TestJadeTableStory` (previously failing on ~15–20% of hash seeds,
+  now 40/40)
+
 ## [v0.7.4-beta "Rainbow Fist"] — 2026-09-27
 
 ### Added

@@ -1,3 +1,4 @@
+from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.ui import cls, get_key, pak
 from ._base_game import BaseGame
 
@@ -9,26 +10,38 @@ class StateMenu(BaseGame):
             cls()
             print(p.get_p_info_verbose())
             print()
-            options = ['Items', 'Accomplishments', 'Moves', 'Techniques']
+            # (display label, English value) pairs: the values are compared below
+            options = [
+                (_('Items'), 'Items'),
+                (_('Accomplishments'), 'Accomplishments'),
+                (_('Moves'), 'Moves'),
+                (_('Techniques'), 'Techniques'),
+            ]
             keys = 'iamt'
             if p.is_master:
-                options.append('Students')
+                options.append((_('Students'), 'Students'))
                 keys += 's'
-            options.append('Back')
+            options.append((_('Back'), 'Back'))
             keys += 'b'
-            print(' ' + '  '.join(f'{k} - {o}' for k, o in zip(keys, options)))
-            sys_options = ['Save', 'Load', 'Quit', 'Save and Quit', 'Debug Menu']
+            print(' ' + '  '.join(f'{k} - {opt[0]}' for k, opt in zip(keys, options)))
+            sys_options = [
+                (_('Save'), 'Save'),
+                (_('Load'), 'Load'),
+                (_('Quit'), 'Quit'),
+                (_('Save and Quit'), 'Save and Quit'),
+                (_('Debug Menu'), 'Debug Menu'),
+            ]
             sys_keys = 'SLQXD'
             if self.play_indefinitely:
-                sys_options.append('Finish Game')
+                sys_options.append((_('Finish Game'), 'Finish Game'))
                 sys_keys += 'F'
-            print(' ' + '  '.join(f'{k} - {o}' for k, o in zip(sys_keys, sys_options)))
+            print(' ' + '  '.join(f'{k} - {opt[0]}' for k, opt in zip(sys_keys, sys_options)))
             options += sys_options
             keys += sys_keys
             while True:
                 key = get_key()
                 if key in keys:
-                    choice = options[keys.index(key)]
+                    choice = options[keys.index(key)][1]
                     break
             if choice == 'Items':
                 cls()
@@ -76,6 +89,11 @@ class StateMenu(BaseGame):
         """Voluntarily end the game after winning and continuing: rerun the
         victory routine (message, stats, bio) and quit."""
         p = self.current_player
-        wins = [f'{p.name} becomes {v}!' for v in self.check_victory_conditions(p)]
+        wins = [
+            _('{name} becomes {victory}!').format(
+                name=tr_fighter_name(p.name), victory=tr_name(v)
+            )
+            for v in self.check_victory_conditions(p)
+        ]
         self.show_victory(wins, [p])
         self.chosen_quit = True

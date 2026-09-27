@@ -1,6 +1,7 @@
 import random
 from typing import Dict, Optional, Text
 
+from kf_lib import i18n
 from kf_lib.kung_fu import boosts as b
 from kf_lib.kung_fu import boost_combos as bc
 from .techniques import Tech
@@ -52,6 +53,17 @@ class Style(object):
         if self.is_tech_style:
             return self.techs.get(SECRET_TECH_LV)
         return None
+
+    @property
+    def display_name(self) -> Text:
+        """Name translated for display; self.name stays the English identifier
+        (saves and get_style_from_str() parsing use it)."""
+        return i18n.tr_style_name(self.name)
+
+    @property
+    def display_public_name(self) -> Text:
+        """Public name ('{W2} {W3}' for generated styles) translated."""
+        return i18n.tr_style_name(self.public_name)
 
     def __str__(self):
         return f'{self.name} ({self.descr})'

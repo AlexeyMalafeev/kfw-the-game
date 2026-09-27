@@ -21,6 +21,8 @@ import os
 import re
 import sys
 
+from kf_lib import i18n
+
 __all__ = [
     'init_colors',
     'set_colors_enabled',
@@ -74,6 +76,16 @@ _AUTO_COLOR_RES = (
     # money/exp amounts
     (re.compile(r'(?<![\w+-])[+-]?\d[\d,]*(?: coins?|-coins?)\b'), 'yellow'),
     (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* exp\b'), 'green'),
+)
+
+# Russian counterparts of the above (units/labels produced by translated
+# templates: «ур.5», «Раунд 3», «День 12», «100 монет», «100 опыта»);
+# applied in addition to the English ones when the language is Russian
+_AUTO_COLOR_RES_RU = (
+    (re.compile(r'\bур\.?\s?\d+'), 'cyan'),  # levels: ур.5
+    (re.compile(r'\b(?:Раунд|День) \d+'), 'bold'),  # headers: Раунд 3, День 12
+    (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* монет[аы]?\b'), 'yellow'),
+    (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* опыта?\b'), 'green'),
 )
 
 _colors_enabled = False
@@ -143,7 +155,11 @@ def _auto_color(text):
     """Wrap systematic patterns (quoted speech, levels, percentages, stat
     tokens, round/day headers, healing, money/exp amounts) in color tags;
     existing tags are unaffected (digits never appear in them)."""
-    for pattern, tag in _AUTO_COLOR_RES:
+    if i18n.get_language() == 'ru':
+        patterns = _AUTO_COLOR_RES + _AUTO_COLOR_RES_RU
+    else:
+        patterns = _AUTO_COLOR_RES
+    for pattern, tag in patterns:
         text = pattern.sub(f'[{tag}]\\g<0>[/{tag}]', text)
     return text
 

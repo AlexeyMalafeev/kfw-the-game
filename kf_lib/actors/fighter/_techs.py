@@ -3,6 +3,7 @@ import random
 from typing import List, Optional, Text
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.kung_fu import techniques
 from kf_lib.kung_fu.techniques import Tech
 
@@ -41,16 +42,18 @@ class TechMethods(FighterAPI, ABC):
     def get_style_tech_if_any(self) -> Optional[Tech]:
         return self.style.techs.get(self.level)
 
-    def get_techs_string(self, show_descr: bool = True, header: Text = 'Techniques:') -> Text:
+    def get_techs_string(self, show_descr: bool = True, header: Optional[Text] = None) -> Text:
         if not self.techs:
             return ''
-        align = max((len(t.name) for t in self.techs)) + 1
+        if header is None:
+            header = _('Techniques:')
+        align = max((len(t.display_name) for t in self.techs)) + 1
         output = []
         for t in self.techs:
             if show_descr:
-                output.append(f'{t.name:<{align}}{t.descr}')
+                output.append(f'{t.display_name:<{align}}{t.descr}')
             else:
-                output.append(f'{t.name:<{align}}')
+                output.append(f'{t.display_name:<{align}}')
         output = [f'{i}. {line}' for i, line in enumerate(sorted(output), 1)]
         output = [header] + output
         return '\n'.join(output)
@@ -63,7 +66,7 @@ class TechMethods(FighterAPI, ABC):
             num = self.num_techs_choose
             av_techs = techniques.get_learnable_techs(self)
         if annotated:
-            av_techs = [(f'{t.name} ({t.descr})', t) for t in av_techs]
+            av_techs = [(f'{t.display_name} ({t.descr})', t) for t in av_techs]
         if 0 < len(av_techs) < num:
             return av_techs
         elif not av_techs:
@@ -89,7 +92,13 @@ class TechMethods(FighterAPI, ABC):
         for tech in techs:
             if tech not in self.techs:
                 self.add_tech(tech)
-                self.show(f'{self.name} learns {tech.name} ({tech.descr}).')
+                self.show(
+                    _('{name} learns {tech} ({descr}).').format(
+                        name=tr_fighter_name(self.name),
+                        tech=tech.display_name,
+                        descr=tech.descr,
+                    )
+                )
                 self.log(f'Learns {tech.name} ({tech.descr})')
                 self.pak()
 

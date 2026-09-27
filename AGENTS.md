@@ -13,7 +13,8 @@ All scripts **must be run from the repo root** — moves, quotes and saves use
 cwd-relative paths.
 
 - `python kfw.py` — single entry point (argparse: `--autoplay`, `-n N`,
-  `--autosave`, `--silent-ending`, `--load FILE`); the only script at repo root
+  `--autosave`, `--silent-ending`, `--load FILE`, `--lang {en,ru}`); the only
+  script at repo root
 
 There is a small pytest suite in `test/` (run `.venv/bin/python -m pytest` from the
 repo root): seeded deterministic fights, generation invariants, and a full headless
@@ -39,10 +40,14 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - `kf_lib/happenings/` — content: `encounters/` (random street encounters), `story/`
   (quest lines), `events.py`, `tournament.py`
 - `kf_lib/kung_fu/` — moves, styles, techniques, boosts; loads `moves/all_moves.txt` at import
+- `kf_lib/i18n/` — optional Russian localization (stdlib gettext wrapper, leaf
+  package; see `docs/i18n.md`); catalogs in `locale/<lang>/LC_MESSAGES/`
+  (committed `.po` + compiled `.mo`), translated quotes in `quotes/ru/`
 - `kf_lib/ui/` — terminal UI; `kf_lib/utils/` — helpers; both star-export via `__init__.py`
 - `moves/` — move source data. Edit the `*_moves.txt` files, regenerate with
   `dev_scripts/move_gen.py` (see `moves/_moves_readme.txt`); `all_moves.txt` is generated
-- `quotes/` — dialogue text files loaded at import
+- `quotes/` — dialogue text files loaded at import; `quotes/ru/` holds the
+  Russian translations (`load_quotes` prefers them under `--lang ru`)
 - `dev_scripts/` — dev utilities (each starts with a `Path('..')` chdir/sys.path
   hack, so run them from their own directory). Includes `testing/` balance
   harnesses: `run_test_fb.py` (fight balance: N mirror matches at random levels
@@ -61,7 +66,7 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   content), `items.md`, `stats.md` (stats/accomplishments/gossip/bios),
   `social_and_traits.md`, `text_content.md` (quotes/names/ASCII art),
   `minigames.md`, `debug_menu.md`, `dev_scripts.md`, `ui.md` (output funnels,
-  color markup); plus `known bugs.txt` and
+  color markup), `i18n.md` (Russian localization); plus `known bugs.txt` and
   old design notes.
   Changelog lives at repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with
   release codenames), the structured backlog in `BACKLOG.md`
@@ -103,6 +108,14 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - Docs rule: `docs/` holds one file per game system (mechanics/pipelines, not
   constant tables — values live in code). A behavior change isn't done until
   the matching doc paragraph is updated in the same commit.
+- Localization (see `docs/i18n.md`): wrap new user-facing strings in
+  bare-name `_()` calls (`from kf_lib.i18n import _`) with placeholders
+  interpolated after translating — the AST extractor only sees bare calls and
+  literal strings. Internal names (moves/techs/styles/items/traits) stay
+  English identifiers (dict/save keys); display goes through the
+  `display_name` properties / `tr_name` / `tr_style_name`. After adding
+  strings: `cd dev_scripts && ../.venv/bin/python i18n_extract.py &&
+  ../.venv/bin/python compile_locale.py` and commit the updated `.po` + `.mo`.
 
 ## Pitfalls — read before editing
 
@@ -121,7 +134,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - **Import-time side effects**: `kung_fu/moves.py` reads `moves/all_moves.txt`,
   `actors/quotes.py` reads `quotes/*.txt`, `utils/_folders.py` mkdirs folders, and
   `utils/__init__.py` configures a root logger writing `kfw.log`. Importing `kf_lib`
-  from the wrong cwd fails or litters files.
+  from the wrong cwd fails or litters files. Quotes and PMAP descriptions also
+  bind the active **language** at import, which is why `kfw.py` defers all
+  `kf_lib` imports until after `i18n.set_language()` — keep it that way.
 - Runtime artifacts at repo root (`debug.txt`, `errors.txt`, `kfw.log`) are generated
   on crashes/runs; don't commit them.
 - **`Fighter.level` is a read-only property** — direct assignment (`f.level = 5`)

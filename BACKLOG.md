@@ -40,21 +40,20 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 - weapon techs don't do anything — reintroduce them
 - dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
   `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
-- trait selection iterates unsorted collections, so even with `random.seed()`
+- ~~trait selection iterates unsorted collections, so even with `random.seed()`
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
-  `traits_list=[]`). Consider sorting pools before sampling. Update
-  2026-09-17: the analogous object-set sites in move/tech generation
-  (`get_rand_moves`, `self.techs` iteration, tech selection pools) and the
-  string-set tie-ordering in `compare_dicts` are fixed — the seeded
-  fight-balance harness is now byte-reproducible across PYTHONHASHSEEDs;
-  trait selection itself is still open.
-- `TestJadeTableStory.test_completes_and_lose_branch_makes_enemy` is flaky
-  across processes: with fixed `random.seed`s per run it still passes/fails
-  depending on PYTHONHASHSEED (verified 2026-09-24: stable per hash seed,
-  ~15–20% of seeds fail with `saw_win=False`). Some set-iteration site in
-  game generation or the story/fight path is still hash-order dependent —
-  same family as the trait-selection entry above.
+  `traits_list=[]`). Consider sorting pools before sampling.~~ **Fixed
+  2026-09-28**: `get_rand_traits(player=...)` now samples from
+  `sorted(av_traits)`. (The analogous object-set sites in move/tech
+  generation and the string-set tie-ordering in `compare_dicts` were fixed
+  earlier — the seeded fight-balance harness is byte-reproducible across
+  PYTHONHASHSEEDs.)
+- ~~`TestJadeTableStory.test_completes_and_lose_branch_makes_enemy` is flaky
+  across processes~~ **Fixed 2026-09-28** — the root cause was the
+  trait-selection site above (`get_rand_traits` sampling an unsorted set);
+  with it sorted, the test passes 40/40 PYTHONHASHSEEDs (previously ~15–20%
+  of seeds failed with `saw_win=False`).
 - possible bug in exp progression in lazy/hardworking players
 - y defense buff not working?
 - bug in careless inactive time?
@@ -368,3 +367,31 @@ changes, not run noise; Diff% = winner-vs-loser correlation):
 - display all player fighter atts in state menu (suboption?)
 - common log for all players; get verbose fighter info
 - add timer to fight screens?
+
+## Localization (Russian milestone 2 — see `docs/i18n.md`)
+
+Milestone 1 shipped 2026-09-28 (menus, fight text, quotes, name catalogs,
+PMAP descriptions). Remaining for full Russian coverage:
+
+- **Encounter/story/event prose** (`kf_lib/happenings/`) — the largest body
+  of untranslated text; wrap in `_()`, extract, machine-draft, human-review
+- **Biographies** (`game/biographies.py`) — needs gender-aware templating
+  (Russian verbs agree with the subject's gender; player gender exists since
+  v0.7.4)
+- **Gossip text** (encounters/_people.py)
+- **Stats report** (`game/game_stats.py`) and the `aston_victory` /
+  `humil_defeat` stat tuple text
+- **Debug menu** strings
+- **Menu key mnemonics**: menu options keyed on English letters ('B - Back'
+  etc.) — decide on Russian-letter or digit keys
+- **Move `descr` stat blocks** ('Dist:2 Pwr:5' etc.) — kept English on
+  purpose; translate if a compact Russian notation is wanted
+- **Mid-process `set_language()`** does not regenerate import-time PMAP
+  descriptions or already-built `Tech.descr` strings (harmless in the real
+  game; only matters for tests/dev scripts)
+- Full declension machinery (currently avoided by case-neutral phrasing) —
+  only if a wanted string can't be phrased around it
+- Russian fighter-name generation (proper names stay Chinese-ish syllables;
+  a Russian flavor would need a new name-pool pipeline)
+- Human review pass over the machine-drafted `kfw_names.po` and
+  `dev_scripts/_names_ru.py` dictionary (draft quality by design)

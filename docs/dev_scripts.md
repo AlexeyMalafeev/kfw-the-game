@@ -1,7 +1,8 @@
 # Dev scripts
 
 Developer utilities in `dev_scripts/`: move generation, profiling, balance
-harnesses, fight-AI training/evaluation, and the ML experiment runners.
+harnesses, fight-AI training/evaluation, the ML experiment runners, and the
+localization catalog tooling.
 Sources: `dev_scripts/` itself plus the modules the scripts drive —
 `kf_lib/testing/testing_tools.py`, `kf_lib/ai/fight_ai_gen.py`,
 `kf_lib/ai/fight_ai_test.py`, `ml/ml_fighter_pwr.py`. Items marked ⚠️ look
@@ -107,10 +108,67 @@ imports nothing from `kf_lib`.
 
 **Broken**: `rich` is not installed in the dev venv and is absent from
 `requirements_dev.txt` → `ModuleNotFoundError` at line 1 (verified). It's a
-leftover of an abandoned rich experiment: `kf_lib/ui/_rich_format.py` is an
-empty file star-imported by `ui/__init__.py`, and the only other trace is a
+leftover of an abandoned rich experiment whose only other trace is a
 commented-out `from rich import print` in
-`kf_lib/actors/human_controlled_fighter.py`.
+`kf_lib/actors/human_controlled_fighter.py`. (The engine that eventually
+shipped in v0.7.4 lives in `kf_lib/ui/_rich_format.py` — a hand-rolled,
+dependency-free module that borrows rich's tag syntax but does not use the
+package; see `docs/ui.md`.)
+
+## i18n — localization catalog tooling
+
+Tooling for the Russian localization (system described in `docs/i18n.md`);
+all four use the top-level `Path('..')` chdir hack — run from `dev_scripts/`.
+They operate on `locale/<lang>/LC_MESSAGES/{kfw,kfw_names}.po`, with the
+compiled `.mo` files committed next to the sources.
+
+### i18n_common.py
+
+Shared library, not run directly: minimal .po parse/write helpers and a
+pure-Python .po→.mo compiler, so catalog maintenance needs no gettext
+binaries. Gotcha baked into it: the header `msgstr` must contain real
+newlines — writing a literal `\n` sequence produces a catalog gettext
+cannot parse (`UnicodeDecodeError` on the charset line).
+
+### i18n_extract.py
+
+`cd dev_scripts && ../.venv/bin/python i18n_extract.py` — AST-scans
+`kf_lib/` and `kfw.py` for bare-name `_()` / `ngettext()` calls (prose
+domain `kfw`) and harvests names for the `kfw_names` domain from the content
+modules (moves, techs, styles, style_gen word lists, items, traits, weapons,
+GROUP_NAMES, ROBBER_NICKNAMES, EXTRA_NAMES, plus `Advanced `-prefixed
+style-tech twins). Attribute calls like `p.add_accompl('...')` are matched
+too, but prose wrapped as `i18n._(...)` is **not** seen — always use the
+bare-name import. Merges into the .po files, never deleting existing
+translations.
+
+### translate_names.py
+
+`cd dev_scripts && ../.venv/bin/python translate_names.py` — machine-fills
+empty `msgstr`s in `kfw_names.po` from the compositional dictionary in
+`_names_ru.py` (adjective gender triples + head nouns + possessive genitives
++ hand-written overrides; `'Advanced X'` → `'<X> (продвинутый)'`
+recursively). Deterministic; never overwrites an existing translation —
+hand-edited entries are safe. Output is a **draft for human review**.
+
+### fill_prose_ru.py
+
+One-shot script that machine-filled the milestone-1 prose catalog
+(`kfw.po`) from the hand-written mapping in `_prose_ru.py` (264/264
+matched). Kept for reference; new prose strings are translated by editing
+the .po directly.
+
+### compile_locale.py
+
+`cd dev_scripts && ../.venv/bin/python compile_locale.py` — compiles all
+`.po` under `locale/` to `.mo` (via `i18n_common`). Run after any catalog
+edit; commit the `.mo` together with the `.po`.
+
+### i18n_coverage.py
+
+`cd dev_scripts && ../.venv/bin/python i18n_coverage.py` — reports extracted
+msgids vs translated msgstrs per domain (should read 100% before a commit
+that adds `_()` strings).
 
 ## ai/ — fight-AI and AI-player runners
 
@@ -334,3 +392,4 @@ tracked report was restored.
 | `testing/run_test_ffa.py` | Yes | both tables ran to completion; report committed |
 | `testing/sim_group_ffa.py` | Yes | full three-tier run to completion (~27 min); stdout only, no report file |
 | `testing/run_test_level_sign.py` | Yes | full 20×20 matrix ran to completion; report restored |
+| `i18n_extract.py` / `compile_locale.py` / `i18n_coverage.py` / `translate_names.py` | Yes | catalogs regenerated, machine-filled, compiled and verified at 100% coverage (2026-09) |

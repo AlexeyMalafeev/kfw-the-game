@@ -1,6 +1,7 @@
 from typing import Dict, List, Text
 
 
+from kf_lib import i18n
 from kf_lib.kung_fu import boosts as b
 from kf_lib.kung_fu import boost_combos as bc
 from kf_lib.things import weapons
@@ -43,6 +44,13 @@ class Tech:
         return (f'Tech({self.name!r}, fav_moves={self.fav_moves!r}, '
                 f'is_upgradable={self.is_upgradable!r}, is_advanced={self.is_advanced!r}, '
                 f'is_weapon_tech={self.is_weapon_tech!r}, {self.params!r})')
+
+    @property
+    def display_name(self):
+        """Name translated for display (incl. the 'Advanced X' upgraded style
+        techs, which are catalog entries of their own); self.name stays the
+        English identifier used by saves and get_tech_obj()."""
+        return i18n.tr_name(self.name)
 
     def apply(self, f):
         for p in self.params:

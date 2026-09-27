@@ -4,6 +4,7 @@ import random
 from typing import TYPE_CHECKING
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import _, ngettext, tr_fighter_name
 from kf_lib.ui import cyan, magenta, red, style, yellow
 from kf_lib.utils import rnd, rndint, rndint_2d
 
@@ -104,7 +105,11 @@ class StrikeMechanics(FighterAPI, ABC):
         self.stamina_factor = self.stamina / self.stamina_max / 2 + self.STAMINA_FACTOR_BIAS
 
     def cause_bleeding(self) -> None:
-        self.current_fight.display(f'{self.target.name} {red("is BLEEDING!")}')
+        self.current_fight.display(
+            _('{name} {msg}').format(
+                name=tr_fighter_name(self.target.name), msg=red(_('is BLEEDING!'))
+            )
+        )
         self.target.bleeding += max(1, round(self.dam * self.BLEEDING_PART_OF_DAM))
 
     def cause_fall(self) -> None:
@@ -115,22 +120,29 @@ class StrikeMechanics(FighterAPI, ABC):
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
         self.current_fight.display(
-            f' falls to the ground! {red(f"-{fall_dam} HP")} ({self.hp})', align=False
+            _(' falls to the ground! {dmg} ({hp})').format(
+                dmg=red(_('-{dam} HP').format(dam=fall_dam)), hp=self.hp
+            ),
+            align=False,
         )
         self.momentum = 0
 
     def cause_knockback(self, dist: int) -> None:
         opp = self.target
         self.change_distance(dist, opp)
-        s = 's' if dist > 1 else ''
         self.set_ascii('Knockback')
         self.ascii_buffer += dist
-        self.current_fight.display(f' knocked back {dist} step{s}!', align=False)
+        self.current_fight.display(
+            ngettext(
+                ' knocked back {dist} step!', ' knocked back {dist} steps!', dist
+            ).format(dist=dist),
+            align=False,
+        )
 
     def cause_off_balance(self) -> None:
         ob_dur = rndint_2d(self.DUR_OFF_BAL_MIN, self.DUR_OFF_BAL_MAX) // self.speed_full
         self.add_status('off-balance', ob_dur)
-        self.current_fight.display(yellow(' off-balance!'), align=False)
+        self.current_fight.display(yellow(_(' off-balance!')), align=False)
 
     def cause_shock(self) -> None:
         """Shock is worse than stun."""
@@ -139,7 +151,7 @@ class StrikeMechanics(FighterAPI, ABC):
         self.add_status('skip', shock_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display(yellow(' shocked!'), align=False)
+        self.current_fight.display(yellow(_(' shocked!')), align=False)
 
     def cause_slow_down(self) -> None:
         slow_dur = rndint_2d(self.DUR_SLOW_MIN, self.DUR_SLOW_MAX) // self.speed_full
@@ -147,7 +159,7 @@ class StrikeMechanics(FighterAPI, ABC):
         # todo do not repeat this line in all functions, use helper
         prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display(yellow(' slowed down!'), align=False)
+        self.current_fight.display(yellow(_(' slowed down!')), align=False)
 
     def cause_stun(self) -> None:
         """Stun is not as bad as shock."""
@@ -156,13 +168,18 @@ class StrikeMechanics(FighterAPI, ABC):
         self.add_status('skip', stun_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display(yellow(' stunned!'), align=False)
+        self.current_fight.display(yellow(_(' stunned!')), align=False)
 
     def do_agility_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(1, self.agility_full * self.STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display(f' agility-based {red(f"-{dam} HP")} ({targ.hp})', align=False)
+        self.current_fight.display(
+            _(' agility-based {dmg} ({hp})').format(
+                dmg=red(_('-{dam} HP').format(dam=dam)), hp=targ.hp
+            ),
+            align=False,
+        )
 
     def do_knockback(self) -> None:
         dist = random.choice(self.KNOCKBACK_DIST_FORCED)
@@ -172,7 +189,12 @@ class StrikeMechanics(FighterAPI, ABC):
         targ = self.target
         dam = rndint_2d(1, self.level * self.LEVEL_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display(f' level-based {red(f"-{dam} HP")} ({targ.hp})', align=False)
+        self.current_fight.display(
+            _(' level-based {dmg} ({hp})').format(
+                dmg=red(_('-{dam} HP').format(dam=dam)), hp=targ.hp
+            ),
+            align=False,
+        )
 
     def do_mob_dam(self) -> None:
         self.target.cause_slow_down()
@@ -187,7 +209,12 @@ class StrikeMechanics(FighterAPI, ABC):
         targ = self.target
         dam = rndint_2d(self.qp, self.qp * self.QI_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display(f' qi-based {red(f"-{dam} HP")} ({targ.hp})', align=False)
+        self.current_fight.display(
+            _(' qi-based {dmg} ({hp})').format(
+                dmg=red(_('-{dam} HP').format(dam=dam)), hp=targ.hp
+            ),
+            align=False,
+        )
 
     def do_shock_move(self) -> None:
         self.target.cause_shock()
@@ -196,7 +223,12 @@ class StrikeMechanics(FighterAPI, ABC):
         targ = self.target
         dam = rndint_2d(1, self.speed_full * self.STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display(f' speed-based {red(f"-{dam} HP")} ({targ.hp})', align=False)
+        self.current_fight.display(
+            _(' speed-based {dmg} ({hp})').format(
+                dmg=red(_('-{dam} HP').format(dam=dam)), hp=targ.hp
+            ),
+            align=False,
+        )
 
     def do_stam_dam(self) -> None:
         targ = self.target
@@ -204,13 +236,18 @@ class StrikeMechanics(FighterAPI, ABC):
         targ.change_stamina(-dam)
         prefix = 'lying ' if targ.check_status('lying') else ''
         targ.set_ascii(prefix + 'Hit Effect')
-        self.current_fight.display(yellow(' gasps for breath!'), align=False)
+        self.current_fight.display(yellow(_(' gasps for breath!')), align=False)
 
     def do_strength_based_dam(self) -> None:
         targ = self.target
         dam = rndint_2d(1, self.strength_full * self.STAT_BASED_DAM_UPPER_MULT)
         targ.take_damage(dam)
-        self.current_fight.display(f' strength-based {red(f"-{dam} HP")} ({targ.hp})', align=False)
+        self.current_fight.display(
+            _(' strength-based {dmg} ({hp})').format(
+                dmg=red(_('-{dam} HP').format(dam=dam)), hp=targ.hp
+            ),
+            align=False,
+        )
 
     def do_takedown(self) -> None:
         targ = self.target
@@ -249,7 +286,7 @@ class StrikeMechanics(FighterAPI, ABC):
             self.dam = round(self.dam)
             if self.fight_stats is not None:
                 self.fight_stats['criticals'] += 1
-            self.current_fight.display(style('CRITICAL!', 'bold red'))
+            self.current_fight.display(style(_('CRITICAL!'), 'bold red'))
 
     def try_environment(self, mode: str) -> None:
         if (
@@ -264,7 +301,12 @@ class StrikeMechanics(FighterAPI, ABC):
                 self.dfs_pwr *= self.current_fight.environment_bonus
                 self.to_block *= self.current_fight.environment_bonus
                 self.to_dodge *= self.current_fight.environment_bonus
-            self.current_fight.display(f'{self.name} {cyan("uses the environment!")}')
+            self.current_fight.display(
+                _('{name} {msg}').format(
+                    name=tr_fighter_name(self.name),
+                    msg=cyan(_('uses the environment!')),
+                )
+            )
 
     def try_epic(self) -> None:
         if self.epic_chance and rnd() <= self.epic_chance:
@@ -272,19 +314,25 @@ class StrikeMechanics(FighterAPI, ABC):
             self.dam = round(self.dam)
             if self.fight_stats is not None:
                 self.fight_stats['epics'] += 1
-            self.current_fight.display(style('~*~*~EPIC!!!~*~*~', 'bold magenta'))
+            self.current_fight.display(style(_('~*~*~EPIC!!!~*~*~'), 'bold magenta'))
 
     def try_hit_disarm(self) -> None:
         tgt = self.target
         if tgt.weapon and self.hit_disarm and rnd() <= self.hit_disarm:
             tgt.disarm()
-            self.current_fight.display(f'{self.name} {cyan("disarms")} {tgt.name} while attacking')
+            self.current_fight.display(
+                _('{n1} {verb} {n2} while attacking').format(
+                    n1=tr_fighter_name(self.name),
+                    verb=cyan(_('disarms')),
+                    n2=tr_fighter_name(tgt.name),
+                )
+            )
 
     def try_insta_ko(self) -> None:
         targ = self.target
         if rnd() <= self.INSTA_KO_CHANCE:
             dam = targ.hp
-            self.current_fight.display(style('INSTANT KNOCK-OUT!!!', 'bold red'))
+            self.current_fight.display(style(_('INSTANT KNOCK-OUT!!!'), 'bold red'))
             targ.take_damage(dam)
 
     def try_knockback(self) -> None:
@@ -323,4 +371,4 @@ class StrikeMechanics(FighterAPI, ABC):
     def try_unblockable(self) -> None:
         if self.unblock_chance and rnd() <= self.unblock_chance:
             self.target.to_block = 0
-            self.current_fight.display(style('UNBLOCKABLE!', 'bold red'))
+            self.current_fight.display(style(_('UNBLOCKABLE!'), 'bold red'))

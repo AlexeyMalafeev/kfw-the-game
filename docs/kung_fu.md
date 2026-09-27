@@ -28,7 +28,9 @@ features & {'drunken'}`, builds `descr`, and picks ASCII art via
 `Stance` default — generated names need no mapping entry). ⚠️
 `Move.descr_short` is initialized to `''` and never filled in — dead field.
 Field semantics in a fight (power > 0 = strike, negative costs restore a
-pool, etc.) are covered in [fight].
+pool, etc.) are covered in [fight]. `Move.display_name` returns the
+translated name for UI output; `name` itself stays English forever (dict
+key, save key, art lookup) — see `docs/i18n.md`.
 
 `BASIC_MOVES` (14 moves: Punch, Kick, maneuvers, Guard/Focus/Catch Breath,
 finishers) are flagged `is_basic` and given to every fighter at creation
@@ -160,7 +162,12 @@ who knows their own style's secret (`knows_style_secret()` — the secret tech
 or its upgraded twin is in `f.techs`); everything else (prefight tables,
 tournaments, gossip, encounters, stories, bios, AI-player info) uses the
 public name. Handcrafted and special styles have `public_name == name`, so
-only the hidden lv-7 tech description applies to them.
+only the hidden lv-7 tech description applies to them. Both display paths
+route through `tr_style_name()` — under `--lang ru` generated three-word
+names are reassembled with adjective-noun gender agreement while the English
+`name`/`public_name` remain the dict and save keys (see `docs/i18n.md`);
+`Style.display_name`/`display_public_name` expose the same translation
+without the secret check.
 
 - 24 handcrafted `default_styles` (Bagua Zhang … Xing Yi) — all are tech
   styles with techs at levels 3/5/7. 10 of them (Bagua Zhang, Choy Li Fut,
@@ -218,7 +225,10 @@ overwrites in `all_styles`, harmlessly).
 
 `Tech` (`kung_fu/techniques.py`) = name + `params` dict of attribute deltas
 + flags (`is_upgradable`, `is_advanced`, `is_weapon_tech`) + `fav_moves`
-(unused?). `Tech.apply(f)` *adds* each param to the fighter attribute and,
+(unused?). Like `Move`, a `Tech` has a `display_name` property used for all
+UI output while `name` stays the English identifier — including the
+runtime-created `Advanced {tech.name}` style-tech twins, which the names
+catalog translates via a `'<X> (продвинутый)'` pattern (see `docs/i18n.md`). `Tech.apply(f)` *adds* each param to the fighter attribute and,
 for `*_strike_mult` params, adds the corresponding feature to
 `f.fav_move_features` (e.g. Iron Fist → `'punch'`) — this is the only way
 `fav_move_features` grows, and it drives both random move selection and the

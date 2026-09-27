@@ -2,6 +2,7 @@ import random
 
 from kf_lib.actors.names import GROUP_NAMES
 from kf_lib.constants import experience
+from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.ui import cls, menu, pak, style, yellow
 
 
@@ -65,9 +66,9 @@ class BaseFight(object):
         total = len(self.cartoon)
         if total >= EPIC_FIGHT_MIN_LEN:
             if len(unique) / total >= EPIC_FIGHT_RATIO:
-                return ' (epic!)'
+                return _(' (epic!)')
             if len(unique) / total <= BORING_FIGHT_RATIO:
-                return ' (boring...)'
+                return _(' (boring...)')
         return ''
 
     def check_fight_over(self):
@@ -172,10 +173,13 @@ class BaseFight(object):
         return self.active_side_b if f in self.active_side_a else self.active_side_a
 
     def get_f_name_string(self, f):
+        name = tr_fighter_name(f.name)
         if self.school_display:
-            return f'{f.name} ({f.get_displayed_style_name()})'
+            return _('{name} ({style})').format(
+                name=name, style=f.get_displayed_style_name()
+            )
         else:
-            return f.name
+            return name
 
     def get_seconds(self):
         return round(self.timer / TIME_TO_SEC_DIVISOR)
@@ -238,13 +242,15 @@ class BaseFight(object):
     def handle_exp_bonuses(self, p, exp):
         bonuses = []
         if self.timer / TIME_TO_SEC_DIVISOR <= 10:
-            bonuses.append('Quick victory')
+            bonuses.append(_('Quick victory'))
         if not p.took_damage:
-            bonuses.append('Not a scratch')
+            bonuses.append(_('Not a scratch'))
         if p.kos_this_fight >= 3:
-            bonuses.append('Multi-knockout')
+            bonuses.append(_('Multi-knockout'))
         for bonus in bonuses:
-            p.show(f'{p.name}: {bonus}')
+            p.show(
+                _('{name}: {bonus}').format(name=tr_fighter_name(p.name), bonus=bonus)
+            )
             p.log(bonus)
         n_bonuses = len(bonuses)
         exp *= 1 + n_bonuses * 0.25  # rounded and converted to int later
@@ -371,10 +377,10 @@ class BaseFight(object):
             self.cartoon = self.cartoon[1:]
         s = self.check_epic()
         options = (
-            ('Stats', self.show_stats),
-            ('Timeline', self.show_timeline),
-            ('Slideshow ({})'.format(len(self.cartoon)) + s, self.slideshow),
-            ('Save slideshow', self.save_slideshow),
+            (_('Stats'), self.show_stats),
+            (_('Timeline'), self.show_timeline),
+            (_('Slideshow ({n})').format(n=len(self.cartoon)) + s, self.slideshow),
+            (_('Save slideshow'), self.save_slideshow),
         )
         while True:
             choice = menu(options, keys='stlv', weak=True)
@@ -407,20 +413,20 @@ class BaseFight(object):
             else:
                 wnr = self.winners[0]
                 if wnr.name in GROUP_NAMES:
-                    s = f'{GROUP_NAMES[wnr.name]} win.'
+                    s = _('{group} win.').format(group=tr_name(GROUP_NAMES[wnr.name]))
                 else:
-                    s = f'{wnr.name} wins.'
+                    s = _('{name} wins.').format(name=tr_fighter_name(wnr.name))
             self.handle_win_quote()
             s = style(s, 'bold green')
         else:
-            s = yellow('Draw!')
+            s = yellow(_('Draw!'))
         return s
 
     def save_slideshow(self):
-        file_name = input("Input file name: ")
+        file_name = input(_('Input file name: '))
         with open(file_name, 'w', encoding='utf-8') as f:
             f.write('\n\n'.join(self.cartoon))
-        print('Saved successfully.')
+        print(_('Saved successfully.'))
 
     def show(self, *args, **kwargs):
         pass
@@ -438,10 +444,10 @@ class BaseFight(object):
         s = self._resolve_winner_name()
         n_min, n_sec_left = self.get_time()
         if n_min:
-            t_string = f'{n_min} min. {n_sec_left} sec.'
+            t_string = _('{min} min. {sec} sec.').format(min=n_min, sec=n_sec_left)
         else:
-            t_string = f'{n_sec_left} sec.'
-        dur_st = f'The fight lasted {t_string}'
+            t_string = _('{sec} sec.').format(sec=n_sec_left)
+        dur_st = _('The fight lasted {t}').format(t=t_string)
         sep = '-' * len(dur_st)
         s += f'\n{sep}\n{dur_st}'
         if alternative_printing_fn is None:
@@ -458,13 +464,25 @@ class BaseFight(object):
             thrown, landed = fs['thrown'], fs['landed']
             accuracy = f'{round(landed / thrown * 100)}%' if thrown else '-'
             top_moves = sorted(fs['moves_used'].items(), key=lambda kv: -kv[1])[:3]
-            top_moves_s = ', '.join(f'{name} x{cnt}' for name, cnt in top_moves) or '-'
+            top_moves_s = ', '.join(
+                f'{tr_name(name)} x{cnt}' for name, cnt in top_moves
+            ) or '-'
             lines.append(
-                f'{f.name}: strikes {landed}/{thrown} landed ({accuracy}), '
-                f'damage dealt {fs["dam_dealt"]}, criticals {fs["criticals"]}, '
-                f'epics {fs["epics"]}, moves: {top_moves_s}'
+                _(
+                    '{name}: strikes {landed}/{thrown} landed ({accuracy}), '
+                    'damage dealt {dam}, criticals {crits}, epics {epics}, moves: {moves}'
+                ).format(
+                    name=tr_fighter_name(f.name),
+                    landed=landed,
+                    thrown=thrown,
+                    accuracy=accuracy,
+                    dam=fs['dam_dealt'],
+                    crits=fs['criticals'],
+                    epics=fs['epics'],
+                    moves=top_moves_s,
+                )
             )
-        print('\n'.join(lines) if lines else 'No stats recorded.')
+        print('\n'.join(lines) if lines else _('No stats recorded.'))
 
     def show_timeline(self):
         print('\n'.join(self.timeline))

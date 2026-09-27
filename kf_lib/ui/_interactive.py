@@ -1,3 +1,4 @@
+from kf_lib.i18n import _
 from ._keyboard import get_key
 from ._rich_format import grey, render, rprint
 
@@ -7,8 +8,8 @@ def get_int_from_user(message, min_, max_, can_cancel=False):
     Return an integer in range [a, b] (both included) input by user.
     If can_cancel is True, entering 'b' returns None (go back).
     """
-    error_msg = 'invalid input, try again'
-    cancel_hint = ", 'b' to go back" if can_cancel else ''
+    error_msg = _('invalid input, try again')
+    cancel_hint = _(", 'b' to go back") if can_cancel else ''
     while True:
         rprint(message)
         inp = input(f' ({min_}-{max_}{cancel_hint})> ')
@@ -26,7 +27,7 @@ def get_int_from_user(message, min_, max_, can_cancel=False):
 
 
 def get_str_from_user(message, can_be_empty=False) -> str:
-    error_msg = 'invalid input, try again'
+    error_msg = _('invalid input, try again')
     while True:
         rprint(message)
         inp = input(f' > ')
@@ -47,9 +48,9 @@ def pak(silent=True):
     Wait for user to press any key.
     """
     if not silent:
-        print(render(grey('(Press any key)')))
+        print(render(grey(_('(Press any key)'))))
     get_key()
 
 
 def pe():
-    input(render(grey('Press Enter')))
+    input(render(grey(_('Press Enter'))))

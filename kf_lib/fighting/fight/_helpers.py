@@ -1,5 +1,6 @@
 from ._auto_fight import AutoFight
 from ._normal_fight import NormalFight
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import cls, pak, yn
 
 
@@ -12,26 +13,32 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
     if groups:
         for i, group in enumerate(groups):
             if group:
-                label = f'--- Group {i + 1} ---'
+                label = _('--- Group {n} ---').format(n=i + 1)
                 if any(f.is_human for f in group):
-                    label = f'--- Group {i + 1} (your group) ---'
+                    label = _('--- Group {n} (your group) ---').format(n=i + 1)
                 group_labels[id(group[0])] = label
     s = ''
     first_fighter = fs[0]
-    size1 = max([len(s) for s in ['NAME '] + [f.name + '  ' for f in fs]])
-    size2 = max([len(s) for s in ['LEV '] + [str(f.level) + ' ' for f in fs]])
-    size3 = max([len(s) for s in ['STYLE '] + [f.get_displayed_style_name() + ' ' for f in fs]])
+    head_name = _('NAME')
+    head_lev = _('LEV')
+    head_style = _('STYLE')
+    disp_names = [tr_fighter_name(f.name) for f in fs]
+    size1 = max([len(s) for s in [head_name + ' '] + [n + '  ' for n in disp_names]])
+    size2 = max([len(s) for s in [head_lev + ' '] + [str(f.level) + ' ' for f in fs]])
+    size3 = max(
+        [len(s) for s in [head_style + ' '] + [f.get_displayed_style_name() + ' ' for f in fs]]
+    )
     att_names = ' '.join(first_fighter.att_names_short) if not basic_info_only else ''
-    s += 'NAME'.ljust(size1) + 'LEV'.ljust(size2) + 'STYLE'.ljust(size3) + att_names
+    s += head_name.ljust(size1) + head_lev.ljust(size2) + head_style.ljust(size3) + att_names
     if any([f.weapon for f in fs]) and not basic_info_only:
-        s += ' WEAPON'
-    for f in fs:
+        s += ' ' + _('WEAPON')
+    for f, disp_name in zip(fs, disp_names):
         if id(f) in group_labels:
             s += f'\n{group_labels[id(f)]}'
         if side_b and f == side_b[0]:
             s += '\n-vs-'
         s += '\n{:<{}}{:<{}}{:<{}}'.format(
-            f.name,
+            disp_name,
             size1,
             f.level,
             size2,
@@ -51,7 +58,7 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
             atts_wb = (f.get_att_str_prefight(att, hide=True) for att in first_fighter.att_names)
         s += '{:<4}{:<4}{:<4}{:<4}'.format(*atts_wb)
         if f.weapon:
-            s += f'{f.weapon.name} {f.weapon.descr_short}'
+            s += f'{f.weapon.display_name} {f.weapon.descr_short}'
         s += f"\n{' ' * (size1 + size2)}{f.get_displayed_style_emph()}"
     return s
 
@@ -89,7 +96,7 @@ def fight(
         cls()
         print(get_prefight_info(side_a, side_b, hide_stats))
         if af_option:
-            auto_fight = yn('\nAuto fight?')
+            auto_fight = yn(_('\nAuto fight?'))
         else:
             pak()
             cls()

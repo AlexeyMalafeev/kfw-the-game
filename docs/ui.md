@@ -57,7 +57,11 @@ self.show(style('CRITICAL!', 'bold red'))
   amounts (`N coins`, `N-coin`, optional `+`/`-` sign; yellow) and exp amounts
   (`N exp`; green). Quoted speech is wrapped first so amounts inside quotes
   still get their own colors. Width math and logs operate on the original
-  text, so they are unaffected.
+  text, so they are unaffected. When the language is Russian (see
+  `docs/i18n.md`) a second pattern set, `_AUTO_COLOR_RES_RU`, is applied
+  additionally — matching the translated shapes (ур.5, `N монет`, `N опыта`,
+  Раунд/День N); the Russian message templates must keep producing exactly
+  these shapes or the auto-coloring silently stops applying.
 
 ### When colors are on
 

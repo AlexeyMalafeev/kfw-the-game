@@ -2,6 +2,7 @@ from abc import ABC
 from typing import Union
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import tr_style_name
 from kf_lib.kung_fu import styles
 
 
@@ -13,8 +14,8 @@ class StyleMethods(FighterAPI, ABC):
         if self.custom_style_name:
             return self.custom_style_name
         if self.is_human and self.knows_style_secret():
-            return self.style.name
-        return self.style.public_name
+            return tr_style_name(self.style.name)
+        return tr_style_name(self.style.public_name)
 
     def get_displayed_style_emph(self) -> str:
         if self.is_human and self.knows_style_secret():

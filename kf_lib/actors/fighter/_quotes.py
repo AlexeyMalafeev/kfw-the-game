@@ -3,6 +3,7 @@ from abc import ABC
 
 from kf_lib.actors.fighter._abc import FighterAPI
 from kf_lib.actors import quotes
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import dim
 
 
@@ -17,7 +18,9 @@ class QuoteMethods(FighterAPI, ABC):
         pool = quotes.PREFIGHT_QUOTES.get(self.quotes, None)
         if pool is not None:
             q = random.choice(pool)
-            self.current_fight.show(dim(f'{self.name}: "{q}"'))
+            self.current_fight.show(
+                dim(_('{name}: "{q}"').format(name=tr_fighter_name(self.name), q=q))
+            )
             return True
         else:  # this is important for correctly making pauses after quotes
             return False
@@ -26,4 +29,6 @@ class QuoteMethods(FighterAPI, ABC):
         pool = quotes.WIN_QUOTES.get(self.quotes, None)
         if pool is not None:
             q = random.choice(pool)
-            self.current_fight.show(dim(f'{self.name}: "{q}"'))
+            self.current_fight.show(
+                dim(_('{name}: "{q}"').format(name=tr_fighter_name(self.name), q=q))
+            )
