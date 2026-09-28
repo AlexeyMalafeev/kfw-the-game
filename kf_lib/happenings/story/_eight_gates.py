@@ -2,6 +2,7 @@ import random
 
 from kf_lib.actors import fighter_factory
 from kf_lib.fighting import fight
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.kung_fu import techniques
 from kf_lib.utils import rndint
 from ._base_story import BaseStory
@@ -24,12 +25,12 @@ class EightGatesStory(BaseStory):
         g = self.game
         g.cls()
         p = self.player
-        t = (
-            f'Word of {p.name}\'s battle royale triumph reaches a reclusive master living '
-            f'in the mountains near {g.town_name}. A letter arrives, written in elegant '
-            f'script: "You have proven you can stand alone against many. But can you pass '
-            f'the Trial of Eight Gates? Come."'
-        )
+        t = _(
+            'Word of {name}\'s battle royale triumph reaches a reclusive master living '
+            'in the mountains near {town}. A letter arrives, written in elegant '
+            'script: "You have proven you can stand alone against many. But can you pass '
+            'the Trial of Eight Gates? Come."'
+        ).format(name=tr_fighter_name(p.name), town=g.town_name)
         g.show(t)
         g.pak()
         name = g.get_new_name('Master')
@@ -43,7 +44,9 @@ class EightGatesStory(BaseStory):
         if learnable:
             tech = random.choice(learnable)
             self.player.show(
-                f'{self.boss.name}: "Few have passed the Trial. You have earned this."'
+                _('{name}: "Few have passed the Trial. You have earned this."').format(
+                    name=tr_fighter_name(self.boss.name)
+                )
             )
             p.learn_tech(tech)
         else:
@@ -51,14 +54,14 @@ class EightGatesStory(BaseStory):
 
     def scene1(self):
         p, b = self.player, self.boss
-        t = (
-            f'A mountain courtyard. {b.name} sits motionless as eight disciples of eight '
-            f'different styles step into a circle drawn in the dust. '
-            f'{b.name}: "No weapons. No tricks. The Eight Gates do not open for the '
-            f'faint-hearted. BEGIN!"'
-        )
+        t = _(
+            'A mountain courtyard. {name} sits motionless as eight disciples of eight '
+            'different styles step into a circle drawn in the dust. '
+            '{name}: "No weapons. No tricks. The Eight Gates do not open for the '
+            'faint-hearted. BEGIN!"'
+        ).format(name=tr_fighter_name(b.name))
         p.show(t)
-        p.log('Takes part in the Trial of Eight Gates.')
+        p.log(_('Takes part in the Trial of Eight Gates.'))
         p.pak()
         disciples = [
             fighter_factory.new_fighter(rndint(max(p.level - 2, 1), p.level))
@@ -66,17 +69,19 @@ class EightGatesStory(BaseStory):
         ]
         if fight.free_for_all([p] + disciples, environment_allowed=False, items_allowed=False):
             p.show(
-                f'One by one, the eight disciples fall. Finally, only {p.name} is left '
-                f'standing in the circle. {b.name} slowly rises and bows.'
+                _('One by one, the eight disciples fall. Finally, only {p_name} is left '
+                  'standing in the circle. {b_name} slowly rises and bows.')
+                .format(p_name=tr_fighter_name(p.name), b_name=tr_fighter_name(b.name))
             )
-            p.log('Passes the Trial of Eight Gates!')
+            p.log(_('Passes the Trial of Eight Gates!'))
             self.reward()
         else:
             p.show(
-                f'{p.name} wakes up at the mountain gate, every bone aching. '
-                f'{b.name}: "The Gates are still closed to you. Come back stronger... '
-                f'in your next life."'
+                _('{p_name} wakes up at the mountain gate, every bone aching. '
+                  '{b_name}: "The Gates are still closed to you. Come back stronger... '
+                  'in your next life."')
+                .format(p_name=tr_fighter_name(p.name), b_name=tr_fighter_name(b.name))
             )
-            p.log('Fails the Trial of Eight Gates.')
+            p.log(_('Fails the Trial of Eight Gates.'))
         p.pak()
         self.end()

@@ -158,7 +158,10 @@ dumped to `save/<name>'s log.txt` on each save (`SaveGame._dump_player_logs`)
   attributes (level, atts, friends/enemies/students counts, money,
   reputation, fame). "Strikes landed" is shown as `landed/thrown (acc%)`;
   the Fame row (right after Reputation) shows `p.get_fame()` as a percentage
-  for masters and is blank for non-masters. `Playing.show_stats` prints it
+  for masters and is blank for non-masters. All labels are `_()`-wrapped and
+  move-name values go through `tr_name`, so the report localizes under
+  `--lang ru` (column widths are computed from the rendered strings, so they
+  adapt automatically). `Playing.show_stats` prints it
   and writes it to `save/stats.txt`. Called from the Gossip encounter and at victory
   (`check_victory`); with `--silent-ending` the ending never shows it.
 - The per-day header shows a short Fights/Wins/KOs line
@@ -217,7 +220,14 @@ exists), and a
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
 "almost inhuman ... at the cost of ..."), and — for married winners — a family
 line naming the spouse and the number of children ("who carry on his
-kung-fu"). Other stats, accomplishments, traits
+kung-fu"). Since 2026-09-28 the bio is **gender-aware**: every sentence with
+a pronoun or gendered verb has an explicit male/female msgid pair selected by
+`p.gender` (female players get 'Her kung-fu style...' / Russian «вышла
+замуж» etc.); old genderless saves fall back to the male branch, i.e. the
+legacy wording. The children line uses `ngettext`, which also fixed the
+English singular ('1 wonderful children' → '1 wonderful child'). All move,
+attribute and victory-title names go through the display-name layer
+(`tr_name`), so bios render in Russian under `--lang ru`. Other stats, accomplishments, traits
 and the gossip records are **not** used ⚠️ — the module docstring-comment lists
 planned content (undefeated record, money habits, notable
 fights, "unwrap accomplishments into short stories") that was never

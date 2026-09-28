@@ -36,6 +36,10 @@ EXTRA_NAMES = {
     # victory conditions (kf_lib/game/_playing.py)
     'Grandmaster', 'Folk Hero', 'Kung-fu Legend', 'Greatest Fighter', 'Uniter of Schools',
     'Famous Master', 'Living Legend', 'Master of Masters',
+    # attribute names (kf_lib/actors/fighter/_basic_attributes.py)
+    'strength', 'agility', 'speed', 'health',
+    # tournament levels (kf_lib/happenings/events.py TOURN_TYPES)
+    'beginner', 'intermediate', 'advanced', 'master',
     # misc display names
     'Unknown', 'Gang Leader', 'Foshan',
 }

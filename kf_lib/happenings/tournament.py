@@ -5,6 +5,7 @@ from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
 from kf_lib.actors.player import AIPlayer, HumanPlayer
 from kf_lib.fighting import fight
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 
 
 BET_REPUTATION_PENALTY = -3
@@ -51,7 +52,11 @@ class Tournament(object):
             return
         self.spectator.cls()
         self.spectator.msg(
-            f'All {len(self.participants)} participants fight at once — last man standing wins!'
+            ngettext(
+                'All {} participants fight at once — last man standing wins!',
+                'All {} participants fight at once — last man standing wins!',
+                len(self.participants),
+            ).format(len(self.participants))
         )
         fight_obj = fight.free_for_all(
             self.participants,
@@ -72,8 +77,13 @@ class Tournament(object):
             self.current_round += 1
             self.spectator.cls()
             self.spectator.msg(
-                f'Round {self.current_round}\n'
-                f'tournament participants left: {n_remaining_participants}'
+                ngettext(
+                    'Round {round}\ntournament participants left: {left}',
+                    'Round {round}\ntournament participants left: {left}',
+                    n_remaining_participants,
+                ).format(
+                    round=self.current_round, left=n_remaining_participants
+                )
             )
             random.shuffle(remaining_participants)
             winners_list = []
@@ -123,9 +133,9 @@ class Tournament(object):
     def _give_prize(self):
         winner = self.winner
         if winner is None:
-            self.g.msg('The tournament ends with no winner!')
+            self.g.msg(_('The tournament ends with no winner!'))
             return
-        self.g.msg(f'{winner.name} wins the tournament!')
+        self.g.msg(_('{} wins the tournament!').format(tr_fighter_name(winner.name)))
         if winner.is_player:
             winner.win_tourn(self.prize)
             if self.ffa:
@@ -136,7 +146,17 @@ class Tournament(object):
             if p.bet_on_tourn_or_not():
                 bet_on, bet_amount = p.place_bet_on_tourn(self)
                 self.bets[p] = bet_on, bet_amount
-                self.g.msg(f'{p.name}: {bet_amount} coins says {bet_on.name} wins!')
+                self.g.msg(
+                    ngettext(
+                        '{name}: {bet} coin says {opponent} wins!',
+                        '{name}: {bet} coins says {opponent} wins!',
+                        bet_amount,
+                    ).format(
+                        name=tr_fighter_name(p.name),
+                        bet=bet_amount,
+                        opponent=tr_fighter_name(bet_on.name),
+                    )
+                )
                 # gambling is not honorable (wuxia morals) — win or lose
                 p.gain_rep(BET_REPUTATION_PENALTY)
             else:
@@ -152,10 +172,19 @@ class Tournament(object):
             school = self.g.schools.get(p.new_school_name, [])
             for f in self.participants:
                 if not f.is_player and f in school:
-                    p.log(f'{f.name} represents the school at the tournament.')
+                    p.log(
+                        _('{} represents the school at the tournament.').format(
+                            tr_fighter_name(f.name)
+                        )
+                    )
             winner = self.winner
             if winner is not None and not winner.is_player and winner in school:
-                p.write(f'{p.name}\'s student {winner.name} wins the tournament!')
+                p.write(
+                    _("{name}'s student {student} wins the tournament!").format(
+                        name=tr_fighter_name(p.name),
+                        student=tr_fighter_name(winner.name),
+                    )
+                )
                 p.gain_rep(STUDENT_TOURN_WIN_REP)
                 p.change_stat('students_tourn_won', 1)
                 if p.get_stat('students_tourn_won') >= STUDENT_TOURN_WINS_ACCOMPL:
@@ -168,26 +197,43 @@ class Tournament(object):
                 win_mult = max((self.current_round, 1.5))  # 1.5 is for the 1 round edge case
                 money_won = int(bet_amount * win_mult)
                 p.money += money_won
-                self.g.msg(f'{p.name} wins {money_won} coins with his bet!')
+                self.g.msg(
+                    ngettext(
+                        '{name} wins {money} coin with his bet!',
+                        '{name} wins {money} coins with his bet!',
+                        money_won,
+                    ).format(name=tr_fighter_name(p.name), money=money_won)
+                )
                 p.record_gamble_win(money_won)
             else:
                 p.record_gamble_lost(bet_amount)
 
     def run(self):
         self.g.cls()
-        tourn_type_str = f'({self.tourn_type} level)' if self.tourn_type else ''
+        if self.tourn_type:
+            tourn_type_str = _('({} level)').format(tr_name(self.tourn_type))
+        else:
+            tourn_type_str = ''
         format_str = (
-            ' It is a battle royale: all participants fight at once, last man standing wins!'
-            if self.ffa else ''
+            _(' It is a battle royale: all participants fight at once, last man standing wins!')
+            if self.ffa
+            else ''
         )
         self.g.msg(
-            f'A kung-fu tournament {tourn_type_str} is organized in {self.g.town_name}.{format_str} '
-            f'The participation fee is {self.fee}.'
+            _(
+                'A kung-fu tournament {type_str} is organized in {town}.{format_str} '
+                'The participation fee is {fee}.'
+            ).format(
+                type_str=tourn_type_str,
+                town=self.g.town_name,
+                format_str=format_str,
+                fee=self.fee,
+            )
         )
 
         self._gather_participants()
         if not self.participants:
-            self.g.msg('...but nobody shows up, so the tournament is canceled.')
+            self.g.msg(_('...but nobody shows up, so the tournament is canceled.'))
             return
         self.spectator = self.participants[0]
         self._show_participants()
@@ -200,6 +246,6 @@ class Tournament(object):
     def _show_participants(self):
         participants = self.participants
         self.g.cls()
-        self.g.show('The participants are:\n')
+        self.g.show(_('The participants are:\n'))
         self.g.show(fight.get_prefight_info(participants, basic_info_only=True))
         self.g.pak()

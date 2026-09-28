@@ -1,5 +1,6 @@
 import random
 
+from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.things import items
 from kf_lib.utils import rnd
 from ._base_encounter import BaseEncounter, Guaranteed
@@ -20,8 +21,12 @@ class FindItem(BaseEncounter):
     def run(self):
         p = self.player
         it = items.get_random_item()
-        p.show(f"{p.name} accidentally finds an item: {it}.")
-        p.log(f"Accidentally finds an item: {it}.")
+        p.show(
+            _('{name} accidentally finds an item: {item}.').format(
+                name=tr_fighter_name(p.name), item=tr_name(it)
+            )
+        )
+        p.log(_('Accidentally finds an item: {item}.').format(item=tr_name(it)))
         p.obtain_item(it)
         p.change_stat("items_found", 1)
         p.pak()
@@ -37,8 +42,12 @@ class LoseItem(BaseEncounter):
         p = self.player
         _items = p.get_items(incl_healer=True)
         it = random.choice(_items)
-        p.show(f"{p.name} accidentally loses his {it}.")
-        p.log(f"Accidentally loses his {it}.")
+        p.show(
+            _('{name} accidentally loses his {item}.').format(
+                name=tr_fighter_name(p.name), item=tr_name(it)
+            )
+        )
+        p.log(_('Accidentally loses his {item}.').format(item=tr_name(it)))
         p.lose_item(it)
         p.change_stat("items_lost", 1)
         p.pak()
@@ -59,13 +68,24 @@ class Merchant(BaseEncounter):
         price = random.choice(items.PRICES)
         descr = items.get_item_descr(item)
         descr_s = f" ({descr})" if descr else ""
-        t = f"""{p.name} meets a street merchant.
-Merchant: "Please buy this {item}{descr_s}!"
-Buy it for {price} coins?"""
+        t = (
+            _('{name} meets a street merchant.\n'
+              'Merchant: "Please buy this {item}{descr_s}!"\n'
+              'Buy it for {price} coins?').format(
+                name=tr_fighter_name(p.name),
+                item=tr_name(item),
+                descr_s=descr_s,
+                price=price,
+            )
+        )
         p.show(t)
-        p.log("Meets a street merchant.")
+        p.log(_('Meets a street merchant.'))
         if not p.check_money(price):
-            p.show(f"{p.name} doesn't have enough money.")
+            p.show(
+                _("{name} doesn't have enough money.").format(
+                    name=tr_fighter_name(p.name)
+                )
+            )
             p.pak()
         elif p.buy_item_or_not() and not check_feeling_greedy(p):
             p.buy_item(item, price)
@@ -80,25 +100,41 @@ class Weirdo(BaseEncounter):
         p = self.player
         item = random.choice(items.MOCK_ITEMS)
         reward = items.SUPER_BOOSTER
-        t = 'A very strange-looking man bumps into {}.\nWeirdo: "Quick! I need a {}!"'.format(
-            p.name, item
+        t = (
+            _('A very strange-looking man bumps into {name}.\n'
+              'Weirdo: "Quick! I need a {item}!"').format(
+                name=tr_fighter_name(p.name), item=tr_name(item)
+            )
         )
         p.show(t)
-        p.log(f"Meets a strange-looking man asking for {item}.")
+        p.log(
+            _('Meets a strange-looking man asking for {item}.').format(
+                item=tr_name(item)
+            )
+        )
         if p.check_item(item):
             t = (
-                '{0}: "Here, I happen to have one."\nWeirdo: "THANKS! I\'ll give you this in return."'
-                "\nWith these words, the strange man rushes off. {0} is left with a {1} in his hands, and a "
-                "strong feeling of confusion.".format(p.name, reward)
+                _('{name}: "Here, I happen to have one."\n'
+                  'Weirdo: "THANKS! I\'ll give you this in return."\n'
+                  'With these words, the strange man rushes off. {name} is left with a {reward} '
+                  'in his hands, and a strong feeling of confusion.').format(
+                    name=tr_fighter_name(p.name), reward=tr_name(reward)
+                )
             )
             p.show(t)
-            p.log(f"Trades {item} for a {reward}.")
+            p.log(
+                _('Trades {item} for a {reward}.').format(
+                    item=tr_name(item), reward=tr_name(reward)
+                )
+            )
             p.lose_item(item)
             p.obtain_item(reward)
             p.add_accompl("Weird Item")
             p.change_stat("super_herbs_obtained", 1)
         else:
-            t = f"{p.name}: \"Sorry, I can't help you."
+            t = _('{name}: "Sorry, I can\'t help you.').format(
+                name=tr_fighter_name(p.name)
+            )
             p.show(t)
         p.pak()
 

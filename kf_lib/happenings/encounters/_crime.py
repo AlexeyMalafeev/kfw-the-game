@@ -2,6 +2,7 @@ import random
 
 from kf_lib.actors import fighter_factory
 from kf_lib.fighting import fight
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.things import items
 from kf_lib.utils import add_article, rnd, rndint
 from ._base_encounter import BaseEncounter, Guaranteed
@@ -26,11 +27,11 @@ CH_THUG_ENEMY = 0.1
 
 # lines
 LINES_ROBBER = (
-    "Hey, I really need {} coins. Do you think you can help me out?",
-    "If you don't give me {} coins, you'll need a doctor, and a good one!",
-    "Hey you! This is my territory. Entering is free, but leaving in one piece costs {} coins.",
-    "You know, I need {} coins to buy medicine for my sick grandma. Wanna share?",
-    "It is important to share what you have with others. Pay {} coins and you are free to go.",
+    _('Hey, I really need {} coins. Do you think you can help me out?'),
+    _("If you don't give me {} coins, you'll need a doctor, and a good one!"),
+    _('Hey you! This is my territory. Entering is free, but leaving in one piece costs {} coins.'),
+    _('You know, I need {} coins to buy medicine for my sick grandma. Wanna share?'),
+    _('It is important to share what you have with others. Pay {} coins and you are free to go.'),
 )
 
 # money
@@ -64,22 +65,26 @@ class Criminal(BaseEncounter):
     def run(self):
         p = self.player
         self.c = c = random.choice(p.game.criminals)
-        p.show(f"{p.name} accidentally bumps into a wanted criminal, {c.name}.")
-        p.log("Encounters a wanted criminal.")
+        p.show(
+            _('{name} accidentally bumps into a wanted criminal, {c_name}.').format(
+                name=tr_fighter_name(p.name), c_name=tr_fighter_name(c.name)
+            )
+        )
+        p.log(_('Encounters a wanted criminal.'))
         opp_strength = p.get_rel_strength(c)
         if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
             if c.check_lv(p.level + 1):
                 self.allies = p.check_allies(1)
             if rnd() <= CH_CONVICT_ARMED:
                 c.arm_robber()
-                p.msg("The criminal pulls out a weapon!")
+                p.msg(_('The criminal pulls out a weapon!'))
             win = p.fight(c, self.allies)
             if win:
                 self.reward()
                 p.game.criminals.remove(c)
                 p.game.unregister_fighter(c)
         else:
-            p.log("Doesn't try to stop the criminal.")
+            p.log(_("Doesn't try to stop the criminal."))
 
     def reward(self):
         p = self.player
@@ -87,7 +92,7 @@ class Criminal(BaseEncounter):
         rew_mult = random.choice(MONEY_CONVICT_REWARD_MULT)
         reward = c.level * rew_mult
         rep_gain = c.level
-        p.show(f"{p.name} takes the criminal to the police.")
+        p.show(_('{} takes the criminal to the police.').format(tr_fighter_name(p.name)))
         # split the reward
         if self.allies:
             ally = self.allies[0]
@@ -110,8 +115,20 @@ class Extorters(BaseEncounter):
     def run(self):
         p = self.player
         num_en = rndint(*NUM_EXTORTERS)
-        p.show(f"{p.name} sees {num_en} men in a shop demanding 'protection' money.")
-        p.log(f"Sees {num_en} extorters in a shop.")
+        p.show(
+            ngettext(
+                "{name} sees {} man in a shop demanding 'protection' money.",
+                "{name} sees {} men in a shop demanding 'protection' money.",
+                num_en,
+            ).format(num_en, name=tr_fighter_name(p.name))
+        )
+        p.log(
+            ngettext(
+                'Sees {} extorter in a shop.',
+                'Sees {} extorters in a shop.',
+                num_en,
+            ).format(num_en)
+        )
         en = fighter_factory.new_thug(n=num_en)
         for e in en:
             if random.choice((True, False, False)):
@@ -125,15 +142,19 @@ class Extorters(BaseEncounter):
                 try_enemy(p, en[0], CH_THUG_ENEMY)
                 if random.choice([True, True, False]):
                     item = items.get_random_item()
-                    p.show('Shop owner: "Thank you, thank you young man!"')
+                    p.show(_('Shop owner: "Thank you, thank you young man!"'))
                     for pp in [p] + (p.allies if p.allies is not None else []):
                         if pp.is_player:
                             pp.show(
-                                f"{p.name} gets {item} from the grateful shop owner."
+                                _(
+                                    '{name} gets {item} from the grateful shop owner.'
+                                ).format(
+                                    name=tr_fighter_name(p.name), item=tr_name(item)
+                                )
                             )
                             pp.obtain_item(item)
                 else:
-                    t = (
+                    t = _(
                         'Shop owner: "Oh boy... You martial artists only know how to fight and break things! '
                         "Look what you've done to my shop! Who's gonna pay for the breakages?.."
                     )
@@ -141,14 +162,18 @@ class Extorters(BaseEncounter):
                     cost = random.choice(MONEY_SHOP_BREAKAGES)
                     if p.check_money(cost) and not check_feeling_greedy(p):
                         p.pay(cost)
-                        p.show(f"{p.name} pays {cost} c.")
+                        p.show(
+                            _('{name} pays {cost} c.').format(
+                                name=tr_fighter_name(p.name), cost=cost
+                            )
+                        )
                     else:
                         p.gain_rep(REP_PEN_BREAK_NOT_PAY)
             else:
-                p.show('Shop owner: "Are you hurt? I\'ll find a doctor..."')
+                p.show(_('Shop owner: "Are you hurt? I\'ll find a doctor..."'))
             p.pak()
         else:
-            p.log("Looks the other way.")
+            p.log(_('Looks the other way.'))
 
 
 
@@ -161,10 +186,13 @@ class GangWar(BaseEncounter):
         num_a = rndint(*NUM_GANG_WAR)
         num_b = rndint(*NUM_GANG_WAR)
         p.show(
-            f'{p.name} walks right into a street war between two gangs, '
-            f'{num_a} against {num_b} — and both sides think {p.name} is with the enemy!'
+            _(
+                '{name} walks right into a street war between two gangs, '
+                '{num_a} against {num_b} — and both sides think {name} is with '
+                'the enemy!'
+            ).format(name=tr_fighter_name(p.name), num_a=num_a, num_b=num_b)
         )
-        p.log('Gets caught in a gang war.')
+        p.log(_('Gets caught in a gang war.'))
         gang_a = fighter_factory.new_thug(n=num_a)
         gang_b = fighter_factory.new_thug(n=num_b)
         for e in gang_a + gang_b:
@@ -176,7 +204,7 @@ class GangWar(BaseEncounter):
         if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(
                 p, opp_to_self_pwr_ratio=opp_strength[0]):
             if fight.group_free_for_all([[p], gang_a, gang_b]):
-                p.show(f'{p.name} is the last one standing!')
+                p.show(_('{} is the last one standing!').format(tr_fighter_name(p.name)))
                 p.gain_rep(len(opp))
                 p.game.crime_down()
                 try_enemy(p, opp[0], CH_THUG_ENEMY)
@@ -194,8 +222,16 @@ class HelpPolice(BaseEncounter):
         p = self.player
         num_al = rndint(*NUM_POLICE_VS_THUGS)
         num_en = num_al + rndint(*NUM_THUGS_VS_POLICE)
-        p.show(f"{p.name} sees {num_al} police officers fighting {num_en} thugs!")
-        p.log(f"Sees {num_al} police officers fighting {num_en} thugs.")
+        p.show(
+            _('{name} sees {num_al} police officers fighting {num_en} thugs!').format(
+                name=tr_fighter_name(p.name), num_al=num_al, num_en=num_en
+            )
+        )
+        p.log(
+            _('Sees {num_al} police officers fighting {num_en} thugs.').format(
+                num_al=num_al, num_en=num_en
+            )
+        )
         al = fighter_factory.new_police(n=num_al)
         for a in al:
             if random.choice((True, False)):
@@ -212,10 +248,10 @@ class HelpPolice(BaseEncounter):
             p.gain_rep(num_en - num_al)
             p.check_help(allies=False, master=False, school=False)
             if p.fight(en[0], al, en[1:]):
-                p.show('Police Officer: "Thank you very much for your help!"')
+                p.show(_('Police Officer: "Thank you very much for your help!"'))
                 p.pak()
         else:
-            p.log("Does not help the police.")
+            p.log(_('Does not help the police.'))
 
     def do_chaos(self, al, en):
         p = self.player
@@ -224,12 +260,17 @@ class HelpPolice(BaseEncounter):
             if random.choice((True, False)):
                 e.arm_robber()
         p.show(
-            f'Suddenly, {len(newcomers)} more thugs arrive to rob both sides — '
-            f'the fight turns into a total free-for-all!'
+            ngettext(
+                'Suddenly, {} more thug arrives to rob both sides — '
+                'the fight turns into a total free-for-all!',
+                'Suddenly, {} more thugs arrive to rob both sides — '
+                'the fight turns into a total free-for-all!',
+                len(newcomers),
+            ).format(len(newcomers))
         )
-        p.log('The fight turns into a free-for-all.')
+        p.log(_('The fight turns into a free-for-all.'))
         if fight.free_for_all([p] + al + en + newcomers):
-            p.show('Police Officer: "Thank you very much for your help!"')
+            p.show(_('Police Officer: "Thank you very much for your help!"'))
             p.gain_rep(len(en) + len(newcomers) - len(al))
             p.pak()
 
@@ -240,8 +281,6 @@ class Robbers(BaseEncounter):
         self.num_r = 0
         self.r = None
         self.rs = []
-        self.sn = ""
-        self.sv = ""
         self.escape_chance = 0
         self.squabble = False
         self.money = random.choice(MONEY_GIVE_ROBBERS)
@@ -261,30 +300,40 @@ class Robbers(BaseEncounter):
     def set_up(self):
         self.num_r = random.choice((1, 1, rndint(*NUM_ROBBERS_GROUP), rndint(*NUM_ROBBERS_CROWD)))
         self.r = fighter_factory.new_robber()
-        self.sn = "s" if self.num_r > 1 else ""
-        self.sv = "" if self.num_r > 1 else "s"
         self.escape_chance = get_escape_chance(self.p)
         self.squabble = self.num_r >= NUM_ROBBERS_CROWD[0] and rnd() <= CH_ROBBERS_SQUABBLE
 
     def start_one(self):
-        self.p.show(f"{self.p.name} encounters a robber.")
-        self.p.log("Encounters a robber.")
+        self.p.show(_('{} encounters a robber.').format(tr_fighter_name(self.p.name)))
+        self.p.log(_('Encounters a robber.'))
         if rnd() <= CH_ROBBER_ARMED:
             self.r.arm_robber()
-            self.p.show(f"He is armed with {add_article(self.r.weapon.name)}.")
+            self.p.show(
+                _('He is armed with {}.').format(
+                    add_article(tr_name(self.r.weapon.name))
+                )
+            )
         self.rs = []
 
     def start_many(self):
-        self.p.show(f"{self.p.name} encounters {self.num_r} robbers.")
-        self.p.log(f"Encounters {self.num_r} robbers.")
+        self.p.show(
+            ngettext(
+                '{} encounters {} robber.', '{} encounters {} robbers.', self.num_r
+            ).format(tr_fighter_name(self.p.name), self.num_r)
+        )
+        self.p.log(
+            ngettext(
+                'Encounters {} robber.', 'Encounters {} robbers.', self.num_r
+            ).format(self.num_r)
+        )
         self.rs = fighter_factory.new_robber(n=self.num_r)
         self.r, self.rs = self.rs[0], self.rs[1:]
 
     def pre_fight(self):
         p = self.player
-        r_words = random.choice(LINES_ROBBER)
-        r_line = f'Robber: "{r_words}"'
-        p.show(r_line.format(self.money))
+        r_words = random.choice(LINES_ROBBER).format(self.money)
+        r_line = _('Robber: "{}"').format(r_words)
+        p.show(r_line)
         opp = [self.r] + self.rs
         opp_strength = p.get_rel_strength(*opp)
         choice = p.fight_run_or_pay(opp_strength, self.escape_chance, self.money)
@@ -302,10 +351,12 @@ class Robbers(BaseEncounter):
         p = self.p
         if self.squabble:
             p.show(
-                'The robbers start arguing over how to split the loot... In the chaos, '
-                "it's everyone for themselves!"
+                _(
+                    'The robbers start arguing over how to split the loot... '
+                    "In the chaos, it's everyone for themselves!"
+                )
             )
-            p.log('The robbers squabble over the loot.')
+            p.log(_('The robbers squabble over the loot.'))
             if fight.free_for_all([p, self.r] + self.rs):
                 p.game.crime_down()
                 p.gain_rep(self.num_r)
@@ -327,7 +378,13 @@ class Robbers(BaseEncounter):
     def pay(self):
         self.p.pay(self.money)
         self.p.change_stat("money_robbed", self.money)
-        self.p.msg(f"The robber{self.sn} decide{self.sv} to let {self.p.name} go.")
+        self.p.msg(
+            ngettext(
+                'The robber decides to let {name} go.',
+                'The robbers decide to let {name} go.',
+                self.num_r,
+            ).format(name=tr_fighter_name(self.p.name))
+        )
 
 
 
@@ -338,8 +395,18 @@ class RobbingSomeone(BaseEncounter):
     def run(self):
         p = self.player
         num_en = rndint(*NUM_EXTORTERS)
-        p.show(f"{p.name} sees {num_en} men robbing someone.")
-        p.log(f"Sees {num_en} men robbing someone.")
+        p.show(
+            ngettext(
+                '{} sees {} man robbing someone.',
+                '{} sees {} men robbing someone.',
+                num_en,
+            ).format(tr_fighter_name(p.name), num_en)
+        )
+        p.log(
+            ngettext(
+                'Sees {} man robbing someone.', 'Sees {} men robbing someone.', num_en
+            ).format(num_en)
+        )
         en = fighter_factory.new_thug(n=num_en)
         opp_strength = p.get_rel_strength(*en)
         if p.fight_or_not(opp_strength) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_strength[0]):
@@ -348,11 +415,11 @@ class RobbingSomeone(BaseEncounter):
             if p.fight(en[0], p.allies, en[1:]):
                 p.game.crime_down()
                 try_enemy(p, en[0], CH_ROBBER_ENEMY)
-                victim = random.choice(("Man", "Woman"))
-                p.show(f'{victim}: "Thank you very much!!!"')
+                victim = random.choice((_('Man'), _('Woman')))
+                p.show(_('{}: "Thank you very much!!!"').format(victim))
                 p.pak()
         else:
-            p.log("Looks the other way.")
+            p.log(_('Looks the other way.'))
 
 
 
@@ -378,12 +445,16 @@ class Thief(BaseEncounter):
 
     def nothing_to_steal(self):
         p = self.p
-        t = '''A thief tries to steal something from {} but fails to find anything!
-Thief: "What\'s with that? Are you poor or something?"'''.format(
-            p.name
-        )
+        t = _(
+            '''A thief tries to steal something from {name} but fails to find anything!
+Thief: "What\'s with that? Are you poor or something?"'''
+        ).format(name=tr_fighter_name(p.name))
         p.show(t)
-        p.log(f"A thief fails to find anything to steal from {p.name}.")
+        p.log(
+            _('A thief fails to find anything to steal from {}.').format(
+                tr_fighter_name(p.name)
+            )
+        )
         p.pak()
 
     def steal(self):
@@ -392,34 +463,65 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
         if (steal_item or p.money <= 0) and self.players_items:
             item = random.choice(self.players_items)
             p.lose_item(item)
-            p.show(f"A thief steals {item} from {p.name}.")
-            p.log(f"{item} is stolen by a thief.")
+            p.show(
+                _('A thief steals {item} from {name}.').format(
+                    item=tr_name(item), name=tr_fighter_name(p.name)
+                )
+            )
+            p.log(_('{} is stolen by a thief.').format(tr_name(item)))
             p.change_stat("items_stolen_from", 1)
         else:
             amount = random.choice(MONEY_THIEF_STEALS)
             if amount >= p.money:
                 amount = p.money
-                p.show("A thief steals all {0}'s money! {0} loses {1} c.".format(p.name, amount))
-                p.log(f"All {p.name}'s money ({amount}) is stolen by a thief.")
+                p.show(
+                    _(
+                        "A thief steals all {name}'s money! {name} loses {amount} c."
+                    ).format(name=tr_fighter_name(p.name), amount=amount)
+                )
+                p.log(
+                    _("All {name}'s money ({amount}) is stolen by a thief.").format(
+                        name=tr_fighter_name(p.name), amount=amount
+                    )
+                )
             else:
-                p.write(f"A thief steals {amount} coins from {p.name}!")
-                p.log(f"{amount} c. is stolen by a thief.")
+                p.write(
+                    ngettext(
+                        'A thief steals {} coin from {name}!',
+                        'A thief steals {} coins from {name}!',
+                        amount,
+                    ).format(amount, name=tr_fighter_name(p.name))
+                )
+                p.log(_('{} c. is stolen by a thief.').format(amount))
             self.p.steal_from(amount)
-            p.show(f"The pickpocket had escaped before {p.name} noticed anything.")
+            p.show(
+                _('The pickpocket had escaped before {} noticed anything.').format(
+                    tr_fighter_name(p.name)
+                )
+            )
 
     def fail(self):
         p = self.player
-        p.show(f"A thief tries to steal from {p.name}, but fails.")
-        p.log(f"A thief fails to steal from {p.name}.")
-        if rnd() <= CH_THIEF_ESCAPES:
-            t = "{} tries to stop him, but the pickpocket quickly disappears in the crowd.".format(
-                p.name
+        p.show(
+            _('A thief tries to steal from {}, but fails.').format(
+                tr_fighter_name(p.name)
             )
+        )
+        p.log(_('A thief fails to steal from {}.').format(tr_fighter_name(p.name)))
+        if rnd() <= CH_THIEF_ESCAPES:
+            t = _(
+                '{} tries to stop him, but the pickpocket quickly disappears '
+                'in the crowd.'
+            ).format(tr_fighter_name(p.name))
             p.show(t)
-            p.log("The thief escapes.")
+            p.log(_('The thief escapes.'))
         else:
-            p.show(f"{p.name} grabs the thief by the arm, but the thief fights back.")
-            p.log(f"The thief attacks {p.name}.")
+            p.show(
+                _('{} grabs the thief by the arm, but the thief fights back.').format(
+                    tr_fighter_name(p.name)
+                )
+            )
+            p.log(_('The thief attacks {}.').format(tr_fighter_name(p.name)))
             self.do_fight()
 
     def do_fight(self):
@@ -427,7 +529,11 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
         if rnd() <= CH_THIEF_TOUGH and p.game.thief is not None:
             tough_thief = True
             thief = p.game.thief
-            p.show(f'Thief: "Can you stop the infamous {thief.name}?"')
+            p.show(
+                _('Thief: "Can you stop the infamous {}?"').format(
+                    tr_fighter_name(thief.name)
+                )
+            )
         else:
             tough_thief = False
             thief = fighter_factory.new_thief(tough=False)
@@ -435,13 +541,21 @@ Thief: "What\'s with that? Are you poor or something?"'''.format(
         if rnd() <= CH_THIEF_ARMED:
             thief.arm("knife")
         if self.p.fight(thief):
-            p.show('{}: "Now let\'s go to the police..."'.format(self.p.name))
+            p.show(
+                _('{}: "Now let\'s go to the police..."').format(
+                    tr_fighter_name(self.p.name)
+                )
+            )
             if tough_thief:
                 p.add_accompl("Beat Tough Thief")
                 p.game.thief = None
                 p.game.unregister_fighter(thief)
         else:
-            p.show('{}: "Can\'t stop me, can you? Ha-ha-ha!"'.format(thief.name))
+            p.show(
+                _('{}: "Can\'t stop me, can you? Ha-ha-ha!"').format(
+                    tr_fighter_name(thief.name)
+                )
+            )
 
 
 

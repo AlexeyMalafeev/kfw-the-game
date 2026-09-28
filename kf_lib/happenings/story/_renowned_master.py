@@ -1,5 +1,6 @@
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
+from kf_lib.i18n import _, tr_fighter_name, tr_style_name
 
 
 class RenownedMasterStory(BaseStory):
@@ -12,9 +13,13 @@ class RenownedMasterStory(BaseStory):
         name = g.get_new_name(prefix='Master')
         b = self.boss = fighter_factory.new_master_challenger(p.level, name)
         g.register_fighter(b)
-        t = (
-            f'{b.name}, a renowned master of {b.style.public_name} kung-fu from a remote province, '
-            f'comes to {g.town_name} and stays at a local tavern.'
+        t = _(
+            '{name}, a renowned master of {style} kung-fu from a remote province, '
+            'comes to {town} and stays at a local tavern.'
+        ).format(
+            name=tr_fighter_name(b.name),
+            style=tr_style_name(b.style.public_name),
+            town=g.town_name,
         )
         g.show(t)
         g.pak()
@@ -22,32 +27,39 @@ class RenownedMasterStory(BaseStory):
     def reward(self):
         p = self.player
         p.add_accompl('Renowned Master')
-        t = (
-            f'Having defeated such a strong opponent, {p.name} gained an important insight into '
-            f'his own fighting technique.'
-        )
+        t = _(
+            'Having defeated such a strong opponent, {name} gained an important insight into '
+            'his own fighting technique.'
+        ).format(name=tr_fighter_name(p.name))
         p.show(t)
         p.choose_tech_to_upgrade()
 
     def scene1(self):
         g, p, b = self.game, self.player, self.boss
-        t = (
-            f'{p.name} meets {b.name}. '
-            f'\n{b.name}: "I feel that I have reached perfection in my kung-fu, {b.style.public_name}. '
-            f'I have been looking for a worthy opponent for a very, very long time. I will be '
-            f'honored to test your famous {p.get_displayed_style_name()} kung-fu."'
+        t = _(
+            '{p_name} meets {b_name}. '
+            '\n{b_name}: "I feel that I have reached perfection in my kung-fu, {style}. '
+            'I have been looking for a worthy opponent for a very, very long time. I will be '
+            'honored to test your famous {p_style} kung-fu."'
+        ).format(
+            p_name=tr_fighter_name(p.name),
+            b_name=tr_fighter_name(b.name),
+            style=tr_style_name(b.style.public_name),
+            p_style=p.get_displayed_style_name(),
         )
         p.show(t)
-        p.log(f'Challenged by {b.name}.')
+        p.log(_('Challenged by {}.').format(tr_fighter_name(b.name)))
         p.pak()
         if p.fight(b, environment_allowed=False, items_allowed=False):
-            t = (
-                f'{b.name}: "Indeed remarkable! What excellent skill. I thank you for showing me '
-                f'that I still have something to learn."'
-            )
+            t = _(
+                '{name}: "Indeed remarkable! What excellent skill. I thank you for showing me '
+                'that I still have something to learn."'
+            ).format(name=tr_fighter_name(b.name))
             p.show(t)
             self.reward()
         else:
-            p.show(f'{b.name}: "I am disappointed - yet again."')
+            p.show(_('{name}: "I am disappointed - yet again."').format(
+                name=tr_fighter_name(b.name)
+            ))
         self.end()
         p.pak()

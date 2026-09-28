@@ -12,7 +12,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
-#: kf_lib/fighting/fight/_free_for_all.py:32 kf_lib/fighting/fight/_free_for_all.py:73 kf_lib/fighting/fight/_helpers.py:99 kf_lib/fighting/fight/_sparring.py:27
+msgid ""
+"\n"
+"\n"
+"*NEW DAY*"
+msgstr ""
+"\n"
+"\n"
+"*НОВЫЙ ДЕНЬ*"
+
+msgid ""
+"\n"
+"*FIGHTING*"
+msgstr ""
+"\n"
+"*БОИ*"
+
+msgid ""
+"\n"
+"*GENERAL*"
+msgstr ""
+"\n"
+"*ОБЩЕЕ*"
+
+msgid ""
+"\n"
+"*ITEMS*"
+msgstr ""
+"\n"
+"*ПРЕДМЕТЫ*"
+
+msgid ""
+"\n"
+"*LIFE*"
+msgstr ""
+"\n"
+"*ЖИЗНЬ*"
+
+msgid ""
+"\n"
+"*MONEY*"
+msgstr ""
+"\n"
+"*ДЕНЬГИ*"
+
+msgid ""
+"\n"
+"---{} ends his turn---"
+msgstr ""
+"\n"
+"---{} заканчивает свой ход---"
+
 msgid ""
 "\n"
 "Auto fight?"
@@ -20,1006 +70,2478 @@ msgstr ""
 "\n"
 "Автобой?"
 
-#: kf_lib/fighting/fight/_base_fight.py:71
+msgid ""
+"\n"
+"{name} was the renowned {victories} of {town}."
+msgstr ""
+"\n"
+"{name} — гордость города {town}: {victories}."
+
+msgid " (best student)"
+msgstr " (лучший ученик)"
+
+msgid " (best: {name})"
+msgstr " (лучший: {name})"
+
 msgid " (boring...)"
 msgstr " (скучновато...)"
 
-#: kf_lib/fighting/fight/_base_fight.py:69
 msgid " (epic!)"
 msgstr " (эпично!)"
 
-#: kf_lib/actors/fighter/_fight_actions.py:55
 msgid " (guarding while attacking)"
 msgstr " (защищается в атаке)"
 
-#: kf_lib/actors/fighter/_fight_actions.py:48
 msgid " *FURY*"
 msgstr " *ЯРОСТЬ*"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:178
+msgid " A school with the name \"{}\" already exists."
+msgstr " Школа с названием \"{}\" уже существует."
+
 msgid " agility-based {dmg} ({hp})"
 msgstr " {dmg} (от ловкости) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:123
+msgid " children:{}"
+msgstr " дети:{}"
+
 msgid " falls to the ground! {dmg} ({hp})"
 msgstr " падает на землю! {dmg} ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:239
 msgid " gasps for breath!"
 msgstr " задыхается!"
 
-#: kf_lib/actors/fighter/_fight_actions.py:382
+msgid " It is a battle royale: all participants fight at once, last man standing wins!"
+msgstr " Это королевская битва: все участники дерутся одновременно, побеждает последний оставшийся на ногах!"
+
 msgid " KNOCK-OUT!"
 msgstr " НОКАУТ!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:136
 msgid " knocked back {dist} step!"
 msgid_plural " knocked back {dist} steps!"
 msgstr[0] " отлетает на {dist} шаг назад!"
 msgstr[1] " отлетает на {dist} шага назад!"
 msgstr[2] " отлетает на {dist} шагов назад!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:193
 msgid " level-based {dmg} ({hp})"
 msgstr " {dmg} (от уровня) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:145
 msgid " off-balance!"
 msgstr " теряет равновесие!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:213
 msgid " qi-based {dmg} ({hp})"
 msgstr " {dmg} (от ци) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:154
 msgid " shocked!"
 msgstr " в шоке!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:162
 msgid " slowed down!"
 msgstr " замедляется!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:227
 msgid " speed-based {dmg} ({hp})"
 msgstr " {dmg} (от скорости) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:246
 msgid " strength-based {dmg} ({hp})"
 msgstr " {dmg} (от силы) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:171
 msgid " stunned!"
 msgstr " в ступоре!"
 
-#: kf_lib/ui/_interactive.py:51
+msgid " What is the name of {}'s school? >"
+msgstr " Как называется школа {}? >"
+
+msgid "\"Enough! You will both spar ME.\""
+msgstr "\"Хватит! Теперь вы оба выйдете в спарринг против МЕНЯ.\""
+
+msgid "\"I'm sorry.\""
+msgstr "\"Простите.\""
+
+msgid "\"They talk about such silly things instead of practicing!\" - {} thinks."
+msgstr "\"Вместо того чтобы тренироваться, они болтают о всяких глупостях!\" - думает {}."
+
+msgid "\"What? I'll teach you a lesson! ({})\""
+msgstr "\"Что? Я тебя проучу! ({})\""
+
+msgid "\"{n} coin! My {n} coin!\""
+msgid_plural "\"{n} coins! My {n} coins!\""
+msgstr[0] "\"{n} монета! Моя {n} монета!\""
+msgstr[1] "\"{n} монеты! Мои {n} монеты!\""
+msgstr[2] "\"{n} монет! Мои {n} монет!\""
+
+msgid "(nothing else)"
+msgstr "(ничего больше)"
+
 msgid "(Press any key)"
 msgstr "(Нажмите любую клавишу)"
 
-#: kf_lib/actors/human_controlled_fighter.py:257
+msgid "({} level)"
+msgstr "(ур.{})"
+
 msgid "*LEVEL UP*"
 msgstr "*НОВЫЙ УРОВЕНЬ*"
 
-#: kf_lib/actors/fighter/_fight_actions.py:141
 msgid "+COUNTER!+"
 msgstr "+КОНТРАТАКА!+"
 
-#: kf_lib/ui/_interactive.py:12
 msgid ", 'b' to go back"
 msgstr ", 'b' — назад"
 
-#: kf_lib/fighting/fight/_helpers.py:18
 msgid "--- Group {n} (your group) ---"
 msgstr "--- Группа {n} (ваша) ---"
 
-#: kf_lib/fighting/fight/_helpers.py:16
 msgid "--- Group {n} ---"
 msgstr "--- Группа {n} ---"
 
-#: kf_lib/actors/fighter/_fight_actions.py:248 kf_lib/actors/fighter/_strike_mechanics.py:124 kf_lib/actors/fighter/_strike_mechanics.py:179 kf_lib/actors/fighter/_strike_mechanics.py:194 kf_lib/actors/fighter/_strike_mechanics.py:214 kf_lib/actors/fighter/_strike_mechanics.py:228 kf_lib/actors/fighter/_strike_mechanics.py:247
+msgid ""
+"---{}'s turn---\n"
+msgstr ""
+"---ход {}---\n"
+
 msgid "-{dam} HP"
 msgstr "-{dam} HP"
 
-#: kf_lib/actors/fighter/_fight_actions.py:155
+msgid "...at lv."
+msgstr "...на ур."
+
+msgid "...but nobody shows up, so the tournament is canceled."
+msgstr "...но никто не является, так что турнир отменяется."
+
 msgid "<-PREEMPTIVE!-<"
 msgstr "<-УПРЕЖДЕНИЕ!-<"
 
-#: kf_lib/fighting/fight/_free_for_all.py:29
 msgid "[bold]Free for all![/bold]"
 msgstr "[bold]Каждый сам за себя![/bold]"
 
-#: kf_lib/fighting/fight/_free_for_all.py:70
 msgid "[bold]Group free for all![/bold]"
 msgstr "[bold]Групповая свалка![/bold]"
 
-#: kf_lib/actors/human_controlled_fighter.py:90
+msgid "A baby daughter is born."
+msgstr "Рождается дочь."
+
+msgid "A baby son is born."
+msgstr "Рождается сын."
+
+msgid ""
+"A coversation in {town}'s tavern:\n"
+"{name}: \"That old man's daughter is really pretty...\"\n"
+"{name}'s Henchman: \"If you like her that much, boss, why not marry her?\"\n"
+"{name}: \"Hmm...\""
+msgstr ""
+"Разговор в таверне города {town}:\n"
+"{name}: \"А дочка старика-то хороша...\"\n"
+"Подручный ({name}): \"Если она вам так нравится, босс, почему бы на ней не жениться?\"\n"
+"{name}: \"Хм...\""
+
+msgid "A fight breaks out between students of {} and {}!"
+msgstr "Вспыхивает драка между учениками школ {} и {}!"
+
+msgid "A flashy stranger arrives in {town} and starts putting up posters: \"THE GRAND MELEE! Eight fighters enter, one fighter leaves with a fat purse! No rules, no teams, no honor!\" The local masters shake their heads in disapproval..."
+msgstr "В {town} прибывает эффектный незнакомец и начинает расклеивать плакаты: \"БОЛЬШАЯ СВАЛКА! Восемь бойцов выходят, один уходит с тугим кошельком! Никаких правил, никаких команд, никакой чести!\" Местные мастера неодобрительно качают головами..."
+
+msgid "A knife flashes. A table is flipped. \"TREACHERY!\" — and in a heartbeat the private room turns into a battlefield, every boss for himself!"
+msgstr "Сверкает нож. Стол перевёрнут. \"ИЗМЕНА!\" — и в мгновение ока отдельный кабинет превращается в поле боя, каждый босс сам за себя!"
+
+msgid "A kung-fu tournament {type_str} is organized in {town}.{format_str} The participation fee is {fee}."
+msgstr "В городе {town} организуется турнир по кунг-фу {type_str}.{format_str} Взнос за участие: {fee}."
+
+msgid "a lot "
+msgstr "намного "
+
+msgid ""
+"A man bumps into {name} in the street.\n"
+"Man: \"Hey you! Apologize or I'll beat you up!\""
+msgstr ""
+"На улице какой-то мужчина сталкивается с {name}.\n"
+"Мужчина: \"Эй ты! Извинись, не то я тебя отколочу!\""
+
+msgid "A mountain courtyard. {name} sits motionless as eight disciples of eight different styles step into a circle drawn in the dust. {name}: \"No weapons. No tricks. The Eight Gates do not open for the faint-hearted. BEGIN!\""
+msgstr "Горный двор. {name} сидит неподвижно, пока восемь учеников восьми разных стилей входят в начерченный в пыли круг. {name}: \"Никакого оружия. Никаких уловок. Восемь Врат не открываются для слабодушных. НАЧАЛИ!\""
+
+msgid "A new student joins {name}'s school."
+msgstr "В школу {name} приходит новый ученик."
+
+msgid "A nimble figure bumps into {name}, apologizes profusely, and disappears into the crowd. A moment later {name} realizes the money pouch is gone. "
+msgstr "Какой-то ловкач врезается в {name}, обильно извиняется и исчезает в толпе. Мгновение спустя {name} понимает, что кошелёк с деньгами пропал. "
+
+msgid "A romance begins between {p_name} and {name}."
+msgstr "Между {p_name} и {name} начинается роман."
+
+msgid "A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed tones, clearly deciding what to do next..."
+msgstr "Внезапная вспышка пронзает глубокую тьму ночи... Появляются четыре фигуры, мускулистые и не совсем человеческие. В руках у них традиционное японское оружие. Они растерянно озираются и переговариваются шёпотом, явно решая, что делать дальше..."
+
+msgid "A thief fails to find anything to steal from {}."
+msgstr "Вор не находит, что украсть у {}."
+
+msgid "A thief fails to steal from {}."
+msgstr "Вор пытается обокрасть {}, но терпит неудачу."
+
+msgid "A thief steals all {name}'s money! {name} loses {amount} c."
+msgstr "Вор крадёт все деньги {name}! {name} теряет {amount} м."
+
+msgid "A thief steals {item} from {name}."
+msgstr "Вор крадёт {item} у {name}."
+
+msgid "A thief steals {} coin from {name}!"
+msgid_plural "A thief steals {} coins from {name}!"
+msgstr[0] "Вор крадёт у {name} {} монету!"
+msgstr[1] "Вор крадёт у {name} {} монеты!"
+msgstr[2] "Вор крадёт у {name} {} монет!"
+
+msgid "A thief tries to steal from {}, but fails."
+msgstr "Вор пытается обокрасть {}, но терпит неудачу."
+
+msgid ""
+"A thief tries to steal something from {name} but fails to find anything!\n"
+"Thief: \"What's with that? Are you poor or something?\""
+msgstr ""
+"Вор пытается что-то украсть у {name}, но ничего не находит!\n"
+"Вор: \"Что за дела? Ты что, совсем нищий?\""
+
+msgid ""
+"A very strange-looking man bumps into {name}.\n"
+"Weirdo: \"Quick! I need a {item}!\""
+msgstr ""
+"{name} сталкивается с очень странного вида человеком.\n"
+"Чудак: \"Быстрее! Мне нужен предмет: {item}!\""
+
+msgid "a young man"
+msgstr "молодой человек"
+
+msgid "a young woman"
+msgstr "молодая женщина"
+
+msgid "A.-S.tourn.won"
+msgstr "Побед в ТВШ"
+
 msgid "Acc"
 msgstr "Точн"
 
-#: kf_lib/game/_state_menu.py:16
+msgid "Accept the young man?"
+msgstr "Принять юношу?"
+
+msgid "Accept?"
+msgstr "Принять?"
+
+msgid "Accidentally finds an item: {item}."
+msgstr "Случайно находит предмет: {item}."
+
+msgid "Accidentally loses his {item}."
+msgstr "Случайно теряет предмет: {item}."
+
+msgid "Accomp,stories"
+msgstr "Достиж,истории"
+
+msgid "Accomplishment: {label}"
+msgstr "Достижение: {label}"
+
 msgid "Accomplishments"
 msgstr "Достижения"
 
-#: kf_lib/kung_fu/boosts.py:168
 msgid "acrob.str"
 msgstr "акроб.уд."
 
-#: kf_lib/kung_fu/boosts.py:168
 msgid "acrobatic strike efficiency"
 msgstr "эффективность акробатических ударов"
 
-#: kf_lib/actors/fighter/_basic_attributes.py:49
 msgid "Agi"
 msgstr "Лов"
 
-#: kf_lib/actors/human_controlled_fighter.py:40
 msgid "Agility"
 msgstr "Ловкость"
 
-#: kf_lib/kung_fu/boosts.py:106
 msgid "agility"
 msgstr "ловкость"
 
-#: kf_lib/game/_new_game.py:117
+msgid "All the masters of {town} already acknowledge {name}."
+msgstr "Все мастера {town} уже признают {name}."
+
+msgid "All the schools of {town} are now united under {name}'s kung-fu federation!"
+msgstr "{town}: все школы теперь объединены под началом федерации кунг-фу {name}!"
+
+msgid "All {name}'s money ({amount}) is stolen by a thief."
+msgstr "Все деньги {name} ({amount}) украдены вором."
+
+msgid "All {} participants fight at once — last man standing wins!"
+msgid_plural "All {} participants fight at once — last man standing wins!"
+msgstr[0] "Все {} участник дерутся одновременно — побеждает последний, кто останется на ногах!"
+msgstr[1] "Все {} участника дерутся одновременно — побеждает последний, кто останется на ногах!"
+msgstr[2] "Все {} участников дерутся одновременно — побеждает последний, кто останется на ногах!"
+
+msgid ""
+"All-Schools Tournament, round {round}:\n"
+"{pairings}"
+msgstr ""
+"Турнир всех школ, раунд {round}:\n"
+"{pairings}"
+
+msgid "Apologizes."
+msgstr "Извиняется."
+
 msgid "Are these styles ok?"
 msgstr "Эти стили подходят?"
 
-#: kf_lib/actors/human_controlled_fighter.py:178
+msgid "As {name} comes to, he realizes that {boss} and his men have disappeared. They took all the treasures, too. {name} is lucky to be alive..."
+msgstr "Придя в себя, {name} понимает, что {boss} и его люди исчезли. Они забрали и все сокровища. {name} повезло остаться в живых..."
+
 msgid "As {name} trains hard, delving deeper into the art of {style}, he discovers a way to improve one of the style's techniques..."
 msgstr "Усердно тренируясь и постигая всё более глубокие тайны стиля {style}, {name} открывает способ улучшить одну из техник стиля..."
 
-#: kf_lib/kung_fu/boosts.py:107
+msgid ""
+"As {name} turns to leave however, the beggar stops him.\n"
+"Beggar: \"In thanks for your kindness, young man, let me teach you some special kung-fu from {bname}!"
+msgstr ""
+"Когда {name} уже собирается уйти, нищий останавливает его.\n"
+"Нищий: \"В благодарность за твою доброту, юноша, позволь научить тебя особому кунг-фу из {bname}!\""
+
 msgid "attack"
 msgstr "атака"
 
-#: kf_lib/game/_new_game.py:96
+msgid "Attempts to escape."
+msgstr "Пытается сбежать."
+
+msgid "Attends the Jade Table sit-down."
+msgstr "Присутствует на сходке в «Нефритовом столе»."
+
 msgid "Auto save?"
 msgstr "Автосохранение?"
 
-#: kf_lib/game/_state_menu.py:24 kf_lib/ui/_menu.py:49
 msgid "Back"
 msgstr "Назад"
 
-#: kf_lib/actors/fighter/_fight_actions.py:107 kf_lib/actors/fighter/_fight_actions.py:121
+msgid "BAD LUCK!"
+msgstr "НЕ ПОВЕЗЛО!"
+
 msgid "barely"
 msgstr "едва "
 
-#: kf_lib/kung_fu/boosts.py:108
+msgid ""
+"Beaten and barely conscious, {p_name} suddenly hears the guards screaming... {sw_name} has broken free and driven the bandits off — {sw_name} is a martial artist, after all.\n"
+"{sw_name}: \"You came for me, and that is what matters. But you should practice more, my love.\""
+msgstr ""
+"Избитый и почти без сознания, {p_name} вдруг слышит крики стражи... {sw_name} вырывается на свободу и прогоняет бандитов — {sw_name} ведь тоже мастер боевых искусств.\n"
+"{sw_name}: \"Ты пришёл за мной, и это главное. Но тебе стоит больше тренироваться, любовь моя.\""
+
+msgid "Beats both quarreling students in a spar."
+msgstr "Побеждает в спарринге обоих поссорившихся учеников."
+
+msgid "Became master"
+msgstr "Стал мастером"
+
+msgid "Becomes a master and founds his own school."
+msgstr "Становится мастером и основывает собственную школу."
+
+msgid "Becomes the best student of his school."
+msgstr "Становится лучшим учеником своей школы."
+
+msgid "Begs the master for forgiveness, in vain."
+msgstr "Безуспешно молит мастера о прощении."
+
 msgid "bleeding"
 msgstr "кровотечение"
 
-#: kf_lib/kung_fu/boosts.py:110
 msgid "block efficiency"
 msgstr "эффективность блока"
 
-#: kf_lib/kung_fu/boosts.py:110
 msgid "blocks"
 msgstr "блоки"
 
-#: kf_lib/kung_fu/boosts.py:108
+msgid "Bought/total"
+msgstr "Куплено/всего"
+
+msgid "Brawler: \"That's not good enough!\""
+msgstr "Задира: \"Этого недостаточно!\""
+
+msgid "But her most feared move was the {move}."
+msgstr "Но самым страшным её приёмом был {move}."
+
+msgid "But his most feared move was the {move}."
+msgstr "Но страшнее всего был его приём: {move}."
+
+msgid "Buy items"
+msgstr "Покупка предметов"
+
+msgid "Buys {item} for {price}."
+msgstr "Покупает {item} за {price}."
+
+msgid "Cannot parse {!r} as a Python literal, not setting anything!"
+msgstr "Не удаётся разобрать {!r} как литерал Python — ничего не установлено!"
+
 msgid "cause bleeding"
 msgstr "вызов кровотечения"
 
-#: kf_lib/kung_fu/boosts.py:158
+msgid "Challenge {b_name}?"
+msgstr "Бросить вызов {b_name}?"
+
+msgid "Challenge {name} to a spar? (\"No\" = try to persuade him; persuasion chance: {chance:.0%})"
+msgstr "Вызвать {name} на спарринг? (\"Нет\" = попытаться уговорить; шанс убеждения: {chance:.0%})"
+
+msgid "Challenged by {name}, number {rank} in the {school} school."
+msgstr "Вызов бросает {name}, номер {rank} в школе {school}."
+
+msgid "Challenged by {}."
+msgstr "{} вызывает его на поединок."
+
 msgid "chance to resist KO"
 msgstr "шанс устоять при нокауте"
 
-#: kf_lib/kung_fu/boosts.py:122
 msgid "chance to use environment"
 msgstr "шанс использовать окружение"
 
-#: kf_lib/actors/human_controlled_fighter.py:119
+msgid "Children"
+msgstr "Дети"
+
+msgid "Children grow so fast — new clothes. (-{amount} coins)"
+msgstr "Дети так быстро растут — новая одежда. (-{amount} монет)"
+
 msgid "Choose a move to learn:"
 msgstr "Выберите приём для изучения:"
 
-#: kf_lib/game/_new_game.py:59
+msgid "Choose a story"
+msgstr "Выберите историю"
+
 msgid "Choose a style"
 msgstr "Выберите стиль"
 
-#: kf_lib/actors/human_controlled_fighter.py:167 kf_lib/actors/human_controlled_fighter.py:188
+msgid "Choose a tech:"
+msgstr "Выберите технику:"
+
 msgid "Choose a technique to improve:"
 msgstr "Выберите технику для улучшения:"
 
-#: kf_lib/actors/human_controlled_fighter.py:127
 msgid "Choose a technique to learn:"
 msgstr "Выберите технику для изучения:"
 
-#: kf_lib/actors/human_controlled_fighter.py:160
+msgid "Choose an encounter"
+msgstr "Выберите событие"
+
 msgid "Choose target:"
 msgstr "Выберите цель:"
 
-#: kf_lib/kung_fu/boosts.py:169
+msgid "Choose the techniques your school will teach:"
+msgstr "Выберите техники, которым будет обучать ваша школа:"
+
+msgid "Chooses to ignore the challenge."
+msgstr "Решает проигнорировать вызов."
+
+msgid "Chooses to ignore the offer."
+msgstr "Решает проигнорировать предложение."
+
 msgid "close-range"
 msgstr "ближняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:169
 msgid "close-range strike efficiency"
 msgstr "эффективность ударов вблизи"
 
-#: kf_lib/actors/human_controlled_fighter.py:91
 msgid "Cmpl"
 msgstr "Слож"
 
-#: kf_lib/game/_new_game.py:182
 msgid "Co-op mode?"
 msgstr "Кооперативный режим?"
 
-#: kf_lib/kung_fu/boosts.py:111
 msgid "counterattack chance"
 msgstr "шанс контратаки"
 
-#: kf_lib/kung_fu/boosts.py:111
 msgid "counters"
 msgstr "контратаки"
 
-#: kf_lib/game/_new_game.py:141
+msgid "Craftsman: \"A spark from the soul is worth more than a thousand pieces of gold. I see that you are fated to become one of the greats. Let us spar and then you can have my {item} for free!\""
+msgstr "Ремесленник: \"Искра души стоит дороже тысячи золотых. Я вижу: тебе суждено войти в число великих. Давай проведём спарринг — и ты бесплатно получишь вот это: {item}!\""
+
+msgid "Craftsman: \"What a good sparring session!\""
+msgstr "Ремесленник: \"Какой хороший спарринг!\""
+
 msgid "Crash Course (faster level progression)"
 msgstr "Ускоренный курс (быстрая прокачка)"
 
-#: kf_lib/game/_new_game.py:153
 msgid "Crime rate?"
 msgstr "Уровень преступности?"
 
-#: kf_lib/kung_fu/boosts.py:112
 msgid "critical attack chance"
 msgstr "шанс критической атаки"
 
-#: kf_lib/kung_fu/boosts.py:113
 msgid "critical attack power"
 msgstr "сила критической атаки"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:289
 msgid "CRITICAL!"
 msgstr "КРИТИЧЕСКИЙ УДАР!"
 
-#: kf_lib/kung_fu/boosts.py:112 kf_lib/kung_fu/boosts.py:113
 msgid "criticals"
 msgstr "критические удары"
 
-#: kf_lib/game/_new_game.py:87
+msgid "Crits,EPICs"
+msgstr "Криты,эпики"
+
 msgid "Customize game settings? (choose \"no\" to keep the defaults)"
 msgstr "Настроить параметры игры? (ответьте \"нет\", чтобы оставить умолчания)"
 
-#: kf_lib/kung_fu/boosts.py:114
 msgid "dam.reduc."
 msgstr "сниж.урона"
 
-#: kf_lib/actors/fighter/_fight_actions.py:244
+msgid "Damage dealt"
+msgstr "Нанесено урона"
+
 msgid "damage is reduced!"
 msgstr "урон снижен!"
 
-#: kf_lib/kung_fu/boosts.py:114
 msgid "damage reduction"
 msgstr "снижение урона"
 
-#: kf_lib/game/_state_menu.py:32
 msgid "Debug Menu"
 msgstr "Меню отладки"
 
-#: kf_lib/kung_fu/boosts.py:115
+msgid "Decides not to participate in the disgraceful Grand Melee."
+msgstr "Решает не участвовать в позорной Большой Свалке."
+
+msgid "Decides not to pursue the relationship with {name}."
+msgstr "Решает не развивать отношения с {name}."
+
+msgid "Decides to teach {}."
+msgstr "Решает учить {}."
+
+msgid "Declines the Night Melee."
+msgstr "Отказывается от Ночной Схватки."
+
+msgid "Defeats the jealous rival {r_name}; {sw_name} is impressed."
+msgstr "Побеждает ревнивого соперника: {r_name}. {sw_name} под впечатлением."
+
+msgid "Defends the school against a night attack."
+msgstr "Отбивает ночное нападение на школу."
+
 msgid "defense"
 msgstr "защита"
 
-#: kf_lib/kung_fu/boosts.py:119
 msgid "defense penalty (20% by default)"
 msgstr "штраф защиты (по умолчанию 20%)"
 
-#: kf_lib/kung_fu/boosts.py:144
 msgid "defense while lying"
 msgstr "защита лёжа"
 
-#: kf_lib/kung_fu/boosts.py:109 kf_lib/kung_fu/boosts.py:137
 msgid "disarm"
 msgstr "обезоруживание"
 
-#: kf_lib/kung_fu/boosts.py:137
 msgid "disarm chance when attacking"
 msgstr "шанс обезоружить в атаке"
 
-#: kf_lib/kung_fu/boosts.py:109
 msgid "disarm chance when defending"
 msgstr "шанс обезоружить в защите"
 
-#: kf_lib/actors/fighter/_fight_actions.py:321 kf_lib/actors/fighter/_strike_mechanics.py:326
 msgid "disarms"
 msgstr "обезоруживает"
 
-#: kf_lib/actors/human_controlled_fighter.py:88
 msgid "Dist"
 msgstr "Дист"
 
-#: kfw.py:62
+msgid "Do not use items"
+msgstr "Не использовать предметы"
+
 msgid "Do you want to see what AI players do?"
 msgstr "Хотите видеть действия ИИ-игроков?"
 
-#: kf_lib/kung_fu/boosts.py:121
 msgid "dodge"
 msgstr "уклонение"
 
-#: kf_lib/kung_fu/boosts.py:121
 msgid "dodge efficiency"
 msgstr "эффективность уклонения"
 
-#: kf_lib/fighting/fight/_base_fight.py:422
+msgid "Does not help the police."
+msgstr "Не помогает полиции."
+
+msgid "Doesn't give anything."
+msgstr "Ничего не даёт."
+
+msgid "Doesn't try to stop the criminal."
+msgstr "Не пытается остановить преступника."
+
+msgid "Donated"
+msgstr "Пожертв."
+
+msgid "Donates {} c."
+msgstr "Жертвует {} монет."
+
 msgid "Draw!"
 msgstr "Ничья!"
 
-#: kf_lib/kung_fu/boosts.py:172
+msgid "Drinks wine."
+msgstr "Пьёт вино."
+
 msgid "drun.str."
 msgstr "пьян.уд."
 
-#: kf_lib/kung_fu/boosts.py:172
+msgid "Drunkard: \"What? Just ignoring Legendary {}?             Let me teach you some manners!\""
+msgstr "Пьяница: \"Что? Перед вами сам {} Легендарный, а вы и ухом не ведёте!             Сейчас я научу вас манерам!\""
+
+msgid "Drunkard: \"You think you're too good for drinkin' with me?\""
+msgstr "Пьяница: \"Ты что, слишком хорош, чтобы выпить со мной?\""
+
 msgid "drunken strike efficiency"
 msgstr "эффективность пьяных ударов"
 
-#: kf_lib/actors/fighter/_fight_actions.py:107 kf_lib/actors/fighter/_fight_actions.py:121
+msgid "Earns {} c."
+msgstr "Зарабатывает {} монет."
+
 msgid "easily"
 msgstr "легко "
 
-#: kf_lib/kung_fu/boosts.py:173
 msgid "elbow strike efficiency"
 msgstr "эффективность ударов локтем"
 
-#: kf_lib/kung_fu/boosts.py:173
 msgid "elbows"
 msgstr "локти"
 
-#: kf_lib/kung_fu/boosts.py:122
+msgid "Encounter"
+msgstr "Событие"
+
+msgid "Encounters a brawler."
+msgstr "Сталкивается с забиякой."
+
+msgid "Encounters a robber."
+msgstr "Встречает грабителя."
+
+msgid "Encounters a wanted criminal."
+msgstr "Встречает разыскиваемого преступника."
+
+msgid "Encounters {} robber."
+msgid_plural "Encounters {} robbers."
+msgstr[0] "Встречает {} разбойника."
+msgstr[1] "Встречает {} разбойника."
+msgstr[2] "Встречает {} разбойников."
+
+msgid "Enemies"
+msgstr "Враги"
+
+msgid "enemies:{}"
+msgstr "враги:{}"
+
+msgid "Enjoys the Saint's Day festival."
+msgstr "Празднует День святого."
+
+msgid "Enter attribute:"
+msgstr "Введите атрибут:"
+
+msgid "Enter move string (move name / tier / features, etc.):"
+msgstr "Введите строку приёма (название / ранг / особенности и т.д.):"
+
+msgid ""
+"Enter value:\n"
+" > "
+msgstr ""
+"Введите значение:\n"
+" > "
+
 msgid "environment"
 msgstr "окружение"
 
-#: kf_lib/actors/fighter/_fight_actions.py:74
+msgid "Every so often one has some really unusual dreams..."
+msgstr "Время от времени снятся по-настоящему необычные сны..."
+
+msgid "Everybody in {town} talks about national treasures being stolen and sold to foreign buyers. Who could be responsible for such horrible crimes?"
+msgstr "Весь {town} только и говорит о том, что национальные сокровища крадут и продают иностранным скупщикам. Кто мог совершить столь ужасные преступления?"
+
+msgid "Exp bonuses"
+msgstr "Бонусы опыта"
+
+msgid "exp:{exp}/{next_lv} money:{money}"
+msgstr "опыт:{exp}/{next_lv} деньги:{money}"
+
 msgid "Fail!"
 msgstr "Неудача!"
 
-#: kf_lib/kung_fu/boosts.py:123
+msgid "Fails the Trial of Eight Gates."
+msgstr "Проваливает Испытание Восьми Врат."
+
+msgid "Fails to defend the school; it is ransacked."
+msgstr "Не удаётся защитить школу — её разграбляют."
+
+msgid "Fails to escape."
+msgstr "Не удаётся сбежать."
+
 msgid "fall damage"
 msgstr "урон от падения"
 
-#: kfw.py:67
+msgid "Fame"
+msgstr "Слава"
+
 msgid "Farewell, brave warrior!"
 msgstr "Прощай, храбрый воин!"
 
-#: kf_lib/game/_state_menu.py:36
+msgid "Fat Girl: \"Now that I think about it, you are too weak to be my husband anyway!\""
+msgstr "Толстуха: \"Впрочем, если подумать, ты всё равно слишком слаб, чтобы быть моим мужем!\""
+
+msgid "Fat Girl: \"You look like a martial artist! Surely you'll make a fine husband. MARRY ME NOW OR I'LL BEAT THE CRAP OUT OF YOU!"
+msgstr "Толстушка: \"Судя по виду, ты — мастер боевых искусств! Из тебя выйдет прекрасный муж. ЖЕНИСЬ НА МНЕ СЕЙЧАС ЖЕ, ИЛИ Я ВЫБЬЮ ИЗ ТЕБЯ ВСЮ ДУРЬ!"
+
+msgid "Fav. move"
+msgstr "Люб.приём"
+
+msgid "Feared move"
+msgstr "Грозный приём"
+
+msgid "Fee?"
+msgstr "Взнос?"
+
+msgid "Feels too greedy to pay the bribe."
+msgstr "Жадность не даёт заплатить взятку."
+
+msgid "Feels too greedy."
+msgstr "Жадность берёт верх."
+
+msgid "Feels too scared to fight."
+msgstr "Слишком боится драться."
+
+msgid "Fight crime"
+msgstr "Бороться с преступностью"
+
+msgid "Fight Thug(s)"
+msgstr "Бой с головорезами"
+
+msgid "Fight! ({})"
+msgstr "В бой! ({})"
+
+msgid "Fight:"
+msgstr "Бой:"
+
+msgid "Fights ({})"
+msgstr "Бои ({})"
+
+msgid "Fights/Wins/KOs: {}/{}/{}"
+msgstr "Бои/Победы/Нокауты: {}/{}/{}"
+
+msgid "Finds the pickpocket... and two angry fences... and their thugs."
+msgstr "Находит карманника... и двух разъярённых скупщиков краденого... и их головорезов."
+
 msgid "Finish Game"
 msgstr "Завершить игру"
 
-#: kf_lib/game/_new_game.py:177
+msgid "Forbid the duel and send them back to training"
+msgstr "Запретить дуэль и отправить их тренироваться"
+
+msgid "Forbids the students' duel."
+msgstr "Запрещает поединок учеников."
+
+msgid "Found,lost"
+msgstr "Найдено,потеряно"
+
+msgid "Founds the kung-fu federation."
+msgstr "Основывает федерацию кунг-фу."
+
+msgid "Founds the {} school and style."
+msgstr "Основывает школу и стиль: {}."
+
+msgid "Friends"
+msgstr "Друзья"
+
+msgid "friends:{}"
+msgstr "друзья:{}"
+
+msgid "From now on, {name}'s kung-fu style will be known as {school}."
+msgstr "Отныне стиль кунг-фу {name} будет известен как {school}."
+
 msgid "Full co-op"
 msgstr "Полный кооператив"
 
-#: kf_lib/actors/human_controlled_fighter.py:95
 msgid "Func"
 msgstr "Функ"
 
-#: kf_lib/kung_fu/boosts.py:124
 msgid "fury"
 msgstr "ярость"
 
-#: kf_lib/kung_fu/boosts.py:124
 msgid "fury chance"
 msgstr "шанс ярости"
 
-#: kf_lib/game/_new_game.py:151
+msgid "Gains {} exp."
+msgstr "Получает {} опыта."
+
+msgid "gains {} exp."
+msgstr "получает {} опыта."
+
+msgid "Gamb.won,lost"
+msgstr "Азарт выигр.,проигр."
+
+msgid "Gamble?"
+msgstr "Сыграть?"
+
+msgid "Gambler wins!"
+msgstr "Азартный игрок выигрывает!"
+
+msgid "Gambler: \"Better luck next time!\""
+msgstr "Игрок: \"В следующий раз повезёт больше!\""
+
+msgid ""
+"Gambler: \"Hey, do you want to play? You could make some serious money!\"\n"
+"One bet is {} coin."
+msgid_plural ""
+"Gambler: \"Hey, do you want to play? You could make some serious money!\"\n"
+"One bet is {} coins."
+msgstr[0] ""
+"Азартный игрок: \"Эй, хотите сыграть? Можно выиграть серьёзные деньги!\"\n"
+"Одна ставка — {} монета."
+msgstr[1] ""
+"Азартный игрок: \"Эй, хотите сыграть? Можно выиграть серьёзные деньги!\"\n"
+"Одна ставка — {} монеты."
+msgstr[2] ""
+"Азартный игрок: \"Эй, хотите сыграть? Можно выиграть серьёзные деньги!\"\n"
+"Одна ставка — {} монет."
+
+msgid "Gambler: \"I'm telling you, this is not over yet!\""
+msgstr "Игрок: \"Говорю тебе, это ещё не конец!\""
+
+msgid "Gambler: \"You think you can get away with that?\""
+msgstr "Игрок: \"Думаешь, тебе это сойдёт с рук?\""
+
+msgid "Gambler: I'm just taking back what's mine!"
+msgstr "Игрок: Я просто забираю своё!"
+
+msgid "Gambles."
+msgstr "Играет на деньги."
+
 msgid "Gang-Ridden (high crime)"
 msgstr "Город банд (высокая преступность)"
 
-#: kf_lib/game/_new_game.py:158
+msgid "Get Item"
+msgstr "Получить предмет"
+
+msgid "Get Money"
+msgstr "Получить деньги"
+
+msgid "Gets away."
+msgstr "Ускользает."
+
+msgid "Gets caught in a gang war."
+msgstr "Попадает в бандитскую разборку."
+
+msgid "Gets caught in the Saint's Day riot."
+msgstr "Попадает в заварушку на День Святого."
+
 msgid "Getting By (default poverty)"
 msgstr "Перебиваемся (обычная бедность)"
 
-#: kf_lib/kung_fu/boosts.py:128
+msgid "Give {} coin"
+msgid_plural "Give {} coins"
+msgstr[0] "Дать {} монету"
+msgstr[1] "Дать {} монеты"
+msgstr[2] "Дать {} монет"
+
+msgid "Go for a walk"
+msgstr "Пойти на прогулку"
+
+msgid "Go to seedy places"
+msgstr "Пойти по злачным местам"
+
+msgid "Go to work"
+msgstr "Пойти на работу"
+
+msgid "Goes for a walk."
+msgstr "Идёт на прогулку."
+
+msgid "Goes on a date with {name}."
+msgstr "Идёт на свидание: {name}."
+
+msgid "Goes on a date with {sw}."
+msgstr "Идёт на свидание с {sw}."
+
+msgid "Goes to the seedy places of {}."
+msgstr "Идёт по злачным местам: {}."
+
+msgid "Goes to work."
+msgstr "Идёт на работу."
+
+msgid "Got drunk"
+msgstr "Напился"
+
 msgid "grab chance"
 msgstr "шанс захвата"
 
-#: kf_lib/kung_fu/boosts.py:127
 msgid "grabs"
 msgstr "захваты"
 
-#: kf_lib/actors/fighter/_fight_actions.py:358
 msgid "grabs an improvised weapon!"
 msgstr "хватает подручное оружие!"
 
-#: kf_lib/kung_fu/boosts.py:175
+msgid "Grabs an improvised weapon."
+msgstr "Хватает подручное оружие."
+
 msgid "grappling"
 msgstr "борьба"
 
-#: kf_lib/kung_fu/boosts.py:175
 msgid "grappling efficiency"
 msgstr "эффективность борьбы"
 
-#: kf_lib/kung_fu/boosts.py:130
 msgid "guard"
 msgstr "защитная стойка"
 
-#: kf_lib/kung_fu/boosts.py:130
 msgid "guard efficiency"
 msgstr "эффективность защитной стойки"
 
-#: kf_lib/kung_fu/boosts.py:133
 msgid "guard while atk"
 msgstr "защита в атаке"
 
-#: kf_lib/kung_fu/boosts.py:134
 msgid "guard while attacking"
 msgstr "защита во время атаки"
 
-#: kf_lib/game/_new_game.py:159
+msgid "hands-down "
+msgstr "в чистую "
+
 msgid "Hard Times (high poverty)"
 msgstr "Тяжёлые времена (высокая бедность)"
 
-#: kf_lib/actors/human_controlled_fighter.py:42
+msgid "Has to settle a rivalry between two students."
+msgstr "Вынужден разрешать соперничество двух учеников."
+
+msgid "Has too many friends already; {obj} stays an acquaintance."
+msgstr "Друзей уже слишком много; {obj} остаётся просто знакомым."
+
+msgid "Having defeated such a strong opponent, {name} gained an important insight into his own fighting technique."
+msgstr "Победив столь сильного противника, {name} пришёл к важному прозрению в собственной боевой технике."
+
+msgid "Having proved his superiority, {b_name} leaves {town}."
+msgstr "Доказав своё превосходство, {b_name} покидает {town}."
+
+msgid "He is armed with {}."
+msgstr "У него оружие: {}."
+
+msgid "He married the love of his life, {name}, and they raised {} wonderful child, who carries on his kung-fu."
+msgid_plural "He married the love of his life, {name}, and they raised {} wonderful children, who carry on his kung-fu."
+msgstr[0] "Он женился на любви всей своей жизни, {name}, и они вырастили {} ребёнка — чудесного продолжателя его кунг-фу."
+msgstr[1] "Он женился на любви всей своей жизни, {name}, и они вырастили {} детей — чудесных продолжателей его кунг-фу."
+msgstr[2] "Он женился на любви всей своей жизни, {name}, и они вырастили {} детей — чудесных продолжателей его кунг-фу."
+
+msgid "He married the love of his life, {name}."
+msgstr "Его женой стала любовь всей его жизни: {name}."
+
+msgid "He was especially known for his outstanding {atts}."
+msgstr "Особенно он славился выдающимися качествами: {atts}."
+
+msgid "He was rather versatile, but especially known for his {atts}."
+msgstr "Он был довольно разносторонним, но особенно славился качествами: {atts}."
+
+msgid "He was said to possess almost inhuman {best_atts}, although, perhaps, at the cost of {worst_atts}."
+msgstr "О нём говорили, что у него почти нечеловеческие данные: {best_atts}, — хотя, возможно, ценой других: {worst_atts}."
+
+msgid "He was uniquely versatile, having equally great {atts}."
+msgstr "Он был удивительно разносторонним — все качества были одинаково велики: {atts}."
+
 msgid "Health"
 msgstr "Здоровье"
 
-#: kf_lib/kung_fu/boosts.py:136
 msgid "health"
 msgstr "здоровье"
 
-#: kf_lib/actors/fighter/_fight_actions.py:247
+msgid "Hears the rumors."
+msgstr "Слышит слухи."
+
+msgid "Help the poor"
+msgstr "Помочь бедным"
+
+msgid "Her kung-fu style was {style}."
+msgstr "Её стилем кунг-фу был {style}."
+
+msgid "Her signature move was the {move}."
+msgstr "Её коронный приём: {move}."
+
+msgid "Hey you! This is my territory. Entering is free, but leaving in one piece costs {} coins."
+msgstr "Эй, ты! Это моя территория. Вход бесплатный, а вот выйти целым стоит {} монет."
+
+msgid "Hey, I really need {} coins. Do you think you can help me out?"
+msgstr "Эй, мне правда нужно {} монет. Думаете, сможете выручить?"
+
+msgid "His kung-fu style was {style}."
+msgstr "Его стиль кунг-фу: {style}."
+
+msgid "His signature move was the {move}."
+msgstr "Его коронным приёмом был {move}."
+
 msgid "hit: {dmg} ({hp})"
 msgstr "попадание: {dmg} ({hp})"
 
-#: kf_lib/actors/fighter/_basic_attributes.py:51
 msgid "Hlt"
 msgstr "Здр"
 
-#: kf_lib/actors/human_controlled_fighter.py:355
+msgid "How many levels up?"
+msgstr "На сколько уровней поднять?"
+
+msgid "How many participants?"
+msgstr "Сколько участников?"
+
+msgid "How many thugs?"
+msgstr "Сколько головорезов?"
+
+msgid "How many {item}?"
+msgid_plural "How many {item}s?"
+msgstr[0] "Сколько: {item}?"
+msgstr[1] "Сколько: {item}?"
+msgstr[2] "Сколько: {item}?"
+
+msgid "How much money?"
+msgstr "Сколько денег?"
+
+msgid "How much to bet?"
+msgstr "Сколько поставить?"
+
+msgid "However, the {item} turns out to be of very shoddy quality. It breaks immediately as {name} tries a few of his moves on it. Too bad the craftsman has vanished in thin air!"
+msgstr "Однако {item} оказывается очень низкого качества — вещь ломается, едва {name} успевает опробовать на ней пару своих приёмов. Досадно, что ремесленник словно испарился!"
+
 msgid "HP"
 msgstr "HP"
 
-#: kf_lib/kung_fu/boosts.py:138
 msgid "HP gain"
 msgstr "восстановление HP"
 
-#: kf_lib/kung_fu/boosts.py:138
 msgid "HP gain per turn"
 msgstr "HP за ход"
 
-#: kf_lib/actors/human_controlled_fighter.py:153
 msgid "HP:{}"
 msgstr "HP:{}"
 
-#: kf_lib/kung_fu/boosts.py:141
+msgid "If you don't give me {} coins, you'll need a doctor, and a good one!"
+msgstr "Если не отдашь мне {} монет, тебе понадобится врач, и очень хороший!"
+
+msgid "Ignore"
+msgstr "Игнорировать"
+
 msgid "improv.weapons"
 msgstr "подруч.оружие"
 
-#: kf_lib/actors/human_controlled_fighter.py:45
 msgid "Improve:"
 msgstr "Улучшить:"
 
-#: kf_lib/kung_fu/boosts.py:142
 msgid "in-fight improvised weapon chance"
 msgstr "шанс подручного оружия в бою"
 
-#: kf_lib/fighting/fight/_base_fight.py:426
+msgid "Input att (type \"all\" to see all atts)"
+msgstr "Введите атрибут (наберите \"all\", чтобы увидеть все)"
+
 msgid "Input file name: "
 msgstr "Введите имя файла: "
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:335
+msgid "Inspect Player"
+msgstr "Осмотреть игрока"
+
 msgid "INSTANT KNOCK-OUT!!!"
 msgstr "МГНОВЕННЫЙ НОКАУТ!!!"
 
-#: kf_lib/ui/_interactive.py:11 kf_lib/ui/_interactive.py:30
+msgid "Intends to fight crime."
+msgstr "Собирается бороться с преступностью."
+
+msgid "Intends to help the poor."
+msgstr "Намеревается помогать бедным."
+
+msgid "Intends to pick fights."
+msgstr "Намеревается ввязываться в драки."
+
 msgid "invalid input, try again"
 msgstr "неверный ввод, попробуйте ещё раз"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:110
+msgid "Is about to propose to {sw}, but gets cold feet."
+msgstr "Собирается сделать предложение ({sw}), но в последний момент струхивает."
+
+msgid "Is ambushed by a fat girl."
+msgstr "Попадает в засаду толстой девушки."
+
+msgid "Is ambushed by {enemy} with {n} thug."
+msgid_plural "Is ambushed by {enemy} with {n} thugs."
+msgstr[0] "Попадает в засаду: {enemy} с {n} головорезом."
+msgstr[1] "Попадает в засаду: {enemy} с {n} головорезами."
+msgstr[2] "Попадает в засаду: {enemy} с {n} головорезами."
+
+msgid "Is approached by a group of potential students."
+msgstr "К нему подходит группа потенциальных учеников."
+
+msgid "Is approached by a potential student."
+msgstr "К нему подходит потенциальный ученик."
+
+msgid "Is banned from school by {master}."
+msgstr "{master} отчисляет его из школы."
+
+msgid "Is beaten by the jealous rival {name}."
+msgstr "Терпит поражение от ревнивого соперника: {name}."
+
+msgid "Is blamed for the Saint's Day riot."
+msgstr "Обвинён в беспорядках на День святого."
+
 msgid "is BLEEDING!"
 msgstr "ИСТЕКАЕТ КРОВЬЮ!"
 
-#: kf_lib/actors/fighter/_fight_actions.py:342
+msgid "Is bullied at his school."
+msgstr "Терпит издевательства в своей школе."
+
+msgid "Is challenged by a jealous rival, {name}."
+msgstr "Получает вызов от ревнивого соперника: {name}."
+
+msgid "Is hired by {b_name} as muscle for the Jade Table sit-down."
+msgstr "{b_name} нанимает его силовиком на сходку в «Нефритовом столе»."
+
 msgid "is in FURY!"
 msgstr "в ЯРОСТИ!"
 
-#: kf_lib/game/_new_game.py:45
+msgid "Is injured."
+msgstr "Получает травму."
+
+msgid "Is invited to the Night Melee."
+msgstr "Получает приглашение на Ночную Схватку."
+
+msgid "Is knocked out at the Jade Table."
+msgstr "Нокаутирован в Нефритовом Столе."
+
+msgid "Is knocked out in the den brawl. The money is gone for good."
+msgstr "Выбит в нокаут в драке в притоне. Деньги потеряны безвозвратно."
+
+msgid "Is knocked out in the Saint's Day riot."
+msgstr "Нокаутирован в беспорядках на День святого."
+
+msgid "Is offered a trial at his school."
+msgstr "В его школе ему предлагают пройти испытание."
+
+msgid "Is offered a trial to become a master."
+msgstr "Получает предложение пройти испытание на звание мастера."
+
+msgid "Is pickpocketed of {} coin."
+msgid_plural "Is pickpocketed of {} coins."
+msgstr[0] "Кража карманником: {} монета."
+msgstr[1] "Кража карманником: {} монеты."
+msgstr[2] "Кража карманником: {} монет."
+
+msgid "Is provoked."
+msgstr "Поддаётся на провокацию."
+
+msgid "Is publicly scolded by the elders."
+msgstr "Старейшины при всех отчитывают его."
+
+msgid "Is reprimanded and disciplined by {master} for fighting for money."
+msgstr "{master} делает выговор и наказывает его за бои за деньги."
+
+msgid "Is the last one standing at the Jade Table."
+msgstr "Остаётся последним на ногах за Нефритовым столом."
+
 msgid "Is this character ok?"
 msgstr "Этот персонаж подходит?"
 
-#: kf_lib/game/_state_menu.py:15
+msgid "It is important to share what you have with others. Pay {} coins and you are free to go."
+msgstr "Важно делиться с другими тем, что имеешь. Заплатите {} монет — и можете идти."
+
+msgid "It starts with a spilled jar of wine and an old grudge. A punch is thrown, then another — and suddenly the whole festival square is one giant brawl! {name} is right in the middle of it."
+msgstr "Всё начинается с разлитого кувшина вина и старой обиды. Летит один удар, затем другой — и вдруг вся праздничная площадь превращается в одну гигантскую свалку! {name} оказывается в самой её гуще."
+
 msgid "Items"
 msgstr "Предметы"
 
-#: kf_lib/kung_fu/boosts.py:174
+msgid "Joins the brawl."
+msgstr "Ввязывается в драку."
+
 msgid "jumping strike efficiency"
 msgstr "эффективность ударов в прыжке"
 
-#: kf_lib/kung_fu/boosts.py:174
 msgid "jumps"
 msgstr "прыжки"
 
-#: kf_lib/game/_playing.py:84
+msgid "Junk items b."
+msgstr "Хлам купл."
+
 msgid "Keep playing indefinitely?"
 msgstr "Продолжать играть бессрочно?"
 
-#: kf_lib/kung_fu/boosts.py:176
 msgid "kick efficiency"
 msgstr "эффективность пинков"
 
-#: kf_lib/kung_fu/boosts.py:176
 msgid "kicks"
 msgstr "пинки"
 
-#: kf_lib/kung_fu/boosts.py:177
 msgid "knee strike efficiency"
 msgstr "эффективность ударов коленом"
 
-#: kf_lib/kung_fu/boosts.py:177
 msgid "knees"
 msgstr "колени"
 
-#: kf_lib/game/_new_game.py:165
+msgid "KOed,days inac."
+msgstr "Нок.,дней неакт."
+
 msgid "Kung-Fu Backwater (low enthusiasm)"
 msgstr "Кунг-фу глухомань (слабый энтузиазм)"
 
-#: kf_lib/game/_new_game.py:167
 msgid "Kung-Fu Craze (high enthusiasm)"
 msgstr "Кунг-фу лихорадка (сильный энтузиазм)"
 
-#: kf_lib/game/_new_game.py:169
 msgid "Kung-fu enthusiasm?"
 msgstr "Энтузиазм к кунг-фу?"
 
-#: kf_lib/fighting/fight/_helpers.py:23
+msgid "Lately, rough-looking strangers have been seen watching {school}. {name}'s students whisper that someone has hired thugs to \"teach the new master a lesson\"."
+msgstr "В последнее время возле школы ({school}) замечали суровых незнакомцев. Ученики {name} шепчутся: кто-то нанял головорезов, чтобы \"проучить нового мастера\"."
+
+msgid "Lately, the streets of {town} whisper about the underworld: the old balance between the crime bosses is breaking, and a bloody war seems inevitable. To prevent it, the elders of the underworld call for a sit-down at the Jade Table restaurant..."
+msgstr "В последнее время улицы {town} шепчутся о преступном мире: старый баланс между боссами рушится, и кровавая война кажется неизбежной. Чтобы предотвратить её, старейшины преступного мира созывают сходку в ресторане \"Нефритовый стол\"..."
+
+msgid "Learn Move"
+msgstr "Изучить приём"
+
+msgid "Learn Tech"
+msgstr "Изучить технику"
+
+msgid "Let them duel — may the better fighter win"
+msgstr "Пусть сразятся — победит сильнейший"
+
 msgid "LEV"
 msgstr "УР"
 
-#: kf_lib/game/_new_game.py:143
+msgid "Level (Exp.)"
+msgstr "Уровень (опыт)"
+
 msgid "Level progression?"
 msgstr "Скорость прокачки?"
 
-#: kf_lib/game/_state_menu.py:29
+msgid "Level up"
+msgstr "Повысить уровень"
+
 msgid "Load"
 msgstr "Загрузить"
 
-#: kf_lib/kung_fu/boosts.py:171
 msgid "long-range"
 msgstr "дальняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:171
 msgid "long-range strike efficiency"
 msgstr "эффективность ударов издалека"
 
-#: kf_lib/kung_fu/boosts.py:123
+msgid "Looks the other way."
+msgstr "Отводит глаза."
+
+msgid "Loses a spar to his own students."
+msgstr "Проигрывает спарринг собственным ученикам."
+
+msgid "Loses the Grand Melee."
+msgstr "Проигрывает Великую Свалку."
+
+msgid "Loses the Night Melee."
+msgstr "Проигрывает Ночную свалку."
+
+msgid "Loses {}."
+msgstr "Теряет: {}."
+
 msgid "low fall dam"
 msgstr "малый урон от падения"
 
-#: kf_lib/actors/human_controlled_fighter.py:152
+msgid "LUCKY!"
+msgstr "УДАЧА!"
+
 msgid "lv.{}"
 msgstr "ур.{}"
 
-#: kf_lib/kung_fu/boosts.py:144
 msgid "lying dfs"
 msgstr "защита лёжа"
 
-#: kf_lib/game/_new_game.py:37
 msgid "Man"
 msgstr "Мужчина"
 
-#: kf_lib/kung_fu/boosts.py:145
+msgid "Man: Master {name}! Why are you here?"
+msgstr "Мужчина: Мастер {name}! Что вы здесь делаете?"
+
 msgid "maneuv.time"
 msgstr "время манёвра"
 
-#: kf_lib/kung_fu/boosts.py:145
 msgid "maneuver time cost"
 msgstr "стоимость манёвра по времени"
 
-#: kf_lib/game/_new_game.py:166
+msgid "Marries {sw}."
+msgstr "Вступает в брак: {sw}."
+
 msgid "Martial Town (default enthusiasm)"
 msgstr "Город единоборств (обычный энтузиазм)"
 
-#: kf_lib/kung_fu/boosts.py:156
+msgid "Max blow"
+msgstr "Макс. удар"
+
+msgid "Max level?"
+msgstr "Макс. уровень?"
+
 msgid "max QP"
 msgstr "макс. QP"
 
-#: kf_lib/kung_fu/boosts.py:160
 msgid "max stamina"
 msgstr "макс. выносливость"
 
-#: kf_lib/kung_fu/boosts.py:170
+msgid "Meets a beggar."
+msgstr "Встречает нищего."
+
+msgid "Meets a book seller."
+msgstr "Встречает книготорговца."
+
+msgid "Meets a craftsman."
+msgstr "Встречает ремесленника."
+
+msgid "Meets a drunkard."
+msgstr "Встречает пьяницу."
+
+msgid "Meets a gambler."
+msgstr "Встречает азартного игрока."
+
+msgid "Meets a gossipmonger."
+msgstr "Встречает сплетника."
+
+msgid "Meets a strange-looking man asking for {item}."
+msgstr "Встречает странного на вид человека, который просит {item}."
+
+msgid "Meets a street merchant."
+msgstr "Встречает уличного торговца."
+
+msgid "Meets a wise man."
+msgstr "Встречает мудреца."
+
+msgid "Meets {boss}, the Grand Melee promoter."
+msgstr "Встречает организатора Большой свалки — {boss}."
+
+msgid "Meets {name}."
+msgstr "Встречает {name}."
+
+msgid "Meets {}"
+msgstr "Встречает {}"
+
 msgid "mid-range"
 msgstr "средняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:170
 msgid "mid-range strike efficiency"
 msgstr "эффективность ударов со средней дистанции"
 
-#: kf_lib/actors/fighter/_fight_actions.py:71
+msgid "Min level?"
+msgstr "Мин. уровень?"
+
 msgid "Miss!"
 msgstr "Промах!"
 
-#: kf_lib/actors/human_controlled_fighter.py:86
+msgid "Misses the Grand Melee, being broke."
+msgstr "Пропускает Большую Свалку из-за пустых карманов."
+
+msgid "Money"
+msgstr "Деньги"
+
+msgid "Money earned"
+msgstr "Заработано"
+
 msgid "Move"
 msgstr "Приём"
 
-#: kf_lib/kung_fu/boosts.py:151
 msgid "move complexity"
 msgstr "сложность приёмов"
 
-#: kf_lib/kung_fu/boosts.py:151
 msgid "move cplx."
 msgstr "сложн. приёмов"
 
-#: kf_lib/game/_state_menu.py:17
 msgid "Moves"
 msgstr "Приёмы"
 
-#: kf_lib/fighting/fight/_base_fight.py:249
+msgid "much "
+msgstr "намного "
+
 msgid "Multi-knockout"
 msgstr "Мультинокаут"
 
-#: kf_lib/fighting/fight/_helpers.py:22
 msgid "NAME"
 msgstr "ИМЯ"
 
-#: kf_lib/ui/_menu.py:45
+msgid "Name"
+msgstr "Имя"
+
 msgid "Next page"
 msgstr "След. страница"
 
-#: kf_lib/ui/_menu.py:76
+msgid "Night. A crash of breaking wood — masked men burst into {school} with torches and clubs! {name} and the students rush out to defend the school."
+msgstr "Ночь. Треск ломаемого дерева — люди в масках врываются в {school} с факелами и дубинами! {name} и ученики бросаются защищать школу."
+
 msgid "no"
 msgstr "нет"
 
-#: kf_lib/game/_new_game.py:180
 msgid "No co-op"
 msgstr "Без кооператива"
 
-#: kf_lib/fighting/fight/_base_fight.py:485
 msgid "No stats recorded."
 msgstr "Статистика не записана."
 
-#: kf_lib/fighting/fight/_base_fight.py:247
+msgid "No such attribute!"
+msgstr "Нет такого атрибута!"
+
+msgid "No such move: {!r}"
+msgstr "Нет такого приёма: {!r}"
+
 msgid "Not a scratch"
 msgstr "Ни царапины"
 
-#: kf_lib/game/_new_game.py:84
+msgid "Not enough money!"
+msgstr "Недостаточно денег!"
+
+msgid "Nothing interesting."
+msgstr "Ничего интересного."
+
 msgid "Number of players?"
 msgstr "Количество игроков?"
 
-#: kf_lib/kung_fu/boosts.py:152
 msgid "off-bal.atk"
 msgstr "дисб.атк"
 
-#: kf_lib/kung_fu/boosts.py:153
 msgid "off-bal.dfs"
 msgstr "дисб.зщт"
 
-#: kf_lib/kung_fu/boosts.py:152
 msgid "off-balance attack"
 msgstr "атака при потере равновесия"
 
-#: kf_lib/kung_fu/boosts.py:153
 msgid "off-balance defense"
 msgstr "защита при потере равновесия"
 
-#: kf_lib/kung_fu/boosts.py:178
+msgid "Offered to take part in an underground prize fighting contest."
+msgstr "Получает предложение участвовать в подпольных боях с призовыми."
+
+msgid "Old man: It seems everybody in {} wants to practice kung-fu nowadays..."
+msgstr "Старик: Похоже, нынче все в городе {} хотят заниматься кунг-фу..."
+
+msgid "Old man: The people of {} are losing their interest in kung-fu..."
+msgstr "Старик: {}... Здешние люди теряют интерес к кунг-фу..."
+
+msgid "Old woman: Many people in {} now don't have enough to eat..."
+msgstr "Старуха: Многие в {} теперь недоедают..."
+
+msgid "Old woman: There are not as many poor and homeless people in {} as before..."
+msgstr "Старуха: Бедных и бездомных в городе {} стало не так много, как раньше..."
+
+msgid "One by one, the eight disciples fall. Finally, only {p_name} is left standing in the circle. {b_name} slowly rises and bows."
+msgstr "Один за другим падают восемь учеников. Наконец на ногах в кругу остаётся только {p_name}. {b_name} медленно поднимается и кланяется."
+
+msgid "One of them says: \"Haven't you heard? {} at lv.{} beat {}. What an astonishing victory!\""
+msgstr "Один из них говорит: \"Не слыхали? {} на ур.{} победил {}. Какая потрясающая победа!\""
+
+msgid "One of them says: \"Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to kung-fu!\""
+msgstr "Один из них говорит: \"Не слышали? {} (ур.{}) позорно проиграл {}. Какой позор для кунг-фу!\""
+
+msgid "Overhears a conversation."
+msgstr "Подслушивает разговор."
+
 msgid "palm str."
 msgstr "ладонь"
 
-#: kf_lib/kung_fu/boosts.py:178
 msgid "palm strike efficiency"
 msgstr "эффективность ударов ладонью"
 
-#: kf_lib/actors/fighter/_fight_actions.py:31
+msgid "Paper"
+msgstr "Бумага"
+
+msgid "Participates in the Grand Melee."
+msgstr "Участвует в Большой свалке."
+
+msgid "Participates in the Night Melee."
+msgstr "Участвует в Ночной свалке."
+
 msgid "passes out because of bleeding!"
 msgstr "теряет сознание от кровопотери!"
 
-#: kf_lib/game/_new_game.py:149
+msgid "Passes the Trial of Eight Gates!"
+msgstr "Проходит Испытание Восьми Врат!"
+
+msgid "Pay the bribe?"
+msgstr "Заплатить взятку?"
+
+msgid "Pays a bribe to {boss}."
+msgstr "Платит взятку: {boss}."
+
+msgid "Pays {} c."
+msgstr "Платит {} мон."
+
+msgid "Pays {} coin for the riot damages."
+msgid_plural "Pays {} coins for the riot damages."
+msgstr[0] "Платит {} монету за ущерб от бунта."
+msgstr[1] "Платит {} монеты за ущерб от бунта."
+msgstr[2] "Платит {} монет за ущерб от бунта."
+
 msgid "Peaceful Town (low crime)"
 msgstr "Мирный город (низкая преступность)"
 
-#: kf_lib/game/_new_game.py:38
+msgid "Pick fights"
+msgstr "Искать драки"
+
+msgid "Pins the blame for the riot on the {style} school."
+msgstr "Возлагает вину за беспорядки на школу {style}."
+
 msgid "Play as a man or a woman?"
 msgstr "Играть за мужчину или женщину?"
 
-#: kf_lib/game/_new_game.py:185
 msgid "Player {n} -- human player?"
 msgstr "Игрок {n} — человек?"
 
-#: kf_lib/game/_new_game.py:161
+msgid "Please accept this {item} as a token of my gratitude.\""
+msgstr "Пожалуйста, примите этот подарок: {item} — в знак моей благодарности.\""
+
+msgid "Police Officer: \"Thank you very much for your help!\""
+msgstr "Полицейский: \"Огромное спасибо за вашу помощь!\""
+
 msgid "Poverty?"
 msgstr "Бедность?"
 
-#: kf_lib/kung_fu/boosts.py:148
+msgid "Practice"
+msgstr "Тренировка"
+
+msgid "Practice at school"
+msgstr "Тренироваться в школе"
+
+msgid "Practices at his school."
+msgstr "Тренируется в своей школе."
+
+msgid "Practices at home."
+msgstr "Тренируется дома."
+
+msgid "Practices at school."
+msgstr "Тренируется в школе."
+
+msgid "Practices kung-fu with the child."
+msgstr "Занимается кунг-фу с ребёнком."
+
 msgid "preemptive"
 msgstr "упреждение"
 
-#: kf_lib/kung_fu/boosts.py:149
 msgid "preemptive strike chance"
 msgstr "шанс упреждающего удара"
 
-#: kf_lib/ui/_interactive.py:56
 msgid "Press Enter"
 msgstr "Нажмите Enter"
 
-#: kf_lib/game/_playing.py:236
 msgid "Press Enter to see stats."
 msgstr "Нажмите Enter, чтобы увидеть статистику."
 
-#: kf_lib/ui/_menu.py:45
 msgid "Previous page"
 msgstr "Пред. страница"
 
-#: kf_lib/game/_new_game.py:157
+msgid "Propose to {sw}?"
+msgstr "Сделать предложение ({sw})?"
+
 msgid "Prosperous (low poverty)"
 msgstr "Благополучный (низкая бедность)"
 
-#: kf_lib/kung_fu/boosts.py:179
 msgid "punch efficiency"
 msgstr "эффективность ударов кулаком"
 
-#: kf_lib/kung_fu/boosts.py:179
 msgid "punches"
 msgstr "удары кулаком"
 
-#: kf_lib/actors/human_controlled_fighter.py:89
+msgid "Pursue the relationship?"
+msgstr "Развивать отношения?"
+
 msgid "Pwr"
 msgstr "Мощь"
 
-#: kf_lib/actors/human_controlled_fighter.py:94
 msgid "Qi"
 msgstr "Ци"
 
-#: kf_lib/kung_fu/boosts.py:155 kf_lib/kung_fu/boosts.py:156 kf_lib/kung_fu/boosts.py:157
 msgid "qi"
 msgstr "ци"
 
-#: kf_lib/kung_fu/boosts.py:154
 msgid "qi when attacking"
 msgstr "ци при атаке"
 
-#: kf_lib/kung_fu/boosts.py:154
 msgid "qi/atk"
 msgstr "ци/атака"
 
-#: kf_lib/actors/human_controlled_fighter.py:367
 msgid "QP"
 msgstr "QP"
 
-#: kf_lib/kung_fu/boosts.py:157
 msgid "QP to start with"
 msgstr "начальное QP"
 
-#: kf_lib/kung_fu/boosts.py:155
 msgid "QP/turn"
 msgstr "QP/ход"
 
-#: kf_lib/actors/human_controlled_fighter.py:155
 msgid "QP:{}"
 msgstr "QP:{}"
 
-#: kf_lib/fighting/fight/_base_fight.py:245
 msgid "Quick victory"
 msgstr "Быстрая победа"
 
-#: kf_lib/game/_state_menu.py:30
 msgid "Quit"
 msgstr "Выход"
 
-#: kf_lib/game/_new_game.py:105
 msgid "Randomly generated styles?"
 msgstr "Случайно сгенерированные стили?"
 
-#: kf_lib/kung_fu/boosts.py:158
+msgid "rank in school: {}/{}"
+msgstr "ранг в школе: {}/{}"
+
+msgid "Reaches level {}."
+msgstr "Достигает уровня {}."
+
+msgid "Refuses to drink."
+msgstr "Отказывается пить."
+
+msgid "Refuses to gamble."
+msgstr "Отказывается играть."
+
+msgid "Refuses."
+msgstr "Отказывается."
+
+msgid "Repels the attack on the school!"
+msgstr "Отбивает нападение на школу!"
+
+msgid "Reputation"
+msgstr "Репутация"
+
+msgid "Reputation: {} ({})"
+msgstr "Репутация: {} ({})"
+
 msgid "resist KO"
 msgstr "сопротивление нокауту"
 
-#: kf_lib/actors/fighter/_fight_actions.py:373
 msgid "resists being knocked out!"
 msgstr "удерживается на ногах!"
 
-#: kf_lib/kung_fu/boosts.py:161
+msgid "Rest"
+msgstr "Отдых"
+
 msgid "restore stamina"
 msgstr "восстановление выносливости"
 
-#: kf_lib/game/_new_game.py:150
+msgid "Rewards,prizes"
+msgstr "Награды,призы"
+
+msgid "Robbed,stolen"
+msgstr "Ограбл.,кражи"
+
+msgid "Robber: \"{}\""
+msgstr "Грабитель: \"{}\""
+
+msgid "Rock"
+msgstr "Камень"
+
 msgid "Rough Edges (default crime)"
 msgstr "Неспокойный район (обычная преступность)"
 
-#: kf_lib/game/_state_menu.py:28
+msgid ""
+"Round {round}\n"
+"tournament participants left: {left}"
+msgid_plural ""
+"Round {round}\n"
+"tournament participants left: {left}"
+msgstr[0] ""
+"Раунд {round}\n"
+"осталось {left} участник турнира"
+msgstr[1] ""
+"Раунд {round}\n"
+"осталось {left} участника турнира"
+msgstr[2] ""
+"Раунд {round}\n"
+"осталось {left} участников турнира"
+
+msgid "Rumor has it that {b_name}, a renowned martial artist from {country}, has arrived in {town} to defeat local masters and prove the superiority of his own fighting style, {style}."
+msgstr "Ходят слухи, что {b_name}, прославленный мастер боевых искусств из {country}, прибыл в {town}, чтобы победить местных мастеров и доказать превосходство собственного стиля: {style}."
+
+msgid "Run away ({})"
+msgstr "Убежать ({})"
+
+msgid "Run! ({})"
+msgstr "Бежать! ({})"
+
+msgid "S.herbs obt."
+msgstr "С.трав получ."
+
 msgid "Save"
 msgstr "Сохранить"
 
-#: kf_lib/game/_state_menu.py:31
 msgid "Save and Quit"
 msgstr "Сохранить и выйти"
 
-#: kf_lib/fighting/fight/_base_fight.py:383
 msgid "Save slideshow"
 msgstr "Сохранить слайд-шоу"
 
-#: kf_lib/fighting/fight/_base_fight.py:429
 msgid "Saved successfully."
 msgstr "Сохранено успешно."
 
-#: kf_lib/fighting/fight/_base_fight.py:382
+msgid "Scissors"
+msgstr "Ножницы"
+
+msgid "Sees a kung-fu master demonstrating his skills in the street."
+msgstr "Видит, как мастер кунг-фу показывает своё искусство на улице."
+
+msgid "Sees a street brawl."
+msgstr "Видит уличную драку."
+
+msgid "Sees a tavern brawl."
+msgstr "Видит драку в таверне."
+
+msgid "Sees {num_al} police officers fighting {num_en} thugs."
+msgstr "Видит, как стражники ({num_al}) дерутся с головорезами ({num_en})."
+
+msgid "Sees {} extorter in a shop."
+msgid_plural "Sees {} extorters in a shop."
+msgstr[0] "Видит в лавке {} вымогатель."
+msgstr[1] "Видит в лавке {} вымогателя."
+msgstr[2] "Видит в лавке {} вымогателей."
+
+msgid "Sees {} man robbing someone."
+msgid_plural "Sees {} men robbing someone."
+msgstr[0] "Видит, как {} человек кого-то грабит."
+msgstr[1] "Видит, как {} человека кого-то грабят."
+msgstr[2] "Видит, как {} человек кого-то грабят."
+
+msgid "Set Attribute"
+msgstr "Установить атрибут"
+
+msgid "She married the love of her life, {name}, and they raised {} wonderful child, who carries on her kung-fu."
+msgid_plural "She married the love of her life, {name}, and they raised {} wonderful children, who carry on her kung-fu."
+msgstr[0] "Она вышла замуж за любовь всей своей жизни — {name} — и они вырастили {} чудесного ребёнка, который продолжает её кунг-фу."
+msgstr[1] "Она вышла замуж за любовь всей своей жизни — {name} — и они вырастили {} чудесных ребёнка, которые продолжают её кунг-фу."
+msgstr[2] "Она вышла замуж за любовь всей своей жизни — {name} — и они вырастили {} чудесных детей, которые продолжают её кунг-фу."
+
+msgid "She married the love of her life, {name}."
+msgstr "Она вышла замуж за любовь всей своей жизни, {name}."
+
+msgid "She was especially known for her outstanding {atts}."
+msgstr "Особенно она славилась выдающимися качествами: {atts}."
+
+msgid "She was rather versatile, but especially known for her {atts}."
+msgstr "Она была довольно разносторонней, но особую известность ей принесли качества: {atts}."
+
+msgid "She was said to possess almost inhuman {best_atts}, although, perhaps, at the cost of {worst_atts}."
+msgstr "Ей приписывали почти нечеловеческие качества: {best_atts} — хотя, возможно, ценой других: {worst_atts}."
+
+msgid "She was uniquely versatile, having equally great {atts}."
+msgstr "Она была поразительно разносторонняя и одинаково сильна во всём: {atts}."
+
+msgid "Shop owner: \"Are you hurt? I'll find a doctor...\""
+msgstr "Хозяин лавки: \"Вы ранены? Я найду врача...\""
+
+msgid "Shop owner: \"Oh boy... You martial artists only know how to fight and break things! Look what you've done to my shop! Who's gonna pay for the breakages?.."
+msgstr "Хозяин лавки: \"О боги... Вы, мастера единоборств, только и умеете, что драться и всё ломать! Посмотрите, что вы сделали с моей лавкой! И кто теперь будет платить за разрушения?.."
+
+msgid "Shop owner: \"Thank you, thank you young man!\""
+msgstr "Хозяин лавки: \"Спасибо, спасибо, юноша!\""
+
+msgid "simply "
+msgstr "просто "
+
 msgid "Slideshow ({n})"
 msgstr "Слайд-шоу ({n})"
 
-#: kf_lib/actors/human_controlled_fighter.py:361
+msgid "Something about {}'s astonishing victory."
+msgstr "Что-то об ошеломительной победе: {}."
+
+msgid "Something about {}'s humiliating defeat."
+msgstr "Что-то насчёт позорного поражения: {}."
+
 msgid "SP"
 msgstr "SP"
 
-#: kf_lib/actors/human_controlled_fighter.py:154
 msgid "SP:{}"
 msgstr "SP:{}"
 
-#: kf_lib/actors/fighter/_basic_attributes.py:50
+msgid "Spar"
+msgstr "Спарринг"
+
 msgid "Spd"
 msgstr "Скр"
 
-#: kf_lib/actors/human_controlled_fighter.py:41
 msgid "Speed"
 msgstr "Скорость"
 
-#: kf_lib/kung_fu/boosts.py:159
 msgid "speed"
 msgstr "скорость"
 
-#: kf_lib/actors/human_controlled_fighter.py:92
+msgid "Spends the day with {sw}."
+msgstr "Проводит день вдвоём: {sw}."
+
+msgid "Spent on train."
+msgstr "Потрачено на трен."
+
+msgid "spouse"
+msgstr "супруг(а)"
+
+msgid "Spouse"
+msgstr "Супруг(а)"
+
 msgid "Sta"
 msgstr "Вын"
 
-#: kf_lib/kung_fu/boosts.py:160 kf_lib/kung_fu/boosts.py:161
+msgid "Stage {}"
+msgstr "Этап {}"
+
 msgid "stamina"
 msgstr "выносливость"
 
-#: kf_lib/fighting/fight/_base_fight.py:380
+msgid "State"
+msgstr "Состояние"
+
 msgid "Stats"
 msgstr "Статистика"
 
-#: kf_lib/actors/fighter/_basic_attributes.py:48
+msgid "Stolen by th."
+msgstr "Украд.вором"
+
+msgid "Story"
+msgstr "История"
+
 msgid "Str"
 msgstr "Сил"
 
-#: kf_lib/actors/human_controlled_fighter.py:39
 msgid "Strength"
 msgstr "Сила"
 
-#: kf_lib/kung_fu/boosts.py:162
 msgid "strength"
 msgstr "сила"
 
-#: kf_lib/kung_fu/boosts.py:163
 msgid "strike time"
 msgstr "время удара"
 
-#: kf_lib/kung_fu/boosts.py:163
 msgid "strike time cost"
 msgstr "стоимость удара по времени"
 
-#: kf_lib/game/_state_menu.py:22
+msgid "Strikes landed"
+msgstr "Удары в цель"
+
+msgid "Stud.tourn.won"
+msgstr "Выигр.турн.учен."
+
 msgid "Students"
 msgstr "Ученики"
 
-#: kf_lib/kung_fu/boosts.py:164
+msgid "students:{}"
+msgstr "ученики:{}"
+
 msgid "stun"
 msgstr "оглушение"
 
-#: kf_lib/kung_fu/boosts.py:164
 msgid "stun chance"
 msgstr "шанс оглушения"
 
-#: kf_lib/fighting/fight/_helpers.py:24
 msgid "STYLE"
 msgstr "СТИЛЬ"
 
-#: kf_lib/game/_state_menu.py:18
+msgid "Style"
+msgstr "Стиль"
+
+msgid "Suddenly, {name}'s master appears!"
+msgstr "Внезапно появляется учитель {name}!"
+
+msgid "Suddenly, {} more thug arrives to rob both sides — the fight turns into a total free-for-all!"
+msgid_plural "Suddenly, {} more thugs arrive to rob both sides — the fight turns into a total free-for-all!"
+msgstr[0] "Внезапно появляется ещё {} головорез, чтобы обобрать обе стороны, — бой превращается в тотальную свалку!"
+msgstr[1] "Внезапно появляются ещё {} головореза, чтобы обобрать обе стороны, — бой превращается в тотальную свалку!"
+msgstr[2] "Внезапно появляются ещё {} головорезов, чтобы обобрать обе стороны, — бой превращается в тотальную свалку!"
+
+msgid "Suddenly, {} thug appears and attacks the master. Apparently, they are after his money. Help him?"
+msgid_plural "Suddenly, {} thugs appear and attack the master. Apparently, they are after his money. Help him?"
+msgstr[0] "Внезапно появляется {} головорез и нападает на мастера. Видимо, им нужны его деньги. Помочь ему?"
+msgstr[1] "Внезапно появляются {} головореза и нападают на мастера. Видимо, им нужны его деньги. Помочь ему?"
+msgstr[2] "Внезапно появляются {} головорезов и нападают на мастера. Видимо, им нужны его деньги. Помочь ему?"
+
+msgid "sweetheart"
+msgstr "любовь"
+
+msgid "Take responsibility for the riot?"
+msgstr "Взять на себя ответственность за беспорядки?"
+
+msgid "Takes part in a kung-fu tournament."
+msgstr "Участвует в турнире по кунг-фу."
+
+msgid "Takes part in the Trial of Eight Gates."
+msgstr "Участвует в Испытании Восьми Врат."
+
+msgid "Teach students"
+msgstr "Обучать учеников"
+
+msgid "Teaches his students."
+msgstr "Обучает своих учеников."
+
 msgid "Techniques"
 msgstr "Техники"
 
-#: kf_lib/actors/fighter/_techs.py:49
 msgid "Techniques:"
 msgstr "Техники:"
 
-#: kf_lib/game/_playing.py:200
+msgid "Techs"
+msgstr "Техники"
+
+msgid "Tension is brewing in {school}: two students keep arguing about who is {p_name}'s best. Yesterday's shouting match ended with a broken bench."
+msgstr "В школе {school} назревает напряжённость: двое учеников спорят, кто из них — лучший ученик {p_name}. Вчерашняя перепалка закончилась сломанной скамьёй."
+
+msgid "That night, the two sneak out to the backyard and duel anyway..."
+msgstr "Той ночью оба тайком выбираются на задний двор и всё-таки дерутся на дуэли..."
+
+msgid "The All-Schools Tournament ends in a draw — no school prevails!"
+msgstr "Турнир всех школ заканчивается ничьей — ни одна школа не одержала верх!"
+
 msgid "The All-Schools Tournament will be held at the end of the month."
 msgstr "Турнир всех школ состоится в конце месяца."
 
-#: kf_lib/game/_new_game.py:140
+msgid "The book turns out to be complete rubbish!"
+msgstr "Книга оказывается полной чушью!"
+
+msgid "The brawl spreads to bystanders."
+msgstr "Драка перекидывается на зевак."
+
+msgid "The brawler won't let go."
+msgstr "Задира не отстаёт."
+
 msgid "The Classic Path (default progression)"
 msgstr "Классический путь (обычная прокачка)"
 
-#: kf_lib/fighting/fight/_base_fight.py:450
+msgid "The commotion draws in {} more people — it turns into a full-blown street brawl!"
+msgstr "Суматоха привлекает ещё {} человек — начинается настоящая уличная свалка!"
+
+msgid "The criminal pulls out a weapon!"
+msgstr "Преступник выхватывает оружие!"
+
+msgid "The drunkard attacks {}."
+msgstr "Пьяница нападает на {}."
+
+msgid "The Elixir turns out to be a {item}."
+msgstr "Эликсир оказывается всего лишь: {item}."
+
 msgid "The fight lasted {t}"
 msgstr "Бой длился {t}"
 
-#: kf_lib/game/_new_game.py:139
+msgid "The fight turns into a free-for-all."
+msgstr "Бой превращается в общую свалку."
+
+msgid "The gambler attacks {}."
+msgstr "Азартный игрок нападает на {}."
+
+msgid "The Grand Melee begins! {boss} waves at {name}: \"Last chance! {fee} coin to enter, {purse} to the last man standing!\""
+msgid_plural "The Grand Melee begins! {boss} waves at {name}: \"Last chance! {fee} coins to enter, {purse} to the last man standing!\""
+msgstr[0] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монета, {purse} — последнему устоявшему на ногах!\""
+msgstr[1] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монеты, {purse} — последнему устоявшему на ногах!\""
+msgstr[2] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монет, {purse} — последнему устоявшему на ногах!\""
+
+msgid "The Jade Table restaurant, private room. Silk robes, gold teeth, cold smiles. {b_name} raises a cup: \"To peace!\" Everyone drinks. Nobody believes a word. {p_name} notices a bodyguard slowly reaching under the table..."
+msgstr "Ресторан \"Нефритовый стол\", отдельный зал. Шёлковые халаты, золотые зубы, холодные улыбки. {b_name} поднимает чашу: \"За мир!\" Все пьют. Никто не верит ни единому слову. {p_name} замечает, как телохранитель медленно тянется под стол..."
+
+msgid "The Jade Table sit-down explodes into a brawl."
+msgstr "Сходка Нефритового Стола перерастает в драку."
+
+msgid "The last thug crawls away into the night. The school stands! The neighbors saw everything — word spreads through {town}."
+msgstr "Последний головорез уползает в ночь. Школа устояла! Соседи всё видели — весть разносится по всему городу: {town}."
+
 msgid "The Long Road (slower level progression)"
 msgstr "Долгий путь (медленная прокачка)"
 
-#: kf_lib/actors/human_controlled_fighter.py:303
+msgid "The master offers a challenge."
+msgstr "Мастер бросает вызов."
+
+msgid "The master offers to buy Golden Magnificent Elixir."
+msgstr "Мастер предлагает купить Золотой Великолепный Эликсир."
+
+msgid "The masters of {} gather for the All-Schools Tournament! Every school fields its students, weakest first — a knocked-out fighter is out for the whole tournament, replaced by the next one in rank. Last fighter standing wins the title for his school!"
+msgstr "Мастера города {} собираются на Турнир всех школ! Каждая школа выставляет своих учеников, начиная со слабейшего, — выбитый нокаутом боец выбывает до конца турнира, его заменяет следующий по рангу. Последний устоявший на ногах боец приносит титул своей школе!"
+
+msgid "The morning after, {town} counts the broken stalls and broken noses. The elders demand that someone answer for the riot. All eyes turn to {name}..."
+msgstr "На следующее утро {town} подсчитывает разбитые лотки и сломанные носы. Старейшины требуют, чтобы кто-то ответил за бунт. Все взгляды устремляются на {name}..."
+
+msgid ""
+"The old fish market at dusk. {b_name} and his thugs are waiting.\n"
+"{b_name}: \"So the lovebird came after all! Get 'em, boys!\"\n"
+"{sw_name}: \"{p_name}!\""
+msgstr ""
+"Старый рыбный рынок в сумерках. {b_name} и его головорезы ждут.\n"
+"{b_name}: \"А вот и наш влюблённый! Хватайте его, ребята!\"\n"
+"{sw_name}: \"{p_name}!\""
+
+msgid ""
+"The participants are:\n"
+msgstr ""
+"Участники:\n"
+
+msgid "The people of {town} are amazed at {p_name}'s victory!"
+msgstr "Жители города {town} поражены победой {p_name}!"
+
+msgid "The people of {town} keep talking about the foreigner, {b_name}. He has already defeated some good fighters."
+msgstr "Жители {town} продолжают обсуждать иностранца — {b_name}. Он уже победил нескольких хороших бойцов."
+
+msgid "The pickpocket had escaped before {} noticed anything."
+msgstr "Карманник успел скрыться, прежде чем {} что-либо заметил."
+
+msgid "The police arrested {boss}... The people of {town} are proud of {name}!"
+msgstr "Полиция арестовала {boss}... Город {town} гордится {name}!"
+
+msgid "The robber decides to let {name} go."
+msgid_plural "The robbers decide to let {name} go."
+msgstr[0] "Грабитель решает отпустить {name}."
+msgstr[1] "Грабители решают отпустить {name}."
+msgstr[2] "Грабители решают отпустить {name}."
+
+msgid "The robbers squabble over the loot."
+msgstr "Грабители ссорятся из-за добычи."
+
+msgid "The robbers start arguing over how to split the loot... In the chaos, it's everyone for themselves!"
+msgstr "Грабители начинают спорить, как поделить добычу... В суматохе каждый сам за себя!"
+
+msgid "The Saint's Day festival is in full swing. Lanterns, drums, wine... Students of rival schools are already measuring each other with long looks."
+msgstr "Праздник Дня Святого в самом разгаре. Фонарики, барабаны, вино... Ученики соперничающих школ уже оценивают друг друга долгими взглядами."
+
+msgid "The school is ransacked and half-burned before the thugs retreat into the night. It will take time to live this down..."
+msgstr "Головорезы грабят и наполовину сжигают школу, прежде чем скрыться в ночи. Пройдёт время, прежде чем об этом позоре забудут..."
+
+msgid "The students bow and disperse. Order is kept — for now."
+msgstr "Ученики кланяются и расходятся. Порядок сохранён — пока что."
+
+msgid "The thief attacks {}."
+msgstr "Вор нападает на {}."
+
+msgid "The thief escapes."
+msgstr "Вор убегает."
+
+msgid "The tournament ends with no winner!"
+msgstr "Турнир заканчивается без победителя!"
+
+msgid "The victory does {winner} good — he visibly improves!"
+msgstr "Победа идёт на пользу: {winner} заметно прибавляет в мастерстве!"
+
+msgid "The wise man talks about the importance of being {}."
+msgstr "Мудрец говорит о важности качества: {}."
+
+msgid "Thief: \"Can you stop the infamous {}?\""
+msgstr "Вор: \"А сумеешь ли ты остановить пресловутого {}?\""
+
+msgid "This conversation changes {}'s life."
+msgstr "Этот разговор меняет жизнь {}."
+
 msgid "Through countless hours of training, {name} finally grasps the deepest secret of {style} — {tech}."
 msgstr "После бесчисленных часов тренировок {name} наконец постигает глубочайшую тайну стиля {style} — {tech}."
 
-#: kf_lib/actors/human_controlled_fighter.py:87
+msgid "Tie!"
+msgstr "Ничья!"
+
 msgid "Tier"
 msgstr "Ранг"
 
-#: kf_lib/actors/human_controlled_fighter.py:93
 msgid "Time"
 msgstr "Время"
 
-#: kf_lib/fighting/fight/_base_fight.py:381
 msgid "Timeline"
 msgstr "Хронология"
 
-#: kf_lib/kung_fu/boosts.py:165
+msgid "To open a martial arts school, {} needs to make the initial outlay of {} coins."
+msgstr "Чтобы открыть школу боевых искусств, {} нужно внести первоначальный взнос: {} монет."
+
+msgid "Too bad {} doesn't have enough money to treat the wise man to lunch and talk to him."
+msgstr "Жаль, что у {} недостаточно денег, чтобы угостить мудреца обедом и поговорить с ним."
+
+msgid "Tourn.won"
+msgstr "Турн.выигр."
+
+msgid "Tournament"
+msgstr "Турнир"
+
+msgid "Trades {item} for a {reward}."
+msgstr "Обменивает {item} на {reward}."
+
+msgid "traits: {}"
+msgstr "черты: {}"
+
+msgid "Treat the wise man to lunch and talk to him?"
+msgstr "Угостить мудреца обедом и поговорить с ним?"
+
 msgid "unblock."
 msgstr "неблок."
 
-#: kf_lib/kung_fu/boosts.py:165
 msgid "unblockable attack"
 msgstr "неблокируемая атака"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:374
 msgid "UNBLOCKABLE!"
 msgstr "НЕБЛОКИРУЕМЫЙ!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:307
+msgid "undoubtedly "
+msgstr "несомненно "
+
+msgid "Use the {} medicine?"
+msgstr "Использовать лекарство: {}?"
+
+msgid "Used:ft,med"
+msgstr "Исп:еда,лек"
+
+msgid "Uses medicine to recover."
+msgstr "Использует лекарство, чтобы восстановиться."
+
 msgid "uses the environment!"
 msgstr "использует окружение!"
 
-#: kf_lib/kung_fu/boosts.py:118
+msgid "Uses {item}."
+msgstr "Использует: {item}."
+
+msgid "Visit other masters"
+msgstr "Посетить других мастеров"
+
+msgid "Visit spouse"
+msgstr "Навестить супруга(у)"
+
+msgid "Visit sweetheart"
+msgstr "Навестить вторую половинку"
+
+msgid "Visits other masters to promote the idea of a kung-fu federation."
+msgstr "Навещает других мастеров, продвигая идею федерации кунг-фу."
+
+msgid "vs"
+msgstr "против"
+
 msgid "vs crowd"
 msgstr "против толпы"
 
-#: kf_lib/fighting/fight/_helpers.py:34
+msgid "Walks away from the brawl."
+msgstr "Уходит прочь от драки."
+
+msgid "way "
+msgstr "куда "
+
 msgid "WEAPON"
 msgstr "ОРУЖИЕ"
 
-#: kf_lib/kung_fu/boosts.py:180
 msgid "weapon efficiency"
 msgstr "эффективность оружия"
 
-#: kf_lib/kung_fu/boosts.py:180
 msgid "weapons"
 msgstr "оружие"
 
-#: kf_lib/game/_new_game.py:37
+msgid "When the dust settles, {name} is the only one still standing in the square. Somebody in the crowd starts a slow clap..."
+msgstr "Когда пыль оседает, на площади на ногах остаётся только {name}. Кто-то в толпе начинает медленно хлопать..."
+
+msgid "When the dust settles, {p_name} stands alone among the broken tables. The underworld of {town} has been decapitated in a single evening. The town breathes a sigh of relief — and looks at {p_name} with new respect."
+msgstr "Когда пыль оседает, {p_name} один стоит среди переломанных столов. За один вечер преступный мир {town} обезглавлен. Город выдыхает с облегчением — и смотрит на {p_name} с новым уважением."
+
+msgid "Which item?"
+msgstr "Какой предмет?"
+
+msgid "While walking around town, {p_name} bumps into {who} — quite literally. After a moment of confusion, they get to talking. What a charming person! Turns out, {name} is also a martial artist."
+msgstr "Гуляя по городу, {p_name} буквально сносит с ног прохожего ({who}). Минутное замешательство — и они уже разговаривают. Какой обаятельный человек! Оказывается, {name} тоже занимается боевыми искусствами."
+
+msgid "Who wins?"
+msgstr "Кто победит?"
+
+msgid "Wins the All-Schools Tournament with {}."
+msgstr "Побеждает в Турнире всех школ ({})"
+
+msgid "Wins the den brawl and recovers the stolen money."
+msgstr "Побеждает в драке в притоне и возвращает украденные деньги."
+
+msgid "Wins the Grand Melee."
+msgstr "Побеждает в Великой Свалке."
+
+msgid "Wins the Night Melee."
+msgstr "Побеждает в Ночной Свалке."
+
+msgid "Wins the Saint's Day riot."
+msgstr "Побеждает в заварушке на День Святого."
+
+msgid "Wins the tournament"
+msgstr "Выигрывает турнир"
+
+msgid "Wins {}."
+msgstr "Выигрывает {}."
+
+msgid "Wins,KOs"
+msgstr "Победы,нокауты"
+
 msgid "Woman"
 msgstr "Женщина"
 
-#: kf_lib/ui/_menu.py:76
+msgid "Woman: Good day, Master {name}!"
+msgstr "Женщина: Добрый день, мастер {name}!"
+
+msgid "Word of {name}'s battle royale triumph reaches a reclusive master living in the mountains near {town}. A letter arrives, written in elegant script: \"You have proven you can stand alone against many. But can you pass the Trial of Eight Gates? Come.\""
+msgstr "Весть о триумфе {name} в большой свалке доходит до затворника-мастера, живущего в горах близ {town}. Приходит письмо, написанное изящным почерком: \"Вы доказали, что можете стоять одни против многих. Но сможете ли пройти Испытание Восьми Врат? Приходите.\""
+
 msgid "yes"
 msgstr "да"
 
-#: kf_lib/fighting/fight/_base_fight.py:416
+msgid "You don't have any students yet."
+msgstr "У вас пока нет учеников."
+
+msgid "You know, I need {} coins to buy medicine for my sick grandma. Wanna share?"
+msgstr "Понимаете, мне нужно {} монет на лекарство для больной бабушки. Не поделитесь?"
+
+msgid "Young man: \"Master {}! Please accept me as your student!\""
+msgstr "Юноша: \"Мастер {}! Прошу вас, примите меня в ученики!\""
+
+msgid "Young men: \"Master {}! We want to learn kung-fu. Please show us your skill!\""
+msgstr "Юноши: \"Мастер {}! Мы хотим изучать кунг-фу. Пожалуйста, покажите нам своё мастерство!\""
+
+msgid "Young men: \"Sorry, Master, we'll learn kung-fu elsewhere.\""
+msgstr "Юноши: \"Простите, мастер, мы будем учиться кунг-фу в другом месте.\""
+
+msgid "Young men: \"Thank you Master, now we see that you're very strong! Please teach us to be strong too!\""
+msgstr "Юноши: \"Спасибо, мастер, теперь мы видим, как вы сильны! Пожалуйста, научите нас, как стать такими же сильными!\""
+
+msgid ""
+"Your kung-fu is very good; however, I can help you improve it.\"\n"
+"{master} teaches {name} some of his moves."
+msgstr ""
+"Ваше кунг-фу очень хорошо, но я могу помочь вам его улучшить.\"\n"
+"{master} учит {name} некоторым своим приёмам."
+
+msgid "Your school will teach {}."
+msgstr "В вашей школе будут учить стилю: {}."
+
+msgid "{!r} is a method, not overwriting it!"
+msgstr "{!r} — это метод, не перезаписываю его!"
+
+msgid ""
+"{b_name} has challenged some martial artists in {town}, yet again. Today {p_name} watched him fight, in a few of his 'friendly matches', which didn't seem all that friendly. In the last fight, {b_name} defeated three opponents at once, injuring them badly. He is a formidable adversary... \n"
+"By watching {b_name} fight {p_name} gained some valuable insights into the foreigner's technique."
+msgstr ""
+"{b_name} в очередной раз вызвал на бой мастеров боевых искусств в городе {town}. Сегодня {p_name} наблюдал за ним в нескольких его 'товарищеских поединках', которые не выглядели особо товарищескими. В последнем бою {b_name} победил сразу троих противников, тяжело их ранив. Он грозный соперник... \n"
+"Наблюдая за боем {b_name}, {p_name} почерпнул ценные сведения о технике иностранца."
+
+msgid "{b_name} is now {p_name}' enemy."
+msgstr "{b_name} теперь враг {p_name}."
+
+msgid ""
+"{b_name}: \"Old man, are you trying to make a fool of me? Where is your daughter?\"\n"
+"Old Man: \"Please, sir, have mercy...\"\n"
+"{p_name}: \"Wait, {b_name}, let us discuss this like civil men!\""
+msgstr ""
+"{b_name}: \"Старик, ты что, меня за дурака держишь? Где твоя дочь?\"\n"
+"Старик: \"Прошу вас, господин, смилуйтесь...\"\n"
+"{p_name}: \"Погодите, {b_name}, давайте обсудим это как цивилизованные люди!\""
+
+msgid "{bname} gives {name} a free kung-fu lesson."
+msgstr "{bname} даёт {name} бесплатный урок кунг-фу."
+
+msgid "{bname}: \"Still got a lot to learn, huh...\""
+msgstr "{bname}: \"Тебе ещё многому учиться, да...\""
+
+msgid "{bname}: \"Within the four seas, all men are brothers. Let me also teach you this secret technique...\""
+msgstr "{bname}: \"В пределах четырёх морей все люди — братья. Позвольте мне также научить вас этой секретной технике...\""
+
+msgid "{bname}: \"Your skill is very impressive! Let's practice again some time.\""
+msgstr "{bname}: \"Ваше мастерство впечатляет! Давайте как-нибудь потренируемся ещё.\""
+
+msgid "{boss} finds {name} after the fight: \"The crowd LOVED you! How about the Night Melee? Armed fighters, no questions asked, and the purse is {purse} coin! But let's keep it quiet — if your master finds out...\""
+msgid_plural "{boss} finds {name} after the fight: \"The crowd LOVED you! How about the Night Melee? Armed fighters, no questions asked, and the purse is {purse} coins! But let's keep it quiet — if your master finds out...\""
+msgstr[0] "{boss} находит {name} после боя: \"Толпа от тебя в ВОСТОРГЕ! Как насчёт Ночной Свалки? Бойцы с оружием, никаких вопросов, а куш — {purse} монета! Только тихо — если твой мастер узнает...\""
+msgstr[1] "{boss} находит {name} после боя: \"Толпа от тебя в ВОСТОРГЕ! Как насчёт Ночной Свалки? Бойцы с оружием, никаких вопросов, а куш — {purse} монеты! Только тихо — если твой мастер узнает...\""
+msgstr[2] "{boss} находит {name} после боя: \"Толпа от тебя в ВОСТОРГЕ! Как насчёт Ночной Свалки? Бойцы с оружием, никаких вопросов, а куш — {purse} монет! Только тихо — если твой мастер узнает...\""
+
+msgid "{boss}: \"Good. Now get out of my sight!\""
+msgstr "{boss}: \"Хорошо. А теперь убирайся с глаз долой!\""
+
+msgid ""
+"{boss}: \"I always knew you are no match for my heavenly kung-fu!\"\n"
+"Did {name} really lose to {boss}?..\n"
+"Needless to say, the crook disappears with all the treasures... Too bad even {name} couldn't stop him."
+msgstr ""
+"{boss}: \"Я всегда знал, что ты не ровня моему небесному кунг-фу!\"\n"
+"Неужели {name} действительно проиграл {boss}?..\n"
+"Нечего и говорить: мошенник исчезает со всеми сокровищами... Жаль, что даже {name} не смог его остановить."
+
+msgid ""
+"{boss}: \"I should hire better bodyguards... What idiots! You are lucky I don't have time to beat you up myself!\" \n"
+"{name}: \"...\""
+msgstr ""
+"{boss}: \"Надо бы нанять телохранителей получше... Что за идиоты! Тебе повезло, что у меня нет времени отделать тебя самому!\" \n"
+"{name}: \"...\""
+
+msgid "{boss}: \"That will teach you! Next time just pay."
+msgstr "{boss}: \"Это тебе урок! В следующий раз просто плати."
+
+msgid "{boss}: \"This can't be... They were supposed to...\""
+msgstr "{boss}: \"Не может быть... Они же должны были...\""
+
+msgid "{boss}: You..."
+msgstr "{boss}: Ты..."
+
+msgid "{enemy} is no longer {name}' enemy."
+msgstr "{enemy} больше не враг для {name}."
+
+msgid "{enemy} is now {name}' enemy."
+msgstr "Теперь {name} и {enemy} — враги."
+
+msgid "{f_name} of {style}"
+msgstr "{f_name} из {style}"
+
 msgid "{group} win."
 msgstr "{group} побеждают."
 
-#: kf_lib/fighting/fight/_base_fight.py:447
+msgid "{helper} joins the fight on {name}'s side."
+msgstr "{helper} вступает в бой на стороне {name}."
+
+msgid "{item} ({descr}) ({count})"
+msgstr "{item} ({descr}) ({count})"
+
+msgid "{item}: {delta}({total})"
+msgstr "{item}: {delta}({total})"
+
+msgid "{m_name}: \"Well done, {p_name}. You are now the best student of our school. You make me proud — but remember, there is always more to learn.\""
+msgstr "{m_name}: \"Молодец, {p_name}. Теперь ты лучший ученик нашей школы. Я горжусь тобой — но помни: всегда есть чему учиться.\""
+
+msgid "{m_name}: \"{p_name}, I can see that you have mastered some aspects of {style}. However, you must keep practicing as you still have a long way to go.\""
+msgstr "{m_name}: \"{p_name}, я вижу, что вы освоили некоторые аспекты {style}. Но вам нужно продолжать тренироваться — вам ещё долго идти.\""
+
+msgid "{master} forgives {name} and lifts the ban."
+msgstr "{master} прощает {name} и снимает запрет."
+
+msgid "{master} hears about this and vows to make {name} pay for the slander."
+msgstr "{master} слышит об этом и клянётся заставить {name} заплатить за клевету."
+
+msgid "{master} is now {name}' enemy."
+msgstr "{master} теперь враг {name}."
+
+msgid "{master} joins the fight on {name}'s side."
+msgstr "{master} вступает в бой на стороне {name}."
+
+msgid "{master} of {school} joins the federation."
+msgstr "{master} из школы {school} вступает в федерацию."
+
+msgid ""
+"{master} summons {name}.\n"
+"{master}: \"So. The WHOLE town is talking about how my student rolled in the dirt for coins like a common wrestler! A hundred horse stances! NOW!\"\n"
+"{name} spends the whole evening holding the horse stance, sweating and repenting."
+msgstr ""
+"{master} вызывает к себе {name}.\n"
+"{master}: \"Так. ВЕСЬ город только и говорит о том, как мой ученик валялся в грязи за монеты, словно заезжий борец! Сто стоек всадника! НЕМЕДЛЕННО!\"\n"
+"{name} весь вечер простаивает в стойке всадника, потея и раскаиваясь."
+
+msgid "{master}: \"And that is not all! You are BANNED from this school until you learn some humility. Do not show your face here!\""
+msgstr "{master}: \"И это ещё не всё! Тебе ЗАПРЕЩЕНО появляться в этой школе, пока ты не научишься смирению. Не попадайся мне здесь на глаза!\""
+
+msgid "{master}: \"From this day, {school} stands with you!\""
+msgstr "{master}: \"С этого дня {school} с вами!\""
+
+msgid "{master}: \"Hmm... You do look sincere. Very well, I forgive you. But if I EVER hear about you fighting for money again...!\""
+msgstr "{master}: \"Хм... Вы и правда выглядите искренним. Ладно, я прощаю вас. Но если я ЕЩЁ РАЗ услышу, что вы сражаетесь за деньги...!\""
+
+msgid "{master}: \"You still don't get it, do you? Come back when you have learned some humility!\""
+msgstr "{master}: \"Ты так ничего и не понял, верно? Возвращайся, когда научишься смирению!\""
+
+msgid "{mates}, who were passing by, join the fight on {name}'s side."
+msgstr "{mates}, проходившие мимо, вступают в бой на стороне {name}."
+
 msgid "{min} min. {sec} sec."
 msgstr "{min} мин. {sec} сек."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:324
 msgid "{n1} {verb} {n2} while attacking"
 msgstr "{n1} {verb} {n2} в атаке"
 
-#: kf_lib/actors/fighter/_fight_actions.py:319
 msgid "{n1} {verb} {n2} while blocking"
 msgstr "{n1} {verb} {n2} в блоке"
 
-#: kf_lib/actors/fighter/_fight_actions.py:144 kf_lib/actors/fighter/_fight_actions.py:159
 msgid "{n1}: {move} @ {n2}"
 msgstr "{n1}: {move} @ {n2}"
 
-#: kf_lib/actors/fighter/_fight_actions.py:50
 msgid "{n1}{fury}: {move} @ {n2}"
 msgstr "{n1}{fury}: {move} @ {n2}"
 
-#: kf_lib/fighting/fight/_base_fight.py:178
 msgid "{name} ({style})"
 msgstr "{name} ({style})"
 
-#: kf_lib/game/_playing.py:74 kf_lib/game/_state_menu.py:93
+msgid "{name} accidentally bumps into a wanted criminal, {c_name}."
+msgstr "{name} случайно сталкивается с разыскиваемым преступником: {c_name}."
+
+msgid "{name} accidentally bumps into {boss}. Although {name} apologizes, {boss} is enraged. \"Teach this fool a good lesson!\" he orders his bodyguards. \"Unless...\" he looks at {name}, \"...you want to pay a fine of {bribe} coin for insulting an official?\""
+msgid_plural "{name} accidentally bumps into {boss}. Although {name} apologizes, {boss} is enraged. \"Teach this fool a good lesson!\" he orders his bodyguards. \"Unless...\" he looks at {name}, \"...you want to pay a fine of {bribe} coins for insulting an official?\""
+msgstr[0] "{name} случайно врезается в {boss}. Хотя {name} извиняется, {boss} приходит в ярость. \"Проучите этого болвана как следует!\" — приказывает он телохранителям. \"Хотя...\" — он смотрит на {name}, \"...не хочешь ли заплатить штраф в {bribe} монету за оскорбление чиновника?\""
+msgstr[1] "{name} случайно врезается в {boss}. Хотя {name} извиняется, {boss} приходит в ярость. \"Проучите этого болвана как следует!\" — приказывает он телохранителям. \"Хотя...\" — он смотрит на {name}, \"...не хочешь ли заплатить штраф в {bribe} монеты за оскорбление чиновника?\""
+msgstr[2] "{name} случайно врезается в {boss}. Хотя {name} извиняется, {boss} приходит в ярость. \"Проучите этого болвана как следует!\" — приказывает он телохранителям. \"Хотя...\" — он смотрит на {name}, \"...не хочешь ли заплатить штраф в {bribe} монет за оскорбление чиновника?\""
+
+msgid "{name} accidentally finds an item: {item}."
+msgstr "{name} случайно находит предмет: {item}."
+
+msgid "{name} accidentally loses his {item}."
+msgstr "{name} случайно теряет предмет: {item}."
+
+msgid "{name} accidentally overhears a conversation between {boss} and some foreigner. {name} could swear he heard the words 'treasures', 'foreign partners' and 'good money'. Could it be that {boss} is somehow connected with national treasures being stolen? Too bad {name} lacks solid proof..."
+msgstr "{name} случайно подслушивает разговор между {boss} и каким-то иностранцем. {name} готов поклясться, что слышал слова 'сокровища', 'иностранные партнёры' и 'хорошие деньги'. Неужели {boss} как-то связан с кражей национальных сокровищ? Жаль, что у {name} нет веских доказательств..."
+
+msgid "{name} already has {max_num} friends — too many to keep up with. {obj} remains a friendly acquaintance."
+msgstr "У {name} уже слишком много друзей ({max_num}) — за всеми не уследишь. {obj} остаётся добрым знакомым."
+
+msgid "{name} and {sw} welcome a baby daughter!"
+msgstr "У {name} и {sw} рождается дочка!"
+
+msgid "{name} and {sw} welcome a baby son!"
+msgstr "У {name} и {sw} рождается сын!"
+
+msgid "{name} becomes {trait}."
+msgstr "{name} получает черту характера: {trait}."
+
 msgid "{name} becomes {victory}!"
 msgstr "{name} получает титул: {victory}!"
 
-#: kf_lib/game/_base_game.py:132
+msgid "{name} brings a small gift. {sw} is delighted!"
+msgstr "{name} приносит небольшой подарок. {sw} в восторге!"
+
+msgid "{name} brings home some money. (+{amount} coins)"
+msgstr "{name} приносит домой немного денег. (+{amount} монет)"
+
+msgid "{name} cannot resist the free wine. It would be rude not to, right?"
+msgstr "{name} не может устоять перед бесплатным вином. Отказаться было бы невежливо, правда?"
+
+msgid "{name} climbs out of the pile of bodies, pockets {n} coin (\"EXACTLY mine, I counted\"), and also grabs {item} from the table. Finders keepers!"
+msgid_plural "{name} climbs out of the pile of bodies, pockets {n} coins (\"EXACTLY mine, I counted\"), and also grabs {item} from the table. Finders keepers!"
+msgstr[0] "{name} выбирается из груды тел, прикарманивает {n} монету (\"РОВНО моя, я считал\"), а также прибирает к рукам предмет: {item}. Кто нашёл — того и вещь!"
+msgstr[1] "{name} выбирается из груды тел, прикарманивает {n} монеты (\"РОВНО мои, я считал\"), а также прибирает к рукам предмет: {item}. Кто нашёл — того и вещь!"
+msgstr[2] "{name} выбирается из груды тел, прикарманивает {n} монет (\"РОВНО мои, я считал\"), а также прибирает к рукам предмет: {item}. Кто нашёл — того и вещь!"
+
+msgid ""
+"{name} collects the money from all those willing to buy his Elixir and quickly walks away.\n"
+"Later, the \"Golden Magnificent Elixir\" turns out to be a simple {item}."
+msgstr ""
+"{name} собирает деньги со всех желающих купить его Эликсир и быстро уходит.\n"
+"Позже выясняется, что \"Золотой Великолепный Эликсир\" — это просто {item}."
+
+msgid "{name} comes to school to beg {master} for forgiveness."
+msgstr "{name} приходит в школу, чтобы умолять {master} о прощении."
+
+msgid "{name} decides to stay sober. Just in case."
+msgstr "{name} решает остаться трезвым. На всякий случай."
+
+msgid "{name} decides to wait a little longer."
+msgstr "{name} решает подождать ещё немного."
+
+msgid "{name} doesn't have enough money to enter."
+msgstr "{name} не может заплатить взнос — денег не хватает."
+
+msgid "{name} doesn't have enough money."
+msgstr "У {name} недостаточно денег."
+
+msgid "{name} earns a {prize} prize."
+msgstr "{name} получает приз: {prize}."
+
+msgid "{name} earns a {reward} reward."
+msgstr "{name} получает награду: {reward}."
+
+msgid "{name} encounters the four teenage mutant ninja turtles travelling in time."
+msgstr "{name} встречает четырёх черепашек-ниндзя — мутантов-подростков, путешествующих во времени."
+
+msgid "{name} feels too greedy to pay this ridiculous \"fine\": \"You are no better than a robber!\""
+msgstr "{name} слишком жадничает, чтобы платить этот нелепый \"штраф\": \"Ты ничем не лучше грабителя!\""
+
+msgid "{name} gets injured during training."
+msgstr "{name} получает травму на тренировке."
+
+msgid "{name} gets {item} from the grateful shop owner."
+msgstr "{name} получает {item} от благодарного хозяина лавки."
+
+msgid "{name} grabs an improvised weapon!"
+msgstr "{name} хватает подручное оружие!"
+
+msgid "{name} has a strange dream..."
+msgstr "{name} видит странный сон..."
+
+msgid "{name} has already started!"
+msgstr "{name} уже начался!"
+
+msgid "{name} has no accomplishments yet."
+msgstr "{name}: достижений пока нет."
+
+msgid "{name} has no money for the damages and has to endure a public scolding by the elders."
+msgstr "У {name} нет денег на возмещение ущерба, и ему приходится стерпеть публичную отчитку старейшин."
+
+msgid ""
+"{name} is ambushed by his enemy {enemy} with {n} thug!!\n"
+"{enemy}: \"Seize this fellow and give him a good beating!\""
+msgid_plural ""
+"{name} is ambushed by his enemy {enemy} with {n} thugs!!\n"
+"{enemy}: \"Seize this fellow and give him a good beating!\""
+msgstr[0] ""
+"На {name} нападает его враг {enemy} — а с ним {n} головорез!!\n"
+"{enemy}: \"Хватайте этого типа и задайте ему хорошую трёпку!\""
+msgstr[1] ""
+"На {name} нападает его враг {enemy} — а с ним {n} головореза!!\n"
+"{enemy}: \"Хватайте этого типа и задайте ему хорошую трёпку!\""
+msgstr[2] ""
+"На {name} нападает его враг {enemy} — а с ним {n} головорезов!!\n"
+"{enemy}: \"Хватайте этого типа и задайте ему хорошую трёпку!\""
+
+msgid "{name} is no longer {trait}."
+msgstr "{name} больше не {trait}."
+
 msgid "{name} is now number {rank} at his school."
 msgstr "{name} теперь номер {rank} в своей школе."
 
-#: kf_lib/actors/human_controlled_fighter.py:271
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have, so today I can trust you with the inner teaching of our school. The style the outside world knows as {public_style} has a true name, whispered only to the most trusted disciples: {style}! And with it comes the secret technique — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -1027,7 +2549,6 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты, поэтому сегодня я могу доверить тебе внутреннее учение нашей школы. У стиля, который внешний мир знает как {public_style}, есть истинное имя, которое шепотом передают лишь самым доверенным ученикам: {style}! А вместе с ним — секретная техника: {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
-#: kf_lib/actors/human_controlled_fighter.py:289
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have. It is time you learned the secret technique of {style} — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -1035,50 +2556,693 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты. Пришло время узнать секретную технику стиля {style} — {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
-#: kf_lib/actors/fighter/_techs.py:96
+msgid "{name} is the last one standing again! Easy money!"
+msgstr "{name} снова остаётся последним на ногах! Лёгкие деньги!"
+
+msgid "{name} is the last one standing! The crowd goes wild!"
+msgstr "На ногах остаётся только {name}! Толпа ликует!"
+
+msgid "{name} is {status} and needs {days} day to recover."
+msgid_plural "{name} is {status} and needs {days} days to recover."
+msgstr[0] "{name}: {status}. Для восстановления нужен {days} день."
+msgstr[1] "{name}: {status}. Для восстановления нужно {days} дня."
+msgstr[2] "{name}: {status}. Для восстановления нужно {days} дней."
+
 msgid "{name} learns {tech} ({descr})."
 msgstr "{name} изучает: {tech} ({descr})."
 
-#: kf_lib/fighting/fight/_base_fight.py:418
+msgid "{name} learns {tech}."
+msgstr "{name} изучает технику: {tech}."
+
+msgid ""
+"{name} lv.{lv} exp:{exp}/{next_lv}\n"
+"money:{money}\n"
+msgstr ""
+"{name} ур.{lv} опыт:{exp}/{next_lv}\n"
+"деньги:{money}\n"
+
+msgid ""
+"{name} meets a craftsman.\n"
+"Craftsman: \"Ah, a martial artist! You're in luck! I'm selling this excellent {item} ({descr}). It's only {price} coins! Don't worry, if you don't have enough money right now, you can pay the rest later. Will you buy it?\""
+msgstr ""
+"{name} встречает ремесленника.\n"
+"Ремесленник: \"А, мастер боевых искусств! Вам повезло! Продаю отличный товар: {item} ({descr}). Всего {price} монет! Не беспокойтесь, если сейчас не хватает денег, — остаток доплатите позже. Берёте?\""
+
+msgid "{name} meets a local gossipmonger. Pay {n} coin to hear the latest rumors?"
+msgid_plural "{name} meets a local gossipmonger. Pay {n} coins to hear the latest rumors?"
+msgstr[0] "{name} встречает местного сплетника. Заплатить {n} монета, чтобы услышать свежие слухи?"
+msgstr[1] "{name} встречает местного сплетника. Заплатить {n} монеты, чтобы услышать свежие слухи?"
+msgstr[2] "{name} встречает местного сплетника. Заплатить {n} монет, чтобы услышать свежие слухи?"
+
+msgid ""
+"{name} meets a street merchant.\n"
+"Merchant: \"Please buy this {item}{descr_s}!\"\n"
+"Buy it for {price} coins?"
+msgstr ""
+"{name} встречает уличного торговца.\n"
+"Торговец: \"Купите, пожалуйста, {item}{descr_s}!\"\n"
+"Купить за {price} монет?"
+
+msgid ""
+"{name} meets a traveling book seller.\n"
+"Book Seller: \"Ah, a martial artist! I'm selling this wonderful kung-fu book for only {price} coins! Its secret and powerful techniques will make you a legendary fighter! What say you?\"\n"
+"Buy it?"
+msgstr ""
+"{name} встречает странствующего книготорговца.\n"
+"Книготорговец: \"А, мастер единоборств! Продаю чудесную книгу о кунг-фу всего за {price} монет! Её секретные и могущественные техники сделают вас легендарным бойцом! Что скажете?\"\n"
+"Купить её?"
+
+msgid "{name} pays {cost} c."
+msgstr "{name} платит {cost} мон."
+
+msgid "{name} pays {} coin for the damages. Honor is kept, if not the money."
+msgid_plural "{name} pays {} coins for the damages. Honor is kept, if not the money."
+msgstr[0] "{name} платит {} монету за ущерб. Честь сохранена, хотя денег и нет."
+msgstr[1] "{name} платит {} монеты за ущерб. Честь сохранена, хотя денег и нет."
+msgstr[2] "{name} платит {} монет за ущерб. Честь сохранена, хотя денег и нет."
+
+msgid "{name} reaches lv.{lv}."
+msgstr "{name} достигает ур.{lv}."
+
+msgid "{name} sees a crowd reading the Grand Melee posters. {boss} is boasting to anyone who will listen: \"Real fighting, no masters wagging their fingers! Entry fee {fee} coin, the purse is {purse}! What do you say, friend? You look like you can throw a punch!\""
+msgid_plural "{name} sees a crowd reading the Grand Melee posters. {boss} is boasting to anyone who will listen: \"Real fighting, no masters wagging their fingers! Entry fee {fee} coins, the purse is {purse}! What do you say, friend? You look like you can throw a punch!\""
+msgstr[0] "{name} видит толпу, читающую плакаты о Большой свалке. {boss} хвастается всем, кто готов слушать: \"Настоящий бой, и никаких мастеров, грозящих пальцем! Взнос за участие: {fee} монета, призовые: {purse}! Что скажете, друг? Вы похожи на того, кто умеет махать кулаками!\""
+msgstr[1] "{name} видит толпу, читающую плакаты о Большой свалке. {boss} хвастается всем, кто готов слушать: \"Настоящий бой, и никаких мастеров, грозящих пальцем! Взнос за участие: {fee} монеты, призовые: {purse}! Что скажете, друг? Вы похожи на того, кто умеет махать кулаками!\""
+msgstr[2] "{name} видит толпу, читающую плакаты о Большой свалке. {boss} хвастается всем, кто готов слушать: \"Настоящий бой, и никаких мастеров, грозящих пальцем! Взнос за участие: {fee} монет, призовые: {purse}! Что скажете, друг? Вы похожи на того, кто умеет махать кулаками!\""
+
+msgid ""
+"{name} sees a pompous official surrounded by his bodyguards. As they walk down {town}'s main street, they push walkers-by around and otherwise behave rudely.\n"
+"Some old man: \"Fear not officials, except those who officiate over you! This is {boss}. Too bad he's so corrupt and arrogant... He's a shame to our town!\""
+msgstr ""
+"{name} видит надменного чиновника в окружении телохранителей. Шагая по главной улице {town}, они расталкивают прохожих и всячески грубят.\n"
+"Какой-то старик: \"Не бойся чиновника, кроме того, что чиновничит над тобой! Это {boss}. Как жаль, что он такой продажный и высокомерный... Позор нашего города!\""
+
+msgid "{name} sees a travelling kung-fu master demonstrating his skills in the street."
+msgstr "{name} видит странствующего мастера кунг-фу, демонстрирующего своё мастерство на улице."
+
+msgid ""
+"{name} sees some suspicious-looking men carrying crates. {name}'s intuition tells him something is fishy. He secretly follows them to find that they are taking the crates to a guarded warehouse. As {name} sneaks in, he sees that the crates are full of ancient treasures that have recently been stolen all over the country. \n"
+"Suddenly, {boss} appears with his two elite bodyguards. \n"
+"So it was him all along!.. {boss} is behind all this!.. {name} barely has time to figure this out before {boss}'s thugs jump at him..."
+msgstr ""
+"{name} замечает подозрительных людей, которые несут ящики. Интуиция подсказывает {name}, что здесь что-то нечисто. Он тайком идёт за ними и обнаруживает, что ящики относят на охраняемый склад. Проскользнув внутрь, {name} видит, что ящики полны древних сокровищ, недавно похищенных по всей стране. \n"
+"Внезапно появляется {boss} с двумя отборными телохранителями. \n"
+"Так это был он всё это время!.. За всем этим стоит {boss}!.. {name} едва успевает сообразить, что к чему, как головорезы {boss} уже бросаются на него..."
+
+msgid "{name} sees {num_al} police officers fighting {num_en} thugs!"
+msgstr "{name} видит, как {num_al} полицейских дерутся с {num_en} головорезами!"
+
+msgid "{name} sees {} man in a shop demanding 'protection' money."
+msgid_plural "{name} sees {} men in a shop demanding 'protection' money."
+msgstr[0] "{name} видит, как {} человек вымогает в лавке деньги за 'защиту'."
+msgstr[1] "{name} видит, как {} человека вымогают в лавке деньги за 'защиту'."
+msgstr[2] "{name} видит, как {} человек вымогают в лавке деньги за 'защиту'."
+
+msgid "{name} spends a quiet day at home with {sw}."
+msgstr "{name} проводит тихий день дома с {sw}."
+
+msgid "{name} spends the day practicing kung-fu with the child."
+msgstr "{name} весь день занимается кунг-фу с ребёнком."
+
+msgid "{name} spends the day with {sw}."
+msgstr "{name} проводит день с {sw}."
+
+msgid "{name} stumbles into a tavern brawl — {n} drunkard is fighting each other!"
+msgid_plural "{name} stumbles into a tavern brawl — {n} drunkards are fighting each other!"
+msgstr[0] "{name} попадает в кабацкую драку — {n} пьяница дерётся друг с другом!"
+msgstr[1] "{name} попадает в кабацкую драку — {n} пьяницы дерутся друг с другом!"
+msgstr[2] "{name} попадает в кабацкую драку — {n} пьяниц дерутся друг с другом!"
+
+msgid "{name} stumbles upon a street brawl — {n} man is fighting each other!"
+msgid_plural "{name} stumbles upon a street brawl — {n} men are fighting each other!"
+msgstr[0] "{name} натыкается на уличную драку — {n} человек дерётся!"
+msgstr[1] "{name} натыкается на уличную драку — {n} человека дерутся друг с другом!"
+msgstr[2] "{name} натыкается на уличную драку — {n} человек дерутся друг с другом!"
+
+msgid "{name} visits {master}, the master of {school}, to discuss uniting the schools of {town}."
+msgstr "{name} навещает {master}, мастера школы {school}, чтобы обсудить объединение школ в городе {town}."
+
+msgid "{name} wakes up in the alley behind the den. The pouches are gone. So is everyone. Even the table is gone."
+msgstr "{name} приходит в себя в переулке за притоном. Кошельки исчезли. Как и все. Даже стол исчез."
+
+msgid "{name} walks right into a street war between two gangs, {num_a} against {num_b} — and both sides think {name} is with the enemy!"
+msgstr "{name} попадает прямо в уличную войну двух банд: {num_a} против {num_b} — и обе стороны принимают {name} за врага!"
+
+msgid "{name} wins {money} coin with his bet!"
+msgid_plural "{name} wins {money} coins with his bet!"
+msgstr[0] "{name} выигрывает {money} монету своей ставкой!"
+msgstr[1] "{name} выигрывает {money} монеты своей ставкой!"
+msgstr[2] "{name} выигрывает {money} монет своей ставкой!"
+
 msgid "{name} wins."
 msgstr "{name} побеждает."
 
-#: kf_lib/actors/fighter/_fight_actions.py:124
 msgid "{name} {adv}blocks! ({pwr})"
 msgstr "{name} {adv}блокирует! ({pwr})"
 
-#: kf_lib/actors/fighter/_fight_actions.py:110
 msgid "{name} {adv}dodges!"
 msgstr "{name} {adv}уклоняется!"
 
-#: kf_lib/actors/fighter/_fight_actions.py:29 kf_lib/actors/fighter/_fight_actions.py:341 kf_lib/actors/fighter/_fight_actions.py:357 kf_lib/actors/fighter/_fight_actions.py:371 kf_lib/actors/fighter/_strike_mechanics.py:109 kf_lib/actors/fighter/_strike_mechanics.py:305
+msgid "{name} {exp_msg}"
+msgstr "{name} {exp_msg}"
+
 msgid "{name} {msg}"
 msgstr "{name} {msg}"
 
-#: kf_lib/actors/fighter/_quotes.py:22 kf_lib/actors/fighter/_quotes.py:33
+msgid "{name}'s accomplishments:"
+msgstr "Достижения {name}:"
+
+msgid "{name}'s items:"
+msgstr "Предметы {name}:"
+
+msgid "{name}'s student {student} wins the tournament!"
+msgstr "Ученик {name} — {student} — побеждает в турнире!"
+
+msgid "{name}'s students ({num}):"
+msgstr "Ученики {name} ({num}):"
+
+msgid "{name}, a renowned master of {style} kung-fu from a remote province, comes to {town} and stays at a local tavern."
+msgstr "{name}, прославленный мастер кунг-фу {style} из далёкой провинции, прибывает в {town} и останавливается в местной таверне."
+
+msgid "{name}, number {rank} in the {school} school, stops {pname} in the street and yells: \"My kung-fu is {color}better than yours!!\""
+msgstr "{name}, номер {rank} в школе {school}, останавливает {pname} на улице и кричит: \"Моё кунг-фу {color}лучше твоего!!\""
+
+msgid "{name}: \"Come back when you are stronger.\""
+msgstr "{name}: \"Возвращайтесь, когда станете сильнее.\""
+
+msgid "{name}: \"Curses! You are stronger than I thought...\""
+msgstr "{name}: \"Проклятье! Ты сильнее, чем я думал...\""
+
+msgid "{name}: \"Do you see now? You are not a good match for this girl.\""
+msgstr "{name}: \"Теперь видишь? Ты не пара этой девушке.\""
+
+msgid "{name}: \"Few have passed the Trial. You have earned this.\""
+msgstr "{name}: \"Немногие прошли Испытание. Вы это заслужили.\""
+
+msgid "{name}: \"Forgive me, master! You won't see me again.\""
+msgstr "{name}: \"Простите меня, мастер! Вы меня больше не увидите.\""
+
+msgid ""
+"{name}: \"Here, I happen to have one.\"\n"
+"Weirdo: \"THANKS! I'll give you this in return.\"\n"
+"With these words, the strange man rushes off. {name} is left with a {reward} in his hands, and a strong feeling of confusion."
+msgstr ""
+"{name}: \"Вот, у меня как раз есть.\"\n"
+"Чудак: \"СПАСИБО! Взамен я дам вам вот это.\"\n"
+"С этими словами странный человек убегает прочь. {name} остаётся стоять, сжимая в руках {reward}, в полном недоумении."
+
+msgid "{name}: \"Hmph! No one can beat me.\""
+msgstr "{name}: \"Хм! Никто не может меня победить.\""
+
+msgid "{name}: \"How dare you belittle the kung-fu I teach? You will pay for this!\""
+msgstr "{name}: \"Как ты смеешь унижать кунг-фу, которому я учу? Ты за это заплатишь!\""
+
+msgid "{name}: \"I am disappointed - yet again.\""
+msgstr "{name}: \"Я разочарован — в который уже раз.\""
+
+msgid "{name}: \"I can learn something from this fight.\""
+msgstr "{name}: \"Из этого боя можно кое-что почерпнуть.\""
+
+msgid "{name}: \"I didn't think I could lose...\""
+msgstr "{name}: \"Не думал, что могу проиграть...\""
+
+msgid "{name}: \"I see that you are a very brave young man."
+msgstr "{name}: \"Я вижу, что вы очень смелый молодой человек."
+
+msgid "{name}: \"Indeed remarkable! What excellent skill. I thank you for showing me that I still have something to learn.\""
+msgstr "{name}: \"Воистину замечательно! Какое превосходное мастерство. Благодарю вас — вы показали мне, что мне ещё есть чему учиться.\""
+
+msgid "{name}: \"It is no good, the police are coming! The people here are not hospitable at all. It is time for {name} to move on to the next town!\""
+msgstr "{name}: \"Ничего не выйдет, полиция уже идёт! Здешние люди совсем не гостеприимны. {name} пора двигаться в следующий город!\""
+
+msgid "{name}: \"It was the {style} school! Their students started it!\" The elders nod — they never liked those guys anyway."
+msgstr "{name}: \"Это была школа {style}! Их ученики всё начали!\" Старейшины кивают — они и без того недолюбливали этих ребят."
+
+msgid "{name}: \"Let me help you, dear!\""
+msgstr "{name}: \"Позволь, я помогу тебе, любовь моя!\""
+
+msgid "{name}: \"Let me help, Master!\""
+msgstr "{name}: \"Позвольте помочь, мастер!\""
+
+msgid "{name}: \"No, you are not ready yet. Practice some more.\""
+msgstr "{name}: \"Нет, ты ещё не готов. Тренируйся дальше.\""
+
+msgid ""
+"{name}: \"Now, if you want to become as strong as I am and cure all your diseases, buy this Golden Magnificent Elixir. It's only {price} coins\".\n"
+"This seems a little fishy... Could be the real thing though. Buy it?"
+msgstr ""
+"{name}: \"Итак, если вы хотите стать таким же сильным, как я, и исцелить все свои болезни, купите этот Золотой Великолепный Эликсир. Всего {price} монет\".\n"
+"Выглядит немного подозрительно... Но, может быть, это настоящее лекарство. Купить?"
+
+msgid "{name}: \"Now, who dares to challenge me? It costs {cost} coins - if you win, you'll get twice as much!\""
+msgstr "{name}: \"Ну, кто осмелится бросить мне вызов? Ставка: {cost} монет - если выиграете, получите вдвое больше!\""
+
+msgid "{name}: \"Please forgive me! I swear you'll never see me again!\""
+msgstr "{name}: \"Прошу, простите меня! Клянусь, вы больше никогда меня не увидите!\""
+
+msgid "{name}: \"Sorry, I can't help you."
+msgstr "{name}: \"Простите, я не могу вам помочь."
+
+msgid "{name}: \"What amazing kung-fu! Even though I lost, I feel that my technique has improved\""
+msgstr "{name}: \"Какое потрясающее кунг-фу! Хоть я и проиграл, чувствую, что моя техника стала лучше\""
+
+msgid "{name}: \"What amazing kung-fu! Even though I lost, I feel that my technique has improved.\""
+msgstr "{name}: \"Какое потрясающее кунг-фу! Несмотря на поражение, я чувствую, что моя техника стала лучше.\""
+
+msgid "{name}: \"What amazing kung-fu! I feel that my technique has improved\""
+msgstr "{name}: \"Какое потрясающее кунг-фу! Я чувствую, что моя техника улучшилась"
+
+msgid "{name}: \"What great good fortune that I could meet this fine man today. However, I spent too much energy in this friendly sparring. Now I need some good rest.\""
+msgstr "{name}: \"Какая удача — встретить сегодня такого замечательного человека. Впрочем, в этом дружеском спарринге я потратил слишком много сил. Теперь мне нужен хороший отдых.\""
+
+msgid "{name}: \"Why should the schools follow you? Prove yourself first.\""
+msgstr "{name}: \"Почему школы должны идти за вами? Сначала докажите, чего вы стоите.\""
+
+msgid "{name}: \"Words are wind. Show me your kung-fu!\""
+msgstr "{name}: \"Слова — это ветер. Покажите мне ваше кунг-фу!\""
+
+msgid "{name}: \"Yes, you ARE ready!\""
+msgstr "{name}: \"Да, ты ДЕЙСТВИТЕЛЬНО готов!\""
+
+msgid "{name}: \"You haven't seen the last of me!\""
+msgstr "{name}: \"Вы обо мне ещё услышите!\""
+
+msgid "{name}: \"Your reputation precedes you... Let the schools unite.\""
+msgstr "{name}: \"Ваша репутация идёт впереди вас... Пусть школы объединятся.\""
+
 msgid "{name}: \"{q}\""
 msgstr "{name}: \"{q}\""
 
-#: kf_lib/actors/human_controlled_fighter.py:255
+msgid "{name}: \"{sw}, will you marry me?\""
+msgstr "{name}: \"{sw}, ты согласишься связать со мной судьбу?\""
+
 msgid "{name}: *LEVEL UP*"
 msgstr "{name}: *НОВЫЙ УРОВЕНЬ*"
 
-#: kf_lib/fighting/fight/_base_fight.py:471
 msgid "{name}: strikes {landed}/{thrown} landed ({accuracy}), damage dealt {dam}, criticals {crits}, epics {epics}, moves: {moves}"
 msgstr "{name}: удары {landed}/{thrown} попали ({accuracy}), нанесено урона {dam}, критических {crits}, эпичных {epics}, приёмы: {moves}"
 
-#: kf_lib/fighting/fight/_base_fight.py:252
+msgid "{name}: {banner}"
+msgstr "{name}: {banner}"
+
+msgid "{name}: {bet} coin says {opponent} wins!"
+msgid_plural "{name}: {bet} coins says {opponent} wins!"
+msgstr[0] "{name}: ставлю {bet} монету — победит {opponent}!"
+msgstr[1] "{name}: ставлю {bet} монеты — победит {opponent}!"
+msgstr[2] "{name}: ставлю {bet} монет — победит {opponent}!"
+
 msgid "{name}: {bonus}"
 msgstr "{name}: {bonus}"
 
-#: kf_lib/actors/fighter/_fight_actions.py:263
 msgid "{name}: {move}"
 msgstr "{name}: {move}"
 
-#: kf_lib/fighting/fight/_base_fight.py:449
+msgid "{name}: {react}"
+msgstr "{name}: {react}"
+
+msgid "{num} students join {name}'s school."
+msgstr "В школу {name} вступают новые ученики: {num}."
+
+msgid "{obj} is now {name}' friend."
+msgstr "Теперь {obj} — друг {name}."
+
+msgid "{old}: \"You'll regret messing with {new}! From now on, you'd better watch your back!\""
+msgstr "{old}: \"Ты пожалеешь, что связался с {new}! С этого дня тебе лучше оглядываться почаще!\""
+
+msgid "{opp}: \"{player}, I've learned some new moves. Let's practice!\""
+msgstr "{opp}: \"{player}, я выучил несколько новых приёмов. Давай потренируемся!\""
+
+msgid "{p_name} and {name} agree to meet again."
+msgstr "{p_name} и {name} договариваются встретиться снова."
+
+msgid "{p_name} and {sw_name} go on a date. They talk about kung-fu, life and dreams for the future."
+msgstr "{p_name} и {sw_name} идут на свидание. Они говорят о кунг-фу, о жизни и мечтах о будущем."
+
+msgid ""
+"{p_name} chases the pickpocket into a shady den... and freezes in the doorway. The thief has had a busy day: he also stole from TWO gang fences, and both gangs are already here. A pile of pouches lies on the table.\n"
+"{f1_name}: \"That one's mine! I know my own pouch!\"\n"
+"{f2_name}: \"Yours? YOURS?! You couldn't tell a pouch from a potato!\"\n"
+"Thief: \"Gentlemen, gentlemen, let's be civilized about this—\"\n"
+"{p_name}: \"Hey! One of those is MINE!\"\n"
+"Everyone looks at everyone. Someone grabs the whole pile. Bad idea."
+msgstr ""
+"{p_name} гонится за карманником до самого притона... и замирает в дверях. У вора был хлопотный день: он также обокрал ДВУХ скупщиков краденого из банд, и обе банды уже здесь. На столе лежит целая гора кошельков.\n"
+"{f1_name}: \"Этот — мой! Уж свой-то кошель я узнаю!\"\n"
+"{f2_name}: \"Твой? ТВОЙ?! Ты кошель от картофелины не отличишь!\"\n"
+"Вор: \"Господа, господа, давайте по-цивилизованному—\"\n"
+"{p_name}: \"Эй! Один из них — МОЙ!\"\n"
+"Все смотрят друг на друга. Кто-то хватает всю гору. Плохая идея."
+
+msgid "{p_name} finds out that {b_name} beat {f_st}! Can no one stop this arrogant foreigner?"
+msgstr "{p_name} узнаёт, что {b_name} победил {f_st}! Неужели никто не может остановить этого наглого иностранца?"
+
+msgid "{p_name} is approached by a polite gentleman with a scar: \"{b_name} sends his regards. The sit-down at the Jade Table needs... outside muscle. Someone neutral, to keep things honest. The pay is good.\" {p_name} has heard the rumors — every boss coming to that table plans treachery. But the pay IS good."
+msgstr "К {p_name} подходит вежливый господин со шрамом: \"{b_name} передаёт привет. Встреча за Нефритовым столом требует... сторонней силы. Кого-то нейтрального, чтобы все играли честно. Плата хорошая.\" {p_name} слышал слухи — каждый босс, идущий к тому столу, замышляет предательство. Но плата ДЕЙСТВИТЕЛЬНО хорошая."
+
+msgid "{p_name} is bullied at his school while {m_name} is away."
+msgstr "{p_name} терпит издевательства в своей школе, пока {m_name} в отъезде."
+
+msgid ""
+"{p_name} meets an old man in the tavern. The old man looks very sad. It turns out that the infamous bandit {b_name} wants to marry the old man's beautiful daughter. The old man cannot refuse as {b_name} will likely kill him and take his daughter anyway.\n"
+"{p_name}: \"Don't worry! When I was on Mount Wutai I learned the Buddhist Laws of Logic from the abbot. Now I can talk a man around even if he's hard as iron. I am sure {b_name} will listen.\"\n"
+"Old Man: \"What great good fortune that I could meet you today!\""
+msgstr ""
+"{p_name} встречает в таверне старика. Старик выглядит очень печальным. Оказывается, печально известный бандит {b_name} хочет жениться на прекрасной дочери старика. Старик не может отказать, ведь {b_name} скорее всего просто убьёт его и всё равно заберёт дочь.\n"
+"{p_name}: \"Не волнуйтесь! Когда я был на горе Утайшань, настоятель обучил меня буддийским Законам Логики. Теперь я могу уговорить любого, даже твёрдого, как железо. Уверен, {b_name} выслушает.\"\n"
+"Старик: \"Какое же это счастье, что я смог встретить вас сегодня!\""
+
+msgid ""
+"{p_name} meets his master.\n"
+"{m_name}: \"{p_name}, you have been practicing hard. It is now time to test your kung-fu!\""
+msgstr ""
+"{p_name} встречает своего мастера.\n"
+"{m_name}: \"{p_name}, ты усердно тренировался. Пришло время испытать твоё кунг-фу!\""
+
+msgid ""
+"{p_name} meets his master. \n"
+"{m_name}: \"{p_name}, you are one of my best students. You have made a lot of progress in {style}. But you might be ready to found your own kung-fu school... Let's find that out!\""
+msgstr ""
+"{p_name} встречает своего мастера. \n"
+"{m_name}: \"{p_name}, ты один из моих лучших учеников. Ты показываешь большие успехи в стиле {style}. Но, возможно, ты уже готов основать собственную школу кунг-фу... Давай это выясним!\""
+
+msgid ""
+"{p_name} meets {b_name}. \n"
+"{b_name}: \"I feel that I have reached perfection in my kung-fu, {style}. I have been looking for a worthy opponent for a very, very long time. I will be honored to test your famous {p_style} kung-fu.\""
+msgstr ""
+"{p_name} встречает {b_name}. \n"
+"{b_name}: \"Я чувствую, что достиг совершенства в своём кунг-фу — {style}. Я очень, очень долго искал достойного противника. Буду польщён испытать ваше знаменитое кунг-фу {p_style}.\""
+
+msgid "{p_name} never finds out what happened — the trail has gone cold."
+msgstr "{p_name} так и не узнаёт, что произошло, — след давно остыл."
+
+msgid ""
+"{p_name} returns home to find the door open and signs of a struggle. A note is pinned to the wall with a knife:\n"
+"\"{p_name}! Your beloved {sw_name} is our guest now. If you ever want to see {sw_name} again, come to the old fish market and bring money. And no police!\"\n"
+"— {b_name}"
+msgstr ""
+"{p_name} возвращается домой и обнаруживает открытую дверь и следы борьбы. К стене ножом приколота записка:\n"
+"\"{p_name}! Ваша возлюбленная {sw_name} теперь наша гостья. Если вы когда-нибудь захотите снова увидеть {sw_name}, приходите на старый рыбный рынок и приносите деньги. И никакой полиции!\"\n"
+"— {b_name}"
+
+msgid ""
+"{p_name} spends days asking around the docks and the market. Finally, an old fisherman whispers that {b_name}'s gang has a hideout by the old fish market.\n"
+"{p_name}: \"Hold on, {sw_name}. I am coming.\""
+msgstr ""
+"{p_name} днями расспрашивает людей на пристани и на рынке. Наконец старый рыбак шепчет, что у банды {b_name} есть укрытие возле старого рыбного рынка.\n"
+"{p_name}: \"Потерпи, {sw_name}. Я иду.\""
+
+msgid "{p_name} wakes up at the mountain gate, every bone aching. {b_name}: \"The Gates are still closed to you. Come back stronger... in your next life.\""
+msgstr "{p_name} просыпается у горных ворот — ноет каждая косточка. {b_name}: \"Врата по-прежнему закрыты для тебя. Возвращайся, когда станешь сильнее... в следующей жизни.\""
+
+msgid "{p_name} wakes up under a pile of broken furniture. The sit-down is over, and so is the peace. {b_name} survives — and he remembers who was supposed to \"keep things honest\"..."
+msgstr "{p_name} просыпается под грудой сломанной мебели. Сходка окончена — и перемирие тоже. {b_name} выжил — и он помнит, кто должен был \"следить за честностью\"..."
+
+msgid "{p_name} wipes the blood off his lip. The students look impressed... and a little too pleased."
+msgstr "{p_name} вытирает кровь с губы. Ученики выглядят впечатлёнными... и чересчур довольными."
+
+msgid "{p_name}'s best student {f_name}"
+msgstr "Лучший ученик {p_name} — {f_name}"
+
+msgid "{p_name}'s decision:"
+msgstr "Решение {p_name}:"
+
+msgid "{p_name}'s friend {f_name}"
+msgstr "Друг {p_name}: {f_name}"
+
+msgid "{p_name}: \"It's not about styles. True strength is in the fighter's heart.\""
+msgstr "{p_name}: \"Дело не в стилях. Истинная сила — в сердце бойца.\""
+
+msgid ""
+"{p_name}: {yc}\n"
+"Gambler: {gc}"
+msgstr ""
+"{p_name}: {yc}\n"
+"Азартный игрок: {gc}"
+
+msgid ""
+"{player} meets {opp} (lv.{lv}).\n"
+"{opp}: \"Let's have a friendly match!\""
+msgstr ""
+"{player} встречает {opp} (ур.{lv}).\n"
+"{opp}: \"Давай проведём дружеский поединок!\""
+
+msgid "{player}'s friend {opp} challenges him to a friendly match."
+msgstr "Друг {player} ({opp}) вызывает его на товарищеский бой."
+
+msgid ""
+"{r_name} blocks {p_name}'s way.\n"
+"{r_name}: \"Stay away from {sw_name}! {sw_name} is mine! Let's settle this like martial artists!\""
+msgstr ""
+"{r_name} преграждает путь {p_name}.\n"
+"{r_name}: \"Держись подальше от {sw_name}! {sw_name} принадлежит мне! Решим это как мастера единоборств!\""
+
+msgid "{r_name}: \"Ha! And you call yourself a martial artist? Stay away from {sw_name}!\""
+msgstr "{r_name}: \"Ха! И ты называешь себя мастером боевых искусств? Держись подальше от {sw_name}!\""
+
+msgid "{rel}:{name}"
+msgstr "{rel}:{name}"
+
+msgid "{s1_name} and {s2_name} bow to each other — and explode into motion!"
+msgstr "{s1_name} и {s2_name} кланяются друг другу — и взрываются движением!"
+
+msgid "{s1_name} and {s2_name} lie on the ground, groaning and grinning. {s1_name}: \"The master is the master!\""
+msgstr "{s1_name} и {s2_name} лежат на земле, стонут и ухмыляются. {s1_name}: \"Мастер есть мастер!\""
+
+msgid "{s1_name} and {s2_name} stand before {p_name}, fists clenched. Each demands to be recognized as the master's best student. The whole school holds its breath, waiting for the master's word."
+msgstr "{s1_name} и {s2_name} стоят перед {p_name}, сжимая кулаки. Каждый требует признать его лучшим учеником мастера. Вся школа затаила дыхание, ожидая слова мастера."
+
+msgid "{school} wins the All-Schools Tournament and is declared the Strongest School in {town}!"
+msgstr "{school} побеждает на Турнире всех школ и объявляется Сильнейшей Школой города {town}!"
+
 msgid "{sec} sec."
 msgstr "{sec} сек."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:317
+msgid ""
+"{style} lv.{level} exp:{exp}/{next_level}\n"
+"money:{money}\n"
+msgstr ""
+"{style} ур.{level} опыт:{exp}/{next_level}\n"
+"деньги:{money}\n"
+
+msgid "{sw_name} frees herself from {b_name}'s gang."
+msgstr "{sw_name} сама освобождается от банды {b_name}."
+
+msgid "{sw_name}: \"I knew you would come for me!\""
+msgstr "{sw_name}: \"Я знал(а), что ты придёшь за мной!\""
+
+msgid "{sw} breaks up with {name}."
+msgstr "{sw} расстаётся с {name}."
+
+msgid "{sw} is not impressed and decides to see {name} no more."
+msgstr "{sw} не под впечатлением и решает больше не видеться с {name}."
+
+msgid "{sw} joins the fight on {name}'s side."
+msgstr "{sw} вступает в бой на стороне {name}."
+
+msgid "{sw} turns down the proposal, for now."
+msgstr "{sw} отклоняет предложение — пока что."
+
+msgid "{sw}: \"I... I am not ready yet. Give me some more time.\""
+msgstr "{sw}: \"Я... я пока не могу. Дай мне ещё немного времени.\""
+
+msgid "{sw}: \"Yes! Yes, a thousand times yes!\""
+msgstr "{sw}: \"Да! Да, тысячу раз да!\""
+
+msgid "{town} is preparing for the Saint's Day festival — the one day of the year when all work stops, wine flows like water, and the town's kung-fu schools show off their students. The air smells of roast duck and trouble..."
+msgstr "{town} готовится к празднику Дня Святого — единственному дню в году, когда прекращается вся работа, вино льётся рекой, а городские школы кунг-фу выставляют напоказ своих учеников. В воздухе пахнет жареной уткой и неприятностями..."
+
+msgid "{winner} defeats {loser} in a students' duel."
+msgstr "{winner} побеждает в ученической дуэли; проигравший — {loser}."
+
+msgid "{winner} wins the duel. {loser} bows, gritting his teeth."
+msgstr "{winner} побеждает в поединке. {loser} кланяется, стиснув зубы."
+
+msgid "{} - use an item?"
+msgstr "{} - использовать предмет?"
+
+msgid "{} accidentally overhears a conversation of two young kung-fu practitioners."
+msgstr "{} случайно подслушивает разговор двух молодых бойцов кунг-фу."
+
+msgid "{} and the wise man have a long conversation in a nearby tavern. The wise man talks about the importance of being {}."
+msgstr "{} и мудрец долго беседуют в ближайшем кабаке. Мудрец рассуждает о том, как важно быть: {}."
+
+msgid "{} c. is stolen by a thief."
+msgstr "Вор крадёт {} монет."
+
+msgid "{} can't resist the temptation."
+msgstr "{} не может устоять перед искушением."
+
+msgid "{} decides to stop gambling."
+msgstr "{} решает завязать с азартными играми."
+
+msgid "{} doesn't have enough money."
+msgstr "Недостаточно денег у {}."
+
+msgid "{} encounters a robber."
+msgstr "{} встречает грабителя."
+
+msgid "{} encounters {} robber."
+msgid_plural "{} encounters {} robbers."
+msgstr[0] "{} встречает {} разбойника."
+msgstr[1] "{} встречает {} разбойника."
+msgstr[2] "{} встречает {} разбойников."
+
+msgid "{} fails to escape and gets a beating."
+msgstr "{} не удаётся сбежать, и его избивают."
+
+msgid "{} feels too greedy!"
+msgstr "{} чувствует себя слишком жадным!"
+
+msgid "{} feels too scared to fight!"
+msgstr "{} слишком напуган, чтобы драться!"
+
+msgid "{} grabs the thief by the arm, but the thief fights back."
+msgstr "{} хватает вора за руку, но вор оказывает сопротивление."
+
+msgid "{} is ambushed by a strange fat girl."
+msgstr "{} попадает в засаду странной толстой девицы."
+
+msgid "{} is out of students and leaves the tournament!"
+msgstr "В школе {} не осталось учеников — школа выбывает из турнира!"
+
+msgid "{} is stolen by a thief."
+msgstr "Вор крадёт: {}."
+
+msgid "{} is the last one standing!"
+msgstr "{} последним остаётся на ногах!"
+
+msgid "{} joins the fight on {}'s side."
+msgid_plural "{} join the fight on {}'s side."
+msgstr[0] "{} вступает в бой на стороне {}."
+msgstr[1] "{} вступают в бой на стороне {}."
+msgstr[2] "{} вступают в бой на стороне {}."
+
+msgid "{} joins {}'s training session."
+msgid_plural "{} join {}'s training session."
+msgstr[0] "{} присоединяется к тренировке {}."
+msgstr[1] "{} присоединяются к тренировке {}."
+msgstr[2] "{} присоединяются к тренировке {}."
+
+msgid "{} made great progress!"
+msgstr "{} добился больших успехов!"
+
+msgid "{} manages to get away."
+msgstr "{} удаётся ускользнуть."
+
+msgid "{} meets a beggar."
+msgstr "{} встречает нищего."
+
+msgid "{} meets a drunkard. \"Hey, pal, come drink with me!\" he slurs."
+msgstr "{} встречает пьяницу. \"Эй, приятель, пойдём выпьем!\" — бормочет он."
+
+msgid "{} meets a shady character who offers to participate in an underground prize fighting contest. \"It's simple. You pay {} coin to enter. There are five stages in the contest. The more opponents you beat, the more money you win. How does that sound?\""
+msgid_plural "{} meets a shady character who offers to participate in an underground prize fighting contest. \"It's simple. You pay {} coins to enter. There are five stages in the contest. The more opponents you beat, the more money you win. How does that sound?\""
+msgstr[0] "{} встречает подозрительного типа, который предлагает поучаствовать в подпольном бойцовском турнире. \"Всё просто. Вы платите {} монету за вход. В турнире пять этапов. Чем больше противников победите, тем больше денег выиграете. Как вам такое предложение?\""
+msgstr[1] "{} встречает подозрительного типа, который предлагает поучаствовать в подпольном бойцовском турнире. \"Всё просто. Вы платите {} монеты за вход. В турнире пять этапов. Чем больше противников победите, тем больше денег выиграете. Как вам такое предложение?\""
+msgstr[2] "{} встречает подозрительного типа, который предлагает поучаствовать в подпольном бойцовском турнире. \"Всё просто. Вы платите {} монет за вход. В турнире пять этапов. Чем больше противников победите, тем больше денег выиграете. Как вам такое предложение?\""
+
+msgid "{} meets a wise man."
+msgstr "{} встречает мудреца."
+
+msgid "{} politely says goodbye and walks away."
+msgstr "{} вежливо прощается и уходит."
+
+msgid "{} refuses to drink."
+msgstr "{} отказывается пить."
+
+msgid "{} refuses to gamble."
+msgstr "{} отказывается от азартной игры."
+
+msgid "{} represents the school at the tournament."
+msgstr "{} представляет школу на турнире."
+
+msgid "{} runs away in fear."
+msgstr "{} в страхе убегает."
+
+msgid "{} school wins!"
+msgstr "Школа {} побеждает!"
+
+msgid "{} sees {} man robbing someone."
+msgid_plural "{} sees {} men robbing someone."
+msgstr[0] "{} видит, как {} человек кого-то грабит."
+msgstr[1] "{} видит, как {} человека кого-то грабят."
+msgstr[2] "{} видит, как {} человек кого-то грабят."
+
+msgid "{} takes the criminal to the police."
+msgstr "{} отводит преступника в полицию."
+
+msgid "{} thug attacks the master."
+msgid_plural "{} thugs attack the master."
+msgstr[0] "{} головорез нападает на мастера."
+msgstr[1] "{} головореза нападают на мастера."
+msgstr[2] "{} головорезов нападают на мастера."
+
+msgid "{} tries to stop him, but the pickpocket quickly disappears in the crowd."
+msgstr "{} пытается остановить его, но карманник быстро исчезает в толпе."
+
+msgid "{} wins the tournament!"
+msgstr "{} побеждает в турнире!"
+
+msgid "{} wins!"
+msgstr "{} побеждает!"
+
+msgid "{}'s school wins the All-Schools Tournament!"
+msgstr "Школа {} побеждает в Турнире всех школ!"
+
+msgid "{}:"
+msgstr "{}:"
+
+msgid "{}: \"A fist fight carries no weight. Let's duel with blades.\""
+msgstr "{}: \"Кулачный бой ничего не значит. Будем драться на клинках.\""
+
+msgid "{}: \"Can't stop me, can you? Ha-ha-ha!\""
+msgstr "{}: \"Не остановить меня, а? Ха-ха-ха!\""
+
+msgid "{}: \"I shouldn't have been provoked so easily...\""
+msgstr "{}: \"Мне не следовало так легко поддаваться на провокации...\""
+
+msgid "{}: \"Now let's go to the police...\""
+msgstr "{}: \"А теперь пойдём в полицию...\""
+
+msgid "{}: \"Thank you very much!!!\""
+msgstr "{}: \"Большое спасибо!!!\""
+
+msgid ""
+"{}: \"That was a good fight!\n"
+"Let's be friends!\""
+msgstr ""
+"{}: \"Это был хороший бой!\n"
+"Давайте будем друзьями!\""
+
+msgid "{}: \"That was a good match! Let's do it again some time.\""
+msgstr "{}: \"Отличный был поединок! Давай как-нибудь повторим.\""
+
+msgid "{}: \"What amazing kung-fu! Even though I lost, I feel that my technique has improved\""
+msgstr "{}: \"Какое потрясающее кунг-фу! Несмотря на поражение, я чувствую, что моя техника стала лучше\""
+
+msgid "{}: \"What amazing kung-fu! I feel that my technique has improved\""
+msgstr "{}: \"Какое потрясающее кунг-фу! Я чувствую, что моя техника улучшилась"
+
+msgid "{}: \"What's going on here?\""
+msgstr "{}: \"Что здесь происходит?\""
+
+msgid "{}: \"When I'm one-tenth drunk I can use only one-tenth of my skill, but when I'm ten-tenths drunk I'm at the top of my form.\""
+msgstr "{}: \"Когда я пьян на одну десятую, я могу использовать лишь одну десятую своего мастерства, но когда я пьян на десять десятых, я на пике формы.\""
+
+msgid "{}: \"Whoa, you are good! I was just as good and just as arrogant in my day...                 I'm sure we'll meet again.\""
+msgstr "{}: \"Ого, вы хороши! В своё время я был так же хорош и так же самонадеян...                 Уверен, мы ещё встретимся.\""
+
+msgid "{}: auto-fight all your bouts in this tournament?"
+msgstr "{}: провести все ваши бои на этом турнире в режиме автобоя?"
+
+msgid "{}: Bet on the tournament?"
+msgstr "{}: Сделать ставку на турнир?"
+
+msgid "{}: Participate?"
+msgstr "{}: Участвовать?"
+
+msgid "{}: {}"
+msgstr "{}: {}"
+
 msgid "~*~*~EPIC!!!~*~*~"
 msgstr "~*~*~ЭПИЧНО!!!~*~*~"

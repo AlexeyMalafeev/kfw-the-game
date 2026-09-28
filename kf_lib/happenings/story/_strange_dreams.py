@@ -1,6 +1,7 @@
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 from kf_lib.constants import experience
+from kf_lib.i18n import _, tr_fighter_name
 
 
 class StrangeDreamsStory(BaseStory):
@@ -10,7 +11,7 @@ class StrangeDreamsStory(BaseStory):
     def intro(self):
         g = self.game
         g.cls()
-        g.show('Every so often one has some really unusual dreams...')
+        g.show(_('Every so often one has some really unusual dreams...'))
         g.pak()
 
     def reward(self):
@@ -21,7 +22,7 @@ class StrangeDreamsStory(BaseStory):
 
     def scene1(self):
         p = self.player
-        p.write(f'{p.name} has a strange dream...')
+        p.write(_('{name} has a strange dream...').format(name=tr_fighter_name(p.name)))
         p.choose_best_norm_wp()
         ens = fighter_factory.new_opponent(n=4, rand_atts_mode=0)
         for en in ens:
@@ -32,7 +33,7 @@ class StrangeDreamsStory(BaseStory):
 
     def scene2(self):
         p = self.player
-        p.write(f'{p.name} has a strange dream...')
+        p.write(_('{name} has a strange dream...').format(name=tr_fighter_name(p.name)))
         p.pak()
         en = fighter_factory.new_monster(lv=p.level)
         en.name = 'Weird ' + en.name
@@ -42,7 +43,7 @@ class StrangeDreamsStory(BaseStory):
 
     def scene3(self):
         p = self.player
-        p.write(f'{p.name} has a strange dream...')
+        p.write(_('{name} has a strange dream...').format(name=tr_fighter_name(p.name)))
         p.pak()
         en = fighter_factory.copy_fighter(p)
         en.__class__ = fighter_factory.Fighter

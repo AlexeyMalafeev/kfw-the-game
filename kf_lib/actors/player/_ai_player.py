@@ -1,5 +1,6 @@
 import random
 
+from kf_lib.i18n import _, tr_fighter_name, tr_style_name
 from kf_lib.ui import cls, pak, render, strip_tags
 from kf_lib.utils import rnd
 from ._base_player import BasePlayer
@@ -201,7 +202,7 @@ class SmartAIPVisible(SmartAIP):
         cls()
 
     def end_turn(self):
-        print(f'\n---{self.name} ends his turn---')
+        print(_('\n---{} ends his turn---').format(tr_fighter_name(self.name)))
         pak()
 
     def log(self, text):
@@ -210,16 +211,21 @@ class SmartAIPVisible(SmartAIP):
         pak()
 
     def log_new_day(self):
-        self.plog.append('\n\n*NEW DAY*')
+        self.plog.append(_('\n\n*NEW DAY*'))
         self.plog.append(self.game.get_date())
         self.plog.append(self.get_p_info())
 
     def see_day_info(self):
         cls()
-        print(f'---{self.name}\'s turn---\n')
+        print(_("---{}'s turn---\n").format(tr_fighter_name(self.name)))
         print(
-            f'{self.style.public_name} lv.{self.level} exp:{self.exp}/{self.next_level}\n'
-            f'money:{self.money}\n'
+            _('{style} lv.{level} exp:{exp}/{next_level}\nmoney:{money}\n').format(
+                style=tr_style_name(self.style.public_name),
+                level=self.level,
+                exp=self.exp,
+                next_level=self.next_level,
+                money=self.money,
+            )
         )
 
 

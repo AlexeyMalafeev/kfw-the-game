@@ -10,6 +10,7 @@ from kf_lib.constants import experience
 from kf_lib.constants.experience import EXP_PER_LEVEL
 from kf_lib.game import game_stats
 from kf_lib.happenings import encounters
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.kung_fu import techniques
 from kf_lib.things import items
 from kf_lib.ui import green, strip_tags, yellow, yn
@@ -173,21 +174,27 @@ class BasePlayer(Fighter):
         if label not in self.accompl:
             self.accompl.append(label)
             self.accompl_dates.append(self.game.get_date())
-            self.write(f'Accomplishment: {label}')
+            self.write(_('Accomplishment: {label}').format(label=tr_name(label)))
             self.gain_exp(experience.ACCOMPL_EXP)
             self.pak()
 
     def add_enemy(self, enemy):
         self.enemies.append(enemy)
         self.game.register_fighter(enemy)
-        self.log('{} is now {}\' enemy.'.format(enemy.name, self.name))
+        self.log(
+            _('{enemy} is now {name}\' enemy.').format(
+                enemy=tr_fighter_name(enemy.name), name=tr_fighter_name(self.name)
+            )
+        )
 
     def get_accompl_info(self):
         if not self.accompl:
-            return f'{self.name} has no accomplishments yet.'
-        lines = ['{}\'s accomplishments:'.format(self.name)]
+            return _('{name} has no accomplishments yet.').format(
+                name=tr_fighter_name(self.name)
+            )
+        lines = [_('{name}\'s accomplishments:').format(name=tr_fighter_name(self.name))]
         lines += [
-            f'{i}. {label} ({date})'
+            '{}. {} ({})'.format(i, tr_name(label), date)
             for i, (label, date) in enumerate(zip(self.accompl, self.accompl_dates), 1)
         ]
         return '\n'.join(lines)
@@ -195,13 +202,27 @@ class BasePlayer(Fighter):
     def add_friend(self, obj):
         if len(self.friends) < self.max_num_friends:
             self.friends.append(obj)
-            self.log('{} is now {}\' friend.'.format(obj.name, self.name))
+            self.log(
+                _('{obj} is now {name}\' friend.').format(
+                    obj=tr_fighter_name(obj.name), name=tr_fighter_name(self.name)
+                )
+            )
         else:
             self.show(
-                f'{self.name} already has {self.max_num_friends} friends — too many to '
-                f'keep up with. {obj.name} remains a friendly acquaintance.'
+                _(
+                    '{name} already has {max_num} friends — too many to '
+                    'keep up with. {obj} remains a friendly acquaintance.'
+                ).format(
+                    name=tr_fighter_name(self.name),
+                    max_num=self.max_num_friends,
+                    obj=tr_fighter_name(obj.name),
+                )
             )
-            self.log(f'Has too many friends already; {obj.name} stays an acquaintance.')
+            self.log(
+                _('Has too many friends already; {obj} stays an acquaintance.').format(
+                    obj=tr_fighter_name(obj.name)
+                )
+            )
 
     def choose_school_techs(self):
         """Pick the techs the player's school will teach (AI default: random known
@@ -211,7 +232,11 @@ class BasePlayer(Fighter):
             t.name for t in random.sample(av, min(NUM_SCHOOL_TECHS, len(av)))
         ]
         if self.school_techs:
-            self.log('Decides to teach {}.'.format(enum_words(self.school_techs)))
+            self.log(
+                _('Decides to teach {}.').format(
+                    enum_words([tr_name(t) for t in self.school_techs])
+                )
+            )
 
     def add_students(self, num_stud):
         self.students += num_stud
@@ -224,9 +249,17 @@ class BasePlayer(Fighter):
             school.append(new_student)
             self.game.register_fighter(new_student)
         if num_stud > 1:
-            self.log('{} students join {}\'s school.'.format(num_stud, self.name))
+            self.log(
+                _('{num} students join {name}\'s school.').format(
+                    num=num_stud, name=tr_fighter_name(self.name)
+                )
+            )
         else:
-            self.log('A new student joins {}\'s school.'.format(self.name))
+            self.log(
+                _('A new student joins {name}\'s school.').format(
+                    name=tr_fighter_name(self.name)
+                )
+            )
         self.log('\n'.join((str(s) for s in new_students)))
         self.refresh_best_student()
 
@@ -238,15 +271,25 @@ class BasePlayer(Fighter):
         # the school key is the style's secret true name — a master wouldn't
         # reveal it, so announce/log the displayed (public) name instead
         displayed_school = master.get_displayed_style_name()
-        self.show(f'{master.name}: "From this day, {displayed_school} stands with you!"')
-        self.log(f'{master.name} of {displayed_school} joins the federation.')
+        self.show(
+            _('{master}: "From this day, {school} stands with you!"').format(
+                master=tr_fighter_name(master.name), school=displayed_school
+            )
+        )
+        self.log(
+            _('{master} of {school} joins the federation.').format(
+                master=tr_fighter_name(master.name), school=displayed_school
+            )
+        )
         self.pak()
         if not self.get_unallied_masters():
             self.show(
-                f'All the schools of {self.game.town_name} are now united under '
-                f'{self.name}\'s kung-fu federation!'
+                _(
+                    'All the schools of {town} are now united under '
+                    '{name}\'s kung-fu federation!'
+                ).format(town=self.game.town_name, name=tr_fighter_name(self.name))
             )
-            self.log('Founds the kung-fu federation.')
+            self.log(_('Founds the kung-fu federation.'))
             self.add_accompl('Founder of the Federation')
 
     def add_trait(self, trait):
@@ -256,7 +299,11 @@ class BasePlayer(Fighter):
         if trait not in self.traits and opp_trait not in self.traits:
             self.traits.append(trait)
             self.activate_trait(trait)
-            self.write(f'{self.name} becomes {trait}.')
+            self.write(
+                _('{name} becomes {trait}.').format(
+                    name=tr_fighter_name(self.name), trait=tr_name(trait)
+                )
+            )
         else:
             raise Exception(
                 'Cannot add trait "{}" to player {}\'s traits: {}'.format(
@@ -271,27 +318,39 @@ class BasePlayer(Fighter):
         if m is None or self.is_master:
             self.banned_from_school = False
             return
-        self.show(f'{self.name} comes to school to beg {m.name} for forgiveness.')
+        self.show(
+            _('{name} comes to school to beg {master} for forgiveness.').format(
+                name=tr_fighter_name(self.name), master=tr_fighter_name(m.name)
+            )
+        )
         if rnd() <= CH_MASTER_FORGIVES:
             self.banned_from_school = False
             self.show(
-                f'{m.name}: "Hmm... You do look sincere. Very well, I forgive you. '
-                f'But if I EVER hear about you fighting for money again...!"'
+                _(
+                    '{master}: "Hmm... You do look sincere. Very well, I forgive you. '
+                    'But if I EVER hear about you fighting for money again...!"'
+                ).format(master=tr_fighter_name(m.name))
             )
-            self.log(f'{m.name} forgives {self.name} and lifts the ban.')
+            self.log(
+                _('{master} forgives {name} and lifts the ban.').format(
+                    master=tr_fighter_name(m.name), name=tr_fighter_name(self.name)
+                )
+            )
         else:
             self.show(
-                f'{m.name}: "You still don\'t get it, do you? Come back when you have '
-                f'learned some humility!"'
+                _(
+                    '{master}: "You still don\'t get it, do you? Come back when you have '
+                    'learned some humility!"'
+                ).format(master=tr_fighter_name(m.name))
             )
-            self.log('Begs the master for forgiveness, in vain.')
+            self.log(_('Begs the master for forgiveness, in vain.'))
             if self.school_rank > 1 and rnd() <= CH_BEG_BULLIED:
                 encounters.SchoolBullying(self, check_if_happens=False)
         self.pak()
 
     def buy_item(self, item, price):
         self.pay(price)
-        self.log(f'Buys {item} for {price}.')
+        self.log(_('Buys {item} for {price}.').format(item=tr_name(item), price=price))
         self.change_stat('items_bought', 1)
         self.obtain_item(item)
 
@@ -306,7 +365,7 @@ class BasePlayer(Fighter):
 
     def change_att(self, att, amount):
         Fighter.change_att(self, att, amount)
-        self.msg('{}: {}'.format(att, add_sign(amount)))
+        self.msg(_('{}: {}').format(tr_name(att), add_sign(amount)))
 
     def change_stat(self, stat_name, value):
         """Modify stat by adding value"""
@@ -329,12 +388,14 @@ class BasePlayer(Fighter):
                 if len(allies) == max_num_allies:
                     break
             if allies:
-                if len(allies) > 1:
-                    s = ''
-                else:
-                    s = 's'
-                a_str = enum_words([a.name for a in allies])
-                self.msg('{} join{} the fight on {}\'s side.'.format(a_str, s, self.name))
+                a_str = enum_words([tr_fighter_name(a.name) for a in allies])
+                self.msg(
+                    ngettext(
+                        '{} joins the fight on {}\'s side.',
+                        '{} join the fight on {}\'s side.',
+                        len(allies),
+                    ).format(a_str, tr_fighter_name(self.name))
+                )
             return allies
 
     def check_fight_items(self):
@@ -370,21 +431,38 @@ class BasePlayer(Fighter):
                     if not school:
                         return
                     helper = max(school, key=lambda f: f.get_exp_worth())
-                    p.show(f'{helper.name}: "Let me help, Master!"')
-                    p.log(f"{helper.name} joins the fight on {p.name}'s side.")
+                    p.show(
+                        _('{name}: "Let me help, Master!"').format(
+                            name=tr_fighter_name(helper.name)
+                        )
+                    )
+                    p.log(
+                        _('{helper} joins the fight on {name}\'s side.').format(
+                            helper=tr_fighter_name(helper.name),
+                            name=tr_fighter_name(p.name),
+                        )
+                    )
                     p.allies = [helper]
                     p.pak()
                 else:
                     m = p.get_master()
-                    p.show('{}: "What\'s going on here?"'.format(m.name))
-                    p.log(f"{m.name} joins the fight on {p.name}'s side.")
+                    p.show(_('{}: "What\'s going on here?"').format(tr_fighter_name(m.name)))
+                    p.log(
+                        _('{master} joins the fight on {name}\'s side.').format(
+                            master=tr_fighter_name(m.name), name=tr_fighter_name(p.name)
+                        )
+                    )
                     p.allies = [m]
                     p.pak()
         elif x == 'w':
             if rnd() <= self.grab_improvised_weapon:
                 p.arm_improv()
-                p.show(f'{p.name} grabs an improvised weapon!')
-                p.log('Grabs an improvised weapon.')
+                p.show(
+                    _('{name} grabs an improvised weapon!').format(
+                        name=tr_fighter_name(p.name)
+                    )
+                )
+                p.log(_('Grabs an improvised weapon.'))
                 p.pak()
         elif x == 's':
             if rnd() <= self.schoolmates_help:
@@ -392,18 +470,27 @@ class BasePlayer(Fighter):
                 if av_mates:
                     n = min(random.choice((2, 3)), len(av_mates))
                     mates = random.sample(av_mates, n)
-                    a_str = enum_words([f.name for f in mates])
+                    a_str = enum_words([tr_fighter_name(f.name) for f in mates])
                     p.allies = mates
                     self.msg(
-                        '{}, who were passing by, join the fight on {}\'s side.'.format(
-                            a_str, self.name
-                        )
+                        _(
+                            '{mates}, who were passing by, join the fight on '
+                            '{name}\'s side.'
+                        ).format(mates=a_str, name=tr_fighter_name(self.name))
                     )
         elif x == 'sp':
             if p.sweetheart is not None and rnd() <= self.spouse_joins_fight:
                 sw = p.sweetheart
-                p.show(f'{sw.name}: "Let me help you, dear!"')
-                p.log(f"{sw.name} joins the fight on {p.name}'s side.")
+                p.show(
+                    _('{name}: "Let me help you, dear!"').format(
+                        name=tr_fighter_name(sw.name)
+                    )
+                )
+                p.log(
+                    _('{sw} joins the fight on {name}\'s side.').format(
+                        sw=tr_fighter_name(sw.name), name=tr_fighter_name(p.name)
+                    )
+                )
                 p.allies = [sw]
                 p.pak()
 
@@ -417,14 +504,14 @@ class BasePlayer(Fighter):
         outcome = random.randint(EXTREMELY_BAD_LUCK, EXTREMELY_GOOD_LUCK)
         if outcome == EXTREMELY_BAD_LUCK:
             if not silent:
-                self.show('BAD LUCK!')
+                self.show(_('BAD LUCK!'))
             self.change_stat('bad_luck', 1)
             if self.get_stat('bad_luck') >= LUCK_ACCOMPLISHMENT_THRESHOLD:
                 self.add_accompl('Unlucky Devil')
             return -1
         elif outcome == EXTREMELY_GOOD_LUCK:
             if not silent:
-                self.show('LUCKY!')
+                self.show(_('LUCKY!'))
             self.change_stat('good_luck', 1)
             if self.get_stat('good_luck') >= LUCK_ACCOMPLISHMENT_THRESHOLD:
                 self.add_accompl('Lucky Devil')
@@ -447,19 +534,25 @@ class BasePlayer(Fighter):
                 ):
                     partners.append(a)
             if partners:
-                if len(partners) > 1:
-                    s = ''
-                else:
-                    s = 's'
-                p_str = enum_words([p.name for p in partners])
-                self.write('{} join{} {}\'s training session.'.format(p_str, s, self.name))
+                p_str = enum_words([tr_fighter_name(p.name) for p in partners])
+                self.write(
+                    ngettext(
+                        '{} joins {}\'s training session.',
+                        '{} join {}\'s training session.',
+                        len(partners),
+                    ).format(p_str, tr_fighter_name(self.name))
+                )
             return partners
 
     def check_training_injury(self):
         if rnd() <= self.training_injury:
             q = random.choice(quotes.TRAINING_INJURY)
-            self.show(f'{self.name}: "{q}"')
-            self.msg(f'{self.name} gets injured during training.')
+            self.show(_('{name}: "{q}"').format(name=tr_fighter_name(self.name), q=q))
+            self.msg(
+                _('{name} gets injured during training.').format(
+                    name=tr_fighter_name(self.name)
+                )
+            )
             self.injure(1)
 
     def check_spouse_daily(self):
@@ -469,14 +562,20 @@ class BasePlayer(Fighter):
         if rnd() <= CH_SPOUSE_GIFT:
             amount = rndint(5, 20)
             self.show(
-                f'{self.sweetheart.name} brings home some money. (+{amount} coins)'
+                _('{name} brings home some money. (+{amount} coins)').format(
+                    name=tr_fighter_name(self.sweetheart.name), amount=amount
+                )
             )
             self.earn_money(amount)
         if self.children_ages and self.money > 0:
             if rnd() <= CH_CHILD_COST * len(self.children_ages):
                 amount = min(self.money, rndint(1, 5))
                 self.pay(amount)
-                self.show(f'Children grow so fast — new clothes. (-{amount} coins)')
+                self.show(
+                    _('Children grow so fast — new clothes. (-{amount} coins)').format(
+                        amount=amount
+                    )
+                )
 
     def check_family_monthly(self):
         """Monthly family events: children grow; a new child may be born."""
@@ -485,12 +584,22 @@ class BasePlayer(Fighter):
         self.children_ages = [age + 1 for age in self.children_ages]
         if len(self.children_ages) < MAX_CHILDREN and rnd() <= CH_CHILD_BORN:
             self.children_ages.append(0)
-            son_or_daughter = random.choice(('son', 'daughter'))
-            self.show(
-                f'{self.name} and {self.sweetheart.name} welcome a baby '
-                f'{son_or_daughter}!'
-            )
-            self.log(f'A baby {son_or_daughter} is born.')
+            if rnd() < 0.5:
+                self.show(
+                    _('{name} and {sw} welcome a baby son!').format(
+                        name=tr_fighter_name(self.name),
+                        sw=tr_fighter_name(self.sweetheart.name),
+                    )
+                )
+                self.log(_('A baby son is born.'))
+            else:
+                self.show(
+                    _('{name} and {sw} welcome a baby daughter!').format(
+                        name=tr_fighter_name(self.name),
+                        sw=tr_fighter_name(self.sweetheart.name),
+                    )
+                )
+                self.log(_('A baby daughter is born.'))
             if len(self.children_ages) == 1:
                 self.add_accompl('Proud Parent')
 
@@ -509,15 +618,15 @@ class BasePlayer(Fighter):
 
     def donate(self, amount):
         if not amount:
-            self.log('Doesn\'t give anything.')
+            self.log(_('Doesn\'t give anything.'))
         else:
-            self.log(f'Donates {amount} c.')
+            self.log(_('Donates {} c.').format(amount))
             self.money -= amount
             self.change_stat('donated', amount)
             self.gain_rep(round(amount * 0.2))
 
     def drink(self):
-        self.log('Drinks wine.')
+        self.log(_('Drinks wine.'))
         self.inactive += 1
         self.inact_status = 'sick'
         self.change_stat('got_drunk', 1)
@@ -526,28 +635,36 @@ class BasePlayer(Fighter):
         self.money += amount
         if not silent:
             self.change_stat('money_earned', amount)
-            self.log(f'Earns {amount} c.')
+            self.log(_('Earns {} c.').format(amount))
 
     def earn_prize(self, amount):
         self.money += amount
         self.change_stat('prize_money_earned', amount)
-        self.write(f'{self.name} earns a {yellow(f"{amount}-coin")} prize.')
+        self.write(
+            _('{name} earns a {prize} prize.').format(
+                name=tr_fighter_name(self.name), prize=yellow(f'{amount}-coin')
+            )
+        )
 
     def earn_reward(self, amount):
         self.money += amount
         self.change_stat('rew_money_earned', amount)
-        self.write(f'{self.name} earns a {yellow(f"{amount}-coin")} reward.')
+        self.write(
+            _('{name} earns a {reward} reward.').format(
+                name=tr_fighter_name(self.name), reward=yellow(f'{amount}-coin')
+            )
+        )
 
     def end_turn(self):
         pass
 
     def enter_tourn(self, fee):
-        self.log('Takes part in a kung-fu tournament.')
+        self.log(_('Takes part in a kung-fu tournament.'))
         self.pay(fee)
         self.change_stat('num_tourn', 1)
 
     def fight_crime(self):
-        self.log('Intends to fight crime.')
+        self.log(_('Intends to fight crime.'))
         encs = encounters.FIGHT_CRIME_ENCS
         encounters.random_encounters(self, encs)
         return True  # to end turn
@@ -560,15 +677,20 @@ class BasePlayer(Fighter):
 
     def gain_exp(self, amount, silent=False):
         if not silent:
-            self.show(f'{self.name} {green(f"gains {amount} exp.")}')
-            self.log(f'Gains {amount} exp.')
+            self.show(
+                _('{name} {exp_msg}').format(
+                    name=tr_fighter_name(self.name),
+                    exp_msg=green(_('gains {} exp.').format(amount)),
+                )
+            )
+            self.log(_('Gains {} exp.').format(amount))
         self.exp += amount
         while self.exp >= self.next_level:
             self.level_up()
 
     def gain_rep(self, amount):
         self.reputation += amount
-        self.log('Reputation: {} ({})'.format(add_sign(amount), self.reputation))
+        self.log(_('Reputation: {} ({})').format(add_sign(amount), self.reputation))
 
     def get_items(self, incl_healer=False, incl_mock=False, as_dict=False):
         item_strings = items.FIGHT_ITEMS[:]
@@ -584,24 +706,24 @@ class BasePlayer(Fighter):
     def get_day_actions(self):
         """Return list of available options"""
         ops = [
-            ('Practice at school', self.practice_school)
+            (_('Practice at school'), self.practice_school)
             if not self.is_master
-            else ('Practice', self.practice_master),
-            ('Go to work', self.go_work),
-            ('Buy items', self.buy_items),
-            ('Fight crime', self.fight_crime),
-            ('Help the poor', self.help_poor),
-            ('Pick fights', self.pick_fights)
+            else (_('Practice'), self.practice_master),
+            (_('Go to work'), self.go_work),
+            (_('Buy items'), self.buy_items),
+            (_('Fight crime'), self.fight_crime),
+            (_('Help the poor'), self.help_poor),
+            (_('Pick fights'), self.pick_fights)
             if not self.is_master
-            else ('Teach students', self.teach_students),
-            ('Go to seedy places', self.go_seedy),
-            ('Go for a walk', self.go_walk),
+            else (_('Teach students'), self.teach_students),
+            (_('Go to seedy places'), self.go_seedy),
+            (_('Go for a walk'), self.go_walk),
             # ('Dummy', self.fight_dummy)
         ]
         if self.is_master:
-            ops.append(('Visit other masters', self.visit_masters))
+            ops.append((_('Visit other masters'), self.visit_masters))
         if self.sweetheart is not None:
-            label = 'Visit spouse' if self.is_married else 'Visit sweetheart'
+            label = _('Visit spouse') if self.is_married else _('Visit sweetheart')
             ops.append((label, self.visit_sweetheart))
         return ops
 
@@ -611,13 +733,19 @@ class BasePlayer(Fighter):
         ) * 0.01
 
     def get_fight_statistics(self):
-        return 'Fights/Wins/KOs: {}/{}/{}'.format(
+        return _('Fights/Wins/KOs: {}/{}/{}').format(
             self.get_stat('num_fights'), self.get_stat('fights_won'), self.get_stat('num_kos')
         )
 
     def get_inact_info(self):
-        s = '{} is {} and needs {} day{} to recover.'.format(
-            self.name, self.inact_status, self.inactive, 's' if self.inactive > 1 else ''
+        s = ngettext(
+            '{name} is {status} and needs {days} day to recover.',
+            '{name} is {status} and needs {days} days to recover.',
+            self.inactive,
+        ).format(
+            name=tr_fighter_name(self.name),
+            status=self.inact_status,
+            days=self.inactive,
         )
         self.log(s)
         return s
@@ -641,8 +769,10 @@ class BasePlayer(Fighter):
         lines = []
         for k, v in self.inventory.items():
             if v > 0:
-                lines.append(f'{k}: {v}')
-        lines = ['{}\'s items:'.format(self.name)] + sorted(lines)
+                lines.append('{}: {}'.format(tr_name(k), v))
+        lines = [_('{name}\'s items:').format(name=tr_fighter_name(self.name))] + sorted(
+            lines
+        )
         return '\n'.join(lines)
 
     def get_master(self):
@@ -661,30 +791,44 @@ class BasePlayer(Fighter):
 
     def get_p_info(self):
         s = self
-        return f'{s.name} lv.{s.level} exp:{s.exp}/{s.next_level}\nmoney:{s.money}\n'
+        return _('{name} lv.{lv} exp:{exp}/{next_lv}\nmoney:{money}\n').format(
+            name=tr_fighter_name(s.name),
+            lv=s.level,
+            exp=s.exp,
+            next_lv=s.next_level,
+            money=s.money,
+        )
 
     def get_p_info_verbose(self):
         lines = [
             self.get_f_info(),
-            f'exp:{self.exp}/{self.next_level} money:{self.money}',
-            f'traits: {enum_words(self.traits)}',
+            _('exp:{exp}/{next_lv} money:{money}').format(
+                exp=self.exp, next_lv=self.next_level, money=self.money
+            ),
+            _('traits: {}').format(enum_words([tr_name(t) for t in self.traits])),
         ]
-        fr_info = 'friends:{}'.format(len(self.friends)) if self.friends else ''
-        en_info = 'enemies:{}'.format(len(self.enemies)) if self.enemies else ''
+        fr_info = _('friends:{}').format(len(self.friends)) if self.friends else ''
+        en_info = _('enemies:{}').format(len(self.enemies)) if self.enemies else ''
         love_info = ''
         if self.sweetheart is not None:
-            rel = 'spouse' if self.is_married else 'sweetheart'
-            love_info = f'{rel}:{self.sweetheart.name}'
+            rel = _('spouse') if self.is_married else _('sweetheart')
+            love_info = _('{rel}:{name}').format(
+                rel=rel, name=tr_fighter_name(self.sweetheart.name)
+            )
             if self.children_ages:
-                love_info += f' children:{len(self.children_ages)}'
-        stud_info = f'students:{self.students}' if self.students else ''
+                love_info += _(' children:{}').format(len(self.children_ages))
+        stud_info = _('students:{}').format(self.students) if self.students else ''
         if self.is_master and self.best_student is not None:
-            stud_info += f' (best: {self.best_student.name})'
+            stud_info += _(' (best: {name})').format(
+                name=tr_fighter_name(self.best_student.name)
+            )
         if self.is_master:
             lines.append(stud_info)
             lines.append(' '.join(w for w in (fr_info, en_info, love_info) if w))
         else:
-            lines.append(f'rank in school: {self.school_rank}/{self.max_school_rank}')
+            lines.append(
+                _('rank in school: {}/{}').format(self.school_rank, self.max_school_rank)
+            )
             lines.append(' '.join(w for w in (fr_info, en_info, love_info, stud_info) if w))
         lines.append(self.get_fight_statistics())
         return '\n'.join([line for line in lines if line])
@@ -694,11 +838,15 @@ class BasePlayer(Fighter):
         students = sorted(
             (f for f in school if f is not self), key=lambda f: f.level, reverse=True
         )
-        lines = ['{}\'s students ({}):'.format(self.name, len(students))]
+        lines = [
+            _('{name}\'s students ({num}):').format(
+                name=tr_fighter_name(self.name), num=len(students)
+            )
+        ]
         for s in students:
             line = s.get_f_info(short=True)
             if s is self.best_student:
-                line += ' (best student)'
+                line += _(' (best student)')
             lines.append(line)
         return '\n'.join(lines)
 
@@ -745,32 +893,40 @@ class BasePlayer(Fighter):
         return self.stats_dict[stat_name]
 
     def go_seedy(self):
-        self.log(f'Goes to the seedy places of {self.game.town_name}.')
+        self.log(_('Goes to the seedy places of {}.').format(self.game.town_name))
         encs = encounters.SEEDY_PLACES_ENCS
         encounters.random_encounters(self, encs)
         return True  # to end turn
 
     def go_walk(self):
-        self.log('Goes for a walk.')
+        self.log(_('Goes for a walk.'))
         encs = encounters.WALK_ENCS
         encounters.random_encounters(self, encs)
         if self.is_master and rnd() <= MASTER_GREETING_CHANCE:
             self.refresh_screen()
-            self.show(f'Woman: Good day, Master {self.name.split()[0]}!')
+            self.show(
+                _('Woman: Good day, Master {name}!').format(
+                    name=tr_fighter_name(self.name.split()[0])
+                )
+            )
             self.pak()
         return True  # to end turn
 
     def go_work(self):
-        self.log('Goes to work.')
+        self.log(_('Goes to work.'))
         if self.is_master:
             self.refresh_screen()
-            self.show(f'Man: Master {self.name.split()[0]}! Why are you here?')
+            self.show(
+                _('Man: Master {name}! Why are you here?').format(
+                    name=tr_fighter_name(self.name.split()[0])
+                )
+            )
             self.pak()
         self.earn_money(round(WAGE * self.wage_mult))
         return True  # to end turn
 
     def help_poor(self):
-        self.log('Intends to help the poor.')
+        self.log(_('Intends to help the poor.'))
         encs = encounters.HELP_POOR_ENCS
         encounters.random_encounters(self, encs)
         return True  # to end turn
@@ -780,26 +936,30 @@ class BasePlayer(Fighter):
             extent = rndint(1, self.max_days_to_recover)
         self.inactive += extent
         self.inact_status = 'injured'
-        self.log('Is injured.')
+        self.log(_('Is injured.'))
 
     def level_up(self, times=1):
         # do not replace with super() for now; can cause bugs; todo investigate this
         Fighter.level_up(self, times)
-        self.log(f'Reaches level {self.level}.')
+        self.log(_('Reaches level {}.').format(self.level))
         self.next_level = self.get_next_lv_exp()
 
     def log(self, text):
         self.plog.append(strip_tags(text))
 
     def log_new_day(self):
-        self.log('\n\n*NEW DAY*')
+        self.log(_('\n\n*NEW DAY*'))
         self.log(self.game.get_date())
         self.log(self.get_p_info())
 
     def lose_item(self, item_name, quantity=1):
         self.inventory[item_name] -= quantity
         total = self.inventory[item_name]
-        self.log(f'{item_name}: {-quantity}({total})')
+        self.log(
+            _('{item}: {delta}({total})').format(
+                item=tr_name(item_name), delta=-quantity, total=total
+            )
+        )
 
     def obtain_item(self, item_name, quantity=1):
         if self.check_item(item_name):
@@ -807,7 +967,11 @@ class BasePlayer(Fighter):
         else:
             self.inventory[item_name] = quantity
         total = self.inventory[item_name]
-        self.log(f'{item_name}: {quantity}({total})')
+        self.log(
+            _('{item}: {delta}({total})').format(
+                item=tr_name(item_name), delta=quantity, total=total
+            )
+        )
         self.change_stat('items_obtained', quantity)
 
     def pak(self):
@@ -815,22 +979,22 @@ class BasePlayer(Fighter):
 
     def pay(self, amount):
         self.money -= amount
-        self.log(f'Pays {amount} c.')
+        self.log(_('Pays {} c.').format(amount))
 
     def pick_fights(self):
-        self.log('Intends to pick fights.')
+        self.log(_('Intends to pick fights.'))
         encs = encounters.PICK_FIGHTS_ENCS
         encounters.random_encounters(self, encs)
         return True  # to end turn
 
     def practice_home(self, suppress_log=False):
         if not suppress_log:
-            self.log('Practices at home.')
+            self.log(_('Practices at home.'))
         exp = experience.HOME_TRAINING_EXP + self.home_training_exp_bonus
         self.gain_exp(max(exp, 0), silent=True)
 
     def practice_master(self):
-        self.log('Practices at his school.')
+        self.log(_('Practices at his school.'))
         base_exp = experience.MASTER_TRAINING_EXP
         base_exp = round(base_exp * self.school_training_exp_mult)
         min_exp = round(base_exp * 0.8)
@@ -840,7 +1004,7 @@ class BasePlayer(Fighter):
         return True  # to end turn
 
     def practice_school(self):
-        self.log('Practices at school.')
+        self.log(_('Practices at school.'))
         if self.banned_from_school:
             self.beg_master_for_mercy()
             return True  # to end turn
@@ -857,25 +1021,25 @@ class BasePlayer(Fighter):
             self.check_training_injury()
             return True  # to end turn
         else:
-            self.show('Not enough money!')
+            self.show(_('Not enough money!'))
             self.pak()
 
     def prepare_for_fight(self):
         super().prepare_for_fight()
         self.exp_bonuses = 0
-        self.log('Fight:')
+        self.log(_('Fight:'))
         side_b = self.current_fight.side_b
         for ff in self.current_fight.side_a + side_b:
             if side_b and ff == side_b[0]:
-                self.log('vs')
+                self.log(_('vs'))
             self.log(ff.get_f_info())
 
     def record_gamble_lost(self, money):
-        self.log(f"Loses {money}.")
+        self.log(_('Loses {}.').format(money))
         self.change_stat("gamb_lost", money)
 
     def record_gamble_win(self, money):
-        self.log(f"Wins {money}.")
+        self.log(_('Wins {}.').format(money))
         self.change_stat("gamb_won", money)
 
     def recover(self):
@@ -901,13 +1065,21 @@ class BasePlayer(Fighter):
 
     def remove_enemy(self, enemy):
         self.enemies.remove(enemy)
-        self.log('{} is no longer {}\' enemy.'.format(enemy.name, self.name))
+        self.log(
+            _('{enemy} is no longer {name}\' enemy.').format(
+                enemy=tr_fighter_name(enemy.name), name=tr_fighter_name(self.name)
+            )
+        )
         self.game.unregister_fighter(enemy)
 
     def remove_trait(self, trait):
         self.traits.remove(trait)
         self.deactivate_trait(trait)
-        self.write(f'{self.name} is no longer {trait}.')
+        self.write(
+            _('{name} is no longer {trait}.').format(
+                name=tr_fighter_name(self.name), trait=tr_name(trait)
+            )
+        )
 
     @staticmethod
     def rest():
@@ -933,9 +1105,9 @@ class BasePlayer(Fighter):
 
     def teach_students(self):
         if not self.students:
-            self.msg('You don\'t have any students yet.')
+            self.msg(_('You don\'t have any students yet.'))
         else:
-            self.log('Teaches his students.')
+            self.log(_('Teaches his students.'))
             self.earn_money(TUITION_FEE * self.students // 2)
             school = self.game.schools.get(self.new_school_name, [])
             max_student_lv = self.level - TAUGHT_STUDENT_LV_GAP
@@ -944,10 +1116,18 @@ class BasePlayer(Fighter):
                 if student.level < max_student_lv and rnd() <= CH_STUDENT_LV_UP_WHEN_TAUGHT:
                     student.level_up()
                     improved.append(student)
-                    self.log(f'{student.name} reaches lv.{student.level}.')
+                    self.log(
+                        _('{name} reaches lv.{lv}.').format(
+                            name=tr_fighter_name(student.name), lv=student.level
+                        )
+                    )
             self.refresh_best_student()
             if improved:
-                self.write('{} made great progress!'.format(enum_words([s.name for s in improved])))
+                self.write(
+                    _('{} made great progress!').format(
+                        enum_words([tr_fighter_name(s.name) for s in improved])
+                    )
+                )
             school_techs = [techniques.get_tech_obj(name) for name in self.school_techs]
             learned = []
             if school_techs:
@@ -956,7 +1136,11 @@ class BasePlayer(Fighter):
                     if missing and rnd() <= CH_STUDENT_LEARN_TECH:
                         tech = random.choice(missing)
                         student.learn_tech(tech)  # silent for NPC students
-                        learned.append(f'{student.name} learns {tech.name}.')
+                        learned.append(
+                            _('{name} learns {tech}.').format(
+                                name=tr_fighter_name(student.name), tech=tr_name(tech.name)
+                            )
+                        )
                 if learned:
                     self.write('\n'.join(learned))
             if improved or learned:
@@ -964,13 +1148,13 @@ class BasePlayer(Fighter):
             return True  # to end turn
 
     def use_med(self):
-        self.log('Uses medicine to recover.')
+        self.log(_('Uses medicine to recover.'))
         self.inventory[items.MEDICINE] -= 1
         self.change_stat('healers_used', 1)
         self.recover()
 
     def use_item(self, item):
-        self.log(f'Uses {item}.')
+        self.log(_('Uses {item}.').format(item=tr_name(item)))
         self.lose_item(item)
         items.use_item(item, self)
         if item in items.FIGHT_ITEMS:
@@ -982,34 +1166,63 @@ class BasePlayer(Fighter):
         g = self.game
         av = self.get_unallied_masters()
         if not av:
-            self.msg(f'All the masters of {g.town_name} already acknowledge {self.name}.')
+            self.msg(
+                _('All the masters of {town} already acknowledge {name}.').format(
+                    town=g.town_name, name=tr_fighter_name(self.name)
+                )
+            )
             return  # the turn is not consumed
-        self.log('Visits other masters to promote the idea of a kung-fu federation.')
+        self.log(_('Visits other masters to promote the idea of a kung-fu federation.'))
         school_name, m = random.choice(av)
         self.show(
-            f'{self.name} visits {m.name}, the master of {m.get_displayed_style_name()}, '
-            f'to discuss uniting the schools of {g.town_name}.'
+            _(
+                '{name} visits {master}, the master of {school}, '
+                'to discuss uniting the schools of {town}.'
+            ).format(
+                name=tr_fighter_name(self.name),
+                master=tr_fighter_name(m.name),
+                school=m.get_displayed_style_name(),
+                town=g.town_name,
+            )
         )
         persuade_chance = min(self.reputation / PERSUADE_REP_DIVISOR, MAX_PERSUADE_CH)
         if self.is_human:
             challenge = yn(
-                f'Challenge {m.name} to a spar? ("No" = try to persuade him; '
-                f'persuasion chance: {persuade_chance:.0%})'
+                _(
+                    'Challenge {name} to a spar? ("No" = try to persuade him; '
+                    'persuasion chance: {chance:.0%})'
+                ).format(name=tr_fighter_name(m.name), chance=persuade_chance)
             )
         else:
             challenge = self.fight_or_not(self.get_rel_strength(m))
         if challenge:
-            self.show(f'{m.name}: "Words are wind. Show me your kung-fu!"')
+            self.show(
+                _('{name}: "Words are wind. Show me your kung-fu!"').format(
+                    name=tr_fighter_name(m.name)
+                )
+            )
             if self.spar(m, hide_stats=False):
                 self.ally_school(school_name, m)
             else:
-                self.show(f'{m.name}: "Come back when you are stronger."')
+                self.show(
+                    _('{name}: "Come back when you are stronger."').format(
+                        name=tr_fighter_name(m.name)
+                    )
+                )
                 self.pak()
         elif rnd() <= persuade_chance:
-            self.show(f'{m.name}: "Your reputation precedes you... Let the schools unite."')
+            self.show(
+                _(
+                    '{name}: "Your reputation precedes you... Let the schools unite."'
+                ).format(name=tr_fighter_name(m.name))
+            )
             self.ally_school(school_name, m)
         else:
-            self.show(f'{m.name}: "Why should the schools follow you? Prove yourself first."')
+            self.show(
+                _(
+                    '{name}: "Why should the schools follow you? Prove yourself first."'
+                ).format(name=tr_fighter_name(m.name))
+            )
             self.pak()
         return True  # to end turn
 
@@ -1019,20 +1232,38 @@ class BasePlayer(Fighter):
         sw = p.sweetheart
         if p.is_married:
             if p.get_grown_children() and rnd() <= CHILD_PRACTICE_CHANCE:
-                p.show(f'{p.name} spends the day practicing kung-fu with the child.')
-                p.log('Practices kung-fu with the child.')
+                p.show(
+                    _('{name} spends the day practicing kung-fu with the child.').format(
+                        name=tr_fighter_name(p.name)
+                    )
+                )
+                p.log(_('Practices kung-fu with the child.'))
                 p.gain_exp(CHILD_EXP)
             else:
-                p.show(f'{p.name} spends a quiet day at home with {sw.name}.')
-                p.log(f'Spends the day with {sw.name}.')
+                p.show(
+                    _('{name} spends a quiet day at home with {sw}.').format(
+                        name=tr_fighter_name(p.name), sw=tr_fighter_name(sw.name)
+                    )
+                )
+                p.log(
+                    _('Spends the day with {sw}.').format(sw=tr_fighter_name(sw.name))
+                )
         else:
-            p.show(f'{p.name} spends the day with {sw.name}.')
-            p.log(f'Goes on a date with {sw.name}.')
+            p.show(
+                _('{name} spends the day with {sw}.').format(
+                    name=tr_fighter_name(p.name), sw=tr_fighter_name(sw.name)
+                )
+            )
+            p.log(_('Goes on a date with {sw}.').format(sw=tr_fighter_name(sw.name)))
             progress = rndint(1, 2)
             if p.check_money(ROMANCE_GIFT_COST) and rnd() <= 0.5:
                 p.pay(ROMANCE_GIFT_COST)
                 progress += 2
-                p.show(f'{p.name} brings a small gift. {sw.name} is delighted!')
+                p.show(
+                    _('{name} brings a small gift. {sw} is delighted!').format(
+                        name=tr_fighter_name(p.name), sw=tr_fighter_name(sw.name)
+                    )
+                )
             p.romance_progress += progress
             if p.romance_progress >= ROMANCE_PROPOSE_THRESHOLD:
                 p.propose_marriage()
@@ -1048,36 +1279,66 @@ class BasePlayer(Fighter):
         ):
             sw = self.sweetheart
             self.show(
-                f'{sw.name} is not impressed and decides to see {self.name} no more.'
+                _('{sw} is not impressed and decides to see {name} no more.').format(
+                    sw=tr_fighter_name(sw.name), name=tr_fighter_name(self.name)
+                )
             )
-            self.log(f'{sw.name} breaks up with {self.name}.')
+            self.log(
+                _('{sw} breaks up with {name}.').format(
+                    sw=tr_fighter_name(sw.name), name=tr_fighter_name(self.name)
+                )
+            )
             self.sweetheart = None
             self.romance_progress = 0
 
     def propose_marriage(self):
         p = self
         sw = p.sweetheart
-        p.show(f'Propose to {sw.name}?')
+        p.show(_('Propose to {sw}?').format(sw=tr_fighter_name(sw.name)))
         if not p.pursue_romance_or_not():
-            p.show(f'{p.name} decides to wait a little longer.')
-            p.log(f'Is about to propose to {sw.name}, but gets cold feet.')
+            p.show(
+                _('{name} decides to wait a little longer.').format(
+                    name=tr_fighter_name(p.name)
+                )
+            )
+            p.log(
+                _('Is about to propose to {sw}, but gets cold feet.').format(
+                    sw=tr_fighter_name(sw.name)
+                )
+            )
             return
-        p.show(f'{p.name}: "{sw.name}, will you marry me?"')
+        p.show(
+            _('{name}: "{sw}, will you marry me?"').format(
+                name=tr_fighter_name(p.name), sw=tr_fighter_name(sw.name)
+            )
+        )
         accept_chance = min(0.9, CH_PROPOSAL_ACCEPT + p.reputation / 500)
         if rnd() <= accept_chance:
             p.is_married = True
-            p.show(f'{sw.name}: "Yes! Yes, a thousand times yes!"')
-            p.log(f'Marries {sw.name}.')
+            p.show(
+                _('{sw}: "Yes! Yes, a thousand times yes!"').format(
+                    sw=tr_fighter_name(sw.name)
+                )
+            )
+            p.log(_('Marries {sw}.').format(sw=tr_fighter_name(sw.name)))
             p.add_accompl('Got Married')
         else:
-            p.show(f'{sw.name}: "I... I am not ready yet. Give me some more time."')
-            p.log(f'{sw.name} turns down the proposal, for now.')
+            p.show(
+                _('{sw}: "I... I am not ready yet. Give me some more time."').format(
+                    sw=tr_fighter_name(sw.name)
+                )
+            )
+            p.log(
+                _('{sw} turns down the proposal, for now.').format(
+                    sw=tr_fighter_name(sw.name)
+                )
+            )
             p.romance_progress = ROMANCE_PROPOSE_THRESHOLD - 4
 
     def win_tourn(self, prize):
         self.earn_prize(prize)
         self.change_stat('tourn_won', 1)
-        self.log('Wins the tournament')
+        self.log(_('Wins the tournament'))
         self.pak()
         if self.get_stat('tourn_won') >= 3:
             self.add_accompl('Tournament Champion')

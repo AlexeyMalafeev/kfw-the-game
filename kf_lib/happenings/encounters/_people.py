@@ -3,6 +3,7 @@ import re
 
 from kf_lib.actors import fighter_factory, traits
 from kf_lib.fighting import fight
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.utils import enum_words, rnd, rndint
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_escape
@@ -79,24 +80,30 @@ class Brawler(BaseEncounter):
 
     def run(self):
         p = self.player
-        t = f'''A man bumps into {p.name} in the street.
-Man: "Hey you! Apologize or I'll beat you up!\"'''
+        t = _('''A man bumps into {name} in the street.
+Man: "Hey you! Apologize or I'll beat you up!\"''').format(
+            name=tr_fighter_name(p.name)
+        )
         p.show(t)
-        p.log("Encounters a brawler.")
+        p.log(_('Encounters a brawler.'))
         b = fighter_factory.new_brawler()
         opp_info = p.get_rel_strength(b)
         if p.brawl_or_not(opp_info):
-            p.log("Is provoked.")
+            p.log(_('Is provoked.'))
             p.gain_rep(REP_PEN_BRAWL)
             self.do_fight(b)
-            p.show('{}: "I shouldn\'t have been provoked so easily..."'.format(p.name))
+            p.show(
+                _('{}: "I shouldn\'t have been provoked so easily..."').format(
+                    tr_fighter_name(p.name)
+                )
+            )
             p.pak()
         else:
-            p.log("Apologizes.")
+            p.log(_('Apologizes.'))
             p.gain_rep(REP_NOT_BRAWL)
             if rnd() <= CH_BRAWLER_ATTACKS:
-                p.log("The brawler won't let go.")
-                p.show('Brawler: "That\'s not good enough!"')
+                p.log(_("The brawler won't let go."))
+                p.show(_('Brawler: "That\'s not good enough!"'))
                 p.pak()
                 self.do_fight(b)
 
@@ -107,10 +114,12 @@ Man: "Hey you! Apologize or I'll beat you up!\"'''
                 fighter_factory.new_brawler() for _ in range(rndint(*NUM_BRAWL_BYSTANDERS))
             ]
             p.show(
-                f'The commotion draws in {len(bystanders)} more people — '
-                f'it turns into a full-blown street brawl!'
+                _(
+                    'The commotion draws in {} more people — '
+                    'it turns into a full-blown street brawl!'
+                ).format(len(bystanders))
             )
-            p.log('The brawl spreads to bystanders.')
+            p.log(_('The brawl spreads to bystanders.'))
             fight.free_for_all([p, b] + bystanders)
         else:
             p.fight(b)
@@ -123,16 +132,18 @@ class Drunkard(BaseEncounter):
 
     def run(self):
         p = self.player
-        t = f"""{p.name} meets a drunkard. "Hey, pal, come drink with me!" he slurs."""
+        t = _('{} meets a drunkard. "Hey, pal, come drink with me!" he slurs.').format(
+            tr_fighter_name(p.name)
+        )
         p.show(t)
-        p.log("Meets a drunkard.")
+        p.log(_('Meets a drunkard.'))
         if rnd() < p.drink_with_drunkard:
-            p.show(f"{p.name} can't resist the temptation.")
+            p.show(_("{} can't resist the temptation.").format(tr_fighter_name(p.name)))
             p.drink()
             p.gain_rep(REP_PEN_DRINK)
         else:
-            p.show(f"{p.name} refuses to drink.")
-            p.log("Refuses to drink.")
+            p.show(_('{} refuses to drink.').format(tr_fighter_name(p.name)))
+            p.log(_('Refuses to drink.'))
             roll = rnd()
             if (
                 p.check_lv(*REQ_LV_DRUNKARD_FIGHT_STRONG)
@@ -148,36 +159,48 @@ class Drunkard(BaseEncounter):
         p = self.player
         if strong:
             d = p.game.drunkard
-            t = '''Drunkard: "What? Just ignoring Legendary {}? \
-            Let me teach you some manners!"'''.format(
-                d.name.replace("Drunkard ", "")
+            t = _('''Drunkard: "What? Just ignoring Legendary {}? \
+            Let me teach you some manners!"''').format(
+                tr_fighter_name(d.name.replace("Drunkard ", ""))
             )
         else:
-            t = '''Drunkard: "You think you're too good for drinkin' with me?"'''
+            t = _('''Drunkard: "You think you're too good for drinkin' with me?"''')
             d = fighter_factory.new_drunkard(strong=False)
         p.show(t)
-        p.log(f"The drunkard attacks {p.name}.")
+        p.log(_('The drunkard attacks {}.').format(tr_fighter_name(p.name)))
         p.pak()
         if p.fight(d, items_allowed=False):
             if strong:
-                t = '''{}: "Whoa, you are good! I was just as good and just as arrogant in my day... \
-                I\'m sure we\'ll meet again."'''.format(
-                    d.name
+                t = _('''{}: "Whoa, you are good! I was just as good and just as arrogant in my day... \
+                I\'m sure we\'ll meet again."''').format(
+                    tr_fighter_name(d.name)
                 )
                 p.show(t)
                 p.add_friend(d)
                 p.add_accompl("Drunkard's Friend")
-                p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
+                p.show(
+                    _(
+                        '{}: "What amazing kung-fu! I feel that my technique has improved"'
+                    ).format(tr_fighter_name(p.name))
+                )
                 p.pak()
                 p.learn_move_from(d)
                 p.game.drunkard = None
         else:
-            p.show(f'{d.name}: "When I\'m one-tenth drunk I can use only one-tenth of my skill, '
-                   f'but when I\'m ten-tenths drunk I\'m at the top of my form."')
+            p.show(
+                _(
+                    '{}: "When I\'m one-tenth drunk I can use only one-tenth of my skill, '
+                    'but when I\'m ten-tenths drunk I\'m at the top of my form."'
+                ).format(tr_fighter_name(d.name))
+            )
             p.pak()
             if strong:
-                p.show(f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my '
-                       'technique has improved"')
+                p.show(
+                    _(
+                        '{}: "What amazing kung-fu! Even though I lost, I feel that my '
+                        'technique has improved"'
+                    ).format(tr_fighter_name(p.name))
+                )
                 p.pak()
                 p.learn_move_from(d)
 
@@ -194,14 +217,16 @@ class FatGirl(BaseEncounter):
 
     def run(self):
         p = self.player
-        p.show(f"{p.name} is ambushed by a strange fat girl.")
-        p.log("Is ambushed by a fat girl.")
+        p.show(_('{} is ambushed by a strange fat girl.').format(tr_fighter_name(p.name)))
+        p.log(_('Is ambushed by a fat girl.'))
         self.g = p.game.fat_girl
         opp_strength = p.get_rel_strength(self.g)
         esc_chance = get_escape_chance(p)
         p.show(
-            'Fat Girl: "You look like a martial artist! '
-            "Surely you'll make a fine husband. MARRY ME NOW OR I'LL BEAT THE CRAP OUT OF YOU!"
+            _(
+                'Fat Girl: "You look like a martial artist! '
+                "Surely you'll make a fine husband. MARRY ME NOW OR I'LL BEAT THE CRAP OUT OF YOU!"
+            )
         )
         if p.fight_or_run(opp_strength, esc_chance) and not check_scary_fight(p, opp_strength[0]):
             self.do_fight()
@@ -211,12 +236,16 @@ class FatGirl(BaseEncounter):
     def do_fight(self):
         p = self.player
         if p.fight(self.g):
-            p.msg(f"{self.p.name} runs away in fear.")
+            p.msg(_('{} runs away in fear.').format(tr_fighter_name(self.p.name)))
             p.game.fat_girl = None
             p.add_accompl("Fat Girl Defeated")
         else:
-            p.msg('Fat Girl: "Now that I think about it, you are too weak to be my husband '
-                  'anyway!"')
+            p.msg(
+                _(
+                    'Fat Girl: "Now that I think about it, you are too weak to be my husband '
+                    'anyway!"'
+                )
+            )
 
 
 
@@ -235,17 +264,25 @@ class FriendMatch(BaseEncounter):
     def run(self):
         p = self.player
         opp = random.choice(self.av_fr)
-        t1 = f'''{opp.name}: "{p.name}, I've learned some new moves. Let's practice!\"'''
-        t2 = f"{p.name}'s friend {opp.name} challenges him to a friendly match."
+        t1 = _('''{opp}: "{player}, I've learned some new moves. Let's practice!\"''').format(
+            opp=tr_fighter_name(opp.name), player=tr_fighter_name(p.name)
+        )
+        t2 = _("{player}'s friend {opp} challenges him to a friendly match.").format(
+            player=tr_fighter_name(p.name), opp=tr_fighter_name(opp.name)
+        )
         p.show(t1)
         p.log(t2)
-        p.show("Accept?")
+        p.show(_('Accept?'))
         if p.p_match_or_not():
             p.spar(opp)
-            p.show('{}: "That was a good match! Let\'s do it again some time."'.format(opp.name))
+            p.show(
+                _('{}: "That was a good match! Let\'s do it again some time."').format(
+                    tr_fighter_name(opp.name)
+                )
+            )
             p.pak()
         else:
-            p.log("Refuses.")
+            p.log(_('Refuses.'))
 
 
 
@@ -256,14 +293,16 @@ class Gossip(BaseEncounter):
     def run(self):
         p = self.player
         cost = random.choice(MONEY_GOSSIP_COST)
-        t = "{} meets a local gossipmonger. Pay {} coins to hear the latest rumors?".format(
-            p.name, cost
-        )
+        t = ngettext(
+            '{name} meets a local gossipmonger. Pay {n} coin to hear the latest rumors?',
+            '{name} meets a local gossipmonger. Pay {n} coins to hear the latest rumors?',
+            cost,
+        ).format(name=tr_fighter_name(p.name), n=cost)
         p.show(t)
-        p.log("Meets a gossipmonger.")
+        p.log(_('Meets a gossipmonger.'))
         if p.hear_rumors_or_not() and p.check_money(cost):
             p.pay(cost)
-            p.log("Hears the rumors.")
+            p.log(_('Hears the rumors.'))
             p.game.show_stats()
 
 
@@ -289,38 +328,46 @@ class OverhearConversation(BaseEncounter):
 
     def run(self):
         p = self.player
-        t = "{} accidentally overhears a conversation of two young kung-fu practitioners.".format(
-            p.name
-        )
-        p.log("Overhears a conversation.")
+        t = _(
+            '{} accidentally overhears a conversation of two young kung-fu practitioners.'
+        ).format(tr_fighter_name(p.name))
+        p.log(_('Overhears a conversation.'))
         p.show(t)
         self.collect_facts()
         if not self.facts:
             p.show(
-                '"They talk about such silly things instead of practicing!" - {} thinks.'.format(
-                    p.name
-                )
+                _(
+                    '"They talk about such silly things instead of practicing!" - {} thinks.'
+                ).format(tr_fighter_name(p.name))
             )
-            p.log("Nothing interesting.")
+            p.log(_('Nothing interesting.'))
         else:
             random.shuffle(self.facts)
             person, fact, result = self.facts[0]
             date, lv, opps, ratio = result
             opp_str = enum_words(group_same_fighters(opps))
             if fact == "humil_defeat":
-                t = '''One of them says: "Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to \
-kung-fu!"'''.format(
-                    person.name, lv, opp_str
+                t = _('''One of them says: "Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to \
+kung-fu!"''').format(
+                    tr_fighter_name(person.name), lv, tr_name(opp_str)
                 )
                 p.show(t)
-                p.log(f"Something about {person.name}'s humiliating defeat.")
+                p.log(
+                    _("Something about {}'s humiliating defeat.").format(
+                        tr_fighter_name(person.name)
+                    )
+                )
             elif fact == "aston_victory":
-                t = '''One of them says: "Haven't you heard? {} at lv.{} beat {}. What an astonishing \
-victory!"'''.format(
-                    person.name, lv, opp_str
+                t = _('''One of them says: "Haven't you heard? {} at lv.{} beat {}. What an astonishing \
+victory!"''').format(
+                    tr_fighter_name(person.name), lv, tr_name(opp_str)
                 )
                 p.show(t)
-                p.log(f"Something about {person.name}'s astonishing victory.")
+                p.log(
+                    _("Something about {}'s astonishing victory.").format(
+                        tr_fighter_name(person.name)
+                    )
+                )
         p.pak()
 
 
@@ -346,18 +393,22 @@ class PlayerMatch(BaseEncounter):
     def run(self):
         p = self.player
         opp = random.choice(self.av_p)
-        t = '''{0} meets {1} (lv.{2}).
-{1}: "Let\'s have a friendly match!"'''.format(
-            p.name, opp.name, opp.level
+        t = _('''{player} meets {opp} (lv.{lv}).
+{opp}: "Let\'s have a friendly match!"''').format(
+            player=tr_fighter_name(p.name), opp=tr_fighter_name(opp.name), lv=opp.level
         )
         p.show(t)
-        p.log(f"Meets {opp.name}")
+        p.log(_('Meets {}').format(tr_fighter_name(opp.name)))
         if p.p_match_or_not():
             p.spar(opp)
-            p.show('{}: "That was a good match! Let\'s do it again some time."'.format(opp.name))
+            p.show(
+                _('{}: "That was a good match! Let\'s do it again some time."').format(
+                    tr_fighter_name(opp.name)
+                )
+            )
             p.pak()
         else:
-            p.log("Refuses.")
+            p.log(_('Refuses.'))
 
 
 
@@ -370,25 +421,33 @@ class StreetBrawl(BaseEncounter):
         num_b = rndint(*NUM_STREET_BRAWLERS)
         if random.choice((True, False)):
             p.show(
-                f'{p.name} stumbles upon a street brawl — {num_b} men are fighting each other!'
+                ngettext(
+                    '{name} stumbles upon a street brawl — {n} man is fighting each other!',
+                    '{name} stumbles upon a street brawl — {n} men are fighting each other!',
+                    num_b,
+                ).format(name=tr_fighter_name(p.name), n=num_b)
             )
-            p.log('Sees a street brawl.')
+            p.log(_('Sees a street brawl.'))
         else:
             p.show(
-                f'{p.name} stumbles into a tavern brawl — {num_b} drunkards are fighting each other!'
+                ngettext(
+                    '{name} stumbles into a tavern brawl — {n} drunkard is fighting each other!',
+                    '{name} stumbles into a tavern brawl — {n} drunkards are fighting each other!',
+                    num_b,
+                ).format(name=tr_fighter_name(p.name), n=num_b)
             )
-            p.log('Sees a tavern brawl.')
+            p.log(_('Sees a tavern brawl.'))
         brawlers = [fighter_factory.new_brawler() for _ in range(num_b)]
         opp_info = p.get_rel_strength(*brawlers, mean=True)
         if p.brawl_or_not(opp_info) and not check_scary_fight(p, opp_to_self_pwr_ratio=opp_info[0]):
-            p.log('Joins the brawl.')
+            p.log(_('Joins the brawl.'))
             p.gain_rep(REP_PEN_BRAWL)
             if fight.free_for_all([p] + brawlers):
-                p.show(f'{p.name} is the last one standing!')
+                p.show(_('{} is the last one standing!').format(tr_fighter_name(p.name)))
                 p.gain_rep(num_b * REP_WIN_BRAWL)
             p.pak()
         else:
-            p.log('Walks away from the brawl.')
+            p.log(_('Walks away from the brawl.'))
 
 
 
@@ -398,20 +457,30 @@ class WiseMan(BaseEncounter):
 
     def run(self):
         p = self.player
-        t = f"{p.name} meets a wise man."
+        t = _('{} meets a wise man.').format(tr_fighter_name(p.name))
         p.show(t)
-        p.log("Meets a wise man.")
+        p.log(_('Meets a wise man.'))
         if p.check_money(MONEY_WISE_MAN):
             if p.talk_wise_or_not() and not check_feeling_greedy(p):
                 p.pay(MONEY_WISE_MAN)
                 trait = traits.get_rand_traits(negative=False)
                 p.show(
-                    "{} and the wise man have a long conversation in a nearby tavern. The wise man talks about "
-                    "the importance of being {}.".format(p.name, trait)
+                    _(
+                        "{} and the wise man have a long conversation in a nearby tavern. The wise man talks about "
+                        "the importance of being {}."
+                    ).format(tr_fighter_name(p.name), tr_name(trait))
                 )
-                p.log(f"The wise man talks about the importance of being {trait}.")
+                p.log(
+                    _('The wise man talks about the importance of being {}.').format(
+                        tr_name(trait)
+                    )
+                )
                 if rnd() <= CH_CHANGE_TRAIT and trait not in p.traits:
-                    p.show(f"This conversation changes {p.name}'s life.")
+                    p.show(
+                        _("This conversation changes {}'s life.").format(
+                            tr_fighter_name(p.name)
+                        )
+                    )
                     opp_trait = traits.get_opposite_trait(trait)
                     if opp_trait in p.traits:
                         p.remove_trait(opp_trait)
@@ -422,9 +491,9 @@ class WiseMan(BaseEncounter):
                 return
         else:
             p.show(
-                "Too bad {} doesn't have enough money to treat the wise man to lunch and talk to him.".format(
-                    p.name
-                )
+                _(
+                    "Too bad {} doesn't have enough money to treat the wise man to lunch and talk to him."
+                ).format(tr_fighter_name(p.name))
             )
         p.pak()
 
@@ -432,6 +501,5 @@ class WiseMan(BaseEncounter):
 
 class GDrunkard(Guaranteed, Drunkard):
     pass
-
 
 

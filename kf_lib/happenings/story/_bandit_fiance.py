@@ -3,6 +3,7 @@ import random
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.names import ROBBER_NICKNAMES
+from kf_lib.i18n import _, tr_fighter_name
 
 
 class BanditFianceStory(BaseStory):
@@ -17,12 +18,12 @@ class BanditFianceStory(BaseStory):
         b = self.boss = fighter_factory.new_convict()
         b.name = g.get_new_name(random.choice(ROBBER_NICKNAMES))
         g.register_fighter(b)
-        t = (
-            f'A coversation in {g.town_name}\'s tavern:'
-            f'\n{b.name}: "That old man\'s daughter is really pretty..."'
-            f'\n{b.name}\'s Henchman: "If you like her that much, boss, why not marry her?"'
-            f'\n{b.name}: "Hmm..."'
-        )
+        t = _(
+            'A coversation in {town}\'s tavern:'
+            '\n{name}: "That old man\'s daughter is really pretty..."'
+            '\n{name}\'s Henchman: "If you like her that much, boss, why not marry her?"'
+            '\n{name}: "Hmm..."'
+        ).format(town=g.town_name, name=tr_fighter_name(b.name))
         g.show(t)
         g.pak()
 
@@ -33,35 +34,40 @@ class BanditFianceStory(BaseStory):
 
     def scene1(self):
         g, p, b = self.game, self.player, self.boss
-        t = (
-            f'{p.name} meets an old man in the tavern. The old man looks very sad. '
-            f'It turns out that the infamous bandit {b.name} wants to marry the old man\'s '
-            f'beautiful daughter. The old man cannot refuse as {b.name} will likely kill '
+        t = _(
+            '{p_name} meets an old man in the tavern. The old man looks very sad. '
+            'It turns out that the infamous bandit {b_name} wants to marry the old man\'s '
+            'beautiful daughter. The old man cannot refuse as {b_name} will likely kill '
             'him and take his daughter anyway.'
-            f'\n{p.name}: "Don\'t worry! When I was on Mount Wutai I learned the Buddhist Laws '
+            '\n{p_name}: "Don\'t worry! When I was on Mount Wutai I learned the Buddhist Laws '
             'of Logic from the abbot. Now I can talk a man around even if he\'s hard as iron. '
-            f'I am sure {b.name} will listen."'
-            f'\nOld Man: "What great good fortune that I could meet you today!"'
-        )
+            'I am sure {b_name} will listen."'
+            '\nOld Man: "What great good fortune that I could meet you today!"'
+        ).format(p_name=tr_fighter_name(p.name), b_name=tr_fighter_name(b.name))
         p.msg(t)
 
     def scene2(self):
         g, p, b = self.game, self.player, self.boss
-        t = (
-            f'{b.name}: "Old man, are you trying to make a fool of me? Where is your daughter?"'
-            f'\nOld Man: "Please, sir, have mercy..."'
-            f'\n{p.name}: "Wait, {b.name}, let us discuss this like civil men!"'
-        )
+        t = _(
+            '{b_name}: "Old man, are you trying to make a fool of me? Where is your daughter?"'
+            '\nOld Man: "Please, sir, have mercy..."'
+            '\n{p_name}: "Wait, {b_name}, let us discuss this like civil men!"'
+        ).format(p_name=tr_fighter_name(p.name), b_name=tr_fighter_name(b.name))
         p.msg(t)
         if p.fight(b):
-            p.show(f'{p.name}: "Do you see now? You are not a good match for this girl."')
-            p.show(f'{b.name}: "Forgive me, master! You won\'t see me again."')
+            p.show(_('{name}: "Do you see now? You are not a good match for this girl."').format(
+                name=tr_fighter_name(p.name)
+            ))
+            p.show(_('{name}: "Forgive me, master! You won\'t see me again."').format(
+                name=tr_fighter_name(b.name)
+            ))
             p.pak()
             self.reward()
         else:
             p.show(
-                f'{b.name}: "It is no good, the police are coming! The people here are not '
-                f'hospitable at all. It is time for {b.name} to move on to the next town!"'
+                _('{name}: "It is no good, the police are coming! The people here are not '
+                  'hospitable at all. It is time for {name} to move on to the next town!"')
+                .format(name=tr_fighter_name(b.name))
             )
             p.pak()
 

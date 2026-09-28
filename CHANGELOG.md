@@ -30,9 +30,29 @@ All notable changes to KFW are documented here. Format loosely follows
   tooling needed to play), maintained with new dev scripts
   (`i18n_extract.py`, `translate_names.py`, `compile_locale.py`,
   `i18n_coverage.py`); the machine-filled Russian is a draft meant for human
-  review. Encounter/story/event prose and biographies are deliberately not
-  translated yet (see BACKLOG.md). New test module `test/test_i18n.py`; full
-  autoplay games verified to complete in both languages.
+  review. New test module `test/test_i18n.py`; full autoplay games verified
+  to complete in both languages.
+- **Russian localization, second slice — the narrative prose**: all street
+  encounters, story lines, scheduled events, tournament/Grand Melee/
+  All-Schools announcements, gossip and overheard conversations, all
+  player-life messages and log entries (training, money, friends, school,
+  family), the full stats report (labels and move-name values), and the
+  debug menu are wrapped and translated — the prose catalog grows to 954
+  entries at 100% coverage. Sentences with counts use `ngettext`
+  (Russian 3-form plurals: «1 монета / 3 монеты / 5 монет»); names
+  interpolated into prose go through `tr_fighter_name`/`tr_name`, with
+  Russian phrasing deliberately avoiding declension of inserted names.
+  Rock-paper-scissors choices display translated while staying English
+  identifiers in game logic, and accomplishment labels now render translated
+  in the accomplishments screen (`get_accompl_info`).
+- **Gender-aware biographies** (`game/biographies.py`): the end-of-game bio
+  now follows the player's gender (since v0.7.4) instead of always saying
+  "His" — female characters get 'Her kung-fu style was...' / 'She married
+  the love of her life...', and every gendered sentence is a separate msgid
+  pair so Russian verb agreement works («Он женился» / «Она вышла замуж»).
+  Genderless old saves keep the legacy male wording. As a side effect the
+  one-child family line is now grammatical English ('1 wonderful child'
+  instead of '1 wonderful children').
 
 ### Fixed
 - **Trait selection no longer hash-seed dependent**:
@@ -42,6 +62,10 @@ All notable changes to KFW are documented here. Format loosely follows
   the last known site of this bug family. This also cures the long-standing
   flaky `TestJadeTableStory` (previously failing on ~15–20% of hash seeds,
   now 40/40)
+- **A bet of exactly 1 coin** announced as "1 coins" in tournaments — plural
+  forms now come from `ngettext`, which fixed this English grammar slip as a
+  side effect (the robber-crowd "The robber(s) decide(s)" suffix hack was
+  likewise replaced by `ngettext`, with identical output)
 
 ## [v0.7.4-beta "Rainbow Fist"] — 2026-09-27
 

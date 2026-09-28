@@ -368,30 +368,33 @@ changes, not run noise; Diff% = winner-vs-loser correlation):
 - common log for all players; get verbose fighter info
 - add timer to fight screens?
 
-## Localization (Russian milestone 2 — see `docs/i18n.md`)
+## Localization (see `docs/i18n.md`)
 
-Milestone 1 shipped 2026-09-28 (menus, fight text, quotes, name catalogs,
-PMAP descriptions). Remaining for full Russian coverage:
+Milestones 1+2 shipped 2026-09-28: menus, meta UI, fight text, quotes,
+encounter/story/event/tournament prose, player-life messages, stats report,
+debug menu, biographies (gender-aware), all name catalogs — 954 prose +
+14,483 name entries, 100% machine-translated. What remains:
 
-- **Encounter/story/event prose** (`kf_lib/happenings/`) — the largest body
-  of untranslated text; wrap in `_()`, extract, machine-draft, human-review
-- **Biographies** (`game/biographies.py`) — needs gender-aware templating
-  (Russian verbs agree with the subject's gender; player gender exists since
-  v0.7.4)
-- **Gossip text** (encounters/_people.py)
-- **Stats report** (`game/game_stats.py`) and the `aston_victory` /
-  `humil_defeat` stat tuple text
-- **Debug menu** strings
-- **Menu key mnemonics**: menu options keyed on English letters ('B - Back'
-  etc.) — decide on Russian-letter or digit keys
+- **Human review pass** over the machine-drafted `kfw.po` and
+  `kfw_names.po` (+ `dev_scripts/_names_ru.py` dictionary) — draft quality
+  by design; this is the main open item
+- **Russian fighter-name generation** — proper names stay Chinese-ish
+  syllables transliterated as-is; a Russian flavor would need a new
+  name-pool pipeline
+- **Menu key mnemonics** — menu option keys are derived from English
+  letters; under ru the auto-keys follow the translated labels, which may
+  collide or be awkward; consider explicit keys
 - **Move `descr` stat blocks** ('Dist:2 Pwr:5' etc.) — kept English on
   purpose; translate if a compact Russian notation is wanted
+- **Full declension machinery** — currently avoided via case-neutral
+  phrasing; a few interpolated fighter names still sit in oblique-case
+  positions (acceptable with undeclined Chinese names, but noticeable)
 - **Mid-process `set_language()`** does not regenerate import-time PMAP
   descriptions or already-built `Tech.descr` strings (harmless in the real
   game; only matters for tests/dev scripts)
-- Full declension machinery (currently avoided by case-neutral phrasing) —
-  only if a wanted string can't be phrased around it
-- Russian fighter-name generation (proper names stay Chinese-ish syllables;
-  a Russian flavor would need a new name-pool pipeline)
-- Human review pass over the machine-drafted `kfw_names.po` and
-  `dev_scripts/_names_ru.py` dictionary (draft quality by design)
+- **'Weird' prefix in `_strange_dreams.py`** is glued to an enemy's name in
+  code (`en.name = 'Weird ' + en.name`), so it stays English — a display-layer
+  prefix mechanism would be needed
+- **Two-count sentences** ("{n} police officers fighting {m} thugs") can't
+  inflect both counts via one `ngettext`; current phrasing parenthesizes the
+  numbers

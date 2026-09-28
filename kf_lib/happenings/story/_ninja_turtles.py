@@ -1,5 +1,6 @@
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.kung_fu.styles import TURTLE_NUNJUTSU
 
 
@@ -10,7 +11,7 @@ class NinjaTurtlesStory(BaseStory):
     def intro(self):
         g = self.game
         g.cls()
-        t = (
+        t = _(
             'A sudden flash pierces the deep darkness of the night... Four figures appear, '
             'muscular and not quite human. They are wielding traditional Japanese weapons. '
             'Looking around in confusion, they speak in hushed tones, clearly deciding what to do '
@@ -27,7 +28,8 @@ class NinjaTurtlesStory(BaseStory):
     def scene1(self):
         p = self.player
         p.write(
-            f'{p.name} encounters the four teenage mutant ninja turtles travelling in time.'
+            _('{name} encounters the four teenage mutant ninja turtles travelling in '
+              'time.').format(name=tr_fighter_name(p.name))
         )
         p.pak()
         opponents = fighter_factory.new_ninja_turtles()

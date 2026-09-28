@@ -3,6 +3,7 @@ import random
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 from kf_lib.constants import experience
+from kf_lib.i18n import _, tr_fighter_name, tr_style_name
 
 
 class ForeignerStory(BaseStory):
@@ -17,9 +18,16 @@ class ForeignerStory(BaseStory):
         b = self.boss = fighter_factory.new_foreigner()
         g.register_fighter(b)
         t = (
-            f'Rumor has it that {b.name}, a renowned martial artist from {b.country}, has arrived '
-            f'in {g.town_name} to defeat local masters and prove the superiority of his own '
-            f'fighting style, {b.style.public_name}.'
+            _(
+                'Rumor has it that {b_name}, a renowned martial artist from {country}, has '
+                'arrived in {town} to defeat local masters and prove the superiority of '
+                'his own fighting style, {style}.'
+            ).format(
+                b_name=tr_fighter_name(b.name),
+                country=b.country,
+                town=g.town_name,
+                style=tr_style_name(b.style.public_name),
+            )
         )
         g.show(t)
         g.pak()
@@ -32,8 +40,10 @@ class ForeignerStory(BaseStory):
     def scene1(self):
         g, p, b = self.game, self.player, self.boss
         t = (
-            f'The people of {g.town_name} keep talking about the foreigner, {b.name}. He has '
-            f'already defeated some good fighters.'
+            _(
+                'The people of {town} keep talking about the foreigner, {b_name}. He has '
+                'already defeated some good fighters.'
+            ).format(town=g.town_name, b_name=tr_fighter_name(b.name))
         )
         p.show(t)
         p.pak()
@@ -43,12 +53,18 @@ class ForeignerStory(BaseStory):
         f = fighter_factory.new_fighter(5)
         p.spectate([b], [f])
         t = (
-            f'{b.name} has challenged some martial artists in {g.town_name}, yet again. Today '
-            f'{p.name} watched him fight, in a few of his \'friendly matches\', which didn\'t '
-            f'seem all that friendly. In the last fight, {b.name} defeated three opponents at '
-            f'once, injuring them badly. He is a formidable adversary... '
-            f'\nBy watching {b.name} fight {p.name} gained some valuable insights into the '
-            f'foreigner\'s technique.'
+            _(
+                '{b_name} has challenged some martial artists in {town}, yet again. Today '
+                '{p_name} watched him fight, in a few of his \'friendly matches\', which '
+                'didn\'t seem all that friendly. In the last fight, {b_name} defeated three '
+                'opponents at once, injuring them badly. He is a formidable adversary... '
+                '\nBy watching {b_name} fight {p_name} gained some valuable insights into '
+                'the foreigner\'s technique.'
+            ).format(
+                b_name=tr_fighter_name(b.name),
+                town=g.town_name,
+                p_name=tr_fighter_name(p.name),
+            )
         )
         p.show(t)
         p.gain_exp(random.randint(*experience.SPECTATE_FOREIGNER_EXP))
@@ -59,28 +75,53 @@ class ForeignerStory(BaseStory):
         av_friends = [f for f in p.friends if f not in g.players]
         if p.best_student:
             f = p.best_student
-            f_st = f'{p.name}\'s best student {f.name}'
+            f_st = _('{p_name}\'s best student {f_name}').format(
+                p_name=tr_fighter_name(p.name), f_name=tr_fighter_name(f.name)
+            )
         elif av_friends:
             f = random.choice(av_friends)
-            f_st = f'{p.name}\'s friend {f.name}'
+            f_st = _('{p_name}\'s friend {f_name}').format(
+                p_name=tr_fighter_name(p.name), f_name=tr_fighter_name(f.name)
+            )
         else:
             f = random.choice(list(g.masters.values()))
-            f_st = f'{f.name} of {f.style.public_name}'
+            f_st = _('{f_name} of {style}').format(
+                f_name=tr_fighter_name(f.name), style=tr_style_name(f.style.public_name)
+            )
         t = (
-            f'{p.name} finds out that {b.name} beat {f_st}! Can no one stop this arrogant '
-            f'foreigner?'
+            _(
+                '{p_name} finds out that {b_name} beat {f_st}! Can no one stop this '
+                'arrogant foreigner?'
+            ).format(
+                p_name=tr_fighter_name(p.name),
+                b_name=tr_fighter_name(b.name),
+                f_st=f_st,
+            )
         )
         p.show(t)
-        if not p.is_human or g.yn(f'Challenge {b.name}?'):
+        if not p.is_human or g.yn(
+            _('Challenge {b_name}?').format(b_name=tr_fighter_name(b.name))
+        ):
             if p.fight(b, hide_stats=False, environment_allowed=False, items_allowed=False):
                 p.show(
-                    f'{p.name}: "It\'s not about styles. True strength is in the fighter\'s heart."'
+                    _(
+                        '{p_name}: "It\'s not about styles. True strength is in the '
+                        'fighter\'s heart."'
+                    ).format(p_name=tr_fighter_name(p.name))
                 )
-                p.show(f'The people of {g.town_name} are amazed at {p.name}\'s victory!')
+                p.show(
+                    _('The people of {town} are amazed at {p_name}\'s victory!').format(
+                        town=g.town_name, p_name=tr_fighter_name(p.name)
+                    )
+                )
                 p.pak()
                 self.reward()
             else:
-                p.msg(f'Having proved his superiority, {b.name} leaves {g.town_name}.')
+                p.msg(
+                    _(
+                        'Having proved his superiority, {b_name} leaves {town}.'
+                    ).format(b_name=tr_fighter_name(b.name), town=g.town_name)
+                )
                 # todo get depressed after losing to the foreigner?
         # end of the story
         self.end()

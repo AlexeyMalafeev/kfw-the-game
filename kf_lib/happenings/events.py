@@ -1,6 +1,7 @@
 import random
 
 from kf_lib.fighting import fight
+from kf_lib.i18n import _, tr_style_name
 from kf_lib.utils import rnd
 from .all_schools import AllSchoolsTournament
 from .tournament import Tournament
@@ -80,17 +81,21 @@ def crime_up(g, rate=CRIME_INCREASE_MONTHLY, mult=1.0):
 def kungfu_down(g):
     g.cls()
     g.kung_fu = max(g.kung_fu - KUNGFU_CHANGE, MIN_KUNGFU)
-    g.msg(f'Old man: The people of {g.town_name} are losing their interest in kung-fu...')
+    g.msg(
+        _('Old man: The people of {} are losing their interest in kung-fu...').format(
+            g.town_name
+        )
+    )
 
 
 def kungfu_up(g):
     g.cls()
     g.kung_fu = min(g.kung_fu + KUNGFU_CHANGE, MAX_KUNGFU)
     g.msg(
-        'Old man: It seems everybody in {} wants \
-to practice kung-fu nowadays...'.format(
-            g.town_name
-        )
+        _(
+            'Old man: It seems everybody in {} wants '
+            'to practice kung-fu nowadays...'
+        ).format(g.town_name)
     )
 
 
@@ -123,16 +128,21 @@ def poverty_down(g):
     g.cls()
     g.poverty = max(g.poverty - POVERTY_CHANGE, MIN_POVERTY)
     g.msg(
-        'Old woman: There are not as many poor and homeless people in {} as before...'.format(
-            g.town_name
-        )
+        _(
+            'Old woman: There are not as many poor and homeless people '
+            'in {} as before...'
+        ).format(g.town_name)
     )
 
 
 def poverty_up(g):
     g.cls()
     g.poverty = min(g.poverty + POVERTY_CHANGE, MAX_POVERTY)
-    g.msg('Old woman: Many people in {} now don\'t have enough to eat...'.format(g.town_name))
+    g.msg(
+        _('Old woman: Many people in {} now don\'t have enough to eat...').format(
+            g.town_name
+        )
+    )
 
 
 def randevent(g):
@@ -155,9 +165,13 @@ def school_vs_school(g):
     b = [f for f in b if not f.is_player or not f.inactive]
     style_a = a[0].style.public_name
     style_b = b[0].style.public_name
-    s = f'A fight breaks out between students of {style_a} and {style_b}!'
+    s = _('A fight breaks out between students of {} and {}!').format(
+        tr_style_name(style_a), tr_style_name(style_b)
+    )
     g.msg(s)
     for f in a + b:
         f.log(s)
-    win_messages = tuple(f'{st} school wins!' for st in (style_a, style_b))
+    win_messages = tuple(
+        _('{} school wins!').format(tr_style_name(st)) for st in (style_a, style_b)
+    )
     fight.fight(a[0], b[0], a[1:], b[1:], win_messages=win_messages, school_display=True)

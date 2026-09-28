@@ -1,6 +1,7 @@
 import random
 
 from kf_lib.actors import fighter_factory
+from kf_lib.i18n import _, ngettext, tr_fighter_name
 from kf_lib.utils import rnd, rndint
 from ._base_encounter import BaseEncounter
 from ._utils import get_escape_chance, check_scary_fight, try_escape
@@ -25,11 +26,21 @@ class Ambush(BaseEncounter):
         e = self.e = random.choice(p.enemies)
         num_thugs = rndint(NUM_AMBUSH_THUGS[0], NUM_AMBUSH_THUGS[1])
         self.thugs = fighter_factory.new_thug(weak=True, n=num_thugs)
-        p.show(
-            f"{p.name} is ambushed by his enemy {self.e.name} with {num_thugs} thugs!!\n"
-            f'{e.name}: "Seize this fellow and give him a good beating!"'
+        t = ngettext(
+            '{name} is ambushed by his enemy {enemy} with {n} thug!!\n'
+            '{enemy}: "Seize this fellow and give him a good beating!"',
+            '{name} is ambushed by his enemy {enemy} with {n} thugs!!\n'
+            '{enemy}: "Seize this fellow and give him a good beating!"',
+            num_thugs,
+        ).format(name=tr_fighter_name(p.name), enemy=tr_fighter_name(e.name), n=num_thugs)
+        p.show(t)
+        p.log(
+            ngettext(
+                'Is ambushed by {enemy} with {n} thug.',
+                'Is ambushed by {enemy} with {n} thugs.',
+                num_thugs,
+            ).format(enemy=tr_fighter_name(self.e.name), n=num_thugs)
         )
-        p.log(f"Is ambushed by {self.e.name} with {num_thugs} thugs.")
         opp = [self.e] + self.thugs
         opp_strength = p.get_rel_strength(*opp)
         esc_chance = get_escape_chance(p)
@@ -45,7 +56,11 @@ class Ambush(BaseEncounter):
         if p.fight(e, p.allies, self.thugs):
             p.game.crime_down()
             if rnd() <= CH_ENEMY_REPENTS:
-                p.msg(f'{e.name}: "Please forgive me! I swear you\'ll never see me again!"')
+                p.msg(
+                    _('{name}: "Please forgive me! I swear you\'ll never see me again!"').format(
+                        name=tr_fighter_name(e.name)
+                    )
+                )
                 p.remove_enemy(e)
                 p.gain_rep(REP_REFORM_ENEMY)
                 p.add_accompl("Enemy Reformed")

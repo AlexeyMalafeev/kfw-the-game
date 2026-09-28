@@ -2,6 +2,7 @@ import random
 
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.names import ROBBER_NICKNAMES
+from kf_lib.i18n import _, tr_fighter_name
 from ._base_story import BaseStory
 
 
@@ -24,11 +25,17 @@ class KidnappedSweetheartStory(BaseStory):
         p = self.player
         sw = p.sweetheart
         t = (
-            f'{p.name} returns home to find the door open and signs of a struggle. '
-            f'A note is pinned to the wall with a knife:'
-            f'\n"{p.name}! Your beloved {sw.name} is our guest now. If you ever want '
-            f'to see {sw.name} again, come to the old fish market and bring money. '
-            f'And no police!"\n— {b.name}'
+            _(
+                '{p_name} returns home to find the door open and signs of a struggle. '
+                'A note is pinned to the wall with a knife:'
+                '\n"{p_name}! Your beloved {sw_name} is our guest now. If you ever want '
+                'to see {sw_name} again, come to the old fish market and bring money. '
+                'And no police!"\n— {b_name}'
+            ).format(
+                p_name=tr_fighter_name(p.name),
+                sw_name=tr_fighter_name(sw.name),
+                b_name=tr_fighter_name(b.name),
+            )
         )
         g.show(t)
         g.pak()
@@ -43,7 +50,11 @@ class KidnappedSweetheartStory(BaseStory):
         """The romance may have ended while the story was in progress."""
         if self.player.sweetheart is None:
             p = self.player
-            p.msg(f'{p.name} never finds out what happened — the trail has gone cold.')
+            p.msg(
+                _(
+                    '{p_name} never finds out what happened — the trail has gone cold.'
+                ).format(p_name=tr_fighter_name(p.name))
+            )
             self.end()
             return True
         return False
@@ -54,10 +65,16 @@ class KidnappedSweetheartStory(BaseStory):
         p, b = self.player, self.boss
         sw = p.sweetheart
         t = (
-            f'{p.name} spends days asking around the docks and the market. Finally, an '
-            f'old fisherman whispers that {b.name}\'s gang has a hideout by the old '
-            f'fish market.'
-            f'\n{p.name}: "Hold on, {sw.name}. I am coming."'
+            _(
+                '{p_name} spends days asking around the docks and the market. Finally, an '
+                'old fisherman whispers that {b_name}\'s gang has a hideout by the old '
+                'fish market.'
+                '\n{p_name}: "Hold on, {sw_name}. I am coming."'
+            ).format(
+                p_name=tr_fighter_name(p.name),
+                b_name=tr_fighter_name(b.name),
+                sw_name=tr_fighter_name(sw.name),
+            )
         )
         p.msg(t)
 
@@ -68,24 +85,43 @@ class KidnappedSweetheartStory(BaseStory):
         sw = p.sweetheart
         thugs = fighter_factory.new_thug(n=2)
         t = (
-            f'The old fish market at dusk. {b.name} and his thugs are waiting.'
-            f'\n{b.name}: "So the lovebird came after all! Get \'em, boys!"'
-            f'\n{sw.name}: "{p.name}!"'
+            _(
+                'The old fish market at dusk. {b_name} and his thugs are waiting.'
+                '\n{b_name}: "So the lovebird came after all! Get \'em, boys!"'
+                '\n{sw_name}: "{p_name}!"'
+            ).format(
+                b_name=tr_fighter_name(b.name),
+                sw_name=tr_fighter_name(sw.name),
+                p_name=tr_fighter_name(p.name),
+            )
         )
         p.msg(t)
         p.check_help()
         if p.fight(b, p.allies, thugs):
-            p.show(f'{sw.name}: "I knew you would come for me!"')
+            p.show(
+                _('{sw_name}: "I knew you would come for me!"').format(
+                    sw_name=tr_fighter_name(sw.name)
+                )
+            )
             p.pak()
             self.reward()
         else:
             p.show(
-                f'Beaten and barely conscious, {p.name} suddenly hears the guards '
-                f'screaming... {sw.name} has broken free and driven the bandits off '
-                f'— {sw.name} is a martial artist, after all.'
-                f'\n{sw.name}: "You came for me, and that is what matters. But you '
-                f'should practice more, my love."'
+                _(
+                    'Beaten and barely conscious, {p_name} suddenly hears the guards '
+                    'screaming... {sw_name} has broken free and driven the bandits off '
+                    '— {sw_name} is a martial artist, after all.'
+                    '\n{sw_name}: "You came for me, and that is what matters. But you '
+                    'should practice more, my love."'
+                ).format(
+                    p_name=tr_fighter_name(p.name),
+                    sw_name=tr_fighter_name(sw.name),
+                )
             )
-            p.log(f'{sw.name} frees herself from {b.name}\'s gang.')
+            p.log(
+                _('{sw_name} frees herself from {b_name}\'s gang.').format(
+                    sw_name=tr_fighter_name(sw.name), b_name=tr_fighter_name(b.name)
+                )
+            )
             p.pak()
         self.end()

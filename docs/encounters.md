@@ -9,6 +9,11 @@ modules), `kf_lib/happenings/story/` (quest chains), `kf_lib/happenings/events.p
 `docs/fight_mechanics.md` for the fights themselves.
 Items marked ⚠️ look unintentional or surprising — verify before building on them.
 
+All user-facing text in these modules is `_()`/`ngettext()`-wrapped and
+translates under `--lang ru` (see `docs/i18n.md`): names in prose go through
+`tr_fighter_name` / `tr_name` / `tr_style_name`, and accomplishment labels
+(`add_accompl`) stay English identifiers translated at display.
+
 ## Encounter lifecycle
 
 An encounter is a class, not an instance registry: `BaseEncounter`

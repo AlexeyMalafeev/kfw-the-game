@@ -2,6 +2,7 @@ import random
 from collections import deque
 
 from kf_lib.fighting import fight
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import yn
 
 
@@ -93,12 +94,17 @@ class AllSchoolsTournament:
             bouts += [rest[i: i + 2] for i in range(0, len(rest), 2)]
             pairings = '; '.join(
                 ' vs '.join(
-                    f'{f.name} ({self._displayed_school_name(name)})' for name, f in bout
+                    f'{tr_fighter_name(f.name)} ({self._displayed_school_name(name)})'
+                    for name, f in bout
                 )
                 for bout in bouts
             )
             g.cls()
-            g.msg(f'All-Schools Tournament, round {current_round}:\n{pairings}')
+            g.msg(
+                _('All-Schools Tournament, round {round}:\n{pairings}').format(
+                    round=current_round, pairings=pairings
+                )
+            )
             still_active = {}
             for bout in bouts:
                 # player fighters first (protagonist perspective in fights)
@@ -112,8 +118,9 @@ class AllSchoolsTournament:
                         still_active[name] = reserves[name].popleft()
                     else:
                         g.msg(
-                            f'{self._displayed_school_name(name)} is out of students '
-                            'and leaves the tournament!'
+                            _('{} is out of students and leaves the tournament!').format(
+                                self._displayed_school_name(name)
+                            )
                         )
             active = still_active
         if active:
@@ -124,18 +131,24 @@ class AllSchoolsTournament:
     def _give_rewards(self):
         g = self.g
         if self.champion is None:
-            g.msg('The All-Schools Tournament ends in a draw — no school prevails!')
+            g.msg(_('The All-Schools Tournament ends in a draw — no school prevails!'))
             return
         roster = self.rosters[self.champion]
         displayed_school = self._displayed_school_name(self.champion)
         g.msg(
-            f'{displayed_school} wins the All-Schools Tournament and is declared '
-            f'the Strongest School in {g.town_name}!'
+            _(
+                '{school} wins the All-Schools Tournament and is declared '
+                'the Strongest School in {town}!'
+            ).format(school=displayed_school, town=g.town_name)
         )
         for f in roster:
             # each fighter logs the name as they know it — a student who hasn't
             # learned the style's secret must not find its true name in his log
-            f.log(f'Wins the All-Schools Tournament with {f.get_displayed_style_name()}.')
+            f.log(
+                _('Wins the All-Schools Tournament with {}.').format(
+                    f.get_displayed_style_name()
+                )
+            )
         final_fighter = self.final_fighter
         for p in (f for f in roster if f.is_player):
             if p is final_fighter:
@@ -145,7 +158,11 @@ class AllSchoolsTournament:
                 p.gain_exp(ALL_SCHOOLS_PART_EXP)
         master = g.masters.get(self.champion)
         if master is not None and master.is_player:
-            master.write(f"{master.name}'s school wins the All-Schools Tournament!")
+            master.write(
+                _("{}'s school wins the All-Schools Tournament!").format(
+                    tr_fighter_name(master.name)
+                )
+            )
             master.gain_rep(ALL_SCHOOLS_MASTER_REP)
             master.change_stat('all_schools_tourn_won', 1)
 
@@ -164,10 +181,12 @@ class AllSchoolsTournament:
             return
         g.cls()
         g.msg(
-            f'The masters of {g.town_name} gather for the All-Schools Tournament! Every school '
-            'fields its students, weakest first — a knocked-out fighter is out for the whole '
-            'tournament, replaced by the next one in rank. Last fighter standing wins the '
-            'title for his school!'
+            _(
+                'The masters of {} gather for the All-Schools Tournament! Every school '
+                'fields its students, weakest first — a knocked-out fighter is out for the whole '
+                'tournament, replaced by the next one in rank. Last fighter standing wins the '
+                'title for his school!'
+            ).format(g.town_name)
         )
         # human participants may opt to skip all their bouts: they are then
         # auto-fought without the per-fight display and prompt; declining
@@ -177,7 +196,9 @@ class AllSchoolsTournament:
         ]
         for h in skippers:
             h.auto_fight_all = yn(
-                f'{h.name}: auto-fight all your bouts in this tournament?'
+                _('{}: auto-fight all your bouts in this tournament?').format(
+                    tr_fighter_name(h.name)
+                )
             )
         try:
             self._do_rounds()

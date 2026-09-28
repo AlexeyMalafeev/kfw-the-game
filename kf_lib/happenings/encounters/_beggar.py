@@ -1,5 +1,6 @@
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_feeling_greedy
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.utils import rnd
 
 
@@ -18,8 +19,8 @@ class Beggar(BaseEncounter):
 
     def run(self):
         p = self.player
-        p.show(f"{p.name} meets a beggar.")
-        p.log("Meets a beggar.")
+        p.show(_('{} meets a beggar.').format(tr_fighter_name(p.name)))
+        p.log(_("Meets a beggar."))
         amount = p.donate_or_not(MONEY_GIVE_BEGGAR)
         if amount and not check_feeling_greedy(p):
             p.donate(amount)
@@ -31,39 +32,57 @@ class Beggar(BaseEncounter):
         b = p.game.beggar
         if b is None:
             return
-        t = (
-            f'As {p.name} turns to leave however, the beggar stops him.\n'
+        t = _(
+            'As {name} turns to leave however, the beggar stops him.\n'
             'Beggar: "In thanks for your kindness, young man, let me teach you some special '
-            f'kung-fu from {b.name}!'
-        )
+            'kung-fu from {bname}!'
+        ).format(name=tr_fighter_name(p.name), bname=tr_fighter_name(b.name))
         p.show(t)
-        p.log(f"{b.name} gives {p.name} a free kung-fu lesson.")
+        p.log(
+            _('{bname} gives {name} a free kung-fu lesson.').format(
+                bname=tr_fighter_name(b.name), name=tr_fighter_name(p.name)
+            )
+        )
         p.pak()
         if p.spar(b):
-            p.show(f'{b.name}: "Your skill is very impressive! Let\'s practice again some time."')
+            p.show(
+                _('{bname}: "Your skill is very impressive! Let\'s practice again some '
+                  'time."').format(bname=tr_fighter_name(b.name))
+            )
             p.add_friend(b)
             p.add_accompl("Beggar's Friend")
-            p.show(f'{p.name}: "What amazing kung-fu! I feel that my technique has improved"')
+            p.show(
+                _('{name}: "What amazing kung-fu! I feel that my technique has '
+                  'improved"').format(name=tr_fighter_name(p.name))
+            )
             p.pak()
             p.learn_move_from(b)
             luck = p.check_luck()
             if luck == 1:
-                p.show(f'{b.name}: "Within the four seas, all men are brothers. '
-                       'Let me also teach you this secret technique..."')
+                p.show(
+                    _('{bname}: "Within the four seas, all men are brothers. '
+                      'Let me also teach you this secret technique..."').format(
+                        bname=tr_fighter_name(b.name)
+                    )
+                )
                 p.pak()
                 p.learn_random_new_tech()
             elif luck == -1:
-                p.show(f'{p.name}: "What great good fortune that I could meet this fine man today. '
-                       'However, I spent too much energy in this friendly sparring. Now I need '
-                       'some good rest."')
+                p.show(
+                    _('{name}: "What great good fortune that I could meet this fine man today. '
+                      'However, I spent too much energy in this friendly sparring. Now I need '
+                      'some good rest."').format(name=tr_fighter_name(p.name))
+                )
                 p.injure()
                 p.pak()
             p.game.beggar = None
         else:
-            p.show(f'{b.name}: "Still got a lot to learn, huh..."')
+            p.show(_('{bname}: "Still got a lot to learn, huh..."').format(
+                bname=tr_fighter_name(b.name)
+            ))
             p.show(
-                f'{p.name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
-                'has improved."'
+                _('{name}: "What amazing kung-fu! Even though I lost, I feel that my technique '
+                  'has improved."').format(name=tr_fighter_name(p.name))
             )
             p.pak()
             p.learn_move_from(b)

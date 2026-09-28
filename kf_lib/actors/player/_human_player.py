@@ -1,4 +1,5 @@
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.things.items import get_item_descr, MEDICINE
 from kf_lib.ui import cls, menu, style, yn
 from kf_lib.utils import enum_words, float_to_pcnt
@@ -9,15 +10,15 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
     is_human = True
 
     def bet_on_tourn_or_not(self):
-        return yn(f'{self.name}: Bet on the tournament?')
+        return yn(_('{}: Bet on the tournament?').format(tr_fighter_name(self.name)))
 
     def brawl_or_not(self, opp_info):
         return self.menu(
             (
-                ('"What? I\'ll teach you a lesson! ({})"'.format(opp_info[1]), True),
-                ('"I\'m sorry."', False),
+                (_('"What? I\'ll teach you a lesson! ({})"').format(opp_info[1]), True),
+                (_('"I\'m sorry."'), False),
             ),
-            title=f'{self.name}:',
+            title=_('{}:').format(tr_fighter_name(self.name)),
         )
 
     @staticmethod
@@ -30,7 +31,7 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         n = len(options)
         keys = '1234567890'[:n]
         options.extend(
-            [('Rest', self.rest), ('State', self.game.state_menu)]
+            [(_('Rest'), self.rest), (_('State'), self.game.state_menu)]
         )
         keys += 'rs'
         # choose what to do; choice is a function
@@ -38,82 +39,108 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
 
     def choose_school_name(self):
         while True:
-            school_name = input(' What is the name of {}\'s school? >'.format(self.name))
+            school_name = input(
+                _(" What is the name of {}'s school? >").format(
+                    tr_fighter_name(self.name)
+                )
+            )
             if school_name not in self.game.schools:
                 return school_name
             else:
-                self.show(f' A school with the name "{school_name}" already exists.')
+                self.show(
+                    _(' A school with the name "{}" already exists.').format(school_name)
+                )
 
     def choose_school_techs(self):
         av = sorted((t for t in self.techs if not t.is_weapon_tech), key=lambda t: t.name)
         chosen = []
         while av and len(chosen) < NUM_SCHOOL_TECHS:
-            options = [(f'{t.name} ({t.descr})', t) for t in av]
-            options.append(('(nothing else)', None))
-            t = self.menu(options, title='Choose the techniques your school will teach:')
+            options = [(f'{t.display_name} ({t.descr})', t) for t in av]
+            options.append((_('(nothing else)'), None))
+            t = self.menu(
+                options, title=_('Choose the techniques your school will teach:')
+            )
             if t is None:
                 break
             chosen.append(t.name)
             av.remove(t)
         self.school_techs = chosen
         if chosen:
-            self.write('Your school will teach {}.'.format(enum_words(chosen)))
+            self.write(
+                _('Your school will teach {}.').format(
+                    enum_words([tr_name(c) for c in chosen])
+                )
+            )
 
     def donate_or_not(self, amount):
         """Return an amount or 0"""
         options = []
         if self.check_money(amount):
-            options.append((f'Give {amount} coins', amount))
-        options.append(('Ignore', 0))
+            options.append(
+                (
+                    ngettext('Give {} coin', 'Give {} coins', amount).format(amount),
+                    amount,
+                )
+            )
+        options.append((_('Ignore'), 0))
         return self.menu(options)
 
     @staticmethod
     def fight_or_not(opp_info):
         """Return True if fight is chosen"""
-        return menu([(f'Fight! ({opp_info[1]})', True), ('Ignore', False)])
+        return menu([(_('Fight! ({})').format(opp_info[1]), True), (_('Ignore'), False)])
 
     @staticmethod
     def fight_or_run(opp_info, esc_chance):
         """Return True if fight is chosen"""
         return menu(
             [
-                (f'Fight! ({opp_info[1]})', True),
-                ('Run! ({})'.format(float_to_pcnt(esc_chance)), False),
+                (_('Fight! ({})').format(opp_info[1]), True),
+                (_('Run! ({})').format(float_to_pcnt(esc_chance)), False),
             ]
         )
 
     def fight_run_or_pay(self, opp_info, esc_chance, money):
         """Return 'f', 'r' or 'p'"""
         options = [
-            (f'Fight! ({opp_info[1]})', 'f'),
-            ('Run away ({})'.format(float_to_pcnt(esc_chance)), 'r'),
+            (_('Fight! ({})').format(opp_info[1]), 'f'),
+            (_('Run away ({})').format(float_to_pcnt(esc_chance)), 'r'),
         ]
         if self.check_money(money):
-            options.append((f'Give {money} coins', 'p'))
+            options.append(
+                (ngettext('Give {} coin', 'Give {} coins', money).format(money), 'p')
+            )
         return menu(options)
 
     @staticmethod
     def gamble_or_not():
-        return yn("Gamble?")
+        return yn(_('Gamble?'))
 
     @staticmethod
     def hear_rumors_or_not():
         return yn('')
 
     def level_up(self, times=1):
-        self.msg(f'{self.name}: {style("*LEVEL UP*", "bold green")}')
+        banner = style(_('*LEVEL UP*'), 'bold green')
+        self.msg(
+            _('{name}: {banner}').format(
+                name=tr_fighter_name(self.name), banner=banner
+            )
+        )
         cls()
-        self.show(style('*LEVEL UP*', 'bold green'))
+        self.show(banner)
         # do not change BasePlayer to super(), will cause bugs; todo investigate this
         BasePlayer.level_up(self, times)
 
     def place_bet_on_tourn(self, tourn_obj):
         bet_on = menu(
             [(f.get_f_info(short=True), f) for f in tourn_obj.participants],
-            title='Who wins?',
+            title=_('Who wins?'),
         )
-        bet_amount = menu([(str(amount), amount) for amount in self.possible_tournament_bets],
-                          title='How much to bet?')
+        bet_amount = menu(
+            [(str(amount), amount) for amount in self.possible_tournament_bets],
+            title=_('How much to bet?'),
+        )
         self.pay(bet_amount)
         return bet_on, bet_amount
 
@@ -130,7 +157,9 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
         self.show(self.get_p_info())
 
     def rock_paper_or_scissors(self):
-        return self.menu(('Rock', 'Paper', 'Scissors'))
+        return self.menu(
+            [(_('Rock'), 'Rock'), (_('Paper'), 'Paper'), (_('Scissors'), 'Scissors')]
+        )
 
     def see_day_info(self):
         cls()
@@ -139,21 +168,26 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
 
     @staticmethod
     def talk_wise_or_not():
-        return yn('Treat the wise man to lunch and talk to him?')
+        return yn(_('Treat the wise man to lunch and talk to him?'))
 
     def tourn_or_not(self):
-        return yn(f'{self.name}: Participate?')
+        return yn(_('{}: Participate?').format(tr_fighter_name(self.name)))
 
     def use_fight_item_or_not(self):
         av_items = self.get_items(as_dict=True)
-        options = (('Do not use items', False),)
+        options = ((_('Do not use items'), False),)
         options += tuple(
-            (f'{k} ({get_item_descr(k)}) ({av_items[k]})', k)
+            (
+                _('{item} ({descr}) ({count})').format(
+                    item=tr_name(k), descr=get_item_descr(k), count=av_items[k]
+                ),
+                k,
+            )
             for k in sorted(av_items.keys())
         )
-        choice = menu(options, f'{self.name} - use an item?')
+        choice = menu(options, _('{} - use an item?').format(tr_fighter_name(self.name)))
         return choice
 
     @staticmethod
     def use_med_or_not():
-        return yn(f'Use the {MEDICINE} medicine?')
+        return yn(_('Use the {} medicine?').format(tr_name(MEDICINE)))
