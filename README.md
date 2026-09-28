@@ -57,6 +57,14 @@ A few more things you can do from the command line:
 
 Should you want to take a peek at the code, since we're on GitHub and all: the bulk of it was written back when my Python kung-fu was still weak, and the technical debt accrued is being cleaned up gradually. The code base in its present state is somewhat readable, covered by a growing test suite, and hopefully free of major bugs. See `CHANGELOG.md` for what's changed and `BACKLOG.md` for what's planned.
 
+## Russian version / Русская версия
+
+The game is also available in Russian (machine-translated, review ongoing — impressions welcome):
+
+    python kfw.py --lang ru
+
+Игра также доступна на русском языке: запустите `python kfw.py --lang ru`. Перевод пока машинный и будет улучшаться — пишите, если что-то звучит странно!
+
 ## Final remarks
 
 Thank you for reading this and for your interest in this game! If you decide to give KFW a try, I hope you enjoy playing the game as much as I did creating and play-testing it. 
