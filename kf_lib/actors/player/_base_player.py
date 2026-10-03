@@ -13,7 +13,7 @@ from kf_lib.happenings import encounters
 from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.kung_fu import techniques
 from kf_lib.things import items
-from kf_lib.ui import green, strip_tags, yellow, yn
+from kf_lib.ui import bold, green, strip_tags, yellow, yn
 from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
 
 
@@ -792,11 +792,11 @@ class BasePlayer(Fighter):
     def get_p_info(self):
         s = self
         return _('{name} lv.{lv} exp:{exp}/{next_lv}\nmoney:{money}\n').format(
-            name=tr_fighter_name(s.name),
+            name=bold(tr_fighter_name(s.name)),
             lv=s.level,
-            exp=s.exp,
-            next_lv=s.next_level,
-            money=s.money,
+            exp=green(s.exp),
+            next_lv=green(s.next_level),
+            money=yellow(s.money),
         )
 
     def get_p_info_verbose(self):

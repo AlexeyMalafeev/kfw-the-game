@@ -95,6 +95,7 @@ option).
 | menu titles | bold (applied globally in `menu()`) |
 | menu option keys | cyan (applied globally in `menu()`) |
 | menu option text | grey (applied globally in `menu()`); style-selection descriptions also grey; `yes`/`no` green/red; page navigation and the optional `B - Back` entry grey |
+| day-info header (`see_day_info` / `get_p_info`) | date bold, player name bold, level cyan (automatic), exp green, money yellow |
 | press-key prompts (`(Press any key)`, `Press Enter`) | grey |
 | distance visualization (`OX` … `O...X`) | red → yellow → green → cyan as distance grows (close = dangerous, far = safe) |
 | move stars (feature bonuses in fight/learn-move menus) | yellow |

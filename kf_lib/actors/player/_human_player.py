@@ -163,7 +163,7 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
 
     def see_day_info(self):
         cls()
-        self.show(self.game.get_date())
+        self.show(style(self.game.get_date(), 'bold'))
         self.show(self.get_p_info())
 
     @staticmethod
