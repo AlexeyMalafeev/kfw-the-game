@@ -2,7 +2,7 @@ import string
 
 from kf_lib.i18n import _
 from ._keyboard import get_key
-from ._rich_format import cyan, green, grey, red, render, white
+from ._rich_format import cyan, green, grey, red, render
 from ._screen import cls
 
 
@@ -54,7 +54,7 @@ def menu(
             st = '\n'
         else:
             st = '; '
-        print(render(st.join([f' {cyan(curr_keys[j])} - {white(curr_options[j])}' for j in range(len(curr_keys))])))
+        print(render(st.join([f' {cyan(curr_keys[j])} - {grey(curr_options[j])}' for j in range(len(curr_keys))])))
         while True:
             choice = get_key()
             if back and choice == BACK_KEY:
