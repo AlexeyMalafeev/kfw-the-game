@@ -99,7 +99,11 @@ class TechMethods(FighterAPI, ABC):
                         descr=tech.descr,
                     )
                 )
-                self.log(f'Learns {tech.name} ({tech.descr})')
+                self.log(
+                    _('Learns {tech} ({descr})').format(
+                        tech=tech.display_name, descr=tech.descr
+                    )
+                )
                 self.pak()
 
     def knows_style_secret(self) -> bool:

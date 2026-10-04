@@ -1,5 +1,6 @@
 from typing import List, Set, Text, Tuple, Union
 
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.kung_fu import styles
 from kf_lib.actors.fighter._ai import FightAIMethods
 from kf_lib.actors.fighter._ascii import FighterWithASCII
@@ -95,14 +96,16 @@ class Fighter(
     def get_f_info(self, short=False, show_st_emph=False):
         s = self
         if s.weapon:
-            w_info = f', {s.weapon.name}'
+            w_info = f', {s.weapon.display_name}'
         else:
             w_info = ''
+        name = tr_fighter_name(s.name)
+        lv = _('lv.{}').format(s.level)
         if short:
-            info = f'{s.name}, lv.{s.level} {s.get_displayed_style_name()}{w_info}'
+            info = f'{name}, {lv} {s.get_displayed_style_name()}{w_info}'
         else:
-            info = '{}, lv.{} {}{}\n{}'.format(
-                s.name, s.level, s.get_style_string(show_st_emph), w_info, s.get_all_atts_str()
+            info = '{}, {} {}{}\n{}'.format(
+                name, lv, s.get_style_string(show_st_emph), w_info, s.get_all_atts_str()
             )
         return info
 

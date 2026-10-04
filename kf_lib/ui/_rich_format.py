@@ -84,6 +84,10 @@ _AUTO_COLOR_RES = (
 _AUTO_COLOR_RES_RU = (
     (re.compile(r'\bур\.?\s?\d+'), 'cyan'),  # levels: ур.5
     (re.compile(r'\b(?:Раунд|День) \d+'), 'bold'),  # headers: Раунд 3, День 12
+    (re.compile(r'\bОЗ(?=:)'), 'green'),  # stat tokens, see the English HP/SP/QP above
+    (re.compile(r'\bВН(?=:)'), 'yellow'),
+    (re.compile(r'\bЦи(?=:)'), 'magenta'),
+    (re.compile(r'(?<![\w+])\+\d+ ОЗ\b'), 'green'),  # healing: +5 ОЗ
     (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* монет[аы]?\b'), 'yellow'),
     (re.compile(r'(?<![\w+-])[+-]?\d[\d,]* опыта?\b'), 'green'),
 )

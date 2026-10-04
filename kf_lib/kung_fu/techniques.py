@@ -2,6 +2,7 @@ from typing import Dict, List, Text
 
 
 from kf_lib import i18n
+from kf_lib.i18n import _
 from kf_lib.kung_fu import boosts as b
 from kf_lib.kung_fu import boost_combos as bc
 from kf_lib.things import weapons
@@ -49,8 +50,18 @@ class Tech:
     def display_name(self):
         """Name translated for display (incl. the 'Advanced X' upgraded style
         techs, which are catalog entries of their own); self.name stays the
-        English identifier used by saves and get_tech_obj()."""
-        return i18n.tr_name(self.name)
+        English identifier used by saves and get_tech_obj(). Upgraded techs of
+        runtime-generated styles are not in the catalog, so they are
+        translated compositionally as '{base} (advanced)'."""
+        tr = i18n.tr_name(self.name)
+        if tr != self.name:
+            return tr
+        if self.name.startswith(UPGRADED_STYLE_TECH_PREFIX):
+            base = self.name[len(UPGRADED_STYLE_TECH_PREFIX):]
+            tr_base = i18n.tr_name(base)
+            if tr_base != base:
+                return _('{tech} (advanced)').format(tech=tr_base)
+        return tr
 
     def apply(self, f):
         for p in self.params:
@@ -89,9 +100,9 @@ class WeaponTech(Tech):
         a = add_sign(self.wp_bonus[0])
         d = add_sign(self.wp_bonus[1])
         if self.wp_type in weapons.WEAPON_TYPES:
-            w = f'{self.wp_type} weapons'
+            w = _('{wp_type} weapons').format(wp_type=i18n.tr_name(self.wp_type))
         else:
-            w = self.wp_type
+            w = i18n.tr_name(self.wp_type)
         self.descr = f'{w} {a}/{d}'
 
     def undo(self, f):

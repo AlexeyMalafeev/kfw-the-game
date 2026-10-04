@@ -3,7 +3,7 @@ import random
 from ._base_story import BaseStory
 from kf_lib.actors import fighter_factory
 from kf_lib.constants import experience
-from kf_lib.i18n import _, tr_fighter_name, tr_style_name
+from kf_lib.i18n import _, tr_fighter_name, tr_name, tr_style_name
 
 
 class ForeignerStory(BaseStory):
@@ -24,8 +24,8 @@ class ForeignerStory(BaseStory):
                 'his own fighting style, {style}.'
             ).format(
                 b_name=tr_fighter_name(b.name),
-                country=b.country,
-                town=g.town_name,
+                country=tr_name(b.country),
+                town=tr_name(g.town_name),
                 style=tr_style_name(b.style.public_name),
             )
         )
@@ -43,7 +43,7 @@ class ForeignerStory(BaseStory):
             _(
                 'The people of {town} keep talking about the foreigner, {b_name}. He has '
                 'already defeated some good fighters.'
-            ).format(town=g.town_name, b_name=tr_fighter_name(b.name))
+            ).format(town=tr_name(g.town_name), b_name=tr_fighter_name(b.name))
         )
         p.show(t)
         p.pak()
@@ -62,7 +62,7 @@ class ForeignerStory(BaseStory):
                 'the foreigner\'s technique.'
             ).format(
                 b_name=tr_fighter_name(b.name),
-                town=g.town_name,
+                town=tr_name(g.town_name),
                 p_name=tr_fighter_name(p.name),
             )
         )
@@ -111,7 +111,7 @@ class ForeignerStory(BaseStory):
                 )
                 p.show(
                     _('The people of {town} are amazed at {p_name}\'s victory!').format(
-                        town=g.town_name, p_name=tr_fighter_name(p.name)
+                        town=tr_name(g.town_name), p_name=tr_fighter_name(p.name)
                     )
                 )
                 p.pak()
@@ -120,7 +120,7 @@ class ForeignerStory(BaseStory):
                 p.msg(
                     _(
                         'Having proved his superiority, {b_name} leaves {town}.'
-                    ).format(b_name=tr_fighter_name(b.name), town=g.town_name)
+                    ).format(b_name=tr_fighter_name(b.name), town=tr_name(g.town_name))
                 )
                 # todo get depressed after losing to the foreigner?
         # end of the story

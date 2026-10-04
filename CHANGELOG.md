@@ -53,8 +53,31 @@ All notable changes to KFW are documented here. Format loosely follows
   Genderless old saves keep the legacy male wording. As a side effect the
   one-child family line is now grammatical English ('1 wonderful child'
   instead of '1 wonderful children').
+- **Russian localization, third slice — proper names and the last English
+  traces**: fighter proper names are cyrillized for display with the
+  Palladius system, the standard Russian cyrillization of Chinese
+  ('Qiu Qiufan' → 'Цю Цюфань', 'Beggar Wang' → 'Нищий Ван'), including
+  numbered group-name bases ('Thug 2' → 'Головорез 2'), foreign challengers
+  and the turtles; the syllable data and segmenter live in
+  `kf_lib/i18n/_ru_names.py`, internal names stay English save keys. The
+  remaining untranslated spots were swept: move stat blocks
+  ('Dist:2 Pwr:5' → 'Дист:2 Мощь:5'), move function names in the move table
+  and descriptions, the prefight attribute header ('Str Agi Spd Hlt' →
+  'Сил Лов Скр Здр'), mock items at the market, 'Advanced X' techs of
+  runtime-generated styles (translated compositionally), risk legends in
+  fight menus, the injured/sick status word, the town name everywhere,
+  weapon-tech descriptions, gossip about astonishing victories (incl.
+  '5 Thugs' condensing, rendered declension-free as 'Головорезы x5'), KO and
+  win/lose log lines, AI school names, and player log file names
+  ('Лог (Цю Цюфань).txt'). The HP/SP/QP tokens render as ОЗ/ВН/Ци with
+  matching auto-coloring, the fight-menu move hint letters follow the
+  language (P/A/s → М/Т/В), and the prefight '-vs-' separator is translated
+  too.
 
 ### Fixed
+- **Post-fight Timeline screen printed raw markup**: `show_timeline` dumped
+  the fight timeline without `render()`, so `[red]-37 HP[/red]`-style tags
+  appeared literally on screen instead of colors
 - **Trait selection no longer hash-seed dependent**:
   `get_rand_traits(player=...)` sampled from a `list(set-of-str)`, whose
   order varies with `PYTHONHASHSEED` across processes, making seeded runs

@@ -4,6 +4,7 @@ import random
 from typing import List, Union
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.kung_fu import moves
 from kf_lib.utils import roman
 
@@ -18,8 +19,9 @@ class MoveMethods(FighterAPI, ABC):
         known = [m for m in self.moves if not m.is_basic]
         if not known:
             return ''
-        align = max(len(m.name) for m in known) + 1
-        lines = [f'{m.name:<{align}}{m.descr}' for m in known]
+        disp = [(m.display_name, m.display_descr) for m in known]
+        align = max(len(name) for name, _ in disp) + 1
+        lines = [f'{name:<{align}}{descr}' for name, descr in disp]
         lines = [f'{i}. {line}' for i, line in enumerate(sorted(lines), 1)]
         return '\n'.join([header] + lines)
 
@@ -48,8 +50,18 @@ class MoveMethods(FighterAPI, ABC):
         else:
             print(f'warning: trying to learn move {move} that is already known by {self}')
         if not silent:
-            self.show(f'{self.name} learns {move.name} ({move.descr}).')
-            self.log(f'Learns {move.name} ({move.descr})')
+            self.show(
+                _('{name} learns {move} ({descr}).').format(
+                    name=tr_fighter_name(self.name),
+                    move=move.display_name,
+                    descr=move.display_descr,
+                )
+            )
+            self.log(
+                _('Learns {move} ({descr})').format(
+                    move=move.display_name, descr=move.display_descr
+                )
+            )
             self.pak()
 
     def learn_move_from(self, other: FighterAPI) -> None:

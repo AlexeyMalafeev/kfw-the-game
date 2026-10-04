@@ -1,5 +1,5 @@
 from kf_lib.actors import fighter_factory
-from kf_lib.i18n import _, tr_fighter_name
+from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.utils import rndint
 from ._base_story import BaseStory
 
@@ -55,7 +55,7 @@ class SchoolAttackStory(BaseStory):
             p.show(
                 _('The last thug crawls away into the night. The school stands! '
                   'The neighbors saw everything — word spreads through {town}.')
-                .format(town=g.town_name)
+                .format(town=tr_name(g.town_name))
             )
             p.log(_('Repels the attack on the school!'))
             p.gain_rep(SCHOOL_DEFENSE_WIN_REP)

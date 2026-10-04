@@ -2,7 +2,7 @@ import random
 
 from kf_lib.actors import fighter_factory
 from kf_lib.fighting import fight
-from kf_lib.i18n import _, ngettext, tr_fighter_name
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.utils import rnd, rndint
 from ._base_story import BaseStory
 
@@ -29,7 +29,7 @@ class SaintsDayRiotStory(BaseStory):
               'year when all work stops, wine flows like water, and the town\'s kung-fu '
               'schools show off their students. The air smells of roast duck and '
               'trouble...')
-        ).format(town=g.town_name)
+        ).format(town=tr_name(g.town_name))
         g.show(t)
         g.pak()
 
@@ -96,7 +96,7 @@ class SaintsDayRiotStory(BaseStory):
         p.show(
             _('The morning after, {town} counts the broken stalls and broken noses. '
               'The elders demand that someone answer for the riot. All eyes turn to '
-              '{name}...').format(town=g.town_name, name=tr_fighter_name(p.name))
+              '{name}...').format(town=tr_name(g.town_name), name=tr_fighter_name(p.name))
         )
         p.log(_('Is blamed for the Saint\'s Day riot.'))
         if not p.is_human or g.yn(_('Take responsibility for the riot?')):

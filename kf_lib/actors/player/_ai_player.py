@@ -60,7 +60,7 @@ class AIPlayer(BasePlayer):
                     return self.go_walk
 
     def choose_school_name(self):
-        return '{}\'s school'.format(self.name)
+        return _('{name}\'s school').format(name=tr_fighter_name(self.name))
 
     def cls(self):
         pass

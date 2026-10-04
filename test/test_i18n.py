@@ -70,9 +70,20 @@ class TestRussian:
         assert tr_style_name('Bagua Zhang') == 'Багуа Чжан'
 
     def test_fighter_name_prefix(self):
-        assert tr_fighter_name('Beggar Wang') == 'Нищий Wang'
+        # descriptive prefixes go through the catalog; proper-name syllables
+        # are cyrillized (Palladius)
+        assert tr_fighter_name('Beggar Wang') == 'Нищий Ван'
         assert tr_fighter_name('Thug 1') == 'Головорез 1'
-        assert tr_fighter_name('Liu Kang') == 'Liu Kang'
+        assert tr_fighter_name('Liu Kang') == 'Лю Кан'
+
+    def test_fighter_name_transliteration(self):
+        # single syllables, concatenated given names, numbered group bases,
+        # foreign names; unknown tokens pass through unchanged
+        assert tr_fighter_name('Qiu Qiufan') == 'Цю Цюфань'
+        assert tr_fighter_name('Thug 2') == 'Головорез 2'
+        assert tr_fighter_name('Officer 3') == 'Полицейский 3'
+        assert tr_fighter_name('Satou') == 'Сато'
+        assert tr_fighter_name('CustomName123') == 'CustomName123'
 
     def test_quotes_loaded_in_russian(self):
         assert len(quotes.HERO_PREFIGHT) > 100

@@ -3,7 +3,7 @@ import re
 
 from kf_lib.actors import fighter_factory, traits
 from kf_lib.fighting import fight
-from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
+from kf_lib.i18n import _, get_language, ngettext, tr_fighter_name, tr_name
 from kf_lib.utils import enum_words, rnd, rndint
 from ._base_encounter import BaseEncounter, Guaranteed
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_escape
@@ -22,6 +22,10 @@ ENC_CH_WISE_MAN = 0.02
 
 # misc chances
 _NUMBERED_NAME = re.compile(r'^(.*\S)\s+\d+$')
+# separator between name and level in stored short fighter-info strings
+# ('Wang Bai, lv.5 Eagle Claw'); both the English and the Russian marker can
+# occur in saves
+_LV_SEP = re.compile(r', (?:lv\.|ур\.)')
 
 
 def group_same_fighters(opp_strs):
@@ -29,7 +33,7 @@ def group_same_fighters(opp_strs):
     groups = {}
     order = []
     for s in opp_strs:
-        name = s.split(', lv.', 1)[0]
+        name = _LV_SEP.split(s, maxsplit=1)[0]
         m = _NUMBERED_NAME.match(name)
         # only numbered names group; an unnumbered name stays unique to its string
         base = m.group(1) if m else s
@@ -41,10 +45,30 @@ def group_same_fighters(opp_strs):
     for base in order:
         group = groups[base]
         if len(group) > 1:
-            parts.append(f'{len(group)} {base}s')
+            parts.append(_group_label(base, len(group)))
         else:
-            parts.append(group[0])
+            parts.append(_translate_opp_str(group[0]))
     return parts
+
+
+def _group_label(base, n):
+    """'5 Thugs' in English; in Russian the number follows the name to avoid
+    noun declension ('Головорезы x5')."""
+    if get_language() == 'en':
+        return f'{n} {base}s'
+    return f'{tr_name(base)} x{n}'
+
+
+def _translate_opp_str(s):
+    """Best-effort display translation of a stored short fighter-info string:
+    strings saved by a Russian game are already translated, older English
+    ones get at least the fighter name cyrillized."""
+    if get_language() == 'en':
+        return s
+    m = _LV_SEP.search(s)
+    if m is None:
+        return tr_fighter_name(s)
+    return tr_fighter_name(s[: m.start()]) + s[m.start():]
 CH_BRAWLER_ATTACKS = 0.2
 CH_BRAWL_SPREADS = 0.125
 CH_CHANGE_TRAIT = 0.15
@@ -349,7 +373,7 @@ class OverhearConversation(BaseEncounter):
             if fact == "humil_defeat":
                 t = _('''One of them says: "Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to \
 kung-fu!"''').format(
-                    tr_fighter_name(person.name), lv, tr_name(opp_str)
+                    tr_fighter_name(person.name), lv, opp_str
                 )
                 p.show(t)
                 p.log(
@@ -360,7 +384,7 @@ kung-fu!"''').format(
             elif fact == "aston_victory":
                 t = _('''One of them says: "Haven't you heard? {} at lv.{} beat {}. What an astonishing \
 victory!"''').format(
-                    tr_fighter_name(person.name), lv, tr_name(opp_str)
+                    tr_fighter_name(person.name), lv, opp_str
                 )
                 p.show(t)
                 p.log(

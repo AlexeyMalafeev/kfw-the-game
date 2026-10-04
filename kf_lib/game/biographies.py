@@ -1,6 +1,6 @@
 from typing import List, Text
 
-from kf_lib.i18n import _, ngettext, tr_name
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.utils import enum_words
 
 
@@ -14,9 +14,9 @@ def generate_bio(player_instance) -> Text:
     victories = g.check_victory_conditions(p)
     bio.append(
         _('\n{name} was the renowned {victories} of {town}.').format(
-            name=p.name,
+            name=tr_fighter_name(p.name),
             victories=enum_words([tr_name(v) for v in victories]),
-            town=g.town_name,
+            town=tr_name(g.town_name),
         )
     )
     style = p.get_displayed_style_name()
@@ -126,7 +126,7 @@ def generate_bio(player_instance) -> Text:
                         'She married the love of her life, {name}, and they '
                         'raised {} wonderful children, who carry on her kung-fu.',
                         n_children,
-                    ).format(n_children, name=p.sweetheart.name)
+                    ).format(n_children, name=tr_fighter_name(p.sweetheart.name))
                 )
             else:
                 bio.append(
@@ -136,19 +136,19 @@ def generate_bio(player_instance) -> Text:
                         'He married the love of his life, {name}, and they '
                         'raised {} wonderful children, who carry on his kung-fu.',
                         n_children,
-                    ).format(n_children, name=p.sweetheart.name)
+                    ).format(n_children, name=tr_fighter_name(p.sweetheart.name))
                 )
         else:
             if female:
                 bio.append(
                     _('She married the love of her life, {name}.').format(
-                        name=p.sweetheart.name
+                        name=tr_fighter_name(p.sweetheart.name)
                     )
                 )
             else:
                 bio.append(
                     _('He married the love of his life, {name}.').format(
-                        name=p.sweetheart.name
+                        name=tr_fighter_name(p.sweetheart.name)
                     )
                 )
 

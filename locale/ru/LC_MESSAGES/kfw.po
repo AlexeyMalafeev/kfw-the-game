@@ -12,6 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
+#: kf_lib/actors/player/_ai_player.py:214 kf_lib/actors/player/_base_player.py:958
 msgid ""
 "\n"
 "\n"
@@ -21,6 +22,7 @@ msgstr ""
 "\n"
 "*НОВЫЙ ДЕНЬ*"
 
+#: kf_lib/game/game_stats.py:107
 msgid ""
 "\n"
 "*FIGHTING*"
@@ -28,6 +30,7 @@ msgstr ""
 "\n"
 "*БОИ*"
 
+#: kf_lib/game/game_stats.py:97
 msgid ""
 "\n"
 "*GENERAL*"
@@ -35,6 +38,7 @@ msgstr ""
 "\n"
 "*ОБЩЕЕ*"
 
+#: kf_lib/game/game_stats.py:147
 msgid ""
 "\n"
 "*ITEMS*"
@@ -42,6 +46,7 @@ msgstr ""
 "\n"
 "*ПРЕДМЕТЫ*"
 
+#: kf_lib/game/game_stats.py:125
 msgid ""
 "\n"
 "*LIFE*"
@@ -49,6 +54,7 @@ msgstr ""
 "\n"
 "*ЖИЗНЬ*"
 
+#: kf_lib/game/game_stats.py:139
 msgid ""
 "\n"
 "*MONEY*"
@@ -56,6 +62,7 @@ msgstr ""
 "\n"
 "*ДЕНЬГИ*"
 
+#: kf_lib/actors/player/_ai_player.py:205
 msgid ""
 "\n"
 "---{} ends his turn---"
@@ -63,6 +70,7 @@ msgstr ""
 "\n"
 "---{} заканчивает свой ход---"
 
+#: kf_lib/fighting/fight/_free_for_all.py:32 kf_lib/fighting/fight/_free_for_all.py:73 kf_lib/fighting/fight/_helpers.py:101 kf_lib/fighting/fight/_sparring.py:27
 msgid ""
 "\n"
 "Auto fight?"
@@ -70,6 +78,7 @@ msgstr ""
 "\n"
 "Автобой?"
 
+#: kf_lib/game/biographies.py:16
 msgid ""
 "\n"
 "{name} was the renowned {victories} of {town}."
@@ -77,149 +86,203 @@ msgstr ""
 "\n"
 "{name} — гордость города {town}: {victories}."
 
+#: kf_lib/actors/player/_base_player.py:856
 msgid " (best student)"
 msgstr " (лучший ученик)"
 
+#: kf_lib/actors/player/_base_player.py:829
 msgid " (best: {name})"
 msgstr " (лучший: {name})"
 
+#: kf_lib/fighting/fight/_base_fight.py:71
 msgid " (boring...)"
 msgstr " (скучновато...)"
 
+#: kf_lib/fighting/fight/_base_fight.py:69
 msgid " (epic!)"
 msgstr " (эпично!)"
 
+#: kf_lib/actors/fighter/_fight_actions.py:55
 msgid " (guarding while attacking)"
 msgstr " (защищается в атаке)"
 
+#: kf_lib/actors/fighter/_fight_actions.py:48
 msgid " *FURY*"
 msgstr " *ЯРОСТЬ*"
 
+#: kf_lib/actors/player/_human_player.py:51
 msgid " A school with the name \"{}\" already exists."
 msgstr " Школа с названием \"{}\" уже существует."
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:178
 msgid " agility-based {dmg} ({hp})"
 msgstr " {dmg} (от ловкости) ({hp})"
 
+#: kf_lib/actors/player/_base_player.py:826
 msgid " children:{}"
 msgstr " дети:{}"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:123
 msgid " falls to the ground! {dmg} ({hp})"
 msgstr " падает на землю! {dmg} ({hp})"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:239
 msgid " gasps for breath!"
 msgstr " задыхается!"
 
+#: kf_lib/happenings/tournament.py:218
 msgid " It is a battle royale: all participants fight at once, last man standing wins!"
 msgstr " Это королевская битва: все участники дерутся одновременно, побеждает последний оставшийся на ногах!"
 
+#: kf_lib/actors/fighter/_fight_actions.py:382
 msgid " KNOCK-OUT!"
 msgstr " НОКАУТ!"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:136
 msgid " knocked back {dist} step!"
 msgid_plural " knocked back {dist} steps!"
 msgstr[0] " отлетает на {dist} шаг назад!"
 msgstr[1] " отлетает на {dist} шага назад!"
 msgstr[2] " отлетает на {dist} шагов назад!"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:193
 msgid " level-based {dmg} ({hp})"
 msgstr " {dmg} (от уровня) ({hp})"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:145
 msgid " off-balance!"
 msgstr " теряет равновесие!"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:213
 msgid " qi-based {dmg} ({hp})"
 msgstr " {dmg} (от ци) ({hp})"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:154
 msgid " shocked!"
 msgstr " в шоке!"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:162
 msgid " slowed down!"
 msgstr " замедляется!"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:227
 msgid " speed-based {dmg} ({hp})"
 msgstr " {dmg} (от скорости) ({hp})"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:246
 msgid " strength-based {dmg} ({hp})"
 msgstr " {dmg} (от силы) ({hp})"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:171
 msgid " stunned!"
 msgstr " в ступоре!"
 
+#: kf_lib/actors/player/_human_player.py:43
 msgid " What is the name of {}'s school? >"
 msgstr " Как называется школа {}? >"
 
+#: kf_lib/happenings/story/_student_rivalry.py:102
 msgid "\"Enough! You will both spar ME.\""
 msgstr "\"Хватит! Теперь вы оба выйдете в спарринг против МЕНЯ.\""
 
+#: kf_lib/actors/player/_human_player.py:19
 msgid "\"I'm sorry.\""
 msgstr "\"Простите.\""
 
+#: kf_lib/happenings/encounters/_people.py:363
 msgid "\"They talk about such silly things instead of practicing!\" - {} thinks."
 msgstr "\"Вместо того чтобы тренироваться, они болтают о всяких глупостях!\" - думает {}."
 
+#: kf_lib/actors/player/_human_player.py:18
 msgid "\"What? I'll teach you a lesson! ({})\""
 msgstr "\"Что? Я тебя проучу! ({})\""
 
+#: kf_lib/happenings/story/_wrong_pouch.py:39
 msgid "\"{n} coin! My {n} coin!\""
 msgid_plural "\"{n} coins! My {n} coins!\""
 msgstr[0] "\"{n} монета! Моя {n} монета!\""
 msgstr[1] "\"{n} монеты! Мои {n} монеты!\""
 msgstr[2] "\"{n} монет! Мои {n} монет!\""
 
+#: kf_lib/actors/player/_human_player.py:59
 msgid "(nothing else)"
 msgstr "(ничего больше)"
 
+#: kf_lib/ui/_interactive.py:51
 msgid "(Press any key)"
 msgstr "(Нажмите любую клавишу)"
 
+#: kf_lib/happenings/tournament.py:214
 msgid "({} level)"
 msgstr "(ур.{})"
 
+#: kf_lib/actors/human_controlled_fighter.py:257 kf_lib/actors/player/_human_player.py:124
 msgid "*LEVEL UP*"
 msgstr "*НОВЫЙ УРОВЕНЬ*"
 
+#: kf_lib/actors/fighter/_fight_actions.py:141
 msgid "+COUNTER!+"
 msgstr "+КОНТРАТАКА!+"
 
+#: kf_lib/ui/_interactive.py:12
 msgid ", 'b' to go back"
 msgstr ", 'b' — назад"
 
+#: kf_lib/fighting/fight/_helpers.py:18
 msgid "--- Group {n} (your group) ---"
 msgstr "--- Группа {n} (ваша) ---"
 
+#: kf_lib/fighting/fight/_helpers.py:16
 msgid "--- Group {n} ---"
 msgstr "--- Группа {n} ---"
 
+#: kf_lib/actors/player/_ai_player.py:220
 msgid ""
 "---{}'s turn---\n"
 msgstr ""
 "---ход {}---\n"
 
-msgid "-{dam} HP"
-msgstr "-{dam} HP"
+#: kf_lib/fighting/fight/_helpers.py:41
+msgid "-vs-"
+msgstr "-против-"
 
+#: kf_lib/actors/fighter/_fight_actions.py:248 kf_lib/actors/fighter/_strike_mechanics.py:124 kf_lib/actors/fighter/_strike_mechanics.py:179 kf_lib/actors/fighter/_strike_mechanics.py:194 kf_lib/actors/fighter/_strike_mechanics.py:214 kf_lib/actors/fighter/_strike_mechanics.py:228 kf_lib/actors/fighter/_strike_mechanics.py:247
+msgid "-{dam} HP"
+msgstr "-{dam} ОЗ"
+
+#: kf_lib/game/game_stats.py:127
 msgid "...at lv."
 msgstr "...на ур."
 
+#: kf_lib/happenings/tournament.py:236
 msgid "...but nobody shows up, so the tournament is canceled."
 msgstr "...но никто не является, так что турнир отменяется."
 
+#: kf_lib/actors/fighter/_fight_actions.py:155
 msgid "<-PREEMPTIVE!-<"
 msgstr "<-УПРЕЖДЕНИЕ!-<"
 
+#: kf_lib/fighting/fight/_free_for_all.py:29
 msgid "[bold]Free for all![/bold]"
 msgstr "[bold]Каждый сам за себя![/bold]"
 
+#: kf_lib/fighting/fight/_free_for_all.py:70
 msgid "[bold]Group free for all![/bold]"
 msgstr "[bold]Групповая свалка![/bold]"
 
+#: kf_lib/actors/human_controlled_fighter.py:231
+msgid "A"
+msgstr "Т"
+
+#: kf_lib/actors/player/_base_player.py:604
 msgid "A baby daughter is born."
 msgstr "Рождается дочь."
 
+#: kf_lib/actors/player/_base_player.py:596
 msgid "A baby son is born."
 msgstr "Рождается сын."
 
+#: kf_lib/happenings/story/_bandit_fiance.py:21
 msgid ""
 "A coversation in {town}'s tavern:\n"
 "{name}: \"That old man's daughter is really pretty...\"\n"
@@ -231,21 +294,27 @@ msgstr ""
 "Подручный ({name}): \"Если она вам так нравится, босс, почему бы на ней не жениться?\"\n"
 "{name}: \"Хм...\""
 
+#: kf_lib/happenings/events.py:168
 msgid "A fight breaks out between students of {} and {}!"
 msgstr "Вспыхивает драка между учениками школ {} и {}!"
 
+#: kf_lib/happenings/story/_grand_melee.py:29
 msgid "A flashy stranger arrives in {town} and starts putting up posters: \"THE GRAND MELEE! Eight fighters enter, one fighter leaves with a fat purse! No rules, no teams, no honor!\" The local masters shake their heads in disapproval..."
 msgstr "В {town} прибывает эффектный незнакомец и начинает расклеивать плакаты: \"БОЛЬШАЯ СВАЛКА! Восемь бойцов выходят, один уходит с тугим кошельком! Никаких правил, никаких команд, никакой чести!\" Местные мастера неодобрительно качают головами..."
 
+#: kf_lib/happenings/story/_jade_table.py:77
 msgid "A knife flashes. A table is flipped. \"TREACHERY!\" — and in a heartbeat the private room turns into a battlefield, every boss for himself!"
 msgstr "Сверкает нож. Стол перевёрнут. \"ИЗМЕНА!\" — и в мгновение ока отдельный кабинет превращается в поле боя, каждый босс сам за себя!"
 
+#: kf_lib/happenings/tournament.py:223
 msgid "A kung-fu tournament {type_str} is organized in {town}.{format_str} The participation fee is {fee}."
 msgstr "В городе {town} организуется турнир по кунг-фу {type_str}.{format_str} Взнос за участие: {fee}."
 
+#: kf_lib/happenings/encounters/_challenger.py:27
 msgid "a lot "
 msgstr "намного "
 
+#: kf_lib/happenings/encounters/_people.py:107
 msgid ""
 "A man bumps into {name} in the street.\n"
 "Man: \"Hey you! Apologize or I'll beat you up!\""
@@ -253,42 +322,54 @@ msgstr ""
 "На улице какой-то мужчина сталкивается с {name}.\n"
 "Мужчина: \"Эй ты! Извинись, не то я тебя отколочу!\""
 
+#: kf_lib/happenings/story/_eight_gates.py:57
 msgid "A mountain courtyard. {name} sits motionless as eight disciples of eight different styles step into a circle drawn in the dust. {name}: \"No weapons. No tricks. The Eight Gates do not open for the faint-hearted. BEGIN!\""
 msgstr "Горный двор. {name} сидит неподвижно, пока восемь учеников восьми разных стилей входят в начерченный в пыли круг. {name}: \"Никакого оружия. Никаких уловок. Восемь Врат не открываются для слабодушных. НАЧАЛИ!\""
 
+#: kf_lib/actors/player/_base_player.py:261
 msgid "A new student joins {name}'s school."
 msgstr "В школу {name} приходит новый ученик."
 
+#: kf_lib/happenings/story/_wrong_pouch.py:36
 msgid "A nimble figure bumps into {name}, apologizes profusely, and disappears into the crowd. A moment later {name} realizes the money pouch is gone. "
 msgstr "Какой-то ловкач врезается в {name}, обильно извиняется и исчезает в толпе. Мгновение спустя {name} понимает, что кошелёк с деньгами пропал. "
 
+#: kf_lib/happenings/encounters/_romance.py:74
 msgid "A romance begins between {p_name} and {name}."
 msgstr "Между {p_name} и {name} начинается роман."
 
+#: kf_lib/happenings/story/_ninja_turtles.py:14
 msgid "A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed tones, clearly deciding what to do next..."
 msgstr "Внезапная вспышка пронзает глубокую тьму ночи... Появляются четыре фигуры, мускулистые и не совсем человеческие. В руках у них традиционное японское оружие. Они растерянно озираются и переговариваются шёпотом, явно решая, что делать дальше..."
 
+#: kf_lib/happenings/encounters/_crime.py:454
 msgid "A thief fails to find anything to steal from {}."
 msgstr "Вор не находит, что украсть у {}."
 
+#: kf_lib/happenings/encounters/_crime.py:510
 msgid "A thief fails to steal from {}."
 msgstr "Вор пытается обокрасть {}, но терпит неудачу."
 
+#: kf_lib/happenings/encounters/_crime.py:478
 msgid "A thief steals all {name}'s money! {name} loses {amount} c."
 msgstr "Вор крадёт все деньги {name}! {name} теряет {amount} м."
 
+#: kf_lib/happenings/encounters/_crime.py:467
 msgid "A thief steals {item} from {name}."
 msgstr "Вор крадёт {item} у {name}."
 
+#: kf_lib/happenings/encounters/_crime.py:489
 msgid "A thief steals {} coin from {name}!"
 msgid_plural "A thief steals {} coins from {name}!"
 msgstr[0] "Вор крадёт у {name} {} монету!"
 msgstr[1] "Вор крадёт у {name} {} монеты!"
 msgstr[2] "Вор крадёт у {name} {} монет!"
 
+#: kf_lib/happenings/encounters/_crime.py:506
 msgid "A thief tries to steal from {}, but fails."
 msgstr "Вор пытается обокрасть {}, но терпит неудачу."
 
+#: kf_lib/happenings/encounters/_crime.py:448
 msgid ""
 "A thief tries to steal something from {name} but fails to find anything!\n"
 "Thief: \"What's with that? Are you poor or something?\""
@@ -296,6 +377,7 @@ msgstr ""
 "Вор пытается что-то украсть у {name}, но ничего не находит!\n"
 "Вор: \"Что за дела? Ты что, совсем нищий?\""
 
+#: kf_lib/happenings/encounters/_items.py:104
 msgid ""
 "A very strange-looking man bumps into {name}.\n"
 "Weirdo: \"Quick! I need a {item}!\""
@@ -303,69 +385,90 @@ msgstr ""
 "{name} сталкивается с очень странного вида человеком.\n"
 "Чудак: \"Быстрее! Мне нужен предмет: {item}!\""
 
+#: kf_lib/happenings/encounters/_romance.py:38
 msgid "a young man"
 msgstr "молодой человек"
 
+#: kf_lib/happenings/encounters/_romance.py:38
 msgid "a young woman"
 msgstr "молодая женщина"
 
+#: kf_lib/game/game_stats.py:134
 msgid "A.-S.tourn.won"
 msgstr "Побед в ТВШ"
 
+#: kf_lib/actors/human_controlled_fighter.py:90 kf_lib/kung_fu/moves.py:94
 msgid "Acc"
 msgstr "Точн"
 
+#: kf_lib/happenings/encounters/_school.py:241
 msgid "Accept the young man?"
 msgstr "Принять юношу?"
 
+#: kf_lib/happenings/encounters/_people.py:299
 msgid "Accept?"
 msgstr "Принять?"
 
+#: kf_lib/happenings/encounters/_items.py:29
 msgid "Accidentally finds an item: {item}."
 msgstr "Случайно находит предмет: {item}."
 
+#: kf_lib/happenings/encounters/_items.py:50
 msgid "Accidentally loses his {item}."
 msgstr "Случайно теряет предмет: {item}."
 
+#: kf_lib/game/game_stats.py:135
 msgid "Accomp,stories"
 msgstr "Достиж,истории"
 
+#: kf_lib/actors/player/_base_player.py:177
 msgid "Accomplishment: {label}"
 msgstr "Достижение: {label}"
 
+#: kf_lib/game/_state_menu.py:16
 msgid "Accomplishments"
 msgstr "Достижения"
 
+#: kf_lib/kung_fu/boosts.py:168
 msgid "acrob.str"
 msgstr "акроб.уд."
 
+#: kf_lib/kung_fu/boosts.py:168
 msgid "acrobatic strike efficiency"
 msgstr "эффективность акробатических ударов"
 
+#: kf_lib/actors/fighter/_basic_attributes.py:49
 msgid "Agi"
 msgstr "Лов"
 
+#: kf_lib/actors/human_controlled_fighter.py:40 kf_lib/game/game_stats.py:102
 msgid "Agility"
 msgstr "Ловкость"
 
+#: kf_lib/kung_fu/boosts.py:106
 msgid "agility"
 msgstr "ловкость"
 
+#: kf_lib/actors/player/_base_player.py:1177
 msgid "All the masters of {town} already acknowledge {name}."
 msgstr "Все мастера {town} уже признают {name}."
 
+#: kf_lib/actors/player/_base_player.py:289
 msgid "All the schools of {town} are now united under {name}'s kung-fu federation!"
 msgstr "{town}: все школы теперь объединены под началом федерации кунг-фу {name}!"
 
+#: kf_lib/happenings/encounters/_crime.py:483
 msgid "All {name}'s money ({amount}) is stolen by a thief."
 msgstr "Все деньги {name} ({amount}) украдены вором."
 
+#: kf_lib/happenings/tournament.py:55
 msgid "All {} participants fight at once — last man standing wins!"
 msgid_plural "All {} participants fight at once — last man standing wins!"
 msgstr[0] "Все {} участник дерутся одновременно — побеждает последний, кто останется на ногах!"
 msgstr[1] "Все {} участника дерутся одновременно — побеждает последний, кто останется на ногах!"
 msgstr[2] "Все {} участников дерутся одновременно — побеждает последний, кто останется на ногах!"
 
+#: kf_lib/happenings/all_schools.py:104
 msgid ""
 "All-Schools Tournament, round {round}:\n"
 "{pairings}"
@@ -373,18 +476,27 @@ msgstr ""
 "Турнир всех школ, раунд {round}:\n"
 "{pairings}"
 
+#: kf_lib/things/items.py:75
+msgid "allows home training"
+msgstr "позволяет тренироваться дома"
+
+#: kf_lib/happenings/encounters/_people.py:126
 msgid "Apologizes."
 msgstr "Извиняется."
 
+#: kf_lib/game/_new_game.py:117
 msgid "Are these styles ok?"
 msgstr "Эти стили подходят?"
 
+#: kf_lib/happenings/story/_stolen_treasures.py:170
 msgid "As {name} comes to, he realizes that {boss} and his men have disappeared. They took all the treasures, too. {name} is lucky to be alive..."
 msgstr "Придя в себя, {name} понимает, что {boss} и его люди исчезли. Они забрали и все сокровища. {name} повезло остаться в живых..."
 
+#: kf_lib/actors/human_controlled_fighter.py:178
 msgid "As {name} trains hard, delving deeper into the art of {style}, he discovers a way to improve one of the style's techniques..."
 msgstr "Усердно тренируясь и постигая всё более глубокие тайны стиля {style}, {name} открывает способ улучшить одну из техник стиля..."
 
+#: kf_lib/happenings/encounters/_beggar.py:35
 msgid ""
 "As {name} turns to leave however, the beggar stops him.\n"
 "Beggar: \"In thanks for your kindness, young man, let me teach you some special kung-fu from {bname}!"
@@ -392,27 +504,35 @@ msgstr ""
 "Когда {name} уже собирается уйти, нищий останавливает его.\n"
 "Нищий: \"В благодарность за твою доброту, юноша, позволь научить тебя особому кунг-фу из {bname}!\""
 
+#: kf_lib/kung_fu/boosts.py:107
 msgid "attack"
 msgstr "атака"
 
+#: kf_lib/happenings/encounters/_utils.py:74
 msgid "Attempts to escape."
 msgstr "Пытается сбежать."
 
+#: kf_lib/happenings/story/_jade_table.py:71
 msgid "Attends the Jade Table sit-down."
 msgstr "Присутствует на сходке в «Нефритовом столе»."
 
+#: kf_lib/game/_new_game.py:96
 msgid "Auto save?"
 msgstr "Автосохранение?"
 
+#: kf_lib/game/_state_menu.py:24 kf_lib/game/debug_menu.py:35 kf_lib/ui/_menu.py:49
 msgid "Back"
 msgstr "Назад"
 
+#: kf_lib/actors/player/_base_player.py:509
 msgid "BAD LUCK!"
 msgstr "НЕ ПОВЕЗЛО!"
 
+#: kf_lib/actors/fighter/_fight_actions.py:107 kf_lib/actors/fighter/_fight_actions.py:121
 msgid "barely"
 msgstr "едва "
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:110
 msgid ""
 "Beaten and barely conscious, {p_name} suddenly hears the guards screaming... {sw_name} has broken free and driven the bandits off — {sw_name} is a martial artist, after all.\n"
 "{sw_name}: \"You came for me, and that is what matters. But you should practice more, my love.\""
@@ -420,306 +540,414 @@ msgstr ""
 "Избитый и почти без сознания, {p_name} вдруг слышит крики стражи... {sw_name} вырывается на свободу и прогоняет бандитов — {sw_name} ведь тоже мастер боевых искусств.\n"
 "{sw_name}: \"Ты пришёл за мной, и это главное. Но тебе стоит больше тренироваться, любовь моя.\""
 
+#: kf_lib/happenings/story/_student_rivalry.py:123
 msgid "Beats both quarreling students in a spar."
 msgstr "Побеждает в спарринге обоих поссорившихся учеников."
 
+#: kf_lib/game/game_stats.py:126
 msgid "Became master"
 msgstr "Стал мастером"
 
+#: kf_lib/happenings/encounters/_school.py:78
 msgid "Becomes a master and founds his own school."
 msgstr "Становится мастером и основывает собственную школу."
 
+#: kf_lib/happenings/encounters/_school.py:194
 msgid "Becomes the best student of his school."
 msgstr "Становится лучшим учеником своей школы."
 
+#: kf_lib/actors/player/_base_player.py:348
 msgid "Begs the master for forgiveness, in vain."
 msgstr "Безуспешно молит мастера о прощении."
 
+#: kf_lib/kung_fu/boosts.py:108
 msgid "bleeding"
 msgstr "кровотечение"
 
+#: kf_lib/kung_fu/boosts.py:110
 msgid "block efficiency"
 msgstr "эффективность блока"
 
+#: kf_lib/kung_fu/boosts.py:110
 msgid "blocks"
 msgstr "блоки"
 
+#: kf_lib/game/game_stats.py:148
 msgid "Bought/total"
 msgstr "Куплено/всего"
 
+#: kf_lib/happenings/encounters/_people.py:130
 msgid "Brawler: \"That's not good enough!\""
 msgstr "Задира: \"Этого недостаточно!\""
 
+#: kf_lib/game/biographies.py:34
 msgid "But her most feared move was the {move}."
 msgstr "Но самым страшным её приёмом был {move}."
 
+#: kf_lib/game/biographies.py:44
 msgid "But his most feared move was the {move}."
 msgstr "Но страшнее всего был его приём: {move}."
 
+#: kf_lib/actors/player/_base_player.py:717
 msgid "Buy items"
 msgstr "Покупка предметов"
 
+#: kf_lib/actors/player/_base_player.py:355
 msgid "Buys {item} for {price}."
 msgstr "Покупает {item} за {price}."
 
+#: kf_lib/game/debug_menu.py:151
 msgid "Cannot parse {!r} as a Python literal, not setting anything!"
 msgstr "Не удаётся разобрать {!r} как литерал Python — ничего не установлено!"
 
+#: kf_lib/kung_fu/boosts.py:108
 msgid "cause bleeding"
 msgstr "вызов кровотечения"
 
+#: kf_lib/happenings/story/_foreigner.py:103
 msgid "Challenge {b_name}?"
 msgstr "Бросить вызов {b_name}?"
 
+#: kf_lib/actors/player/_base_player.py:1198
 msgid "Challenge {name} to a spar? (\"No\" = try to persuade him; persuasion chance: {chance:.0%})"
 msgstr "Вызвать {name} на спарринг? (\"Нет\" = попытаться уговорить; шанс убеждения: {chance:.0%})"
 
+#: kf_lib/happenings/encounters/_challenger.py:51
 msgid "Challenged by {name}, number {rank} in the {school} school."
 msgstr "Вызов бросает {name}, номер {rank} в школе {school}."
 
+#: kf_lib/happenings/story/_renowned_master.py:51
 msgid "Challenged by {}."
 msgstr "{} вызывает его на поединок."
 
+#: kf_lib/kung_fu/boosts.py:158
 msgid "chance to resist KO"
 msgstr "шанс устоять при нокауте"
 
+#: kf_lib/kung_fu/boosts.py:122
 msgid "chance to use environment"
 msgstr "шанс использовать окружение"
 
+#: kf_lib/game/game_stats.py:131
 msgid "Children"
 msgstr "Дети"
 
+#: kf_lib/actors/player/_base_player.py:577
 msgid "Children grow so fast — new clothes. (-{amount} coins)"
 msgstr "Дети так быстро растут — новая одежда. (-{amount} монет)"
 
+#: kf_lib/actors/human_controlled_fighter.py:119
 msgid "Choose a move to learn:"
 msgstr "Выберите приём для изучения:"
 
+#: kf_lib/game/debug_menu.py:159
 msgid "Choose a story"
 msgstr "Выберите историю"
 
+#: kf_lib/game/_new_game.py:59
 msgid "Choose a style"
 msgstr "Выберите стиль"
 
+#: kf_lib/game/debug_menu.py:116
 msgid "Choose a tech:"
 msgstr "Выберите технику:"
 
+#: kf_lib/actors/human_controlled_fighter.py:167 kf_lib/actors/human_controlled_fighter.py:188
 msgid "Choose a technique to improve:"
 msgstr "Выберите технику для улучшения:"
 
+#: kf_lib/actors/human_controlled_fighter.py:127
 msgid "Choose a technique to learn:"
 msgstr "Выберите технику для изучения:"
 
+#: kf_lib/game/debug_menu.py:44
 msgid "Choose an encounter"
 msgstr "Выберите событие"
 
+#: kf_lib/actors/human_controlled_fighter.py:160
 msgid "Choose target:"
 msgstr "Выберите цель:"
 
+#: kf_lib/actors/player/_human_player.py:61
 msgid "Choose the techniques your school will teach:"
 msgstr "Выберите техники, которым будет обучать ваша школа:"
 
+#: kf_lib/happenings/encounters/_challenger.py:63 kf_lib/happenings/encounters/_performer.py:99
 msgid "Chooses to ignore the challenge."
 msgstr "Решает проигнорировать вызов."
 
+#: kf_lib/happenings/encounters/_gambling.py:183
 msgid "Chooses to ignore the offer."
 msgstr "Решает проигнорировать предложение."
 
+#: kf_lib/kung_fu/boosts.py:169
 msgid "close-range"
 msgstr "ближняя дистанция"
 
+#: kf_lib/kung_fu/boosts.py:169
 msgid "close-range strike efficiency"
 msgstr "эффективность ударов вблизи"
 
+#: kf_lib/actors/human_controlled_fighter.py:91
 msgid "Cmpl"
 msgstr "Слож"
 
+#: kf_lib/game/_new_game.py:182
 msgid "Co-op mode?"
 msgstr "Кооперативный режим?"
 
+#: kf_lib/kung_fu/moves.py:83
+msgid "Cost"
+msgstr "Цена"
+
+#: kf_lib/kung_fu/boosts.py:111
 msgid "counterattack chance"
 msgstr "шанс контратаки"
 
+#: kf_lib/kung_fu/boosts.py:111
 msgid "counters"
 msgstr "контратаки"
 
+#: kf_lib/kung_fu/moves.py:94 kf_lib/kung_fu/moves.py:96
+msgid "Cpl"
+msgstr "Слож"
+
+#: kf_lib/happenings/encounters/_craftsman.py:35
 msgid "Craftsman: \"A spark from the soul is worth more than a thousand pieces of gold. I see that you are fated to become one of the greats. Let us spar and then you can have my {item} for free!\""
 msgstr "Ремесленник: \"Искра души стоит дороже тысячи золотых. Я вижу: тебе суждено войти в число великих. Давай проведём спарринг — и ты бесплатно получишь вот это: {item}!\""
 
+#: kf_lib/happenings/encounters/_craftsman.py:44
 msgid "Craftsman: \"What a good sparring session!\""
 msgstr "Ремесленник: \"Какой хороший спарринг!\""
 
+#: kf_lib/game/_new_game.py:141
 msgid "Crash Course (faster level progression)"
 msgstr "Ускоренный курс (быстрая прокачка)"
 
+#: kf_lib/game/_new_game.py:153
 msgid "Crime rate?"
 msgstr "Уровень преступности?"
 
+#: kf_lib/kung_fu/boosts.py:112
 msgid "critical attack chance"
 msgstr "шанс критической атаки"
 
+#: kf_lib/kung_fu/boosts.py:113
 msgid "critical attack power"
 msgstr "сила критической атаки"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:289
 msgid "CRITICAL!"
 msgstr "КРИТИЧЕСКИЙ УДАР!"
 
+#: kf_lib/kung_fu/boosts.py:112 kf_lib/kung_fu/boosts.py:113
 msgid "criticals"
 msgstr "критические удары"
 
+#: kf_lib/game/game_stats.py:112
 msgid "Crits,EPICs"
 msgstr "Криты,эпики"
 
+#: kf_lib/game/_new_game.py:87
 msgid "Customize game settings? (choose \"no\" to keep the defaults)"
 msgstr "Настроить параметры игры? (ответьте \"нет\", чтобы оставить умолчания)"
 
+#: kf_lib/kung_fu/boosts.py:114
 msgid "dam.reduc."
 msgstr "сниж.урона"
 
+#: kf_lib/game/game_stats.py:111
 msgid "Damage dealt"
 msgstr "Нанесено урона"
 
+#: kf_lib/actors/fighter/_fight_actions.py:244
 msgid "damage is reduced!"
 msgstr "урон снижен!"
 
+#: kf_lib/kung_fu/boosts.py:114
 msgid "damage reduction"
 msgstr "снижение урона"
 
+#: kf_lib/game/_state_menu.py:32
 msgid "Debug Menu"
 msgstr "Меню отладки"
 
+#: kf_lib/happenings/story/_grand_melee.py:98
 msgid "Decides not to participate in the disgraceful Grand Melee."
 msgstr "Решает не участвовать в позорной Большой Свалке."
 
+#: kf_lib/happenings/encounters/_romance.py:57
 msgid "Decides not to pursue the relationship with {name}."
 msgstr "Решает не развивать отношения с {name}."
 
+#: kf_lib/actors/player/_base_player.py:236
 msgid "Decides to teach {}."
 msgstr "Решает учить {}."
 
+#: kf_lib/happenings/story/_grand_melee.py:167
 msgid "Declines the Night Melee."
 msgstr "Отказывается от Ночной Схватки."
 
+#: kf_lib/happenings/encounters/_romance.py:160
 msgid "Defeats the jealous rival {r_name}; {sw_name} is impressed."
 msgstr "Побеждает ревнивого соперника: {r_name}. {sw_name} под впечатлением."
 
+#: kf_lib/happenings/story/_school_attack.py:52
 msgid "Defends the school against a night attack."
 msgstr "Отбивает ночное нападение на школу."
 
+#: kf_lib/kung_fu/boosts.py:115
 msgid "defense"
 msgstr "защита"
 
+#: kf_lib/kung_fu/boosts.py:119
 msgid "defense penalty (20% by default)"
 msgstr "штраф защиты (по умолчанию 20%)"
 
+#: kf_lib/kung_fu/boosts.py:144
 msgid "defense while lying"
 msgstr "защита лёжа"
 
+#: kf_lib/kung_fu/boosts.py:109 kf_lib/kung_fu/boosts.py:137
 msgid "disarm"
 msgstr "обезоруживание"
 
+#: kf_lib/kung_fu/boosts.py:137
 msgid "disarm chance when attacking"
 msgstr "шанс обезоружить в атаке"
 
+#: kf_lib/kung_fu/boosts.py:109
 msgid "disarm chance when defending"
 msgstr "шанс обезоружить в защите"
 
+#: kf_lib/actors/fighter/_fight_actions.py:321 kf_lib/actors/fighter/_strike_mechanics.py:326
 msgid "disarms"
 msgstr "обезоруживает"
 
+#: kf_lib/actors/human_controlled_fighter.py:88 kf_lib/kung_fu/moves.py:93 kf_lib/kung_fu/moves.py:96
 msgid "Dist"
 msgstr "Дист"
 
+#: kf_lib/actors/player/_human_player.py:178
 msgid "Do not use items"
 msgstr "Не использовать предметы"
 
+#: kfw.py:62
 msgid "Do you want to see what AI players do?"
 msgstr "Хотите видеть действия ИИ-игроков?"
 
+#: kf_lib/kung_fu/boosts.py:121
 msgid "dodge"
 msgstr "уклонение"
 
+#: kf_lib/kung_fu/boosts.py:121
 msgid "dodge efficiency"
 msgstr "эффективность уклонения"
 
+#: kf_lib/happenings/encounters/_crime.py:254
 msgid "Does not help the police."
 msgstr "Не помогает полиции."
 
+#: kf_lib/actors/player/_base_player.py:623
 msgid "Doesn't give anything."
 msgstr "Ничего не даёт."
 
+#: kf_lib/happenings/encounters/_crime.py:87
 msgid "Doesn't try to stop the criminal."
 msgstr "Не пытается остановить преступника."
 
+#: kf_lib/game/game_stats.py:144
 msgid "Donated"
 msgstr "Пожертв."
 
+#: kf_lib/actors/player/_base_player.py:625
 msgid "Donates {} c."
 msgstr "Жертвует {} монет."
 
+#: kf_lib/fighting/fight/_base_fight.py:422
 msgid "Draw!"
 msgstr "Ничья!"
 
+#: kf_lib/actors/player/_base_player.py:631
 msgid "Drinks wine."
 msgstr "Пьёт вино."
 
+#: kf_lib/kung_fu/boosts.py:172
 msgid "drun.str."
 msgstr "пьян.уд."
 
+#: kf_lib/happenings/encounters/_people.py:186
 msgid "Drunkard: \"What? Just ignoring Legendary {}?             Let me teach you some manners!\""
 msgstr "Пьяница: \"Что? Перед вами сам {} Легендарный, а вы и ухом не ведёте!             Сейчас я научу вас манерам!\""
 
+#: kf_lib/happenings/encounters/_people.py:191
 msgid "Drunkard: \"You think you're too good for drinkin' with me?\""
 msgstr "Пьяница: \"Ты что, слишком хорош, чтобы выпить со мной?\""
 
+#: kf_lib/kung_fu/boosts.py:172
 msgid "drunken strike efficiency"
 msgstr "эффективность пьяных ударов"
 
+#: kf_lib/actors/player/_base_player.py:640
 msgid "Earns {} c."
 msgstr "Зарабатывает {} монет."
 
+#: kf_lib/actors/fighter/_fight_actions.py:107 kf_lib/actors/fighter/_fight_actions.py:121
 msgid "easily"
 msgstr "легко "
 
+#: kf_lib/kung_fu/boosts.py:173
 msgid "elbow strike efficiency"
 msgstr "эффективность ударов локтем"
 
+#: kf_lib/kung_fu/boosts.py:173
 msgid "elbows"
 msgstr "локти"
 
+#: kf_lib/game/debug_menu.py:30
 msgid "Encounter"
 msgstr "Событие"
 
+#: kf_lib/happenings/encounters/_people.py:112
 msgid "Encounters a brawler."
 msgstr "Сталкивается с забиякой."
 
+#: kf_lib/happenings/encounters/_crime.py:308
 msgid "Encounters a robber."
 msgstr "Встречает грабителя."
 
+#: kf_lib/happenings/encounters/_crime.py:73
 msgid "Encounters a wanted criminal."
 msgstr "Встречает разыскиваемого преступника."
 
+#: kf_lib/happenings/encounters/_crime.py:325
 msgid "Encounters {} robber."
 msgid_plural "Encounters {} robbers."
 msgstr[0] "Встречает {} разбойника."
 msgstr[1] "Встречает {} разбойника."
 msgstr[2] "Встречает {} разбойников."
 
+#: kf_lib/game/game_stats.py:129
 msgid "Enemies"
 msgstr "Враги"
 
+#: kf_lib/actors/player/_base_player.py:818
 msgid "enemies:{}"
 msgstr "враги:{}"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:43
 msgid "Enjoys the Saint's Day festival."
 msgstr "Празднует День святого."
 
+#: kf_lib/game/debug_menu.py:138
 msgid "Enter attribute:"
 msgstr "Введите атрибут:"
 
+#: kf_lib/game/debug_menu.py:107
 msgid "Enter move string (move name / tier / features, etc.):"
 msgstr "Введите строку приёма (название / ранг / особенности и т.д.):"
 
+#: kf_lib/game/debug_menu.py:147
 msgid ""
 "Enter value:\n"
 " > "
@@ -727,144 +955,195 @@ msgstr ""
 "Введите значение:\n"
 " > "
 
+#: kf_lib/kung_fu/boosts.py:122
 msgid "environment"
 msgstr "окружение"
 
+#: kf_lib/happenings/story/_strange_dreams.py:14
 msgid "Every so often one has some really unusual dreams..."
 msgstr "Время от времени снятся по-настоящему необычные сны..."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:20
 msgid "Everybody in {town} talks about national treasures being stolen and sold to foreign buyers. Who could be responsible for such horrible crimes?"
 msgstr "Весь {town} только и говорит о том, что национальные сокровища крадут и продают иностранным скупщикам. Кто мог совершить столь ужасные преступления?"
 
+#: kf_lib/game/game_stats.py:122
 msgid "Exp bonuses"
 msgstr "Бонусы опыта"
 
+#: kf_lib/actors/player/_base_player.py:812
 msgid "exp:{exp}/{next_lv} money:{money}"
 msgstr "опыт:{exp}/{next_lv} деньги:{money}"
 
+#: kf_lib/actors/fighter/_fight_actions.py:74
 msgid "Fail!"
 msgstr "Неудача!"
 
+#: kf_lib/happenings/story/_eight_gates.py:85
 msgid "Fails the Trial of Eight Gates."
 msgstr "Проваливает Испытание Восьми Врат."
 
+#: kf_lib/happenings/story/_school_attack.py:69
 msgid "Fails to defend the school; it is ransacked."
 msgstr "Не удаётся защитить школу — её разграбляют."
 
+#: kf_lib/happenings/encounters/_utils.py:14
 msgid "Fails to escape."
 msgstr "Не удаётся сбежать."
 
+#: kf_lib/actors/fighter/_exp_worth.py:21
+msgid "fair fight"
+msgstr "равный бой"
+
+#: kf_lib/kung_fu/boosts.py:123
 msgid "fall damage"
 msgstr "урон от падения"
 
+#: kf_lib/game/game_stats.py:138
 msgid "Fame"
 msgstr "Слава"
 
+#: kfw.py:67
 msgid "Farewell, brave warrior!"
 msgstr "Прощай, храбрый воин!"
 
+#: kf_lib/happenings/encounters/_people.py:268
 msgid "Fat Girl: \"Now that I think about it, you are too weak to be my husband anyway!\""
 msgstr "Толстуха: \"Впрочем, если подумать, ты всё равно слишком слаб, чтобы быть моим мужем!\""
 
+#: kf_lib/happenings/encounters/_people.py:250
 msgid "Fat Girl: \"You look like a martial artist! Surely you'll make a fine husband. MARRY ME NOW OR I'LL BEAT THE CRAP OUT OF YOU!"
 msgstr "Толстушка: \"Судя по виду, ты — мастер боевых искусств! Из тебя выйдет прекрасный муж. ЖЕНИСЬ НА МНЕ СЕЙЧАС ЖЕ, ИЛИ Я ВЫБЬЮ ИЗ ТЕБЯ ВСЮ ДУРЬ!"
 
+#: kf_lib/game/game_stats.py:113
 msgid "Fav. move"
 msgstr "Люб.приём"
 
+#: kf_lib/game/game_stats.py:114
 msgid "Feared move"
 msgstr "Грозный приём"
 
+#: kf_lib/game/debug_menu.py:187
 msgid "Fee?"
 msgstr "Взнос?"
 
+#: kf_lib/happenings/story/_stolen_treasures.py:79
 msgid "Feels too greedy to pay the bribe."
 msgstr "Жадность не даёт заплатить взятку."
 
+#: kf_lib/happenings/encounters/_utils.py:22
 msgid "Feels too greedy."
 msgstr "Жадность берёт верх."
 
+#: kf_lib/happenings/encounters/_utils.py:33
 msgid "Feels too scared to fight."
 msgstr "Слишком боится драться."
 
+#: kf_lib/actors/player/_base_player.py:718
 msgid "Fight crime"
 msgstr "Бороться с преступностью"
 
+#: kf_lib/game/debug_menu.py:28
 msgid "Fight Thug(s)"
 msgstr "Бой с головорезами"
 
+#: kf_lib/actors/player/_human_player.py:106 kf_lib/actors/player/_human_player.py:91 kf_lib/actors/player/_human_player.py:98
 msgid "Fight! ({})"
 msgstr "В бой! ({})"
 
+#: kf_lib/actors/player/_base_player.py:1037
 msgid "Fight:"
 msgstr "Бой:"
 
+#: kf_lib/game/game_stats.py:108
 msgid "Fights ({})"
 msgstr "Бои ({})"
 
+#: kf_lib/actors/player/_base_player.py:740
 msgid "Fights/Wins/KOs: {}/{}/{}"
 msgstr "Бои/Победы/Нокауты: {}/{}/{}"
 
+#: kf_lib/happenings/story/_wrong_pouch.py:73
 msgid "Finds the pickpocket... and two angry fences... and their thugs."
 msgstr "Находит карманника... и двух разъярённых скупщиков краденого... и их головорезов."
 
+#: kf_lib/game/_state_menu.py:36
 msgid "Finish Game"
 msgstr "Завершить игру"
 
+#: kf_lib/happenings/story/_student_rivalry.py:103
 msgid "Forbid the duel and send them back to training"
 msgstr "Запретить дуэль и отправить их тренироваться"
 
+#: kf_lib/happenings/story/_student_rivalry.py:143
 msgid "Forbids the students' duel."
 msgstr "Запрещает поединок учеников."
 
+#: kf_lib/game/game_stats.py:149
 msgid "Found,lost"
 msgstr "Найдено,потеряно"
 
+#: kf_lib/actors/player/_base_player.py:294
 msgid "Founds the kung-fu federation."
 msgstr "Основывает федерацию кунг-фу."
 
+#: kf_lib/happenings/encounters/_school.py:93
 msgid "Founds the {} school and style."
 msgstr "Основывает школу и стиль: {}."
 
+#: kf_lib/game/game_stats.py:128
 msgid "Friends"
 msgstr "Друзья"
 
+#: kf_lib/actors/player/_base_player.py:817
 msgid "friends:{}"
 msgstr "друзья:{}"
 
+#: kf_lib/happenings/encounters/_school.py:89
 msgid "From now on, {name}'s kung-fu style will be known as {school}."
 msgstr "Отныне стиль кунг-фу {name} будет известен как {school}."
 
+#: kf_lib/game/_new_game.py:177
 msgid "Full co-op"
 msgstr "Полный кооператив"
 
+#: kf_lib/actors/human_controlled_fighter.py:95
 msgid "Func"
 msgstr "Функ"
 
+#: kf_lib/kung_fu/boosts.py:124
 msgid "fury"
 msgstr "ярость"
 
+#: kf_lib/kung_fu/boosts.py:124
 msgid "fury chance"
 msgstr "шанс ярости"
 
+#: kf_lib/actors/player/_base_player.py:690
 msgid "Gains {} exp."
 msgstr "Получает {} опыта."
 
+#: kf_lib/actors/player/_base_player.py:687
 msgid "gains {} exp."
 msgstr "получает {} опыта."
 
+#: kf_lib/game/game_stats.py:145
 msgid "Gamb.won,lost"
 msgstr "Азарт выигр.,проигр."
 
+#: kf_lib/actors/player/_human_player.py:117
 msgid "Gamble?"
 msgstr "Сыграть?"
 
+#: kf_lib/happenings/encounters/_gambling.py:116
 msgid "Gambler wins!"
 msgstr "Азартный игрок выигрывает!"
 
+#: kf_lib/happenings/encounters/_gambling.py:63
 msgid "Gambler: \"Better luck next time!\""
 msgstr "Игрок: \"В следующий раз повезёт больше!\""
 
+#: kf_lib/happenings/encounters/_gambling.py:44
 msgid ""
 "Gambler: \"Hey, do you want to play? You could make some serious money!\"\n"
 "One bet is {} coin."
@@ -881,828 +1160,1157 @@ msgstr[2] ""
 "Азартный игрок: \"Эй, хотите сыграть? Можно выиграть серьёзные деньги!\"\n"
 "Одна ставка — {} монет."
 
+#: kf_lib/happenings/encounters/_gambling.py:145
 msgid "Gambler: \"I'm telling you, this is not over yet!\""
 msgstr "Игрок: \"Говорю тебе, это ещё не конец!\""
 
+#: kf_lib/happenings/encounters/_gambling.py:140
 msgid "Gambler: \"You think you can get away with that?\""
 msgstr "Игрок: \"Думаешь, тебе это сойдёт с рук?\""
 
+#: kf_lib/happenings/encounters/_gambling.py:151
 msgid "Gambler: I'm just taking back what's mine!"
 msgstr "Игрок: Я просто забираю своё!"
 
+#: kf_lib/happenings/encounters/_gambling.py:55
 msgid "Gambles."
 msgstr "Играет на деньги."
 
+#: kf_lib/game/_new_game.py:151
 msgid "Gang-Ridden (high crime)"
 msgstr "Город банд (высокая преступность)"
 
+#: kf_lib/game/debug_menu.py:24
 msgid "Get Item"
 msgstr "Получить предмет"
 
+#: kf_lib/game/debug_menu.py:23
 msgid "Get Money"
 msgstr "Получить деньги"
 
+#: kf_lib/happenings/encounters/_utils.py:41
 msgid "Gets away."
 msgstr "Ускользает."
 
+#: kf_lib/happenings/encounters/_crime.py:195
 msgid "Gets caught in a gang war."
 msgstr "Попадает в бандитскую разборку."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:77
 msgid "Gets caught in the Saint's Day riot."
 msgstr "Попадает в заварушку на День Святого."
 
+#: kf_lib/game/_new_game.py:158
 msgid "Getting By (default poverty)"
 msgstr "Перебиваемся (обычная бедность)"
 
+#: kf_lib/actors/player/_human_player.py:111 kf_lib/actors/player/_human_player.py:81
 msgid "Give {} coin"
 msgid_plural "Give {} coins"
 msgstr[0] "Дать {} монету"
 msgstr[1] "Дать {} монеты"
 msgstr[2] "Дать {} монет"
 
+#: kf_lib/actors/player/_base_player.py:724
 msgid "Go for a walk"
 msgstr "Пойти на прогулку"
 
+#: kf_lib/actors/player/_base_player.py:723
 msgid "Go to seedy places"
 msgstr "Пойти по злачным местам"
 
+#: kf_lib/actors/player/_base_player.py:716
 msgid "Go to work"
 msgstr "Пойти на работу"
 
+#: kf_lib/actors/player/_base_player.py:909
 msgid "Goes for a walk."
 msgstr "Идёт на прогулку."
 
+#: kf_lib/happenings/encounters/_romance.py:102
 msgid "Goes on a date with {name}."
 msgstr "Идёт на свидание: {name}."
 
+#: kf_lib/actors/player/_base_player.py:1264
 msgid "Goes on a date with {sw}."
 msgstr "Идёт на свидание с {sw}."
 
+#: kf_lib/actors/player/_day_actions.py:6
+msgid "Goes to the marketplace."
+msgstr "Идёт на рынок."
+
+#: kf_lib/actors/player/_base_player.py:903
 msgid "Goes to the seedy places of {}."
 msgstr "Идёт по злачным местам: {}."
 
+#: kf_lib/actors/player/_base_player.py:923
 msgid "Goes to work."
 msgstr "Идёт на работу."
 
+#: kf_lib/game/game_stats.py:136
 msgid "Got drunk"
 msgstr "Напился"
 
+#: kf_lib/kung_fu/boosts.py:128
 msgid "grab chance"
 msgstr "шанс захвата"
 
+#: kf_lib/kung_fu/boosts.py:127
 msgid "grabs"
 msgstr "захваты"
 
+#: kf_lib/actors/fighter/_fight_actions.py:358
 msgid "grabs an improvised weapon!"
 msgstr "хватает подручное оружие!"
 
+#: kf_lib/actors/player/_base_player.py:467
 msgid "Grabs an improvised weapon."
 msgstr "Хватает подручное оружие."
 
+#: kf_lib/kung_fu/boosts.py:175
 msgid "grappling"
 msgstr "борьба"
 
+#: kf_lib/kung_fu/boosts.py:175
 msgid "grappling efficiency"
 msgstr "эффективность борьбы"
 
+#: kf_lib/kung_fu/boosts.py:130
 msgid "guard"
 msgstr "защитная стойка"
 
+#: kf_lib/kung_fu/boosts.py:130
 msgid "guard efficiency"
 msgstr "эффективность защитной стойки"
 
+#: kf_lib/kung_fu/boosts.py:133
 msgid "guard while atk"
 msgstr "защита в атаке"
 
+#: kf_lib/kung_fu/boosts.py:134
 msgid "guard while attacking"
 msgstr "защита во время атаки"
 
+#: kf_lib/happenings/encounters/_challenger.py:28
 msgid "hands-down "
 msgstr "в чистую "
 
+#: kf_lib/game/_new_game.py:159
 msgid "Hard Times (high poverty)"
 msgstr "Тяжёлые времена (высокая бедность)"
 
+#: kf_lib/happenings/story/_student_rivalry.py:97
 msgid "Has to settle a rivalry between two students."
 msgstr "Вынужден разрешать соперничество двух учеников."
 
+#: kf_lib/actors/player/_base_player.py:222
 msgid "Has too many friends already; {obj} stays an acquaintance."
 msgstr "Друзей уже слишком много; {obj} остаётся просто знакомым."
 
+#: kf_lib/happenings/story/_renowned_master.py:30
 msgid "Having defeated such a strong opponent, {name} gained an important insight into his own fighting technique."
 msgstr "Победив столь сильного противника, {name} пришёл к важному прозрению в собственной боевой технике."
 
+#: kf_lib/happenings/story/_foreigner.py:121
 msgid "Having proved his superiority, {b_name} leaves {town}."
 msgstr "Доказав своё превосходство, {b_name} покидает {town}."
 
+#: kf_lib/happenings/encounters/_crime.py:312
 msgid "He is armed with {}."
 msgstr "У него оружие: {}."
 
+#: kf_lib/game/biographies.py:133
 msgid "He married the love of his life, {name}, and they raised {} wonderful child, who carries on his kung-fu."
 msgid_plural "He married the love of his life, {name}, and they raised {} wonderful children, who carry on his kung-fu."
 msgstr[0] "Он женился на любви всей своей жизни, {name}, и они вырастили {} ребёнка — чудесного продолжателя его кунг-фу."
 msgstr[1] "Он женился на любви всей своей жизни, {name}, и они вырастили {} детей — чудесных продолжателей его кунг-фу."
 msgstr[2] "Он женился на любви всей своей жизни, {name}, и они вырастили {} детей — чудесных продолжателей его кунг-фу."
 
+#: kf_lib/game/biographies.py:150
 msgid "He married the love of his life, {name}."
 msgstr "Его женой стала любовь всей его жизни: {name}."
 
+#: kf_lib/game/biographies.py:91
 msgid "He was especially known for his outstanding {atts}."
 msgstr "Особенно он славился выдающимися качествами: {atts}."
 
+#: kf_lib/game/biographies.py:78
 msgid "He was rather versatile, but especially known for his {atts}."
 msgstr "Он был довольно разносторонним, но особенно славился качествами: {atts}."
 
+#: kf_lib/game/biographies.py:112
 msgid "He was said to possess almost inhuman {best_atts}, although, perhaps, at the cost of {worst_atts}."
 msgstr "О нём говорили, что у него почти нечеловеческие данные: {best_atts}, — хотя, возможно, ценой других: {worst_atts}."
 
+#: kf_lib/game/biographies.py:61
 msgid "He was uniquely versatile, having equally great {atts}."
 msgstr "Он был удивительно разносторонним — все качества были одинаково велики: {atts}."
 
+#: kf_lib/actors/human_controlled_fighter.py:42 kf_lib/game/game_stats.py:104
 msgid "Health"
 msgstr "Здоровье"
 
+#: kf_lib/kung_fu/boosts.py:136
 msgid "health"
 msgstr "здоровье"
 
+#: kf_lib/happenings/encounters/_people.py:329
 msgid "Hears the rumors."
 msgstr "Слышит слухи."
 
+#: kf_lib/actors/player/_base_player.py:719
 msgid "Help the poor"
 msgstr "Помочь бедным"
 
+#: kf_lib/game/biographies.py:24
 msgid "Her kung-fu style was {style}."
 msgstr "Её стилем кунг-фу был {style}."
 
+#: kf_lib/game/biographies.py:30
 msgid "Her signature move was the {move}."
 msgstr "Её коронный приём: {move}."
 
+#: kf_lib/happenings/encounters/_crime.py:32
 msgid "Hey you! This is my territory. Entering is free, but leaving in one piece costs {} coins."
 msgstr "Эй, ты! Это моя территория. Вход бесплатный, а вот выйти целым стоит {} монет."
 
+#: kf_lib/happenings/encounters/_crime.py:30
 msgid "Hey, I really need {} coins. Do you think you can help me out?"
 msgstr "Эй, мне правда нужно {} монет. Думаете, сможете выручить?"
 
+#: kf_lib/game/biographies.py:26
 msgid "His kung-fu style was {style}."
 msgstr "Его стиль кунг-фу: {style}."
 
+#: kf_lib/game/biographies.py:40
 msgid "His signature move was the {move}."
 msgstr "Его коронным приёмом был {move}."
 
+#: kf_lib/actors/fighter/_fight_actions.py:247
 msgid "hit: {dmg} ({hp})"
 msgstr "попадание: {dmg} ({hp})"
 
+#: kf_lib/actors/fighter/_basic_attributes.py:51
 msgid "Hlt"
 msgstr "Здр"
 
+#: kf_lib/things/items.py:76
+msgid "home training"
+msgstr "тренировка дома"
+
+#: kf_lib/game/debug_menu.py:124
 msgid "How many levels up?"
 msgstr "На сколько уровней поднять?"
 
+#: kf_lib/game/debug_menu.py:184
 msgid "How many participants?"
 msgstr "Сколько участников?"
 
+#: kf_lib/game/debug_menu.py:53
 msgid "How many thugs?"
 msgstr "Сколько головорезов?"
 
+#: kf_lib/game/debug_menu.py:73
 msgid "How many {item}?"
 msgid_plural "How many {item}s?"
 msgstr[0] "Сколько: {item}?"
 msgstr[1] "Сколько: {item}?"
 msgstr[2] "Сколько: {item}?"
 
+#: kf_lib/game/debug_menu.py:86
 msgid "How much money?"
 msgstr "Сколько денег?"
 
+#: kf_lib/actors/player/_human_player.py:142
 msgid "How much to bet?"
 msgstr "Сколько поставить?"
 
+#: kf_lib/happenings/encounters/_craftsman.py:51
 msgid "However, the {item} turns out to be of very shoddy quality. It breaks immediately as {name} tries a few of his moves on it. Too bad the craftsman has vanished in thin air!"
 msgstr "Однако {item} оказывается очень низкого качества — вещь ломается, едва {name} успевает опробовать на ней пару своих приёмов. Досадно, что ремесленник словно испарился!"
 
+#: kf_lib/actors/human_controlled_fighter.py:359
 msgid "HP"
-msgstr "HP"
+msgstr "ОЗ"
 
+#: kf_lib/kung_fu/boosts.py:138
 msgid "HP gain"
-msgstr "восстановление HP"
+msgstr "восстановление ОЗ"
 
+#: kf_lib/kung_fu/boosts.py:138
 msgid "HP gain per turn"
-msgstr "HP за ход"
+msgstr "ОЗ за ход"
 
+#: kf_lib/actors/human_controlled_fighter.py:153
 msgid "HP:{}"
-msgstr "HP:{}"
+msgstr "ОЗ:{}"
 
+#: kf_lib/happenings/encounters/_crime.py:31
 msgid "If you don't give me {} coins, you'll need a doctor, and a good one!"
 msgstr "Если не отдашь мне {} монет, тебе понадобится врач, и очень хороший!"
 
+#: kf_lib/actors/player/_human_player.py:85 kf_lib/actors/player/_human_player.py:91
 msgid "Ignore"
 msgstr "Игнорировать"
 
+#: kf_lib/actors/fighter/_exp_worth.py:18
+msgid "impossible"
+msgstr "невозможно"
+
+#: kf_lib/kung_fu/boosts.py:141
 msgid "improv.weapons"
 msgstr "подруч.оружие"
 
+#: kf_lib/actors/human_controlled_fighter.py:45
 msgid "Improve:"
 msgstr "Улучшить:"
 
+#: kf_lib/kung_fu/boosts.py:142
 msgid "in-fight improvised weapon chance"
 msgstr "шанс подручного оружия в бою"
 
+#: kf_lib/actors/player/_base_player.py:745
+msgid "injured"
+msgstr "травма"
+
+#: kf_lib/game/debug_menu.py:93
 msgid "Input att (type \"all\" to see all atts)"
 msgstr "Введите атрибут (наберите \"all\", чтобы увидеть все)"
 
+#: kf_lib/fighting/fight/_base_fight.py:426
 msgid "Input file name: "
 msgstr "Введите имя файла: "
 
+#: kf_lib/game/debug_menu.py:32
 msgid "Inspect Player"
 msgstr "Осмотреть игрока"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:335
 msgid "INSTANT KNOCK-OUT!!!"
 msgstr "МГНОВЕННЫЙ НОКАУТ!!!"
 
+#: kf_lib/actors/player/_base_player.py:671
 msgid "Intends to fight crime."
 msgstr "Собирается бороться с преступностью."
 
+#: kf_lib/actors/player/_base_player.py:936
 msgid "Intends to help the poor."
 msgstr "Намеревается помогать бедным."
 
+#: kf_lib/actors/player/_base_player.py:992
 msgid "Intends to pick fights."
 msgstr "Намеревается ввязываться в драки."
 
+#: kf_lib/ui/_interactive.py:11 kf_lib/ui/_interactive.py:30
 msgid "invalid input, try again"
 msgstr "неверный ввод, попробуйте ещё раз"
 
+#: kf_lib/actors/player/_base_player.py:1312
 msgid "Is about to propose to {sw}, but gets cold feet."
 msgstr "Собирается сделать предложение ({sw}), но в последний момент струхивает."
 
+#: kf_lib/happenings/encounters/_people.py:245
 msgid "Is ambushed by a fat girl."
 msgstr "Попадает в засаду толстой девушки."
 
+#: kf_lib/happenings/encounters/_ambush.py:38
 msgid "Is ambushed by {enemy} with {n} thug."
 msgid_plural "Is ambushed by {enemy} with {n} thugs."
 msgstr[0] "Попадает в засаду: {enemy} с {n} головорезом."
 msgstr[1] "Попадает в засаду: {enemy} с {n} головорезами."
 msgstr[2] "Попадает в засаду: {enemy} с {n} головорезами."
 
+#: kf_lib/happenings/encounters/_school.py:220
 msgid "Is approached by a group of potential students."
 msgstr "К нему подходит группа потенциальных учеников."
 
+#: kf_lib/happenings/encounters/_school.py:239
 msgid "Is approached by a potential student."
 msgstr "К нему подходит потенциальный ученик."
 
+#: kf_lib/happenings/story/_grand_melee.py:200
 msgid "Is banned from school by {master}."
 msgstr "{master} отчисляет его из школы."
 
+#: kf_lib/happenings/encounters/_romance.py:181
 msgid "Is beaten by the jealous rival {name}."
 msgstr "Терпит поражение от ревнивого соперника: {name}."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:101
 msgid "Is blamed for the Saint's Day riot."
 msgstr "Обвинён в беспорядках на День святого."
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:110
 msgid "is BLEEDING!"
 msgstr "ИСТЕКАЕТ КРОВЬЮ!"
 
+#: kf_lib/happenings/encounters/_school.py:117
 msgid "Is bullied at his school."
 msgstr "Терпит издевательства в своей школе."
 
+#: kf_lib/happenings/encounters/_romance.py:137
 msgid "Is challenged by a jealous rival, {name}."
 msgstr "Получает вызов от ревнивого соперника: {name}."
 
+#: kf_lib/happenings/story/_jade_table.py:54
 msgid "Is hired by {b_name} as muscle for the Jade Table sit-down."
 msgstr "{b_name} нанимает его силовиком на сходку в «Нефритовом столе»."
 
+#: kf_lib/actors/fighter/_fight_actions.py:342
 msgid "is in FURY!"
 msgstr "в ЯРОСТИ!"
 
+#: kf_lib/actors/player/_base_player.py:946
 msgid "Is injured."
 msgstr "Получает травму."
 
+#: kf_lib/happenings/story/_grand_melee.py:143
 msgid "Is invited to the Night Melee."
 msgstr "Получает приглашение на Ночную Схватку."
 
+#: kf_lib/happenings/story/_jade_table.py:119
 msgid "Is knocked out at the Jade Table."
 msgstr "Нокаутирован в Нефритовом Столе."
 
+#: kf_lib/happenings/story/_wrong_pouch.py:101
 msgid "Is knocked out in the den brawl. The money is gone for good."
 msgstr "Выбит в нокаут в драке в притоне. Деньги потеряны безвозвратно."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:90
 msgid "Is knocked out in the Saint's Day riot."
 msgstr "Нокаутирован в беспорядках на День святого."
 
+#: kf_lib/happenings/encounters/_school.py:161
 msgid "Is offered a trial at his school."
 msgstr "В его школе ему предлагают пройти испытание."
 
+#: kf_lib/happenings/encounters/_school.py:62
 msgid "Is offered a trial to become a master."
 msgstr "Получает предложение пройти испытание на звание мастера."
 
+#: kf_lib/happenings/story/_wrong_pouch.py:45
 msgid "Is pickpocketed of {} coin."
 msgid_plural "Is pickpocketed of {} coins."
 msgstr[0] "Кража карманником: {} монета."
 msgstr[1] "Кража карманником: {} монеты."
 msgstr[2] "Кража карманником: {} монет."
 
+#: kf_lib/happenings/encounters/_people.py:116
 msgid "Is provoked."
 msgstr "Поддаётся на провокацию."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:126
 msgid "Is publicly scolded by the elders."
 msgstr "Старейшины при всех отчитывают его."
 
+#: kf_lib/happenings/story/_grand_melee.py:188
 msgid "Is reprimanded and disciplined by {master} for fighting for money."
 msgstr "{master} делает выговор и наказывает его за бои за деньги."
 
+#: kf_lib/happenings/story/_jade_table.py:106
 msgid "Is the last one standing at the Jade Table."
 msgstr "Остаётся последним на ногах за Нефритовым столом."
 
+#: kf_lib/game/_new_game.py:45
 msgid "Is this character ok?"
 msgstr "Этот персонаж подходит?"
 
+#: kf_lib/happenings/encounters/_crime.py:34
 msgid "It is important to share what you have with others. Pay {} coins and you are free to go."
 msgstr "Важно делиться с другими тем, что имеешь. Заплатите {} монет — и можете идти."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:72
 msgid "It starts with a spilled jar of wine and an old grudge. A punch is thrown, then another — and suddenly the whole festival square is one giant brawl! {name} is right in the middle of it."
 msgstr "Всё начинается с разлитого кувшина вина и старой обиды. Летит один удар, затем другой — и вдруг вся праздничная площадь превращается в одну гигантскую свалку! {name} оказывается в самой её гуще."
 
+#: kf_lib/game/_state_menu.py:15
 msgid "Items"
 msgstr "Предметы"
 
+#: kf_lib/happenings/encounters/_people.py:467
 msgid "Joins the brawl."
 msgstr "Ввязывается в драку."
 
+#: kf_lib/kung_fu/boosts.py:174
 msgid "jumping strike efficiency"
 msgstr "эффективность ударов в прыжке"
 
+#: kf_lib/kung_fu/boosts.py:174
 msgid "jumps"
 msgstr "прыжки"
 
+#: kf_lib/game/game_stats.py:152
 msgid "Junk items b."
 msgstr "Хлам купл."
 
+#: kf_lib/game/_playing.py:84
 msgid "Keep playing indefinitely?"
 msgstr "Продолжать играть бессрочно?"
 
+#: kf_lib/kung_fu/boosts.py:176
 msgid "kick efficiency"
 msgstr "эффективность пинков"
 
+#: kf_lib/kung_fu/boosts.py:176
 msgid "kicks"
 msgstr "пинки"
 
+#: kf_lib/kung_fu/boosts.py:177
 msgid "knee strike efficiency"
 msgstr "эффективность ударов коленом"
 
+#: kf_lib/kung_fu/boosts.py:177
 msgid "knees"
 msgstr "колени"
 
+#: kf_lib/actors/fighter/_fight_actions.py:379
+msgid "Knocked out by {name}."
+msgstr "Нокаут от {name}."
+
+#: kf_lib/actors/fighter/_fight_actions.py:378
+msgid "Knocks out {name}."
+msgstr "Нокаутирует: {name}."
+
+#: kf_lib/game/game_stats.py:123
 msgid "KOed,days inac."
 msgstr "Нок.,дней неакт."
 
+#: kf_lib/game/_new_game.py:165
 msgid "Kung-Fu Backwater (low enthusiasm)"
 msgstr "Кунг-фу глухомань (слабый энтузиазм)"
 
+#: kf_lib/game/_new_game.py:167
 msgid "Kung-Fu Craze (high enthusiasm)"
 msgstr "Кунг-фу лихорадка (сильный энтузиазм)"
 
+#: kf_lib/game/_new_game.py:169
 msgid "Kung-fu enthusiasm?"
 msgstr "Энтузиазм к кунг-фу?"
 
+#: kf_lib/happenings/story/_school_attack.py:33
 msgid "Lately, rough-looking strangers have been seen watching {school}. {name}'s students whisper that someone has hired thugs to \"teach the new master a lesson\"."
 msgstr "В последнее время возле школы ({school}) замечали суровых незнакомцев. Ученики {name} шепчутся: кто-то нанял головорезов, чтобы \"проучить нового мастера\"."
 
+#: kf_lib/happenings/story/_jade_table.py:24
 msgid "Lately, the streets of {town} whisper about the underworld: the old balance between the crime bosses is breaking, and a bloody war seems inevitable. To prevent it, the elders of the underworld call for a sit-down at the Jade Table restaurant..."
 msgstr "В последнее время улицы {town} шепчутся о преступном мире: старый баланс между боссами рушится, и кровавая война кажется неизбежной. Чтобы предотвратить её, старейшины преступного мира созывают сходку в ресторане \"Нефритовый стол\"..."
 
+#: kf_lib/game/debug_menu.py:26
 msgid "Learn Move"
 msgstr "Изучить приём"
 
+#: kf_lib/game/debug_menu.py:27
 msgid "Learn Tech"
 msgstr "Изучить технику"
 
+#: kf_lib/actors/human_controlled_fighter.py:313
+msgid "Learns the secret technique of {style}."
+msgstr "Изучает секретную технику: {style}."
+
+#: kf_lib/actors/fighter/_moves.py:61
+msgid "Learns {move} ({descr})"
+msgstr "Изучает приём: {move} ({descr})"
+
+#: kf_lib/actors/fighter/_techs.py:103
+msgid "Learns {tech} ({descr})"
+msgstr "Изучает технику: {tech} ({descr})"
+
+#: kf_lib/happenings/story/_student_rivalry.py:101
 msgid "Let them duel — may the better fighter win"
 msgstr "Пусть сразятся — победит сильнейший"
 
+#: kf_lib/fighting/fight/_helpers.py:23
 msgid "LEV"
 msgstr "УР"
 
+#: kf_lib/game/game_stats.py:100
 msgid "Level (Exp.)"
 msgstr "Уровень (опыт)"
 
+#: kf_lib/game/_new_game.py:143
 msgid "Level progression?"
 msgstr "Скорость прокачки?"
 
+#: kf_lib/game/debug_menu.py:25
 msgid "Level up"
 msgstr "Повысить уровень"
 
+#: kf_lib/game/_state_menu.py:29
 msgid "Load"
 msgstr "Загрузить"
 
+#: kf_lib/kung_fu/boosts.py:171
 msgid "long-range"
 msgstr "дальняя дистанция"
 
+#: kf_lib/kung_fu/boosts.py:171
 msgid "long-range strike efficiency"
 msgstr "эффективность ударов издалека"
 
+#: kf_lib/happenings/encounters/_crime.py:176 kf_lib/happenings/encounters/_crime.py:422
 msgid "Looks the other way."
 msgstr "Отводит глаза."
 
+#: kf_lib/happenings/story/_student_rivalry.py:132
 msgid "Loses a spar to his own students."
 msgstr "Проигрывает спарринг собственным ученикам."
 
+#: kf_lib/happenings/story/_grand_melee.py:119
 msgid "Loses the Grand Melee."
 msgstr "Проигрывает Великую Свалку."
 
+#: kf_lib/happenings/story/_grand_melee.py:165
 msgid "Loses the Night Melee."
 msgstr "Проигрывает Ночную свалку."
 
+#: kf_lib/actors/player/_base_player.py:1045
 msgid "Loses {}."
 msgstr "Теряет: {}."
 
+#: kf_lib/fighting/fight/_base_fight.py:218
+msgid "Loses."
+msgstr "Проигрывает."
+
+#: kf_lib/kung_fu/boosts.py:123
 msgid "low fall dam"
 msgstr "малый урон от падения"
 
+#: kf_lib/actors/fighter/_exp_worth.py:22
+msgid "low risk"
+msgstr "низкий риск"
+
+#: kf_lib/actors/player/_base_player.py:516
 msgid "LUCKY!"
 msgstr "УДАЧА!"
 
+#: kf_lib/actors/fighter/__init__.py:103 kf_lib/actors/human_controlled_fighter.py:152
 msgid "lv.{}"
 msgstr "ур.{}"
 
+#: kf_lib/kung_fu/boosts.py:144
 msgid "lying dfs"
 msgstr "защита лёжа"
 
+#: kf_lib/game/_new_game.py:37 kf_lib/happenings/encounters/_crime.py:418
 msgid "Man"
 msgstr "Мужчина"
 
+#: kf_lib/actors/player/_base_player.py:927
 msgid "Man: Master {name}! Why are you here?"
 msgstr "Мужчина: Мастер {name}! Что вы здесь делаете?"
 
+#: kf_lib/kung_fu/boosts.py:145
 msgid "maneuv.time"
 msgstr "время манёвра"
 
+#: kf_lib/kung_fu/boosts.py:145
 msgid "maneuver time cost"
 msgstr "стоимость манёвра по времени"
 
+#: kf_lib/actors/player/_base_player.py:1330
 msgid "Marries {sw}."
 msgstr "Вступает в брак: {sw}."
 
+#: kf_lib/game/_new_game.py:166
 msgid "Martial Town (default enthusiasm)"
 msgstr "Город единоборств (обычный энтузиазм)"
 
+#: kf_lib/game/game_stats.py:116
 msgid "Max blow"
 msgstr "Макс. удар"
 
+#: kf_lib/game/debug_menu.py:193
 msgid "Max level?"
 msgstr "Макс. уровень?"
 
+#: kf_lib/kung_fu/boosts.py:156
 msgid "max QP"
-msgstr "макс. QP"
+msgstr "макс. Ци"
 
+#: kf_lib/kung_fu/boosts.py:160
 msgid "max stamina"
 msgstr "макс. выносливость"
 
+#: kf_lib/happenings/encounters/_beggar.py:23
 msgid "Meets a beggar."
 msgstr "Встречает нищего."
 
+#: kf_lib/happenings/encounters/_book_seller.py:34
 msgid "Meets a book seller."
 msgstr "Встречает книготорговца."
 
+#: kf_lib/happenings/encounters/_craftsman.py:31
 msgid "Meets a craftsman."
 msgstr "Встречает ремесленника."
 
+#: kf_lib/happenings/encounters/_people.py:163
 msgid "Meets a drunkard."
 msgstr "Встречает пьяницу."
 
+#: kf_lib/happenings/encounters/_gambling.py:52
 msgid "Meets a gambler."
 msgstr "Встречает азартного игрока."
 
+#: kf_lib/happenings/encounters/_people.py:326
 msgid "Meets a gossipmonger."
 msgstr "Встречает сплетника."
 
+#: kf_lib/happenings/encounters/_items.py:111
 msgid "Meets a strange-looking man asking for {item}."
 msgstr "Встречает странного на вид человека, который просит {item}."
 
+#: kf_lib/happenings/encounters/_items.py:82
 msgid "Meets a street merchant."
 msgstr "Встречает уличного торговца."
 
+#: kf_lib/happenings/encounters/_people.py:486
 msgid "Meets a wise man."
 msgstr "Встречает мудреца."
 
+#: kf_lib/happenings/story/_grand_melee.py:63
 msgid "Meets {boss}, the Grand Melee promoter."
 msgstr "Встречает организатора Большой свалки — {boss}."
 
+#: kf_lib/happenings/encounters/_romance.py:48
 msgid "Meets {name}."
 msgstr "Встречает {name}."
 
+#: kf_lib/happenings/encounters/_people.py:425
 msgid "Meets {}"
 msgstr "Встречает {}"
 
+#: kf_lib/kung_fu/boosts.py:170
 msgid "mid-range"
 msgstr "средняя дистанция"
 
+#: kf_lib/kung_fu/boosts.py:170
 msgid "mid-range strike efficiency"
 msgstr "эффективность ударов со средней дистанции"
 
+#: kf_lib/game/debug_menu.py:190
 msgid "Min level?"
 msgstr "Мин. уровень?"
 
+#: kf_lib/actors/fighter/_fight_actions.py:71
 msgid "Miss!"
 msgstr "Промах!"
 
+#: kf_lib/happenings/story/_grand_melee.py:94
 msgid "Misses the Grand Melee, being broke."
 msgstr "Пропускает Большую Свалку из-за пустых карманов."
 
+#: kf_lib/game/game_stats.py:140
 msgid "Money"
 msgstr "Деньги"
 
+#: kf_lib/game/game_stats.py:141
 msgid "Money earned"
 msgstr "Заработано"
 
+#: kf_lib/actors/human_controlled_fighter.py:86
 msgid "Move"
 msgstr "Приём"
 
+#: kf_lib/kung_fu/boosts.py:151
 msgid "move complexity"
 msgstr "сложность приёмов"
 
+#: kf_lib/kung_fu/boosts.py:151
 msgid "move cplx."
 msgstr "сложн. приёмов"
 
+#: kf_lib/game/_state_menu.py:17 kf_lib/game/game_stats.py:106
 msgid "Moves"
 msgstr "Приёмы"
 
+#: kf_lib/game/_state_menu.py:56
+msgid "Moves:"
+msgstr "Приёмы:"
+
+#: kf_lib/happenings/encounters/_challenger.py:29
 msgid "much "
 msgstr "намного "
 
+#: kf_lib/fighting/fight/_base_fight.py:249
 msgid "Multi-knockout"
 msgstr "Мультинокаут"
 
+#: kf_lib/fighting/fight/_helpers.py:22
 msgid "NAME"
 msgstr "ИМЯ"
 
+#: kf_lib/game/game_stats.py:98
 msgid "Name"
 msgstr "Имя"
 
+#: kf_lib/ui/_menu.py:45
 msgid "Next page"
 msgstr "След. страница"
 
+#: kf_lib/happenings/story/_school_attack.py:47
 msgid "Night. A crash of breaking wood — masked men burst into {school} with torches and clubs! {name} and the students rush out to defend the school."
 msgstr "Ночь. Треск ломаемого дерева — люди в масках врываются в {school} с факелами и дубинами! {name} и ученики бросаются защищать школу."
 
+#: kf_lib/ui/_menu.py:76
 msgid "no"
 msgstr "нет"
 
+#: kf_lib/game/_new_game.py:180
 msgid "No co-op"
 msgstr "Без кооператива"
 
+#: kf_lib/actors/fighter/_exp_worth.py:24
+msgid "no risk"
+msgstr "без риска"
+
+#: kf_lib/fighting/fight/_base_fight.py:485
 msgid "No stats recorded."
 msgstr "Статистика не записана."
 
+#: kf_lib/game/debug_menu.py:140 kf_lib/game/debug_menu.py:98
 msgid "No such attribute!"
 msgstr "Нет такого атрибута!"
 
+#: kf_lib/game/debug_menu.py:109
 msgid "No such move: {!r}"
 msgstr "Нет такого приёма: {!r}"
 
+#: kf_lib/fighting/fight/_base_fight.py:247
 msgid "Not a scratch"
 msgstr "Ни царапины"
 
+#: kf_lib/actors/player/_base_player.py:1031
 msgid "Not enough money!"
 msgstr "Недостаточно денег!"
 
+#: kf_lib/happenings/encounters/_people.py:367
 msgid "Nothing interesting."
 msgstr "Ничего интересного."
 
+#: kf_lib/game/_new_game.py:84
 msgid "Number of players?"
 msgstr "Количество игроков?"
 
+#: kf_lib/kung_fu/boosts.py:152
 msgid "off-bal.atk"
 msgstr "дисб.атк"
 
+#: kf_lib/kung_fu/boosts.py:153
 msgid "off-bal.dfs"
 msgstr "дисб.зщт"
 
+#: kf_lib/kung_fu/boosts.py:152
 msgid "off-balance attack"
 msgstr "атака при потере равновесия"
 
+#: kf_lib/kung_fu/boosts.py:153
 msgid "off-balance defense"
 msgstr "защита при потере равновесия"
 
+#: kf_lib/happenings/encounters/_gambling.py:172
 msgid "Offered to take part in an underground prize fighting contest."
 msgstr "Получает предложение участвовать в подпольных боях с призовыми."
 
+#: kf_lib/happenings/events.py:95
 msgid "Old man: It seems everybody in {} wants to practice kung-fu nowadays..."
 msgstr "Старик: Похоже, нынче все в городе {} хотят заниматься кунг-фу..."
 
+#: kf_lib/happenings/events.py:85
 msgid "Old man: The people of {} are losing their interest in kung-fu..."
 msgstr "Старик: {}... Здешние люди теряют интерес к кунг-фу..."
 
+#: kf_lib/happenings/events.py:142
 msgid "Old woman: Many people in {} now don't have enough to eat..."
 msgstr "Старуха: Многие в {} теперь недоедают..."
 
+#: kf_lib/happenings/events.py:131
 msgid "Old woman: There are not as many poor and homeless people in {} as before..."
 msgstr "Старуха: Бедных и бездомных в городе {} стало не так много, как раньше..."
 
+#: kf_lib/happenings/story/_eight_gates.py:72
 msgid "One by one, the eight disciples fall. Finally, only {p_name} is left standing in the circle. {b_name} slowly rises and bows."
 msgstr "Один за другим падают восемь учеников. Наконец на ногах в кругу остаётся только {p_name}. {b_name} медленно поднимается и кланяется."
 
+#: kf_lib/happenings/encounters/_people.py:385
 msgid "One of them says: \"Haven't you heard? {} at lv.{} beat {}. What an astonishing victory!\""
 msgstr "Один из них говорит: \"Не слыхали? {} на ур.{} победил {}. Какая потрясающая победа!\""
 
+#: kf_lib/happenings/encounters/_people.py:374
 msgid "One of them says: \"Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to kung-fu!\""
 msgstr "Один из них говорит: \"Не слышали? {} (ур.{}) позорно проиграл {}. Какой позор для кунг-фу!\""
 
+#: kf_lib/happenings/encounters/_people.py:358
 msgid "Overhears a conversation."
 msgstr "Подслушивает разговор."
 
+#: kf_lib/actors/human_controlled_fighter.py:229
+msgid "P"
+msgstr "М"
+
+#: kf_lib/kung_fu/boosts.py:178
 msgid "palm str."
 msgstr "ладонь"
 
+#: kf_lib/kung_fu/boosts.py:178
 msgid "palm strike efficiency"
 msgstr "эффективность ударов ладонью"
 
+#: kf_lib/actors/player/_human_player.py:161 kf_lib/happenings/encounters/_gambling.py:76
 msgid "Paper"
 msgstr "Бумага"
 
+#: kf_lib/happenings/story/_grand_melee.py:103
 msgid "Participates in the Grand Melee."
 msgstr "Участвует в Большой свалке."
 
+#: kf_lib/happenings/story/_grand_melee.py:146
 msgid "Participates in the Night Melee."
 msgstr "Участвует в Ночной свалке."
 
+#: kf_lib/actors/fighter/_fight_actions.py:31
 msgid "passes out because of bleeding!"
 msgstr "теряет сознание от кровопотери!"
 
+#: kf_lib/happenings/story/_eight_gates.py:76
 msgid "Passes the Trial of Eight Gates!"
 msgstr "Проходит Испытание Восьми Врат!"
 
+#: kf_lib/happenings/story/_stolen_treasures.py:68
 msgid "Pay the bribe?"
 msgstr "Заплатить взятку?"
 
+#: kf_lib/happenings/story/_stolen_treasures.py:89
 msgid "Pays a bribe to {boss}."
 msgstr "Платит взятку: {boss}."
 
+#: kf_lib/actors/player/_base_player.py:989
 msgid "Pays {} c."
 msgstr "Платит {} мон."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:115
 msgid "Pays {} coin for the riot damages."
 msgid_plural "Pays {} coins for the riot damages."
 msgstr[0] "Платит {} монету за ущерб от бунта."
 msgstr[1] "Платит {} монеты за ущерб от бунта."
 msgstr[2] "Платит {} монет за ущерб от бунта."
 
+#: kf_lib/game/_new_game.py:149
 msgid "Peaceful Town (low crime)"
 msgstr "Мирный город (низкая преступность)"
 
+#: kf_lib/actors/player/_base_player.py:720
 msgid "Pick fights"
 msgstr "Искать драки"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:140
 msgid "Pins the blame for the riot on the {style} school."
 msgstr "Возлагает вину за беспорядки на школу {style}."
 
+#: kf_lib/game/_new_game.py:38
 msgid "Play as a man or a woman?"
 msgstr "Играть за мужчину или женщину?"
 
+#: kf_lib/game/_new_game.py:185
 msgid "Player {n} -- human player?"
 msgstr "Игрок {n} — человек?"
 
+#: kf_lib/happenings/encounters/_performer.py:114
 msgid "Please accept this {item} as a token of my gratitude.\""
 msgstr "Пожалуйста, примите этот подарок: {item} — в знак моей благодарности.\""
 
+#: kf_lib/happenings/encounters/_crime.py:251 kf_lib/happenings/encounters/_crime.py:273
 msgid "Police Officer: \"Thank you very much for your help!\""
 msgstr "Полицейский: \"Огромное спасибо за вашу помощь!\""
 
+#: kf_lib/game/_new_game.py:161
 msgid "Poverty?"
 msgstr "Бедность?"
 
+#: kf_lib/actors/player/_base_player.py:715
 msgid "Practice"
 msgstr "Тренировка"
 
+#: kf_lib/actors/player/_base_player.py:713
 msgid "Practice at school"
 msgstr "Тренироваться в школе"
 
+#: kf_lib/actors/player/_base_player.py:1004
 msgid "Practices at his school."
 msgstr "Тренируется в своей школе."
 
+#: kf_lib/actors/player/_base_player.py:999
 msgid "Practices at home."
 msgstr "Тренируется дома."
 
+#: kf_lib/actors/player/_base_player.py:1014
 msgid "Practices at school."
 msgstr "Тренируется в школе."
 
+#: kf_lib/actors/player/_base_player.py:1247
 msgid "Practices kung-fu with the child."
 msgstr "Занимается кунг-фу с ребёнком."
 
+#: kf_lib/kung_fu/boosts.py:148
 msgid "preemptive"
 msgstr "упреждение"
 
+#: kf_lib/kung_fu/boosts.py:149
 msgid "preemptive strike chance"
 msgstr "шанс упреждающего удара"
 
+#: kf_lib/ui/_interactive.py:56
 msgid "Press Enter"
 msgstr "Нажмите Enter"
 
+#: kf_lib/game/_playing.py:236
 msgid "Press Enter to see stats."
 msgstr "Нажмите Enter, чтобы увидеть статистику."
 
+#: kf_lib/ui/_menu.py:45
 msgid "Previous page"
 msgstr "Пред. страница"
 
+#: kf_lib/actors/player/_base_player.py:1304
 msgid "Propose to {sw}?"
 msgstr "Сделать предложение ({sw})?"
 
+#: kf_lib/game/_new_game.py:157
 msgid "Prosperous (low poverty)"
 msgstr "Благополучный (низкая бедность)"
 
+#: kf_lib/kung_fu/boosts.py:179
 msgid "punch efficiency"
 msgstr "эффективность ударов кулаком"
 
+#: kf_lib/kung_fu/boosts.py:179
 msgid "punches"
 msgstr "удары кулаком"
 
+#: kf_lib/happenings/encounters/_romance.py:49
 msgid "Pursue the relationship?"
 msgstr "Развивать отношения?"
 
+#: kf_lib/actors/human_controlled_fighter.py:89 kf_lib/kung_fu/moves.py:93
 msgid "Pwr"
 msgstr "Мощь"
 
+#: kf_lib/actors/human_controlled_fighter.py:94 kf_lib/kung_fu/moves.py:84
 msgid "Qi"
 msgstr "Ци"
 
+#: kf_lib/kung_fu/boosts.py:155 kf_lib/kung_fu/boosts.py:156 kf_lib/kung_fu/boosts.py:157
 msgid "qi"
 msgstr "ци"
 
+#: kf_lib/kung_fu/boosts.py:154
 msgid "qi when attacking"
 msgstr "ци при атаке"
 
+#: kf_lib/kung_fu/boosts.py:154
 msgid "qi/atk"
 msgstr "ци/атака"
 
+#: kf_lib/actors/human_controlled_fighter.py:371
 msgid "QP"
-msgstr "QP"
+msgstr "Ци"
 
+#: kf_lib/kung_fu/boosts.py:157
 msgid "QP to start with"
-msgstr "начальное QP"
+msgstr "начальное Ци"
 
+#: kf_lib/kung_fu/boosts.py:155
 msgid "QP/turn"
-msgstr "QP/ход"
+msgstr "Ци/ход"
 
+#: kf_lib/actors/human_controlled_fighter.py:155
 msgid "QP:{}"
-msgstr "QP:{}"
+msgstr "Ци:{}"
 
+#: kf_lib/fighting/fight/_base_fight.py:245
 msgid "Quick victory"
 msgstr "Быстрая победа"
 
+#: kf_lib/game/_state_menu.py:30
 msgid "Quit"
 msgstr "Выход"
 
+#: kf_lib/game/_new_game.py:105
 msgid "Randomly generated styles?"
 msgstr "Случайно сгенерированные стили?"
 
+#: kf_lib/actors/player/_base_player.py:837
 msgid "rank in school: {}/{}"
 msgstr "ранг в школе: {}/{}"
 
+#: kf_lib/actors/player/_base_player.py:951
 msgid "Reaches level {}."
 msgstr "Достигает уровня {}."
 
+#: kf_lib/happenings/encounters/_people.py:170
 msgid "Refuses to drink."
 msgstr "Отказывается пить."
 
+#: kf_lib/happenings/encounters/_gambling.py:71
 msgid "Refuses to gamble."
 msgstr "Отказывается играть."
 
+#: kf_lib/happenings/encounters/_people.py:309 kf_lib/happenings/encounters/_people.py:435
 msgid "Refuses."
 msgstr "Отказывается."
 
+#: kf_lib/happenings/story/_school_attack.py:60
 msgid "Repels the attack on the school!"
 msgstr "Отбивает нападение на школу!"
 
+#: kf_lib/game/game_stats.py:137
 msgid "Reputation"
 msgstr "Репутация"
 
+#: kf_lib/actors/player/_base_player.py:697
 msgid "Reputation: {} ({})"
 msgstr "Репутация: {} ({})"
 
+#: kf_lib/kung_fu/boosts.py:158
 msgid "resist KO"
 msgstr "сопротивление нокауту"
 
+#: kf_lib/actors/fighter/_fight_actions.py:373
 msgid "resists being knocked out!"
 msgstr "удерживается на ногах!"
 
+#: kf_lib/actors/player/_human_player.py:34
 msgid "Rest"
 msgstr "Отдых"
 
+#: kf_lib/kung_fu/boosts.py:161
 msgid "restore stamina"
 msgstr "восстановление выносливости"
 
+#: kf_lib/game/game_stats.py:142
 msgid "Rewards,prizes"
 msgstr "Награды,призы"
 
+#: kf_lib/actors/fighter/_exp_worth.py:20
+msgid "risky"
+msgstr "рискованно"
+
+#: kf_lib/game/game_stats.py:146
 msgid "Robbed,stolen"
 msgstr "Ограбл.,кражи"
 
+#: kf_lib/happenings/encounters/_crime.py:335
 msgid "Robber: \"{}\""
 msgstr "Грабитель: \"{}\""
 
+#: kf_lib/actors/player/_human_player.py:161 kf_lib/happenings/encounters/_gambling.py:76
 msgid "Rock"
 msgstr "Камень"
 
+#: kf_lib/game/_new_game.py:150
 msgid "Rough Edges (default crime)"
 msgstr "Неспокойный район (обычная преступность)"
 
+#: kf_lib/happenings/tournament.py:80
 msgid ""
 "Round {round}\n"
 "tournament participants left: {left}"
@@ -1719,309 +2327,413 @@ msgstr[2] ""
 "Раунд {round}\n"
 "осталось {left} участников турнира"
 
+#: kf_lib/happenings/story/_foreigner.py:21
 msgid "Rumor has it that {b_name}, a renowned martial artist from {country}, has arrived in {town} to defeat local masters and prove the superiority of his own fighting style, {style}."
 msgstr "Ходят слухи, что {b_name}, прославленный мастер боевых искусств из {country}, прибыл в {town}, чтобы победить местных мастеров и доказать превосходство собственного стиля: {style}."
 
+#: kf_lib/actors/player/_human_player.py:107
 msgid "Run away ({})"
 msgstr "Убежать ({})"
 
+#: kf_lib/actors/player/_human_player.py:99
 msgid "Run! ({})"
 msgstr "Бежать! ({})"
 
+#: kf_lib/actors/human_controlled_fighter.py:233
+msgid "s"
+msgstr "В"
+
+#: kf_lib/game/game_stats.py:153
 msgid "S.herbs obt."
 msgstr "С.трав получ."
 
+#: kf_lib/game/_state_menu.py:28
 msgid "Save"
 msgstr "Сохранить"
 
+#: kf_lib/game/_state_menu.py:31
 msgid "Save and Quit"
 msgstr "Сохранить и выйти"
 
+#: kf_lib/fighting/fight/_base_fight.py:383
 msgid "Save slideshow"
 msgstr "Сохранить слайд-шоу"
 
+#: kf_lib/fighting/fight/_base_fight.py:429
 msgid "Saved successfully."
 msgstr "Сохранено успешно."
 
+#: kf_lib/actors/player/_human_player.py:161 kf_lib/happenings/encounters/_gambling.py:76
 msgid "Scissors"
 msgstr "Ножницы"
 
+#: kf_lib/happenings/encounters/_performer.py:49
 msgid "Sees a kung-fu master demonstrating his skills in the street."
 msgstr "Видит, как мастер кунг-фу показывает своё искусство на улице."
 
+#: kf_lib/happenings/encounters/_people.py:454
 msgid "Sees a street brawl."
 msgstr "Видит уличную драку."
 
+#: kf_lib/happenings/encounters/_people.py:463
 msgid "Sees a tavern brawl."
 msgstr "Видит драку в таверне."
 
+#: kf_lib/happenings/encounters/_crime.py:231
 msgid "Sees {num_al} police officers fighting {num_en} thugs."
 msgstr "Видит, как стражники ({num_al}) дерутся с головорезами ({num_en})."
 
+#: kf_lib/happenings/encounters/_crime.py:126
 msgid "Sees {} extorter in a shop."
 msgid_plural "Sees {} extorters in a shop."
 msgstr[0] "Видит в лавке {} вымогатель."
 msgstr[1] "Видит в лавке {} вымогателя."
 msgstr[2] "Видит в лавке {} вымогателей."
 
+#: kf_lib/happenings/encounters/_crime.py:406
 msgid "Sees {} man robbing someone."
 msgid_plural "Sees {} men robbing someone."
 msgstr[0] "Видит, как {} человек кого-то грабит."
 msgstr[1] "Видит, как {} человека кого-то грабят."
 msgstr[2] "Видит, как {} человек кого-то грабят."
 
+#: kf_lib/game/debug_menu.py:33
 msgid "Set Attribute"
 msgstr "Установить атрибут"
 
+#: kf_lib/game/biographies.py:123
 msgid "She married the love of her life, {name}, and they raised {} wonderful child, who carries on her kung-fu."
 msgid_plural "She married the love of her life, {name}, and they raised {} wonderful children, who carry on her kung-fu."
 msgstr[0] "Она вышла замуж за любовь всей своей жизни — {name} — и они вырастили {} чудесного ребёнка, который продолжает её кунг-фу."
 msgstr[1] "Она вышла замуж за любовь всей своей жизни — {name} — и они вырастили {} чудесных ребёнка, которые продолжают её кунг-фу."
 msgstr[2] "Она вышла замуж за любовь всей своей жизни — {name} — и они вырастили {} чудесных детей, которые продолжают её кунг-фу."
 
+#: kf_lib/game/biographies.py:144
 msgid "She married the love of her life, {name}."
 msgstr "Она вышла замуж за любовь всей своей жизни, {name}."
 
+#: kf_lib/game/biographies.py:85
 msgid "She was especially known for her outstanding {atts}."
 msgstr "Особенно она славилась выдающимися качествами: {atts}."
 
+#: kf_lib/game/biographies.py:72
 msgid "She was rather versatile, but especially known for her {atts}."
 msgstr "Она была довольно разносторонней, но особую известность ей принесли качества: {atts}."
 
+#: kf_lib/game/biographies.py:105
 msgid "She was said to possess almost inhuman {best_atts}, although, perhaps, at the cost of {worst_atts}."
 msgstr "Ей приписывали почти нечеловеческие качества: {best_atts} — хотя, возможно, ценой других: {worst_atts}."
 
+#: kf_lib/game/biographies.py:55
 msgid "She was uniquely versatile, having equally great {atts}."
 msgstr "Она была поразительно разносторонняя и одинаково сильна во всём: {atts}."
 
+#: kf_lib/happenings/encounters/_crime.py:173
 msgid "Shop owner: \"Are you hurt? I'll find a doctor...\""
 msgstr "Хозяин лавки: \"Вы ранены? Я найду врача...\""
 
+#: kf_lib/happenings/encounters/_crime.py:157
 msgid "Shop owner: \"Oh boy... You martial artists only know how to fight and break things! Look what you've done to my shop! Who's gonna pay for the breakages?.."
 msgstr "Хозяин лавки: \"О боги... Вы, мастера единоборств, только и умеете, что драться и всё ломать! Посмотрите, что вы сделали с моей лавкой! И кто теперь будет платить за разрушения?.."
 
+#: kf_lib/happenings/encounters/_crime.py:145
 msgid "Shop owner: \"Thank you, thank you young man!\""
 msgstr "Хозяин лавки: \"Спасибо, спасибо, юноша!\""
 
+#: kf_lib/actors/player/_base_player.py:745
+msgid "sick"
+msgstr "болезнь"
+
+#: kf_lib/happenings/encounters/_challenger.py:30
 msgid "simply "
 msgstr "просто "
 
+#: kf_lib/fighting/fight/_base_fight.py:382
 msgid "Slideshow ({n})"
 msgstr "Слайд-шоу ({n})"
 
+#: kf_lib/happenings/encounters/_people.py:391
 msgid "Something about {}'s astonishing victory."
 msgstr "Что-то об ошеломительной победе: {}."
 
+#: kf_lib/happenings/encounters/_people.py:380
 msgid "Something about {}'s humiliating defeat."
 msgstr "Что-то насчёт позорного поражения: {}."
 
+#: kf_lib/actors/human_controlled_fighter.py:365
 msgid "SP"
-msgstr "SP"
+msgstr "ВН"
 
+#: kf_lib/actors/human_controlled_fighter.py:154
 msgid "SP:{}"
-msgstr "SP:{}"
+msgstr "ВН:{}"
 
+#: kf_lib/game/debug_menu.py:34
 msgid "Spar"
 msgstr "Спарринг"
 
+#: kf_lib/actors/fighter/_basic_attributes.py:50
 msgid "Spd"
 msgstr "Скр"
 
+#: kf_lib/actors/human_controlled_fighter.py:41 kf_lib/game/game_stats.py:103
 msgid "Speed"
 msgstr "Скорость"
 
+#: kf_lib/kung_fu/boosts.py:159
 msgid "speed"
 msgstr "скорость"
 
+#: kf_lib/actors/player/_base_player.py:1256
 msgid "Spends the day with {sw}."
 msgstr "Проводит день вдвоём: {sw}."
 
+#: kf_lib/game/game_stats.py:143
 msgid "Spent on train."
 msgstr "Потрачено на трен."
 
+#: kf_lib/actors/player/_base_player.py:821
 msgid "spouse"
 msgstr "супруг(а)"
 
+#: kf_lib/game/game_stats.py:130
 msgid "Spouse"
 msgstr "Супруг(а)"
 
+#: kf_lib/actors/human_controlled_fighter.py:92 kf_lib/kung_fu/moves.py:83
 msgid "Sta"
 msgstr "Вын"
 
+#: kf_lib/happenings/encounters/_gambling.py:190
 msgid "Stage {}"
 msgstr "Этап {}"
 
+#: kf_lib/kung_fu/boosts.py:160 kf_lib/kung_fu/boosts.py:161
 msgid "stamina"
 msgstr "выносливость"
 
+#: kf_lib/actors/player/_human_player.py:34
 msgid "State"
 msgstr "Состояние"
 
+#: kf_lib/fighting/fight/_base_fight.py:380
 msgid "Stats"
 msgstr "Статистика"
 
+#: kf_lib/game/game_stats.py:151
 msgid "Stolen by th."
 msgstr "Украд.вором"
 
+#: kf_lib/game/debug_menu.py:31
 msgid "Story"
 msgstr "История"
 
+#: kf_lib/actors/fighter/_basic_attributes.py:48
 msgid "Str"
 msgstr "Сил"
 
+#: kf_lib/actors/human_controlled_fighter.py:39 kf_lib/game/game_stats.py:101
 msgid "Strength"
 msgstr "Сила"
 
+#: kf_lib/kung_fu/boosts.py:162
 msgid "strength"
 msgstr "сила"
 
+#: kf_lib/kung_fu/boosts.py:163
 msgid "strike time"
 msgstr "время удара"
 
+#: kf_lib/kung_fu/boosts.py:163
 msgid "strike time cost"
 msgstr "стоимость удара по времени"
 
+#: kf_lib/game/game_stats.py:110
 msgid "Strikes landed"
 msgstr "Удары в цель"
 
+#: kf_lib/game/game_stats.py:133
 msgid "Stud.tourn.won"
 msgstr "Выигр.турн.учен."
 
+#: kf_lib/game/_state_menu.py:22 kf_lib/game/game_stats.py:132
 msgid "Students"
 msgstr "Ученики"
 
+#: kf_lib/actors/player/_base_player.py:827
 msgid "students:{}"
 msgstr "ученики:{}"
 
+#: kf_lib/kung_fu/boosts.py:164
 msgid "stun"
 msgstr "оглушение"
 
+#: kf_lib/kung_fu/boosts.py:164
 msgid "stun chance"
 msgstr "шанс оглушения"
 
+#: kf_lib/fighting/fight/_helpers.py:24
 msgid "STYLE"
 msgstr "СТИЛЬ"
 
+#: kf_lib/game/game_stats.py:99
 msgid "Style"
 msgstr "Стиль"
 
+#: kf_lib/happenings/encounters/_challenger.py:87
 msgid "Suddenly, {name}'s master appears!"
 msgstr "Внезапно появляется учитель {name}!"
 
+#: kf_lib/happenings/encounters/_crime.py:263
 msgid "Suddenly, {} more thug arrives to rob both sides — the fight turns into a total free-for-all!"
 msgid_plural "Suddenly, {} more thugs arrive to rob both sides — the fight turns into a total free-for-all!"
 msgstr[0] "Внезапно появляется ещё {} головорез, чтобы обобрать обе стороны, — бой превращается в тотальную свалку!"
 msgstr[1] "Внезапно появляются ещё {} головореза, чтобы обобрать обе стороны, — бой превращается в тотальную свалку!"
 msgstr[2] "Внезапно появляются ещё {} головорезов, чтобы обобрать обе стороны, — бой превращается в тотальную свалку!"
 
+#: kf_lib/happenings/encounters/_performer.py:172
 msgid "Suddenly, {} thug appears and attacks the master. Apparently, they are after his money. Help him?"
 msgid_plural "Suddenly, {} thugs appear and attack the master. Apparently, they are after his money. Help him?"
 msgstr[0] "Внезапно появляется {} головорез и нападает на мастера. Видимо, им нужны его деньги. Помочь ему?"
 msgstr[1] "Внезапно появляются {} головореза и нападают на мастера. Видимо, им нужны его деньги. Помочь ему?"
 msgstr[2] "Внезапно появляются {} головорезов и нападают на мастера. Видимо, им нужны его деньги. Помочь ему?"
 
+#: kf_lib/actors/player/_base_player.py:821
 msgid "sweetheart"
 msgstr "любовь"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:102
 msgid "Take responsibility for the riot?"
 msgstr "Взять на себя ответственность за беспорядки?"
 
+#: kf_lib/actors/player/_base_player.py:666
 msgid "Takes part in a kung-fu tournament."
 msgstr "Участвует в турнире по кунг-фу."
 
+#: kf_lib/happenings/story/_eight_gates.py:64
 msgid "Takes part in the Trial of Eight Gates."
 msgstr "Участвует в Испытании Восьми Врат."
 
+#: kf_lib/actors/player/_base_player.py:722
 msgid "Teach students"
 msgstr "Обучать учеников"
 
+#: kf_lib/actors/player/_base_player.py:1117
 msgid "Teaches his students."
 msgstr "Обучает своих учеников."
 
+#: kf_lib/game/_state_menu.py:18
 msgid "Techniques"
 msgstr "Техники"
 
+#: kf_lib/actors/fighter/_techs.py:49
 msgid "Techniques:"
 msgstr "Техники:"
 
+#: kf_lib/game/game_stats.py:105
 msgid "Techs"
 msgstr "Техники"
 
+#: kf_lib/happenings/story/_student_rivalry.py:41
 msgid "Tension is brewing in {school}: two students keep arguing about who is {p_name}'s best. Yesterday's shouting match ended with a broken bench."
 msgstr "В школе {school} назревает напряжённость: двое учеников спорят, кто из них — лучший ученик {p_name}. Вчерашняя перепалка закончилась сломанной скамьёй."
 
+#: kf_lib/happenings/story/_student_rivalry.py:137
 msgid "That night, the two sneak out to the backyard and duel anyway..."
 msgstr "Той ночью оба тайком выбираются на задний двор и всё-таки дерутся на дуэли..."
 
+#: kf_lib/happenings/all_schools.py:134
 msgid "The All-Schools Tournament ends in a draw — no school prevails!"
 msgstr "Турнир всех школ заканчивается ничьей — ни одна школа не одержала верх!"
 
+#: kf_lib/game/_playing.py:200
 msgid "The All-Schools Tournament will be held at the end of the month."
 msgstr "Турнир всех школ состоится в конце месяца."
 
+#: kf_lib/happenings/encounters/_book_seller.py:46
 msgid "The book turns out to be complete rubbish!"
 msgstr "Книга оказывается полной чушью!"
 
+#: kf_lib/happenings/encounters/_people.py:146
 msgid "The brawl spreads to bystanders."
 msgstr "Драка перекидывается на зевак."
 
+#: kf_lib/happenings/encounters/_people.py:129
 msgid "The brawler won't let go."
 msgstr "Задира не отстаёт."
 
+#: kf_lib/game/_new_game.py:140
 msgid "The Classic Path (default progression)"
 msgstr "Классический путь (обычная прокачка)"
 
+#: kf_lib/happenings/encounters/_people.py:141
 msgid "The commotion draws in {} more people — it turns into a full-blown street brawl!"
 msgstr "Суматоха привлекает ещё {} человек — начинается настоящая уличная свалка!"
 
+#: kf_lib/happenings/encounters/_crime.py:80
 msgid "The criminal pulls out a weapon!"
 msgstr "Преступник выхватывает оружие!"
 
+#: kf_lib/happenings/encounters/_people.py:194
 msgid "The drunkard attacks {}."
 msgstr "Пьяница нападает на {}."
 
+#: kf_lib/happenings/encounters/_performer.py:162
 msgid "The Elixir turns out to be a {item}."
 msgstr "Эликсир оказывается всего лишь: {item}."
 
+#: kf_lib/fighting/fight/_base_fight.py:450
 msgid "The fight lasted {t}"
 msgstr "Бой длился {t}"
 
+#: kf_lib/happenings/encounters/_crime.py:271
 msgid "The fight turns into a free-for-all."
 msgstr "Бой превращается в общую свалку."
 
+#: kf_lib/happenings/encounters/_gambling.py:141
 msgid "The gambler attacks {}."
 msgstr "Азартный игрок нападает на {}."
 
+#: kf_lib/happenings/story/_grand_melee.py:73
 msgid "The Grand Melee begins! {boss} waves at {name}: \"Last chance! {fee} coin to enter, {purse} to the last man standing!\""
 msgid_plural "The Grand Melee begins! {boss} waves at {name}: \"Last chance! {fee} coins to enter, {purse} to the last man standing!\""
 msgstr[0] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монета, {purse} — последнему устоявшему на ногах!\""
 msgstr[1] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монеты, {purse} — последнему устоявшему на ногах!\""
 msgstr[2] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монет, {purse} — последнему устоявшему на ногах!\""
 
+#: kf_lib/happenings/story/_jade_table.py:63
 msgid "The Jade Table restaurant, private room. Silk robes, gold teeth, cold smiles. {b_name} raises a cup: \"To peace!\" Everyone drinks. Nobody believes a word. {p_name} notices a bodyguard slowly reaching under the table..."
 msgstr "Ресторан \"Нефритовый стол\", отдельный зал. Шёлковые халаты, золотые зубы, холодные улыбки. {b_name} поднимает чашу: \"За мир!\" Все пьют. Никто не верит ни единому слову. {p_name} замечает, как телохранитель медленно тянется под стол..."
 
+#: kf_lib/happenings/story/_jade_table.py:82
 msgid "The Jade Table sit-down explodes into a brawl."
 msgstr "Сходка Нефритового Стола перерастает в драку."
 
+#: kf_lib/happenings/story/_school_attack.py:56
 msgid "The last thug crawls away into the night. The school stands! The neighbors saw everything — word spreads through {town}."
 msgstr "Последний головорез уползает в ночь. Школа устояла! Соседи всё видели — весть разносится по всему городу: {town}."
 
+#: kf_lib/game/_new_game.py:139
 msgid "The Long Road (slower level progression)"
 msgstr "Долгий путь (медленная прокачка)"
 
+#: kf_lib/happenings/encounters/_performer.py:64
 msgid "The master offers a challenge."
 msgstr "Мастер бросает вызов."
 
+#: kf_lib/happenings/encounters/_performer.py:141
 msgid "The master offers to buy Golden Magnificent Elixir."
 msgstr "Мастер предлагает купить Золотой Великолепный Эликсир."
 
+#: kf_lib/happenings/all_schools.py:184
 msgid "The masters of {} gather for the All-Schools Tournament! Every school fields its students, weakest first — a knocked-out fighter is out for the whole tournament, replaced by the next one in rank. Last fighter standing wins the title for his school!"
 msgstr "Мастера города {} собираются на Турнир всех школ! Каждая школа выставляет своих учеников, начиная со слабейшего, — выбитый нокаутом боец выбывает до конца турнира, его заменяет следующий по рангу. Последний устоявший на ногах боец приносит титул своей школе!"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:97
 msgid "The morning after, {town} counts the broken stalls and broken noses. The elders demand that someone answer for the riot. All eyes turn to {name}..."
 msgstr "На следующее утро {town} подсчитывает разбитые лотки и сломанные носы. Старейшины требуют, чтобы кто-то ответил за бунт. Все взгляды устремляются на {name}..."
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:88
 msgid ""
 "The old fish market at dusk. {b_name} and his thugs are waiting.\n"
 "{b_name}: \"So the lovebird came after all! Get 'em, boys!\"\n"
@@ -2031,230 +2743,324 @@ msgstr ""
 "{b_name}: \"А вот и наш влюблённый! Хватайте его, ребята!\"\n"
 "{sw_name}: \"{p_name}!\""
 
+#: kf_lib/happenings/tournament.py:249
 msgid ""
 "The participants are:\n"
 msgstr ""
 "Участники:\n"
 
+#: kf_lib/happenings/story/_foreigner.py:113
 msgid "The people of {town} are amazed at {p_name}'s victory!"
 msgstr "Жители города {town} поражены победой {p_name}!"
 
+#: kf_lib/happenings/story/_foreigner.py:43
 msgid "The people of {town} keep talking about the foreigner, {b_name}. He has already defeated some good fighters."
 msgstr "Жители {town} продолжают обсуждать иностранца — {b_name}. Он уже победил нескольких хороших бойцов."
 
+#: kf_lib/happenings/encounters/_crime.py:498
 msgid "The pickpocket had escaped before {} noticed anything."
 msgstr "Карманник успел скрыться, прежде чем {} что-либо заметил."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:149
 msgid "The police arrested {boss}... The people of {town} are proud of {name}!"
 msgstr "Полиция арестовала {boss}... Город {town} гордится {name}!"
 
+#: kf_lib/happenings/encounters/_crime.py:382
 msgid "The robber decides to let {name} go."
 msgid_plural "The robbers decide to let {name} go."
 msgstr[0] "Грабитель решает отпустить {name}."
 msgstr[1] "Грабители решают отпустить {name}."
 msgstr[2] "Грабители решают отпустить {name}."
 
+#: kf_lib/happenings/encounters/_crime.py:359
 msgid "The robbers squabble over the loot."
 msgstr "Грабители ссорятся из-за добычи."
 
+#: kf_lib/happenings/encounters/_crime.py:354
 msgid "The robbers start arguing over how to split the loot... In the chaos, it's everyone for themselves!"
 msgstr "Грабители начинают спорить, как поделить добычу... В суматохе каждый сам за себя!"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:39
 msgid "The Saint's Day festival is in full swing. Lanterns, drums, wine... Students of rival schools are already measuring each other with long looks."
 msgstr "Праздник Дня Святого в самом разгаре. Фонарики, барабаны, вино... Ученики соперничающих школ уже оценивают друг друга долгими взглядами."
 
+#: kf_lib/happenings/story/_school_attack.py:66
 msgid "The school is ransacked and half-burned before the thugs retreat into the night. It will take time to live this down..."
 msgstr "Головорезы грабят и наполовину сжигают школу, прежде чем скрыться в ночи. Пройдёт время, прежде чем об этом позоре забудут..."
 
+#: kf_lib/happenings/story/_student_rivalry.py:142
 msgid "The students bow and disperse. Order is kept — for now."
 msgstr "Ученики кланяются и расходятся. Порядок сохранён — пока что."
 
+#: kf_lib/happenings/encounters/_crime.py:524
 msgid "The thief attacks {}."
 msgstr "Вор нападает на {}."
 
+#: kf_lib/happenings/encounters/_crime.py:517
 msgid "The thief escapes."
 msgstr "Вор убегает."
 
+#: kf_lib/happenings/tournament.py:136
 msgid "The tournament ends with no winner!"
 msgstr "Турнир заканчивается без победителя!"
 
+#: kf_lib/happenings/story/_student_rivalry.py:76
 msgid "The victory does {winner} good — he visibly improves!"
 msgstr "Победа идёт на пользу: {winner} заметно прибавляет в мастерстве!"
 
+#: kf_lib/happenings/encounters/_people.py:498
 msgid "The wise man talks about the importance of being {}."
 msgstr "Мудрец говорит о важности качества: {}."
 
+#: kf_lib/happenings/encounters/_crime.py:533
 msgid "Thief: \"Can you stop the infamous {}?\""
 msgstr "Вор: \"А сумеешь ли ты остановить пресловутого {}?\""
 
+#: kf_lib/happenings/encounters/_people.py:504
 msgid "This conversation changes {}'s life."
 msgstr "Этот разговор меняет жизнь {}."
 
+#: kf_lib/actors/human_controlled_fighter.py:303
 msgid "Through countless hours of training, {name} finally grasps the deepest secret of {style} — {tech}."
 msgstr "После бесчисленных часов тренировок {name} наконец постигает глубочайшую тайну стиля {style} — {tech}."
 
+#: kf_lib/happenings/encounters/_gambling.py:103
 msgid "Tie!"
 msgstr "Ничья!"
 
+#: kf_lib/actors/human_controlled_fighter.py:87
 msgid "Tier"
 msgstr "Ранг"
 
+#: kf_lib/actors/human_controlled_fighter.py:93 kf_lib/kung_fu/moves.py:84
 msgid "Time"
 msgstr "Время"
 
+#: kf_lib/fighting/fight/_base_fight.py:381
 msgid "Timeline"
 msgstr "Хронология"
 
+#: kf_lib/happenings/encounters/_school.py:70
 msgid "To open a martial arts school, {} needs to make the initial outlay of {} coins."
 msgstr "Чтобы открыть школу боевых искусств, {} нужно внести первоначальный взнос: {} монет."
 
+#: kf_lib/happenings/encounters/_people.py:518
 msgid "Too bad {} doesn't have enough money to treat the wise man to lunch and talk to him."
 msgstr "Жаль, что у {} недостаточно денег, чтобы угостить мудреца обедом и поговорить с ним."
 
+#: kf_lib/game/game_stats.py:124
 msgid "Tourn.won"
 msgstr "Турн.выигр."
 
+#: kf_lib/game/debug_menu.py:29
 msgid "Tournament"
 msgstr "Турнир"
 
+#: kf_lib/happenings/encounters/_items.py:126
 msgid "Trades {item} for a {reward}."
 msgstr "Обменивает {item} на {reward}."
 
+#: kf_lib/actors/player/_base_player.py:815
 msgid "traits: {}"
 msgstr "черты: {}"
 
+#: kf_lib/actors/player/_human_player.py:171
 msgid "Treat the wise man to lunch and talk to him?"
 msgstr "Угостить мудреца обедом и поговорить с ним?"
 
+#: kf_lib/kung_fu/boosts.py:165
 msgid "unblock."
 msgstr "неблок."
 
+#: kf_lib/kung_fu/boosts.py:165
 msgid "unblockable attack"
 msgstr "неблокируемая атака"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:374
 msgid "UNBLOCKABLE!"
 msgstr "НЕБЛОКИРУЕМЫЙ!"
 
+#: kf_lib/happenings/encounters/_challenger.py:31
 msgid "undoubtedly "
 msgstr "несомненно "
 
+#: kf_lib/actors/player/_human_player.py:193
 msgid "Use the {} medicine?"
 msgstr "Использовать лекарство: {}?"
 
+#: kf_lib/game/game_stats.py:150
 msgid "Used:ft,med"
 msgstr "Исп:еда,лек"
 
+#: kf_lib/actors/player/_base_player.py:1158
 msgid "Uses medicine to recover."
 msgstr "Использует лекарство, чтобы восстановиться."
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:307
 msgid "uses the environment!"
 msgstr "использует окружение!"
 
+#: kf_lib/actors/player/_base_player.py:1164
 msgid "Uses {item}."
 msgstr "Использует: {item}."
 
+#: kf_lib/actors/fighter/_exp_worth.py:23
+msgid "very low risk"
+msgstr "очень низкий риск"
+
+#: kf_lib/actors/fighter/_exp_worth.py:19
+msgid "very risky"
+msgstr "очень рискованно"
+
+#: kf_lib/actors/player/_base_player.py:728
 msgid "Visit other masters"
 msgstr "Посетить других мастеров"
 
+#: kf_lib/actors/player/_base_player.py:730
 msgid "Visit spouse"
 msgstr "Навестить супруга(у)"
 
+#: kf_lib/actors/player/_base_player.py:730
 msgid "Visit sweetheart"
 msgstr "Навестить вторую половинку"
 
+#: kf_lib/actors/player/_base_player.py:1182
 msgid "Visits other masters to promote the idea of a kung-fu federation."
 msgstr "Навещает других мастеров, продвигая идею федерации кунг-фу."
 
+#: kf_lib/actors/player/_base_player.py:1041
 msgid "vs"
 msgstr "против"
 
+#: kf_lib/kung_fu/boosts.py:118
 msgid "vs crowd"
 msgstr "против толпы"
 
+#: kf_lib/happenings/encounters/_people.py:474
 msgid "Walks away from the brawl."
 msgstr "Уходит прочь от драки."
 
+#: kf_lib/happenings/encounters/_challenger.py:32
 msgid "way "
 msgstr "куда "
 
+#: kf_lib/fighting/fight/_helpers.py:36
 msgid "WEAPON"
 msgstr "ОРУЖИЕ"
 
+#: kf_lib/kung_fu/boosts.py:180
 msgid "weapon efficiency"
 msgstr "эффективность оружия"
 
+#: kf_lib/kung_fu/boosts.py:180
 msgid "weapons"
 msgstr "оружие"
 
+#: kf_lib/fighting/fight/_base_fight.py:294
+msgid "What a humiliating defeat! ({ratio})"
+msgstr "Какое позорное поражение! ({ratio})"
+
+#: kf_lib/fighting/fight/_base_fight.py:278
+msgid "What an astonishing victory! ({ratio})"
+msgstr "Какая поразительная победа! ({ratio})"
+
+#: kf_lib/happenings/story/_saints_day_riot.py:81
 msgid "When the dust settles, {name} is the only one still standing in the square. Somebody in the crowd starts a slow clap..."
 msgstr "Когда пыль оседает, на площади на ногах остаётся только {name}. Кто-то в толпе начинает медленно хлопать..."
 
+#: kf_lib/happenings/story/_jade_table.py:98
 msgid "When the dust settles, {p_name} stands alone among the broken tables. The underworld of {town} has been decapitated in a single evening. The town breathes a sigh of relief — and looks at {p_name} with new respect."
 msgstr "Когда пыль оседает, {p_name} один стоит среди переломанных столов. За один вечер преступный мир {town} обезглавлен. Город выдыхает с облегчением — и смотрит на {p_name} с новым уважением."
 
+#: kf_lib/game/debug_menu.py:67
 msgid "Which item?"
 msgstr "Какой предмет?"
 
+#: kf_lib/happenings/encounters/_romance.py:40
 msgid "While walking around town, {p_name} bumps into {who} — quite literally. After a moment of confusion, they get to talking. What a charming person! Turns out, {name} is also a martial artist."
 msgstr "Гуляя по городу, {p_name} буквально сносит с ног прохожего ({who}). Минутное замешательство — и они уже разговаривают. Какой обаятельный человек! Оказывается, {name} тоже занимается боевыми искусствами."
 
+#: kf_lib/actors/player/_human_player.py:138
 msgid "Who wins?"
 msgstr "Кто победит?"
 
+#: kf_lib/happenings/all_schools.py:148
 msgid "Wins the All-Schools Tournament with {}."
 msgstr "Побеждает в Турнире всех школ ({})"
 
+#: kf_lib/happenings/story/_wrong_pouch.py:91
 msgid "Wins the den brawl and recovers the stolen money."
 msgstr "Побеждает в драке в притоне и возвращает украденные деньги."
 
+#: kf_lib/happenings/story/_grand_melee.py:116
 msgid "Wins the Grand Melee."
 msgstr "Побеждает в Великой Свалке."
 
+#: kf_lib/happenings/story/_grand_melee.py:163
 msgid "Wins the Night Melee."
 msgstr "Побеждает в Ночной Свалке."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:88
 msgid "Wins the Saint's Day riot."
 msgstr "Побеждает в заварушке на День Святого."
 
+#: kf_lib/actors/player/_base_player.py:1348
 msgid "Wins the tournament"
 msgstr "Выигрывает турнир"
 
+#: kf_lib/actors/player/_base_player.py:1049
 msgid "Wins {}."
 msgstr "Выигрывает {}."
 
+#: kf_lib/game/game_stats.py:109
 msgid "Wins,KOs"
 msgstr "Победы,нокауты"
 
+#: kf_lib/fighting/fight/_base_fight.py:322
+msgid "Wins."
+msgstr "Побеждает."
+
+#: kf_lib/game/_new_game.py:37 kf_lib/happenings/encounters/_crime.py:418
 msgid "Woman"
 msgstr "Женщина"
 
+#: kf_lib/actors/player/_base_player.py:915
 msgid "Woman: Good day, Master {name}!"
 msgstr "Женщина: Добрый день, мастер {name}!"
 
+#: kf_lib/happenings/story/_eight_gates.py:28
 msgid "Word of {name}'s battle royale triumph reaches a reclusive master living in the mountains near {town}. A letter arrives, written in elegant script: \"You have proven you can stand alone against many. But can you pass the Trial of Eight Gates? Come.\""
 msgstr "Весть о триумфе {name} в большой свалке доходит до затворника-мастера, живущего в горах близ {town}. Приходит письмо, написанное изящным почерком: \"Вы доказали, что можете стоять одни против многих. Но сможете ли пройти Испытание Восьми Врат? Приходите.\""
 
+#: kf_lib/ui/_menu.py:76
 msgid "yes"
 msgstr "да"
 
+#: kf_lib/actors/player/_base_player.py:1115
 msgid "You don't have any students yet."
 msgstr "У вас пока нет учеников."
 
+#: kf_lib/happenings/encounters/_crime.py:33
 msgid "You know, I need {} coins to buy medicine for my sick grandma. Wanna share?"
 msgstr "Понимаете, мне нужно {} монет на лекарство для больной бабушки. Не поделитесь?"
 
+#: kf_lib/happenings/encounters/_school.py:235
 msgid "Young man: \"Master {}! Please accept me as your student!\""
 msgstr "Юноша: \"Мастер {}! Прошу вас, примите меня в ученики!\""
 
+#: kf_lib/happenings/encounters/_school.py:217
 msgid "Young men: \"Master {}! We want to learn kung-fu. Please show us your skill!\""
 msgstr "Юноши: \"Мастер {}! Мы хотим изучать кунг-фу. Пожалуйста, покажите нам своё мастерство!\""
 
+#: kf_lib/happenings/encounters/_school.py:231
 msgid "Young men: \"Sorry, Master, we'll learn kung-fu elsewhere.\""
 msgstr "Юноши: \"Простите, мастер, мы будем учиться кунг-фу в другом месте.\""
 
+#: kf_lib/happenings/encounters/_school.py:226
 msgid "Young men: \"Thank you Master, now we see that you're very strong! Please teach us to be strong too!\""
 msgstr "Юноши: \"Спасибо, мастер, теперь мы видим, как вы сильны! Пожалуйста, научите нас, как стать такими же сильными!\""
 
+#: kf_lib/happenings/encounters/_performer.py:122
 msgid ""
 "Your kung-fu is very good; however, I can help you improve it.\"\n"
 "{master} teaches {name} some of his moves."
@@ -2262,12 +3068,19 @@ msgstr ""
 "Ваше кунг-фу очень хорошо, но я могу помочь вам его улучшить.\"\n"
 "{master} учит {name} некоторым своим приёмам."
 
+#: kf_lib/actors/player/_human_player.py:70
 msgid "Your school will teach {}."
 msgstr "В вашей школе будут учить стилю: {}."
 
+#: kf_lib/game/debug_menu.py:144
 msgid "{!r} is a method, not overwriting it!"
 msgstr "{!r} — это метод, не перезаписываю его!"
 
+#: kf_lib/actors/player/_base_player.py:648 kf_lib/actors/player/_base_player.py:658
+msgid "{amount}-coin"
+msgstr "{amount} монет"
+
+#: kf_lib/happenings/story/_foreigner.py:56
 msgid ""
 "{b_name} has challenged some martial artists in {town}, yet again. Today {p_name} watched him fight, in a few of his 'friendly matches', which didn't seem all that friendly. In the last fight, {b_name} defeated three opponents at once, injuring them badly. He is a formidable adversary... \n"
 "By watching {b_name} fight {p_name} gained some valuable insights into the foreigner's technique."
@@ -2275,9 +3088,11 @@ msgstr ""
 "{b_name} в очередной раз вызвал на бой мастеров боевых искусств в городе {town}. Сегодня {p_name} наблюдал за ним в нескольких его 'товарищеских поединках', которые не выглядели особо товарищескими. В последнем бою {b_name} победил сразу троих противников, тяжело их ранив. Он грозный соперник... \n"
 "Наблюдая за боем {b_name}, {p_name} почерпнул ценные сведения о технике иностранца."
 
+#: kf_lib/happenings/story/_jade_table.py:122
 msgid "{b_name} is now {p_name}' enemy."
 msgstr "{b_name} теперь враг {p_name}."
 
+#: kf_lib/happenings/story/_bandit_fiance.py:51
 msgid ""
 "{b_name}: \"Old man, are you trying to make a fool of me? Where is your daughter?\"\n"
 "Old Man: \"Please, sir, have mercy...\"\n"
@@ -2287,27 +3102,34 @@ msgstr ""
 "Старик: \"Прошу вас, господин, смилуйтесь...\"\n"
 "{p_name}: \"Погодите, {b_name}, давайте обсудим это как цивилизованные люди!\""
 
+#: kf_lib/happenings/encounters/_beggar.py:42
 msgid "{bname} gives {name} a free kung-fu lesson."
 msgstr "{bname} даёт {name} бесплатный урок кунг-фу."
 
+#: kf_lib/happenings/encounters/_beggar.py:80
 msgid "{bname}: \"Still got a lot to learn, huh...\""
 msgstr "{bname}: \"Тебе ещё многому учиться, да...\""
 
+#: kf_lib/happenings/encounters/_beggar.py:63
 msgid "{bname}: \"Within the four seas, all men are brothers. Let me also teach you this secret technique...\""
 msgstr "{bname}: \"В пределах четырёх морей все люди — братья. Позвольте мне также научить вас этой секретной технике...\""
 
+#: kf_lib/happenings/encounters/_beggar.py:49
 msgid "{bname}: \"Your skill is very impressive! Let's practice again some time.\""
 msgstr "{bname}: \"Ваше мастерство впечатляет! Давайте как-нибудь потренируемся ещё.\""
 
+#: kf_lib/happenings/story/_grand_melee.py:127
 msgid "{boss} finds {name} after the fight: \"The crowd LOVED you! How about the Night Melee? Armed fighters, no questions asked, and the purse is {purse} coin! But let's keep it quiet — if your master finds out...\""
 msgid_plural "{boss} finds {name} after the fight: \"The crowd LOVED you! How about the Night Melee? Armed fighters, no questions asked, and the purse is {purse} coins! But let's keep it quiet — if your master finds out...\""
 msgstr[0] "{boss} находит {name} после боя: \"Толпа от тебя в ВОСТОРГЕ! Как насчёт Ночной Свалки? Бойцы с оружием, никаких вопросов, а куш — {purse} монета! Только тихо — если твой мастер узнает...\""
 msgstr[1] "{boss} находит {name} после боя: \"Толпа от тебя в ВОСТОРГЕ! Как насчёт Ночной Свалки? Бойцы с оружием, никаких вопросов, а куш — {purse} монеты! Только тихо — если твой мастер узнает...\""
 msgstr[2] "{boss} находит {name} после боя: \"Толпа от тебя в ВОСТОРГЕ! Как насчёт Ночной Свалки? Бойцы с оружием, никаких вопросов, а куш — {purse} монет! Только тихо — если твой мастер узнает...\""
 
+#: kf_lib/happenings/story/_stolen_treasures.py:84
 msgid "{boss}: \"Good. Now get out of my sight!\""
 msgstr "{boss}: \"Хорошо. А теперь убирайся с глаз долой!\""
 
+#: kf_lib/happenings/story/_stolen_treasures.py:161
 msgid ""
 "{boss}: \"I always knew you are no match for my heavenly kung-fu!\"\n"
 "Did {name} really lose to {boss}?..\n"
@@ -2317,6 +3139,7 @@ msgstr ""
 "Неужели {name} действительно проиграл {boss}?..\n"
 "Нечего и говорить: мошенник исчезает со всеми сокровищами... Жаль, что даже {name} не смог его остановить."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:99
 msgid ""
 "{boss}: \"I should hire better bodyguards... What idiots! You are lucky I don't have time to beat you up myself!\" \n"
 "{name}: \"...\""
@@ -2324,57 +3147,75 @@ msgstr ""
 "{boss}: \"Надо бы нанять телохранителей получше... Что за идиоты! Тебе повезло, что у меня нет времени отделать тебя самому!\" \n"
 "{name}: \"...\""
 
+#: kf_lib/happenings/story/_stolen_treasures.py:105
 msgid "{boss}: \"That will teach you! Next time just pay."
 msgstr "{boss}: \"Это тебе урок! В следующий раз просто плати."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:142
 msgid "{boss}: \"This can't be... They were supposed to...\""
 msgstr "{boss}: \"Не может быть... Они же должны были...\""
 
+#: kf_lib/happenings/story/_stolen_treasures.py:78
 msgid "{boss}: You..."
 msgstr "{boss}: Ты..."
 
+#: kf_lib/actors/player/_base_player.py:1076
 msgid "{enemy} is no longer {name}' enemy."
 msgstr "{enemy} больше не враг для {name}."
 
+#: kf_lib/actors/player/_base_player.py:185
 msgid "{enemy} is now {name}' enemy."
 msgstr "Теперь {name} и {enemy} — враги."
 
+#: kf_lib/happenings/story/_foreigner.py:88
 msgid "{f_name} of {style}"
 msgstr "{f_name} из {style}"
 
+#: kf_lib/fighting/fight/_base_fight.py:416
 msgid "{group} win."
 msgstr "{group} побеждают."
 
+#: kf_lib/actors/player/_base_player.py:442
 msgid "{helper} joins the fight on {name}'s side."
 msgstr "{helper} вступает в бой на стороне {name}."
 
+#: kf_lib/actors/player/_human_player.py:181
 msgid "{item} ({descr}) ({count})"
 msgstr "{item} ({descr}) ({count})"
 
+#: kf_lib/actors/player/_base_player.py:966 kf_lib/actors/player/_base_player.py:978
 msgid "{item}: {delta}({total})"
 msgstr "{item}: {delta}({total})"
 
+#: kf_lib/happenings/encounters/_school.py:189
 msgid "{m_name}: \"Well done, {p_name}. You are now the best student of our school. You make me proud — but remember, there is always more to learn.\""
 msgstr "{m_name}: \"Молодец, {p_name}. Теперь ты лучший ученик нашей школы. Я горжусь тобой — но помни: всегда есть чему учиться.\""
 
+#: kf_lib/happenings/encounters/_school.py:178
 msgid "{m_name}: \"{p_name}, I can see that you have mastered some aspects of {style}. However, you must keep practicing as you still have a long way to go.\""
 msgstr "{m_name}: \"{p_name}, я вижу, что вы освоили некоторые аспекты {style}. Но вам нужно продолжать тренироваться — вам ещё долго идти.\""
 
+#: kf_lib/actors/player/_base_player.py:337
 msgid "{master} forgives {name} and lifts the ban."
 msgstr "{master} прощает {name} и снимает запрет."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:153
 msgid "{master} hears about this and vows to make {name} pay for the slander."
 msgstr "{master} слышит об этом и клянётся заставить {name} заплатить за клевету."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:147
 msgid "{master} is now {name}' enemy."
 msgstr "{master} теперь враг {name}."
 
+#: kf_lib/actors/player/_base_player.py:453
 msgid "{master} joins the fight on {name}'s side."
 msgstr "{master} вступает в бой на стороне {name}."
 
+#: kf_lib/actors/player/_base_player.py:282
 msgid "{master} of {school} joins the federation."
 msgstr "{master} из школы {school} вступает в федерацию."
 
+#: kf_lib/happenings/story/_grand_melee.py:178
 msgid ""
 "{master} summons {name}.\n"
 "{master}: \"So. The WHOLE town is talking about how my student rolled in the dirt for coins like a common wrestler! A hundred horse stances! NOW!\"\n"
@@ -2384,87 +3225,113 @@ msgstr ""
 "{master}: \"Так. ВЕСЬ город только и говорит о том, как мой ученик валялся в грязи за монеты, словно заезжий борец! Сто стоек всадника! НЕМЕДЛЕННО!\"\n"
 "{name} весь вечер простаивает в стойке всадника, потея и раскаиваясь."
 
+#: kf_lib/happenings/story/_grand_melee.py:195
 msgid "{master}: \"And that is not all! You are BANNED from this school until you learn some humility. Do not show your face here!\""
 msgstr "{master}: \"И это ещё не всё! Тебе ЗАПРЕЩЕНО появляться в этой школе, пока ты не научишься смирению. Не попадайся мне здесь на глаза!\""
 
+#: kf_lib/actors/player/_base_player.py:277
 msgid "{master}: \"From this day, {school} stands with you!\""
 msgstr "{master}: \"С этого дня {school} с вами!\""
 
+#: kf_lib/actors/player/_base_player.py:331
 msgid "{master}: \"Hmm... You do look sincere. Very well, I forgive you. But if I EVER hear about you fighting for money again...!\""
 msgstr "{master}: \"Хм... Вы и правда выглядите искренним. Ладно, я прощаю вас. Но если я ЕЩЁ РАЗ услышу, что вы сражаетесь за деньги...!\""
 
+#: kf_lib/actors/player/_base_player.py:343
 msgid "{master}: \"You still don't get it, do you? Come back when you have learned some humility!\""
 msgstr "{master}: \"Ты так ничего и не понял, верно? Возвращайся, когда научишься смирению!\""
 
+#: kf_lib/actors/player/_base_player.py:478
 msgid "{mates}, who were passing by, join the fight on {name}'s side."
 msgstr "{mates}, проходившие мимо, вступают в бой на стороне {name}."
 
+#: kf_lib/fighting/fight/_base_fight.py:447
 msgid "{min} min. {sec} sec."
 msgstr "{min} мин. {sec} сек."
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:324
 msgid "{n1} {verb} {n2} while attacking"
 msgstr "{n1} {verb} {n2} в атаке"
 
+#: kf_lib/actors/fighter/_fight_actions.py:319
 msgid "{n1} {verb} {n2} while blocking"
 msgstr "{n1} {verb} {n2} в блоке"
 
+#: kf_lib/actors/fighter/_fight_actions.py:144 kf_lib/actors/fighter/_fight_actions.py:159
 msgid "{n1}: {move} @ {n2}"
 msgstr "{n1}: {move} @ {n2}"
 
+#: kf_lib/actors/fighter/_fight_actions.py:50
 msgid "{n1}{fury}: {move} @ {n2}"
 msgstr "{n1}{fury}: {move} @ {n2}"
 
+#: kf_lib/fighting/fight/_base_fight.py:178
 msgid "{name} ({style})"
 msgstr "{name} ({style})"
 
+#: kf_lib/happenings/encounters/_crime.py:69
 msgid "{name} accidentally bumps into a wanted criminal, {c_name}."
 msgstr "{name} случайно сталкивается с разыскиваемым преступником: {c_name}."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:51
 msgid "{name} accidentally bumps into {boss}. Although {name} apologizes, {boss} is enraged. \"Teach this fool a good lesson!\" he orders his bodyguards. \"Unless...\" he looks at {name}, \"...you want to pay a fine of {bribe} coin for insulting an official?\""
 msgid_plural "{name} accidentally bumps into {boss}. Although {name} apologizes, {boss} is enraged. \"Teach this fool a good lesson!\" he orders his bodyguards. \"Unless...\" he looks at {name}, \"...you want to pay a fine of {bribe} coins for insulting an official?\""
 msgstr[0] "{name} случайно врезается в {boss}. Хотя {name} извиняется, {boss} приходит в ярость. \"Проучите этого болвана как следует!\" — приказывает он телохранителям. \"Хотя...\" — он смотрит на {name}, \"...не хочешь ли заплатить штраф в {bribe} монету за оскорбление чиновника?\""
 msgstr[1] "{name} случайно врезается в {boss}. Хотя {name} извиняется, {boss} приходит в ярость. \"Проучите этого болвана как следует!\" — приказывает он телохранителям. \"Хотя...\" — он смотрит на {name}, \"...не хочешь ли заплатить штраф в {bribe} монеты за оскорбление чиновника?\""
 msgstr[2] "{name} случайно врезается в {boss}. Хотя {name} извиняется, {boss} приходит в ярость. \"Проучите этого болвана как следует!\" — приказывает он телохранителям. \"Хотя...\" — он смотрит на {name}, \"...не хочешь ли заплатить штраф в {bribe} монет за оскорбление чиновника?\""
 
+#: kf_lib/happenings/encounters/_items.py:25
 msgid "{name} accidentally finds an item: {item}."
 msgstr "{name} случайно находит предмет: {item}."
 
+#: kf_lib/happenings/encounters/_items.py:46
 msgid "{name} accidentally loses his {item}."
 msgstr "{name} случайно теряет предмет: {item}."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:114
 msgid "{name} accidentally overhears a conversation between {boss} and some foreigner. {name} could swear he heard the words 'treasures', 'foreign partners' and 'good money'. Could it be that {boss} is somehow connected with national treasures being stolen? Too bad {name} lacks solid proof..."
 msgstr "{name} случайно подслушивает разговор между {boss} и каким-то иностранцем. {name} готов поклясться, что слышал слова 'сокровища', 'иностранные партнёры' и 'хорошие деньги'. Неужели {boss} как-то связан с кражей национальных сокровищ? Жаль, что у {name} нет веских доказательств..."
 
+#: kf_lib/actors/player/_base_player.py:212
 msgid "{name} already has {max_num} friends — too many to keep up with. {obj} remains a friendly acquaintance."
 msgstr "У {name} уже слишком много друзей ({max_num}) — за всеми не уследишь. {obj} остаётся добрым знакомым."
 
+#: kf_lib/actors/player/_base_player.py:599
 msgid "{name} and {sw} welcome a baby daughter!"
 msgstr "У {name} и {sw} рождается дочка!"
 
+#: kf_lib/actors/player/_base_player.py:591
 msgid "{name} and {sw} welcome a baby son!"
 msgstr "У {name} и {sw} рождается сын!"
 
+#: kf_lib/actors/player/_base_player.py:305
 msgid "{name} becomes {trait}."
 msgstr "{name} получает черту характера: {trait}."
 
+#: kf_lib/game/_playing.py:74 kf_lib/game/_state_menu.py:93
 msgid "{name} becomes {victory}!"
 msgstr "{name} получает титул: {victory}!"
 
+#: kf_lib/actors/player/_base_player.py:1270
 msgid "{name} brings a small gift. {sw} is delighted!"
 msgstr "{name} приносит небольшой подарок. {sw} в восторге!"
 
+#: kf_lib/actors/player/_base_player.py:567
 msgid "{name} brings home some money. (+{amount} coins)"
 msgstr "{name} приносит домой немного денег. (+{amount} монет)"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:46
 msgid "{name} cannot resist the free wine. It would be rude not to, right?"
 msgstr "{name} не может устоять перед бесплатным вином. Отказаться было бы невежливо, правда?"
 
+#: kf_lib/happenings/story/_wrong_pouch.py:79
 msgid "{name} climbs out of the pile of bodies, pockets {n} coin (\"EXACTLY mine, I counted\"), and also grabs {item} from the table. Finders keepers!"
 msgid_plural "{name} climbs out of the pile of bodies, pockets {n} coins (\"EXACTLY mine, I counted\"), and also grabs {item} from the table. Finders keepers!"
 msgstr[0] "{name} выбирается из груды тел, прикарманивает {n} монету (\"РОВНО моя, я считал\"), а также прибирает к рукам предмет: {item}. Кто нашёл — того и вещь!"
 msgstr[1] "{name} выбирается из груды тел, прикарманивает {n} монеты (\"РОВНО мои, я считал\"), а также прибирает к рукам предмет: {item}. Кто нашёл — того и вещь!"
 msgstr[2] "{name} выбирается из груды тел, прикарманивает {n} монет (\"РОВНО мои, я считал\"), а также прибирает к рукам предмет: {item}. Кто нашёл — того и вещь!"
 
+#: kf_lib/happenings/encounters/_performer.py:156
 msgid ""
 "{name} collects the money from all those willing to buy his Elixir and quickly walks away.\n"
 "Later, the \"Golden Magnificent Elixir\" turns out to be a simple {item}."
@@ -2472,54 +3339,71 @@ msgstr ""
 "{name} собирает деньги со всех желающих купить его Эликсир и быстро уходит.\n"
 "Позже выясняется, что \"Золотой Великолепный Эликсир\" — это просто {item}."
 
+#: kf_lib/actors/player/_base_player.py:324
 msgid "{name} comes to school to beg {master} for forgiveness."
 msgstr "{name} приходит в школу, чтобы умолять {master} о прощении."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:53
 msgid "{name} decides to stay sober. Just in case."
 msgstr "{name} решает остаться трезвым. На всякий случай."
 
+#: kf_lib/actors/player/_base_player.py:1307
 msgid "{name} decides to wait a little longer."
 msgstr "{name} решает подождать ещё немного."
 
+#: kf_lib/happenings/story/_grand_melee.py:90
 msgid "{name} doesn't have enough money to enter."
 msgstr "{name} не может заплатить взнос — денег не хватает."
 
+#: kf_lib/happenings/encounters/_book_seller.py:38 kf_lib/happenings/encounters/_items.py:85 kf_lib/happenings/encounters/_performer.py:144
 msgid "{name} doesn't have enough money."
 msgstr "У {name} недостаточно денег."
 
+#: kf_lib/actors/player/_base_player.py:646
 msgid "{name} earns a {prize} prize."
 msgstr "{name} получает приз: {prize}."
 
+#: kf_lib/actors/player/_base_player.py:656
 msgid "{name} earns a {reward} reward."
 msgstr "{name} получает награду: {reward}."
 
+#: kf_lib/happenings/story/_ninja_turtles.py:31
 msgid "{name} encounters the four teenage mutant ninja turtles travelling in time."
 msgstr "{name} встречает четырёх черепашек-ниндзя — мутантов-подростков, путешествующих во времени."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:73
 msgid "{name} feels too greedy to pay this ridiculous \"fine\": \"You are no better than a robber!\""
 msgstr "{name} слишком жадничает, чтобы платить этот нелепый \"штраф\": \"Ты ничем не лучше грабителя!\""
 
+#: kf_lib/actors/player/_base_player.py:554
 msgid "{name} gets injured during training."
 msgstr "{name} получает травму на тренировке."
 
+#: kf_lib/happenings/encounters/_crime.py:149
 msgid "{name} gets {item} from the grateful shop owner."
 msgstr "{name} получает {item} от благодарного хозяина лавки."
 
+#: kf_lib/actors/player/_base_player.py:463
 msgid "{name} grabs an improvised weapon!"
 msgstr "{name} хватает подручное оружие!"
 
+#: kf_lib/happenings/story/_strange_dreams.py:25 kf_lib/happenings/story/_strange_dreams.py:36 kf_lib/happenings/story/_strange_dreams.py:46
 msgid "{name} has a strange dream..."
 msgstr "{name} видит странный сон..."
 
+#: kf_lib/game/debug_menu.py:166
 msgid "{name} has already started!"
 msgstr "{name} уже начался!"
 
+#: kf_lib/actors/player/_base_player.py:192
 msgid "{name} has no accomplishments yet."
 msgstr "{name}: достижений пока нет."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:123
 msgid "{name} has no money for the damages and has to endure a public scolding by the elders."
 msgstr "У {name} нет денег на возмещение ущерба, и ему приходится стерпеть публичную отчитку старейшин."
 
+#: kf_lib/happenings/encounters/_ambush.py:29
 msgid ""
 "{name} is ambushed by his enemy {enemy} with {n} thug!!\n"
 "{enemy}: \"Seize this fellow and give him a good beating!\""
@@ -2536,12 +3420,15 @@ msgstr[2] ""
 "На {name} нападает его враг {enemy} — а с ним {n} головорезов!!\n"
 "{enemy}: \"Хватайте этого типа и задайте ему хорошую трёпку!\""
 
+#: kf_lib/actors/player/_base_player.py:1086
 msgid "{name} is no longer {trait}."
 msgstr "{name} больше не {trait}."
 
+#: kf_lib/game/_base_game.py:132
 msgid "{name} is now number {rank} at his school."
 msgstr "{name} теперь номер {rank} в своей школе."
 
+#: kf_lib/actors/human_controlled_fighter.py:271
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have, so today I can trust you with the inner teaching of our school. The style the outside world knows as {public_style} has a true name, whispered only to the most trusted disciples: {style}! And with it comes the secret technique — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -2549,6 +3436,7 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты, поэтому сегодня я могу доверить тебе внутреннее учение нашей школы. У стиля, который внешний мир знает как {public_style}, есть истинное имя, которое шепотом передают лишь самым доверенным ученикам: {style}! А вместе с ним — секретная техника: {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
+#: kf_lib/actors/human_controlled_fighter.py:289
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have. It is time you learned the secret technique of {style} — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -2556,24 +3444,34 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты. Пришло время узнать секретную технику стиля {style} — {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
+#: kf_lib/happenings/story/_grand_melee.py:157
 msgid "{name} is the last one standing again! Easy money!"
 msgstr "{name} снова остаётся последним на ногах! Лёгкие деньги!"
 
+#: kf_lib/happenings/story/_grand_melee.py:110
 msgid "{name} is the last one standing! The crowd goes wild!"
 msgstr "На ногах остаётся только {name}! Толпа ликует!"
 
+#: kf_lib/actors/player/_base_player.py:748
 msgid "{name} is {status} and needs {days} day to recover."
 msgid_plural "{name} is {status} and needs {days} days to recover."
 msgstr[0] "{name}: {status}. Для восстановления нужен {days} день."
 msgstr[1] "{name}: {status}. Для восстановления нужно {days} дня."
 msgstr[2] "{name}: {status}. Для восстановления нужно {days} дней."
 
+#: kf_lib/actors/fighter/_moves.py:54
+msgid "{name} learns {move} ({descr})."
+msgstr "{name} изучает приём: {move} ({descr})."
+
+#: kf_lib/actors/fighter/_techs.py:96
 msgid "{name} learns {tech} ({descr})."
 msgstr "{name} изучает: {tech} ({descr})."
 
+#: kf_lib/actors/player/_base_player.py:1147
 msgid "{name} learns {tech}."
 msgstr "{name} изучает технику: {tech}."
 
+#: kf_lib/actors/player/_base_player.py:801
 msgid ""
 "{name} lv.{lv} exp:{exp}/{next_lv}\n"
 "money:{money}\n"
@@ -2581,6 +3479,7 @@ msgstr ""
 "{name} ур.{lv} опыт:{exp}/{next_lv}\n"
 "деньги:{money}\n"
 
+#: kf_lib/happenings/encounters/_craftsman.py:22
 msgid ""
 "{name} meets a craftsman.\n"
 "Craftsman: \"Ah, a martial artist! You're in luck! I'm selling this excellent {item} ({descr}). It's only {price} coins! Don't worry, if you don't have enough money right now, you can pay the rest later. Will you buy it?\""
@@ -2588,12 +3487,14 @@ msgstr ""
 "{name} встречает ремесленника.\n"
 "Ремесленник: \"А, мастер боевых искусств! Вам повезло! Продаю отличный товар: {item} ({descr}). Всего {price} монет! Не беспокойтесь, если сейчас не хватает денег, — остаток доплатите позже. Берёте?\""
 
+#: kf_lib/happenings/encounters/_people.py:320
 msgid "{name} meets a local gossipmonger. Pay {n} coin to hear the latest rumors?"
 msgid_plural "{name} meets a local gossipmonger. Pay {n} coins to hear the latest rumors?"
 msgstr[0] "{name} встречает местного сплетника. Заплатить {n} монета, чтобы услышать свежие слухи?"
 msgstr[1] "{name} встречает местного сплетника. Заплатить {n} монеты, чтобы услышать свежие слухи?"
 msgstr[2] "{name} встречает местного сплетника. Заплатить {n} монет, чтобы услышать свежие слухи?"
 
+#: kf_lib/happenings/encounters/_items.py:72
 msgid ""
 "{name} meets a street merchant.\n"
 "Merchant: \"Please buy this {item}{descr_s}!\"\n"
@@ -2603,6 +3504,7 @@ msgstr ""
 "Торговец: \"Купите, пожалуйста, {item}{descr_s}!\"\n"
 "Купить за {price} монет?"
 
+#: kf_lib/happenings/encounters/_book_seller.py:26
 msgid ""
 "{name} meets a traveling book seller.\n"
 "Book Seller: \"Ah, a martial artist! I'm selling this wonderful kung-fu book for only {price} coins! Its secret and powerful techniques will make you a legendary fighter! What say you?\"\n"
@@ -2612,24 +3514,29 @@ msgstr ""
 "Книготорговец: \"А, мастер единоборств! Продаю чудесную книгу о кунг-фу всего за {price} монет! Её секретные и могущественные техники сделают вас легендарным бойцом! Что скажете?\"\n"
 "Купить её?"
 
+#: kf_lib/happenings/encounters/_crime.py:166
 msgid "{name} pays {cost} c."
 msgstr "{name} платит {cost} мон."
 
+#: kf_lib/happenings/story/_saints_day_riot.py:106
 msgid "{name} pays {} coin for the damages. Honor is kept, if not the money."
 msgid_plural "{name} pays {} coins for the damages. Honor is kept, if not the money."
 msgstr[0] "{name} платит {} монету за ущерб. Честь сохранена, хотя денег и нет."
 msgstr[1] "{name} платит {} монеты за ущерб. Честь сохранена, хотя денег и нет."
 msgstr[2] "{name} платит {} монет за ущерб. Честь сохранена, хотя денег и нет."
 
+#: kf_lib/actors/player/_base_player.py:1127
 msgid "{name} reaches lv.{lv}."
 msgstr "{name} достигает ур.{lv}."
 
+#: kf_lib/happenings/story/_grand_melee.py:42
 msgid "{name} sees a crowd reading the Grand Melee posters. {boss} is boasting to anyone who will listen: \"Real fighting, no masters wagging their fingers! Entry fee {fee} coin, the purse is {purse}! What do you say, friend? You look like you can throw a punch!\""
 msgid_plural "{name} sees a crowd reading the Grand Melee posters. {boss} is boasting to anyone who will listen: \"Real fighting, no masters wagging their fingers! Entry fee {fee} coins, the purse is {purse}! What do you say, friend? You look like you can throw a punch!\""
 msgstr[0] "{name} видит толпу, читающую плакаты о Большой свалке. {boss} хвастается всем, кто готов слушать: \"Настоящий бой, и никаких мастеров, грозящих пальцем! Взнос за участие: {fee} монета, призовые: {purse}! Что скажете, друг? Вы похожи на того, кто умеет махать кулаками!\""
 msgstr[1] "{name} видит толпу, читающую плакаты о Большой свалке. {boss} хвастается всем, кто готов слушать: \"Настоящий бой, и никаких мастеров, грозящих пальцем! Взнос за участие: {fee} монеты, призовые: {purse}! Что скажете, друг? Вы похожи на того, кто умеет махать кулаками!\""
 msgstr[2] "{name} видит толпу, читающую плакаты о Большой свалке. {boss} хвастается всем, кто готов слушать: \"Настоящий бой, и никаких мастеров, грозящих пальцем! Взнос за участие: {fee} монет, призовые: {purse}! Что скажете, друг? Вы похожи на того, кто умеет махать кулаками!\""
 
+#: kf_lib/happenings/story/_stolen_treasures.py:37
 msgid ""
 "{name} sees a pompous official surrounded by his bodyguards. As they walk down {town}'s main street, they push walkers-by around and otherwise behave rudely.\n"
 "Some old man: \"Fear not officials, except those who officiate over you! This is {boss}. Too bad he's so corrupt and arrogant... He's a shame to our town!\""
@@ -2637,9 +3544,11 @@ msgstr ""
 "{name} видит надменного чиновника в окружении телохранителей. Шагая по главной улице {town}, они расталкивают прохожих и всячески грубят.\n"
 "Какой-то старик: \"Не бойся чиновника, кроме того, что чиновничит над тобой! Это {boss}. Как жаль, что он такой продажный и высокомерный... Позор нашего города!\""
 
+#: kf_lib/happenings/encounters/_performer.py:46
 msgid "{name} sees a travelling kung-fu master demonstrating his skills in the street."
 msgstr "{name} видит странствующего мастера кунг-фу, демонстрирующего своё мастерство на улице."
 
+#: kf_lib/happenings/story/_stolen_treasures.py:126
 msgid ""
 "{name} sees some suspicious-looking men carrying crates. {name}'s intuition tells him something is fishy. He secretly follows them to find that they are taking the crates to a guarded warehouse. As {name} sneaks in, he sees that the crates are full of ancient treasures that have recently been stolen all over the country. \n"
 "Suddenly, {boss} appears with his two elite bodyguards. \n"
@@ -2649,99 +3558,135 @@ msgstr ""
 "Внезапно появляется {boss} с двумя отборными телохранителями. \n"
 "Так это был он всё это время!.. За всем этим стоит {boss}!.. {name} едва успевает сообразить, что к чему, как головорезы {boss} уже бросаются на него..."
 
+#: kf_lib/happenings/encounters/_crime.py:226
 msgid "{name} sees {num_al} police officers fighting {num_en} thugs!"
 msgstr "{name} видит, как {num_al} полицейских дерутся с {num_en} головорезами!"
 
+#: kf_lib/happenings/encounters/_crime.py:119
 msgid "{name} sees {} man in a shop demanding 'protection' money."
 msgid_plural "{name} sees {} men in a shop demanding 'protection' money."
 msgstr[0] "{name} видит, как {} человек вымогает в лавке деньги за 'защиту'."
 msgstr[1] "{name} видит, как {} человека вымогают в лавке деньги за 'защиту'."
 msgstr[2] "{name} видит, как {} человек вымогают в лавке деньги за 'защиту'."
 
+#: kf_lib/actors/player/_base_player.py:1251
 msgid "{name} spends a quiet day at home with {sw}."
 msgstr "{name} проводит тихий день дома с {sw}."
 
+#: kf_lib/actors/player/_base_player.py:1243
 msgid "{name} spends the day practicing kung-fu with the child."
 msgstr "{name} весь день занимается кунг-фу с ребёнком."
 
+#: kf_lib/actors/player/_base_player.py:1260
 msgid "{name} spends the day with {sw}."
 msgstr "{name} проводит день с {sw}."
 
+#: kf_lib/happenings/encounters/_people.py:457
 msgid "{name} stumbles into a tavern brawl — {n} drunkard is fighting each other!"
 msgid_plural "{name} stumbles into a tavern brawl — {n} drunkards are fighting each other!"
 msgstr[0] "{name} попадает в кабацкую драку — {n} пьяница дерётся друг с другом!"
 msgstr[1] "{name} попадает в кабацкую драку — {n} пьяницы дерутся друг с другом!"
 msgstr[2] "{name} попадает в кабацкую драку — {n} пьяниц дерутся друг с другом!"
 
+#: kf_lib/happenings/encounters/_people.py:448
 msgid "{name} stumbles upon a street brawl — {n} man is fighting each other!"
 msgid_plural "{name} stumbles upon a street brawl — {n} men are fighting each other!"
 msgstr[0] "{name} натыкается на уличную драку — {n} человек дерётся!"
 msgstr[1] "{name} натыкается на уличную драку — {n} человека дерутся друг с другом!"
 msgstr[2] "{name} натыкается на уличную драку — {n} человек дерутся друг с другом!"
 
+#: kf_lib/actors/player/_base_player.py:1185
 msgid "{name} visits {master}, the master of {school}, to discuss uniting the schools of {town}."
 msgstr "{name} навещает {master}, мастера школы {school}, чтобы обсудить объединение школ в городе {town}."
 
+#: kf_lib/happenings/story/_wrong_pouch.py:97
 msgid "{name} wakes up in the alley behind the den. The pouches are gone. So is everyone. Even the table is gone."
 msgstr "{name} приходит в себя в переулке за притоном. Кошельки исчезли. Как и все. Даже стол исчез."
 
+#: kf_lib/happenings/encounters/_crime.py:189
 msgid "{name} walks right into a street war between two gangs, {num_a} against {num_b} — and both sides think {name} is with the enemy!"
 msgstr "{name} попадает прямо в уличную войну двух банд: {num_a} против {num_b} — и обе стороны принимают {name} за врага!"
 
+#: kf_lib/happenings/tournament.py:201
 msgid "{name} wins {money} coin with his bet!"
 msgid_plural "{name} wins {money} coins with his bet!"
 msgstr[0] "{name} выигрывает {money} монету своей ставкой!"
 msgstr[1] "{name} выигрывает {money} монеты своей ставкой!"
 msgstr[2] "{name} выигрывает {money} монет своей ставкой!"
 
+#: kf_lib/fighting/fight/_base_fight.py:418
 msgid "{name} wins."
 msgstr "{name} побеждает."
 
+#: kf_lib/actors/fighter/_fight_actions.py:124
 msgid "{name} {adv}blocks! ({pwr})"
 msgstr "{name} {adv}блокирует! ({pwr})"
 
+#: kf_lib/actors/fighter/_fight_actions.py:110
 msgid "{name} {adv}dodges!"
 msgstr "{name} {adv}уклоняется!"
 
+#: kf_lib/actors/player/_base_player.py:685
 msgid "{name} {exp_msg}"
 msgstr "{name} {exp_msg}"
 
+#: kf_lib/actors/fighter/_fight_actions.py:29 kf_lib/actors/fighter/_fight_actions.py:341 kf_lib/actors/fighter/_fight_actions.py:357 kf_lib/actors/fighter/_fight_actions.py:371 kf_lib/actors/fighter/_strike_mechanics.py:109 kf_lib/actors/fighter/_strike_mechanics.py:305
 msgid "{name} {msg}"
 msgstr "{name} {msg}"
 
+#: kf_lib/actors/player/_base_player.py:195
 msgid "{name}'s accomplishments:"
 msgstr "Достижения {name}:"
 
+#: kf_lib/actors/player/_base_player.py:780
 msgid "{name}'s items:"
 msgstr "Предметы {name}:"
 
+#: kf_lib/game/_save_game.py:111
+msgid "{name}'s log"
+msgstr "Лог ({name})"
+
+#: kf_lib/actors/player/_ai_player.py:63
+msgid "{name}'s school"
+msgstr "Школа {name}"
+
+#: kf_lib/happenings/tournament.py:183
 msgid "{name}'s student {student} wins the tournament!"
 msgstr "Ученик {name} — {student} — побеждает в турнире!"
 
+#: kf_lib/actors/player/_base_player.py:849
 msgid "{name}'s students ({num}):"
 msgstr "Ученики {name} ({num}):"
 
+#: kf_lib/happenings/story/_renowned_master.py:16
 msgid "{name}, a renowned master of {style} kung-fu from a remote province, comes to {town} and stays at a local tavern."
 msgstr "{name}, прославленный мастер кунг-фу {style} из далёкой провинции, прибывает в {town} и останавливается в местной таверне."
 
+#: kf_lib/happenings/encounters/_challenger.py:39
 msgid "{name}, number {rank} in the {school} school, stops {pname} in the street and yells: \"My kung-fu is {color}better than yours!!\""
 msgstr "{name}, номер {rank} в школе {school}, останавливает {pname} на улице и кричит: \"Моё кунг-фу {color}лучше твоего!!\""
 
+#: kf_lib/actors/player/_base_player.py:1215
 msgid "{name}: \"Come back when you are stronger.\""
 msgstr "{name}: \"Возвращайтесь, когда станете сильнее.\""
 
+#: kf_lib/happenings/encounters/_romance.py:155
 msgid "{name}: \"Curses! You are stronger than I thought...\""
 msgstr "{name}: \"Проклятье! Ты сильнее, чем я думал...\""
 
+#: kf_lib/happenings/story/_bandit_fiance.py:58
 msgid "{name}: \"Do you see now? You are not a good match for this girl.\""
 msgstr "{name}: \"Теперь видишь? Ты не пара этой девушке.\""
 
+#: kf_lib/happenings/story/_eight_gates.py:47
 msgid "{name}: \"Few have passed the Trial. You have earned this.\""
 msgstr "{name}: \"Немногие прошли Испытание. Вы это заслужили.\""
 
+#: kf_lib/happenings/story/_bandit_fiance.py:61
 msgid "{name}: \"Forgive me, master! You won't see me again.\""
 msgstr "{name}: \"Простите меня, мастер! Вы меня больше не увидите.\""
 
+#: kf_lib/happenings/encounters/_items.py:117
 msgid ""
 "{name}: \"Here, I happen to have one.\"\n"
 "Weirdo: \"THANKS! I'll give you this in return.\"\n"
@@ -2751,42 +3696,55 @@ msgstr ""
 "Чудак: \"СПАСИБО! Взамен я дам вам вот это.\"\n"
 "С этими словами странный человек убегает прочь. {name} остаётся стоять, сжимая в руках {reward}, в полном недоумении."
 
+#: kf_lib/happenings/encounters/_performer.py:84
 msgid "{name}: \"Hmph! No one can beat me.\""
 msgstr "{name}: \"Хм! Никто не может меня победить.\""
 
+#: kf_lib/happenings/encounters/_challenger.py:92
 msgid "{name}: \"How dare you belittle the kung-fu I teach? You will pay for this!\""
 msgstr "{name}: \"Как ты смеешь унижать кунг-фу, которому я учу? Ты за это заплатишь!\""
 
+#: kf_lib/happenings/story/_renowned_master.py:61
 msgid "{name}: \"I am disappointed - yet again.\""
 msgstr "{name}: \"Я разочарован — в который уже раз.\""
 
+#: kf_lib/happenings/encounters/_challenger.py:79
 msgid "{name}: \"I can learn something from this fight.\""
 msgstr "{name}: \"Из этого боя можно кое-что почерпнуть.\""
 
+#: kf_lib/happenings/encounters/_performer.py:78
 msgid "{name}: \"I didn't think I could lose...\""
 msgstr "{name}: \"Не думал, что могу проиграть...\""
 
+#: kf_lib/happenings/encounters/_performer.py:107
 msgid "{name}: \"I see that you are a very brave young man."
 msgstr "{name}: \"Я вижу, что вы очень смелый молодой человек."
 
+#: kf_lib/happenings/story/_renowned_master.py:54
 msgid "{name}: \"Indeed remarkable! What excellent skill. I thank you for showing me that I still have something to learn.\""
 msgstr "{name}: \"Воистину замечательно! Какое превосходное мастерство. Благодарю вас — вы показали мне, что мне ещё есть чему учиться.\""
 
+#: kf_lib/happenings/story/_bandit_fiance.py:68
 msgid "{name}: \"It is no good, the police are coming! The people here are not hospitable at all. It is time for {name} to move on to the next town!\""
 msgstr "{name}: \"Ничего не выйдет, полиция уже идёт! Здешние люди совсем не гостеприимны. {name} пора двигаться в следующий город!\""
 
+#: kf_lib/happenings/story/_saints_day_riot.py:133
 msgid "{name}: \"It was the {style} school! Their students started it!\" The elders nod — they never liked those guys anyway."
 msgstr "{name}: \"Это была школа {style}! Их ученики всё начали!\" Старейшины кивают — они и без того недолюбливали этих ребят."
 
+#: kf_lib/actors/player/_base_player.py:487
 msgid "{name}: \"Let me help you, dear!\""
 msgstr "{name}: \"Позволь, я помогу тебе, любовь моя!\""
 
+#: kf_lib/actors/player/_base_player.py:437
 msgid "{name}: \"Let me help, Master!\""
 msgstr "{name}: \"Позвольте помочь, мастер!\""
 
+#: kf_lib/happenings/encounters/_school.py:97
 msgid "{name}: \"No, you are not ready yet. Practice some more.\""
 msgstr "{name}: \"Нет, ты ещё не готов. Тренируйся дальше.\""
 
+#: kf_lib/happenings/encounters/_performer.py:135
 msgid ""
 "{name}: \"Now, if you want to become as strong as I am and cure all your diseases, buy this Golden Magnificent Elixir. It's only {price} coins\".\n"
 "This seems a little fishy... Could be the real thing though. Buy it?"
@@ -2794,90 +3752,118 @@ msgstr ""
 "{name}: \"Итак, если вы хотите стать таким же сильным, как я, и исцелить все свои болезни, купите этот Золотой Великолепный Эликсир. Всего {price} монет\".\n"
 "Выглядит немного подозрительно... Но, может быть, это настоящее лекарство. Купить?"
 
+#: kf_lib/happenings/encounters/_performer.py:59
 msgid "{name}: \"Now, who dares to challenge me? It costs {cost} coins - if you win, you'll get twice as much!\""
 msgstr "{name}: \"Ну, кто осмелится бросить мне вызов? Ставка: {cost} монет - если выиграете, получите вдвое больше!\""
 
+#: kf_lib/happenings/encounters/_ambush.py:60
 msgid "{name}: \"Please forgive me! I swear you'll never see me again!\""
 msgstr "{name}: \"Прошу, простите меня! Клянусь, вы больше никогда меня не увидите!\""
 
+#: kf_lib/happenings/encounters/_items.py:135
 msgid "{name}: \"Sorry, I can't help you."
 msgstr "{name}: \"Простите, я не могу вам помочь."
 
+#: kf_lib/happenings/encounters/_performer.py:90
 msgid "{name}: \"What amazing kung-fu! Even though I lost, I feel that my technique has improved\""
 msgstr "{name}: \"Какое потрясающее кунг-фу! Хоть я и проиграл, чувствую, что моя техника стала лучше\""
 
+#: kf_lib/happenings/encounters/_beggar.py:84
 msgid "{name}: \"What amazing kung-fu! Even though I lost, I feel that my technique has improved.\""
 msgstr "{name}: \"Какое потрясающее кунг-фу! Несмотря на поражение, я чувствую, что моя техника стала лучше.\""
 
+#: kf_lib/happenings/encounters/_beggar.py:55
 msgid "{name}: \"What amazing kung-fu! I feel that my technique has improved\""
 msgstr "{name}: \"Какое потрясающее кунг-фу! Я чувствую, что моя техника улучшилась"
 
+#: kf_lib/happenings/encounters/_beggar.py:72
 msgid "{name}: \"What great good fortune that I could meet this fine man today. However, I spent too much energy in this friendly sparring. Now I need some good rest.\""
 msgstr "{name}: \"Какая удача — встретить сегодня такого замечательного человека. Впрочем, в этом дружеском спарринге я потратил слишком много сил. Теперь мне нужен хороший отдых.\""
 
+#: kf_lib/actors/player/_base_player.py:1229
 msgid "{name}: \"Why should the schools follow you? Prove yourself first.\""
 msgstr "{name}: \"Почему школы должны идти за вами? Сначала докажите, чего вы стоите.\""
 
+#: kf_lib/actors/player/_base_player.py:1207
 msgid "{name}: \"Words are wind. Show me your kung-fu!\""
 msgstr "{name}: \"Слова — это ветер. Покажите мне ваше кунг-фу!\""
 
+#: kf_lib/happenings/encounters/_school.py:66
 msgid "{name}: \"Yes, you ARE ready!\""
 msgstr "{name}: \"Да, ты ДЕЙСТВИТЕЛЬНО готов!\""
 
+#: kf_lib/happenings/encounters/_romance.py:167
 msgid "{name}: \"You haven't seen the last of me!\""
 msgstr "{name}: \"Вы обо мне ещё услышите!\""
 
+#: kf_lib/actors/player/_base_player.py:1222
 msgid "{name}: \"Your reputation precedes you... Let the schools unite.\""
 msgstr "{name}: \"Ваша репутация идёт впереди вас... Пусть школы объединятся.\""
 
+#: kf_lib/actors/fighter/_quotes.py:22 kf_lib/actors/fighter/_quotes.py:33 kf_lib/actors/player/_base_player.py:552
 msgid "{name}: \"{q}\""
 msgstr "{name}: \"{q}\""
 
+#: kf_lib/actors/player/_base_player.py:1318
 msgid "{name}: \"{sw}, will you marry me?\""
 msgstr "{name}: \"{sw}, ты согласишься связать со мной судьбу?\""
 
+#: kf_lib/actors/human_controlled_fighter.py:255
 msgid "{name}: *LEVEL UP*"
 msgstr "{name}: *НОВЫЙ УРОВЕНЬ*"
 
+#: kf_lib/fighting/fight/_base_fight.py:471
 msgid "{name}: strikes {landed}/{thrown} landed ({accuracy}), damage dealt {dam}, criticals {crits}, epics {epics}, moves: {moves}"
 msgstr "{name}: удары {landed}/{thrown} попали ({accuracy}), нанесено урона {dam}, критических {crits}, эпичных {epics}, приёмы: {moves}"
 
+#: kf_lib/actors/player/_human_player.py:126
 msgid "{name}: {banner}"
 msgstr "{name}: {banner}"
 
+#: kf_lib/happenings/tournament.py:150
 msgid "{name}: {bet} coin says {opponent} wins!"
 msgid_plural "{name}: {bet} coins says {opponent} wins!"
 msgstr[0] "{name}: ставлю {bet} монету — победит {opponent}!"
 msgstr[1] "{name}: ставлю {bet} монеты — победит {opponent}!"
 msgstr[2] "{name}: ставлю {bet} монет — победит {opponent}!"
 
+#: kf_lib/fighting/fight/_base_fight.py:252
 msgid "{name}: {bonus}"
 msgstr "{name}: {bonus}"
 
+#: kf_lib/actors/fighter/_fight_actions.py:263
 msgid "{name}: {move}"
 msgstr "{name}: {move}"
 
+#: kf_lib/happenings/encounters/_school.py:199
 msgid "{name}: {react}"
 msgstr "{name}: {react}"
 
+#: kf_lib/actors/player/_base_player.py:255
 msgid "{num} students join {name}'s school."
 msgstr "В школу {name} вступают новые ученики: {num}."
 
+#: kf_lib/actors/player/_base_player.py:206
 msgid "{obj} is now {name}' friend."
 msgstr "Теперь {obj} — друг {name}."
 
+#: kf_lib/happenings/encounters/_utils.py:64
 msgid "{old}: \"You'll regret messing with {new}! From now on, you'd better watch your back!\""
 msgstr "{old}: \"Ты пожалеешь, что связался с {new}! С этого дня тебе лучше оглядываться почаще!\""
 
+#: kf_lib/happenings/encounters/_people.py:291
 msgid "{opp}: \"{player}, I've learned some new moves. Let's practice!\""
 msgstr "{opp}: \"{player}, я выучил несколько новых приёмов. Давай потренируемся!\""
 
+#: kf_lib/happenings/encounters/_romance.py:69
 msgid "{p_name} and {name} agree to meet again."
 msgstr "{p_name} и {name} договариваются встретиться снова."
 
+#: kf_lib/happenings/encounters/_romance.py:96
 msgid "{p_name} and {sw_name} go on a date. They talk about kung-fu, life and dreams for the future."
 msgstr "{p_name} и {sw_name} идут на свидание. Они говорят о кунг-фу, о жизни и мечтах о будущем."
 
+#: kf_lib/happenings/story/_wrong_pouch.py:58
 msgid ""
 "{p_name} chases the pickpocket into a shady den... and freezes in the doorway. The thief has had a busy day: he also stole from TWO gang fences, and both gangs are already here. A pile of pouches lies on the table.\n"
 "{f1_name}: \"That one's mine! I know my own pouch!\"\n"
@@ -2893,15 +3879,19 @@ msgstr ""
 "{p_name}: \"Эй! Один из них — МОЙ!\"\n"
 "Все смотрят друг на друга. Кто-то хватает всю гору. Плохая идея."
 
+#: kf_lib/happenings/story/_foreigner.py:92
 msgid "{p_name} finds out that {b_name} beat {f_st}! Can no one stop this arrogant foreigner?"
 msgstr "{p_name} узнаёт, что {b_name} победил {f_st}! Неужели никто не может остановить этого наглого иностранца?"
 
+#: kf_lib/happenings/story/_jade_table.py:44
 msgid "{p_name} is approached by a polite gentleman with a scar: \"{b_name} sends his regards. The sit-down at the Jade Table needs... outside muscle. Someone neutral, to keep things honest. The pay is good.\" {p_name} has heard the rumors — every boss coming to that table plans treachery. But the pay IS good."
 msgstr "К {p_name} подходит вежливый господин со шрамом: \"{b_name} передаёт привет. Встреча за Нефритовым столом требует... сторонней силы. Кого-то нейтрального, чтобы все играли честно. Плата хорошая.\" {p_name} слышал слухи — каждый босс, идущий к тому столу, замышляет предательство. Но плата ДЕЙСТВИТЕЛЬНО хорошая."
 
+#: kf_lib/happenings/encounters/_school.py:113
 msgid "{p_name} is bullied at his school while {m_name} is away."
 msgstr "{p_name} терпит издевательства в своей школе, пока {m_name} в отъезде."
 
+#: kf_lib/happenings/story/_bandit_fiance.py:37
 msgid ""
 "{p_name} meets an old man in the tavern. The old man looks very sad. It turns out that the infamous bandit {b_name} wants to marry the old man's beautiful daughter. The old man cannot refuse as {b_name} will likely kill him and take his daughter anyway.\n"
 "{p_name}: \"Don't worry! When I was on Mount Wutai I learned the Buddhist Laws of Logic from the abbot. Now I can talk a man around even if he's hard as iron. I am sure {b_name} will listen.\"\n"
@@ -2911,6 +3901,7 @@ msgstr ""
 "{p_name}: \"Не волнуйтесь! Когда я был на горе Утайшань, настоятель обучил меня буддийским Законам Логики. Теперь я могу уговорить любого, даже твёрдого, как железо. Уверен, {b_name} выслушает.\"\n"
 "Старик: \"Какое же это счастье, что я смог встретить вас сегодня!\""
 
+#: kf_lib/happenings/encounters/_school.py:156
 msgid ""
 "{p_name} meets his master.\n"
 "{m_name}: \"{p_name}, you have been practicing hard. It is now time to test your kung-fu!\""
@@ -2918,6 +3909,7 @@ msgstr ""
 "{p_name} встречает своего мастера.\n"
 "{m_name}: \"{p_name}, ты усердно тренировался. Пришло время испытать твоё кунг-фу!\""
 
+#: kf_lib/happenings/encounters/_school.py:52
 msgid ""
 "{p_name} meets his master. \n"
 "{m_name}: \"{p_name}, you are one of my best students. You have made a lot of progress in {style}. But you might be ready to found your own kung-fu school... Let's find that out!\""
@@ -2925,6 +3917,7 @@ msgstr ""
 "{p_name} встречает своего мастера. \n"
 "{m_name}: \"{p_name}, ты один из моих лучших учеников. Ты показываешь большие успехи в стиле {style}. Но, возможно, ты уже готов основать собственную школу кунг-фу... Давай это выясним!\""
 
+#: kf_lib/happenings/story/_renowned_master.py:39
 msgid ""
 "{p_name} meets {b_name}. \n"
 "{b_name}: \"I feel that I have reached perfection in my kung-fu, {style}. I have been looking for a worthy opponent for a very, very long time. I will be honored to test your famous {p_style} kung-fu.\""
@@ -2932,9 +3925,11 @@ msgstr ""
 "{p_name} встречает {b_name}. \n"
 "{b_name}: \"Я чувствую, что достиг совершенства в своём кунг-фу — {style}. Я очень, очень долго искал достойного противника. Буду польщён испытать ваше знаменитое кунг-фу {p_style}.\""
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:54
 msgid "{p_name} never finds out what happened — the trail has gone cold."
 msgstr "{p_name} так и не узнаёт, что произошло, — след давно остыл."
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:28
 msgid ""
 "{p_name} returns home to find the door open and signs of a struggle. A note is pinned to the wall with a knife:\n"
 "\"{p_name}! Your beloved {sw_name} is our guest now. If you ever want to see {sw_name} again, come to the old fish market and bring money. And no police!\"\n"
@@ -2944,6 +3939,7 @@ msgstr ""
 "\"{p_name}! Ваша возлюбленная {sw_name} теперь наша гостья. Если вы когда-нибудь захотите снова увидеть {sw_name}, приходите на старый рыбный рынок и приносите деньги. И никакой полиции!\"\n"
 "— {b_name}"
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:68
 msgid ""
 "{p_name} spends days asking around the docks and the market. Finally, an old fisherman whispers that {b_name}'s gang has a hideout by the old fish market.\n"
 "{p_name}: \"Hold on, {sw_name}. I am coming.\""
@@ -2951,27 +3947,35 @@ msgstr ""
 "{p_name} днями расспрашивает людей на пристани и на рынке. Наконец старый рыбак шепчет, что у банды {b_name} есть укрытие возле старого рыбного рынка.\n"
 "{p_name}: \"Потерпи, {sw_name}. Я иду.\""
 
+#: kf_lib/happenings/story/_eight_gates.py:80
 msgid "{p_name} wakes up at the mountain gate, every bone aching. {b_name}: \"The Gates are still closed to you. Come back stronger... in your next life.\""
 msgstr "{p_name} просыпается у горных ворот — ноет каждая косточка. {b_name}: \"Врата по-прежнему закрыты для тебя. Возвращайся, когда станешь сильнее... в следующей жизни.\""
 
+#: kf_lib/happenings/story/_jade_table.py:113
 msgid "{p_name} wakes up under a pile of broken furniture. The sit-down is over, and so is the peace. {b_name} survives — and he remembers who was supposed to \"keep things honest\"..."
 msgstr "{p_name} просыпается под грудой сломанной мебели. Сходка окончена — и перемирие тоже. {b_name} выжил — и он помнит, кто должен был \"следить за честностью\"..."
 
+#: kf_lib/happenings/story/_student_rivalry.py:127
 msgid "{p_name} wipes the blood off his lip. The students look impressed... and a little too pleased."
 msgstr "{p_name} вытирает кровь с губы. Ученики выглядят впечатлёнными... и чересчур довольными."
 
+#: kf_lib/happenings/story/_foreigner.py:78
 msgid "{p_name}'s best student {f_name}"
 msgstr "Лучший ученик {p_name} — {f_name}"
 
+#: kf_lib/happenings/story/_student_rivalry.py:105
 msgid "{p_name}'s decision:"
 msgstr "Решение {p_name}:"
 
+#: kf_lib/happenings/story/_foreigner.py:83
 msgid "{p_name}'s friend {f_name}"
 msgstr "Друг {p_name}: {f_name}"
 
+#: kf_lib/happenings/story/_foreigner.py:107
 msgid "{p_name}: \"It's not about styles. True strength is in the fighter's heart.\""
 msgstr "{p_name}: \"Дело не в стилях. Истинная сила — в сердце бойца.\""
 
+#: kf_lib/happenings/encounters/_gambling.py:96
 msgid ""
 "{p_name}: {yc}\n"
 "Gambler: {gc}"
@@ -2979,6 +3983,7 @@ msgstr ""
 "{p_name}: {yc}\n"
 "Азартный игрок: {gc}"
 
+#: kf_lib/happenings/encounters/_people.py:420
 msgid ""
 "{player} meets {opp} (lv.{lv}).\n"
 "{opp}: \"Let's have a friendly match!\""
@@ -2986,9 +3991,11 @@ msgstr ""
 "{player} встречает {opp} (ур.{lv}).\n"
 "{opp}: \"Давай проведём дружеский поединок!\""
 
+#: kf_lib/happenings/encounters/_people.py:294
 msgid "{player}'s friend {opp} challenges him to a friendly match."
 msgstr "Друг {player} ({opp}) вызывает его на товарищеский бой."
 
+#: kf_lib/happenings/encounters/_romance.py:128
 msgid ""
 "{r_name} blocks {p_name}'s way.\n"
 "{r_name}: \"Stay away from {sw_name}! {sw_name} is mine! Let's settle this like martial artists!\""
@@ -2996,27 +4003,35 @@ msgstr ""
 "{r_name} преграждает путь {p_name}.\n"
 "{r_name}: \"Держись подальше от {sw_name}! {sw_name} принадлежит мне! Решим это как мастера единоборств!\""
 
+#: kf_lib/happenings/encounters/_romance.py:175
 msgid "{r_name}: \"Ha! And you call yourself a martial artist? Stay away from {sw_name}!\""
 msgstr "{r_name}: \"Ха! И ты называешь себя мастером боевых искусств? Держись подальше от {sw_name}!\""
 
+#: kf_lib/actors/player/_base_player.py:822
 msgid "{rel}:{name}"
 msgstr "{rel}:{name}"
 
+#: kf_lib/happenings/story/_student_rivalry.py:53
 msgid "{s1_name} and {s2_name} bow to each other — and explode into motion!"
 msgstr "{s1_name} и {s2_name} кланяются друг другу — и взрываются движением!"
 
+#: kf_lib/happenings/story/_student_rivalry.py:115
 msgid "{s1_name} and {s2_name} lie on the ground, groaning and grinning. {s1_name}: \"The master is the master!\""
 msgstr "{s1_name} и {s2_name} лежат на земле, стонут и ухмыляются. {s1_name}: \"Мастер есть мастер!\""
 
+#: kf_lib/happenings/story/_student_rivalry.py:86
 msgid "{s1_name} and {s2_name} stand before {p_name}, fists clenched. Each demands to be recognized as the master's best student. The whole school holds its breath, waiting for the master's word."
 msgstr "{s1_name} и {s2_name} стоят перед {p_name}, сжимая кулаки. Каждый требует признать его лучшим учеником мастера. Вся школа затаила дыхание, ожидая слова мастера."
 
+#: kf_lib/happenings/all_schools.py:139
 msgid "{school} wins the All-Schools Tournament and is declared the Strongest School in {town}!"
 msgstr "{school} побеждает на Турнире всех школ и объявляется Сильнейшей Школой города {town}!"
 
+#: kf_lib/fighting/fight/_base_fight.py:449
 msgid "{sec} sec."
 msgstr "{sec} сек."
 
+#: kf_lib/actors/player/_ai_player.py:223
 msgid ""
 "{style} lv.{level} exp:{exp}/{next_level}\n"
 "money:{money}\n"
@@ -3024,189 +4039,253 @@ msgstr ""
 "{style} ур.{level} опыт:{exp}/{next_level}\n"
 "деньги:{money}\n"
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:122
 msgid "{sw_name} frees herself from {b_name}'s gang."
 msgstr "{sw_name} сама освобождается от банды {b_name}."
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:102
 msgid "{sw_name}: \"I knew you would come for me!\""
 msgstr "{sw_name}: \"Я знал(а), что ты придёшь за мной!\""
 
+#: kf_lib/actors/player/_base_player.py:1294
 msgid "{sw} breaks up with {name}."
 msgstr "{sw} расстаётся с {name}."
 
+#: kf_lib/actors/player/_base_player.py:1289
 msgid "{sw} is not impressed and decides to see {name} no more."
 msgstr "{sw} не под впечатлением и решает больше не видеться с {name}."
 
+#: kf_lib/actors/player/_base_player.py:492
 msgid "{sw} joins the fight on {name}'s side."
 msgstr "{sw} вступает в бой на стороне {name}."
 
+#: kf_lib/actors/player/_base_player.py:1339
 msgid "{sw} turns down the proposal, for now."
 msgstr "{sw} отклоняет предложение — пока что."
 
+#: kf_lib/actors/player/_base_player.py:1334
 msgid "{sw}: \"I... I am not ready yet. Give me some more time.\""
 msgstr "{sw}: \"Я... я пока не могу. Дай мне ещё немного времени.\""
 
+#: kf_lib/actors/player/_base_player.py:1326
 msgid "{sw}: \"Yes! Yes, a thousand times yes!\""
 msgstr "{sw}: \"Да! Да, тысячу раз да!\""
 
+#: kf_lib/kung_fu/techniques.py:63
+msgid "{tech} (advanced)"
+msgstr "{tech} (продвинутый)"
+
+#: kf_lib/happenings/story/_saints_day_riot.py:28
 msgid "{town} is preparing for the Saint's Day festival — the one day of the year when all work stops, wine flows like water, and the town's kung-fu schools show off their students. The air smells of roast duck and trouble..."
 msgstr "{town} готовится к празднику Дня Святого — единственному дню в году, когда прекращается вся работа, вино льётся рекой, а городские школы кунг-фу выставляют напоказ своих учеников. В воздухе пахнет жареной уткой и неприятностями..."
 
+#: kf_lib/happenings/story/_student_rivalry.py:69
 msgid "{winner} defeats {loser} in a students' duel."
 msgstr "{winner} побеждает в ученической дуэли; проигравший — {loser}."
 
+#: kf_lib/happenings/story/_student_rivalry.py:62
 msgid "{winner} wins the duel. {loser} bows, gritting his teeth."
 msgstr "{winner} побеждает в поединке. {loser} кланяется, стиснув зубы."
 
+#: kf_lib/kung_fu/techniques.py:103
+msgid "{wp_type} weapons"
+msgstr "оружие ({wp_type})"
+
+#: kf_lib/actors/player/_human_player.py:188
 msgid "{} - use an item?"
 msgstr "{} - использовать предмет?"
 
+#: kf_lib/happenings/encounters/_people.py:355
 msgid "{} accidentally overhears a conversation of two young kung-fu practitioners."
 msgstr "{} случайно подслушивает разговор двух молодых бойцов кунг-фу."
 
+#: kf_lib/happenings/encounters/_people.py:492
 msgid "{} and the wise man have a long conversation in a nearby tavern. The wise man talks about the importance of being {}."
 msgstr "{} и мудрец долго беседуют в ближайшем кабаке. Мудрец рассуждает о том, как важно быть: {}."
 
+#: kf_lib/happenings/encounters/_crime.py:495
 msgid "{} c. is stolen by a thief."
 msgstr "Вор крадёт {} монет."
 
+#: kf_lib/happenings/encounters/_gambling.py:54 kf_lib/happenings/encounters/_people.py:165
 msgid "{} can't resist the temptation."
 msgstr "{} не может устоять перед искушением."
 
+#: kf_lib/happenings/encounters/_gambling.py:123
 msgid "{} decides to stop gambling."
 msgstr "{} решает завязать с азартными играми."
 
+#: kf_lib/happenings/encounters/_gambling.py:175
 msgid "{} doesn't have enough money."
 msgstr "Недостаточно денег у {}."
 
+#: kf_lib/happenings/encounters/_crime.py:307
 msgid "{} encounters a robber."
 msgstr "{} встречает грабителя."
 
+#: kf_lib/happenings/encounters/_crime.py:320
 msgid "{} encounters {} robber."
 msgid_plural "{} encounters {} robbers."
 msgstr[0] "{} встречает {} разбойника."
 msgstr[1] "{} встречает {} разбойника."
 msgstr[2] "{} встречает {} разбойников."
 
+#: kf_lib/happenings/encounters/_utils.py:13
 msgid "{} fails to escape and gets a beating."
 msgstr "{} не удаётся сбежать, и его избивают."
 
+#: kf_lib/happenings/encounters/_utils.py:21
 msgid "{} feels too greedy!"
 msgstr "{} чувствует себя слишком жадным!"
 
+#: kf_lib/happenings/encounters/_utils.py:32
 msgid "{} feels too scared to fight!"
 msgstr "{} слишком напуган, чтобы драться!"
 
+#: kf_lib/happenings/encounters/_crime.py:520
 msgid "{} grabs the thief by the arm, but the thief fights back."
 msgstr "{} хватает вора за руку, но вор оказывает сопротивление."
 
+#: kf_lib/happenings/encounters/_people.py:244
 msgid "{} is ambushed by a strange fat girl."
 msgstr "{} попадает в засаду странной толстой девицы."
 
+#: kf_lib/happenings/all_schools.py:121
 msgid "{} is out of students and leaves the tournament!"
 msgstr "В школе {} не осталось учеников — школа выбывает из турнира!"
 
+#: kf_lib/happenings/encounters/_crime.py:471
 msgid "{} is stolen by a thief."
 msgstr "Вор крадёт: {}."
 
+#: kf_lib/happenings/encounters/_crime.py:207 kf_lib/happenings/encounters/_people.py:470
 msgid "{} is the last one standing!"
 msgstr "{} последним остаётся на ногах!"
 
+#: kf_lib/actors/player/_base_player.py:395
 msgid "{} joins the fight on {}'s side."
 msgid_plural "{} join the fight on {}'s side."
 msgstr[0] "{} вступает в бой на стороне {}."
 msgstr[1] "{} вступают в бой на стороне {}."
 msgstr[2] "{} вступают в бой на стороне {}."
 
+#: kf_lib/actors/player/_base_player.py:541
 msgid "{} joins {}'s training session."
 msgid_plural "{} join {}'s training session."
 msgstr[0] "{} присоединяется к тренировке {}."
 msgstr[1] "{} присоединяются к тренировке {}."
 msgstr[2] "{} присоединяются к тренировке {}."
 
+#: kf_lib/actors/player/_base_player.py:1134
 msgid "{} made great progress!"
 msgstr "{} добился больших успехов!"
 
+#: kf_lib/happenings/encounters/_utils.py:40
 msgid "{} manages to get away."
 msgstr "{} удаётся ускользнуть."
 
+#: kf_lib/happenings/encounters/_beggar.py:22
 msgid "{} meets a beggar."
 msgstr "{} встречает нищего."
 
+#: kf_lib/happenings/encounters/_people.py:159
 msgid "{} meets a drunkard. \"Hey, pal, come drink with me!\" he slurs."
 msgstr "{} встречает пьяницу. \"Эй, приятель, пойдём выпьем!\" — бормочет он."
 
+#: kf_lib/happenings/encounters/_gambling.py:162
 msgid "{} meets a shady character who offers to participate in an underground prize fighting contest. \"It's simple. You pay {} coin to enter. There are five stages in the contest. The more opponents you beat, the more money you win. How does that sound?\""
 msgid_plural "{} meets a shady character who offers to participate in an underground prize fighting contest. \"It's simple. You pay {} coins to enter. There are five stages in the contest. The more opponents you beat, the more money you win. How does that sound?\""
 msgstr[0] "{} встречает подозрительного типа, который предлагает поучаствовать в подпольном бойцовском турнире. \"Всё просто. Вы платите {} монету за вход. В турнире пять этапов. Чем больше противников победите, тем больше денег выиграете. Как вам такое предложение?\""
 msgstr[1] "{} встречает подозрительного типа, который предлагает поучаствовать в подпольном бойцовском турнире. \"Всё просто. Вы платите {} монеты за вход. В турнире пять этапов. Чем больше противников победите, тем больше денег выиграете. Как вам такое предложение?\""
 msgstr[2] "{} встречает подозрительного типа, который предлагает поучаствовать в подпольном бойцовском турнире. \"Всё просто. Вы платите {} монет за вход. В турнире пять этапов. Чем больше противников победите, тем больше денег выиграете. Как вам такое предложение?\""
 
+#: kf_lib/happenings/encounters/_people.py:484
 msgid "{} meets a wise man."
 msgstr "{} встречает мудреца."
 
+#: kf_lib/happenings/encounters/_romance.py:52
 msgid "{} politely says goodbye and walks away."
 msgstr "{} вежливо прощается и уходит."
 
+#: kf_lib/happenings/encounters/_people.py:169
 msgid "{} refuses to drink."
 msgstr "{} отказывается пить."
 
+#: kf_lib/happenings/encounters/_gambling.py:70
 msgid "{} refuses to gamble."
 msgstr "{} отказывается от азартной игры."
 
+#: kf_lib/happenings/tournament.py:176
 msgid "{} represents the school at the tournament."
 msgstr "{} представляет школу на турнире."
 
+#: kf_lib/happenings/encounters/_people.py:263
 msgid "{} runs away in fear."
 msgstr "{} в страхе убегает."
 
+#: kf_lib/happenings/events.py:175
 msgid "{} school wins!"
 msgstr "Школа {} побеждает!"
 
+#: kf_lib/happenings/encounters/_crime.py:399
 msgid "{} sees {} man robbing someone."
 msgid_plural "{} sees {} men robbing someone."
 msgstr[0] "{} видит, как {} человек кого-то грабит."
 msgstr[1] "{} видит, как {} человека кого-то грабят."
 msgstr[2] "{} видит, как {} человек кого-то грабят."
 
+#: kf_lib/happenings/encounters/_crime.py:95
 msgid "{} takes the criminal to the police."
 msgstr "{} отводит преступника в полицию."
 
+#: kf_lib/happenings/encounters/_performer.py:180
 msgid "{} thug attacks the master."
 msgid_plural "{} thugs attack the master."
 msgstr[0] "{} головорез нападает на мастера."
 msgstr[1] "{} головореза нападают на мастера."
 msgstr[2] "{} головорезов нападают на мастера."
 
+#: kf_lib/happenings/encounters/_crime.py:512
 msgid "{} tries to stop him, but the pickpocket quickly disappears in the crowd."
 msgstr "{} пытается остановить его, но карманник быстро исчезает в толпе."
 
+#: kf_lib/happenings/tournament.py:138
 msgid "{} wins the tournament!"
 msgstr "{} побеждает в турнире!"
 
+#: kf_lib/happenings/encounters/_gambling.py:112
 msgid "{} wins!"
 msgstr "{} побеждает!"
 
+#: kf_lib/happenings/all_schools.py:162
 msgid "{}'s school wins the All-Schools Tournament!"
 msgstr "Школа {} побеждает в Турнире всех школ!"
 
+#: kf_lib/actors/player/_human_player.py:21
 msgid "{}:"
 msgstr "{}:"
 
+#: kf_lib/happenings/encounters/_utils.py:51
 msgid "{}: \"A fist fight carries no weight. Let's duel with blades.\""
 msgstr "{}: \"Кулачный бой ничего не значит. Будем драться на клинках.\""
 
+#: kf_lib/happenings/encounters/_crime.py:555
 msgid "{}: \"Can't stop me, can you? Ha-ha-ha!\""
 msgstr "{}: \"Не остановить меня, а? Ха-ха-ха!\""
 
+#: kf_lib/happenings/encounters/_people.py:120
 msgid "{}: \"I shouldn't have been provoked so easily...\""
 msgstr "{}: \"Мне не следовало так легко поддаваться на провокации...\""
 
+#: kf_lib/happenings/encounters/_crime.py:545
 msgid "{}: \"Now let's go to the police...\""
 msgstr "{}: \"А теперь пойдём в полицию...\""
 
+#: kf_lib/happenings/encounters/_crime.py:419
 msgid "{}: \"Thank you very much!!!\""
 msgstr "{}: \"Большое спасибо!!!\""
 
+#: kf_lib/happenings/encounters/_challenger.py:70
 msgid ""
 "{}: \"That was a good fight!\n"
 "Let's be friends!\""
@@ -3214,35 +4293,46 @@ msgstr ""
 "{}: \"Это был хороший бой!\n"
 "Давайте будем друзьями!\""
 
+#: kf_lib/happenings/encounters/_people.py:303 kf_lib/happenings/encounters/_people.py:429
 msgid "{}: \"That was a good match! Let's do it again some time.\""
 msgstr "{}: \"Отличный был поединок! Давай как-нибудь повторим.\""
 
+#: kf_lib/happenings/encounters/_people.py:223
 msgid "{}: \"What amazing kung-fu! Even though I lost, I feel that my technique has improved\""
 msgstr "{}: \"Какое потрясающее кунг-фу! Несмотря на поражение, я чувствую, что моя техника стала лучше\""
 
+#: kf_lib/happenings/encounters/_people.py:206
 msgid "{}: \"What amazing kung-fu! I feel that my technique has improved\""
 msgstr "{}: \"Какое потрясающее кунг-фу! Я чувствую, что моя техника улучшилась"
 
+#: kf_lib/actors/player/_base_player.py:451
 msgid "{}: \"What's going on here?\""
 msgstr "{}: \"Что здесь происходит?\""
 
+#: kf_lib/happenings/encounters/_people.py:215
 msgid "{}: \"When I'm one-tenth drunk I can use only one-tenth of my skill, but when I'm ten-tenths drunk I'm at the top of my form.\""
 msgstr "{}: \"Когда я пьян на одну десятую, я могу использовать лишь одну десятую своего мастерства, но когда я пьян на десять десятых, я на пике формы.\""
 
+#: kf_lib/happenings/encounters/_people.py:198
 msgid "{}: \"Whoa, you are good! I was just as good and just as arrogant in my day...                 I'm sure we'll meet again.\""
 msgstr "{}: \"Ого, вы хороши! В своё время я был так же хорош и так же самонадеян...                 Уверен, мы ещё встретимся.\""
 
+#: kf_lib/happenings/all_schools.py:199
 msgid "{}: auto-fight all your bouts in this tournament?"
 msgstr "{}: провести все ваши бои на этом турнире в режиме автобоя?"
 
+#: kf_lib/actors/player/_human_player.py:13
 msgid "{}: Bet on the tournament?"
 msgstr "{}: Сделать ставку на турнир?"
 
+#: kf_lib/actors/player/_human_player.py:174
 msgid "{}: Participate?"
 msgstr "{}: Участвовать?"
 
+#: kf_lib/actors/player/_base_player.py:370
 msgid "{}: {}"
 msgstr "{}: {}"
 
+#: kf_lib/actors/fighter/_strike_mechanics.py:317
 msgid "~*~*~EPIC!!!~*~*~"
 msgstr "~*~*~ЭПИЧНО!!!~*~*~"

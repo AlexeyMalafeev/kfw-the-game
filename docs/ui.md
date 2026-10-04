@@ -60,8 +60,9 @@ self.show(style('CRITICAL!', 'bold red'))
   text, so they are unaffected. When the language is Russian (see
   `docs/i18n.md`) a second pattern set, `_AUTO_COLOR_RES_RU`, is applied
   additionally — matching the translated shapes (ур.5, `N монет`, `N опыта`,
-  Раунд/День N); the Russian message templates must keep producing exactly
-  these shapes or the auto-coloring silently stops applying.
+  Раунд/День N, the `ОЗ:`/`ВН:`/`Ци:` stat tokens and healing `+N ОЗ`); the
+  Russian message templates must keep producing exactly these shapes or the
+  auto-coloring silently stops applying.
 
 ### When colors are on
 

@@ -6,6 +6,7 @@ from typing import Dict, List, Literal, Text, Union
 
 from kf_lib import i18n
 from kf_lib.fighting.distances import DISTANCE_FEATURES
+from kf_lib.i18n import _
 from kf_lib.utils import roman
 from .ascii_art import get_ascii
 from kf_lib.utils import MOVES_FOLDER
@@ -63,6 +64,36 @@ class Move:
         """Name translated for display; self.name stays the English identifier
         (save files, ALL_MOVES_DICT and ASCII-art lookup use it)."""
         return i18n.tr_name(self.name)
+
+    @property
+    def display_functions(self):
+        """Function names translated for display; self.functions stays the
+        raw Fighter method names."""
+        return [i18n.tr_name(fn) for fn in self.functions]
+
+    @property
+    def display_descr(self):
+        """Translated counterpart of self.descr (which is built at import and
+        stays English). English output is byte-identical to self.descr."""
+        if i18n.get_language() == 'en':
+            return self.descr
+        fun = ', '.join(self.display_functions)
+        t = roman(self.tier)
+        cost = (
+            f"{_('Cost')}:{_('Sta')}{self.stam_cost}"
+            f"/{_('Time')}{self.time_cost}/{_('Qi')}{self.qi_cost}"
+        )
+        if self.power:
+            d = str(self.distance) if self.distance else ''
+            if self.dist_change > 0:
+                d += f'(+{self.dist_change})'
+            elif self.dist_change < 0:
+                d += f'({self.dist_change})'
+            return (
+                f"{t} {_('Dist')}:{d} {_('Pwr')}:{self.power} "
+                f"{_('Acc')}:{self.accuracy} {_('Cpl')}:{self.complexity} {cost} {fun}"
+            )
+        return f"{t} {_('Dist')}:{self.dist_change} {_('Cpl')}:{self.complexity} {cost} {fun}"
 
     def set_ascii(self):
         self.ascii_l, self.ascii_r = get_ascii(self.name)

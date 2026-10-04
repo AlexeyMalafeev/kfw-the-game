@@ -1,7 +1,7 @@
 import random
 
 from kf_lib.fighting import fight
-from kf_lib.i18n import _, tr_style_name
+from kf_lib.i18n import _, tr_name, tr_style_name
 from kf_lib.utils import rnd
 from .all_schools import AllSchoolsTournament
 from .tournament import Tournament
@@ -83,7 +83,7 @@ def kungfu_down(g):
     g.kung_fu = max(g.kung_fu - KUNGFU_CHANGE, MIN_KUNGFU)
     g.msg(
         _('Old man: The people of {} are losing their interest in kung-fu...').format(
-            g.town_name
+            tr_name(g.town_name)
         )
     )
 
@@ -95,7 +95,7 @@ def kungfu_up(g):
         _(
             'Old man: It seems everybody in {} wants '
             'to practice kung-fu nowadays...'
-        ).format(g.town_name)
+        ).format(tr_name(g.town_name))
     )
 
 
@@ -131,7 +131,7 @@ def poverty_down(g):
         _(
             'Old woman: There are not as many poor and homeless people '
             'in {} as before...'
-        ).format(g.town_name)
+        ).format(tr_name(g.town_name))
     )
 
 
@@ -140,7 +140,7 @@ def poverty_up(g):
     g.poverty = min(g.poverty + POVERTY_CHANGE, MAX_POVERTY)
     g.msg(
         _('Old woman: Many people in {} now don\'t have enough to eat...').format(
-            g.town_name
+            tr_name(g.town_name)
         )
     )
 

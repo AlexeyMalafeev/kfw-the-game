@@ -28,7 +28,9 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
     size3 = max(
         [len(s) for s in [head_style + ' '] + [f.get_displayed_style_name() + ' ' for f in fs]]
     )
-    att_names = ' '.join(first_fighter.att_names_short) if not basic_info_only else ''
+    att_names = (
+        ' '.join(_(a) for a in first_fighter.att_names_short) if not basic_info_only else ''
+    )
     s += head_name.ljust(size1) + head_lev.ljust(size2) + head_style.ljust(size3) + att_names
     if any([f.weapon for f in fs]) and not basic_info_only:
         s += ' ' + _('WEAPON')
@@ -36,7 +38,7 @@ def get_prefight_info(side_a, side_b=None, hide_enemy_stats=False, basic_info_on
         if id(f) in group_labels:
             s += f'\n{group_labels[id(f)]}'
         if side_b and f == side_b[0]:
-            s += '\n-vs-'
+            s += '\n' + _('-vs-')
         s += '\n{:<{}}{:<{}}{:<{}}'.format(
             disp_name,
             size1,

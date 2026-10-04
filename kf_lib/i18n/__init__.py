@@ -99,14 +99,20 @@ def tr_style_name(name):
 
 
 def tr_fighter_name(name):
-    """Translate a fighter name for display: the descriptive prefix
-    ('Beggar Wang' -> 'Нищий Wang') or a known group name ('Thug 1') is
-    translated, proper-name parts stay as-is."""
+    """Translate a fighter name for display: a known group name ('Thug 1'),
+    a numbered group-name base ('Thug 2') or a descriptive prefix ('Beggar
+    Wang') goes through the names catalog; in Russian the proper-name parts
+    are additionally cyrillized (Palladius, see ._ru_names), e.g. 'Beggar
+    Wang' -> 'Нищий Ван', 'Qiu Qiufan' -> 'Цю Цюфань'."""
     if _language == DEFAULT_LANGUAGE:
         return name
     translated = tr_name(name)
     if translated != name:
         return translated
+    if _language == 'ru':
+        from ._ru_names import translit_fighter_name
+
+        return translit_fighter_name(name, tr_name)
     first, sep, rest = name.partition(' ')
     if sep:
         tr_first = tr_name(first)

@@ -225,7 +225,7 @@ class Tournament(object):
                 'The participation fee is {fee}.'
             ).format(
                 type_str=tourn_type_str,
-                town=self.g.town_name,
+                town=tr_name(self.g.town_name),
                 format_str=format_str,
                 fee=self.fee,
             )

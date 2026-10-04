@@ -3,7 +3,7 @@ import random
 from kf_lib.actors.names import GROUP_NAMES
 from kf_lib.constants import experience
 from kf_lib.i18n import _, tr_fighter_name, tr_name
-from kf_lib.ui import cls, menu, pak, style, yellow
+from kf_lib.ui import cls, menu, pak, render, style, yellow
 
 
 ASTON_VICTORY_MIN_RATIO = 1.2
@@ -215,7 +215,7 @@ class BaseFight(object):
                 exp = self.handle_exp_bonuses(p, winners_gain)
             else:
                 exp = losers_gain
-                p.log('Loses.')
+                p.log(_('Loses.'))
             p.gain_exp(round(exp))
         self.handle_player_stats()
         self.main_player.pak()
@@ -275,7 +275,7 @@ class BaseFight(object):
                             ratio,
                         )
                         p.write_stat('aston_victory', tup)
-                        p.log(f'What an astonishing victory! ({tup[-1]})')
+                        p.log(_('What an astonishing victory! ({ratio})').format(ratio=tup[-1]))
                 elif p in self.losers and len(self.losers) == 1:
                     ratio = round(self.aggregate_exp_yield(self.winners) / p.exp_yield, 2)
                     curr_stat = p.get_stat(
@@ -291,7 +291,7 @@ class BaseFight(object):
                             ratio,
                         )
                         p.write_stat('humil_defeat', tup)
-                        p.log(f'What a humiliating defeat! ({tup[-1]})')
+                        p.log(_('What a humiliating defeat! ({ratio})').format(ratio=tup[-1]))
 
     def handle_injuries(self):
         for f in self.all_fighters:
@@ -319,7 +319,7 @@ class BaseFight(object):
         for p in self.players:
             p.change_stat('num_fights', 1)
             if p in self.winners:
-                p.log('Wins.')
+                p.log(_('Wins.'))
                 p.change_stat('fights_won', 1)
             if p.exp_bonuses:
                 p.change_stat('exp_bonuses', p.exp_bonuses)
@@ -485,7 +485,7 @@ class BaseFight(object):
         print('\n'.join(lines) if lines else _('No stats recorded.'))
 
     def show_timeline(self):
-        print('\n'.join(self.timeline))
+        print(render('\n'.join(self.timeline)))
 
     def slideshow(self):
         total = len(self.cartoon)

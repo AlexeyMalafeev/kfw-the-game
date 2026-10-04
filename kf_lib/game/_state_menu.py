@@ -53,7 +53,7 @@ class StateMenu(BaseGame):
                 pak()
             elif choice == 'Moves':
                 cls()
-                p.show(p.get_moves_string())
+                p.show(p.get_moves_string(header=_('Moves:')))
                 pak()
             elif choice == 'Techniques':
                 cls()

@@ -7476,6 +7476,7 @@ msgstr "Синъи II (продвинутый)"
 msgid "Advanced Xing Yi III"
 msgstr "Синъи III (продвинутый)"
 
+#: kf_lib/fighting/fight/_base_fight.py:236
 msgid "Against All Odds"
 msgstr "Вопреки всему"
 
@@ -7488,6 +7489,7 @@ msgstr "Воздушный"
 msgid "Air Attacks"
 msgstr "Воздушные атаки"
 
+#: kf_lib/happenings/all_schools.py:155
 msgid "All-Schools Champion"
 msgstr "Чемпион всех школ"
 
@@ -7578,6 +7580,7 @@ msgstr "Тяжёлый удар дубинкой"
 msgid "Baton Strike"
 msgstr "Удар дубинкой"
 
+#: kf_lib/happenings/tournament.py:142
 msgid "Battle Royale Champion"
 msgstr "Чемпион королевской битвы"
 
@@ -7587,12 +7590,15 @@ msgstr "Медведь"
 msgid "Bear's Strength"
 msgstr "Сила медведя"
 
+#: kf_lib/happenings/story/_bandit_fiance.py:33
 msgid "Beat Bandit Fiance"
 msgstr "Побит жених-бандит"
 
+#: kf_lib/happenings/story/_strange_dreams.py:19
 msgid "Beat Self"
 msgstr "Победа над собой"
 
+#: kf_lib/happenings/encounters/_crime.py:550
 msgid "Beat Tough Thief"
 msgstr "Побит крутой вор"
 
@@ -7611,6 +7617,7 @@ msgstr "Кулак нищего II"
 msgid "Beggar's Fist III"
 msgstr "Кулак нищего III"
 
+#: kf_lib/happenings/encounters/_beggar.py:53
 msgid "Beggar's Friend"
 msgstr "Друг нищего"
 
@@ -7653,11 +7660,23 @@ msgstr "Удар дубиной"
 msgid "Boar"
 msgstr "Кабан"
 
+msgid "Bodyguard"
+msgstr "Телохранитель"
+
+msgid "Boss"
+msgstr "Хозяин"
+
 msgid "brave"
 msgstr "храбрый"
 
+msgid "Brawler"
+msgstr "Задира"
+
 msgid "Brawler's Resilience"
 msgstr "Стойкость задиры"
+
+msgid "Brazil"
+msgstr "Бразилия"
 
 msgid "broad-minded"
 msgstr "широких взглядов"
@@ -7712,6 +7731,12 @@ msgstr "Атакующая дистанция кота"
 
 msgid "Catch Breath"
 msgstr "Перевести дыхание"
+
+msgid "cause_bleeding"
+msgstr "кровотечение"
+
+msgid "cause_off_balance"
+msgstr "дисбаланс"
 
 msgid "Cautious"
 msgstr "Осторожный"
@@ -8169,8 +8194,14 @@ msgstr "Хлыст тканью"
 msgid "Cobra"
 msgstr "Кобра"
 
+msgid "constipation medicine"
+msgstr "слабительное"
+
 msgid "Cornered Rat"
 msgstr "Загнанная в угол крыса"
+
+msgid "cough medicine"
+msgstr "микстура от кашля"
 
 msgid "Countless Palms"
 msgstr "Бесчисленные ладони"
@@ -8190,17 +8221,26 @@ msgstr "трусливый"
 msgid "Crab"
 msgstr "Краб"
 
+msgid "Craftsman"
+msgstr "Ремесленник"
+
 msgid "Crane"
 msgstr "Журавль"
 
 msgid "Crane Flapping Wings"
 msgstr "Журавль машет крыльями"
 
+msgid "Criminal"
+msgstr "Преступник"
+
 msgid "Crippling Strikes"
 msgstr "Калечащие удары"
 
 msgid "Cruel"
 msgstr "Жестокий"
+
+msgid "culinary herb mix"
+msgstr "смесь кулинарных трав"
 
 msgid "Dance-Like Form"
 msgstr "Танцевальная форма"
@@ -8292,6 +8332,36 @@ msgstr "дисциплинированный"
 msgid "Do Nothing"
 msgstr "Ничего не делать"
 
+msgid "do_agility_based_dam"
+msgstr "урон от ловкости"
+
+msgid "do_knockback"
+msgstr "отталкивание"
+
+msgid "do_level_based_dam"
+msgstr "урон от уровня"
+
+msgid "do_mob_dam"
+msgstr "урон по группе"
+
+msgid "do_qi_based_dam"
+msgstr "урон от ци"
+
+msgid "do_shock_move"
+msgstr "шоковый удар"
+
+msgid "do_speed_based_dam"
+msgstr "урон от скорости"
+
+msgid "do_stam_dam"
+msgstr "урон выносливости"
+
+msgid "do_strength_based_dam"
+msgstr "урон от силы"
+
+msgid "do_takedown"
+msgstr "бросок"
+
 msgid "Dragon"
 msgstr "Дракон"
 
@@ -8319,6 +8389,7 @@ msgstr "Энергия дракона"
 msgid "Drunkard"
 msgstr "Пьяница"
 
+#: kf_lib/happenings/encounters/_people.py:204
 msgid "Drunkard's Friend"
 msgstr "Друг пьяницы"
 
@@ -8478,6 +8549,7 @@ msgstr "Кулак восьми пределов II"
 msgid "Eight Extremities Fist III"
 msgstr "Кулак восьми пределов III"
 
+#: kf_lib/happenings/story/_eight_gates.py:42
 msgid "Eight Gates"
 msgstr "Восемь врат"
 
@@ -8511,6 +8583,7 @@ msgstr "Крепость императора"
 msgid "Emphasis on Speed"
 msgstr "Упор на скорость"
 
+#: kf_lib/happenings/encounters/_ambush.py:66
 msgid "Enemy Reformed"
 msgstr "Исправившийся враг"
 
@@ -8603,6 +8676,9 @@ msgstr "Энергетический бросок"
 
 msgid "Energy Trip"
 msgstr "Энергетическая подножка"
+
+msgid "England"
+msgstr "Англия"
 
 msgid "English Boxing"
 msgstr "Английский бокс"
@@ -16074,6 +16150,10 @@ msgstr "Быстрая Исчезающая подножка"
 msgid "Fat"
 msgstr "Толстый"
 
+msgid "Fat Girl"
+msgstr "Толстушка"
+
+#: kf_lib/happenings/encounters/_people.py:265
 msgid "Fat Girl Defeated"
 msgstr "Побита толстая девушка"
 
@@ -16229,6 +16309,9 @@ msgstr "Свирепая подножка"
 
 msgid "Fierce Strikes"
 msgstr "Свирепые удары"
+
+msgid "Fighter"
+msgstr "Боец"
 
 msgid "Finishing Kick"
 msgstr "Добивающий удар ногой"
@@ -16440,6 +16523,7 @@ msgstr "Фокус"
 msgid "Folk Hero"
 msgstr "Народный герой"
 
+#: kf_lib/happenings/story/_foreigner.py:38
 msgid "Foreign Challenger"
 msgstr "Иностранный претендент"
 
@@ -16452,6 +16536,7 @@ msgstr "Бесформенная форма"
 msgid "Foshan"
 msgstr "Фошань"
 
+#: kf_lib/actors/player/_base_player.py:295
 msgid "Founder of the Federation"
 msgstr "Основатель федерации"
 
@@ -16467,6 +16552,10 @@ msgstr "дружелюбный"
 msgid "Furious"
 msgstr "Яростный"
 
+msgid "Gambler"
+msgstr "Азартный игрок"
+
+#: kf_lib/happenings/encounters/_gambling.py:148
 msgid "Gambler Beaten"
 msgstr "Побит азартный игрок"
 
@@ -16488,15 +16577,20 @@ msgstr "Геккон III"
 msgid "generous"
 msgstr "щедрый"
 
+msgid "Germany"
+msgstr "Германия"
+
 msgid "Ginseng Root"
 msgstr "Корень женьшеня"
 
 msgid "Golden Lotus Stance"
 msgstr "Стойка золотого лотоса"
 
+#: kf_lib/actors/player/_base_player.py:1331
 msgid "Got Married"
 msgstr "Свадьба"
 
+#: kf_lib/happenings/story/_grand_melee.py:115
 msgid "Grand Melee Champion"
 msgstr "Чемпион большой свалки"
 
@@ -16520,6 +16614,9 @@ msgstr "жадный"
 
 msgid "Guard"
 msgstr "Защита"
+
+msgid "guard"
+msgstr "блок"
 
 msgid "Guard Form"
 msgstr "Защитная форма"
@@ -16737,6 +16834,9 @@ msgstr "Ледяной"
 msgid "Immortal"
 msgstr "Бессмертный"
 
+msgid "improvised"
+msgstr "подручное"
+
 msgid "Indestructible"
 msgstr "Несокрушимый"
 
@@ -16764,8 +16864,12 @@ msgstr "Железная кожа"
 msgid "Iron Vest"
 msgstr "Железный жилет"
 
+#: kf_lib/happenings/story/_jade_table.py:108
 msgid "Jade Table"
 msgstr "Нефритовый стол"
+
+msgid "Japan"
+msgstr "Япония"
 
 msgid "Jerky"
 msgstr "Дёрганый"
@@ -16797,6 +16901,7 @@ msgstr "Ножной"
 msgid "Killer"
 msgstr "Убийца"
 
+#: kf_lib/happenings/story/_grand_melee.py:162
 msgid "King of the Night Ring"
 msgstr "Король ночного ринга"
 
@@ -16812,11 +16917,17 @@ msgstr "Взмах ножом"
 msgid "Knife Stab"
 msgstr "Укол ножом"
 
+msgid "Korea"
+msgstr "Корея"
+
 msgid "Kung-Fu Fury"
 msgstr "Ярость кунг-фу"
 
 msgid "Kung-fu Legend"
 msgstr "Легенда кунг-фу"
+
+msgid "Kung-fu Master"
+msgstr "Мастер кунг-фу"
 
 msgid "lazy"
 msgstr "ленивый"
@@ -17616,6 +17727,7 @@ msgstr "Живая легенда"
 msgid "Lizard"
 msgstr "Ящерица"
 
+#: kf_lib/fighting/fight/_base_fight.py:234
 msgid "Lone Warrior"
 msgstr "Одинокий воин"
 
@@ -18129,11 +18241,15 @@ msgstr "Дальнобойный удары"
 msgid "Lotus Stance"
 msgstr "Стойка лотоса"
 
+#: kf_lib/actors/player/_base_player.py:519
 msgid "Lucky Devil"
 msgstr "Везучий чёрт"
 
 msgid "Mad"
 msgstr "Безумный"
+
+msgid "Madame"
+msgstr "Мадам"
 
 msgid "Mantis"
 msgstr "Богомол"
@@ -18147,6 +18263,7 @@ msgstr "Мастер"
 msgid "master"
 msgstr "мастерский"
 
+#: kf_lib/happenings/tournament.py:191
 msgid "Master of Champions"
 msgstr "Мастер чемпионов"
 
@@ -18192,6 +18309,9 @@ msgstr "Обезьяна II"
 msgid "Monkey III"
 msgstr "Обезьяна III"
 
+msgid "Monster"
+msgstr "Монстр"
+
 msgid "Monster Kung-fu"
 msgstr "Кунг-фу монстра"
 
@@ -18219,6 +18339,7 @@ msgstr "Мистический"
 msgid "Mystic Power"
 msgstr "Мистическая мощь"
 
+#: kf_lib/fighting/fight/_base_fight.py:238
 msgid "Narrow Victory"
 msgstr "Трудная победа"
 
@@ -18228,6 +18349,7 @@ msgstr "недалёкий"
 msgid "Nasty"
 msgstr "Гадкий"
 
+#: kf_lib/happenings/story/_stolen_treasures.py:32
 msgid "National Treasures"
 msgstr "Национальные сокровища"
 
@@ -18264,6 +18386,9 @@ msgstr "Без стиля"
 msgid "No-Shadow Kick"
 msgstr "Бестеневой удар ногой"
 
+msgid "normal"
+msgstr "обычное"
+
 msgid "Northern"
 msgstr "Северный"
 
@@ -18275,6 +18400,12 @@ msgstr "Обсидиановый"
 
 msgid "Obsidian Guard"
 msgstr "Обсидиановый блок"
+
+msgid "Officer"
+msgstr "Полицейский"
+
+msgid "Official"
+msgstr "Чиновник"
 
 msgid "Onslaught Claw"
 msgstr "Напористый коготь"
@@ -18675,6 +18806,9 @@ msgstr "Ладонный"
 msgid "Opium"
 msgstr "Опиум"
 
+msgid "Opponent"
+msgstr "Противник"
+
 msgid "Ox"
 msgstr "Бык"
 
@@ -18720,6 +18854,7 @@ msgstr "Упорство"
 msgid "Persevering"
 msgstr "Упорный"
 
+#: kf_lib/happenings/encounters/_people.py:513
 msgid "Personality Change"
 msgstr "Смена личности"
 
@@ -18849,9 +18984,13 @@ msgstr "Удар шестом"
 msgid "Pole Thrust"
 msgstr "Выпад шестом"
 
+msgid "police"
+msgstr "полицейское"
+
 msgid "Police Kung-fu"
 msgstr "Полицейское кунг-фу"
 
+#: kf_lib/happenings/story/_wrong_pouch.py:94
 msgid "Pouch Justice"
 msgstr "Возмездие за кошелёк"
 
@@ -19326,6 +19465,13 @@ msgstr "Точный Исчезающий удар кулаком"
 msgid "Preemptive Strikes"
 msgstr "Упреждающие удары"
 
+msgid "Prize Fighter"
+msgstr "Призовой боец"
+
+msgid "Promoter"
+msgstr "Промоутер"
+
+#: kf_lib/actors/player/_base_player.py:606
 msgid "Proud Parent"
 msgstr "Гордый родитель"
 
@@ -19536,6 +19682,9 @@ msgstr "Радужный"
 msgid "Rainbow Steps"
 msgstr "Радужные шаги"
 
+msgid "Random Fighter"
+msgstr "Случайный боец"
+
 msgid "Rat"
 msgstr "Крыса"
 
@@ -19557,9 +19706,11 @@ msgstr "Регенерирующая ящерица"
 msgid "Relentless Storm"
 msgstr "Неумолимый шторм"
 
+#: kf_lib/happenings/story/_renowned_master.py:29
 msgid "Renowned Master"
 msgstr "Прославленный мастер"
 
+#: kf_lib/happenings/story/_sweetheart_kidnapped.py:46
 msgid "Rescued Sweetheart"
 msgstr "Спасение любимого человека"
 
@@ -19938,6 +20089,7 @@ msgstr "Отступающая Обманная подножка"
 msgid "Retreating Trip"
 msgstr "Отступающая подножка"
 
+#: kf_lib/happenings/story/_saints_day_riot.py:87
 msgid "Riot Survivor"
 msgstr "Переживший бунт"
 
@@ -19949,6 +20101,12 @@ msgstr "Восставший из пепла"
 
 msgid "Rising Phoenix"
 msgstr "Восходящий феникс"
+
+msgid "Robber"
+msgstr "Разбойник"
+
+msgid "robber"
+msgstr "разбойничье"
 
 msgid "Robber 1"
 msgstr "Разбойник 1"
@@ -19983,6 +20141,7 @@ msgstr "Выпад саблей"
 msgid "Savant"
 msgstr "Савант"
 
+#: kf_lib/happenings/story/_school_attack.py:62
 msgid "School Defender"
 msgstr "Защитник школы"
 
@@ -27447,6 +27606,7 @@ msgstr "Колючий"
 msgid "Spiky Attacks"
 msgstr "Колючие атаки"
 
+#: kf_lib/fighting/fight/_base_fight.py:240
 msgid "Split-Second Victory"
 msgstr "Победа в последний миг"
 
@@ -35448,6 +35608,9 @@ msgstr "Тайцзи II"
 msgid "Taiji III"
 msgstr "Тайцзи III"
 
+msgid "Thailand"
+msgstr "Таиланд"
+
 msgid "Thief"
 msgstr "Вор"
 
@@ -35465,6 +35628,9 @@ msgstr "Тень вора III"
 
 msgid "Throw"
 msgstr "Бросок"
+
+msgid "Thug"
+msgstr "Головорез"
 
 msgid "Thug 1"
 msgstr "Головорез 1"
@@ -35499,6 +35665,7 @@ msgstr "Подвыпивший"
 msgid "Tipsy Form"
 msgstr "Подвыпившая форма"
 
+#: kf_lib/happenings/story/_ninja_turtles.py:25
 msgid "TMNT"
 msgstr "Черепашки-ниндзя"
 
@@ -35523,6 +35690,7 @@ msgstr "Крепкий"
 msgid "Toughness"
 msgstr "Крепость"
 
+#: kf_lib/actors/player/_base_player.py:1351
 msgid "Tournament Champion"
 msgstr "Чемпион турнира"
 
@@ -35618,6 +35786,12 @@ msgstr "Обманная подножка"
 
 msgid "Trip"
 msgstr "Подножка"
+
+msgid "try_insta_ko"
+msgstr "мгновенный нокаут"
+
+msgid "try_shock_move"
+msgstr "шок"
 
 msgid "Turtle"
 msgstr "Черепаха"
@@ -42996,6 +43170,9 @@ msgstr "Выпад зонтом"
 msgid "Unbeatable"
 msgstr "Непобедимый"
 
+msgid "Uncle"
+msgstr "Дядюшка"
+
 msgid "undisciplined"
 msgstr "недисциплинированный"
 
@@ -43011,6 +43188,7 @@ msgstr "Неизвестный"
 msgid "Unlikely Weapons"
 msgstr "Неожиданное оружие"
 
+#: kf_lib/actors/player/_base_player.py:512
 msgid "Unlucky Devil"
 msgstr "Невезучий чёрт"
 
@@ -43377,6 +43555,10 @@ msgstr "Слабый короткий удар кулаком"
 msgid "Weapons Competence"
 msgstr "Владение оружием"
 
+msgid "Weird"
+msgstr "Странный"
+
+#: kf_lib/happenings/encounters/_items.py:132
 msgid "Weird Item"
 msgstr "Странный предмет"
 

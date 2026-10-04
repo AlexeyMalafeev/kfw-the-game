@@ -31,8 +31,20 @@ N = i18n_common.N_RU_PLURALS
 
 # extra display names that can't be harvested from code structure
 EXTRA_NAMES = {
-    # fighter-name prefixes (kf_lib/game/_base_game.py)
-    'Beggar', 'Drunkard', 'Thief', 'Master',
+    # fighter-name prefixes (kf_lib/game/_base_game.py,
+    # kf_lib/happenings/story/_strange_dreams.py)
+    'Beggar', 'Drunkard', 'Thief', 'Master', 'Weird',
+    # group-name bases (kf_lib/actors/fighter_factory.py; 'Thug 2' etc. are
+    # translated as base + number at display time)
+    'Thug', 'Robber', 'Officer', 'Random Fighter', 'Prize Fighter',
+    'Kung-fu Master', 'Gambler', 'Bodyguard', 'Brawler', 'Criminal', 'Craftsman',
+    'Fat Girl', 'Fighter', 'Monster', 'Opponent',
+    # story-specific fighter-name prefixes (kf_lib/happenings/story/)
+    'Promoter', 'Official', 'Uncle', 'Boss', 'Madame',
+    # weapon types (kf_lib/things/weapons.py, shown in WeaponTech descriptions)
+    'normal', 'improvised', 'robber', 'police',
+    # foreign challengers' countries (kf_lib/actors/names.py FOREIGN_COUNTRIES)
+    'England', 'Germany', 'Japan', 'Korea', 'Thailand', 'Brazil',
     # victory conditions (kf_lib/game/_playing.py)
     'Grandmaster', 'Folk Hero', 'Kung-fu Legend', 'Greatest Fighter', 'Uniter of Schools',
     'Famous Master', 'Living Legend', 'Master of Masters',
@@ -103,6 +115,9 @@ def harvest_names():
     found |= set(styles.all_styles)
     found |= set(style_gen.W1) | set(style_gen.W2) | set(style_gen.W3)
     found |= set(items.all_items)
+    found |= set(items.MOCK_ITEMS)  # never instantiated, so not in all_items
+    # move functions (Fighter method names) are displayed in move descriptions
+    found |= {fn for m in moves.ALL_MOVES_DICT.values() for fn in m.functions}
     found |= set(traits.TRAIT_EFFECTS)
     found |= set(weapons.all_weapons)
     found |= set(actor_names.GROUP_NAMES) | set(actor_names.GROUP_NAMES.values())

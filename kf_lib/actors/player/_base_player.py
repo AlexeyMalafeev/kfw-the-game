@@ -234,7 +234,9 @@ class BasePlayer(Fighter):
         if self.school_techs:
             self.log(
                 _('Decides to teach {}.').format(
-                    enum_words([tr_name(t) for t in self.school_techs])
+                    enum_words(
+                        [techniques.get_tech_obj(t).display_name for t in self.school_techs]
+                    )
                 )
             )
 
@@ -260,7 +262,7 @@ class BasePlayer(Fighter):
                     name=tr_fighter_name(self.name)
                 )
             )
-        self.log('\n'.join((str(s) for s in new_students)))
+        self.log('\n'.join(s.get_f_info(short=True) for s in new_students))
         self.refresh_best_student()
 
     def ally_school(self, school_name, master):
@@ -287,7 +289,7 @@ class BasePlayer(Fighter):
                 _(
                     'All the schools of {town} are now united under '
                     '{name}\'s kung-fu federation!'
-                ).format(town=self.game.town_name, name=tr_fighter_name(self.name))
+                ).format(town=tr_name(self.game.town_name), name=tr_fighter_name(self.name))
             )
             self.log(_('Founds the kung-fu federation.'))
             self.add_accompl('Founder of the Federation')
@@ -642,7 +644,8 @@ class BasePlayer(Fighter):
         self.change_stat('prize_money_earned', amount)
         self.write(
             _('{name} earns a {prize} prize.').format(
-                name=tr_fighter_name(self.name), prize=yellow(f'{amount}-coin')
+                name=tr_fighter_name(self.name),
+                prize=yellow(_('{amount}-coin').format(amount=amount)),
             )
         )
 
@@ -651,7 +654,8 @@ class BasePlayer(Fighter):
         self.change_stat('rew_money_earned', amount)
         self.write(
             _('{name} earns a {reward} reward.').format(
-                name=tr_fighter_name(self.name), reward=yellow(f'{amount}-coin')
+                name=tr_fighter_name(self.name),
+                reward=yellow(_('{amount}-coin').format(amount=amount)),
             )
         )
 
@@ -738,13 +742,16 @@ class BasePlayer(Fighter):
         )
 
     def get_inact_info(self):
+        status = {'injured': _('injured'), 'sick': _('sick')}.get(
+            self.inact_status, self.inact_status
+        )
         s = ngettext(
             '{name} is {status} and needs {days} day to recover.',
             '{name} is {status} and needs {days} days to recover.',
             self.inactive,
         ).format(
             name=tr_fighter_name(self.name),
-            status=self.inact_status,
+            status=status,
             days=self.inactive,
         )
         self.log(s)
@@ -893,7 +900,7 @@ class BasePlayer(Fighter):
         return self.stats_dict[stat_name]
 
     def go_seedy(self):
-        self.log(_('Goes to the seedy places of {}.').format(self.game.town_name))
+        self.log(_('Goes to the seedy places of {}.').format(tr_name(self.game.town_name)))
         encs = encounters.SEEDY_PLACES_ENCS
         encounters.random_encounters(self, encs)
         return True  # to end turn
@@ -1168,7 +1175,7 @@ class BasePlayer(Fighter):
         if not av:
             self.msg(
                 _('All the masters of {town} already acknowledge {name}.').format(
-                    town=g.town_name, name=tr_fighter_name(self.name)
+                    town=tr_name(g.town_name), name=tr_fighter_name(self.name)
                 )
             )
             return  # the turn is not consumed
@@ -1182,7 +1189,7 @@ class BasePlayer(Fighter):
                 name=tr_fighter_name(self.name),
                 master=tr_fighter_name(m.name),
                 school=m.get_displayed_style_name(),
-                town=g.town_name,
+                town=tr_name(g.town_name),
             )
         )
         persuade_chance = min(self.reputation / PERSUADE_REP_DIVISOR, MAX_PERSUADE_CH)

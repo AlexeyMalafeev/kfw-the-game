@@ -2,7 +2,7 @@ import random
 from collections import deque
 
 from kf_lib.fighting import fight
-from kf_lib.i18n import _, tr_fighter_name
+from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.ui import yn
 
 
@@ -139,7 +139,7 @@ class AllSchoolsTournament:
             _(
                 '{school} wins the All-Schools Tournament and is declared '
                 'the Strongest School in {town}!'
-            ).format(school=displayed_school, town=g.town_name)
+            ).format(school=displayed_school, town=tr_name(g.town_name))
         )
         for f in roster:
             # each fighter logs the name as they know it — a student who hasn't
@@ -186,7 +186,7 @@ class AllSchoolsTournament:
                 'fields its students, weakest first — a knocked-out fighter is out for the whole '
                 'tournament, replaced by the next one in rank. Last fighter standing wins the '
                 'title for his school!'
-            ).format(g.town_name)
+            ).format(tr_name(g.town_name))
         )
         # human participants may opt to skip all their bouts: they are then
         # auto-fought without the per-fight display and prompt; declining

@@ -105,7 +105,7 @@ class HumanControlledFighter(Fighter):
                 str(m.stam_cost),
                 str(m.time_cost),
                 str(m.qi_cost),
-                ', '.join(m.functions),
+                ', '.join(m.display_functions),
             )
             for m in sample
         ]
@@ -226,11 +226,11 @@ class HumanControlledFighter(Fighter):
             max_a = max(m.accuracy for m in moves_pool)
             min_s = min(m.stam_cost for m in moves_pool)
             if move_obj.power == max_p:
-                most_powerful = 'P'
+                most_powerful = _('P')
             if move_obj.accuracy == max_a:
-                most_accurate = 'A'
+                most_accurate = _('A')
             if move_obj.stam_cost == min_s:
-                least_stamina = 's'
+                least_stamina = _('s')
             effects = '!' * len(move_obj.functions)
         mh = '{}{}{}{}{}{}{}'.format(
             fail_warning,
@@ -309,7 +309,11 @@ class HumanControlledFighter(Fighter):
                 tech=tech.display_name,
             )
         self.show(t)
-        self.log(f'Learns the secret technique of {style.name}.')
+        self.log(
+            _('Learns the secret technique of {style}.').format(
+                style=style.display_public_name
+            )
+        )
         self.pak()
         Fighter.learn_tech(self, tech)
 

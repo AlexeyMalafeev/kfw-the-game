@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.utils import SAVE_FOLDER
 from ._base_game import BaseGame
 
@@ -107,7 +108,8 @@ class SaveGame(BaseGame):
     def _dump_player_logs(self):
         for p in self.players:
             # dump log
-            path = Path(SAVE_FOLDER, f'{p.name}\'s log.txt')
+            log_name = _('{name}\'s log').format(name=tr_fighter_name(p.name)) + '.txt'
+            path = Path(SAVE_FOLDER, log_name)
             with open(path, 'a') as log_file:
                 log_file.write('\n'.join(p.plog))
                 p.plog = []

@@ -3,6 +3,7 @@ from abc import ABC
 from typing import Iterable, List, Optional, Tuple
 
 from kf_lib.actors.fighter._abc import FighterAPI
+from kf_lib.i18n import _
 
 
 class ExpMethods(FighterAPI, ABC):
@@ -14,13 +15,13 @@ class ExpMethods(FighterAPI, ABC):
     RATIO_VERY_RISKY = 1.5
     RATIO_EXTREMELY_RISKY = 2.0
     RISK_DESCR_TABLE = (  # must be sorted high to low
-        (RATIO_EXTREMELY_RISKY, 'impossible'),
-        (RATIO_VERY_RISKY, 'very risky'),
-        (RATIO_RISKY, 'risky'),
-        (RATIO_FAIR_FIGHT, 'fair fight'),
-        (RATIO_LOW_RISK, 'low risk'),
-        (RATIO_VERY_LOW_RISK, 'very low risk'),
-        (RATIO_NO_RISK, 'no risk'),
+        (RATIO_EXTREMELY_RISKY, _('impossible')),
+        (RATIO_VERY_RISKY, _('very risky')),
+        (RATIO_RISKY, _('risky')),
+        (RATIO_FAIR_FIGHT, _('fair fight')),
+        (RATIO_LOW_RISK, _('low risk')),
+        (RATIO_VERY_LOW_RISK, _('very low risk')),
+        (RATIO_NO_RISK, _('no risk')),
     )
 
     # todo use get_allies_power for AI, high-prio
