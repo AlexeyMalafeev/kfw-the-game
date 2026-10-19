@@ -32,6 +32,12 @@ All notable changes to KFW are documented here. Format loosely follows
   efficiency". (The fight-balance harness tallies buffs from these
   descriptions, so its next report gains 'claws' / 'headbutts' rows — no
   balance change)
+- **Dragon III and Snake III gave no extra max qi**: the level-7 style techs
+  of Dragon and Snake boosted the derived max-QP value instead of its
+  multiplier, so the bonus was wiped as soon as stats were recomputed and
+  only the "QP to start with" half worked. They now give the intended +10%
+  max QP (and their descriptions list it). Balance-affecting; a new test
+  checks that no tech boosts a value that gets recomputed
 
 ## [v0.7.5-beta "Palladius Palm"] — 2026-10-19
 

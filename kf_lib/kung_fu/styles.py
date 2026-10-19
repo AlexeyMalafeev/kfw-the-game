@@ -119,7 +119,7 @@ default_styles = [
         {
             3: Tech('Dragon I', unblock_chance=b.UNBLOCK_CHANCE1),
             5: Tech('Dragon II', dodge_mult=b.EVADE1),
-            7: Tech('Dragon III', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
+            7: Tech('Dragon III', qp_max_mult=b.QP_MAX1, qp_start=b.QP_START1),
         },
         {2: 'Dragon Claw', 4: '2,kick', 6: '3,punch', 8: '4,energy,kick'},
     ),
@@ -274,7 +274,7 @@ default_styles = [
         {
             3: Tech('Snake I', dodge_mult=b.EVADE1),
             5: Tech('Snake II', critical_chance_mult=b.CRIT_CH1, critical_dam_mult=b.CRIT_M1),
-            7: Tech('Snake III', qp_max=b.QP_MAX1, qp_start=b.QP_START1),
+            7: Tech('Snake III', qp_max_mult=b.QP_MAX1, qp_start=b.QP_START1),
         },
         {
             2: '1,claw',

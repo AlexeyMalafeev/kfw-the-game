@@ -77,10 +77,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
       skips `apply_move_cost`; preemptives pay)
     - `fight_mechanics.md` Techs + `kung_fu.md` Weapon techs — dead boosts
       (`GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`) and the 7
-      no-op `WeaponTech`s (the two entries below); also Dragon III /
-      Snake III (lv-7 style techs) boost the derived `qp_max` instead of
-      `qp_max_mult`, so their max-QP half is wiped on refresh (found
-      2026-10-19; `test_generation.py` lists them as known PMAP exceptions)
+      no-op `WeaponTech`s (the two entries below)
   - **(c) Design questions — probably intended, per the author, 2026-10-19
     ("mostly they are features, not bugs"); to be revisited later.** Not bugs
     and not part of the fix batches. The ⚠️ markers stay, because no single
@@ -136,7 +133,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
       flag never cleared
 - weapon techs don't do anything — reintroduce them
 - dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
-  `WeaponTech`s, Dragon III / Snake III `qp_max`; `TIME_UNIT_MULTIPLIER` unused
+  `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
 - ~~trait selection iterates unsorted collections, so even with `random.seed()`
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
@@ -280,6 +277,9 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 - online learning?
 
 ## Balance & analysis
+
+**Pending `run_test_fb.py` re-run** — balance-affecting changes since the
+snapshot below: Dragon III / Snake III max-QP boost now works (2026-10-19).
 
 **Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; refreshed
 2026-09-17 with the now-**seeded** harness, `seed=42` — the report is

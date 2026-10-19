@@ -246,7 +246,10 @@ Boost values are named constants in `kung_fu/boosts.py`; themed bundles
 descriptions; `set_descr` renders `Tech.descr`/`descr_short` from it. A
 param missing from PMAP still applies (and still adds its fav-feature) but
 is silently left out of the description, so every boost param needs a PMAP
-row — `test_content.py` checks this for all techs.
+row. A param must also be a base attribute or multiplier, never a derived
+value that `refresh_dependent_atts` recomputes (Dragon III / Snake III boosted
+`qp_max` instead of `qp_max_mult` until 2026-10, so their max-QP bonus was
+wiped). `test_generation.py` checks both for all techs.
 
 Upgrading: `LINKED_TECHS` pairs 30 regular techs (`is_upgradable=True`)
 with their advanced versions (`is_advanced=True`); `UPG_MAP_REG_ADV` maps

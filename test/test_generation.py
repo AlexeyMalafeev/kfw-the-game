@@ -98,17 +98,13 @@ class TestStdStyles:
 
 
 class TestTechDescriptions:
-    # Dragon III / Snake III boost the derived `qp_max` instead of
-    # `qp_max_mult` — a dead boost queued in BACKLOG.md (b), not a missing row
-    KNOWN_UNDESCRIBED = {'Dragon III': {'qp_max'}, 'Snake III': {'qp_max'}}
-
     def test_every_tech_param_has_a_pmap_row(self):
         # a param missing from boosts.PMAP still applies but is silently left
         # out of Tech.descr (head_/claw_strike_mult were, until 2026-10)
         style_gen.generate_new_styles(1)  # make sure generated-style techs exist
         described = {param for param, _short, _long in boosts.PMAP}
         for t in techniques.get_all_techs_dict().values():
-            missing = set(t.params) - described - self.KNOWN_UNDESCRIBED.get(t.name, set())
+            missing = set(t.params) - described
             assert not missing, f'{t.name}: {sorted(missing)}'
 
     def test_head_and_claw_boosts_are_described(self):
@@ -118,3 +114,30 @@ class TestTechDescriptions:
         assert 'headbutts' in exotic.descr_short.split(', ')
         assert 'claw strike efficiency' in palms.descr
         assert 'claws' in palms.descr_short.split(', ')
+
+
+class TestTechEffects:
+    def test_no_tech_boosts_an_attribute_that_refresh_recomputes(self):
+        # a boost on a derived attribute (e.g. `qp_max` instead of
+        # `qp_max_mult`, as Dragon III / Snake III had until 2026-10) is
+        # silently wiped by the next refresh, so the tech does nothing
+        random.seed(0)
+        style_gen.generate_new_styles(1)  # make sure generated-style techs exist
+        f = new_fighter(10)
+        params = {p for t in techniques.get_all_techs_dict().values() for p in t.params}
+        for p in sorted(params):
+            v = getattr(f, p)
+            setattr(f, p, v + 0.125)
+            f.refresh_full_atts()
+            f.refresh_dependent_atts()
+            assert getattr(f, p) == v + 0.125, f'{p} is recomputed on refresh'
+            setattr(f, p, v)
+
+    def test_dragon_and_snake_iii_raise_max_qi(self):
+        for name in ('Dragon III', 'Snake III'):
+            random.seed(0)
+            f = new_fighter(10)
+            mult, before = f.qp_max_mult, f.qp_max
+            f.apply_tech(techniques.get_tech_obj(name))
+            assert abs(f.qp_max_mult - (mult + boosts.QP_MAX1)) < 1e-9, name
+            assert f.qp_max > before, name
