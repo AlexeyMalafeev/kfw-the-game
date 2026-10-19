@@ -91,10 +91,6 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     ("mostly they are features, not bugs"); to be revisited later.** Not bugs
     and not part of the fix batches. The ⚠️ markers stay, because no single
     point is confirmed intended yet:
-    - `encounters.md` StreetPerformer — `p.disarm()` on declining the
-      challenge. Today it does nothing (the player is never armed when the
-      encounter starts); if the disarm is meant as a feature, the player
-      would need to be armed first
     - `gameplay.md` + `encounters.md` Town stats — crime never rises
       (`CRIME_INCREASE_MONTHLY = 0.00`); `poverty`/`kung_fu` never change;
       `g.kung_fu` is read nowhere though the new-game menu asks for it
@@ -130,7 +126,10 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     - `fight_mechanics.md` — `TIME_UNIT_MULTIPLIER` unused;
       `DRAW_EXP_DIVISOR` duplicated, `LOSER_EXP_DIVISOR` unused; `do_mob_dam`
       only slows (name)
-    - `encounters.md` — the `check_if_happens` parameter shadows the method
+    - `encounters.md` — the `check_if_happens` parameter shadows the method;
+      StreetPerformer's `p.disarm()` on decline is a harmless no-op (players
+      are never armed outside fights). It's a leftover from 2020; keep it or
+      remove it (author to decide)
     - `social_and_traits.md` — `'cowardly'` checked by name in
       `check_scary_fight`
     - `stats.md` — unused NPC `change_stat` shim; `set_stat`/`write_stat`

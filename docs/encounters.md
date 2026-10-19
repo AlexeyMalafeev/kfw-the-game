@@ -204,9 +204,15 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `StreetPerformer`: randomly a challenge for double-or-nothing, a shady
   'elixir' sale (50% mock item), or thugs to fight off for a reward. ⚠️
   Declining the challenge runs `p.disarm()` (`_performer.py`, comment
-  "disarm player!!!") — a dead call: weapons are per-fight equipment and
-  every fight ends with `disarm_all()`, so the player is never armed when
-  the encounter starts and declining costs nothing.
+  "disarm player!!!"). This is a harmless no-op, not a weapon-loss
+  mechanic. Players hold weapons only inside fights: every arming site
+  (`set_up_weapon_fight`, `check_help`'s improvised weapon, the school
+  challenge, Strange Dreams) leads straight into `fight()`/`spar()`, every
+  fight ends with `disarm_all()`, and `weapon` is not saved. So the player
+  is always unarmed here, and declining costs nothing. The line dates back
+  to the first commit (2020) and looks like leftover defensive cleanup (the
+  similar `Challenger` decline branch has no such call). It can be kept or
+  removed.
 
 ### School and mastership (`_school.py`)
 
