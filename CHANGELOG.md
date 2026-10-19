@@ -3,48 +3,54 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
-## [Unreleased]
+## [v0.7.5-beta "Palladius Palm"] — 2026-10-19
 
 ### Added
-- **Russian localization** (`python kfw.py --lang ru`, or `KFW_LANG=ru`) —
-  first slice of an optional full translation, English remaining the source
-  language and the unchanged default. Covered: all menus and meta UI, all
-  fight text, the quote pools (translated `quotes/ru/*.txt`), and every name
-  catalog — moves, techniques, styles, items, traits, weapons, group names —
-  plus the `boosts.PMAP` technique descriptions. A new leaf package
-  `kf_lib/i18n/` wraps stdlib gettext with two domains: `kfw` (prose
-  templates, `_()` / `ngettext()` with Russian 3-form plurals) and
-  `kfw_names` (name catalogs). Internal names stay English identifiers — they
-  are dict keys, save keys and ASCII-art lookups — while a display layer
-  (`display_name` properties on Move/Tech/Item/Weapon/Style,
-  `tr_fighter_name` for NPC-name prefixes) translates at render time, so
-  saves are fully cross-language: an English save loads under `--lang ru`
-  and displays translated. Generated three-word style names are reassembled
-  in Russian with adjective-noun gender agreement
-  (`kf_lib/i18n/_ru_words.py`). Grammar helpers (`add_article`,
-  `enum_words`) dispatch on language, and the auto-coloring engine learned
-  the Russian output shapes (ур.5, `N монет`, `N опыта`, Раунд/День N), so
-  the Russian game is colored exactly like the English one. `kfw.py` defers
-  all `kf_lib` imports until after the language is set. Catalogs live in
-  `locale/ru/LC_MESSAGES/` (committed `.po` + compiled `.mo` — no gettext
-  tooling needed to play), maintained with new dev scripts
-  (`i18n_extract.py`, `translate_names.py`, `compile_locale.py`,
-  `i18n_coverage.py`); the machine-filled Russian is a draft meant for human
-  review. New test module `test/test_i18n.py`; full autoplay games verified
-  to complete in both languages.
-- **Russian localization, second slice — the narrative prose**: all street
-  encounters, story lines, scheduled events, tournament/Grand Melee/
-  All-Schools announcements, gossip and overheard conversations, all
-  player-life messages and log entries (training, money, friends, school,
-  family), the full stats report (labels and move-name values), and the
-  debug menu are wrapped and translated — the prose catalog grows to 954
-  entries at 100% coverage. Sentences with counts use `ngettext`
-  (Russian 3-form plurals: «1 монета / 3 монеты / 5 монет»); names
-  interpolated into prose go through `tr_fighter_name`/`tr_name`, with
-  Russian phrasing deliberately avoiding declension of inserted names.
-  Rock-paper-scissors choices display translated while staying English
-  identifiers in game logic, and accomplishment labels now render translated
-  in the accomplishments screen (`get_accompl_info`).
+- **Russian localization** (`python kfw.py --lang ru`, or `KFW_LANG=ru`) — an
+  optional full translation of the game; English stays the source language
+  and the unchanged default. The Russian text is machine-translated, a draft
+  meant for human review (988 prose and 14,532 name entries, 100% covered).
+  - **What's translated**: everything the player sees — menus and meta UI,
+    all fight text, the quote pools (`quotes/ru/*.txt`), street encounters,
+    story lines, scheduled events, tournament/Grand Melee/All-Schools
+    announcements, gossip and overheard conversations, player-life messages
+    and log entries (training, money, friends, school, family), the full
+    stats report, accomplishment labels, the debug menu, and every name
+    catalog: moves, techniques (incl. the `boosts.PMAP` descriptions and the
+    'Advanced X' techs of runtime-generated styles, translated
+    compositionally), styles, items, traits, weapons, group names, AI school
+    names and the town name. Compact notations are translated too: move stat
+    blocks ('Dist:2 Pwr:5' → 'Дист:2 Мощь:5'), the prefight attribute header
+    ('Str Agi Spd Hlt' → 'Сил Лов Скр Здр'), HP/SP/QP as ОЗ/ВН/Ци, and the
+    fight-menu move hint letters (P/A/s → М/Т/В). Player log files get
+    Russian names ('Лог (Цю Цюфань).txt').
+  - **Proper names** are cyrillized for display with the Palladius system,
+    the standard Russian transcription of Chinese ('Qiu Qiufan' →
+    'Цю Цюфань', 'Beggar Wang' → 'Нищий Ван'), including numbered group
+    names ('Thug 2' → 'Головорез 2'), foreign challengers and the turtles
+    (syllable data and segmenter in `kf_lib/i18n/_ru_names.py`).
+  - **Grammar**: counts use `ngettext` with Russian 3-form plurals
+    («1 монета / 3 монеты / 5 монет»); names interpolated into prose go
+    through `tr_fighter_name`/`tr_name`, phrased so inserted names never need
+    declension (e.g. 'Головорезы x5'); generated three-word style names are
+    reassembled with adjective-noun gender agreement
+    (`kf_lib/i18n/_ru_words.py`); `add_article`/`enum_words` dispatch on
+    language. The auto-coloring engine knows the Russian output shapes
+    (ур.5, `N монет`, `N опыта`, Раунд/День N, ОЗ/ВН/Ци), so the Russian
+    game is colored exactly like the English one.
+  - **Saves are cross-language**: internal names stay English identifiers
+    (dict keys, save keys, ASCII-art lookups, rock-paper-scissors choices)
+    while a display layer (`display_name` on Move/Tech/Item/Weapon/Style,
+    `tr_fighter_name`) translates at render time, so an English save loads
+    under `--lang ru` and displays translated.
+  - **Plumbing**: a new leaf package `kf_lib/i18n/` wraps stdlib gettext with
+    two domains, `kfw` (prose) and `kfw_names` (name catalogs); `kfw.py`
+    defers all `kf_lib` imports until after the language is set. Catalogs
+    live in `locale/ru/LC_MESSAGES/` (committed `.po` + compiled `.mo`, so no
+    gettext tooling is needed to play) and are maintained with new dev
+    scripts (`i18n_extract.py`, `translate_names.py`, `compile_locale.py`,
+    `i18n_coverage.py`). New test module `test/test_i18n.py`; full autoplay
+    games verified to complete in both languages.
 - **Gender-aware biographies** (`game/biographies.py`): the end-of-game bio
   now follows the player's gender (since v0.7.4) instead of always saying
   "His" — female characters get 'Her kung-fu style was...' / 'She married
@@ -53,26 +59,13 @@ All notable changes to KFW are documented here. Format loosely follows
   Genderless old saves keep the legacy male wording. As a side effect the
   one-child family line is now grammatical English ('1 wonderful child'
   instead of '1 wonderful children').
-- **Russian localization, third slice — proper names and the last English
-  traces**: fighter proper names are cyrillized for display with the
-  Palladius system, the standard Russian cyrillization of Chinese
-  ('Qiu Qiufan' → 'Цю Цюфань', 'Beggar Wang' → 'Нищий Ван'), including
-  numbered group-name bases ('Thug 2' → 'Головорез 2'), foreign challengers
-  and the turtles; the syllable data and segmenter live in
-  `kf_lib/i18n/_ru_names.py`, internal names stay English save keys. The
-  remaining untranslated spots were swept: move stat blocks
-  ('Dist:2 Pwr:5' → 'Дист:2 Мощь:5'), move function names in the move table
-  and descriptions, the prefight attribute header ('Str Agi Spd Hlt' →
-  'Сил Лов Скр Здр'), mock items at the market, 'Advanced X' techs of
-  runtime-generated styles (translated compositionally), risk legends in
-  fight menus, the injured/sick status word, the town name everywhere,
-  weapon-tech descriptions, gossip about astonishing victories (incl.
-  '5 Thugs' condensing, rendered declension-free as 'Головорезы x5'), KO and
-  win/lose log lines, AI school names, and player log file names
-  ('Лог (Цю Цюфань).txt'). The HP/SP/QP tokens render as ОЗ/ВН/Ци with
-  matching auto-coloring, the fight-menu move hint letters follow the
-  language (P/A/s → М/Т/В), and the prefight '-vs-' separator is translated
-  too.
+
+### Changed
+- **Menu option text is grey instead of white** — white option text was too
+  pale; the cyan option keys are unchanged
+- **Colored day-info header**: the daily status block shows the date and the
+  player's name in bold, exp in green and money in yellow (levels stay cyan,
+  as everywhere)
 
 ### Fixed
 - **Post-fight Timeline screen printed raw markup**: `show_timeline` dumped
