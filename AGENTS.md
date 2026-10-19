@@ -88,11 +88,20 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - Releases: rename the `## [Unreleased]` section of `CHANGELOG.md` to
   `## [vX.Y.Z-beta "Codename"] — YYYY-MM-DD`, commit with
   `RELEASE: vX.Y.Z-beta "Codename"` (changelog-only commit), tag `vX.Y.Z-beta`,
-  push with tags. No version string exists in code — the changelog and the git
-  tag are the release. Before tagging, re-read the section being released and
-  prune entries describing mid-cycle states that never shipped (workarounds
-  that were reverted in the same cycle etc.) — the Fixed entries already tell
-  that story.
+  push with tags. No version string exists in code — the changelog, the git
+  tag and its GitHub Release are the release. Before tagging, re-read the
+  section being released and prune entries describing mid-cycle states that
+  never shipped (workarounds that were reverted in the same cycle etc.) — the
+  Fixed entries already tell that story. After pushing the tag, publish a
+  GitHub Release from it (since v0.7.5-beta):
+  `gh release create vX.Y.Z-beta --verify-tag --latest --title
+  'vX.Y.Z-beta "Codename"' --notes-file <notes>` — a normal release, not a
+  pre-release, so it becomes "Latest" and the README's "grab the latest
+  release" lands on it. Notes: a one-line intro (`python kfw.py`, Python
+  3.8+, `--lang ru`), then the released changelog section with its `###`
+  headings promoted to `##`, then a link to `CHANGELOG.md` at the tag; no
+  zip asset unless asked. Needs `gh` logged in (`gh auth status`; the `repo`
+  scope suffices — same write access as pushing).
 - Release codenames: kung-fu flavored but **not necessarily movie references** —
   most are puns or literal winks at the release's own content ('ASCII-fu',
   'Superbug, Victory, Stats', 'Den'gi', 'Nasty Bugs and Small Fixes',
