@@ -31,9 +31,10 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 - **Explicitly address every remaining ⚠️ point across `docs/*.md`** (HIGH
   priority): the user confirmed only 2-3 of them are intended behavior, the
-  rest are bugs. Fix or document as intended, batch by batch. All points were
-  re-verified against the code 2026-10-19; the stale ones were rewritten and
-  unmarked (SmartAIP knobs, tournament `spectator` IndexError,
+  rest are bugs — except the (c) design questions, which the author later
+  called mostly features. Fix or document as intended, batch by batch. All
+  points were re-verified against the code 2026-10-19; the stale ones were
+  rewritten and unmarked (SmartAIP knobs, tournament `spectator` IndexError,
   `get_rand_moves` empty-pool crash, "invisible" accomplishments,
   `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
   Hero). The 80 that remain, by doc → pointer:
@@ -63,8 +64,6 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     - `gameplay.md` Victory — `Playing.play()` recurses once per
       victory-and-continue
     - `encounters.md` Stories — `advance()` dispatches scenes via `exec`
-    - `encounters.md` StreetPerformer — dead `p.disarm()` on declining (the
-      player is never armed there)
     - `social_and_traits.md` Help channels — `check_allies` returns `None`
       instead of `[]`
     - `items.md` — `use_item`/`cancel_item` `KeyError` for names missing from
@@ -88,7 +87,14 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     - `fight_mechanics.md` Techs + `kung_fu.md` Weapon techs — dead boosts
       (`GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`) and the 7
       no-op `WeaponTech`s (the two entries below)
-  - **(c) Needs an author design decision:**
+  - **(c) Design questions — probably intended, per the author, 2026-10-19
+    ("mostly they are features, not bugs"); to be revisited later.** Not bugs
+    and not part of the fix batches. The ⚠️ markers stay, because no single
+    point is confirmed intended yet:
+    - `encounters.md` StreetPerformer — `p.disarm()` on declining the
+      challenge. Today it does nothing (the player is never armed when the
+      encounter starts); if the disarm is meant as a feature, the player
+      would need to be armed first
     - `gameplay.md` + `encounters.md` Town stats — crime never rises
       (`CRIME_INCREASE_MONTHLY = 0.00`); `poverty`/`kung_fu` never change;
       `g.kung_fu` is read nowhere though the new-game menu asks for it
