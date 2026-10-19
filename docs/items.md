@@ -84,16 +84,17 @@ also appear on walks (`WALK_ENCS`).
 - **Craftsman** (`encounters/_craftsman.py`): sells the wooden mannequin for
   `MONEY_MANNEQUIN = 500`, once — `check_if_happens` excludes players who
   already own one. Luck roll: good luck → free after a sparring match; bad
-  luck → the mannequin breaks immediately and is lost. ⚠️ There is **no
-  `check_money` call** before charging: `buy_item(item, 500)` runs regardless,
-  so money silently goes negative. The sales pitch ("you can pay the rest
-  later") describes a debt mechanic that doesn't exist.
+  luck → the mannequin breaks immediately and is lost. There is deliberately
+  **no `check_money` call** before charging: the craftsman sells on credit
+  ("you can pay the rest later"), so `buy_item(item, 500)` runs regardless and
+  a short purse goes negative — that negative balance *is* the debt (see the
+  Economy section of `docs/gameplay.md`).
 - **BookSeller** (`encounters/_book_seller.py`): sells a kung-fu book for
   `MONEY_BOOK = 100`. Not an inventory item: bad luck → "complete rubbish"
   (money gone); otherwise 50% a random move of the player's tier (−1 tier,
-  +1 on good luck) or a flat exp gain (×3 on good luck). ⚠️ Asks "Buy it?"
-  *before* checking money (Merchant checks money first), so a broke player is
-  asked and then refused.
+  +1 on good luck) or a flat exp gain (×3 on good luck). Like the Merchant,
+  it checks money *before* asking: a player who can't pay is told so and
+  never prompted.
 - **FindItem** (`encounters/_items.py:15`): `item_is_found` (0.01) roll after
   any non-rest day action (`rand_enc` in `game/_playing.py:160`) → a random
   standard item. The Lucky trait pair shifts `item_is_found`/`item_is_lost`
@@ -137,9 +138,9 @@ sparring. In practice herbs apply mostly to random crime/street fights.
 
 Usable only outside fights, only when injured: at the start of an inactive day
 (`game/_playing.py:37`) the player may `use_med_or_not()` → `use_med()`, which
-clears `inactive`/`inact_status` entirely (stat `healers_used`). ⚠️ One root
-cures a 1-day sprain and a 7-day injury identically, and `use_med` decrements
-the inventory directly instead of via `lose_item` (no item log line).
+clears `inactive`/`inact_status` entirely (stat `healers_used`); the root is
+spent via `lose_item`, which writes the usual item log line. ⚠️ One root
+cures a 1-day sprain and a 7-day injury identically.
 
 ### Mannequin
 

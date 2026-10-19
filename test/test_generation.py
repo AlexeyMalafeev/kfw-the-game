@@ -2,7 +2,7 @@
 import random
 
 from kf_lib.actors.fighter_factory import new_fighter
-from kf_lib.kung_fu import moves, style_gen, styles
+from kf_lib.kung_fu import boosts, moves, style_gen, styles, techniques
 
 
 class TestStyleGeneration:
@@ -95,3 +95,26 @@ class TestStdStyles:
         for sname in ('Drunken Boxing', 'Long Fist', 'Praying Mantis'):
             s = styles.get_style_obj(sname)
             assert s.name == sname
+
+
+class TestTechDescriptions:
+    # Dragon III / Snake III boost the derived `qp_max` instead of
+    # `qp_max_mult` — a dead boost queued in BACKLOG.md (b), not a missing row
+    KNOWN_UNDESCRIBED = {'Dragon III': {'qp_max'}, 'Snake III': {'qp_max'}}
+
+    def test_every_tech_param_has_a_pmap_row(self):
+        # a param missing from boosts.PMAP still applies but is silently left
+        # out of Tech.descr (head_/claw_strike_mult were, until 2026-10)
+        style_gen.generate_new_styles(1)  # make sure generated-style techs exist
+        described = {param for param, _short, _long in boosts.PMAP}
+        for t in techniques.get_all_techs_dict().values():
+            missing = set(t.params) - described - self.KNOWN_UNDESCRIBED.get(t.name, set())
+            assert not missing, f'{t.name}: {sorted(missing)}'
+
+    def test_head_and_claw_boosts_are_described(self):
+        exotic = techniques.get_tech_obj('Exotic Boxing')
+        palms = techniques.get_tech_obj('Hardened Palms')
+        assert 'headbutt efficiency' in exotic.descr
+        assert 'headbutts' in exotic.descr_short.split(', ')
+        assert 'claw strike efficiency' in palms.descr
+        assert 'claws' in palms.descr_short.split(', ')

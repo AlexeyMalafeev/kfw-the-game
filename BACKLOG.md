@@ -37,25 +37,16 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   rewritten and unmarked (SmartAIP knobs, tournament `spectator` IndexError,
   `get_rand_moves` empty-pool crash, "invisible" accomplishments,
   `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
-  Hero). The 80 that remain, by doc → pointer:
-  - **(a) Clear bugs, safe to fix — no balance impact.** Player-visible:
-    - `gameplay.md` Economy — money goes negative: `pay()` never clamps, and
-      four paths skip `check_money`: MasterTrial school founding (1000 c),
-      Craftsman mannequin (500 c, `items.md`), tournament entry fee and a
-      human's tournament bet (`encounters.md` Tournaments)
-    - `social_and_traits.md` Co-op setup — '2x2'/'3x3' silently create no
-      bonds unless there are exactly 4/6 players
-    - `social_and_traits.md` Trait changes — WiseMan draws the trait without
-      the `player` filter, wasting the 0.15 change roll
-    - `encounters.md` Crime — `Criminal.reward` halves the money but the
-      player still gets full rep
-    - `items.md` BookSeller — asks "Buy it?" before checking money
-    - `items.md` Medicine — `use_med` decrements the inventory directly (no
-      `lose_item` log line)
-    - `gameplay.md` Items — mannequin text says "allows home training"; it's a
-      passive daily trickle
-    - `kung_fu.md` Techniques — `PMAP` lacks `head_strike_mult` /
-      `claw_strike_mult`, so those techs show incomplete descriptions
+  Hero). The 70 that remain, by doc → pointer:
+  - **(a) Resolved 2026-10-19.** Fixed: co-op '2x2'/'3x3' offered only for
+    4/6 players, BookSeller checks money before asking, `use_med` logs via
+    `lose_item`, clearer mannequin description, `PMAP` rows for
+    `head_strike_mult`/`claw_strike_mult` (see `CHANGELOG.md`). Confirmed
+    features and unmarked in the docs: negative money is the game's debt
+    (school founding, Craftsman mannequin, tournament fee and a human's bet
+    deliberately skip `check_money`); WiseMan's unfiltered trait draw (owning
+    more positive traits makes new ones harder); `Criminal.reward` keeps the
+    player's full rep when a friend halves the money (rep rewards bravery).
   - **(a′) Latent defects / code hygiene, safe to fix:**
     - `fight_mechanics.md` Fight setup — `environment_bonus` is `0.0` (not
       `1.0`) when the environment is disallowed; inert behind the
@@ -86,7 +77,10 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
       skips `apply_move_cost`; preemptives pay)
     - `fight_mechanics.md` Techs + `kung_fu.md` Weapon techs — dead boosts
       (`GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`) and the 7
-      no-op `WeaponTech`s (the two entries below)
+      no-op `WeaponTech`s (the two entries below); also Dragon III /
+      Snake III (lv-7 style techs) boost the derived `qp_max` instead of
+      `qp_max_mult`, so their max-QP half is wiped on refresh (found
+      2026-10-19; `test_generation.py` lists them as known PMAP exceptions)
   - **(c) Design questions — probably intended, per the author, 2026-10-19
     ("mostly they are features, not bugs"); to be revisited later.** Not bugs
     and not part of the fix batches. The ⚠️ markers stay, because no single
@@ -103,8 +97,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
       commented out of the menu
     - `items.md` — merchant price ignores the item (basic vs Super herb); one
       Ginseng Root cures any injury length; mock items invisible to
-      `get_items` (can't be stolen/lost); Craftsman's "pay the rest later"
-      pitch vs no debt mechanic
+      `get_items` (can't be stolen/lost)
     - `kung_fu.md` Weapons — no durability/breaking
     - `social_and_traits.md` — `check_help` picks one channel with no
       fallback; `check_partners` (friends joining training) never called
@@ -143,7 +136,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
       flag never cleared
 - weapon techs don't do anything — reintroduce them
 - dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
-  `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
+  `WeaponTech`s, Dragon III / Snake III `qp_max`; `TIME_UNIT_MULTIPLIER` unused
 - ~~trait selection iterates unsorted collections, so even with `random.seed()`
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with

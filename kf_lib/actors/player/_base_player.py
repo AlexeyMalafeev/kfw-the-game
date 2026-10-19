@@ -1156,7 +1156,7 @@ class BasePlayer(Fighter):
 
     def use_med(self):
         self.log(_('Uses medicine to recover.'))
-        self.inventory[items.MEDICINE] -= 1
+        self.lose_item(items.MEDICINE)
         self.change_stat('healers_used', 1)
         self.recover()
 

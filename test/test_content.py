@@ -92,6 +92,28 @@ class TestStories:
             assert s.state is None
 
 
+class TestBookSeller:
+    def _run(self, monkeypatch, money):
+        g = make_game()
+        p = g.players[0]
+        p.money = money
+        p.feel_too_greedy = 0.0
+        asked = []
+        monkeypatch.setattr(p, 'buy_item_or_not', lambda: asked.append(True) or True)
+        encounters.BookSeller(p, check_if_happens=False)
+        return p, asked
+
+    def test_broke_player_is_refused_without_being_asked(self, monkeypatch):
+        p, asked = self._run(monkeypatch, money=99)
+        assert asked == []
+        assert p.money == 99
+
+    def test_player_who_can_pay_is_asked_and_pays(self, monkeypatch):
+        p, asked = self._run(monkeypatch, money=150)
+        assert asked == [True]
+        assert p.money == 50
+
+
 class TestTournament:
     def test_tournament_runs_headless(self):
         g = make_game(seed=2)

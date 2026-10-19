@@ -166,6 +166,7 @@ PMAP = (
 
     # strike multipliers  # todo add more strike multipliers
     ('acrobatic_strike_mult', _('acrob.str'), _('acrobatic strike efficiency')),
+    ('claw_strike_mult', _('claws'), _('claw strike efficiency')),
     ('dist1_strike_mult', _('close-range'), _('close-range strike efficiency')),
     ('dist2_strike_mult', _('mid-range'), _('mid-range strike efficiency')),
     ('dist3_strike_mult', _('long-range'), _('long-range strike efficiency')),
@@ -173,6 +174,7 @@ PMAP = (
     ('elbow_strike_mult', _('elbows'), _('elbow strike efficiency')),
     ('flying_strike_mult', _('jumps'), _('jumping strike efficiency')),
     ('grappling_strike_mult', _('grappling'), _('grappling efficiency')),
+    ('head_strike_mult', _('headbutts'), _('headbutt efficiency')),
     ('kick_strike_mult', _('kicks'), _('kick efficiency')),
     ('knee_strike_mult', _('knees'), _('knee strike efficiency')),
     ('palm_strike_mult', _('palm str.'), _('palm strike efficiency')),

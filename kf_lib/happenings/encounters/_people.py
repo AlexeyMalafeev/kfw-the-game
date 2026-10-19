@@ -487,6 +487,8 @@ class WiseMan(BaseEncounter):
         if p.check_money(MONEY_WISE_MAN):
             if p.talk_wise_or_not() and not check_feeling_greedy(p):
                 p.pay(MONEY_WISE_MAN)
+                # no player= filter on purpose: an owned trait wastes the change
+                # roll, so the more positive traits you have, the harder new ones get
                 trait = traits.get_rand_traits(negative=False)
                 p.show(
                     _(

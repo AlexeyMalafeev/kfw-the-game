@@ -102,7 +102,7 @@ class Criminal(BaseEncounter):
                 ally.gain_rep(rep_gain)
                 ally.earn_reward(reward)
                 ally.pak()
-        p.gain_rep(c.level)
+        p.gain_rep(c.level)  # full rep even when helped: the bravery was the player's
         p.earn_reward(reward)
         p.pak()
 

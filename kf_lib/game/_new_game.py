@@ -15,6 +15,7 @@ from ._base_game import BaseGame, DEFAULT_TOWN_STAT
 
 
 MAX_NUM_PLAYERS = 6
+TEAM_COOP_MODES = {'2x2': 4, '3x3': 6}  # mode -> the player count it fits
 MAX_NUM_STUDENTS = 8
 
 
@@ -170,17 +171,17 @@ class NewGame(BaseGame):
         )
 
     def _init_players(self, num_players, coop, ai_only, forced_aip_class):
-        coop_mode = False
-        if num_players > 1 and coop == '?':
-            coop_mode = menu(
-                (
-                    (_('Full co-op'), 'full'),
-                    ('2x2', '2x2'),
-                    ('3x3', '3x3'),
-                    (_('No co-op'), 'no'),
-                ),
-                title=_('Co-op mode?'),
+        coop_mode = False if coop == '?' else coop
+        if coop_mode in TEAM_COOP_MODES and TEAM_COOP_MODES[coop_mode] != num_players:
+            raise ValueError(
+                f'co-op mode {coop_mode!r} needs {TEAM_COOP_MODES[coop_mode]} players'
             )
+        if num_players > 1 and coop == '?':
+            options = [(_('Full co-op'), 'full')]
+            # team modes only when the teams come out even
+            options += [(m, m) for m, n in TEAM_COOP_MODES.items() if n == num_players]
+            options.append((_('No co-op'), 'no'))
+            coop_mode = menu(options, title=_('Co-op mode?'))
         for i in range(num_players):
             if not ai_only and yn(_('Player {n} -- human player?').format(n=i + 1)):
                 pp = self._get_new_human_player()
@@ -200,7 +201,7 @@ class NewGame(BaseGame):
                 for p2 in self.players:
                     if p1 != p2:
                         p1.add_friend(p2)
-        elif (coop_mode == '2x2' and n_players == 4) or (coop_mode == '3x3' and n_players == 6):
+        elif coop_mode in TEAM_COOP_MODES:
             def _lets_be_friends(players):
                 for p in players:
                     for p2 in players:

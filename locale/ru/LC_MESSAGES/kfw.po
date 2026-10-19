@@ -476,15 +476,14 @@ msgstr ""
 "Турнир всех школ, раунд {round}:\n"
 "{pairings}"
 
-#: kf_lib/things/items.py:75
-msgid "allows home training"
-msgstr "позволяет тренироваться дома"
+#~ msgid "allows home training"
+#~ msgstr "позволяет тренироваться дома"
 
 #: kf_lib/happenings/encounters/_people.py:126
 msgid "Apologizes."
 msgstr "Извиняется."
 
-#: kf_lib/game/_new_game.py:117
+#: kf_lib/game/_new_game.py:118
 msgid "Are these styles ok?"
 msgstr "Эти стили подходят?"
 
@@ -516,9 +515,13 @@ msgstr "Пытается сбежать."
 msgid "Attends the Jade Table sit-down."
 msgstr "Присутствует на сходке в «Нефритовом столе»."
 
-#: kf_lib/game/_new_game.py:96
+#: kf_lib/game/_new_game.py:97
 msgid "Auto save?"
 msgstr "Автосохранение?"
+
+#: kf_lib/things/items.py:75
+msgid "automatic home training: a little exp every day"
+msgstr "автоматическая тренировка дома: понемногу опыта каждый день"
 
 #: kf_lib/game/_state_menu.py:24 kf_lib/game/debug_menu.py:35 kf_lib/ui/_menu.py:49
 msgid "Back"
@@ -644,7 +647,7 @@ msgstr "Выберите приём для изучения:"
 msgid "Choose a story"
 msgstr "Выберите историю"
 
-#: kf_lib/game/_new_game.py:59
+#: kf_lib/game/_new_game.py:60
 msgid "Choose a style"
 msgstr "Выберите стиль"
 
@@ -681,10 +684,18 @@ msgid "Chooses to ignore the offer."
 msgstr "Решает проигнорировать предложение."
 
 #: kf_lib/kung_fu/boosts.py:169
+msgid "claw strike efficiency"
+msgstr "эффективность ударов когтем"
+
+#: kf_lib/kung_fu/boosts.py:169
+msgid "claws"
+msgstr "когти"
+
+#: kf_lib/kung_fu/boosts.py:170
 msgid "close-range"
 msgstr "ближняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:169
+#: kf_lib/kung_fu/boosts.py:170
 msgid "close-range strike efficiency"
 msgstr "эффективность ударов вблизи"
 
@@ -692,7 +703,7 @@ msgstr "эффективность ударов вблизи"
 msgid "Cmpl"
 msgstr "Слож"
 
-#: kf_lib/game/_new_game.py:182
+#: kf_lib/game/_new_game.py:184
 msgid "Co-op mode?"
 msgstr "Кооперативный режим?"
 
@@ -720,11 +731,11 @@ msgstr "Ремесленник: \"Искра души стоит дороже т
 msgid "Craftsman: \"What a good sparring session!\""
 msgstr "Ремесленник: \"Какой хороший спарринг!\""
 
-#: kf_lib/game/_new_game.py:141
+#: kf_lib/game/_new_game.py:142
 msgid "Crash Course (faster level progression)"
 msgstr "Ускоренный курс (быстрая прокачка)"
 
-#: kf_lib/game/_new_game.py:153
+#: kf_lib/game/_new_game.py:154
 msgid "Crime rate?"
 msgstr "Уровень преступности?"
 
@@ -748,9 +759,13 @@ msgstr "критические удары"
 msgid "Crits,EPICs"
 msgstr "Криты,эпики"
 
-#: kf_lib/game/_new_game.py:87
+#: kf_lib/game/_new_game.py:88
 msgid "Customize game settings? (choose \"no\" to keep the defaults)"
 msgstr "Настроить параметры игры? (ответьте \"нет\", чтобы оставить умолчания)"
+
+#: kf_lib/things/items.py:76
+msgid "daily home training"
+msgstr "ежедневная тренировка дома"
 
 #: kf_lib/kung_fu/boosts.py:114
 msgid "dam.reduc."
@@ -872,7 +887,7 @@ msgstr "Ничья!"
 msgid "Drinks wine."
 msgstr "Пьёт вино."
 
-#: kf_lib/kung_fu/boosts.py:172
+#: kf_lib/kung_fu/boosts.py:173
 msgid "drun.str."
 msgstr "пьян.уд."
 
@@ -884,7 +899,7 @@ msgstr "Пьяница: \"Что? Перед вами сам {} Легендар
 msgid "Drunkard: \"You think you're too good for drinkin' with me?\""
 msgstr "Пьяница: \"Ты что, слишком хорош, чтобы выпить со мной?\""
 
-#: kf_lib/kung_fu/boosts.py:172
+#: kf_lib/kung_fu/boosts.py:173
 msgid "drunken strike efficiency"
 msgstr "эффективность пьяных ударов"
 
@@ -896,11 +911,11 @@ msgstr "Зарабатывает {} монет."
 msgid "easily"
 msgstr "легко "
 
-#: kf_lib/kung_fu/boosts.py:173
+#: kf_lib/kung_fu/boosts.py:174
 msgid "elbow strike efficiency"
 msgstr "эффективность ударов локтем"
 
-#: kf_lib/kung_fu/boosts.py:173
+#: kf_lib/kung_fu/boosts.py:174
 msgid "elbows"
 msgstr "локти"
 
@@ -1103,7 +1118,7 @@ msgstr "друзья:{}"
 msgid "From now on, {name}'s kung-fu style will be known as {school}."
 msgstr "Отныне стиль кунг-фу {name} будет известен как {school}."
 
-#: kf_lib/game/_new_game.py:177
+#: kf_lib/game/_new_game.py:180
 msgid "Full co-op"
 msgstr "Полный кооператив"
 
@@ -1176,7 +1191,7 @@ msgstr "Игрок: Я просто забираю своё!"
 msgid "Gambles."
 msgstr "Играет на деньги."
 
-#: kf_lib/game/_new_game.py:151
+#: kf_lib/game/_new_game.py:152
 msgid "Gang-Ridden (high crime)"
 msgstr "Город банд (высокая преступность)"
 
@@ -1200,7 +1215,7 @@ msgstr "Попадает в бандитскую разборку."
 msgid "Gets caught in the Saint's Day riot."
 msgstr "Попадает в заварушку на День Святого."
 
-#: kf_lib/game/_new_game.py:158
+#: kf_lib/game/_new_game.py:159
 msgid "Getting By (default poverty)"
 msgstr "Перебиваемся (обычная бедность)"
 
@@ -1267,11 +1282,11 @@ msgstr "хватает подручное оружие!"
 msgid "Grabs an improvised weapon."
 msgstr "Хватает подручное оружие."
 
-#: kf_lib/kung_fu/boosts.py:175
+#: kf_lib/kung_fu/boosts.py:176
 msgid "grappling"
 msgstr "борьба"
 
-#: kf_lib/kung_fu/boosts.py:175
+#: kf_lib/kung_fu/boosts.py:176
 msgid "grappling efficiency"
 msgstr "эффективность борьбы"
 
@@ -1295,7 +1310,7 @@ msgstr "защита во время атаки"
 msgid "hands-down "
 msgstr "в чистую "
 
-#: kf_lib/game/_new_game.py:159
+#: kf_lib/game/_new_game.py:160
 msgid "Hard Times (high poverty)"
 msgstr "Тяжёлые времена (высокая бедность)"
 
@@ -1346,6 +1361,14 @@ msgstr "О нём говорили, что у него почти нечелов
 msgid "He was uniquely versatile, having equally great {atts}."
 msgstr "Он был удивительно разносторонним — все качества были одинаково велики: {atts}."
 
+#: kf_lib/kung_fu/boosts.py:177
+msgid "headbutt efficiency"
+msgstr "эффективность ударов головой"
+
+#: kf_lib/kung_fu/boosts.py:177
+msgid "headbutts"
+msgstr "удары головой"
+
 #: kf_lib/actors/human_controlled_fighter.py:42 kf_lib/game/game_stats.py:104
 msgid "Health"
 msgstr "Здоровье"
@@ -1394,9 +1417,8 @@ msgstr "попадание: {dmg} ({hp})"
 msgid "Hlt"
 msgstr "Здр"
 
-#: kf_lib/things/items.py:76
-msgid "home training"
-msgstr "тренировка дома"
+#~ msgid "home training"
+#~ msgstr "тренировка дома"
 
 #: kf_lib/game/debug_menu.py:124
 msgid "How many levels up?"
@@ -1611,7 +1633,7 @@ msgstr "{master} делает выговор и наказывает его за
 msgid "Is the last one standing at the Jade Table."
 msgstr "Остаётся последним на ногах за Нефритовым столом."
 
-#: kf_lib/game/_new_game.py:45
+#: kf_lib/game/_new_game.py:46
 msgid "Is this character ok?"
 msgstr "Этот персонаж подходит?"
 
@@ -1631,11 +1653,11 @@ msgstr "Предметы"
 msgid "Joins the brawl."
 msgstr "Ввязывается в драку."
 
-#: kf_lib/kung_fu/boosts.py:174
+#: kf_lib/kung_fu/boosts.py:175
 msgid "jumping strike efficiency"
 msgstr "эффективность ударов в прыжке"
 
-#: kf_lib/kung_fu/boosts.py:174
+#: kf_lib/kung_fu/boosts.py:175
 msgid "jumps"
 msgstr "прыжки"
 
@@ -1647,19 +1669,19 @@ msgstr "Хлам купл."
 msgid "Keep playing indefinitely?"
 msgstr "Продолжать играть бессрочно?"
 
-#: kf_lib/kung_fu/boosts.py:176
+#: kf_lib/kung_fu/boosts.py:178
 msgid "kick efficiency"
 msgstr "эффективность пинков"
 
-#: kf_lib/kung_fu/boosts.py:176
+#: kf_lib/kung_fu/boosts.py:178
 msgid "kicks"
 msgstr "пинки"
 
-#: kf_lib/kung_fu/boosts.py:177
+#: kf_lib/kung_fu/boosts.py:179
 msgid "knee strike efficiency"
 msgstr "эффективность ударов коленом"
 
-#: kf_lib/kung_fu/boosts.py:177
+#: kf_lib/kung_fu/boosts.py:179
 msgid "knees"
 msgstr "колени"
 
@@ -1675,15 +1697,15 @@ msgstr "Нокаутирует: {name}."
 msgid "KOed,days inac."
 msgstr "Нок.,дней неакт."
 
-#: kf_lib/game/_new_game.py:165
+#: kf_lib/game/_new_game.py:166
 msgid "Kung-Fu Backwater (low enthusiasm)"
 msgstr "Кунг-фу глухомань (слабый энтузиазм)"
 
-#: kf_lib/game/_new_game.py:167
+#: kf_lib/game/_new_game.py:168
 msgid "Kung-Fu Craze (high enthusiasm)"
 msgstr "Кунг-фу лихорадка (сильный энтузиазм)"
 
-#: kf_lib/game/_new_game.py:169
+#: kf_lib/game/_new_game.py:170
 msgid "Kung-fu enthusiasm?"
 msgstr "Энтузиазм к кунг-фу?"
 
@@ -1727,7 +1749,7 @@ msgstr "УР"
 msgid "Level (Exp.)"
 msgstr "Уровень (опыт)"
 
-#: kf_lib/game/_new_game.py:143
+#: kf_lib/game/_new_game.py:144
 msgid "Level progression?"
 msgstr "Скорость прокачки?"
 
@@ -1739,11 +1761,11 @@ msgstr "Повысить уровень"
 msgid "Load"
 msgstr "Загрузить"
 
-#: kf_lib/kung_fu/boosts.py:171
+#: kf_lib/kung_fu/boosts.py:172
 msgid "long-range"
 msgstr "дальняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:171
+#: kf_lib/kung_fu/boosts.py:172
 msgid "long-range strike efficiency"
 msgstr "эффективность ударов издалека"
 
@@ -1791,7 +1813,7 @@ msgstr "ур.{}"
 msgid "lying dfs"
 msgstr "защита лёжа"
 
-#: kf_lib/game/_new_game.py:37 kf_lib/happenings/encounters/_crime.py:418
+#: kf_lib/game/_new_game.py:38 kf_lib/happenings/encounters/_crime.py:418
 msgid "Man"
 msgstr "Мужчина"
 
@@ -1811,7 +1833,7 @@ msgstr "стоимость манёвра по времени"
 msgid "Marries {sw}."
 msgstr "Вступает в брак: {sw}."
 
-#: kf_lib/game/_new_game.py:166
+#: kf_lib/game/_new_game.py:167
 msgid "Martial Town (default enthusiasm)"
 msgstr "Город единоборств (обычный энтузиазм)"
 
@@ -1879,11 +1901,11 @@ msgstr "Встречает {name}."
 msgid "Meets {}"
 msgstr "Встречает {}"
 
-#: kf_lib/kung_fu/boosts.py:170
+#: kf_lib/kung_fu/boosts.py:171
 msgid "mid-range"
 msgstr "средняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:170
+#: kf_lib/kung_fu/boosts.py:171
 msgid "mid-range strike efficiency"
 msgstr "эффективность ударов со средней дистанции"
 
@@ -1955,7 +1977,7 @@ msgstr "Ночь. Треск ломаемого дерева — люди в м�
 msgid "no"
 msgstr "нет"
 
-#: kf_lib/game/_new_game.py:180
+#: kf_lib/game/_new_game.py:183
 msgid "No co-op"
 msgstr "Без кооператива"
 
@@ -1987,7 +2009,7 @@ msgstr "Недостаточно денег!"
 msgid "Nothing interesting."
 msgstr "Ничего интересного."
 
-#: kf_lib/game/_new_game.py:84
+#: kf_lib/game/_new_game.py:85
 msgid "Number of players?"
 msgstr "Количество игроков?"
 
@@ -2047,11 +2069,11 @@ msgstr "Подслушивает разговор."
 msgid "P"
 msgstr "М"
 
-#: kf_lib/kung_fu/boosts.py:178
+#: kf_lib/kung_fu/boosts.py:180
 msgid "palm str."
 msgstr "ладонь"
 
-#: kf_lib/kung_fu/boosts.py:178
+#: kf_lib/kung_fu/boosts.py:180
 msgid "palm strike efficiency"
 msgstr "эффективность ударов ладонью"
 
@@ -2094,7 +2116,7 @@ msgstr[0] "Платит {} монету за ущерб от бунта."
 msgstr[1] "Платит {} монеты за ущерб от бунта."
 msgstr[2] "Платит {} монет за ущерб от бунта."
 
-#: kf_lib/game/_new_game.py:149
+#: kf_lib/game/_new_game.py:150
 msgid "Peaceful Town (low crime)"
 msgstr "Мирный город (низкая преступность)"
 
@@ -2106,11 +2128,11 @@ msgstr "Искать драки"
 msgid "Pins the blame for the riot on the {style} school."
 msgstr "Возлагает вину за беспорядки на школу {style}."
 
-#: kf_lib/game/_new_game.py:38
+#: kf_lib/game/_new_game.py:39
 msgid "Play as a man or a woman?"
 msgstr "Играть за мужчину или женщину?"
 
-#: kf_lib/game/_new_game.py:185
+#: kf_lib/game/_new_game.py:186
 msgid "Player {n} -- human player?"
 msgstr "Игрок {n} — человек?"
 
@@ -2122,7 +2144,7 @@ msgstr "Пожалуйста, примите этот подарок: {item} —
 msgid "Police Officer: \"Thank you very much for your help!\""
 msgstr "Полицейский: \"Огромное спасибо за вашу помощь!\""
 
-#: kf_lib/game/_new_game.py:161
+#: kf_lib/game/_new_game.py:162
 msgid "Poverty?"
 msgstr "Бедность?"
 
@@ -2174,15 +2196,15 @@ msgstr "Пред. страница"
 msgid "Propose to {sw}?"
 msgstr "Сделать предложение ({sw})?"
 
-#: kf_lib/game/_new_game.py:157
+#: kf_lib/game/_new_game.py:158
 msgid "Prosperous (low poverty)"
 msgstr "Благополучный (низкая бедность)"
 
-#: kf_lib/kung_fu/boosts.py:179
+#: kf_lib/kung_fu/boosts.py:181
 msgid "punch efficiency"
 msgstr "эффективность ударов кулаком"
 
-#: kf_lib/kung_fu/boosts.py:179
+#: kf_lib/kung_fu/boosts.py:181
 msgid "punches"
 msgstr "удары кулаком"
 
@@ -2234,7 +2256,7 @@ msgstr "Быстрая победа"
 msgid "Quit"
 msgstr "Выход"
 
-#: kf_lib/game/_new_game.py:105
+#: kf_lib/game/_new_game.py:106
 msgid "Randomly generated styles?"
 msgstr "Случайно сгенерированные стили?"
 
@@ -2306,7 +2328,7 @@ msgstr "Грабитель: \"{}\""
 msgid "Rock"
 msgstr "Камень"
 
-#: kf_lib/game/_new_game.py:150
+#: kf_lib/game/_new_game.py:151
 msgid "Rough Edges (default crime)"
 msgstr "Неспокойный район (обычная преступность)"
 
@@ -2662,7 +2684,7 @@ msgstr "Драка перекидывается на зевак."
 msgid "The brawler won't let go."
 msgstr "Задира не отстаёт."
 
-#: kf_lib/game/_new_game.py:140
+#: kf_lib/game/_new_game.py:141
 msgid "The Classic Path (default progression)"
 msgstr "Классический путь (обычная прокачка)"
 
@@ -2713,7 +2735,7 @@ msgstr "Сходка Нефритового Стола перерастает в
 msgid "The last thug crawls away into the night. The school stands! The neighbors saw everything — word spreads through {town}."
 msgstr "Последний головорез уползает в ночь. Школа устояла! Соседи всё видели — весть разносится по всему городу: {town}."
 
-#: kf_lib/game/_new_game.py:139
+#: kf_lib/game/_new_game.py:140
 msgid "The Long Road (slower level progression)"
 msgstr "Долгий путь (медленная прокачка)"
 
@@ -2808,7 +2830,7 @@ msgstr "Турнир заканчивается без победителя!"
 msgid "The victory does {winner} good — he visibly improves!"
 msgstr "Победа идёт на пользу: {winner} заметно прибавляет в мастерстве!"
 
-#: kf_lib/happenings/encounters/_people.py:498
+#: kf_lib/happenings/encounters/_people.py:500
 msgid "The wise man talks about the importance of being {}."
 msgstr "Мудрец говорит о важности качества: {}."
 
@@ -2816,7 +2838,7 @@ msgstr "Мудрец говорит о важности качества: {}."
 msgid "Thief: \"Can you stop the infamous {}?\""
 msgstr "Вор: \"А сумеешь ли ты остановить пресловутого {}?\""
 
-#: kf_lib/happenings/encounters/_people.py:504
+#: kf_lib/happenings/encounters/_people.py:506
 msgid "This conversation changes {}'s life."
 msgstr "Этот разговор меняет жизнь {}."
 
@@ -2844,7 +2866,7 @@ msgstr "Хронология"
 msgid "To open a martial arts school, {} needs to make the initial outlay of {} coins."
 msgstr "Чтобы открыть школу боевых искусств, {} нужно внести первоначальный взнос: {} монет."
 
-#: kf_lib/happenings/encounters/_people.py:518
+#: kf_lib/happenings/encounters/_people.py:520
 msgid "Too bad {} doesn't have enough money to treat the wise man to lunch and talk to him."
 msgstr "Жаль, что у {} недостаточно денег, чтобы угостить мудреца обедом и поговорить с ним."
 
@@ -2948,11 +2970,11 @@ msgstr "куда "
 msgid "WEAPON"
 msgstr "ОРУЖИЕ"
 
-#: kf_lib/kung_fu/boosts.py:180
+#: kf_lib/kung_fu/boosts.py:182
 msgid "weapon efficiency"
 msgstr "эффективность оружия"
 
-#: kf_lib/kung_fu/boosts.py:180
+#: kf_lib/kung_fu/boosts.py:182
 msgid "weapons"
 msgstr "оружие"
 
@@ -3020,7 +3042,7 @@ msgstr "Победы,нокауты"
 msgid "Wins."
 msgstr "Побеждает."
 
-#: kf_lib/game/_new_game.py:37 kf_lib/happenings/encounters/_crime.py:418
+#: kf_lib/game/_new_game.py:38 kf_lib/happenings/encounters/_crime.py:418
 msgid "Woman"
 msgstr "Женщина"
 
@@ -3355,7 +3377,7 @@ msgstr "{name} решает подождать ещё немного."
 msgid "{name} doesn't have enough money to enter."
 msgstr "{name} не может заплатить взнос — денег не хватает."
 
-#: kf_lib/happenings/encounters/_book_seller.py:38 kf_lib/happenings/encounters/_items.py:85 kf_lib/happenings/encounters/_performer.py:144
+#: kf_lib/happenings/encounters/_book_seller.py:37 kf_lib/happenings/encounters/_items.py:85 kf_lib/happenings/encounters/_performer.py:144
 msgid "{name} doesn't have enough money."
 msgstr "У {name} недостаточно денег."
 
@@ -4099,7 +4121,7 @@ msgstr "{} - использовать предмет?"
 msgid "{} accidentally overhears a conversation of two young kung-fu practitioners."
 msgstr "{} случайно подслушивает разговор двух молодых бойцов кунг-фу."
 
-#: kf_lib/happenings/encounters/_people.py:492
+#: kf_lib/happenings/encounters/_people.py:494
 msgid "{} and the wise man have a long conversation in a nearby tavern. The wise man talks about the importance of being {}."
 msgstr "{} и мудрец долго беседуют в ближайшем кабаке. Мудрец рассуждает о том, как важно быть: {}."
 

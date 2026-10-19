@@ -229,13 +229,17 @@ Expenses: tuition 20/day, merchant items 70–150 (`items.PRICES`), kung-fu book
 100, wooden mannequin 500, tournament fees, gossip 15–35, wise man 10, beggar
 donation 10, opening your school 1000.
 
-⚠️ `pay()` never clamps and the MasterTrial path pays the 1000 c school outlay
-**unconditionally** — money can go negative. Most purchases gate on
-`check_money`, but four paths don't: the school founding, the Craftsman's
-500 c mannequin (`docs/items.md`), the tournament entry fee
+**Debt** (by design): `pay()` never clamps, so money can go negative — a
+negative balance is the game's debt. Most purchases gate on `check_money`
+(you can't buy what you can't afford, with an explicit "not enough money"
+branch), but four paths deliberately let you spend more than you have: the
+MasterTrial school founding (1000 c), the Craftsman's 500 c mannequin ("you
+can pay the rest later", `docs/items.md`), the tournament entry fee
 (`enter_tourn`) and a *human* player's tournament bet
-(`HumanPlayer.place_bet_on_tourn`; the AI filters to affordable stakes) — see
-`docs/encounters.md`. The gambler's revenge clawback (`p.money -= self.won`)
+(`HumanPlayer.place_bet_on_tourn`; the AI is more cautious and only bets
+affordable stakes) — see `docs/encounters.md`. While in debt, every
+`check_money`-gated purchase is refused; work, prize money and other income
+pay the debt back. The gambler's revenge clawback (`p.money -= self.won`)
 is unguarded too, but can't go negative: it takes back exactly the session's
 winnings, which are still in the purse.
 
@@ -321,9 +325,9 @@ for a Super Mega Herb (all tier-2 boosts at once). The wooden mannequin (500 c,
 Craftsman) makes `do_daily` call `practice_home` for a silent +1 exp every day,
 forever (+2 if hardworking, +0 if lazy) — worth ~2.5 c/day at the school rate
 (8 exp per 20 c), so it pays for itself in about 200 days of training and
-stacks with everything. ⚠️ Its description says "allows home training", but there is
-no home-training day action; it's a passive trickle, which the text doesn't
-convey.
+stacks with everything. There is no home-training day action — owning the
+mannequin *is* the home training, which happens automatically; its
+description says so ("automatic home training: a little exp every day").
 
 **Luck**: `check_luck` is a d20 rolled in several encounter resolutions; 1 =
 bad, 20 = good (5% each), flipping outcomes (free mannequin vs shoddy one,
@@ -347,7 +351,7 @@ trial, and reaching it earns the master's praise, +25 exp and +2 rep
 Implemented via the MasterTrial encounter (`encounters/_school.py`): requires
 `not is_master`, school rank 1, and `level >= 11` (`fighter_factory.MASTER_LV[0]`),
 then 5% per `MasterTrial` entry per school-practice sweep (3 entries → ~14%/day).
-Beat your master in a spar, pay 1000 c (unconditionally — see ⚠️ above), pick a
+Beat your master in a spar, pay 1000 c (even into debt — see Economy above), pick a
 school name, and **choose up to 3 school techs** from the techs you know
 (`choose_school_techs`; weapon techs excluded; AI masters pick randomly):
 you're removed from the old school, become `masters[your_school]`,

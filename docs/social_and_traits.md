@@ -97,8 +97,8 @@ Call sites: `Ambush`, `Extorters`, `RobbingSomeone`, group/armed `Robbers`,
 `Criminal` (direct `check_allies(1)`), plus weapon-only variants in
 `HelpPolice` and `StolenTreasuresStory` (`allies=False, master=False,
 school=False`). Allies join side_a of a real fight — exp, injuries and stats
-apply to them as usual. In `Criminal`, a joined friend halves the reward (the
-inconsistent rep/money split is flagged in `docs/encounters.md`).
+apply to them as usual. In `Criminal`, a joined friend halves the reward money
+(the player still keeps full rep for the bravery — see `docs/encounters.md`).
 
 `FriendMatch` (`_people.py`): pick-fights encounter with chance
 `len(nonhuman friends) * 0.01` per sweep entry; a spar against a random friend.
@@ -201,15 +201,14 @@ have no other mechanical effect.
 ## Co-op setup
 
 `NewGame._init_players` (`_new_game.py`): with >1 player a menu offers 'Full
-co-op' (every pair of players friended), '2x2', '3x3' (two cliques, `add_friend`
-within each half), or none. Friending players is what switches on the
-`coop_joins_fight` (0.5) / `coop_joins_training` (dead, see above) rolls in
-`check_allies`, vs 0.3 for NPC friends.
-
-⚠️ '2x2' is applied only when there are exactly 4 players and '3x3' only with
-exactly 6 (`elif coop_mode == '2x2' and n_players == 4 ...`). The menu offers
-both options for any player count, so picking '3x3' in a 4-player game silently
-creates no bonds at all.
+co-op' (every pair of players friended), a team mode, or none. The team modes
+(`TEAM_COOP_MODES`: '2x2' for exactly 4 players, '3x3' for exactly 6) make two
+cliques (`add_friend` within each half) and are only offered when the player
+count fits, so with 2, 3 or 5 players the choice is just full co-op or none.
+Scripted callers can pass the mode as `new_game(coop=...)`; a team mode with
+the wrong player count raises `ValueError`. Friending players is what switches
+on the `coop_joins_fight` (0.5) / `coop_joins_training` (dead, see above) rolls
+in `check_allies`, vs 0.3 for NPC friends.
 
 ## Traits: data model
 
@@ -244,9 +243,11 @@ but always fail), 'unfriendly' zeroes challenger befriending.
   'Personality Change' accomplishment. `add_trait` itself raises if the trait
   or its opposite is already present — the WiseMan flow is the only caller and
   guards both cases.
-  ⚠️ The talked-about trait is drawn with `get_rand_traits(negative=False)`
+  The talked-about trait is drawn with `get_rand_traits(negative=False)`
   *without* the `player` filter, so it can name a trait you already have — the
-  `trait not in p.traits` gate then quietly wastes the 0.15 change roll.
+  `trait not in p.traits` gate then makes the 0.15 change roll a no-op. This
+  is intended balance: the more positive traits you already have, the harder
+  it is to acquire new ones.
 - **Persistence**: `get_init_atts()` includes `self.traits` as a constructor
   arg; on load `__init__` re-runs `activate_trait` for each, so mid-game trait
   changes survive save/load (covered by `test/test_save_load.py`).

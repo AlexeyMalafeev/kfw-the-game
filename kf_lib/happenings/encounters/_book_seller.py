@@ -32,30 +32,30 @@ class BookSeller(BaseEncounter):
         ).format(name=tr_fighter_name(p.name), price=price)
         p.show(t)
         p.log(_("Meets a book seller."))
-        if p.buy_item_or_not() and not check_feeling_greedy(p):
-            if not p.check_money(price):
-                p.show(
-                    _('{name} doesn\'t have enough money.').format(
-                        name=tr_fighter_name(p.name)
-                    )
+        if not p.check_money(price):
+            p.show(
+                _('{name} doesn\'t have enough money.').format(
+                    name=tr_fighter_name(p.name)
                 )
-            else:
-                p.pay(price)
-                luck = p.check_luck()
-                if luck == -1:
-                    t = _("The book turns out to be complete rubbish!")
-                    p.write(t)
-                else:  # todo improve a move with books
-                    if rnd() < CH_BOOK_MOVE:
-                        if luck == 1:
-                            tier = p.get_move_tier_for_lv() + BOOK_MOVE_TIER_BONUS
-                        else:
-                            tier = max(1, p.get_move_tier_for_lv() - BOOK_MOVE_TIER_PENALTY)
-                        move = moves.get_rand_move(f=p, tier=tier)
-                        p.learn_move(move)
+            )
+            p.pak()
+        elif p.buy_item_or_not() and not check_feeling_greedy(p):
+            p.pay(price)
+            luck = p.check_luck()
+            if luck == -1:
+                t = _("The book turns out to be complete rubbish!")
+                p.write(t)
+            else:  # todo improve a move with books
+                if rnd() < CH_BOOK_MOVE:
+                    if luck == 1:
+                        tier = p.get_move_tier_for_lv() + BOOK_MOVE_TIER_BONUS
                     else:
-                        exp = random.randint(*experience.BOOK_EXP)
-                        if luck == 1:
-                            exp *= EXP_LUCKY_MULT
-                        p.gain_exp(exp)
+                        tier = max(1, p.get_move_tier_for_lv() - BOOK_MOVE_TIER_PENALTY)
+                    move = moves.get_rand_move(f=p, tier=tier)
+                    p.learn_move(move)
+                else:
+                    exp = random.randint(*experience.BOOK_EXP)
+                    if luck == 1:
+                        exp *= EXP_LUCKY_MULT
+                    p.gain_exp(exp)
             p.pak()

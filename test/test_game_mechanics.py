@@ -5,6 +5,7 @@ import pytest
 
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 from kf_lib.actors.player import SmartAIP
+import kf_lib.game._new_game as new_game_mod
 from kf_lib.game._playing import (
     FOLK_HERO_REP,
     GRANDMASTER_LV,
@@ -14,12 +15,12 @@ from kf_lib.game._playing import (
 )
 
 
-def make_game(seed=0, num_players=2):
+def make_game(seed=0, num_players=2, coop=False):
     random.seed(seed)
     g = game.Game()
     g.new_game(
         num_players=num_players,
-        coop=False,
+        coop=coop,
         ai_only=True,
         auto_save_on=False,
         generated_styles=True,
@@ -32,6 +33,43 @@ def make_game(seed=0, num_players=2):
 def make_player(seed=0):
     random.seed(seed)
     return SmartAIP(name='Test Player', style='Drunken Boxing')
+
+
+class TestCoopSetup:
+    def test_team_modes_offered_only_for_matching_player_counts(self, monkeypatch):
+        offered = {}
+
+        def fake_menu(options, title=''):
+            offered[n] = [value for _label, value in options]
+            return 'no'
+
+        monkeypatch.setattr(new_game_mod, 'menu', fake_menu)
+        for n in range(2, 7):
+            make_game(num_players=n, coop='?')
+        assert offered == {
+            2: ['full', 'no'],
+            3: ['full', 'no'],
+            4: ['full', '2x2', 'no'],
+            5: ['full', 'no'],
+            6: ['full', '3x3', 'no'],
+        }
+
+    @pytest.mark.parametrize('mode, n', [('2x2', 4), ('3x3', 6)])
+    def test_team_mode_makes_two_cliques(self, mode, n):
+        g = make_game(num_players=n, coop=mode)
+        half = n // 2
+        for team in (g.players[:half], g.players[half:]):
+            for p in team:
+                assert set(p.friends) == set(team) - {p}
+
+    def test_full_coop_friends_everyone(self):
+        g = make_game(num_players=3, coop='full')
+        for p in g.players:
+            assert set(p.friends) == set(g.players) - {p}
+
+    def test_team_mode_with_wrong_player_count_raises(self):
+        with pytest.raises(ValueError):
+            make_game(num_players=4, coop='3x3')
 
 
 class TestCalendar:

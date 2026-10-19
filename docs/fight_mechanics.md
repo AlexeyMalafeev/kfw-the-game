@@ -299,7 +299,10 @@ learning). Values live in `kung_fu/boosts.py` / `boost_combos.py`.
 
 ⚠️ Dead/unused boosts: `GRAB_CH1/2` (`grab_chance` unused), `QI_WHEN_ATK`,
 `HP_MULT`, `epic_chance_mult`, all `WeaponTech`s ("weapon techniques do
-nothing; implement"). The advanced 'Lightning-Fast Strikes' tech doubles the
+nothing; implement"). The Dragon III / Snake III style techs (level 7) boost
+the derived `qp_max` instead of `qp_max_mult`, so their `QP_MAX1` half is
+wiped by the next `refresh_dependent_atts` recompute — only `qp_start` works (it's
+also why their descriptions omit the max-QP bonus). The advanced 'Lightning-Fast Strikes' tech doubles the
 basic 'Fast Strikes' effect (`STRIKE_TIME_COST_MULT2` = −0.6 vs −0.3).
 
 `kung_fu/moves.py` loads `moves/all_moves.txt` at import (each line `eval()`d

@@ -72,8 +72,8 @@ class Item(object):
 
 # todo improve mannequin instantiation
 _manneq = Item(MANNEQUIN)  # a bit of a special case
-_manneq.descr = _('allows home training')
-_manneq.descr_short = _('home training')
+_manneq.descr = _('automatic home training: a little exp every day')
+_manneq.descr_short = _('daily home training')
 
 
 def ef_boost(target, **kwargs):

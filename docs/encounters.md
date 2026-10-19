@@ -140,9 +140,10 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   per thug. Boosted ×2 in `FIGHT_CRIME_ENCS`.
 - `Criminal` (flat 0.03, needs `game.criminals`): fight a wanted convict; the
   reward is `criminal.level * random multiplier`, split with one helping ally.
-  ⚠️ In `Criminal.reward` the ally gets the halved `rep_gain`, but the player
-  still gets full `c.level` rep while the *money* is halved — the split is
-  applied inconsistently.
+  In `Criminal.reward` the ally gets half the money and half the rep
+  (`rep_gain`), while the player gets half the money but the full `c.level`
+  rep — by design: reputation rewards the bravery of taking on the criminal,
+  a risk the player accepted without knowing a friend would join.
 
 ### Street people (`_people.py`)
 
@@ -421,8 +422,9 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
   prize and all bets lost; a drawn elimination final ends it the same way.
 - **Gathering** (`_gather_participants`): active players in the level range are
   asked (`tourn_or_not`; AI always accepts) and pay the fee via `enter_tourn`.
-  ⚠️ No money check — a broke player (human or AI) pays anyway and can go
-  negative. Remaining slots are sampled from masters and school students in
+  No money check, by design — a broke player (human or AI) can enter on
+  credit and go into debt (negative money; see the Economy section of
+  `docs/gameplay.md`). Remaining slots are sampled from masters and school students in
   range. If nobody eligible shows up, `run()` cancels the tournament
   ("...but nobody shows up") before `self.spectator = self.participants[0]`
   (used for round announcements) is assigned.
@@ -439,10 +441,11 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
 - **Betting**: after the participant list is shown, every active player may
   bet (`bet_on_tourn_or_not`, AI: `gamble_chance` roll; AI picks a random
   highest-level participant). The stake (10/25/50/100) is paid up front in
-  `place_bet_on_tourn`. ⚠️ Only the AI checks affordability (its
+  `place_bet_on_tourn`. Only the AI checks affordability (its
   `bet_on_tourn_or_not` and stake list filter by `check_money`); the human
-  menu offers every stake regardless of money, so a broke human can bet
-  into negative money. Placing a bet costs reputation
+  menu offers every stake regardless of money, so a human may deliberately
+  bet into debt (negative money is allowed by design — see the Economy
+  section of `docs/gameplay.md`). Placing a bet costs reputation
   (`BET_REPUTATION_PENALTY` −3, win or lose — gambling is dishonorable). In
   `_resolve_bets` a winning bet pays
   `stake * max(current_round, 1.5)` (the 1.5 floor covers one-round

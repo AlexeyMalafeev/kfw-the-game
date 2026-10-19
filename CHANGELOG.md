@@ -3,6 +3,36 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
+## [Unreleased]
+
+### Changed
+- **Clearer wooden mannequin description**: it said "allows home training",
+  but there is no home-training action to unlock. Owning a mannequin *is*
+  the home training (a little exp every day, automatically), and the item
+  description (also shown in the Craftsman's pitch) now says so
+
+### Fixed
+- **Co-op '2x2' / '3x3' could silently create no teams**: the new-game menu
+  offered both team modes for any player count, but '2x2' only worked with
+  exactly 4 players and '3x3' with exactly 6 — picking the wrong one quietly
+  left everyone without co-op bonds. The menu now offers a team mode only
+  when the player count fits (2, 3 or 5 players choose between full co-op
+  and none)
+- **Book seller asked "Buy it?" before checking your money**, so a broke
+  player could say yes and only then be refused; like the street merchant,
+  it now checks first and doesn't ask a player who can't pay
+- **Using Ginseng Root left no inventory log line**: `use_med` decremented
+  the inventory directly; it now goes through `lose_item` like every other
+  spent item
+- **Incomplete technique descriptions**: the headbutt and claw strike
+  bonuses (Exotic Boxing, Hardened Palms, their advanced versions, and the
+  techs of generated 'Exotic' / 'Bizarre' / 'Open-Handed' / 'Heavenly' /
+  'Centipede' styles) applied but weren't
+  listed in the tech description; they now read e.g. "+25% headbutt
+  efficiency". (The fight-balance harness tallies buffs from these
+  descriptions, so its next report gains 'claws' / 'headbutts' rows — no
+  balance change)
+
 ## [v0.7.5-beta "Palladius Palm"] — 2026-10-19
 
 ### Added

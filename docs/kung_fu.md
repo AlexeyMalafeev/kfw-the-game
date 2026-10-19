@@ -243,11 +243,10 @@ additive increments to a 1.0 base — stacked techs add, never compound (see
 Boost values are named constants in `kung_fu/boosts.py`; themed bundles
 (QI1/2, STAMINA1/2, CRITICAL1/2, DRUNKEN1/2, …) live in
 `kung_fu/boost_combos.py`. `boosts.PMAP` maps param names to short/long
-descriptions; `set_descr` renders `Tech.descr`/`descr_short` from it.
-⚠️ PMAP lacks `head_strike_mult` and `claw_strike_mult`, so techs granting
-them (Exotic Boxing, Hardened Palms, style words like 'Exotic' /
-'Open-Handed') display **incomplete descriptions** — the bonus and the
-fav-feature still apply.
+descriptions; `set_descr` renders `Tech.descr`/`descr_short` from it. A
+param missing from PMAP still applies (and still adds its fav-feature) but
+is silently left out of the description, so every boost param needs a PMAP
+row — `test_content.py` checks this for all techs.
 
 Upgrading: `LINKED_TECHS` pairs 30 regular techs (`is_upgradable=True`)
 with their advanced versions (`is_advanced=True`); `UPG_MAP_REG_ADV` maps

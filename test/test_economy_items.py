@@ -29,7 +29,7 @@ class TestMoney:
         assert p.money == 70
 
     def test_pay_into_negative_is_allowed(self):
-        # no guard against overspending in pay() itself
+        # by design: a negative balance is the game's debt (docs/gameplay.md)
         p = make_player()
         p.money = 10
         p.pay(30)
@@ -99,6 +99,18 @@ class TestInventory:
         p.obtain_item(items.MEDICINE, 2)
         p.lose_item(items.MEDICINE)
         assert p.check_item(items.MEDICINE) == 1
+
+    def test_use_med_spends_one_root_with_a_log_line(self):
+        p = make_player()
+        p.obtain_item(items.MEDICINE, 2)
+        p.inactive, p.inact_status = 3, 'injured'
+        log_len = len(p.plog)
+        p.use_med()
+        assert p.check_item(items.MEDICINE) == 1
+        assert (p.inactive, p.inact_status) == (0, '')
+        assert p.get_stat('healers_used') == 1
+        new_lines = p.plog[log_len:]
+        assert f'{items.MEDICINE}: -1(1)' in new_lines  # the lose_item line
 
     def test_buy_item(self):
         p = make_player()
