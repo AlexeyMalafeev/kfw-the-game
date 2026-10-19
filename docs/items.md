@@ -18,7 +18,10 @@ docstring says "Instantiated only for descriptions", and it is literal: nothing
 in the game logic ever touches an `Item` instance except `get_item_descr()`.
 Effects live separately in the `EFFECTS` dict keyed by item name. ⚠️ Because
 the two are decoupled, `use_item`/`cancel_item` raise `KeyError` for any name
-missing from `EFFECTS` (e.g. mock items handed out via the debug menu).
+missing from `EFFECTS` (mock items, the mannequin). Latent today: the only
+callers are the pre-fight item pick, which draws from `get_items()` (fight
+items only), and `use_med` (which bypasses `use_item`) — so even mock items
+handed out via the debug menu never reach it.
 
 Three real item categories, all defined as name constants in
 `things/items.py`:
@@ -162,10 +165,12 @@ code can arm the right NPCs (`arm_robber()`, `arm_police()`, … in
 Arming is always temporary and scene-driven:
 
 - Encounter code arms NPCs (robbers/extorters/police, gamblers, challengers).
-  ⚠️ `set_up_weapon_fight` (`encounters/_utils.py:48`) announces "Let's duel
-  with blades" but arms only the NPC — the player fights barehanded. The
-  school challenge (`_school.py:126`) is the one place the player gets a
-  normal weapon too.
+  `set_up_weapon_fight` (`encounters/_utils.py`, the "Let's duel with
+  blades" challenges) arms both sides via `choose_best_norm_wp()` — which
+  is just `arm_normal()`, a random normal weapon; the human menu override
+  in `human_controlled_fighter.py` is commented out. The school challenge
+  (`_school.py`, `arm_normal()` on both) and the first Strange Dreams scene
+  likewise hand the player a normal weapon.
 - `check_help` may arm the player with a random improvised weapon before a
   street fight (`grab_improvised_weapon` = 0.5).
 - In-fight: `try_in_fight_impro_wp` (`_fight_actions.py:296`) rolls

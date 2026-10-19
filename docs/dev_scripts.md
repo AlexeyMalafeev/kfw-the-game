@@ -34,8 +34,9 @@ left behind (`git status` clean).
 - ⚠️ The chdir happens *before* the script body, so any relative path in a
   script resolves against the repo root, not the script's directory —
   `'../../...'` literals in the script body therefore point *outside* the
-  repo. The concrete instances of this bug found in 2026-09 were fixed, but
-  keep the gotcha in mind when adding paths to these scripts.
+  repo. Most instances found in 2026-09 were fixed; `ml/ML_learn.py` still
+  has one (see its verdict below). Keep the gotcha in mind when adding paths
+  to these scripts.
 - Most scripts end with `input('Press Enter to exit')` — harmless with piped
   stdin if you send one newline (`echo | ...`), an EOFError otherwise.
 - Interactive prompts (`ui.menu`/`ui.yn`) go through termios

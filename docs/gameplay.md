@@ -231,8 +231,13 @@ donation 10, opening your school 1000.
 
 ⚠️ `pay()` never clamps and the MasterTrial path pays the 1000 c school outlay
 **unconditionally** — money can go negative. Most purchases gate on
-`check_money`, but the school founding and the gambler's revenge clawback
-(`p.money -= self.won`) don't.
+`check_money`, but four paths don't: the school founding, the Craftsman's
+500 c mannequin (`docs/items.md`), the tournament entry fee
+(`enter_tourn`) and a *human* player's tournament bet
+(`HumanPlayer.place_bet_on_tourn`; the AI filters to affordable stakes) — see
+`docs/encounters.md`. The gambler's revenge clawback (`p.money -= self.won`)
+is unguarded too, but can't go negative: it takes back exactly the session's
+winnings, which are still in the purse.
 
 Betting on tournaments carries a reputation cost: placing a bet applies
 `BET_REPUTATION_PENALTY` (−3) regardless of the outcome — gambling is not
@@ -247,7 +252,8 @@ crime is monotonically non-increasing and the world gets permanently safer as
 players fight crime. `poverty` only gates the Beggar chance (`poverty/2`) and
 never changes: `poverty_up/down` and `kungfu_up/down` exist but are never
 called (todo in `randevent`). ⚠️ `g.kung_fu` is read nowhere at all (the
-`_base_game.py` todo claims tournaments use it; they don't).
+`_base_game.py` todo claims tournaments use it; they don't), even though the
+new-game settings menu asks for it ("Kung-fu enthusiasm?").
 
 ## Reputation and fame
 
@@ -265,11 +271,14 @@ losing costs injury days (or a Ginseng Root), worsens your fighting record,
 and pays far less exp than winning, so persistent losers fall behind the
 other players.
 
-⚠️ Reputation's **only** mechanical effect is the Folk Hero victory check (and
-a line on the stats screen). Nothing else reads `p.reputation`. In particular,
-student attraction uses `get_fame()` — `(tourn_won + len(accompl) +
+Reputation's mechanical effects: the Folk Hero victory check (≥ 100), a
+master's persuasion chance when visiting other masters for the federation
+(`visit_masters`: `reputation / 150`, capped at 0.75 — the Uniter of Schools
+path), and marriage-proposal acceptance (`propose_marriage`: `0.5 +
+reputation / 500`, capped at 0.9); plus a line on the stats screen. ⚠️
+Student attraction, however, uses `get_fame()` — `(tourn_won + len(accompl) +
 fights_won // 10) × 0.01` — which ignores reputation entirely, so a
-rep-grinding Folk Hero gets no help founding a school, and a hated champion
+rep-grinding Folk Hero gets no help filling a school, and a hated champion
 attracts students just fine.
 
 ## Progression levers
@@ -427,8 +436,10 @@ earns the master +3 rep and a `students_tourn_won` stat point, with the
   via pure donations is ~500 c of beggar money gated behind `poverty/2`
   encounter rolls — slow but safe.
 - **AI policies** (`_ai_player.py`): base AI works until 175 c, then practices
-  90% of days; masters teach when broke with ≥ 5 students. ⚠️ `SmartAIP` sets
-  `drink_chance`, `continue_gambling_chance` and `buy_med_chance` — none of
-  these names exist; the real attrs are `drink_with_drunkard` (0.25),
-  `gamble_continue` (0.4) and `min_days_use_med`. So the "smart" AI drinks and
-  chases gambling streaks exactly as much as the base AI.
+  90% of days; masters teach when broke with ≥ 5 students. `SmartAIP` zeroes
+  `drink_with_drunkard` and `gamble_continue` after `BasePlayer.__init__`
+  (they are trait-modified instance attributes, so class-level overrides
+  would be shadowed): the "smart" AI never drinks with the drunkard and never
+  chases a gambling streak, and spends a Ginseng Root only on injuries of
+  ≥ 3 days (`min_days_use_med`). Pinned in
+  `test_player_ai.py::TestSmartAIPKnobs`; see `docs/ai_players.md`.

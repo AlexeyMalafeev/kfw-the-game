@@ -102,9 +102,12 @@ out by name.
 2. Pool = moves of that tier, not already known, and not having a special
    (`drunken`) feature the fighter lacks — drunken moves are gated behind
    drunken techs/styles this way.
-3. ⚠️ `random.choice(pool)` runs *before* the empty-pool check, so an
-   empty pool raises `IndexError` instead of falling back to the whole tier
-   (already flagged in [fight]). The fallback below it is unreachable.
+3. An empty pool (the fighter already knows every eligible move of the
+   tier) logs a warning and falls back to the whole tier; only then is the
+   "for variety" move drawn with `random.choice(pool)`. ⚠️ The fallback
+   aliases `MOVES_BY_TIERS[tier]` instead of copying it, so the shuffle/sort
+   below reorder the global tier list in place — harmless for randomness,
+   and practically unreachable.
 4. Shuffle, stable-sort by overlap with `features` (descending), truncate
    to `n * 3`, then weight by `freq` (`weighted_pool.extend([move] *
    move.freq)`) and pick `n` distinct moves. When `n > 1`, one uniformly

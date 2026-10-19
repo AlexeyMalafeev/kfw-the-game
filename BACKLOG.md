@@ -31,12 +31,111 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 - **Explicitly address every remaining ⚠️ point across `docs/*.md`** (HIGH
   priority): the user confirmed only 2-3 of them are intended behavior, the
-  rest are bugs. Go through them one by one, fix or document as intended.
-  ~10 remain in `fight_mechanics.md` — environment_bonus = 0.0,
-  dodge-checked-before-block, `do_mob_dam` naming, stun having no defense
-  penalty, free counters, dead boosts/techs — plus ~50 more across
-  encounters/gameplay/ai_players/items/kung_fu/minigames/stats/debug_menu/
-  social_and_traits/text_content.
+  rest are bugs. Fix or document as intended, batch by batch. All points were
+  re-verified against the code 2026-10-19; the stale ones were rewritten and
+  unmarked (SmartAIP knobs, tournament `spectator` IndexError,
+  `get_rand_moves` empty-pool crash, "invisible" accomplishments,
+  `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
+  Hero). The 80 that remain, by doc → pointer:
+  - **(a) Clear bugs, safe to fix — no balance impact.** Player-visible:
+    - `gameplay.md` Economy — money goes negative: `pay()` never clamps, and
+      four paths skip `check_money`: MasterTrial school founding (1000 c),
+      Craftsman mannequin (500 c, `items.md`), tournament entry fee and a
+      human's tournament bet (`encounters.md` Tournaments)
+    - `social_and_traits.md` Co-op setup — '2x2'/'3x3' silently create no
+      bonds unless there are exactly 4/6 players
+    - `social_and_traits.md` Trait changes — WiseMan draws the trait without
+      the `player` filter, wasting the 0.15 change roll
+    - `encounters.md` Crime — `Criminal.reward` halves the money but the
+      player still gets full rep
+    - `items.md` BookSeller — asks "Buy it?" before checking money
+    - `items.md` Medicine — `use_med` decrements the inventory directly (no
+      `lose_item` log line)
+    - `gameplay.md` Items — mannequin text says "allows home training"; it's a
+      passive daily trickle
+    - `kung_fu.md` Techniques — `PMAP` lacks `head_strike_mult` /
+      `claw_strike_mult`, so those techs show incomplete descriptions
+  - **(a′) Latent defects / code hygiene, safe to fix:**
+    - `fight_mechanics.md` Fight setup — `environment_bonus` is `0.0` (not
+      `1.0`) when the environment is disallowed; inert behind the
+      `environment_allowed` gate (pinned by
+      `test_environment_bonus_disabled_is_zero`)
+    - `gameplay.md` Victory — `Playing.play()` recurses once per
+      victory-and-continue
+    - `encounters.md` Stories — `advance()` dispatches scenes via `exec`
+    - `encounters.md` StreetPerformer — dead `p.disarm()` on declining (the
+      player is never armed there)
+    - `social_and_traits.md` Help channels — `check_allies` returns `None`
+      instead of `[]`
+    - `items.md` — `use_item`/`cancel_item` `KeyError` for names missing from
+      `EFFECTS` (unreachable today); `check_fight_items` returns `None`
+    - `kung_fu.md` — `get_rand_moves` fallback reorders `MOVES_BY_TIERS[tier]`
+      in place; each `WeaponTech` appended to `_weapon_techs` twice, dead
+      `WeaponTech.set_descr`; `_style_techs` never filled
+    - `text_content.md` — `get_new_name` loops forever on an exhausted
+      namespace; `new_foreigner` skips the collision check; a duplicate art
+      name blocks import on `input()`; `show_ascii` debug `vars()` dump
+  - **(b) Balance-affecting fight mechanics — queue a `run_test_fb.py`
+    re-run:**
+    - `fight_mechanics.md` defend — one roll checked vs dodge first, so the
+      effective block chance is `block − dodge`
+    - `fight_mechanics.md` hit_or_miss — crit/epic multiply *post-block*
+      damage (and print after the block line)
+    - `fight_mechanics.md` Statuses — `stunned` is only lost turns, no
+      defense penalty (only `shocked` zeroes defense)
+    - `fight_mechanics.md` Counter-attacks — counters are free (`do_counter`
+      skips `apply_move_cost`; preemptives pay)
+    - `fight_mechanics.md` Techs + `kung_fu.md` Weapon techs — dead boosts
+      (`GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`) and the 7
+      no-op `WeaponTech`s (the two entries below)
+  - **(c) Needs an author design decision:**
+    - `gameplay.md` + `encounters.md` Town stats — crime never rises
+      (`CRIME_INCREASE_MONTHLY = 0.00`); `poverty`/`kung_fu` never change;
+      `g.kung_fu` is read nowhere though the new-game menu asks for it
+    - `gameplay.md` Reputation — doesn't feed student attraction (`get_fame`)
+    - `gameplay.md` Progression — per-level cost is a flat 100 exp despite
+      the `× level` formula
+    - `gameplay.md` Economy — prize-fighting stage 1 pays 25 < 50 fee;
+      gambling is a dominated option (EV 0, −rep, revenge risk)
+    - `gameplay.md` Day actions — `WORK_ENCS` is empty; `fight_dummy` is
+      commented out of the menu
+    - `items.md` — merchant price ignores the item (basic vs Super herb); one
+      Ginseng Root cures any injury length; mock items invisible to
+      `get_items` (can't be stolen/lost); Craftsman's "pay the rest later"
+      pitch vs no debt mechanic
+    - `kung_fu.md` Weapons — no durability/breaking
+    - `social_and_traits.md` — `check_help` picks one channel with no
+      fallback; `check_partners` (friends joining training) never called
+    - `stats.md` — no trait modifies the luck roll; the Gossip encounter
+      shows the full stats table instead of rumors
+    - `encounters.md` — `enc_count_dict` is write-only (show it or drop it)
+    - `text_content.md` Quotes — the default `'fighter'` occupation has no
+      quote pool (generic NPCs are silent)
+    - `minigames.md` Chocolate — 4 stale-API points: revive or retire (see
+      the Chocolate entry below)
+  - **(d) Informational / intended / harmless:**
+    - `kung_fu.md` — tier 12–14 moves unreachable (author: reserved);
+      `Move.descr_short` dead; move_gen CSV name lookup and collision-chain
+      composition; unknown move-string literals degrade silently
+      (test-guarded); tuple move strings work only at level 1
+    - `ui.md` — ASCII art frames must stay uncolored
+    - `dev_scripts.md` — chdir-before-body path gotcha (`ML_learn.py` still
+      hit — see the dev scripts entry)
+    - `fight_mechanics.md` — `TIME_UNIT_MULTIPLIER` unused;
+      `DRAW_EXP_DIVISOR` duplicated, `LOSER_EXP_DIVISOR` unused; `do_mob_dam`
+      only slows (name)
+    - `encounters.md` — the `check_if_happens` parameter shadows the method
+    - `social_and_traits.md` — `'cowardly'` checked by name in
+      `check_scary_fight`
+    - `stats.md` — unused NPC `change_stat` shim; `set_stat`/`write_stat`
+      duplicates; `money_robbed`/`stolen_from`, `exp_bonuses`,
+      `handle_gossip` naming; parallel accomplishment lists (Engineering 3);
+      bios ignore stats/accomplishments/gossip
+    - `text_content.md` — `MISC` dead; only `Thug 1`/`Robber 1` get group
+      names; unused name constants; terminal `'Flying'` art branch (3 moves
+      on Stance); `concat` correct only at `BUFFER_WIDTH = 1`
+    - `minigames.md` RING — `from_exp_worth` retry loop unbounded; `play`
+      flag never cleared
 - weapon techs don't do anything — reintroduce them
 - dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
   `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused

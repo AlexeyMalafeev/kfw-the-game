@@ -23,8 +23,8 @@ Three accessors, all trivial (`_base_player.py`):
 
 - `get_stat(name)` / `change_stat(name, value)` (adds) — the used pair.
 - `set_stat(name, value)` and `write_stat(name, value)` are identical
-  duplicates ⚠️; `set_stat` is used for `became_master*`, `write_stat` for the
-  gossip records.
+  duplicates ⚠️; `set_stat` is used for `became_master*` and the
+  `max_blow_*` fight records, `write_stat` for the gossip records.
 
 Tracked stats (defaults in `DEFAULT_STATS`, names self-explanatory): fight
 counters (`num_fights`, `fights_won`, `num_kos`, `times_koed`,
@@ -106,9 +106,9 @@ What they give: flat exp on earning; `len(p.accompl)` feeds the 'Kung-fu
 Legend' victory condition (≥ 8, `Playing.check_victory_conditions`) and
 `get_fame()` (`(tourn_won + len(accompl) + fights_won // 10) * 0.01`, the
 chance a new student joins the player's school in `encounters/_school.py`).
-⚠️ Accomplishments are otherwise invisible — the stats report shows only the
-count, and nothing displays the label+date pairs in-game (BACKLOG: "show
-accomplishments in options (dates and types already stored)").
+The stats report shows only the count; the full list is on the State menu's
+**Accomplishments** screen (`StateMenu` → `BasePlayer.get_accompl_info`),
+one numbered line per label with the date it was earned.
 
 ## Luck
 

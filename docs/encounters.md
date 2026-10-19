@@ -203,8 +203,10 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   once the player owns one.
 - `StreetPerformer`: randomly a challenge for double-or-nothing, a shady
   'elixir' sale (50% mock item), or thugs to fight off for a reward. ⚠️
-  Declining the challenge runs `p.disarm()` — the player loses their equipped
-  weapon for saying no (`_performer.py:86-89`, comment "disarm player!!!").
+  Declining the challenge runs `p.disarm()` (`_performer.py`, comment
+  "disarm player!!!") — a dead call: weapons are per-fight equipment and
+  every fight ends with `disarm_all()`, so the player is never armed when
+  the encounter starts and declining costs nothing.
 
 ### School and mastership (`_school.py`)
 
@@ -415,16 +417,15 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
   asked (`tourn_or_not`; AI always accepts) and pay the fee via `enter_tourn`.
   ⚠️ No money check — a broke player (human or AI) pays anyway and can go
   negative. Remaining slots are sampled from masters and school students in
-  range. ⚠️ `self.spectator = self.participants[0]` (used for round
-  announcements) raises `IndexError` if the bracket ends up empty — latent
-  crash for level ranges with no eligible fighters.
+  range. If nobody eligible shows up, `run()` cancels the tournament
+  ("...but nobody shows up") before `self.spectator = self.participants[0]`
+  (used for round announcements) is assigned.
 - **Rounds** (`_do_rounds`): single elimination (the default format). Each round shuffles the
   remaining list and pairs fighters off; an odd one out gets a bye. Every match
   is a real `fight.fight(...)` (no environment, no items) — players' fights are
   interactive as usual, so tournament losses injure and wins grant exp exactly
   like street fights. A final with both fighters KO'd ends the tournament with
-  no winner (same as a battle-royale draw); if nobody eligible shows up at all,
-  the tournament is canceled.
+  no winner (same as a battle-royale draw).
 - **Prize** (`_calc_prize`): `fee * num_participants / 2`, rounded to tens —
   i.e. the organizer pockets half the fees. Only a *player* winner is paid
   (`win_tourn`: prize money, `tourn_won` stat, 'Tournament Champion'
@@ -432,7 +433,10 @@ students level up with chance 0.1 up to lv 8, then schools are re-ranked.
 - **Betting**: after the participant list is shown, every active player may
   bet (`bet_on_tourn_or_not`, AI: `gamble_chance` roll; AI picks a random
   highest-level participant). The stake (10/25/50/100) is paid up front in
-  `place_bet_on_tourn`. Placing a bet costs reputation
+  `place_bet_on_tourn`. ⚠️ Only the AI checks affordability (its
+  `bet_on_tourn_or_not` and stake list filter by `check_money`); the human
+  menu offers every stake regardless of money, so a broke human can bet
+  into negative money. Placing a bet costs reputation
   (`BET_REPUTATION_PENALTY` −3, win or lose — gambling is dishonorable). In
   `_resolve_bets` a winning bet pays
   `stake * max(current_round, 1.5)` (the 1.5 floor covers one-round

@@ -91,7 +91,7 @@ channels.
 ⚠️ The `'a'` branch assigns `p.allies = p.check_allies()`, and `check_allies`
 returns `None` (not `[]`) when the player has no friends — overwriting the
 `p.allies = []` init. `fight()` tolerates `None`, but `Extorters` has to guard
-explicitly (`p.allies if p.allies is not None else []`, `_crime.py:123`).
+explicitly (`p.allies if p.allies is not None else []`, `_crime.py:146`).
 
 Call sites: `Ambush`, `Extorters`, `RobbingSomeone`, group/armed `Robbers`,
 `Criminal` (direct `check_allies(1)`), plus weapon-only variants in
@@ -194,8 +194,9 @@ enemy list. A random enemy shows up with 2–4 weak thugs; `check_help()` runs
 first; on a win, crime drops and with `CH_ENEMY_REPENTS` (0.5) the enemy is
 removed (+10 rep, 'Enemy Reformed' accomplishment). Losing means the usual
 injury. `Ambush` has no `is_master` gate, so masters keep getting ambushed
-(and their `check_help` pulls allies from the school they left — see the ⚠️ in
-`docs/gameplay.md`). Enemies have no other mechanical effect.
+(their `check_help` draws on their *own* school: the master channel sends
+their strongest student, the schoolmates channel their students). Enemies
+have no other mechanical effect.
 
 ## Co-op setup
 
