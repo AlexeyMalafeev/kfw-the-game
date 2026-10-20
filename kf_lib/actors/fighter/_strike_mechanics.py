@@ -295,12 +295,12 @@ class StrikeMechanics(FighterAPI, ABC):
             and rnd() <= self.environment_chance
         ):
             if mode == 'attack':
-                self.atk_pwr *= self.current_fight.environment_bonus
-                self.to_hit *= self.current_fight.environment_bonus
+                self.atk_pwr *= self.current_fight.environment_bonus_mult
+                self.to_hit *= self.current_fight.environment_bonus_mult
             elif mode == 'defense':
-                self.dfs_pwr *= self.current_fight.environment_bonus
-                self.to_block *= self.current_fight.environment_bonus
-                self.to_dodge *= self.current_fight.environment_bonus
+                self.dfs_pwr *= self.current_fight.environment_bonus_mult
+                self.to_block *= self.current_fight.environment_bonus_mult
+                self.to_dodge *= self.current_fight.environment_bonus_mult
             self.current_fight.display(
                 _('{name} {msg}').format(
                     name=tr_fighter_name(self.name),

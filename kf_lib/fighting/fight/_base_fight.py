@@ -38,7 +38,10 @@ class BaseFight(object):
         # fight settings
         self.hp_carry = None  # {fighter: hp} to start the fight with instead of full hp
         self.environment_allowed = environment_allowed
-        self.environment_bonus = self.environment_allowed * random.choice(ENVIRONMENT_BONUSES)
+        # always drawn, even when unused, so seeded runs stay reproducible;
+        # without the environment the multiplier is neutral (1.0), not 0
+        bonus = random.choice(ENVIRONMENT_BONUSES)
+        self.environment_bonus_mult = bonus if environment_allowed else 1.0
         self.items_allowed = False
         self.school_display = False
         self.win_messages = None

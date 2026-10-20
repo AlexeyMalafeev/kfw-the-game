@@ -23,12 +23,14 @@ strikes.
 ## Fight setup
 
 `BaseFight.__init__` (`_base_fight.py`) stores `side_a`/`side_b`, derives
-`all_fighters` and `active_*` copies, and rolls
-`environment_bonus = environment_allowed * random.choice((1.2, 1.3, 1.5, 1.8, 2.0))`.
-⚠️ When `environment_allowed` is `False` this is `0.0`, not `1.0`. Harmless today
-only because `try_environment` independently checks `environment_allowed`; if
-anything ever applies `environment_bonus` without that check, no-environment
-fights would *zero out* combat numbers instead of leaving them unchanged.
+`all_fighters` and `active_*` copies, and rolls the fight's
+`environment_bonus_mult` from `ENVIRONMENT_BONUSES` (1.2, 1.3, 1.5, 1.8, 2.0).
+When `environment_allowed` is `False` (tournaments, the All-Schools
+Tournament, the Foreigner / Renowned Master / Eight Gates boss fights) the
+multiplier is a neutral `1.0`; the roll is still drawn so seeded runs don't
+shift. `try_environment` checks `environment_allowed` first anyway, so
+environment techs never trigger in those fights. (Until 2026-10 the attribute
+was `environment_bonus` and was `0.0` when disallowed.)
 
 `prepare_for_fight` (`_fight_actions.py`) resets per-fight state: `hp = hp_max`,
 `stamina = stamina_max`, `qp = round(qp_max * qp_start)`, `bleeding = 0`,
@@ -150,11 +152,11 @@ absorb ~1/400 of the intended damage (fixed 2026-09; see CHANGELOG).
 1. `calc_atk(action)`
 2. `try_environment('attack')`: if the fighter has `environment_chance`
    (tech-based), environment is allowed, and the roll succeeds — `atk_pwr` and
-   `to_hit` × `environment_bonus`.
+   `to_hit` × `environment_bonus_mult`.
 3. `target.calc_dfs()`
 4. `try_unblockable()`: `unblock_chance` roll → `target.to_block = 0`.
 5. `target.try_environment('defense')`: `dfs_pwr`, `to_block`, `to_dodge` ×
-   `environment_bonus`.
+   `environment_bonus_mult`.
 6. `target.defend()`
 7. `hit_or_miss()`
 8. `target.apply_dfs_penalty()`: `dfs_penalty_mult -= dfs_penalty_step`

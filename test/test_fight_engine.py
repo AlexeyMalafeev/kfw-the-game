@@ -83,17 +83,27 @@ class TestCheckFightOver:
 
 
 class TestFightSettings:
-    def test_environment_bonus_disabled_is_zero(self):
-        # BUG?: environment_bonus = environment_allowed * random.choice(...) means
-        # a disallowed environment gives a 0 multiplier, not 1.0; pinned as-is
+    def test_environment_bonus_disabled_is_neutral(self):
+        # was 0 (environment_allowed * random.choice(...)) until 2026-10: inert
+        # behind the environment_allowed check, but a zero multiplier
         random.seed(0)
         fight = BaseFight([lv1_fighter('A')], [lv1_fighter('B')], environment_allowed=False)
-        assert fight.environment_bonus == 0
+        assert fight.environment_bonus_mult == 1.0
 
     def test_environment_bonus_allowed(self):
         random.seed(0)
         fight = BaseFight([lv1_fighter('A')], [lv1_fighter('B')], environment_allowed=True)
-        assert fight.environment_bonus in ENVIRONMENT_BONUSES
+        assert fight.environment_bonus_mult in ENVIRONMENT_BONUSES
+
+    def test_environment_bonus_roll_keeps_random_stream_stable(self):
+        # the bonus is drawn even when the environment is off, so turning it
+        # off doesn't shift every later random roll of a seeded run
+        draws = []
+        for allowed in (True, False):
+            random.seed(0)
+            BaseFight([lv1_fighter('A')], [lv1_fighter('B')], environment_allowed=allowed)
+            draws.append(random.random())
+        assert draws[0] == draws[1]
 
     def test_get_time_and_seconds(self):
         random.seed(0)

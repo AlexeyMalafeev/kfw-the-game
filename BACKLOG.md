@@ -37,7 +37,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   rewritten and unmarked (SmartAIP knobs, tournament `spectator` IndexError,
   `get_rand_moves` empty-pool crash, "invisible" accomplishments,
   `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
-  Hero). The 58 that remain, by doc → pointer:
+  Hero). The 57 that remain, by doc → pointer:
   - **(a) Resolved 2026-10-19.** Fixed: co-op '2x2'/'3x3' offered only for
     4/6 players, BookSeller checks money before asking, `use_med` logs via
     `lose_item`, clearer mannequin description, `PMAP` rows for
@@ -48,7 +48,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     more positive traits makes new ones harder); `Criminal.reward` keeps the
     player's full rep when a friend halves the money (rep rewards bravery).
   - **(a′) Latent defects / code hygiene** (same safety as (a), but not
-    visible to players) — **mostly resolved 2026-10-20** (see `CHANGELOG.md`):
+    visible to players) — **resolved 2026-10-20** (see `CHANGELOG.md`):
     `play()` loops instead of recursing, story scenes dispatched via
     `getattr` (a missing scene ends the story with a `kfw.log` warning),
     `check_allies` → `[]`, `check_fight_items` → `False`, items without an
@@ -56,11 +56,9 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     tier list, `WeaponTech` registered once (dead `set_descr`, `_style_techs`
     / `get_style_techs` removed), `get_new_name` raises instead of looping
     forever, `new_foreigner` skips used names, a duplicate art name raises,
-    `show_ascii` debug dump removed. One point is waiting for the author:
-    - `fight_mechanics.md` Fight setup — `environment_bonus` is `0.0` (not
-      `1.0`) when the environment is disallowed; inert behind the
-      `environment_allowed` gate (pinned by
-      `test_environment_bonus_disabled_is_zero`)
+    `show_ascii` debug dump removed, and the environment multiplier
+    (renamed `environment_bonus_mult`) is a neutral `1.0` instead of `0.0`
+    in fights without the environment.
   - **(b) Balance-affecting fight mechanics — queue a `run_test_fb.py`
     re-run:**
     - `fight_mechanics.md` defend — one roll checked vs dodge first, so the

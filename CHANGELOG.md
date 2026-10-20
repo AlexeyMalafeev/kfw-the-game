@@ -56,6 +56,10 @@ All notable changes to KFW are documented here. Format loosely follows
     list / `False` instead of `None`, the move picker's fallback no longer
     reorders the shared move list, weapon techs are registered once, and
     an always-empty style-tech list and a debug dump in `show_ascii` are gone
+  - fights without the environment (tournaments, some story bosses) stored
+    an environment multiplier of 0 instead of a neutral 1 — unused there,
+    since environment techs can't trigger in those fights, but a trap for
+    any future code; the attribute is also renamed `environment_bonus_mult`
 
 ## [v0.7.5-beta "Palladius Palm"] — 2026-10-19
 
