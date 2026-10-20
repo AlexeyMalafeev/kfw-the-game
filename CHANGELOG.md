@@ -30,6 +30,26 @@ All notable changes to KFW are documented here. Format loosely follows
   but there is no home-training action to unlock. Owning a mannequin *is*
   the home training (a little exp every day, automatically), and the item
   description (also shown in the Craftsman's pitch) now says so
+- **Block techs raise block chance, not only block power**
+  (balance-affecting): Wall-like Protection, Emperor's Fortress and the other
+  block techs only made blocks absorb more, and most blocks absorbed the
+  whole strike anyway, so they did almost nothing. They now also raise the
+  chance to block: +30% chance and power (+60% for the advanced versions;
+  +50% / +100% power only before)
+- **Partial blocks are now common** (balance-affecting): base block power
+  went from 20 to 12. Before, 81% of blocks stopped the whole strike; now a
+  little under half do, and the rest let part of the damage through
+- **Guard while attacking is much weaker** (balance-affecting): the bonus was
+  multiplied by the Guard move's own ×1.5 on top, so "+50% guard while
+  attacking" gave ×2.25 defense on every attack, for free — better than an
+  untrained fighter spending a whole turn on Guard. It's a plain bonus now,
+  +40% (+80% for Attack Is Defense); in the fight-balance harness the buff
+  went from the strongest of all (+15.5 Diff%) to neutral (−1.2)
+- **A fully dodged or blocked strike leaves the attacker off-balance**
+  (balance-affecting): briefly — about half a turn, shown as "<name> is
+  off-balance!" — so the defender's counter and quick follow-up meet a
+  weaker guard (×0.75), and drunken fighters, who fight well off-balance,
+  benefit. Fights got slightly shorter (59.7 → 57.1 s on average)
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so
@@ -64,6 +84,15 @@ All notable changes to KFW are documented here. Format loosely follows
   efficiency". (The fight-balance harness tallies buffs from these
   descriptions, so its next report gains 'claws' / 'headbutts' rows — no
   balance change)
+- **The 'defense' buff did nothing**: 18 / 36 Defense Forms, Defense
+  Stance, Hard like Ice, Crane Flapping Wings, White Crane I, Beggar's
+  Fist I and the defense half of Balanced Fist II / III raised a value the
+  fight code never read — since at least 2020. They now raise both dodge
+  and block chance, by +30% (+60% for 36 Defense Forms; the description
+  said +50% / +100%, which modeling showed to be too strong now that dodge
+  and block roll independently). In the fight-balance harness the buff
+  went from −12.7 Diff% (what a dead tech slot scores) to −1.3
+  (balance-affecting)
 - **Dragon III and Snake III gave no extra max qi**: the level-7 style techs
   of Dragon and Snake boosted the derived max-QP value instead of its
   multiplier, so the bonus was wiped as soon as stats were recomputed and

@@ -250,7 +250,7 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
-    def cause_off_balance(self) -> None:
+    def cause_off_balance(self, brief: bool = False) -> None:
         pass
 
     @abstractmethod

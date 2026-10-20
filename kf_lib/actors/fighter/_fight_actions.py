@@ -53,7 +53,9 @@ class FighterWithActions(FighterAPI, ABC):
         self.current_fight.display(s)
         if self.guard_while_attacking:
             self.current_fight.display(_(' (guarding while attacking)'))
-            self.dfs_bonus *= self.GUARD_POWER * (1.0 + self.guard_while_attacking)
+            # until 2026-10 also * GUARD_POWER (the Guard move's x1.5), which made
+            # +50% guard-while-attacking a free x2.25 on every attack
+            self.dfs_bonus *= 1.0 + self.guard_while_attacking
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()
@@ -142,6 +144,10 @@ class FighterWithActions(FighterAPI, ABC):
             self.fight_stats['blocks'] += 1
             if not atkr.dam:  # full block: no damage got through
                 self.fight_stats['full_blocks'] += 1
+        # a fully dodged/blocked strike leaves the attacker briefly off-balance
+        # (since 2026-10): it opens the defender's counter and quick follow-up
+        if self.defended and not atkr.dam:
+            atkr.cause_off_balance(brief=True)
         # todo handle the no defense case
 
     def do_counter(self) -> None:

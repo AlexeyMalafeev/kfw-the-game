@@ -127,25 +127,34 @@ below and Statuses). Otherwise:
 
 ```
 x = dfs_penalty_mult * agility_full * dodge_mult * 10
-    * stamina_factor * rep_actions_factor * dfs_bonus
+    * stamina_factor * rep_actions_factor * dfs_bonus * dfs_mult
 if off-balance: x *= off_balance_dfs_mult   # 0.75
 if lying:       x *= lying_dfs_mult         # 0.5
 if stunned:     x *= STUN_DFS_MULT          # 0.8
 to_dodge = x / DODGE_DIVISOR                # /3
-to_block = x / BLOCK_DIVISOR * wp_dfs_bonus # /2
+to_block = x / BLOCK_DIVISOR * wp_dfs_bonus * block_mult  # /2
 dfs_pwr  = dfs_penalty_mult * BLOCK_DEFAULT_POWER * block_mult * BLOCK_POWER
            * strength_full * stamina_factor * wp_dfs_bonus
 if fury: dfs_pwr *= fury_to_all_mult
 if stunned: dfs_pwr *= STUN_DFS_MULT          # 0.8
 ```
 
+The three defensive buffs: `dfs_mult` ('defense') raises both chances,
+`block_mult` ('blocks') raises block chance *and* block power, `dodge_mult`
+('dodge') sits in `x`, so despite its name it also raises both chances.
+Until 2026-10 `dfs_mult` was set by its techs but read nowhere, and
+`block_mult` raised only block power.
+
 `rep_actions_factor` punishes repetitive attackers: `1 + 0.33 * n`, where `n` =
 how many of the attacker's last 3 actions (`previous_actions`, a maxlen-3 deque)
 are this move — up to ×1.99 to the *defender's* dodge/block.
 
 `BLOCK_DEFAULT_POWER` (1.0, `_fight_actions.py`) is the per-fighter hook —
-techniques can override it per fighter; `BLOCK_POWER` (20, `_strike_mechanics.py`,
-comment: "Punch power = 26") is the global constant. They were once both named
+techniques can override it per fighter; `BLOCK_POWER` (12, `_strike_mechanics.py`)
+is the global constant. It was 20 until 2026-10, when ~81% of blocks absorbed
+the whole strike (attack power is `strength * power / 2`, so a Punch, power
+26, did 13 per strength point vs 20 of block power); at 12 a little under
+half do, and partial blocks are the commoner kind. They were once both named
 `BLOCK_POWER` and `Fighter`'s MRO shadowed the global with 1.0, making blocks
 absorb ~1/400 of the intended damage (fixed 2026-09; see CHANGELOG).
 
@@ -182,7 +191,13 @@ else: clean hit
 ```
 
 So a strike is dodged with `dodge_chance`, blocked with
-`(1 - dodge_chance) * block_chance`, and hits otherwise. Chances above 1.0
+`(1 - dodge_chance) * block_chance`, and hits otherwise. A **full defense**
+— a dodge, or a block that lets no damage through (`attacker.dam == 0` after
+rounding) — leaves the attacker briefly off-balance
+(`cause_off_balance(brief=True)`, 25–50 time units ÷ speed, about half a
+turn; since 2026-10): it mostly weakens the attacker against the defender's
+counter (`try_counter` runs right after) and quick follow-up, and rarely
+outlasts the attacker's own next action. Chances above 1.0
 mean guaranteed defense. (Until 2026-10 one shared roll was compared to both
 chances, so the effective block chance was `block_chance - dodge_chance` and
 a fighter whose dodge chance was at least their block chance never blocked;
@@ -206,9 +221,9 @@ In order (steps 1–2 only if the target didn't defend — see below):
    false): a block, even one that absorbs only part of the damage, denies
    both rolls, rewarding the defender (since 2026-10; before, they multiplied
    whatever got past the block). A dodge or a fully absorbed block never
-   reaches `hit_or_miss` anyway. In practice ~81% of blocks absorb the whole
-   strike, so the rule only bites on partial blocks (~3–4% of strikes in
-   sample auto-fights).
+   reaches `hit_or_miss` anyway. With `BLOCK_POWER` 12 (2026-10) partial
+   blocks are ~11% of strikes in the fight-balance harness, so the rule
+   bites more often than it did at 20 (~4%).
 3. `dam = max(dam - toughness, 0)`; `toughness = (level - 1) * 3`.
 4. `dam_reduc` (tech): `dam *= 1 - dam_reduc`.
 5. `target.take_damage(dam)` → `change_hp(-dam)`, sets `took_damage`.
@@ -244,7 +259,9 @@ fighter can be shown stunned/knocked back/falling before the KNOCK-OUT line;
 `check_move_failed`, run `functions`. `Guard` (`functions=['guard']`) sets
 `dfs_bonus *= guard_dfs_bonus * 1.5`, lasting until the fighter's next turn.
 `guard_while_attacking` (tech) instead multiplies `dfs_bonus` by
-`1.5 * (1 + guard_while_attacking)` inside `attack()`. Any move without
+`1 + guard_while_attacking` inside `attack()` (until 2026-10 also by the
+Guard move's 1.5, so the +50% tech gave a free ×2.25 on every attack — more
+than an untrained Guard move costing a whole turn). Any move without
 `dist_change` resets `momentum` to 0.
 
 `get_move_time_cost = time_cost / (speed_full * (0.7 if slowed down))`, then ×
@@ -274,7 +291,9 @@ faster fighters shed statuses in fewer time units. Durations tick down by
   the penalty on every strike while the status lasts, so nothing needs
   restoring when it wears off.
 - `shocked` (50–100): `skip` + zero dodge/block.
-- `off-balance` (50–100): atk and dfs × 0.75.
+- `off-balance` (50–100; 25–50 after the opponent's full defense): atk and
+  dfs × 0.75 (`off_balance_atk_mult` / `off_balance_dfs_mult`, which the
+  drunken techs raise).
 - `slowed down` (300–600): time costs × 1/0.7.
 - `fury` (500–1000): `atk_pwr`, `to_hit`, `dfs_pwr` × 1.6. Rolled each own turn
   with chance `(1 - hp/hp_max) * fury_chance` (tech-gated).
@@ -299,7 +318,9 @@ Counter-attacks (`try_counter`): after the defender fully negated a strike
 (`attacker.dam == 0`) and is alive, roll `counter_chance` → `do_counter()` runs
 the full strike pipeline back at the attacker with a random available attack
 move, and pays that move's stamina/qi cost (`apply_move_cost`) exactly like
-`do_preemptive` (counters were free until 2026-10).
+`do_preemptive` (counters were free until 2026-10). The attacker is
+off-balance at that moment (see `defend`), so the counter meets ×0.75
+defense.
 
 ## Techs, moves, boosts
 

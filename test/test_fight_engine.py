@@ -261,7 +261,7 @@ class TestBlocking:
 
     def test_block_constants_resolve_correctly(self):
         f = lv1_fighter('A')
-        assert f.BLOCK_POWER == 20  # global, StrikeMechanics
+        assert f.BLOCK_POWER == 12  # global, StrikeMechanics (20 until 2026-10)
         assert f.BLOCK_DEFAULT_POWER == 1.0  # per-fighter hook, FightActions
 
     def test_dfs_pwr_is_meaningful(self):
@@ -330,6 +330,64 @@ class TestDefenseAndCounters:
         fa.status['stunned'] = 0  # the stun wears off
         fa.calc_dfs()
         assert (fa.to_dodge, fa.to_block, fa.dfs_pwr) == pytest.approx(normal)
+
+    def base_dfs(self):
+        fa, fb = self.duel()
+        fa.calc_stamina_factor()
+        fa.dfs_bonus = fa.dfs_penalty_mult = 1.0
+        fb.action = next(m for m in fb.moves if m.name == 'Punch')
+        fa.calc_dfs()
+        return fa, fb, (fa.to_dodge, fa.to_block, fa.dfs_pwr)
+
+    def test_defense_buff_raises_dodge_and_block_chance(self):
+        # dfs_mult was set by the 'defense' techs but never read until 2026-10
+        fa, _, (dodge, block, pwr) = self.base_dfs()
+        fa.dfs_mult = 1.3
+        fa.calc_dfs()
+        assert fa.to_dodge == pytest.approx(dodge * 1.3)
+        assert fa.to_block == pytest.approx(block * 1.3)
+        assert fa.dfs_pwr == pytest.approx(pwr)
+
+    def test_blocks_buff_raises_block_chance_and_power(self):
+        # block_mult raised only block power until 2026-10
+        fa, _, (dodge, block, pwr) = self.base_dfs()
+        fa.block_mult = 1.3
+        fa.calc_dfs()
+        assert fa.to_dodge == pytest.approx(dodge)
+        assert fa.to_block == pytest.approx(block * 1.3)
+        assert fa.dfs_pwr == pytest.approx(pwr * 1.3)
+
+    def test_full_defense_puts_the_attacker_off_balance(self, monkeypatch):
+        _, fb = self.defend_with_rolls(monkeypatch, [0.1])  # dodge
+        assert fb.check_status('off-balance')
+
+    def test_full_block_puts_the_attacker_off_balance(self, monkeypatch):
+        fa, fb = self.duel()
+        fb.atk_pwr, fb.to_hit = 30, 1.0
+        fa.to_dodge, fa.to_block, fa.dfs_pwr = 0.30, 0.25, 40  # absorbs all 30
+        rolls = iter([0.5, 0.2] + [0.99] * 10)
+        monkeypatch.setattr(fight_actions_mod, 'rnd', lambda: next(rolls))
+        fa.defend()
+        assert fb.dam == 0
+        assert fb.check_status('off-balance')
+
+    def test_partial_block_or_hit_keeps_the_attacker_balanced(self, monkeypatch):
+        for rolls in ([0.5, 0.2], [0.5, 0.5]):  # partial block (20 gets through), hit
+            _, fb = self.defend_with_rolls(monkeypatch, rolls)
+            assert fb.dam > 0
+            assert not fb.check_status('off-balance')
+
+    def test_guard_while_attacking_is_a_plain_bonus(self, monkeypatch):
+        # until 2026-10 it was also multiplied by the Guard move's x1.5
+        fa, fb = self.duel()
+        fa.preemptive_chance = 0
+        fb.action = next(m for m in fb.moves if m.name == 'Punch')
+        fb.dfs_bonus = 1.0
+        fb.guard_while_attacking = 0.4
+        monkeypatch.setattr(fb, 'try_strike', lambda: None)
+        monkeypatch.setattr(fa, 'try_counter', lambda: None)
+        fb.attack()
+        assert fb.dfs_bonus == pytest.approx(1.4)
 
     def strike_with_sure_crit(self, fa, fb, defended):
         """fb strikes fa for 30 with a guaranteed critical and epic."""

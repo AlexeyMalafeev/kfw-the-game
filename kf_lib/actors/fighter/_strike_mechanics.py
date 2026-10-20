@@ -15,13 +15,15 @@ if TYPE_CHECKING:
 class StrikeMechanics(FighterAPI, ABC):
     BLEEDING_PART_OF_DAM = 0.15
     BLOCK_DIVISOR = 2
-    BLOCK_POWER = 20  # Punch power = 26
+    BLOCK_POWER = 12  # 20 until 2026-10 (most blocks then absorbed the whole strike)
     DAM_DIVISOR = 2
     DODGE_DIVISOR = 3
     DUR_LYING_MAX = 200
     DUR_LYING_MIN = 100
     DUR_OFF_BAL_MAX = 100
     DUR_OFF_BAL_MIN = 50
+    DUR_OFF_BAL_BRIEF_MAX = 50  # after a fully dodged/blocked strike
+    DUR_OFF_BAL_BRIEF_MIN = 25
     DUR_SHOCK_MAX = 100
     DUR_SHOCK_MIN = 50
     DUR_SLOW_MAX = 600
@@ -80,6 +82,7 @@ class StrikeMechanics(FighterAPI, ABC):
             # todo recalc as a value in (0.0, 1.0)?
             # * 10 because of new system:
             x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
+            x *= self.dfs_mult  # the 'defense' buff (set but never read until 2026-10)
             x *= self.stamina_factor * rep_actions_factor
             x *= self.dfs_bonus
             # print('x after dfs_bonus', x)
@@ -93,6 +96,8 @@ class StrikeMechanics(FighterAPI, ABC):
             self.to_dodge = x / self.DODGE_DIVISOR
             self.to_block = x / self.BLOCK_DIVISOR
             self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
+            # the 'blocks' buff: block chance too, not only block power (since 2026-10)
+            self.to_block *= self.block_mult
             # print('to dodge, to block', self.to_dodge, self.to_block)
             # todo divide dfs_pwr by sth?
             self.dfs_pwr = (self.dfs_penalty_mult
@@ -145,10 +150,21 @@ class StrikeMechanics(FighterAPI, ABC):
             align=False,
         )
 
-    def cause_off_balance(self) -> None:
-        ob_dur = rndint_2d(self.DUR_OFF_BAL_MIN, self.DUR_OFF_BAL_MAX) // self.speed_full
+    def cause_off_balance(self, brief: bool = False) -> None:
+        """brief: the short version after a fully dodged/blocked strike, which
+        mostly matters for the defender's counter and quick follow-up."""
+        if brief:
+            ob_dur = (rndint_2d(self.DUR_OFF_BAL_BRIEF_MIN, self.DUR_OFF_BAL_BRIEF_MAX)
+                      // self.speed_full)
+        else:
+            ob_dur = rndint_2d(self.DUR_OFF_BAL_MIN, self.DUR_OFF_BAL_MAX) // self.speed_full
         self.add_status('off-balance', ob_dur)
-        self.current_fight.display(yellow(_(' off-balance!')), align=False)
+        if brief:
+            self.current_fight.display(
+                yellow(_('{name} is off-balance!').format(name=tr_fighter_name(self.name)))
+            )
+        else:
+            self.current_fight.display(yellow(_(' off-balance!')), align=False)
 
     def cause_shock(self) -> None:
         """Shock is worse than stun."""

@@ -35,14 +35,6 @@ out first), and the index of ⚠️ points in `docs/*.md`. Fixed entries move to
 
 ### Confirmed bugs
 
-- **'defense' buff is dead** (the old "defense buff not working?" hunch,
-  confirmed 2026-10-20): `dfs_mult` is set by 18/36 Defense Forms,
-  generated-style Defense Stance / Hard like Ice / Crane Flapping Wings,
-  White Crane I, Beggar's Fist I and the defense half of Balanced Fist II/III,
-  but no fight code reads it — dead since the 2020 upload (learning 18
-  Defense Forms: `dfs_mult` 1.0 → 1.5, dodge/block chances and block power
-  unchanged). Author: fix it — it should raise both dodge and block chance;
-  +50% (`DEFENSE1`) is probably too much, set the value by modeling
 - `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
   (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
   tech/move names no longer in the data files, `learn_tech` now takes Tech
@@ -169,8 +161,9 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
   relative strength/agility; handle grappling differently from strikes
 - stances: change tactics, always a trade-off except hidden ones (speed vs
   stamina, speed vs dfs, dfs vs atk, dfs vs mobility, preemptive vs dfs)
-- stances/body parts?; off-balance when dodge; a miss → off-balance status;
-  run-up (status?)
+- stances/body parts?; run-up (status?) (a fumbled move and, since
+  2026-10, a fully dodged/blocked strike already leave the attacker
+  off-balance)
 - counters; a special enemy (story?) that can only be defeated with counters
 - more throws (close range), defensive throws; more trips/sweeps that knock
   the enemy down ("ездящая подсечка")
@@ -305,6 +298,25 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## Balance & analysis
 
+**Pending final `run_test_fb.py` re-run** — the defense rework of
+2026-10-20 (the 'defense' buff works, block techs raise block chance,
+guard-while-attacking nerfed, a full defense leaves the attacker briefly
+off-balance, block power 20 → 12; values set by A/B modeling against the
+median general tech) is balance-affecting. An interim 100k run against
+`tests/test f.b. rand.act.=False n=100000.txt` (the same code before the
+rework, first report of the 100k harness): defense −12.7 → −1.3, guard
+while atk +15.5 → −1.2, blocks −12.0 → −4.1, full blocks 81% → 43% of
+blocks, fights 59.7 → 57.1 s; guard (−12), counters (−12) and qi (−7.5)
+still lose. Re-run and refresh the snapshot once the author's follow-ups
+below are decided:
+- **Defense rework follow-ups** (author 2026-10-20, proposals under
+  discussion): buff the Guard move (×1.5 dfs for a turn; its techs score
+  like a dead slot); bigger counters (beyond the off-balance opening);
+  make qi buffs matter (qi isn't scarce: fighters end fights with ~37%);
+  more uses for health (it feeds only max HP; block power is
+  strength-only). `dodge_mult` raising block chance too (it sits in the
+  shared `x`) is a related naming question
+
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
 correlation). The pre-batch code (4f157e9) reproduces the 2026-09 report
@@ -326,10 +338,12 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
   guard −10.5 → −12.6 (the Guard move costs a turn), defense −12.4 → −13.5
   (dead — see "Bugs"). Only 'dodge' is mildly positive (+1.8 → +4.2).
   A dead tech slot costs about −9 to −13 here, the yardstick for "useless".
-- **Counters**: 0.30 → 0.44 per fight, ~26 stamina (16% of max) + 7 QP each,
-  damage per counter 57 → 47; the counters buff is unchanged (−10.6 → −9.8)
-  — the cost doesn't bite because fighters end fights with ~61% stamina and
-  ~37% QP. A +50% counter tech adds ~5 HP of damage per ~410 HP fight.
+- **Counters**: 0.42 → 0.61 per fight, ~26 stamina (16% of max) + ~6 QP
+  each, damage per counter 51 → 42 (corrected: the first hook script missed
+  counters that reused the fighter's last move); the counters buff is
+  unchanged (−10.6 → −9.8) — the cost doesn't bite because fighters end
+  fights with ~61% stamina and ~37% QP. A +50% counter tech adds ~6 HP of
+  damage per ~410 HP fight.
 - **Criticals / stun: no measurable shift** (criticals +0.3 → −1.5, stun
   −1.5 → −0.5). Crits per strike 11.9 → 10.0% (fewer clean hits), per fight
   unchanged. Only 2.6% of strikes hit a stunned fighter, already 87% clean
@@ -359,18 +373,17 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
   v0.7.3 (RMS of per-group sums, `BaseGroupFreeForAll.aggregate_exp_yield`);
   plain FFA deliberately keeps the per-capita average
 - further reduce dist3/dist2 bonuses?
-- nerf guard while attacking
 - **buff counters** (author 2026-10-20): counters now pay their move's cost;
   the 2026-10 re-run shows the counters buff unchanged at ≈ −10 (dead-slot
-  territory) — the problem is size, not cost (~5 HP per fight from a +50%
-  counter tech). Consider:
+  territory) — the problem is size, not cost (~6 HP per fight from a +50%
+  counter tech). Done 2026-10-20: a fully dodged/blocked strike leaves the
+  attacker briefly off-balance, so the counter meets ×0.75 defense — the
+  counters buff stayed at −11.7 in the interim 100k run, so it isn't enough
+  on its own. Still open:
   - raise the counter techs' chance/efficiency
   - discount counters (e.g. half the move's stamina/qi cost) — a middle
-    ground between free and full price ("using the attacker's momentum")
-  - the original attacker defends the counter at a disadvantage — could be
-    the existing "a miss → off-balance status" idea (Fight mechanics): a
-    fully dodged/blocked strike leaves the attacker briefly off-balance
-    (×0.75 atk/dfs), which strengthens counters and any quick follow-up
+    ground between free and full price ("using the attacker's momentum");
+    weak lever while stamina/qi aren't scarce
   - a higher stun chance for counters — go gently: a stun now also lowers
     defense, so counter-stun chains could snowball
 - buff attribute-based damage for strikes
