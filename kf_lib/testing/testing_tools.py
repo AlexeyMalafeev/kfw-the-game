@@ -1,7 +1,9 @@
+import multiprocessing
+import os
 import random
 from pathlib import Path
 
-from tqdm import trange
+from tqdm import tqdm, trange
 
 from kf_lib.actors import fighter_factory as ff
 from kf_lib.actors.fighter import Fighter
@@ -11,8 +13,172 @@ from kf_lib.happenings.encounters import Ambush
 from kf_lib.kung_fu import styles, techniques
 from kf_lib.things import weapons
 from kf_lib.ui import cls, menu, pak, pe, pretty_table
-from kf_lib.utils import add_to_dict, compare_dicts, get_time, mean, pcnt, summary, TESTS_FOLDER
+from kf_lib.utils import (
+    add_to_dict, compare_dicts, get_time, mean, median, pcnt, summary, TESTS_FOLDER
+)
 from . import tech_test
+
+
+FB_CHUNK_SIZE = 2000  # fights per seeded chunk of test_fight_balance
+FB_TABLES = (
+    ('atts', 'atts:'),
+    ('full_atts', 'full atts:'),
+    ('att_diffs', 'att diffs:'),
+    ('buffs', 'style buffs:'),
+    ('techs1', 'techs 1:'),
+    ('techs2', 'techs 2:'),
+    ('moves', 'moves:'),
+)
+FB_LEGEND = (
+    'D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of '
+    'Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, '
+    'a few * are expected by chance alone.'
+)
+
+
+def _fight_balance_chunk(rand_actions, n, seed):
+    """Play one seeded chunk of test_fight_balance and return its tallies.
+
+    Module-level and returning plain dicts, so it can run in a worker process.
+    """
+    random.seed(seed)  # reproducible snapshots: same styles, levels, fights
+    dummy = ff.new_dummy_fighter(1)
+    att_names = dummy.att_names
+    t = {key: ({}, {}) for key, _ in FB_TABLES}  # (winners, losers)
+    for att in att_names:
+        for d in t['atts'] + t['full_atts']:
+            d[att] = 0
+    stats = {key: 0 for key in (
+        'fights', 'no_winner', 'thrown', 'dodges', 'blocks', 'full_blocks',
+        'counters', 'preemptives', 'stunned', 'criticals', 'epics')}
+    stats.update(winner_hp=0.0, stamina_left=0.0, qp_left=0.0)
+    durations = []
+    for _ in range(n):
+        lv = random.randint(1, 20)
+        f1 = ff.new_fighter(lv=lv)
+        f1.name = 'Dummy A'
+        f2 = ff.new_fighter(lv=lv)
+        f2.name = 'Dummy B'
+        if rand_actions:
+            f1.set_fight_ai(fight_ai.BaseAI)
+            f2.set_fight_ai(fight_ai.BaseAI)
+        fgt = fight.AutoFight([f1], [f2])
+        stats['fights'] += 1
+        durations.append(fgt.get_seconds())
+        for ftr in (f1, f2):
+            fs = ftr.fight_stats
+            for key in ('thrown', 'dodges', 'blocks', 'full_blocks', 'counters',
+                        'preemptives', 'stunned', 'criticals', 'epics'):
+                stats[key] += fs[key]
+            stats['stamina_left'] += ftr.stamina / ftr.stamina_max
+            stats['qp_left'] += ftr.qp / ftr.qp_max if ftr.qp_max else 0
+        if not fgt.winners:
+            stats['no_winner'] += 1
+            continue
+        wnr = fgt.winners[0]
+        lsr = fgt.losers[0]
+        stats['winner_hp'] += wnr.hp / wnr.hp_max
+        for i, ftr in enumerate((wnr, lsr)):
+            # att values
+            for att in att_names:
+                t['atts'][i][att] += getattr(ftr, att)
+                t['full_atts'][i][att] += getattr(ftr, att + '_full')
+            # att diffs
+            att_vals = [getattr(ftr, att) for att in att_names]
+            add_to_dict(t['att_diffs'][i], max(att_vals) - min(att_vals), 1)
+            # techs
+            for t_obj in ftr.techs:
+                if t_obj.is_upgradable:
+                    add_to_dict(t['techs1'][i], t_obj.name, 1)
+                elif t_obj.is_advanced:
+                    add_to_dict(t['techs2'][i], t_obj.name, 1)
+                for feature in t_obj.descr_short.split(', '):
+                    add_to_dict(t['buffs'][i], feature, 1)
+                    if not feature.strip():
+                        raise ValueError(
+                            f'Missing descr feature in the following tech: {t_obj}')
+            # moves
+            for m in ftr.moves:
+                for feat in m.features:
+                    add_to_dict(t['moves'][i], feat, 1)
+    return {'tables': t, 'stats': stats, 'durations': durations}
+
+
+def _fight_balance_chunk_indexed(i_chunk):
+    i, chunk = i_chunk
+    return i, _fight_balance_chunk(*chunk)
+
+
+def _diff_margin(chunk_pairs, key):
+    """95% margin of the pooled Diff% of `key`, from the spread between chunks
+    (cluster variance of the ratio sum(D1 - D2) / sum(D1 + D2)); None if < 2."""
+    ys = [w.get(key, 0) - lo.get(key, 0) for w, lo in chunk_pairs]
+    ss = [w.get(key, 0) + lo.get(key, 0) for w, lo in chunk_pairs]
+    k, total = len(ys), sum(ss)
+    if k < 2 or not total:
+        return None
+    ratio = sum(ys) / total
+    var = k / (k - 1) * sum((y - ratio * s) ** 2 for y, s in zip(ys, ss))
+    return 1.96 * 100 * var ** 0.5 / total
+
+
+def _format_fb_table(results, key):
+    chunk_pairs = [r['tables'][key] for r in results]
+    d_wnr, d_lsr = {}, {}
+    for w, lo in chunk_pairs:
+        for k, v in w.items():
+            add_to_dict(d_wnr, k, v)
+        for k, v in lo.items():
+            add_to_dict(d_lsr, k, v)
+    tups = compare_dicts(d_wnr, d_lsr, sort_col_index=3)
+    rows = [tups[0] + ('+-95%', '')]
+    for row in tups[1:]:
+        margin = _diff_margin(chunk_pairs, row[1])
+        if margin is None:
+            rows.append(row + ('-', ''))
+        else:
+            rows.append(row + (round(margin, 1), '*' if abs(row[4]) > margin else ''))
+    lines = ['\n', pretty_table(rows), '', summary(d_wnr), FB_LEGEND, '']
+    return '\n'.join(lines)
+
+
+def _format_fight_stats(results):
+    st = {}
+    durations = []
+    for r in results:
+        for k, v in r['stats'].items():
+            st[k] = st.get(k, 0) + v
+        durations.extend(r['durations'])
+    durations.sort()
+    n_f = st['fights']
+    n_won = n_f - st['no_winner']
+    thrown = st['thrown'] or 1
+    clean = st['thrown'] - st['dodges'] - st['blocks']
+
+    def per_fight(k, nd=2):
+        return round(st[k] / n_f, nd)
+
+    def share(v):
+        return f'{v / thrown * 100:.1f}%'
+
+    lines = [
+        '',
+        f'fights: {n_f}, no winner: {st["no_winner"]}',
+        f'fight length, s: mean {mean(durations):.1f}, median {median(durations)}, '
+        f'slowest 10% from {durations[int(len(durations) * 0.9)]}',
+        f'per fight: strikes {per_fight("thrown", 1)}, counters {per_fight("counters")}, '
+        f'preemptives {per_fight("preemptives")}, criticals {per_fight("criticals")}, '
+        f'epics {per_fight("epics", 3)}, stuns {per_fight("stunned")}',
+        f'strike outcomes: dodged {share(st["dodges"])}, '
+        f'fully blocked {share(st["full_blocks"])}, '
+        f'partly blocked {share(st["blocks"] - st["full_blocks"])}, '
+        f'clean hits {share(clean)}',
+        f'at fight end: winner\'s HP {st["winner_hp"] / max(n_won, 1) * 100:.1f}% of max; '
+        f'stamina {st["stamina_left"] / (2 * n_f) * 100:.1f}%, '
+        f'QP {st["qp_left"] / (2 * n_f) * 100:.1f}% of max (both fighters)',
+        '',
+    ]
+    return '\n'.join(lines)
 
 
 class Tester(object):
@@ -142,97 +308,55 @@ class Tester(object):
                 f.arm('chopsticks')
         p.fight(enemies[0], allies, en_allies, hide_stats=False)
 
-    def test_fight_balance(self, rand_actions=True, n=1000, seed=42,
+    def test_fight_balance(self, rand_actions=True, n=100_000, seed=42,
+                           chunk_size=FB_CHUNK_SIZE, workers=None,
                            file_name_prefix='test f.b.'):
-        random.seed(seed)  # reproducible snapshots: same styles, levels, fights
+        """Mirror matches at random levels, tallying what winners vs losers had.
+
+        The n fights are split into chunks of chunk_size; chunk i is seeded with
+        seed + i, so the report depends only on (n, seed, chunk_size), not on how
+        many worker processes play the chunks. The chunk-to-chunk spread gives
+        each row's 95% noise margin.
+        """
         file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
         file_path = Path(TESTS_FOLDER, file_name)
-        print(get_time(), file=open(file_path, 'w', encoding='utf-8'))
+        chunks = [(rand_actions, min(chunk_size, n - start), seed + i)
+                  for i, start in enumerate(range(0, n, chunk_size))]
         output = '-' * 40 + '\n\n'
         if not rand_actions:
             output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
-        output += f'rand_actions={rand_actions}\nseed={seed}\nn={n}\n\n'
+        output += (f'rand_actions={rand_actions}\nseed={seed}\nn={n}\n'
+                   f'chunks={len(chunks)} x {chunk_size} fights (chunk i: seed + i)\n\n')
         print(output, end='')
-        print(output, end='', file=open(file_path, 'a', encoding='utf-8'))
 
-        dummy = ff.new_dummy_fighter(1)
-        att_names = dummy.att_names
-        d_atts_wnr = {att: 0 for att in att_names}
-        d_atts_lsr = {att: 0 for att in att_names}
-        d_full_atts_wnr = {att: 0 for att in att_names}
-        d_full_atts_lsr = {att: 0 for att in att_names}
-        att_diffs_wnr = {}
-        att_diffs_lsr = {}
-        buffs_wnr = {}
-        buffs_lsr = {}
-        techs1_wnr = {}
-        techs1_lsr = {}
-        techs2_wnr = {}
-        techs2_lsr = {}
-        moves_wnr = {}
-        moves_lsr = {}
+        results = [None] * len(chunks)
+        workers = min(workers or os.cpu_count() or 1, len(chunks))
+        with tqdm(total=n) as bar:
+            if workers == 1:
+                for i, chunk in enumerate(chunks):
+                    results[i] = _fight_balance_chunk(*chunk)
+                    bar.update(chunk[1])
+            else:
+                # spawn (the default on macOS/Windows) everywhere: fresh worker
+                # processes, so results never depend on the platform
+                ctx = multiprocessing.get_context('spawn')
+                # workers import kf_lib, which reads data files relative to the cwd
+                with ctx.Pool(workers, initializer=os.chdir,
+                              initargs=(os.getcwd(),)) as pool:
+                    for i, res in pool.imap_unordered(_fight_balance_chunk_indexed,
+                                                      enumerate(chunks)):
+                        results[i] = res
+                        bar.update(chunks[i][1])
 
-        for _ in trange(n):
-            lv = random.randint(1, 20)
-            f1 = ff.new_fighter(lv=lv)
-            f1.name = 'Dummy A'
-            f2 = ff.new_fighter(lv=lv)
-            f2.name = 'Dummy B'
-            if rand_actions:
-                f1.set_fight_ai(fight_ai.BaseAI)
-                f2.set_fight_ai(fight_ai.BaseAI)
-            f = fight.AutoFight([f1], [f2])
-            if f.winners:
-                wnr = f.winners[0]
-                lsr = f.losers[0]
-                # att values
-                for att in att_names:
-                    for f, d, d_full in (
-                        (wnr, d_atts_wnr, d_full_atts_wnr),
-                        (lsr, d_atts_lsr, d_full_atts_lsr),
-                    ):
-                        d[att] += getattr(f, att)
-                        d_full[att] += getattr(f, att + '_full')
-                # att diffs
-                for f, d in ((wnr, att_diffs_wnr), (lsr, att_diffs_lsr)):
-                    att_vals = [getattr(f, att) for att in att_names]
-                    att_diff = max(att_vals) - min(att_vals)
-                    add_to_dict(d, att_diff, 1)
-                # techs
-                for f, d0, d1, d2 in (
-                        (wnr, buffs_wnr, techs1_wnr, techs2_wnr),
-                        (lsr, buffs_lsr, techs1_lsr, techs2_lsr)):
-                    for t_obj in f.techs:
-                        if t_obj.is_upgradable:
-                            add_to_dict(d1, t_obj.name, 1)
-                        elif t_obj.is_advanced:
-                            add_to_dict(d2, t_obj.name, 1)
-                        for feature in t_obj.descr_short.split(', '):
-                            add_to_dict(d0, feature, 1)
-                            if not feature.strip():
-                                raise ValueError(
-                                    f'Missing descr feature in the following tech: {t_obj}')
-                # moves
-                for f, d in ((wnr, moves_wnr), (lsr, moves_lsr)):
-                    for m in f.moves:
-                        for feat in m.features:
-                            add_to_dict(d, feat, 1)
-        # output
-        tuples = (
-            (d_atts_wnr, d_atts_lsr, 'atts:'),
-            (d_full_atts_wnr, d_full_atts_lsr, 'full atts:'),
-            (att_diffs_wnr, att_diffs_lsr, 'att diffs:'),
-            (buffs_wnr, buffs_lsr, 'style buffs:'),
-            (techs1_wnr, techs1_lsr, 'techs 1:'),
-            (techs2_wnr, techs2_lsr, 'techs 2:'),
-            (moves_wnr, moves_lsr, 'moves:'),
-        )
-        for d_wnr, d_lsr, legend in tuples:
-            tups = compare_dicts(d_wnr, d_lsr, sort_col_index=3)
-            lines = ['\n', pretty_table(tups), '', summary(d_wnr), '']
-            s = '\n'.join(lines)
-            print(legend, s, sep='\n\n')
-            print(legend, s, sep='\n\n', file=open(file_path, 'a', encoding='utf-8'))
+        with open(file_path, 'w', encoding='utf-8') as fh:
+            print(get_time(), file=fh)
+            fh.write(output)
+            sections = [('fight stats:', _format_fight_stats(results))]
+            for key, legend in FB_TABLES:
+                sections.append((legend, _format_fb_table(results, key)))
+            for legend, s in sections:
+                print(legend, s, sep='\n\n')
+                print(legend, s, sep='\n\n', file=fh)
         print(f'\nSaved results to "{file_path}"')
 
     def test_level_vs_crowds(self, n_crowd_min=2, n_crowd_max=5, lv_max=20, n_fights=1000):

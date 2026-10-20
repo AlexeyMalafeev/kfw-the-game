@@ -30,6 +30,18 @@ All notable changes to KFW are documented here. Format loosely follows
   but there is no home-training action to unlock. Owning a mannequin *is*
   the home training (a little exp every day, automatically), and the item
   description (also shown in the Craftsman's pitch) now says so
+- **Fight-balance harness: 100k fights, noise margins, fight stats**
+  (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
+  judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so
+  the harness now plays 100,000 fights by default, in seeded chunks of 2,000
+  run in parallel (~1.5 min on 10 cores; the report is the same whatever the
+  worker count). Every table row gets a ±95% noise margin measured from the
+  chunk-to-chunk spread, and the report opens with fight stats: fight
+  length, strikes, counters, criticals and stuns per fight, how strikes end
+  (dodged / fully blocked / partly blocked / clean hit) and the stamina and
+  qi left at the end. For the latter, fighters' in-fight stats now also
+  count dodges, blocks, full blocks, stuns suffered, counters and
+  preemptives. No gameplay change
 
 ### Fixed
 - **Co-op '2x2' / '3x3' could silently create no teams**: the new-game menu

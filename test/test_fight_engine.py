@@ -414,6 +414,16 @@ class TestInFightStats:
         )
         assert strikes == p.fight_stats['thrown']
 
+    def test_defense_counts_are_consistent(self):
+        """Defender-side counts (2026-10, read by the fight-balance harness):
+        each strike thrown at a fighter is dodged, blocked or not, at most once."""
+        _, p, thug, _ = self.fight_with_player()
+        for me, opp in ((p, thug), (thug, p)):
+            fs = me.fight_stats
+            assert 0 <= fs['full_blocks'] <= fs['blocks']
+            assert fs['dodges'] + fs['blocks'] <= opp.fight_stats['thrown']
+            assert min(fs['stunned'], fs['counters'], fs['preemptives']) >= 0
+
     def test_stats_accumulate_into_player_stats(self):
         _, p, _, _ = self.fight_with_player()
         fs = p.fight_stats

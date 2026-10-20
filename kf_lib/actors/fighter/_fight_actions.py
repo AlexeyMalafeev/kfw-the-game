@@ -100,6 +100,7 @@ class FighterWithActions(FighterAPI, ABC):
         block_chance = self.to_block / atkr.to_hit
         prefix = 'Lying ' if self.check_status('lying') else ''
         self.defended = False
+        blocked = False
         # two independent rolls: a failed dodge still gets the full block
         # chance (one shared roll, until 2026-10, made it block - dodge)
         if rnd() <= dodge_chance:
@@ -115,6 +116,8 @@ class FighterWithActions(FighterAPI, ABC):
             )
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
+            if self.fight_stats is not None:
+                self.fight_stats['dodges'] += 1
         elif rnd() <= block_chance:
             self.dfs_pwr = round(self.dfs_pwr)
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
@@ -130,15 +133,22 @@ class FighterWithActions(FighterAPI, ABC):
             self.set_ascii(prefix + 'Block')
             self.try_block_disarm()
             self.defended = True
+            blocked = True
         else:
             self.set_ascii(prefix + 'Hit')
         # this is necessary here, do not remove, otherwise dam will be a float on hit / block
         atkr.dam = round(atkr.dam)
+        if blocked and self.fight_stats is not None:
+            self.fight_stats['blocks'] += 1
+            if not atkr.dam:  # full block: no damage got through
+                self.fight_stats['full_blocks'] += 1
         # todo handle the no defense case
 
     def do_counter(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
+            if self.fight_stats is not None:
+                self.fight_stats['counters'] += 1
             self.current_fight.display(yellow(_('+COUNTER!+')))
             new_action = random.choice(cand_moves)
             self.action = new_action
@@ -156,6 +166,8 @@ class FighterWithActions(FighterAPI, ABC):
     def do_preemptive(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
         if cand_moves:
+            if self.fight_stats is not None:
+                self.fight_stats['preemptives'] += 1
             self.current_fight.display(yellow(_('<-PREEMPTIVE!-<')))
             new_action = random.choice(cand_moves)
             self.action = new_action
@@ -291,7 +303,11 @@ class FighterWithActions(FighterAPI, ABC):
         self.kos_this_fight = 0
         self.momentum = 0
         self.fight_stats = {'thrown': 0, 'landed': 0, 'dam_dealt': 0, 'criticals': 0, 'epics': 0,
-                            'moves_used': {}, 'max_blow': 0, 'max_blow_move': ''}
+                            'moves_used': {}, 'max_blow': 0, 'max_blow_move': '',
+                            # defender side: strikes this fighter dodged / blocked
+                            # (fully = no damage got through), stuns suffered
+                            'dodges': 0, 'blocks': 0, 'full_blocks': 0, 'stunned': 0,
+                            'counters': 0, 'preemptives': 0}
 
     def set_target(self, target: FighterAPI) -> None:
         self.target = target

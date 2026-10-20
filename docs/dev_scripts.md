@@ -300,25 +300,49 @@ committed logs, not test code). Run from `dev_scripts/testing/`.
 
 ### run_test_fb.py — fight balance
 
-`test_fight_balance(rand_actions=False, n=10000, seed=42)`: 10,000 mirror matches —
-two fresh random fighters at the *same* random level (1–20), both driven by
-the default fight AI (`rand_actions=False`; `True` would use uniform-random
-`BaseAI`). The harness seeds `random` (`seed=42` by default, recorded in the
-report header), so repeated runs produce byte-identical reports (modulo the
-timestamp line). For winners vs losers separately it tallies: sums of the four
-base atts and full atts, a histogram of att spread (max − min), tech
-description features ("style buffs"), upgradable techs, advanced techs, and
-move features. Each category is emitted as a `compare_dicts` table —
-`D1` = winner count, `D2` = loser count, `Diff%`, `Sum` — printed to stdout
-and appended to `tests/test f.b. rand.act.=False n=10000.txt` (tracked).
+`test_fight_balance(rand_actions=False, n=100_000, seed=42)`: 100,000 mirror
+matches — two fresh random fighters at the *same* random level (1–20), both
+driven by the default fight AI (`rand_actions=False`; `True` would use
+uniform-random `BaseAI`). Fighters come from `new_fighter()`, i.e. randomly
+*generated* styles only — the classic hard-coded styles (Dragon, Snake, …)
+never appear, which is fine: they're legacy.
+
+The fights are split into seeded chunks of `chunk_size=2000` (chunk *i* uses
+`seed + i`) played in parallel worker processes (`workers=None` = one per
+CPU; ~1.5 min for 100k on 10 cores). The report depends only on `n`, `seed`
+and `chunk_size` — not on the worker count or the platform (workers are
+always spawned fresh) — so repeated runs are byte-identical modulo the
+timestamp line. With one chunk (`n=10000, chunk_size=10000`) it reproduces
+the old single-process harness exactly. The script needs its
+`if __name__ == '__main__'` guard (workers re-import it) and anchors its
+chdir on `__file__`, so unlike the other dev scripts it runs from any cwd.
+
+The report (`tests/test f.b. rand.act.=False n=100000.txt`, tracked) opens
+with **fight stats** over all fights: length in seconds (mean, median,
+slowest 10%), strikes / counters / preemptives / criticals / epics / stuns
+per fight, strike outcomes (dodged, fully blocked, partly blocked, clean
+hits — from the defender-side counters in `fight_stats`, see
+`docs/stats.md`), and what's left at the end (winner's HP, both fighters'
+stamina and QP). Then, for winners vs losers: sums of the four base atts
+and full atts, a histogram of att spread (max − min), tech description
+features ("style buffs"), upgradable techs, advanced techs, and move
+features — each a `compare_dicts` table, `D1` = winner count, `D2` = loser
+count, `Diff%` = (D1 − D2) / Sum, `Sum`, plus **`+-95%`**: the noise margin
+of that Diff%, estimated from the chunk-to-chunk spread (cluster variance of
+the ratio, so it is honest for correlated rows too — a fighter has many
+moves); `*` marks rows whose |Diff%| exceeds it. With ~150 rows a few `*`
+are expected by chance.
 
 How to read: in a balanced game every `Diff%` hovers near 0; a persistent
-bias marks things that win or lose fights (the seeded n=10000 snapshot of
-2026-10: `'close-range'` buffs at −12.2%, `'defense'` at −15.4%, i.e. losers had them
-more often). Committed samples exist for n = 50…50000.
+bias marks things that win or lose fights (the 100k snapshot of 2026-10:
+`'close-range'` buffs at −14.6 ± 1.5, `'defense'` at −12.7 ± 1.6 — and
+'defense' did nothing at all then, so about −9 to −13 is what a dead tech
+slot scores). A single 10k run is too noisy for techs (margins ±9 for
+techs 1, ±25 for techs 2); committed samples of the old single-process
+harness exist for n = 50…50000.
 
-Works: verified — ran to completion within a 280 s timeout; the
-overwritten tracked report was restored.
+Works: verified 2026-10-20 — 100k in 93 s on 10 cores; worker count 1 vs 2
+gives byte-identical reports.
 
 ### run_test_lv_vs_crowds.py
 

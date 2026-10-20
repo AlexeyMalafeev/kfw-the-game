@@ -172,6 +172,8 @@ class StrikeMechanics(FighterAPI, ABC):
         stun_dur = rndint_2d(self.DUR_STUN_MIN, self.DUR_STUN_MAX) // self.speed_full
         self.add_status('stunned', stun_dur)
         self.add_status('skip', stun_dur)
+        if self.fight_stats is not None:
+            self.fight_stats['stunned'] += 1
         prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
         self.current_fight.display(yellow(_(' stunned!')), align=False)

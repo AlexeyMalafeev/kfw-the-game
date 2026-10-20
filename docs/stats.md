@@ -186,7 +186,10 @@ Added 2026-09. During a fight every fighter accumulates `fight_stats`
 (`{'thrown', 'landed', 'dam_dealt', 'criticals', 'epics', 'moves_used'}`),
 hooked in `do_strike` (thrown/landed/damage, including counters and
 preemptives), `try_critical`/`try_epic` (critical/EPIC counts) and `maneuver`
-(per-move usage). "Landed" = the defender neither dodged nor blocked and the
+(per-move usage). Since 2026-10 it also counts the defender side — `dodges`,
+`blocks` and `full_blocks` (no damage got through) in `defend`, `stunned` in
+`cause_stun` — plus `counters` / `preemptives` performed; only the
+fight-balance harness reads these so far. "Landed" = the defender neither dodged nor blocked and the
 strike dealt damage; fumbled moves (`check_move_failed`) never reach
 `do_strike` and don't count as thrown. Damage includes bonus function damage
 and fall damage caused by the strike (measured as the target's hp delta).
