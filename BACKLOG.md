@@ -29,113 +29,12 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Bugs / known issues
 
-- **Explicitly address every remaining ⚠️ point across `docs/*.md`** (HIGH
-  priority): the user confirmed only 2-3 of them are intended behavior, the
-  rest are bugs — except the (c) design questions, which the author later
-  called mostly features. Fix or document as intended, batch by batch. All
-  points were re-verified against the code 2026-10-19; the stale ones were
-  rewritten and unmarked (SmartAIP knobs, tournament `spectator` IndexError,
-  `get_rand_moves` empty-pool crash, "invisible" accomplishments,
-  `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
-  Hero). The 52 that remain, by doc → pointer:
-  - **(a) Resolved 2026-10-19.** Fixed: co-op '2x2'/'3x3' offered only for
-    4/6 players, BookSeller checks money before asking, `use_med` logs via
-    `lose_item`, clearer mannequin description, `PMAP` rows for
-    `head_strike_mult`/`claw_strike_mult` (see `CHANGELOG.md`). Confirmed
-    features and unmarked in the docs: negative money is the game's debt
-    (school founding, Craftsman mannequin, tournament fee and a human's bet
-    deliberately skip `check_money`); WiseMan's unfiltered trait draw (owning
-    more positive traits makes new ones harder); `Criminal.reward` keeps the
-    player's full rep when a friend halves the money (rep rewards bravery).
-  - **(a′) Latent defects / code hygiene** (same safety as (a), but not
-    visible to players) — **resolved 2026-10-20** (see `CHANGELOG.md`):
-    `play()` loops instead of recursing, story scenes dispatched via
-    `getattr` (a missing scene ends the story with a `kfw.log` warning),
-    `check_allies` → `[]`, `check_fight_items` → `False`, items without an
-    effect are kept with a warning, `get_rand_moves` fallback copies the
-    tier list, `WeaponTech` registered once (dead `set_descr`, `_style_techs`
-    / `get_style_techs` removed), `get_new_name` raises instead of looping
-    forever, `new_foreigner` skips used names, a duplicate art name raises,
-    `show_ascii` debug dump removed, and the environment multiplier
-    (renamed `environment_bonus_mult`) is a neutral `1.0` instead of `0.0`
-    in fights without the environment.
-  - **(b) Balance-affecting fight mechanics — resolved 2026-10-20**, each
-    point decided by the author (see `CHANGELOG.md`): dodge and block now get
-    independent rolls; criticals/epics now need an undefended strike (any
-    block denies them); a stun is a minor shock by design, now with a 20%
-    penalty to dodge, block and block power while it lasts; counters pay
-    their move's cost like
-    preemptives; the unused boosts and the 7 `WeaponTech` placeholders are
-    unfinished features, kept and queued as techs/features below
-    ("Moves, styles, techniques, weapons").
-  - **(c) Design questions — probably intended, per the author, 2026-10-19
-    ("mostly they are features, not bugs"); to be revisited later.** Not bugs
-    and not part of the fix batches. The ⚠️ markers stay, because no single
-    point is confirmed intended yet:
-    - `gameplay.md` + `encounters.md` Town stats — crime never rises
-      (`CRIME_INCREASE_MONTHLY = 0.00`); `poverty`/`kung_fu` never change;
-      `g.kung_fu` is read nowhere though the new-game menu asks for it
-    - `gameplay.md` Reputation — doesn't feed student attraction (`get_fame`)
-    - `gameplay.md` Progression — per-level cost is a flat 100 exp despite
-      the `× level` formula
-    - `gameplay.md` Economy — prize-fighting stage 1 pays 25 < 50 fee;
-      gambling is a dominated option (EV 0, −rep, revenge risk)
-    - `gameplay.md` Day actions — `WORK_ENCS` is empty; `fight_dummy` is
-      commented out of the menu
-    - `items.md` — merchant price ignores the item (basic vs Super herb); one
-      Ginseng Root cures any injury length; mock items invisible to
-      `get_items` (can't be stolen/lost)
-    - `kung_fu.md` Weapons — no durability/breaking
-    - `social_and_traits.md` — `check_help` picks one channel with no
-      fallback; `check_partners` (friends joining training) never called
-    - `stats.md` — no trait modifies the luck roll; the Gossip encounter
-      shows the full stats table instead of rumors
-    - `encounters.md` — `enc_count_dict` is write-only (show it or drop it)
-    - `text_content.md` Quotes — the default `'fighter'` occupation has no
-      quote pool (generic NPCs are silent)
-    - `minigames.md` Chocolate — 4 stale-API points: revive or retire (see
-      the Chocolate entry below)
-  - **(d) Informational / intended / harmless:**
-    - `kung_fu.md` — tier 12–14 moves unreachable (author: reserved);
-      `Move.descr_short` dead; move_gen CSV name lookup and collision-chain
-      composition; unknown move-string literals degrade silently
-      (test-guarded); tuple move strings work only at level 1
-    - `ui.md` — ASCII art frames must stay uncolored
-    - `dev_scripts.md` — chdir-before-body path gotcha (`ML_learn.py` still
-      hit — see the dev scripts entry)
-    - `fight_mechanics.md` — `TIME_UNIT_MULTIPLIER` unused;
-      `DRAW_EXP_DIVISOR` duplicated, `LOSER_EXP_DIVISOR` unused; `do_mob_dam`
-      only slows (name)
-    - `encounters.md` — the `check_if_happens` parameter shadows the method;
-      StreetPerformer's `p.disarm()` on decline is a harmless no-op (players
-      are never armed outside fights). It's a leftover from 2020; keep it or
-      remove it (author to decide)
-    - `social_and_traits.md` — `'cowardly'` checked by name in
-      `check_scary_fight`
-    - `stats.md` — unused NPC `change_stat` shim; `set_stat`/`write_stat`
-      duplicates; `money_robbed`/`stolen_from`, `exp_bonuses`,
-      `handle_gossip` naming; parallel accomplishment lists (Engineering 3);
-      bios ignore stats/accomplishments/gossip
-    - `text_content.md` — `MISC` dead; only `Thug 1`/`Robber 1` get group
-      names; unused name constants; terminal `'Flying'` art branch (3 moves
-      on Stance); `concat` correct only at `BUFFER_WIDTH = 1`
-    - `minigames.md` RING — `from_exp_worth` retry loop unbounded; `play`
-      flag never cleared
-- ~~trait selection iterates unsorted collections, so even with `random.seed()`
-  the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
-  flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
-  `traits_list=[]`). Consider sorting pools before sampling.~~ **Fixed
-  2026-09-28**: `get_rand_traits(player=...)` now samples from
-  `sorted(av_traits)`. (The analogous object-set sites in move/tech
-  generation and the string-set tie-ordering in `compare_dicts` were fixed
-  earlier — the seeded fight-balance harness is byte-reproducible across
-  PYTHONHASHSEEDs.)
-- ~~`TestJadeTableStory.test_completes_and_lose_branch_makes_enemy` is flaky
-  across processes~~ **Fixed 2026-09-28** — the root cause was the
-  trait-selection site above (`get_rand_traits` sampling an unsorted set);
-  with it sorted, the test passes 40/40 PYTHONHASHSEEDs (previously ~15–20%
-  of seeds failed with `saw_win=False`).
-- possible bug in exp progression in lazy/hardworking players
+Three lists: confirmed bugs (fix them), unverified reports (reproduce or rule
+out first), and the index of ⚠️ points in `docs/*.md`. Fixed entries move to
+`CHANGELOG.md` and are pruned from here.
+
+### Confirmed bugs
+
 - **'defense' buff is dead** (the old "defense buff not working?" hunch,
   confirmed 2026-10-20): `dfs_mult` is set by 18/36 Defense Forms,
   generated-style Defense Stance / Hard like Ice / Crane Flapping Wings,
@@ -144,11 +43,10 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   Defense Forms: `dfs_mult` 1.0 → 1.5, dodge/block chances and block power
   unchanged). Author: fix it — it should raise both dodge and block chance;
   +50% (`DEFENSE1`) is probably too much, set the value by modeling
-- bug in careless inactive time?
-- fix style moves; "couldn't find any moves for move string 3,shocking;1,flying;2,flying"
-- some upgradable techs shouldn't be upgradable
-- double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
-  last!)" — verify whether it regressed or the todo entry was stale)
+- `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
+  (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
+  tech/move names no longer in the data files, `learn_tech` now takes Tech
+  objects. RING works (needs a TTY; run from `minigames/`).
 - some dev scripts remain broken (details + per-script verdicts in
   `docs/dev_scripts.md`; the output-path, missing-dir, determinism and
   `count_lines.py` defects were fixed 2026-09):
@@ -159,14 +57,101 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   `generated_styles=` → 100 interactive prompts; also persists nothing
   despite the name),
   `ML_learn.py` (input path `'../../ml/...'` resolves outside the repo)
-- `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
-  (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
-  tech/move names no longer in the data files, `learn_tech` now takes Tech
-  objects. RING works (needs a TTY; run from `minigames/`).
+
+### Unverified reports
+
+Old notes nobody has reproduced recently — some may be stale. Check them
+against the current code first, then fix, or delete the entry if it no
+longer applies.
+
+- possible bug in exp progression in lazy/hardworking players
+- bug in careless inactive time?
+- fix style moves; "couldn't find any moves for move string 3,shocking;1,flying;2,flying"
+- some upgradable techs shouldn't be upgradable
+- double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
+  last!)" — verify whether it regressed or the todo entry was stale)
+- from the old `docs/known bugs.txt` (migrated 2026-10-20; its notes that
+  were already fixed or tracked elsewhere were dropped):
+  - a tier-1 move offered at level 20
+  - exp bonuses don't seem to work / don't register in the statistics
+    (gossip)
+  - shock and similar statuses: reschedule the fighter's turn immediately
+  - exp miscalculated in fights with weapons
+  - Bagua Zhang gets little exp from improvised weapons
+  - Fat Girl encounter: no help from friends
+  - six moves to choose from at level 10 — why?
+  - multiple attempts for defeating beggars? (more a design question)
+
+### Open balance / design questions
+
 - weapons are OP? / remove weapon atk bonus
 - flower kung-fu has only weak and pathetic moves (intended?)
-- organize move list, remove unused moves
-- wtf is STAMINA_FACTOR_BIAS in fighter.py?
+
+### ⚠️ points in the docs
+
+`docs/*.md` mark suspicious behavior with ⚠️. Every point was re-verified
+against the code on 2026-10-19, and the actionable ones were resolved in
+three batches, each item decided by the author: (a) player-visible bugs,
+(a′) latent defects and (b) balance-affecting fight mechanics (2026-10-19/20;
+fixes in `CHANGELOG.md`). Points confirmed as intended — e.g. negative money
+as debt, WiseMan's unfiltered trait draw, Criminal's full rep — are now
+documented as such; the unused boosts and weapon-tech placeholders became
+the "Techs for the placeholder boosts" and "Weapon techs" items under Moves,
+styles, techniques, weapons. The 52 that remain, by doc → pointer:
+
+- **(c) Design questions — probably intended, per the author, 2026-10-19
+  ("mostly they are features, not bugs"); to be revisited later.** Not bugs
+  and not part of the fix batches. The ⚠️ markers stay, because no single
+  point is confirmed intended yet:
+  - `gameplay.md` + `encounters.md` Town stats — crime never rises
+    (`CRIME_INCREASE_MONTHLY = 0.00`); `poverty`/`kung_fu` never change;
+    `g.kung_fu` is read nowhere though the new-game menu asks for it
+  - `gameplay.md` Reputation — doesn't feed student attraction (`get_fame`)
+  - `gameplay.md` Progression — per-level cost is a flat 100 exp despite
+    the `× level` formula
+  - `gameplay.md` Economy — prize-fighting stage 1 pays 25 < 50 fee;
+    gambling is a dominated option (EV 0, −rep, revenge risk)
+  - `gameplay.md` Day actions — `WORK_ENCS` is empty; `fight_dummy` is
+    commented out of the menu
+  - `items.md` — merchant price ignores the item (basic vs Super herb); one
+    Ginseng Root cures any injury length; mock items invisible to
+    `get_items` (can't be stolen/lost)
+  - `kung_fu.md` Weapons — no durability/breaking
+  - `social_and_traits.md` — `check_help` picks one channel with no
+    fallback; `check_partners` (friends joining training) never called
+  - `stats.md` — no trait modifies the luck roll; the Gossip encounter
+    shows the full stats table instead of rumors
+  - `encounters.md` — `enc_count_dict` is write-only (show it or drop it)
+  - `text_content.md` Quotes — the default `'fighter'` occupation has no
+    quote pool (generic NPCs are silent)
+  - `minigames.md` Chocolate — 4 stale-API points: revive or retire (see
+    the Chocolate entry under Confirmed bugs)
+- **(d) Informational / intended / harmless:**
+  - `kung_fu.md` — tier 12–14 moves unreachable (author: reserved);
+    `Move.descr_short` dead; move_gen CSV name lookup and collision-chain
+    composition; unknown move-string literals degrade silently
+    (test-guarded); tuple move strings work only at level 1
+  - `ui.md` — ASCII art frames must stay uncolored
+  - `dev_scripts.md` — chdir-before-body path gotcha (`ML_learn.py` still
+    hit — see the dev scripts entry)
+  - `fight_mechanics.md` — `TIME_UNIT_MULTIPLIER` unused;
+    `DRAW_EXP_DIVISOR` duplicated, `LOSER_EXP_DIVISOR` unused; `do_mob_dam`
+    only slows (name)
+  - `encounters.md` — the `check_if_happens` parameter shadows the method;
+    StreetPerformer's `p.disarm()` on decline is a harmless no-op (players
+    are never armed outside fights). It's a leftover from 2020; keep it or
+    remove it (author to decide)
+  - `social_and_traits.md` — `'cowardly'` checked by name in
+    `check_scary_fight`
+  - `stats.md` — unused NPC `change_stat` shim; `set_stat`/`write_stat`
+    duplicates; `money_robbed`/`stolen_from`, `exp_bonuses`,
+    `handle_gossip` naming; parallel accomplishment lists (Engineering 3);
+    bios ignore stats/accomplishments/gossip
+  - `text_content.md` — `MISC` dead; only `Thug 1`/`Robber 1` get group
+    names; unused name constants; terminal `'Flying'` art branch (3 moves
+    on Stance); `concat` correct only at `BUFFER_WIDTH = 1`
+  - `minigames.md` RING — `from_exp_worth` retry loop unbounded; `play`
+    flag never cleared
 
 ## Fight mechanics
 
@@ -209,6 +194,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 - yell (as a move function?)
 - tests of strength/speed/health/agility in encounters and stories — new
   mechanics beyond fighting
+- make status attacks (stun, shock, …) level-dependent
 
 ## Moves, styles, techniques, weapons
 
@@ -273,7 +259,27 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 - momentum style/techs — use own and opponent's momentum, like Judo
 - strong-against-stronger / strong-against-weaker techs (intimidating,
   fearless, Giant Killer)
-- more strike types (see `docs/strike notes.txt`)
+- more strike types — new move-name words for `dev_scripts/move_gen.py`
+  (ideas from the old `docs/strike notes.txt`; the words already in use
+  live in `move_gen.py`):
+  - effect ideas: Bull (the more HP, the more damage — or a tech?); Rage
+    (the less HP, the more damage — or a tech?); Sacrifice (spend own HP);
+    Reckless (lower own defense? lower accuracy? dist_change −2?); Precise
+    strikes with an increased critical chance; Overhand (unblockable?);
+    unbalancing; All-Rounder (strength + speed + agility based damage);
+    drain or damage the enemy's qi; weaken the enemy (vital points, pressure
+    points, nerve-blocking); Tackle as a special move with derivatives
+    (Takedown, Throw, Trip and Sweep moves already exist); grab, lock and
+    hold wrestling moves (wrestling = strength & agility; see also the
+    grab-chance item above); more moves with level-based damage
+    (`do_level_based_dam`, used by 1 move so far)
+  - unused name words: Aggressive, Astral, Brutal, Crashing, Crushing,
+    Crazy, Insane, Crappy, Weak (etc.), Deceptive, Diamond, Dirty, Divine,
+    Explosive, Extravagant, Fierce, Gold, Hard, Heavenly, Platinum, Shadow,
+    Silver, Sudden, Uncanny, Weird
+- when choosing new moves, always offer at least some that the fighter's
+  techs give a bonus to (the `*` moves)
+- organize the move list, remove unused moves
 
 ## AI
 
@@ -294,6 +300,8 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   names, styles — instead of ugly style.name)
 - new AI players; simulating AI (when choosing upgrades/techs)
 - online learning?
+- fight AI: step forward when ahead, or at distance 4 when the opponent has
+  a range-4 attack; step forward more when its group outnumbers the enemy
 
 ## Balance & analysis
 
@@ -463,6 +471,32 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
   manuscript; rival schools; family trouble; master turns evil; betrayal;
   archenemy; Shaolin wooden fighters; Shaolin gets destroyed?; stolen
   mannequin?; seven Japanese masters; martial arts spirit/world
+- story outlines (from the old `docs/story notes.txt`; steps → rewards):
+  - **King of Robbers:** news about the gang, crime goes up → raid(s) → a
+    big crowd of robbers, fought with allies → final showdown (kidnapping?).
+    Rewards: money, rep
+  - **Chief of Police:** rumors about corrupt police officers → witness
+    extortion, fight the police, the chief appears → police letting
+    criminals go → a set-up, possible arrest of the hero? → a meeting where
+    he acts friendly and offers a large bribe. Rewards: rep
+  - **Out-of-towners:** a new hostile school → it challenges the other
+    schools (open-ended?) → resorts to criminal methods, intimidates
+    students → the hero's students fight the out-of-towners → masters'
+    showdown. Rewards: rep, tech
+  - **Evil sect:** a new sect appears, aims unknown → attacks → the leader
+    is mad (large damage reduction). Rewards: rep, tech
+  - **Spirit of Wushu:** train alone → fight the spirit (a few times?).
+    Rewards: techs, moves, advanced tech
+  - **Daughter of the Tavern Owner:** meet at the tavern, spend money → the
+    girl vs thugs, help out → a friendly match with the girl → thugs kidnap
+    her father; help, get married. Rewards: money, exp (the romance system
+    shipped since — this could become a romance storyline)
+  - titles only: Wandering Master, Shaolin, Secret Scroll, Honest Cop (the
+    first three overlap the one-liners above: wandering master, Shaolin
+    wooden fighters, lost manuscript)
+- when NPC schools fight each other, show which school won
+- inspiration for characters and stories: the major characters of *Outlaws
+  of the Marsh* — http://www.outlawsofthemarsh.com/major-characters/
 - better story rewards: lots of rep/exp/money, special techs/items, remove
   character flaw, special friend, move, 100 magic healers
 - societies: bandits, sects (Righteous, White Lotus)
@@ -504,6 +538,8 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 - display all player fighter atts in state menu (suboption?)
 - common log for all players; get verbose fighter info
 - add timer to fight screens?
+- hide Step Forward / Step Back in the fight menu when the distance makes
+  them pointless
 
 ## Localization (see `docs/i18n.md`)
 

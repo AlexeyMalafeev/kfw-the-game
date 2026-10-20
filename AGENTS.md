@@ -66,8 +66,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   content), `items.md`, `stats.md` (stats/accomplishments/gossip/bios),
   `social_and_traits.md`, `text_content.md` (quotes/names/ASCII art),
   `minigames.md`, `debug_menu.md`, `dev_scripts.md`, `ui.md` (output funnels,
-  color markup), `i18n.md` (Russian localization); plus `known bugs.txt` and
-  old design notes.
+  color markup), `i18n.md` (Russian localization); plus `style notes.txt`
+  (research notes on real kung-fu styles, reference for style design).
+  Raw bug reports and ideas go to `BACKLOG.md`, not into loose note files.
   Changelog lives at repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with
   release codenames), the structured backlog in `BACKLOG.md`
 
