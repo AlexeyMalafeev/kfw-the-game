@@ -191,13 +191,18 @@ def new_fighter(lv=0, n=1):
         return fs
 
 
-def new_foreigner(lv=0, country=None, name=None, style=None):
+def new_foreigner(lv=0, country=None, name=None, style=None, used_names=()):
+    """used_names: names already taken in the game (e.g. Game.used_names);
+    the foreigner's name is drawn from the rest of the country's pool."""
     if not lv:
         lv = rndint(*FOREIGNER_LV)
     if country is None:
         country = random.choice(names.FOREIGN_COUNTRIES)
     if name is None:
-        name = random.choice(names.FOREIGN_NAMES[country])
+        free = [n for n in names.FOREIGN_NAMES[country] if n not in used_names]
+        if not free:
+            raise ValueError(f'new_foreigner: every {country} name is already in use')
+        name = random.choice(free)
     if style is None:
         style = styles.FOREIGN_STYLES[country]
     f = Fighter(name, style, level=1)

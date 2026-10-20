@@ -5,8 +5,6 @@ from kf_lib import i18n
 from kf_lib.i18n import _
 from kf_lib.kung_fu import boosts as b
 from kf_lib.kung_fu import boost_combos as bc
-from kf_lib.things import weapons
-from kf_lib.utils import add_sign
 
 
 # todo refactor to a separate module
@@ -85,8 +83,7 @@ class WeaponTech(Tech):
     def __init__(self, name, **kwargs):
         self.wp_type = ''
         self.wp_bonus = (0, 0)
-        super().__init__(name, is_weapon_tech=True, **kwargs)
-        _weapon_techs.append(self)
+        super().__init__(name, is_weapon_tech=True, **kwargs)  # registers it
 
     def apply(self, f):
         if self.wp_type in f.weapon_bonus:
@@ -95,15 +92,6 @@ class WeaponTech(Tech):
             bonus = f.weapon_bonus[self.wp_type] = [0, 0]
         bonus[0] += self.wp_bonus[0]
         bonus[1] += self.wp_bonus[1]
-
-    def set_descr(self):
-        a = add_sign(self.wp_bonus[0])
-        d = add_sign(self.wp_bonus[1])
-        if self.wp_type in weapons.WEAPON_TYPES:
-            w = _('{wp_type} weapons').format(wp_type=i18n.tr_name(self.wp_type))
-        else:
-            w = i18n.tr_name(self.wp_type)
-        self.descr = f'{w} {a}/{d}'
 
     def undo(self, f):
         bonus = f.weapon_bonus[self.wp_type]  # list of 2
@@ -118,7 +106,6 @@ _all_techs: Dict[str, Tech] = {}
 # tech names (for convenient random choosing)
 _upgradable_techs: List[Tech] = []
 _advanced_techs: List[Tech] = []
-_style_techs: List[Tech] = []
 _weapon_techs: List[Tech] = []
 
 # style techs upgraded at STYLE_TECH_UPGRADE_AT_LV (see fighter/_techs.py); created lazily
@@ -310,16 +297,6 @@ def get_learnable_techs(fighter=None):
             elif t in _advanced_techs:
                 techs.remove(adv_to_reg(t))
     return techs
-
-
-def get_style_techs(fighter=None) -> List[Tech]:
-    if fighter is None:
-        return _style_techs
-    else:
-        # sorted: fighter.techs is a set of id-hashed objects (see _techs.py)
-        return sorted(
-            (t for t in fighter.techs if t in _style_techs), key=lambda t: t.name
-        )
 
 
 def get_tech_obj(tech_name: Text) -> Tech:

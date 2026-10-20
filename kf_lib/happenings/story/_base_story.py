@@ -1,3 +1,8 @@
+import logging
+
+
+logger = logging.getLogger()
+
 _all_stories = []
 
 
@@ -26,7 +31,13 @@ class BaseStory:
         p = self.player
         p.cls()
         p.show(p.get_p_info(), align=False)
-        exec(f'self.scene{self.state}()')
+        scene = getattr(self, f'scene{self.state}', None)
+        if scene is None:
+            # a story whose last scene forgot to call end(): end it cleanly
+            logger.warning(f'{self.name} has no scene{self.state}; ending the story')
+            self.end()
+            return
+        scene()
 
     def check_hasnt_started(self):
         return self.state is None

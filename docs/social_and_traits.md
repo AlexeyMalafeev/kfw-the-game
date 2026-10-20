@@ -88,10 +88,9 @@ is picked (1/4 with all channels on, 1/5 once married), and a failed roll on
 the chosen channel produces no help at all — there is no fallback to the other
 channels.
 
-⚠️ The `'a'` branch assigns `p.allies = p.check_allies()`, and `check_allies`
-returns `None` (not `[]`) when the player has no friends — overwriting the
-`p.allies = []` init. `fight()` tolerates `None`, but `Extorters` has to guard
-explicitly (`p.allies if p.allies is not None else []`, `_crime.py:146`).
+The `'a'` branch assigns `p.allies = p.check_allies()`; `check_allies`
+returns an empty list when the player has no friends, so `p.allies` is always
+a list.
 
 Call sites: `Ambush`, `Extorters`, `RobbingSomeone`, group/armed `Robbers`,
 `Criminal` (direct `check_allies(1)`), plus weapon-only variants in

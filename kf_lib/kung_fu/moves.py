@@ -253,7 +253,7 @@ def get_rand_moves(
             f'\n{features=}'
             f'\nSetting pool to all moves at tier'
         )
-        pool = MOVES_BY_TIERS[tier]
+        pool = list(MOVES_BY_TIERS[tier])  # a copy: pool is shuffled/sorted below
     random_move = random.choice(pool)
     random.shuffle(pool)
     pool.sort(

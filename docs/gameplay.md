@@ -182,8 +182,10 @@ biography (`biographies.py`) are shown and dumped into the save folder along
 with a `game over.txt` save, and the player is asked "Keep playing
 indefinitely?" — which sets `play_indefinitely` so `check_victory` never fires
 again; the State menu then offers **Finish Game** (`F`), which reruns the
-victory routine via `StateMenu.finish_game` and quits. ⚠️ `Playing.play()` then re-invokes itself recursively, growing the
-stack by one frame per victory-and-continue.
+victory routine via `StateMenu.finish_game` and quits. `Playing.play()`
+handles the continue in a loop: when `game_loop` ends on a victory and the
+player chose to keep playing, it prepares the game again and resumes (it
+used to call itself recursively, one stack frame per victory-and-continue).
 
 ## Defeat
 

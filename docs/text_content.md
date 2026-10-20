@@ -99,10 +99,10 @@ for special cases.
   `Thief`, `Official`, `Gambler`, and robber nicknames (below).
 - Collision loop: the candidate is retried while it's in `self.used_names`
   (populated by `register_fighter`; rebuilt from `fighters_dict` by
-  `collect_used_names`). After 1000 failed tries it prints
-  `'1000 names failed'` and the prefix... then keeps looping forever ⚠️ —
-  the outer `while True` has no escape, so an exhausted namespace hangs the
-  game (unreachable in practice at ~1.2 M combos).
+  `collect_used_names`). After `MAX_NAME_TRIES` (1000) failed tries the
+  namespace is treated as exhausted and `get_new_name` raises
+  `RuntimeError` (it used to loop forever). Unreachable in practice: ~1.2 M
+  combos without a prefix, 91 surnames per prefix.
 
 Names matter beyond display: `register_fighter` raises on a duplicate name,
 and JSON saves cross-reference fighters *by name* — uniqueness is a save-format
@@ -121,8 +121,9 @@ proper-name parts untouched (see `docs/i18n.md`).
   robber/criminal NPCs (`encounters/_utils.py`, `story/_bandit_fiance.py`,
   `game/_playing.py`).
 - `new_foreigner` picks a country from `FOREIGN_COUNTRIES` (6) and a surname
-  from `FOREIGN_NAMES` (5–11 per country) ⚠️ without the `get_new_name`
-  collision check — a duplicate would blow up later in `register_fighter`.
+  from `FOREIGN_NAMES` (5–11 per country), skipping names in `used_names`
+  (the Foreigner story passes `Game.used_names`); it raises `ValueError` if
+  every name of the country is taken.
 - `TURTLE_NAMES` (the four Ninja Turtles) for the turtle encounter;
   `DFLT_TOURN_PART_NAME = 'Unknown'` and `GANG_LEADER = 'Gang Leader'` are
   defined but unused in `kf_lib` ⚠️; `CAPITAL_LETTERS` likewise.
@@ -145,9 +146,10 @@ Parsing details (`finalize` / `mirror`):
 - `mirror` builds the right-facing copy by swapping directional characters
   (`\ / < > ( ) [ ] { }`, plus `p→q` and `c→D` with a "todo better mirroring"
   comment) and reversing each line.
-- A move name appearing twice in the file prints a warning and then calls
-  `input('Press Enter to continue')` ⚠️ — at import time, so a duplicate
-  would block the game startup on a prompt (no duplicates currently).
+- A move name appearing twice in the file raises `ValueError` naming the
+  duplicate — at import time, so the game won't start until the file is
+  fixed (there are no duplicates currently; this used to pause startup on a
+  "Press Enter" prompt instead).
 
 ### Matching a move to art — `get_ascii(move_name)`
 
@@ -201,8 +203,6 @@ Effect`. Each `Move` caches its pair at construction (`Move.set_ascii` →
   loser (two lying fighters and the winner's quote).
 - ⚠️ `concat` is only correct with `BUFFER_WIDTH = 1`; the code carries
   `todo if you set buffer width to >=2, there is a bug in concat`.
-- ⚠️ `show_ascii` catches `AttributeError` around the side lookup and dumps
-  full `vars()` of the fighter and fight before re-raising — a debug leftover.
 
 ### The cartoon buffer
 

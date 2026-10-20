@@ -139,9 +139,9 @@ class TestInventory:
 
     def test_check_fight_items(self):
         p = make_player()
-        assert not p.check_fight_items()
+        assert p.check_fight_items() is False
         p.obtain_item(items.MEDICINE)  # medicine is not a fight item
-        assert not p.check_fight_items()
+        assert p.check_fight_items() is False
         p.obtain_item(items.SUPER_BOOSTER)
         assert p.check_fight_items()
 
@@ -173,6 +173,17 @@ class TestItemEffects:
         assert p.inact_status == ''
         assert p.check_item(items.MEDICINE) == 0
         assert p.get_stat('healers_used') == 1
+
+    def test_item_without_effect_is_kept_with_a_warning(self, caplog):
+        # mock items and the mannequin have no EFFECTS entry; using one used
+        # to raise KeyError (unreachable from gameplay, but guarded anyway)
+        p = make_player()
+        mock = items.MOCK_ITEMS[0]
+        p.obtain_item(mock)
+        p.use_item(mock)
+        assert p.check_item(mock) == 1
+        p.cancel_item(mock)
+        assert 'has no effect' in caplog.text
 
     def test_use_item_via_player_wrapper(self):
         p = make_player()

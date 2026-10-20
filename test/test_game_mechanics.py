@@ -72,6 +72,61 @@ class TestCoopSetup:
             make_game(num_players=4, coop='3x3')
 
 
+class TestPlayLoop:
+    def test_keep_playing_after_victory_does_not_recurse(self, monkeypatch):
+        # play() used to call itself once per victory-and-continue; 3000
+        # rounds would exceed Python's default recursion limit (1000)
+        g = make_game()
+        rounds = {'n': 0}
+
+        def fake_game_loop():
+            rounds['n'] += 1
+            g.chosen_quit = False
+            if rounds['n'] < 3000:
+                g.play_indefinitely = True
+                return None  # a victory, after which the player keeps playing
+            g.chosen_quit = True
+            return False
+
+        monkeypatch.setattr(g, 'game_loop', fake_game_loop)
+        g.play()
+        assert rounds['n'] == 3000
+
+    def test_victory_without_continuing_ends_play(self, monkeypatch):
+        g = make_game()
+        calls = []
+        monkeypatch.setattr(g, 'game_loop', lambda: calls.append(1))  # returns None
+        g.play_indefinitely = False
+        g.play()
+        assert calls == [1]
+
+    def test_loading_a_save_keeps_the_loop_going(self, monkeypatch):
+        g = make_game()
+        results = iter([True, True, False])  # load, load, quit
+        monkeypatch.setattr(g, 'game_loop', lambda: next(results))
+        g.chosen_quit = True
+        g.play()
+        assert next(results, 'exhausted') == 'exhausted'
+
+
+class TestNames:
+    def test_new_name_raises_when_namespace_is_exhausted(self):
+        from kf_lib.actors import names
+
+        g = make_game()
+        g.used_names |= {f'Master {s}'.title() for s in names.SURNAME_PARTS}
+        with pytest.raises(RuntimeError, match='no unused name'):
+            g.get_new_name('Master')
+
+
+class TestAllies:
+    def test_check_allies_without_friends_is_empty_list(self):
+        g = make_game()
+        p = g.players[0]
+        p.friends = []
+        assert p.check_allies() == []
+
+
 class TestCalendar:
     def test_starting_date(self):
         g = make_game()

@@ -12,6 +12,7 @@ from ._game_io import GameIO
 
 
 NUM_CONVICTS = 5
+MAX_NAME_TRIES = 1000
 NUM_STYLES = 10
 DEFAULT_TOWN_STAT = 0.125
 
@@ -86,24 +87,25 @@ class BaseGame(GameIO):
         return f'g.fighters_dict[{fighter.name!r}]'
 
     def get_new_name(self, prefix='', gender=None):
-        while True:
-            for i in range(1000):
-                sur = random.choice(names.SURNAME_PARTS)
-                if not prefix:
-                    nf = rndint(1, 2)
-                    first_name_parts = (
-                        names.FEMALE_FIRST_NAME_PARTS
-                        if gender == 'f'
-                        else names.FIRST_NAME_PARTS
-                    )
-                    fir = ''.join(random.sample(first_name_parts, nf))
-                    name = f'{sur} {fir}'.title()
-                else:
-                    name = f'{prefix} {sur}'.title()
-                if name not in self.used_names:
-                    return name
-            print('1000 names failed')
-            print(prefix)
+        for i in range(MAX_NAME_TRIES):
+            sur = random.choice(names.SURNAME_PARTS)
+            if not prefix:
+                nf = rndint(1, 2)
+                first_name_parts = (
+                    names.FEMALE_FIRST_NAME_PARTS
+                    if gender == 'f'
+                    else names.FIRST_NAME_PARTS
+                )
+                fir = ''.join(random.sample(first_name_parts, nf))
+                name = f'{sur} {fir}'.title()
+            else:
+                name = f'{prefix} {sur}'.title()
+            if name not in self.used_names:
+                return name
+        # with this many misses the namespace is (practically) exhausted
+        raise RuntimeError(
+            f'get_new_name: no unused name in {MAX_NAME_TRIES} tries (prefix={prefix!r})'
+        )
 
     @staticmethod
     def get_new_random_styles():

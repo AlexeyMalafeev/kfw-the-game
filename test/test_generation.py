@@ -65,6 +65,16 @@ class TestMoves:
         for m in moves.ALL_MOVES_LIST:
             assert isinstance(m.tier, int) and m.tier >= 0
 
+    def test_empty_pool_fallback_leaves_tier_list_intact(self):
+        # a fighter who knows every move of the tier hits the fallback, which
+        # used to shuffle/sort the global MOVES_BY_TIERS[tier] list in place
+        random.seed(0)
+        f = new_fighter(5)
+        f.moves = list(moves.MOVES_BY_TIERS[1])
+        before = list(moves.MOVES_BY_TIERS[1])
+        moves.get_rand_moves(f, 3, tier=1)
+        assert moves.MOVES_BY_TIERS[1] == before
+
     def test_random_tiers_are_nonempty(self):
         # get_rand_moves picks from MOVES_BY_TIERS[tier]; an empty tier would crash it
         for tier in range(moves.TIER_MIN, moves.TIER_MAX + 1):
@@ -114,6 +124,12 @@ class TestTechDescriptions:
         assert 'headbutts' in exotic.descr_short.split(', ')
         assert 'claw strike efficiency' in palms.descr
         assert 'claws' in palms.descr_short.split(', ')
+
+
+class TestTechRegistry:
+    def test_each_weapon_tech_registered_once(self):
+        wts = techniques.get_weapon_techs()
+        assert len(wts) == len(set(wts)) == 7
 
 
 class TestTechEffects:

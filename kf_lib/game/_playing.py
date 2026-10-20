@@ -213,13 +213,14 @@ class Playing(BaseGame):
 
     def play(self):
         """Play the (previously initialized or loaded) game."""
-        self.prepare_for_playing()
-        play = True
-        while play:
-            play = self.game_loop()
-        else:
-            if self.play_indefinitely and not self.chosen_quit:
-                self.play()
+        while True:
+            self.prepare_for_playing()
+            while self.game_loop():  # True after loading a save: keep playing
+                pass
+            # game_loop ended on quit or victory; after a victory the player
+            # may have chosen to keep playing indefinitely
+            if not self.play_indefinitely or self.chosen_quit:
+                break
 
     def prepare_for_playing(self):
         """Prepare for playing a new or previously saved game."""

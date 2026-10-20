@@ -15,7 +15,7 @@ class ForeignerStory(BaseStory):
     def intro(self):
         g = self.game
         g.cls()
-        b = self.boss = fighter_factory.new_foreigner()
+        b = self.boss = fighter_factory.new_foreigner(used_names=g.used_names)
         g.register_fighter(b)
         t = (
             _(

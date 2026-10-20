@@ -104,10 +104,9 @@ out by name.
    drunken techs/styles this way.
 3. An empty pool (the fighter already knows every eligible move of the
    tier) logs a warning and falls back to the whole tier; only then is the
-   "for variety" move drawn with `random.choice(pool)`. ⚠️ The fallback
-   aliases `MOVES_BY_TIERS[tier]` instead of copying it, so the shuffle/sort
-   below reorder the global tier list in place — harmless for randomness,
-   and practically unreachable.
+   "for variety" move drawn with `random.choice(pool)`. The fallback pool is
+   a copy of `MOVES_BY_TIERS[tier]`, so the shuffle/sort below never reorder
+   the global tier list.
 4. Shuffle, stable-sort by overlap with `features` (descending), truncate
    to `n * 3`, then weight by `freq` (`weighted_pool.extend([move] *
    move.freq)`) and pick `n` distinct moves. When `n > 1`, one uniformly
@@ -274,14 +273,8 @@ Weapon techs: `WeaponTech` adds a `(atk, dfs)` pair into
 `f.weapon_bonus[wp_type]`, but all 7 declared `WeaponTech`s leave
 `wp_type=''` and `wp_bonus=(0,0)` — nothing configures them, and the code
 carries the todo "weapon techniques do nothing; implement" (flagged in
-[fight]). ⚠️ Additionally each `WeaponTech` is appended to
-`_weapon_techs` **twice** (both `Tech.__init__` and `WeaponTech.__init__`
-append), and `WeaponTech.set_descr` is dead code — `Tech.__init__` calls
-the module-level `boosts.set_descr` instead.
-
-⚠️ `_style_techs` is declared but never appended to anywhere, so
-`get_style_techs()` always returns `[]` (only `testing/tech_test.py` calls
-it).
+[fight]). `Tech.__init__` registers each one in `_weapon_techs`
+(`get_weapon_techs()`).
 
 ## Weapons
 

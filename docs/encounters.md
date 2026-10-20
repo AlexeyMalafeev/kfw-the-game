@@ -262,10 +262,10 @@ eligibility window; `state` is `None` (not started), `0..n` (current scene), or
   inactive (KO'd) players — an inactive player is simply not eligible, so the
   story stays unstarted and can begin for the same player after recovery.
 - **Advancing**: the `ContinueStory` encounter calls `advance()`, which
-  increments `state` and runs the scene via
-  `exec(f'self.scene{self.state}()')`. ⚠️ Dynamic dispatch by string `exec` —
-  a `state` with no matching `sceneN` method crashes with `AttributeError`
-  instead of ending cleanly; scenes must call `self.end()` themselves.
+  increments `state` and runs the matching `scene{state}` method (looked up
+  with `getattr`). Scenes must call `self.end()` themselves; if a story
+  forgets to, the next `advance()` finds no scene, writes a warning to
+  `kfw.log` and ends the story cleanly instead of crashing.
   `ContinueStory.check_if_happens` additionally requires the player to not be
   inactive (on top of `random_encounters` skipping inactive players
   outright), so a story started before a KO simply waits for recovery.

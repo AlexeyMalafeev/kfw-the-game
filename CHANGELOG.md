@@ -38,6 +38,24 @@ All notable changes to KFW are documented here. Format loosely follows
   only the "QP to start with" half worked. They now give the intended +10%
   max QP (and their descriptions list it). Balance-affecting; a new test
   checks that no tech boosts a value that gets recomputed
+- **Latent defects** that no normal game currently runs into, fixed so they
+  can't bite later:
+  - "Keep playing indefinitely" after a victory made the game loop call
+    itself recursively; it's a plain loop now
+  - a story whose scene is missing now ends cleanly with a warning in
+    `kfw.log` instead of crashing (scenes are no longer run via `exec`)
+  - using or cancelling an item that has no effect (a mock item, the
+    mannequin) would have crashed; it now does nothing, keeps the item and
+    logs a warning
+  - the name generator looped forever once every name was taken; it now
+    stops with an error, and foreign fighters' names now skip names
+    already in use
+  - a move listed twice in the ASCII art file paused game startup on a
+    "Press Enter" prompt; it now stops with an error naming the move
+  - smaller cleanups: `check_allies` / `check_fight_items` return an empty
+    list / `False` instead of `None`, the move picker's fallback no longer
+    reorders the shared move list, weapon techs are registered once, and
+    an always-empty style-tech list and a debug dump in `show_ascii` are gone
 
 ## [v0.7.5-beta "Palladius Palm"] — 2026-10-19
 

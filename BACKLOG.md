@@ -37,7 +37,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   rewritten and unmarked (SmartAIP knobs, tournament `spectator` IndexError,
   `get_rand_moves` empty-pool crash, "invisible" accomplishments,
   `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
-  Hero). The 70 that remain, by doc → pointer:
+  Hero). The 58 that remain, by doc → pointer:
   - **(a) Resolved 2026-10-19.** Fixed: co-op '2x2'/'3x3' offered only for
     4/6 players, BookSeller checks money before asking, `use_med` logs via
     `lose_item`, clearer mannequin description, `PMAP` rows for
@@ -47,24 +47,20 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     deliberately skip `check_money`); WiseMan's unfiltered trait draw (owning
     more positive traits makes new ones harder); `Criminal.reward` keeps the
     player's full rep when a friend halves the money (rep rewards bravery).
-  - **(a′) Latent defects / code hygiene, safe to fix:**
+  - **(a′) Latent defects / code hygiene** (same safety as (a), but not
+    visible to players) — **mostly resolved 2026-10-20** (see `CHANGELOG.md`):
+    `play()` loops instead of recursing, story scenes dispatched via
+    `getattr` (a missing scene ends the story with a `kfw.log` warning),
+    `check_allies` → `[]`, `check_fight_items` → `False`, items without an
+    effect are kept with a warning, `get_rand_moves` fallback copies the
+    tier list, `WeaponTech` registered once (dead `set_descr`, `_style_techs`
+    / `get_style_techs` removed), `get_new_name` raises instead of looping
+    forever, `new_foreigner` skips used names, a duplicate art name raises,
+    `show_ascii` debug dump removed. One point is waiting for the author:
     - `fight_mechanics.md` Fight setup — `environment_bonus` is `0.0` (not
       `1.0`) when the environment is disallowed; inert behind the
       `environment_allowed` gate (pinned by
       `test_environment_bonus_disabled_is_zero`)
-    - `gameplay.md` Victory — `Playing.play()` recurses once per
-      victory-and-continue
-    - `encounters.md` Stories — `advance()` dispatches scenes via `exec`
-    - `social_and_traits.md` Help channels — `check_allies` returns `None`
-      instead of `[]`
-    - `items.md` — `use_item`/`cancel_item` `KeyError` for names missing from
-      `EFFECTS` (unreachable today); `check_fight_items` returns `None`
-    - `kung_fu.md` — `get_rand_moves` fallback reorders `MOVES_BY_TIERS[tier]`
-      in place; each `WeaponTech` appended to `_weapon_techs` twice, dead
-      `WeaponTech.set_descr`; `_style_techs` never filled
-    - `text_content.md` — `get_new_name` loops forever on an exhausted
-      namespace; `new_foreigner` skips the collision check; a duplicate art
-      name blocks import on `input()`; `show_ascii` debug `vars()` dump
   - **(b) Balance-affecting fight mechanics — queue a `run_test_fb.py`
     re-run:**
     - `fight_mechanics.md` defend — one roll checked vs dodge first, so the

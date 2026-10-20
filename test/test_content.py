@@ -114,6 +114,21 @@ class TestBookSeller:
         assert p.money == 50
 
 
+class TestStoryDispatch:
+    def test_missing_scene_ends_story_with_a_warning(self, caplog):
+        g = make_game()
+        p = g.players[0]
+        s = g.stories['ForeignerStory']
+        s.start(p)
+        assert p.current_story is s
+        s.state = 99  # past the last scene
+        s.advance()
+        assert s.state == -1
+        assert p.current_story is None
+        assert s.boss is None
+        assert 'ForeignerStory has no scene100' in caplog.text
+
+
 class TestTournament:
     def test_tournament_runs_headless(self):
         g = make_game(seed=2)
@@ -268,6 +283,29 @@ class TestForeignStyles:
         f = fighter_factory.new_foreigner(country='Japan')
         assert f.country == 'Japan'
         assert f.style.name == 'Karate'
+
+    def test_new_foreigner_skips_used_names(self):
+        from kf_lib.actors import fighter_factory, names
+
+        pool = names.FOREIGN_NAMES['Brazil']
+        f = fighter_factory.new_foreigner(country='Brazil', used_names=set(pool[1:]))
+        assert f.name == pool[0]
+        with pytest.raises(ValueError, match='already in use'):
+            fighter_factory.new_foreigner(country='Brazil', used_names=set(pool))
+
+
+class TestAsciiArt:
+    def test_duplicate_art_name_raises(self, tmp_path, monkeypatch):
+        from kf_lib.kung_fu import ascii_art
+
+        (tmp_path / 'ascii_mapping.txt').write_text(
+            '# Stance, Kick\n (}\n/|\\\n# Kick\n (}\n/|_\n'
+        )
+        monkeypatch.setattr(ascii_art, 'MOVES_FOLDER', str(tmp_path))
+        monkeypatch.setattr(ascii_art, 'FIGHTER_ART_L', {})
+        monkeypatch.setattr(ascii_art, 'FIGHTER_ART_R', {})
+        with pytest.raises(ValueError, match="'Kick' has more than one ASCII art"):
+            ascii_art.set_ascii_art()
 
 
 class TestMoveLookup:

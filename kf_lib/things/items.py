@@ -1,9 +1,12 @@
+import logging
 import random
 
 from kf_lib import i18n
 from kf_lib.i18n import _
 from kf_lib.kung_fu import boosts
 
+
+logger = logging.getLogger()
 
 # constants
 ATT_BOOST1 = 3
@@ -138,6 +141,9 @@ for k, v in EFFECTS.items():
 
 
 def cancel_item(item, target):
+    if item not in EFFECTS:
+        logger.warning(f'cancel_item: {item!r} has no effect to cancel')
+        return
     ef_func, kwargs = EFFECTS[item]
     target.unboost(**kwargs)
 
@@ -160,5 +166,11 @@ def get_random_mock_item():
 
 
 def use_item(item, target):
+    """Apply the item's effect to target. Return False (and log a warning)
+    for an item without an effect, e.g. a mock item or the mannequin."""
+    if item not in EFFECTS:
+        logger.warning(f'use_item: {item!r} has no effect; nothing happens')
+        return False
     ef_func, kwargs = EFFECTS[item]
     ef_func(target, **kwargs)
+    return True

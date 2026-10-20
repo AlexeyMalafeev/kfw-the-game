@@ -375,7 +375,7 @@ class BasePlayer(Fighter):
 
     def check_allies(self, max_num_allies=-1):
         if not self.friends:
-            return None
+            return []
         else:
             if max_num_allies == -1:
                 max_num_allies = self.max_num_friends
@@ -405,6 +405,7 @@ class BasePlayer(Fighter):
         for k, v in self.inventory.items():
             if k in items.FIGHT_ITEMS and v > 0:
                 return True
+        return False
 
     def check_help(
         self, allies=True, master=True, impr_wp=True, school=True, spouse=True
@@ -1161,9 +1162,10 @@ class BasePlayer(Fighter):
         self.recover()
 
     def use_item(self, item):
+        if not items.use_item(item, self):
+            return  # no effect (warning in kfw.log): keep the item
         self.log(_('Uses {item}.').format(item=tr_name(item)))
         self.lose_item(item)
-        items.use_item(item, self)
         if item in items.FIGHT_ITEMS:
             self.change_stat('fight_items_used', 1)
 

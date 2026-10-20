@@ -16,7 +16,6 @@ class TechTester(object):
     techs1 = techniques.get_upgradable_techs()
     techs2 = techniques.get_upgraded_techs()
     techs3 = techniques.get_weapon_techs()
-    techs4 = techniques.get_style_techs()
 
     def __init__(
         self,
@@ -24,7 +23,6 @@ class TechTester(object):
         upgradable_techs=True,
         advanced_techs=True,
         weapon_techs=True,
-        style_techs=True,
     ):
         self.n_fights = n_fights
         order = []
@@ -34,8 +32,6 @@ class TechTester(object):
             order.append(('advanced techs', self.techs2))
         if weapon_techs:
             order.append(('weapon techs', self.techs3))
-        if style_techs:
-            order.append(('style techs', self.techs4))
         self.order = order
         self.wins_vs1 = {}
         self.wins_crowd = {}

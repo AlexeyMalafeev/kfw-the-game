@@ -23,24 +23,12 @@ class FighterWithASCII(FighterAPI, ABC):
         self.ascii_name = ascii_name
 
     def show_ascii(self) -> None:
-        try:
-            if self in self.current_fight.side_a:
-                a = self.ascii_l
-                b = self.target.ascii_r
-            else:
-                b = self.ascii_r
-                a = self.target.ascii_l
-        except AttributeError:
-            import pprint
-            print(self)
-            print('**********\n'*3)
-            pprint.pprint(vars(self))
-            print('**********\n'*3)
-            pprint.pprint(vars(self.current_fight))
-            print('**********\n'*3)
-            pprint.pprint(vars(self.current_fight.side_b[0]))
-            print('**********\n'*3)
-            raise
+        if self in self.current_fight.side_a:
+            a = self.ascii_l
+            b = self.target.ascii_r
+        else:
+            b = self.ascii_r
+            a = self.target.ascii_l
         buffer = max((self.ascii_buffer, self.target.ascii_buffer))
         pic = ascii_art.concat(a, b, buffer)
         self.current_fight.show(pic, align=False)

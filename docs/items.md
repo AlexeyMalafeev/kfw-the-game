@@ -16,12 +16,12 @@ An "item" is just a *name string*; the player's inventory is a plain
 `Item` objects (`things/items.py:51`) exist *only for descriptions* — the
 docstring says "Instantiated only for descriptions", and it is literal: nothing
 in the game logic ever touches an `Item` instance except `get_item_descr()`.
-Effects live separately in the `EFFECTS` dict keyed by item name. ⚠️ Because
-the two are decoupled, `use_item`/`cancel_item` raise `KeyError` for any name
-missing from `EFFECTS` (mock items, the mannequin). Latent today: the only
-callers are the pre-fight item pick, which draws from `get_items()` (fight
-items only), and `use_med` (which bypasses `use_item`) — so even mock items
-handed out via the debug menu never reach it.
+Effects live separately in the `EFFECTS` dict keyed by item name. Because
+the two are decoupled, a name can be missing from `EFFECTS` (mock items, the
+mannequin): `use_item`/`cancel_item` then do nothing and write a warning to
+`kfw.log`, and the player keeps the item. No gameplay path reaches this
+today — the pre-fight item pick draws from `get_items()` (fight items only),
+and `use_med` bypasses `use_item` — it's a safeguard.
 
 Three real item categories, all defined as name constants in
 `things/items.py`:
@@ -59,8 +59,8 @@ the Wise Man's "lunch" is a flat 10-coin fee
   list (one entry per unit) or dict. Defaults exclude medicine and mock items.
   ⚠️ `incl_mock=True` has no callers — mock items are invisible to every
   item-consuming system (can't be lost, stolen or used through these paths).
-- `check_fight_items()` scans for any `FIGHT_ITEMS` entry with count > 0.
-  ⚠️ Returns `None` (not `False`) when nothing is found.
+- `check_fight_items()` scans for any `FIGHT_ITEMS` entry with count > 0
+  (`True`/`False`).
 
 ## Acquisition
 

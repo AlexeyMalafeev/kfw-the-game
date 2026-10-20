@@ -143,7 +143,7 @@ class Extorters(BaseEncounter):
                 if random.choice([True, True, False]):
                     item = items.get_random_item()
                     p.show(_('Shop owner: "Thank you, thank you young man!"'))
-                    for pp in [p] + (p.allies if p.allies is not None else []):
+                    for pp in [p] + p.allies:
                         if pp.is_player:
                             pp.show(
                                 _(
