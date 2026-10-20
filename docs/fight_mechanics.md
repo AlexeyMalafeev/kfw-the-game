@@ -122,14 +122,15 @@ start of the fighter's own turn.
 
 ### Defense numbers — `calc_dfs` (on the defender)
 
-If `shocked`: `to_dodge = to_block = 0` (stunned alone does **not** zero
-defense — see Statuses). Otherwise:
+If `shocked`: `to_dodge = to_block = 0` (a stun only lowers them — see
+below and Statuses). Otherwise:
 
 ```
 x = dfs_penalty_mult * agility_full * dodge_mult * 10
     * stamina_factor * rep_actions_factor * dfs_bonus
 if off-balance: x *= off_balance_dfs_mult   # 0.75
 if lying:       x *= lying_dfs_mult         # 0.5
+if stunned:     x *= STUN_DFS_MULT          # 0.8
 to_dodge = x / DODGE_DIVISOR                # /3
 to_block = x / BLOCK_DIVISOR * wp_dfs_bonus # /2
 dfs_pwr  = dfs_penalty_mult * BLOCK_DEFAULT_POWER * block_mult * BLOCK_POWER
@@ -168,20 +169,24 @@ absorb ~1/400 of the intended damage (fixed 2026-09; see CHANGELOG).
 
 ### `defend` — dodge / block / hit
 
-One roll against both chances:
+Two independent rolls — dodge first, then block if the dodge failed:
 
 ```
 dodge_chance = to_dodge / attacker.to_hit
 block_chance = to_block / attacker.to_hit
-if roll <= dodge_chance: dodge — attacker.dam = 0, defender gains qp_gain
-elif roll <= block_chance: block — dam = max(dam - round(dfs_pwr), 0),
+if rnd() <= dodge_chance: dodge — attacker.dam = 0, defender gains qp_gain
+elif rnd() <= block_chance: block — dam = max(dam - round(dfs_pwr), 0),
     defender gains qp_gain // 2, try_block_disarm()
 else: clean hit
 ```
 
-⚠️ Because a single roll is compared to dodge first, the *effective* block
-probability is `block_chance - dodge_chance`; if `to_dodge >= to_block`,
-blocking can never trigger. Chances above 1.0 mean guaranteed defense.
+So a strike is dodged with `dodge_chance`, blocked with
+`(1 - dodge_chance) * block_chance`, and hits otherwise. Chances above 1.0
+mean guaranteed defense. (Until 2026-10 one shared roll was compared to both
+chances, so the effective block chance was `block_chance - dodge_chance` and
+a fighter whose dodge chance was at least their block chance never blocked;
+over 300 sample auto-fights blocks rose from 9% to 19% of strikes, clean hits
+fell from 72% to 62%.)
 
 ### `hit_or_miss` — only if `dam > 0`
 
@@ -196,9 +201,10 @@ In order:
    (0.5% per level; 5% at lv 10, 10% at lv 20), no tech/move/style required.
    The crit and epic rolls are independent and both run on the same strike,
    so one hit can be critical *and* epic: `dam * 1.5 * 2.0 = ×3.0`.
-   ⚠️ Both multipliers apply to *post-block* damage, since `defend()` already
-   ran (hence the "Critical, then evade" oddity in `known bugs.txt`: the
-   CRITICAL! line prints after the block/dodge line).
+   Both multipliers apply to *post-block* damage, since `defend()` already
+   ran — by design: a critical amplifies only what gets through the guard,
+   which makes blocking a strong answer to criticals (the CRITICAL! line
+   prints after the block line accordingly).
 3. `dam = max(dam - toughness, 0)`; `toughness = (level - 1) * 3`.
 4. `dam_reduc` (tech): `dam *= 1 - dam_reduc`.
 5. `target.take_damage(dam)` → `change_hp(-dam)`, sets `took_damage`.
@@ -258,8 +264,11 @@ faster fighters shed statuses in fewer time units. Durations tick down by
   with `lying` / `stunned` / `shocked`.
 - `lying` (100–200): `lying_dfs_mult` (0.5) to dodge/block; immune to further
   knockback/knockdown; enables attackers' antiground moves.
-- `stunned` (50–150): only `skip`, no defense penalty. ⚠️ Only `shocked` zeroes
-  `to_dodge`/`to_block`; mechanically stun is *nothing but* lost turns.
+- `stunned` (50–150): `skip` + dodge/block chances × `STUN_DFS_MULT` (0.8,
+  since 2026-10; block power unaffected). A minor shock by design: the target
+  loses the initiative but keeps most of their reflexes. `calc_dfs` applies
+  the penalty on every strike while the status lasts, so nothing needs
+  restoring when it wears off.
 - `shocked` (50–100): `skip` + zero dodge/block.
 - `off-balance` (50–100): atk and dfs × 0.75.
 - `slowed down` (300–600): time costs × 1/0.7.
@@ -285,8 +294,8 @@ faster fighters shed statuses in fewer time units. Durations tick down by
 Counter-attacks (`try_counter`): after the defender fully negated a strike
 (`attacker.dam == 0`) and is alive, roll `counter_chance` → `do_counter()` runs
 the full strike pipeline back at the attacker with a random available attack
-move. ⚠️ Asymmetry: `do_preemptive` pays the move's stamina/qi cost,
-`do_counter` does not — counters are free.
+move, and pays that move's stamina/qi cost (`apply_move_cost`) exactly like
+`do_preemptive` (counters were free until 2026-10).
 
 ## Techs, moves, boosts
 
@@ -299,8 +308,12 @@ stacked techs add rather than compound. Strike-multiplier techs
 in `calc_atk`, and add the feature to `fav_move_features` (biases random move
 learning). Values live in `kung_fu/boosts.py` / `boost_combos.py`.
 
-⚠️ Dead/unused boosts: `GRAB_CH1/2` (`grab_chance` unused), `QI_WHEN_ATK`,
-`HP_MULT`, `epic_chance_mult`, all `WeaponTech`s ("weapon techniques do
+Unfinished features, not bugs (placeholders kept on purpose; the techs that
+would use them are queued in `BACKLOG.md`): the boost constants `GRAB_CH1/2`
+(fighters have no `grab_chance` attribute yet), `QI_WHEN_ATK` (no
+`qi_when_atk` attribute yet) and `HP_MULT` are used by no tech;
+`epic_chance_mult` is a working hook in the epic-chance formula that no tech
+raises yet; and the 7 `WeaponTech`s carry no bonus ("weapon techniques do
 nothing; implement"). The advanced 'Lightning-Fast Strikes' tech doubles the
 basic 'Fast Strikes' effect (`STRIKE_TIME_COST_MULT2` = −0.6 vs −0.3).
 

@@ -271,9 +271,10 @@ saves stay compatible.
 
 Weapon techs: `WeaponTech` adds a `(atk, dfs)` pair into
 `f.weapon_bonus[wp_type]`, but all 7 declared `WeaponTech`s leave
-`wp_type=''` and `wp_bonus=(0,0)` — nothing configures them, and the code
-carries the todo "weapon techniques do nothing; implement" (flagged in
-[fight]). `Tech.__init__` registers each one in `_weapon_techs`
+`wp_type=''` and `wp_bonus=(0,0)` — nothing configures them, no fighter
+ever gets one, and combat never reads `weapon_bonus`. An unfinished feature,
+not a bug: the placeholders are kept on purpose and the feature is queued in
+`BACKLOG.md`. `Tech.__init__` registers each one in `_weapon_techs`
 (`get_weapon_techs()`).
 
 ## Weapons

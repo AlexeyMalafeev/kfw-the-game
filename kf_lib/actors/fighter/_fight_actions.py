@@ -98,10 +98,11 @@ class FighterWithActions(FighterAPI, ABC):
         atkr.dam = atkr.atk_pwr
         dodge_chance = self.to_dodge / atkr.to_hit
         block_chance = self.to_block / atkr.to_hit
-        roll = rnd()
         prefix = 'Lying ' if self.check_status('lying') else ''
         self.defended = False
-        if roll <= dodge_chance:
+        # two independent rolls: a failed dodge still gets the full block
+        # chance (one shared roll, until 2026-10, made it block - dodge)
+        if rnd() <= dodge_chance:
             atkr.dam = 0
             self.change_qp(self.qp_gain)
             adv = choose_adverb(dodge_chance, _('barely'), _('easily'))
@@ -114,7 +115,7 @@ class FighterWithActions(FighterAPI, ABC):
             )
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
-        elif roll <= block_chance:
+        elif rnd() <= block_chance:
             self.dfs_pwr = round(self.dfs_pwr)
             atkr.dam = max(atkr.dam - self.dfs_pwr, 0)
             self.change_qp(self.qp_gain // 2)
@@ -148,6 +149,9 @@ class FighterWithActions(FighterAPI, ABC):
             )
             self.current_fight.display(s)
             self.try_strike()
+            # stamina/qi cost, like a preemptive strike (counters were free
+            # until 2026-10)
+            self.apply_move_cost()
 
     def do_preemptive(self) -> None:
         cand_moves = self.get_av_moves(attack_moves_only=True)
@@ -235,6 +239,8 @@ class FighterWithActions(FighterAPI, ABC):
         # todo let try_* functions return True or False to determine skip
         tgt = self.target
         if self.dam > 0:
+            # by design, criticals/epics multiply the damage that got past a
+            # block (defend() already ran), so blocking softens them
             self.try_critical()
             self.try_epic()
             self.dam = max(self.dam - tgt.toughness, 0)

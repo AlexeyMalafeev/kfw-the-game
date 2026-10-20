@@ -7476,7 +7476,7 @@ msgstr "Синъи II (продвинутый)"
 msgid "Advanced Xing Yi III"
 msgstr "Синъи III (продвинутый)"
 
-#: kf_lib/fighting/fight/_base_fight.py:236
+#: kf_lib/fighting/fight/_base_fight.py:239
 msgid "Against All Odds"
 msgstr "Вопреки всему"
 
@@ -17727,7 +17727,7 @@ msgstr "Живая легенда"
 msgid "Lizard"
 msgstr "Ящерица"
 
-#: kf_lib/fighting/fight/_base_fight.py:234
+#: kf_lib/fighting/fight/_base_fight.py:237
 msgid "Lone Warrior"
 msgstr "Одинокий воин"
 
@@ -18339,7 +18339,7 @@ msgstr "Мистический"
 msgid "Mystic Power"
 msgstr "Мистическая мощь"
 
-#: kf_lib/fighting/fight/_base_fight.py:238
+#: kf_lib/fighting/fight/_base_fight.py:241
 msgid "Narrow Victory"
 msgstr "Трудная победа"
 
@@ -27606,7 +27606,7 @@ msgstr "Колючий"
 msgid "Spiky Attacks"
 msgstr "Колючие атаки"
 
-#: kf_lib/fighting/fight/_base_fight.py:240
+#: kf_lib/fighting/fight/_base_fight.py:243
 msgid "Split-Second Victory"
 msgstr "Победа в последний миг"
 

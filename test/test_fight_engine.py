@@ -1,10 +1,13 @@
 """Fight engine characterization: crowd fights, weapons, sparring, exp, stats."""
 import random
 
+import pytest
+
 from kf_lib import game  # import first: avoids circular import via kf_lib.actors.player
 from kf_lib.actors import fighter_factory
 from kf_lib.actors.fighter import Fighter
 from kf_lib.actors.player import SmartAIP
+import kf_lib.actors.fighter._fight_actions as fight_actions_mod
 import kf_lib.fighting.fight._free_for_all as ffa_mod
 import kf_lib.fighting.fight._helpers as helpers_mod
 from kf_lib.fighting.fight import AutoFight, free_for_all, group_free_for_all
@@ -274,6 +277,71 @@ class TestBlocking:
         # pre-fix the shadowed formula gave dfs_pwr ~= 80/400 = 0.2; a working
         # block must absorb a meaningful share of a punch (Punch power = 26)
         assert fa.dfs_pwr >= 20
+
+
+class TestDefenseAndCounters:
+    def duel(self):
+        random.seed(0)
+        fa, fb = lv1_fighter('A'), lv1_fighter('B')
+        fight = BaseFight([fa], [fb])
+        fight.prepare_fighters()
+        fa.target, fb.target = fb, fa
+        return fa, fb
+
+    def defend_with_rolls(self, monkeypatch, rolls):
+        """fa defends against fb: dodge 30%, block 25%, block power 10."""
+        fa, fb = self.duel()
+        fb.atk_pwr, fb.to_hit = 30, 1.0
+        fa.to_dodge, fa.to_block, fa.dfs_pwr = 0.30, 0.25, 10
+        rolls = iter(rolls + [0.99] * 10)  # 0.99: any later roll fails
+        monkeypatch.setattr(fight_actions_mod, 'rnd', lambda: next(rolls))
+        fa.defend()
+        return fa, fb
+
+    def test_failed_dodge_still_gets_the_full_block_chance(self, monkeypatch):
+        # with one shared roll (until 2026-10) the block chance was
+        # block - dodge, so a 25% block under a 30% dodge could never happen
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.2])
+        assert fa.defended
+        assert fb.dam == 20  # 30 - 10 absorbed by the block
+
+    def test_successful_dodge_negates_the_strike(self, monkeypatch):
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.1])
+        assert fa.defended
+        assert fb.dam == 0
+
+    def test_failed_dodge_and_block_is_a_clean_hit(self, monkeypatch):
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.5])
+        assert not fa.defended
+        assert fb.dam == 30
+
+    def test_stun_lowers_dodge_and_block_only_while_it_lasts(self):
+        fa, fb = self.duel()
+        fa.calc_stamina_factor()
+        fa.dfs_bonus = fa.dfs_penalty_mult = 1.0
+        fb.action = next(m for m in fb.moves if m.name == 'Punch')
+        fa.calc_dfs()
+        normal = (fa.to_dodge, fa.to_block, fa.dfs_pwr)
+        fa.add_status('stunned', 100)
+        fa.calc_dfs()
+        assert fa.to_dodge == pytest.approx(normal[0] * fa.STUN_DFS_MULT)
+        assert fa.to_block == pytest.approx(normal[1] * fa.STUN_DFS_MULT)
+        assert fa.dfs_pwr == pytest.approx(normal[2])  # block power unaffected
+        fa.status['stunned'] = 0  # the stun wears off
+        fa.calc_dfs()
+        assert (fa.to_dodge, fa.to_block, fa.dfs_pwr) == pytest.approx(normal)
+
+    def test_counter_pays_the_move_cost(self, monkeypatch):
+        fa, fb = self.duel()
+        fb.counter_chance = 0  # no counter-to-the-counter
+        moves_ = fa.get_av_moves(attack_moves_only=True)
+        assert moves_, 'the duel setup must leave fa an attack in range'
+        move = moves_[0]
+        monkeypatch.setattr(fight_actions_mod.random, 'choice', lambda seq: move)
+        stamina, qp = fa.stamina, fa.qp
+        fa.do_counter()
+        assert fa.stamina == stamina - move.stam_cost
+        assert fa.qp == qp - move.qi_cost
 
 
 class TestDraw:

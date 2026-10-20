@@ -6,6 +6,21 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Changed
+- **Blocking works as its own chance** (balance-affecting): dodge and block
+  used to share one random roll, so a fighter's real block chance was their
+  block chance *minus* their dodge chance — and someone who dodged at least
+  as well as they blocked could never block at all. A failed dodge now gets
+  a separate block roll. Over 300 sample fights, blocks went from 9% to 19%
+  of strikes and clean hits from 72% to 62%, so fights last a bit longer and
+  defensive fighters hold up better
+- **Stunned fighters defend a little worse** (balance-affecting): a stun used
+  to cost only time; now the stunned fighter's dodge and block chances are
+  also 20% lower while it lasts. It stays a milder cousin of shock, which
+  drops them to zero
+- **Counter-attacks cost stamina and qi** (balance-affecting): a counter now
+  pays its move's cost, like a preemptive strike already did; they used to
+  be free. With the more frequent blocks above, counters also happen more
+  often (a block that absorbs the whole strike opens one)
 - **Clearer wooden mannequin description**: it said "allows home training",
   but there is no home-training action to unlock. Owning a mannequin *is*
   the home training (a little exp every day, automatically), and the item

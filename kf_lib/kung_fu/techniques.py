@@ -114,7 +114,7 @@ UPGRADED_STYLE_TECH_PREFIX = 'Advanced '
 _upgraded_style_techs: Dict[str, Tech] = {}
 
 
-# todo weapon techniques do nothing; implement
+# todo weapon techniques do nothing; implement (see BACKLOG.md)
 _WEAPON_TECHS = [
     WeaponTech('Strange But Deadly'),
     WeaponTech('Weapons Competence'),

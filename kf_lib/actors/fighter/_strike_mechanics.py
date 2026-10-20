@@ -42,6 +42,7 @@ class StrikeMechanics(FighterAPI, ABC):
     STAMINA_DAMAGE = 0.2  # for moves
     STAMINA_FACTOR_BIAS = 0.5
     STAT_BASED_DAM_UPPER_MULT = 5
+    STUN_DFS_MULT = 0.8  # dodge/block chances while stunned
     STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
     TIME_UNIT_MULTIPLIER = 20
 
@@ -86,6 +87,9 @@ class StrikeMechanics(FighterAPI, ABC):
                 x *= self.off_balance_dfs_mult
             if self.check_status('lying'):
                 x *= self.lying_dfs_mult
+            # recalculated every strike, so the penalty ends with the stun
+            if self.check_status('stunned'):
+                x *= self.STUN_DFS_MULT
             self.to_dodge = x / self.DODGE_DIVISOR
             self.to_block = x / self.BLOCK_DIVISOR
             self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!

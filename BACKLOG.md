@@ -37,7 +37,7 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   rewritten and unmarked (SmartAIP knobs, tournament `spectator` IndexError,
   `get_rand_moves` empty-pool crash, "invisible" accomplishments,
   `set_up_weapon_fight` arming only the NPC, reputation feeding only Folk
-  Hero). The 57 that remain, by doc → pointer:
+  Hero). The 52 that remain, by doc → pointer:
   - **(a) Resolved 2026-10-19.** Fixed: co-op '2x2'/'3x3' offered only for
     4/6 players, BookSeller checks money before asking, `use_med` logs via
     `lose_item`, clearer mannequin description, `PMAP` rows for
@@ -59,19 +59,14 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     `show_ascii` debug dump removed, and the environment multiplier
     (renamed `environment_bonus_mult`) is a neutral `1.0` instead of `0.0`
     in fights without the environment.
-  - **(b) Balance-affecting fight mechanics — queue a `run_test_fb.py`
-    re-run:**
-    - `fight_mechanics.md` defend — one roll checked vs dodge first, so the
-      effective block chance is `block − dodge`
-    - `fight_mechanics.md` hit_or_miss — crit/epic multiply *post-block*
-      damage (and print after the block line)
-    - `fight_mechanics.md` Statuses — `stunned` is only lost turns, no
-      defense penalty (only `shocked` zeroes defense)
-    - `fight_mechanics.md` Counter-attacks — counters are free (`do_counter`
-      skips `apply_move_cost`; preemptives pay)
-    - `fight_mechanics.md` Techs + `kung_fu.md` Weapon techs — dead boosts
-      (`GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`) and the 7
-      no-op `WeaponTech`s (the two entries below)
+  - **(b) Balance-affecting fight mechanics — resolved 2026-10-20**, each
+    point decided by the author (see `CHANGELOG.md`): dodge and block now get
+    independent rolls; criticals/epics multiplying post-block damage is by
+    design (kept); a stun is a minor shock by design, now with a 20% penalty
+    to dodge/block while it lasts; counters pay their move's cost like
+    preemptives; the unused boosts and the 7 `WeaponTech` placeholders are
+    unfinished features, kept and queued as techs/features below
+    ("Moves, styles, techniques, weapons").
   - **(c) Design questions — probably intended, per the author, 2026-10-19
     ("mostly they are features, not bugs"); to be revisited later.** Not bugs
     and not part of the fix batches. The ⚠️ markers stay, because no single
@@ -125,9 +120,6 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
       on Stance); `concat` correct only at `BUFFER_WIDTH = 1`
     - `minigames.md` RING — `from_exp_worth` retry loop unbounded; `play`
       flag never cleared
-- weapon techs don't do anything — reintroduce them
-- dead boosts: `GRAB_CH1/2`, `QI_WHEN_ATK`, `HP_MULT`, `epic_chance_mult`, all
-  `WeaponTech`s; `TIME_UNIT_MULTIPLIER` unused
 - ~~trait selection iterates unsorted collections, so even with `random.seed()`
   the drawn traits vary with PYTHONHASHSEED across processes — a test-suite
   flakiness vector (bit us in `TestSmartAIPKnobs`; worked around with
@@ -212,6 +204,34 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Moves, styles, techniques, weapons
 
+- **Techs for the placeholder boosts** (HIGH priority, author 2026-10-20).
+  These boost constants exist but no tech uses them, and two of them need a
+  new combat mechanic before any tech can do something:
+  - **Grab chance** (`GRAB_CH1` 0.2 / `GRAB_CH2` 0.4): fighters have no
+    `grab_chance` attribute and combat has no grab action — grappling today
+    is only a move feature ('grappling' moves, `grappling_strike_mult`).
+    Design first: what a successful grab does (e.g. the target can't dodge
+    the next strike, or it sets up a throw), when it's attempted (a chance on
+    close-range strikes, or a move of its own), and how the target escapes
+    (a strength/agility contest?). Then a regular/advanced tech pair raising
+    `grab_chance`. Related: "grappling state" under Fight mechanics.
+  - **Qi when attacking** (`QI_WHEN_ATK` 0.5): no `qi_when_atk` attribute and
+    no rule yet. Design: how much qi an attack yields (a share of `qp_gain`?
+    only on a hit, or on any attempt?). Decide together with "qi rethink"
+    under Fight mechanics, since both change how qi flows in a fight.
+  - **Max HP** (`HP_MULT` 1.5): decide whether it would add anything over
+    the existing `health_mult` techs (Toughness, Taiji III, Elephant's
+    Health), which already raise max HP through health; if not, drop it.
+  - **Epic chance** (`epic_chance_mult`, no boost constant yet): the hook
+    already works in the epic-chance formula, so only the tech itself is
+    missing (the code comment suggests a secret tech) — the quickest one.
+- **Weapon techs** (feature): the 7 `WeaponTech` placeholders (Strange But
+  Deadly, Weapons Competence, Butterfly Swords, Sky Saber, Lightning Spear,
+  Thunder Staff, Star Sword) carry no bonus and no fighter ever gets one.
+  Needs: what each gives (an atk/dfs bonus for a weapon type — `wp_type` /
+  `wp_bonus` are already there), who learns them (weapon-style masters?
+  stories? a weapon-practice action?), and combat actually reading
+  `weapon_bonus` (nothing does today).
 - more moves (higher tiers, handle tiers); upgrade moves from pathetic to
   ultimate; complex moves as upgrades/modifications
 - boosts: to dict and auto-adjust; boost reducing move complexity (Air style
@@ -273,7 +293,9 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 ## Balance & analysis
 
 **Pending `run_test_fb.py` re-run** — balance-affecting changes since the
-snapshot below: Dragon III / Snake III max-QP boost now works (2026-10-19).
+snapshot below: Dragon III / Snake III max-QP boost now works (2026-10-19);
+dodge and block get independent rolls (blocks ~9% → ~19% of strikes), a stun
+lowers dodge/block by 20%, counters pay their move's cost (2026-10-20).
 
 **Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; refreshed
 2026-09-17 with the now-**seeded** harness, `seed=42` — the report is
@@ -319,6 +341,10 @@ changes, not run noise; Diff% = winner-vs-loser correlation):
   plain FFA deliberately keeps the per-capita average
 - further reduce dist3/dist2 bonuses?
 - nerf guard while attacking
+- counter techs: now that counters pay their move's cost (2026-10-20),
+  consider raising the counter techs' chance/efficiency — counter buffs
+  already correlated with losing (−11.2) in the 2026-09 snapshot; re-check
+  after the pending re-run
 - buff attribute-based damage for strikes
 - come back to experiments with level significance
 - move filtering with pandas, save as csv, collect useful stats
