@@ -61,9 +61,10 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     in fights without the environment.
   - **(b) Balance-affecting fight mechanics — resolved 2026-10-20**, each
     point decided by the author (see `CHANGELOG.md`): dodge and block now get
-    independent rolls; criticals/epics multiplying post-block damage is by
-    design (kept); a stun is a minor shock by design, now with a 20% penalty
-    to dodge/block while it lasts; counters pay their move's cost like
+    independent rolls; criticals/epics now need an undefended strike (any
+    block denies them); a stun is a minor shock by design, now with a 20%
+    penalty to dodge, block and block power while it lasts; counters pay
+    their move's cost like
     preemptives; the unused boosts and the 7 `WeaponTech` placeholders are
     unfinished features, kept and queued as techs/features below
     ("Moves, styles, techniques, weapons").
@@ -219,9 +220,6 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
     no rule yet. Design: how much qi an attack yields (a share of `qp_gain`?
     only on a hit, or on any attempt?). Decide together with "qi rethink"
     under Fight mechanics, since both change how qi flows in a fight.
-  - **Max HP** (`HP_MULT` 1.5): decide whether it would add anything over
-    the existing `health_mult` techs (Toughness, Taiji III, Elephant's
-    Health), which already raise max HP through health; if not, drop it.
   - **Epic chance** (`epic_chance_mult`, no boost constant yet): the hook
     already works in the epic-chance formula, so only the tech itself is
     missing (the code comment suggests a secret tech) — the quickest one.
@@ -295,7 +293,8 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 **Pending `run_test_fb.py` re-run** — balance-affecting changes since the
 snapshot below: Dragon III / Snake III max-QP boost now works (2026-10-19);
 dodge and block get independent rolls (blocks ~9% → ~19% of strikes), a stun
-lowers dodge/block by 20%, counters pay their move's cost (2026-10-20).
+lowers dodge/block/block power by 20%, counters pay their move's cost, and
+criticals/epics need an undefended strike (2026-10-20).
 
 **Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; refreshed
 2026-09-17 with the now-**seeded** harness, `seed=42` — the report is
@@ -341,10 +340,18 @@ changes, not run noise; Diff% = winner-vs-loser correlation):
   plain FFA deliberately keeps the per-capita average
 - further reduce dist3/dist2 bonuses?
 - nerf guard while attacking
-- counter techs: now that counters pay their move's cost (2026-10-20),
-  consider raising the counter techs' chance/efficiency — counter buffs
-  already correlated with losing (−11.2) in the 2026-09 snapshot; re-check
-  after the pending re-run
+- **buff counters** (author 2026-10-20): counters now pay their move's cost
+  and counter buffs already correlated with losing (−11.2) in the 2026-09
+  snapshot, so re-check after the pending re-run, then consider:
+  - raise the counter techs' chance/efficiency
+  - discount counters (e.g. half the move's stamina/qi cost) — a middle
+    ground between free and full price ("using the attacker's momentum")
+  - the original attacker defends the counter at a disadvantage — could be
+    the existing "a miss → off-balance status" idea (Fight mechanics): a
+    fully dodged/blocked strike leaves the attacker briefly off-balance
+    (×0.75 atk/dfs), which strengthens counters and any quick follow-up
+  - a higher stun chance for counters — go gently: a stun now also lowers
+    defense, so counter-stun chains could snowball
 - buff attribute-based damage for strikes
 - come back to experiments with level significance
 - move filtering with pandas, save as csv, collect useful stats

@@ -239,10 +239,11 @@ class FighterWithActions(FighterAPI, ABC):
         # todo let try_* functions return True or False to determine skip
         tgt = self.target
         if self.dam > 0:
-            # by design, criticals/epics multiply the damage that got past a
-            # block (defend() already ran), so blocking softens them
-            self.try_critical()
-            self.try_epic()
+            # criticals/epics need an undefended strike: a block, even one that
+            # absorbs only part of the damage, denies them (since 2026-10)
+            if not tgt.defended:
+                self.try_critical()
+                self.try_epic()
             self.dam = max(self.dam - tgt.toughness, 0)
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)

@@ -14,9 +14,14 @@ All notable changes to KFW are documented here. Format loosely follows
   of strikes and clean hits from 72% to 62%, so fights last a bit longer and
   defensive fighters hold up better
 - **Stunned fighters defend a little worse** (balance-affecting): a stun used
-  to cost only time; now the stunned fighter's dodge and block chances are
-  also 20% lower while it lasts. It stays a milder cousin of shock, which
-  drops them to zero
+  to cost only time; now the stunned fighter's dodge chance, block chance
+  and block power are also 20% lower while it lasts. It stays a milder
+  cousin of shock, which drops dodging and blocking to zero
+- **No critical or epic hits through a block** (balance-affecting): a
+  critical or epic hit now needs a strike the target failed to defend; a
+  block, even one that stops only part of the damage, rules them out
+  (before, they multiplied whatever got past the block). Most blocks absorb
+  the whole strike anyway, so this mostly matters for partial blocks
 - **Counter-attacks cost stamina and qi** (balance-affecting): a counter now
   pays its move's cost, like a preemptive strike already did; they used to
   be free. With the more frequent blocks above, counters also happen more
@@ -54,7 +59,8 @@ All notable changes to KFW are documented here. Format loosely follows
   max QP (and their descriptions list it). Balance-affecting; a new test
   checks that no tech boosts a value that gets recomputed
 - **Latent defects** that no normal game currently runs into, fixed so they
-  can't bite later:
+  can't bite later (plus one cleanup: the unused `HP_MULT` boost constant is
+  gone — the health techs already raise max HP):
   - "Keep playing indefinitely" after a victory made the game loop call
     itself recursively; it's a plain loop now
   - a story whose scene is missing now ends cleanly with a warning in

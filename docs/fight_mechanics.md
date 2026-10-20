@@ -136,6 +136,7 @@ to_block = x / BLOCK_DIVISOR * wp_dfs_bonus # /2
 dfs_pwr  = dfs_penalty_mult * BLOCK_DEFAULT_POWER * block_mult * BLOCK_POWER
            * strength_full * stamina_factor * wp_dfs_bonus
 if fury: dfs_pwr *= fury_to_all_mult
+if stunned: dfs_pwr *= STUN_DFS_MULT          # 0.8
 ```
 
 `rep_actions_factor` punishes repetitive attackers: `1 + 0.33 * n`, where `n` =
@@ -190,7 +191,7 @@ fell from 72% to 62%.)
 
 ### `hit_or_miss` — only if `dam > 0`
 
-In order:
+In order (steps 1–2 only if the target didn't defend — see below):
 
 1. `try_critical()`: `critical_chance` roll → `dam *= critical_dam_mult` (1.5).
    `critical_chance = (agility_full - 3) * 0.05 * critical_chance_mult`.
@@ -201,10 +202,13 @@ In order:
    (0.5% per level; 5% at lv 10, 10% at lv 20), no tech/move/style required.
    The crit and epic rolls are independent and both run on the same strike,
    so one hit can be critical *and* epic: `dam * 1.5 * 2.0 = ×3.0`.
-   Both multipliers apply to *post-block* damage, since `defend()` already
-   ran — by design: a critical amplifies only what gets through the guard,
-   which makes blocking a strong answer to criticals (the CRITICAL! line
-   prints after the block line accordingly).
+   Criticals and epics need an **undefended** strike (`target.defended` is
+   false): a block, even one that absorbs only part of the damage, denies
+   both rolls, rewarding the defender (since 2026-10; before, they multiplied
+   whatever got past the block). A dodge or a fully absorbed block never
+   reaches `hit_or_miss` anyway. In practice ~81% of blocks absorb the whole
+   strike, so the rule only bites on partial blocks (~3–4% of strikes in
+   sample auto-fights).
 3. `dam = max(dam - toughness, 0)`; `toughness = (level - 1) * 3`.
 4. `dam_reduc` (tech): `dam *= 1 - dam_reduc`.
 5. `target.take_damage(dam)` → `change_hp(-dam)`, sets `took_damage`.
@@ -264,8 +268,8 @@ faster fighters shed statuses in fewer time units. Durations tick down by
   with `lying` / `stunned` / `shocked`.
 - `lying` (100–200): `lying_dfs_mult` (0.5) to dodge/block; immune to further
   knockback/knockdown; enables attackers' antiground moves.
-- `stunned` (50–150): `skip` + dodge/block chances × `STUN_DFS_MULT` (0.8,
-  since 2026-10; block power unaffected). A minor shock by design: the target
+- `stunned` (50–150): `skip` + dodge/block chances and block power (`dfs_pwr`)
+  × `STUN_DFS_MULT` (0.8, since 2026-10). A minor shock by design: the target
   loses the initiative but keeps most of their reflexes. `calc_dfs` applies
   the penalty on every strike while the status lasts, so nothing needs
   restoring when it wears off.
@@ -310,8 +314,9 @@ learning). Values live in `kung_fu/boosts.py` / `boost_combos.py`.
 
 Unfinished features, not bugs (placeholders kept on purpose; the techs that
 would use them are queued in `BACKLOG.md`): the boost constants `GRAB_CH1/2`
-(fighters have no `grab_chance` attribute yet), `QI_WHEN_ATK` (no
-`qi_when_atk` attribute yet) and `HP_MULT` are used by no tech;
+(fighters have no `grab_chance` attribute yet) and `QI_WHEN_ATK` (no
+`qi_when_atk` attribute yet) are used by no tech (`HP_MULT` was removed in
+2026-10 as redundant with the `health_mult` techs);
 `epic_chance_mult` is a working hook in the epic-chance formula that no tech
 raises yet; and the 7 `WeaponTech`s carry no bonus ("weapon techniques do
 nothing; implement"). The advanced 'Lightning-Fast Strikes' tech doubles the

@@ -315,7 +315,7 @@ class TestDefenseAndCounters:
         assert not fa.defended
         assert fb.dam == 30
 
-    def test_stun_lowers_dodge_and_block_only_while_it_lasts(self):
+    def test_stun_weakens_defense_only_while_it_lasts(self):
         fa, fb = self.duel()
         fa.calc_stamina_factor()
         fa.dfs_bonus = fa.dfs_penalty_mult = 1.0
@@ -326,10 +326,29 @@ class TestDefenseAndCounters:
         fa.calc_dfs()
         assert fa.to_dodge == pytest.approx(normal[0] * fa.STUN_DFS_MULT)
         assert fa.to_block == pytest.approx(normal[1] * fa.STUN_DFS_MULT)
-        assert fa.dfs_pwr == pytest.approx(normal[2])  # block power unaffected
+        assert fa.dfs_pwr == pytest.approx(normal[2] * fa.STUN_DFS_MULT)
         fa.status['stunned'] = 0  # the stun wears off
         fa.calc_dfs()
         assert (fa.to_dodge, fa.to_block, fa.dfs_pwr) == pytest.approx(normal)
+
+    def strike_with_sure_crit(self, fa, fb, defended):
+        """fb strikes fa for 30 with a guaranteed critical and epic."""
+        fb.dam = 30 if not defended else 20  # 20: what got past a block
+        fb.critical_chance = fb.epic_chance = 1.0
+        fa.defended = defended
+        fb.action = next(m for m in fb.moves if m.name == 'Punch')
+        fb.hit_or_miss()
+        return fb.fight_stats
+
+    def test_blocked_strike_cannot_be_critical_or_epic(self):
+        fa, fb = self.duel()
+        stats = self.strike_with_sure_crit(fa, fb, defended=True)
+        assert stats['criticals'] == stats['epics'] == 0
+
+    def test_undefended_strike_can_be_critical_and_epic(self):
+        fa, fb = self.duel()
+        stats = self.strike_with_sure_crit(fa, fb, defended=False)
+        assert stats['criticals'] == stats['epics'] == 1
 
     def test_counter_pays_the_move_cost(self, monkeypatch):
         fa, fb = self.duel()

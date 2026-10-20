@@ -56,7 +56,6 @@ HIT_DISARM1 = 0.5
 HIT_DISARM2 = 1.0
 HP_GAIN1 = 0.05
 HP_GAIN2 = 0.1
-HP_MULT = 1.5  # placeholder, no tech yet (BACKLOG: techs for placeholder boosts)
 IN_FIGHT_IMPRO_WP_CH1 = 0.25
 IN_FIGHT_IMPRO_WP_CH2 = 0.5
 LYING_DFS_MULT1 = 0.5

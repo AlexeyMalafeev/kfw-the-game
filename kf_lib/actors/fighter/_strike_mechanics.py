@@ -42,7 +42,7 @@ class StrikeMechanics(FighterAPI, ABC):
     STAMINA_DAMAGE = 0.2  # for moves
     STAMINA_FACTOR_BIAS = 0.5
     STAT_BASED_DAM_UPPER_MULT = 5
-    STUN_DFS_MULT = 0.8  # dodge/block chances while stunned
+    STUN_DFS_MULT = 0.8  # dodge/block chances and block power while stunned
     STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
     TIME_UNIT_MULTIPLIER = 20
 
@@ -100,6 +100,8 @@ class StrikeMechanics(FighterAPI, ABC):
                             * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
+            if self.check_status('stunned'):
+                self.dfs_pwr *= self.STUN_DFS_MULT
 
     def calc_move_complexity(self, move_obj: Move) -> float:
         return move_obj.complexity * self.move_complexity_mult
