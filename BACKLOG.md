@@ -136,7 +136,14 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
   with it sorted, the test passes 40/40 PYTHONHASHSEEDs (previously ~15–20%
   of seeds failed with `saw_win=False`).
 - possible bug in exp progression in lazy/hardworking players
-- y defense buff not working?
+- **'defense' buff is dead** (the old "defense buff not working?" hunch,
+  confirmed 2026-10-20): `dfs_mult` is set by 18/36 Defense Forms,
+  generated-style Defense Stance / Hard like Ice / Crane Flapping Wings,
+  White Crane I, Beggar's Fist I and the defense half of Balanced Fist II/III,
+  but no fight code reads it — dead since the 2020 upload (learning 18
+  Defense Forms: `dfs_mult` 1.0 → 1.5, dodge/block chances and block power
+  unchanged). Author: fix it — it should raise both dodge and block chance;
+  +50% (`DEFENSE1`) is probably too much, set the value by modeling
 - bug in careless inactive time?
 - fix style moves; "couldn't find any moves for move string 3,shocking;1,flying;2,flying"
 - some upgradable techs shouldn't be upgradable
@@ -290,43 +297,48 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Balance & analysis
 
-**Pending `run_test_fb.py` re-run** — balance-affecting changes since the
-snapshot below: Dragon III / Snake III max-QP boost now works (2026-10-19);
-dodge and block get independent rolls (blocks ~9% → ~19% of strikes), a stun
-lowers dodge/block/block power by 20%, counters pay their move's cost, and
-criticals/epics need an undefended strike (2026-10-20).
-
-**Snapshot 2026-09** (`tests/test f.b. rand.act.=False n=10000.txt`; refreshed
-2026-09-17 with the now-**seeded** harness, `seed=42` — the report is
-byte-reproducible, so future diffs against this file reflect real balance
-changes, not run noise; Diff% = winner-vs-loser correlation):
-- **Offense wins mirror matches; all defense-oriented buffs correlate with
-  losing**: agility +16.8, strength +12.4, guard-while-atk +9.0, attack +8.8,
-  punches +8.6 win; close-range −14.0, defense −13.3, counters −11.2,
-  unblock. −7.4 (n ≈ 1400), guard −7.3, blocks −6.1 lose. Blocking well
-  doesn't deal damage.
-- **'Lightning-Fast Strikes' after its no-op fix: +29.8** — top of techs 2,
-  directionally consistent with the tech now actually working, but n = 57,
-  so within noise; keep watching. (Unseeded runs had it anywhere from
-  −13.5 to +2.6.)
-- **The AI attribute-growth fix is NOT exercised by this harness**:
-  `test_fight_balance` uses `new_fighter()` = `rand_atts_mode=0`, so the
-  restored mode-1/2 specialization has no effect here. Its balance impact is
-  unmeasured — needs a dedicated test (e.g. mode-1/2 mirror matches).
-- Range/mobility hierarchy holds: flying +8.8, dist4 +6.3 win; vanishing
-  −6.0, ultra short −3.1 lose; lethal −1.4 (n ≈ 1600) and power −1.3 sit at
-  neutral — earlier swings (lethal +3.5→−4.8) were unseeded-harness noise.
-- Bottom techs: 18 Defense Forms −12.8 (techs 1, n = 546), Retaliative Blows
-  −12.6; grappling buff −12.2 (n = 376) persists in the seeded run, so it's
-  probably real, not noise. Techs 2 have n ≈ 50–85 each, so even seeded
-  their ±20–30 spreads (Advanced Blood Strikes −22.6, Hero's Resilience
-  −25.6) are largely small-sample noise.
-- **Resolved — the harness is seeded and deterministic**: earlier run-to-run
-  drift of ±5–8 Diff% points came from unseeded style generation plus
-  PYTHONHASHSEED-dependent iteration of id-hashed object sets in fighter
-  generation (`get_rand_moves`' move pool, `self.techs`) and of the string
-  set in `compare_dicts` (tie ordering); fixed 2026-09-17, same `seed=42`
-  now gives byte-identical reports across processes.
+**Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
+re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
+correlation). The pre-batch code (4f157e9) reproduces the 2026-09 report
+byte-for-byte, so every shift comes from the batch fixes. **One 10k report is
+noisy** — a row's 95% noise margin is about ±196/√Sum Diff% points (style
+buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds ×
+10,000 fights per code version (old → new):
+- **Fights ~20% grindier**: mean length 49.5 → 59.9 s (median 33 → 37,
+  slowest 10% from 108 → 136 s), strikes/fight 9.2 → 11.3, same total damage.
+  Strike outcomes: dodged 19 → 21%, fully blocked 7 → 16%, partly blocked
+  1.5 → 4%, clean hits 72 → 59%. (Counted by a hook script, not the harness.)
+- **Compounding defense rewards whatever scales both chances**: unblock.
+  −5.9 → +2.1 (removing the block roll now costs the defender ~half its
+  defense, not a third); guard while atk +12.1 → +17.6 (tech Guard While
+  Striking +5.7 → +15.4 — now the strongest buff); agility pulled further
+  ahead (+1.1 → +2.0; health −1.3 → −1.8).
+- **Defense-labelled buffs still lose**: blocks −10.2 → −10.7 (`block_mult`
+  is block *power* only, and 82% of blocks already absorb the whole strike),
+  guard −10.5 → −12.6 (the Guard move costs a turn), defense −12.4 → −13.5
+  (dead — see "Bugs"). Only 'dodge' is mildly positive (+1.8 → +4.2).
+  A dead tech slot costs about −9 to −13 here, the yardstick for "useless".
+- **Counters**: 0.30 → 0.44 per fight, ~26 stamina (16% of max) + 7 QP each,
+  damage per counter 57 → 47; the counters buff is unchanged (−10.6 → −9.8)
+  — the cost doesn't bite because fighters end fights with ~61% stamina and
+  ~37% QP. A +50% counter tech adds ~5 HP of damage per ~410 HP fight.
+- **Criticals / stun: no measurable shift** (criticals +0.3 → −1.5, stun
+  −1.5 → −0.5). Crits per strike 11.9 → 10.0% (fewer clean hits), per fight
+  unchanged. Only 2.6% of strikes hit a stunned fighter, already 87% clean
+  hits before (skipping turns never resets the per-strike defense decay).
+- **Dragon III / Snake III: not visible to this harness** (`new_fighter()`
+  only makes generated styles; the author keeps it that way — classic
+  styles are legacy). A/B over 40,000 same-style lv 7–20 fights: the +10%
+  max QP side won 50.2% (Diff% +0.5 ± 1.0) — correct fix, no balance effect,
+  since qi isn't scarce (qi buffs −7.9).
+- Borderline (|z| 2.5–3.5 among ~150 comparisons): preemptive +3.9 → +0.1,
+  dam.reduc. +3.6 → −0.1, drunken moves −4.2 → −6.5, ultra short −3.1 →
+  −8.6. Single-run swings in techs 2 are noise: Sky Dragon +4 → +49 and
+  Emperor's Fortress +1 → −43 in the seed-42 report, but +12 → +20 and
+  −5 → −17 pooled.
+- Still true from 2026-09: the AI attribute-growth fix isn't exercised
+  (`new_fighter()` = `rand_atts_mode=0`); the harness is byte-reproducible
+  per seed across processes (fixed 2026-09-17).
 
 - exp: all levels are 100 exp; calc win exp relative to difficulty (+bonuses);
   exponential exp?; reduce/rewrite trait exp bonuses; test exp bonuses, reweigh
@@ -340,9 +352,10 @@ changes, not run noise; Diff% = winner-vs-loser correlation):
   plain FFA deliberately keeps the per-capita average
 - further reduce dist3/dist2 bonuses?
 - nerf guard while attacking
-- **buff counters** (author 2026-10-20): counters now pay their move's cost
-  and counter buffs already correlated with losing (−11.2) in the 2026-09
-  snapshot, so re-check after the pending re-run, then consider:
+- **buff counters** (author 2026-10-20): counters now pay their move's cost;
+  the 2026-10 re-run shows the counters buff unchanged at ≈ −10 (dead-slot
+  territory) — the problem is size, not cost (~5 HP per fight from a +50%
+  counter tech). Consider:
   - raise the counter techs' chance/efficiency
   - discount counters (e.g. half the move's stamina/qi cost) — a middle
     ground between free and full price ("using the attacker's momentum")

@@ -313,8 +313,8 @@ move features. Each category is emitted as a `compare_dicts` table —
 and appended to `tests/test f.b. rand.act.=False n=10000.txt` (tracked).
 
 How to read: in a balanced game every `Diff%` hovers near 0; a persistent
-bias marks things that win or lose fights (the seeded n=10000 snapshot:
-`'close-range'` buffs at −14.0%, `'defense'` at −13.3%, i.e. losers had them
+bias marks things that win or lose fights (the seeded n=10000 snapshot of
+2026-10: `'close-range'` buffs at −12.2%, `'defense'` at −15.4%, i.e. losers had them
 more often). Committed samples exist for n = 50…50000.
 
 Works: verified — ran to completion within a 280 s timeout; the
