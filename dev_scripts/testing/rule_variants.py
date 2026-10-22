@@ -47,6 +47,12 @@ Health (baseline: health -2.0, strength +2.1, agility +1.8, speed -1.9):
          fights 21.1 / 22.5 s
   (short fights shrink every Diff%: guard and counters, near dead-slot
   level, move -12 -> -7)
+  HbT10S25  10% of toughness, 25% of stamina from health -> health -0.7,
+            speed -2.3; fights 62.9 s; 'health' techs +8.0
+  Hp40+Hb50                                    -> health +1.8, speed -2.9
+            (widest gap); fights 51.4 s; 'health' techs +17.2, HP gain +5.0
+  (at 50 or 40 HP per point speed is the weakest attribute in every setup;
+  only 20 HP lifts it, -3.3 -> -1.2 with Hb50)
 """
 import math
 
@@ -258,11 +264,21 @@ def HbS():
     _hb(1.0, toughness=False)
 
 
-#   Hp20   20 HP per health point instead of 50 (combine: Hp20+Hb50, Hp20+Hb)
+#   Hp20/40   20 / 40 HP per health point instead of 50 (combine: Hp20+Hb50, ...)
+#   HbT10S25  10% of toughness and 25% of stamina from health
 
 
 def Hp20():
     F.HP_PER_HEALTH_LV = 20
+
+
+def Hp40():
+    F.HP_PER_HEALTH_LV = 40
+
+
+def HbT10S25():
+    _hb(0.1, stamina=False)
+    _hb(0.25, toughness=False)  # wraps the first patch; level-based stamina is untouched by it
 
 
 #   Gs     stored guard: Guard's bonus waits for the next incoming strike instead

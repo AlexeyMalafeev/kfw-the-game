@@ -350,7 +350,12 @@ below are decided:
     fury and stamina techs fall to dead-slot level, and every Diff% shrinks
     (a useless slot ≈ −7 instead of −12). With 50% of toughness and
     stamina from health: the most even attributes so far (strength −0.1,
-    agility +0.7, speed −1.2, health +0.5); with 100%: health +3.1 leads
+    agility +0.7, speed −1.2, health +0.5); with 100%: health +3.1 leads.
+    2026-10-23: 10% of toughness + 25% of stamina from health (50 HP):
+    health −0.7, speed −2.3, fights unchanged; 40 HP + 50%: fights 51.4 s
+    (near the pre-batch 49.5), but health +1.8 overshoots and speed −2.9.
+    At 50 or 40 HP speed is the weakest attribute in every setup — raising
+    health only pushes speed further down, so speed needs its own fix
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
