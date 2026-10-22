@@ -355,7 +355,12 @@ below are decided:
     health −0.7, speed −2.3, fights unchanged; 40 HP + 50%: fights 51.4 s
     (near the pre-batch 49.5), but health +1.8 overshoots and speed −2.9.
     At 50 or 40 HP speed is the weakest attribute in every setup — raising
-    health only pushes speed further down, so speed needs its own fix
+    health only pushes speed further down, so speed needs its own fix.
+    Setup C (40 HP, 20% of toughness + 30% of stamina from health): health
+    −0.1, strength +1.3, agility +1.1, speed −2.2 — the smallest gap at
+    40–50 HP; fights 49.4 s (the pre-batch length); 'health' techs +10.8
+    (on par with strength/agility techs), HP gain +12.2 → +4.2, fury
+    +8.0 → +4.2
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser

@@ -292,3 +292,51 @@ techs Vitality Breathing      ±6.9      -4.46     -10.94      -3.50      -3.12 
 techs Hero's Resilience       ±8.3     -17.77     -20.44     -12.31     -21.30      -5.01
 techs Lightning-Fast Strike   ±6.7      30.53      22.13      26.66      24.24      17.00
 techs Explosive Strikes       ±8.4      12.40       8.24       0.31       1.18       1.73
+
+
+=== Health, part 4: setup C (2026-10-23) ===
+
+Hp40+HbT20S30: 40 HP per health point, 20% of toughness and 30% of stamina
+from health. Earlier setups repeated for reference. Same code, seed and n.
+
+                                             base           Hb25       HbT10S25  Hp40+HbT20S30      Hp40+Hb50
+stat len                                    62.70          65.00          62.90          49.40          51.40
+stat strikes                                11.20          11.70          11.30           8.40           8.80
+stat stuns                                   0.94           0.96           0.94           1.15           1.18
+stat ctr                                     0.59           0.61           0.59           0.45           0.48
+stat dodged                                 19.40          19.80          19.60          18.60          18.90
+stat full                                    8.30           8.50           8.50           8.30           8.30
+stat part                                   10.90          11.00          10.80          10.40          10.60
+stat guard                                  28.70          28.20          28.60          31.70          30.60
+stat focus                                   5.20           5.10           5.20           6.40           6.20
+stat breath                                  6.50           6.60           6.40           4.40           4.80
+stat qp                                     31.00          30.90          31.00          29.90          29.60
+stat stam                                   62.50          62.30          62.20          67.50          67.00
+atts strength                 ±0.1           2.05           1.41           1.67           1.31           0.70
+atts agility                  ±0.1           1.77           1.09           1.35           1.06           0.39
+atts speed                    ±0.1          -1.86          -2.67          -2.32          -2.24          -2.91
+atts health                   ±0.1          -1.97           0.16          -0.70          -0.12           1.82
+style strength                ±1.6          13.00          13.65          13.08          13.29          12.64
+style agility                 ±1.7          12.84          13.20          12.06          12.00          11.25
+style speed                   ±1.8          -0.30          -0.80          -0.07           0.72           0.01
+style health                  ±1.8           3.38          11.77           8.01          10.80          17.23
+style attack                  ±1.3          12.22          11.84          11.23          12.10          11.72
+style guard                   ±1.5         -11.79         -12.92         -12.87         -10.26         -11.34
+style counters                ±1.3         -12.45         -13.01         -12.80         -11.28         -10.70
+style qi                      ±1.2          -3.62          -3.78          -4.85          -3.19          -3.92
+style dodge                   ±1.4           0.02           1.74           1.44           2.27           2.21
+style HP gain                 ±1.3          12.15          10.63          11.64           4.22           4.95
+style stamina                 ±1.4          -2.61          -3.10          -3.82          -3.69          -5.75
+style fury                    ±1.5           8.00           7.34           7.64           4.19           3.99
+style resist KO               ±1.8         -10.85         -10.60         -12.21          -8.91          -8.32
+techs Health Breathing        ±2.7           3.46           2.67           2.48           0.00          -0.58
+techs Iron Vest               ±2.5           0.02           2.64          -1.13           2.87           2.19
+techs Brawler's Resilience    ±2.6          -4.35          -8.67          -8.46          -7.95          -3.61
+techs Horse-like Stamina      ±2.7          -4.16          -3.14          -1.38          -2.44          -4.55
+techs Fist of Fury            ±2.5           6.35           1.50           5.61           1.24           1.33
+techs Advanced Guard          ±2.9          -8.48          -7.42          -7.31          -8.20          -8.35
+techs Superior Iron Vest      ±7.8          11.50          11.71           9.38           8.50          17.41
+techs Vitality Breathing      ±6.9          -4.46         -10.94          -3.50         -12.55          -3.12
+techs Hero's Resilience       ±8.3         -17.77         -20.44         -12.31         -15.21         -21.30
+techs Lightning-Fast Strike   ±6.7          30.53          22.13          26.66          21.52          24.24
+techs Explosive Strikes       ±8.4          12.40           8.24           0.31           2.52           1.18
