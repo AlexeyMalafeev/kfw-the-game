@@ -50,6 +50,17 @@ All notable changes to KFW are documented here. Format loosely follows
   off-balance!" — so the defender's counter and quick follow-up meet a
   weaker guard (×0.75), and drunken fighters, who fight well off-balance,
   benefit. Fights got slightly shorter (59.7 → 57.1 s on average)
+- **The 'dodge' buff raises only dodge chance** (balance-affecting): Shadow
+  Slips Away, Shadow of a Shadow and the dodge style techs also raised block
+  chance, because the bonus sat in the number both chances come from. Now
+  each defensive buff does what its name says — dodge, blocks, or defense
+  (both). To keep the dodge techs as useful as an average technique, their
+  bonus went from +40% to +70% (+80% to +140% for the advanced one)
+- **Qi regenerates half as fast** (balance-affecting): 10% of max qi per
+  turn instead of 20%. Fighters used to end fights with over a third of
+  their qi unspent, so the qi techs bought almost nothing; Lotus Stance, for
+  example, now helps about as much as an average technique (in head-to-head
+  tests its edge rose from +6.9 to +10.4)
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so
@@ -58,8 +69,9 @@ All notable changes to KFW are documented here. Format loosely follows
   worker count). Every table row gets a ±95% noise margin measured from the
   chunk-to-chunk spread, and the report opens with fight stats: fight
   length, strikes, counters, criticals and stuns per fight, how strikes end
-  (dodged / fully blocked / partly blocked / clean hit) and the stamina and
-  qi left at the end. For the latter, fighters' in-fight stats now also
+  (dodged / fully blocked / partly blocked / clean hit), how often fighters
+  strike, guard, focus or catch their breath, and the stamina and qi left at
+  the end. For the latter, fighters' in-fight stats now also
   count dodges, blocks, full blocks, stuns suffered, counters and
   preemptives. No gameplay change
 

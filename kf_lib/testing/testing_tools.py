@@ -51,7 +51,8 @@ def _fight_balance_chunk(rand_actions, n, seed):
     stats = {key: 0 for key in (
         'fights', 'no_winner', 'thrown', 'dodges', 'blocks', 'full_blocks',
         'counters', 'preemptives', 'stunned', 'criticals', 'epics')}
-    stats.update(winner_hp=0.0, stamina_left=0.0, qp_left=0.0)
+    stats.update(winner_hp=0.0, stamina_left=0.0, qp_left=0.0, actions=0,
+                 guards=0, focuses=0, breaths=0)
     durations = []
     for _ in range(n):
         lv = random.randint(1, 20)
@@ -70,6 +71,11 @@ def _fight_balance_chunk(rand_actions, n, seed):
             for key in ('thrown', 'dodges', 'blocks', 'full_blocks', 'counters',
                         'preemptives', 'stunned', 'criticals', 'epics'):
                 stats[key] += fs[key]
+            used = fs['moves_used']  # strikes (incl. counters) and maneuvers
+            stats['actions'] += sum(used.values())
+            stats['guards'] += used.get('Guard', 0)
+            stats['focuses'] += used.get('Focus', 0)
+            stats['breaths'] += used.get('Catch Breath', 0)
             stats['stamina_left'] += ftr.stamina / ftr.stamina_max
             stats['qp_left'] += ftr.qp / ftr.qp_max if ftr.qp_max else 0
         if not fgt.winners:
@@ -161,6 +167,9 @@ def _format_fight_stats(results):
     def share(v):
         return f'{v / thrown * 100:.1f}%'
 
+    def act_share(v):
+        return f'{v / (st["actions"] or 1) * 100:.1f}%'
+
     lines = [
         '',
         f'fights: {n_f}, no winner: {st["no_winner"]}',
@@ -173,6 +182,10 @@ def _format_fight_stats(results):
         f'fully blocked {share(st["full_blocks"])}, '
         f'partly blocked {share(st["blocks"] - st["full_blocks"])}, '
         f'clean hits {share(clean)}',
+        f'actions (counters included): strikes {act_share(st["thrown"])}, '
+        f'Guard {act_share(st["guards"])}, Focus {act_share(st["focuses"])}, '
+        f'Catch Breath {act_share(st["breaths"])}, other maneuvers '
+        f'{act_share(st["actions"] - st["thrown"] - st["guards"] - st["focuses"] - st["breaths"])}',
         f'at fight end: winner\'s HP {st["winner_hp"] / max(n_won, 1) * 100:.1f}% of max; '
         f'stamina {st["stamina_left"] / (2 * n_f) * 100:.1f}%, '
         f'QP {st["qp_left"] / (2 * n_f) * 100:.1f}% of max (both fighters)',

@@ -348,6 +348,15 @@ class TestDefenseAndCounters:
         assert fa.to_block == pytest.approx(block * 1.3)
         assert fa.dfs_pwr == pytest.approx(pwr)
 
+    def test_dodge_buff_raises_dodge_chance_only(self):
+        # dodge_mult sat in the shared x and raised block chance too until 2026-10
+        fa, _, (dodge, block, pwr) = self.base_dfs()
+        fa.dodge_mult = 1.7
+        fa.calc_dfs()
+        assert fa.to_dodge == pytest.approx(dodge * 1.7)
+        assert fa.to_block == pytest.approx(block)
+        assert fa.dfs_pwr == pytest.approx(pwr)
+
     def test_blocks_buff_raises_block_chance_and_power(self):
         # block_mult raised only block power until 2026-10
         fa, _, (dodge, block, pwr) = self.base_dfs()

@@ -18,7 +18,7 @@ class FightAttributes(FighterAPI, ABC):
     MAX_RESIST_KO: Final = 0.5
     QP_BASE: Final = 0
     QP_INCR_PER_LV: Final = 5
-    QP_PORTION_RESTORED_PER_TURN: Final = 0.2
+    QP_PORTION_RESTORED_PER_TURN: Final = 0.1  # 0.2 until 2026-10, when qi wasn't scarce
     STAMINA_BASE: Final = 50  # for all fighter levels
     STAMINA_INCR_PER_LV: Final = 10
     STAMINA_PORTION_RESTORED_PER_TURN: Final = 0.1

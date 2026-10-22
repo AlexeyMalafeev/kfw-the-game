@@ -276,6 +276,12 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## AI
 
+- **Retrain the genetic fight AI's weights** (`kf_lib/ai/fight_ai_gen.py`;
+  author 2026-10-22, action item once the 2026-10 balance pass is polished):
+  `prob_atk` / `prob_guard` / `prob_focus` … were tuned for the old rules, and
+  the AI now spends ~25% of its turns on Guard. Retrain after the defense
+  rework, the Guard/counter/qi/health follow-ups and the final
+  `run_test_fb.py` re-run, then re-run the harness once more
 - different fight AI behaviors: aggressive, defensive, cautious, sneaky, erratic
 - different AIs for common fighters vs masters/bosses; difficulty levels via AI choice
 - style-specific AI retraining pipeline
@@ -309,13 +315,21 @@ while atk +15.5 → −1.2, blocks −12.0 → −4.1, full blocks 81% → 43% o
 blocks, fights 59.7 → 57.1 s; guard (−12), counters (−12) and qi (−7.5)
 still lose. Re-run and refresh the snapshot once the author's follow-ups
 below are decided:
-- **Defense rework follow-ups** (author 2026-10-20, proposals under
-  discussion): buff the Guard move (×1.5 dfs for a turn; its techs score
-  like a dead slot); bigger counters (beyond the off-balance opening);
-  make qi buffs matter (qi isn't scarce: fighters end fights with ~37%);
-  more uses for health (it feeds only max HP; block power is
-  strength-only). `dodge_mult` raising block chance too (it sits in the
-  shared `x`) is a related naming question
+- **Defense rework follow-ups** (author 2026-10-20/22). Done 2026-10-22:
+  the 'dodge' buff raises dodge chance only (`EVADE1/2` 0.4/0.8 → 0.7/1.4,
+  modeled); qi regeneration 20% → 10% of max per turn (Lotus Stance A/B
+  +6.9 → +10.4). Being tested as rule variants (100k harness each), the
+  author to choose:
+  - Guard: (a) Guard doubles counter chance until the next turn; (b) Guard
+    ×1.5 → ×2.0; (a)+(b)
+  - counters: (a) counter with the best available move instead of a random
+    one; (a) + Guard (a); (b) partial blocks also open counters — only for
+    fighters with a counter tech
+  - qi, for qi techs only: (b) qi shield — a partial block spends qi to
+    absorb the rest; (c) qi-charged strikes; (b)+(c)
+  - health: (a) block power from (strength + health) / 2; (b) toughness and
+    stamina from health instead of level; then max qi and qi flow from
+    health too, if those aren't enough
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser

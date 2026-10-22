@@ -81,7 +81,7 @@ class StrikeMechanics(FighterAPI, ABC):
             rep_actions_factor = attacker.get_rep_actions_factor(atk_action)
             # todo recalc as a value in (0.0, 1.0)?
             # * 10 because of new system:
-            x = self.dfs_penalty_mult * self.agility_full * self.dodge_mult * 10
+            x = self.dfs_penalty_mult * self.agility_full * 10
             x *= self.dfs_mult  # the 'defense' buff (set but never read until 2026-10)
             x *= self.stamina_factor * rep_actions_factor
             x *= self.dfs_bonus
@@ -93,7 +93,9 @@ class StrikeMechanics(FighterAPI, ABC):
             # recalculated every strike, so the penalty ends with the stun
             if self.check_status('stunned'):
                 x *= self.STUN_DFS_MULT
-            self.to_dodge = x / self.DODGE_DIVISOR
+            # the 'dodge' buff: dodge chance only (until 2026-10 it sat in x and
+            # raised block chance too)
+            self.to_dodge = x * self.dodge_mult / self.DODGE_DIVISOR
             self.to_block = x / self.BLOCK_DIVISOR
             self.to_block *= self.wp_dfs_bonus  # no weapon bonus to dodging!
             # the 'blocks' buff: block chance too, not only block power (since 2026-10)

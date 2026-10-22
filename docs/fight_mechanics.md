@@ -126,12 +126,12 @@ If `shocked`: `to_dodge = to_block = 0` (a stun only lowers them — see
 below and Statuses). Otherwise:
 
 ```
-x = dfs_penalty_mult * agility_full * dodge_mult * 10
+x = dfs_penalty_mult * agility_full * 10
     * stamina_factor * rep_actions_factor * dfs_bonus * dfs_mult
 if off-balance: x *= off_balance_dfs_mult   # 0.75
 if lying:       x *= lying_dfs_mult         # 0.5
 if stunned:     x *= STUN_DFS_MULT          # 0.8
-to_dodge = x / DODGE_DIVISOR                # /3
+to_dodge = x * dodge_mult / DODGE_DIVISOR   # /3
 to_block = x / BLOCK_DIVISOR * wp_dfs_bonus * block_mult  # /2
 dfs_pwr  = dfs_penalty_mult * BLOCK_DEFAULT_POWER * block_mult * BLOCK_POWER
            * strength_full * stamina_factor * wp_dfs_bonus
@@ -139,11 +139,11 @@ if fury: dfs_pwr *= fury_to_all_mult
 if stunned: dfs_pwr *= STUN_DFS_MULT          # 0.8
 ```
 
-The three defensive buffs: `dfs_mult` ('defense') raises both chances,
-`block_mult` ('blocks') raises block chance *and* block power, `dodge_mult`
-('dodge') sits in `x`, so despite its name it also raises both chances.
-Until 2026-10 `dfs_mult` was set by its techs but read nowhere, and
-`block_mult` raised only block power.
+The three defensive buffs each do what their name says: `dodge_mult`
+('dodge') raises dodge chance, `block_mult` ('blocks') raises block chance
+*and* block power, `dfs_mult` ('defense') raises both chances. Until 2026-10
+`dfs_mult` was set by its techs but read nowhere, `block_mult` raised only
+block power, and `dodge_mult` sat in `x`, raising block chance too.
 
 `rep_actions_factor` punishes repetitive attackers: `1 + 0.33 * n`, where `n` =
 how many of the attacker's last 3 actions (`previous_actions`, a maxlen-3 deque)
@@ -306,8 +306,10 @@ faster fighters shed statuses in fewer time units. Durations tick down by
   `qp` when `hp` hits 0. `hp` never goes negative, so all `hp <= 0` checks are
   effectively `hp == 0`.
 - `stamina_max = (50 + 10 * level) * stamina_max_mult`; `stamina_gain` = 10% of
-  max per own turn. `qp_max = 5 * level * qp_max_mult`; `qp_gain` = 20% of max
+  max per own turn. `qp_max = 5 * level * qp_max_mult`; `qp_gain` = 10% of max
   per own turn (plus full/half `qp_gain` on successful dodge/block). Both clamp.
+  Qi regeneration was 20% until 2026-10, when fighters ended fights with ~37%
+  of their qi unspent, so the qi buffs barely mattered.
 - `toughness = (level - 1) * 3` — flat subtraction from every hit.
 - `*_full = round(base * *_mult)` for the four base atts
   (`_basic_attributes.py`).

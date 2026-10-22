@@ -322,7 +322,8 @@ with **fight stats** over all fights: length in seconds (mean, median,
 slowest 10%), strikes / counters / preemptives / criticals / epics / stuns
 per fight, strike outcomes (dodged, fully blocked, partly blocked, clean
 hits — from the defender-side counters in `fight_stats`, see
-`docs/stats.md`), and what's left at the end (winner's HP, both fighters'
+`docs/stats.md`), the action mix (strikes, Guard, Focus, Catch Breath,
+other maneuvers — from `fight_stats['moves_used']`), and what's left at the end (winner's HP, both fighters'
 stamina and QP). Then, for winners vs losers: sums of the four base atts
 and full atts, a histogram of att spread (max − min), tech description
 features ("style buffs"), upgradable techs, advanced techs, and move
