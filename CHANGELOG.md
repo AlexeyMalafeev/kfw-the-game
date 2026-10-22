@@ -71,7 +71,11 @@ All notable changes to KFW are documented here. Format loosely follows
   length, strikes, counters, criticals and stuns per fight, how strikes end
   (dodged / fully blocked / partly blocked / clean hit), how often fighters
   strike, guard, focus or catch their breath, and the stamina and qi left at
-  the end. For the latter, fighters' in-fight stats now also
+  the end. Two companion dev scripts: `run_test_tech_ab.py` measures what
+  a technique is worth (mirror matches where one side gets it — how this
+  pass set its boost values) and `compare_fb_reports.py` puts reports side
+  by side, marking changes beyond noise. For the harness stats, fighters'
+  in-fight stats now also
   count dodges, blocks, full blocks, stuns suffered, counters and
   preemptives. No gameplay change
 

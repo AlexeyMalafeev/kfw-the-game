@@ -345,6 +345,41 @@ harness exist for n = 50…50000.
 Works: verified 2026-10-20 — 100k in 93 s on 10 cores; worker count 1 vs 2
 gives byte-identical reports.
 
+### run_test_tech_ab.py — what is a technique worth
+
+A/B test, the tool behind every boost value set in the 2026-10 balance pass:
+for each named tech, `-n` (default 16,000) mirror matches between two fresh
+random fighters at the same level (`--levels`, default 13–20, where general
+techs are learned); one side, picked at random, is given the tech (pairs
+where it already had it are skipped). It prints Diff% = 2 × win rate − 1
+(the harness's units) with a ±95% margin. Every tech plays the same seeded
+fighter pairs, so techs compare against each other with less noise.
+`--all-general` adds every general tech and prints their median — the
+yardstick: a tech scoring near the median is "an average technique".
+Overrides for "what if" runs, applied in every worker: `--set CONST=VALUE`
+(a `Fighter` class constant, e.g. `GUARD_POWER=2.0`), `--scale PARAM=FACTOR`
+(multiplies that param in every Tech, i.e. tries another boost value), and
+`--variants FILE:NAMES`, which calls `FILE`'s `apply(NAMES)` — a module of
+monkeypatched rule experiments (e.g. a `def Ga(): ...` that patches
+`Fighter.try_counter`, and `apply` calling the named ones), for trying a
+rule before writing it into the engine. Parallel like the harness (spawned
+workers, `__main__` guard, runs from any cwd); prints only, no report file.
+
+Works: verified 2026-10-22 — a 300-fight run matches a single-process
+reference run fight for fight, with and without `--scale`. (`--scale` must
+run after `style_gen` is imported, which builds the generated styles' techs;
+the script imports everything first.)
+
+### compare_fb_reports.py — reports side by side
+
+`python compare_fb_reports.py OLD.txt NEW.txt [MORE.txt ...]` prints each
+report's fight-stats lines, then every table row's Diff% in each report,
+sorted by the last one; a `*` marks a change from the first report beyond
+the two reports' combined noise margin (√(m1² + m2²), from the `+-95%`
+column — old single-process reports have no margins, so no `*`).
+`--section "techs 1"` and `--key guard` narrow the output. Works:
+verified 2026-10-22 on the tracked 10k and 100k reports.
+
 ### run_test_lv_vs_crowds.py
 
 `test_level_vs_crowds(n_fights=100)`: how one fighter levels 1–20 fares

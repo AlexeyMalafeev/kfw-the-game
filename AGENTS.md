@@ -54,7 +54,10 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   levels with the default fight AI, in seeded parallel chunks; reports fight
   length/strike-outcome stats and winner/loser attributes, buffs, techs and
   moves with a ±95% noise margin per row into `tests/test f.b. *.txt`;
-  reproducible for a given seed), `run_test_lv_vs_crowds.py`,
+  reproducible for a given seed), `run_test_tech_ab.py` (what a tech is
+  worth: A/B mirror matches with one side given the tech; the tool for
+  setting boost values), `compare_fb_reports.py` (reports side by side),
+  `run_test_lv_vs_crowds.py`,
   `run_test_level_sign.py`; also `sim_group_ffa.py` (group-FFA effective
   opposition experiment, stdout only — the evidence behind the RMS-of-group-
   sums exp/risk formula)
