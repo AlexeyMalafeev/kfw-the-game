@@ -39,6 +39,14 @@ Health (baseline: health -2.0, strength +2.1, agility +1.8, speed -1.9):
   HbT / HbS    only toughness / only stamina from health         -> +3.3 (fights 79 s) / +1.9
   Hc   max qi scaled by health relative to the level average     -> no added effect
   (Hb25 side effects: 'health' techs +3.4 -> +11.8; speed -1.9 -> -2.7)
+  Hp20   20 HP per health point instead of 50  -> health -1.8 (unchanged: HP
+         stays proportional to health); fights 20.4 s, 3.3 strikes, a stun
+         every 2.3 strikes; HP gain +12.2 -> -5.7, fury +8.0 -> -3.2
+  Hp20+Hb50 / Hp20+Hb                           -> health +0.5 / +3.1;
+         strength -0.1 / -0.7, agility +0.7 / -0.4, speed -1.2 / -2.0;
+         fights 21.1 / 22.5 s
+  (short fights shrink every Diff%: guard and counters, near dead-slot
+  level, move -12 -> -7)
 """
 import math
 
@@ -248,6 +256,13 @@ def HbT():
 
 def HbS():
     _hb(1.0, toughness=False)
+
+
+#   Hp20   20 HP per health point instead of 50 (combine: Hp20+Hb50, Hp20+Hb)
+
+
+def Hp20():
+    F.HP_PER_HEALTH_LV = 20
 
 
 #   Gs     stored guard: Guard's bonus waits for the next incoming strike instead

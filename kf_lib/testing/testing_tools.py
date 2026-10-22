@@ -369,9 +369,11 @@ class Tester(object):
 
         results = [None] * len(chunks)
         workers = min(workers or os.cpu_count() or 1, len(chunks))
+        # here too, not only in the workers: a bad FILE:NAMES then fails at once,
+        # instead of crashing every worker on startup (the pool respawns them forever)
+        _apply_variants(variants)
         with tqdm(total=n) as bar:
             if workers == 1:
-                _apply_variants(variants)
                 for i, chunk in enumerate(chunks):
                     results[i] = _fight_balance_chunk(*chunk)
                     bar.update(chunk[1])

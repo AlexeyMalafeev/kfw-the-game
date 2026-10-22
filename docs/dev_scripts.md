@@ -349,9 +349,45 @@ runtime monkeypatches, e.g. `--variants rule_variants.py:Gc+Hb25`. Relative
 paths resolve against the folder you run from. Give variant runs an `--out`,
 so they don't overwrite the tracked report.
 
+The variants are applied once in the main process before any worker starts,
+so a misspelled name, a missing file or a patch that crashes stops the run
+at once with a traceback and a non-zero exit code. (Until 2026-10-22 they
+were applied only in the workers: a typo like `Hb2` crashed every worker on
+startup, the pool respawned them forever, and the run hung without a
+report.)
+
+**Batches of variant runs.** Run them one after another, not side by side:
+one 100k run already keeps 10 cores 87% busy (measured 2026-10-22: 898 s of
+CPU in 104 s), so parallel runs only split the cores and could at best
+recover the idle 13% at the end of each run, when fewer chunks than cores
+remain. Two silent failures to guard against:
+
+- zsh, the macOS default shell, does not split an unquoted variable into
+  words: `arg="--variants rule_variants.py:Hb25"; run_test_fb.py $arg`
+  hands the script one argument, argparse rejects it, and the run exits in
+  under a second. Write the flag literally, with its value quoted.
+- A loop that doesn't check exit codes reports a batch of failed runs as
+  done. Stop at the first failure, and give the script `< /dev/null`: on an
+  error it waits on `input()`, which would block a background job.
+
+```zsh
+cd dev_scripts/testing
+for v in Hb25 Hp20 Hp20+Hb; do
+  ../../.venv/bin/python run_test_fb.py --variants "rule_variants.py:$v" \
+    --out "$OUT/$v.txt" < /dev/null > "$OUT/$v.log" 2>&1 || { echo "FAILED: $v"; break; }
+done
+```
+
+The baseline is a run without `--variants`. Before comparing, check that
+every report exists and that its header's `variants=` line names what you
+meant; a 100k run takes 1.5 min on 10 cores, so one that ends in seconds
+failed.
+
 Works: verified 2026-10-20 — 100k in 93 s on 10 cores; worker count 1 vs 2
 gives byte-identical reports; 2026-10-22 — a `--variants` run matches the
-scratch driver it replaced fight for fight.
+scratch driver it replaced fight for fight; a misspelled variant now fails
+in 1 s with exit code 1 (it used to hang), and a valid run's report stayed
+byte-identical after that change.
 
 ### run_test_tech_ab.py — what is a technique worth
 
@@ -370,8 +406,13 @@ Overrides for "what if" runs, applied in every worker: `--set CONST=VALUE`
 `--variants FILE:NAMES`, which calls `FILE`'s `apply(NAMES)` — a module of
 monkeypatched rule experiments (e.g. a `def Ga(): ...` that patches
 `Fighter.try_counter`, and `apply` calling the named ones), for trying a
-rule before writing it into the engine. Parallel like the harness (spawned
-workers, `__main__` guard, runs from any cwd); prints only, no report file.
+rule before writing it into the engine. The overrides are applied once in
+the main process before the workers start, so a misspelled `--set`
+constant, a `--scale` param that no technique has (which would silently
+measure nothing) or a bad variant name stops the run at once with exit
+code 1 instead of hanging (verified 2026-10-22). Parallel like the harness
+(spawned workers, `__main__` guard, runs from any cwd); prints only, no
+report file.
 
 Works: verified 2026-10-22 — a 300-fight run matches a single-process
 reference run fight for fight, with and without `--scale`. (`--scale` must

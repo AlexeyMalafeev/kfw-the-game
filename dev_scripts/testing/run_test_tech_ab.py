@@ -46,9 +46,13 @@ def apply_overrides(sets, scales, variants):
         setattr(Fighter, name, float(value) if isinstance(cur, float) else int(value))
     for item in scales:
         param, factor = item.split('=', 1)
+        hits = 0
         for tech in techniques.get_all_techs_dict().values():
             if param in getattr(tech, 'params', {}):
                 tech.params[param] *= float(factor)
+                hits += 1
+        if not hits:  # a typo would silently measure nothing
+            raise ValueError(f'--scale {item}: no technique has the param {param!r}')
     if variants:
         import importlib.util
         path, names = variants.rsplit(':', 1)
@@ -109,6 +113,9 @@ def main():
     if args.variants:
         path, rest = args.variants.rsplit(':', 1)
         args.variants = f'{Path(path).resolve()}:{rest}'  # workers start in the repo root
+    # once here too, so a bad override fails at once instead of crashing every
+    # worker on startup (the pool would respawn them forever)
+    apply_overrides(args.set, args.scale, args.variants)
     jobs = [(name, args.n, args.seed, lv_min, lv_max) for name in names]
     workers = min(args.workers or os.cpu_count() or 1, len(jobs))
     ctx = multiprocessing.get_context('spawn')

@@ -343,7 +343,14 @@ below are decided:
     (negligible); 25% of toughness and stamina from health: health → +0.2
     (neutral), fights +2 s, but the 'health' techs +3.4 → +11.8 and speed
     −1.9 → −2.7; 100% from health: +5.8 (too strong). Speed is the next
-    weakest attribute
+    weakest attribute. Also tested: 20 HP per health point instead of 50.
+    Alone it leaves health at −1.8 (HP stays proportional to health, so
+    the HP ratio of two fighters is the same) but fights get 3× shorter
+    (62.7 → 20–22 s, 3–4 strikes, a stun every ~2.5 strikes), HP gain,
+    fury and stamina techs fall to dead-slot level, and every Diff% shrinks
+    (a useless slot ≈ −7 instead of −12). With 50% of toughness and
+    stamina from health: the most even attributes so far (strength −0.1,
+    agility +0.7, speed −1.2, health +0.5); with 100%: health +3.1 leads
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
