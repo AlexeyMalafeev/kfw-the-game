@@ -56,6 +56,21 @@ Health (baseline: health -2.0, strength +2.1, agility +1.8, speed -1.9):
   Hp40+HbT20S30 ("setup C")                    -> health -0.1, strength +1.3,
             agility +1.1, speed -2.2 (smallest gap at 40-50 HP); fights 49.4 s;
             'health' techs +10.8, HP gain +4.2, fury +4.2
+Speed (baseline: strength +2.1, agility +1.8, speed -1.9, health -2.0; an
+attribute point is worth +15.9 for speed vs +26.6..+36.2 for the others at
+lv 1-7, about even at lv 15-20; strength wins via block power, see the tables):
+  Sd    dodge from (agility + speed) / 2        -> speed -1.2, agility +1.0
+  Sp    strike power from (strength + speed) / 2 -> speed +3.0, strength -2.9
+  Sp20  the same with 20% speed                 -> speed +0.1, strength 0.0
+        (health -2.0 stays the weakest)
+  St    time cost / speed^1.5 (level-normalized) -> speed -0.2, health -2.6
+  On top of setup C (Hp40+HbT20S30), strength / agility / speed / health:
+    C+Sp20  -0.7 / +1.1 / -0.2 / -0.1   (gap 1.8), fights 48.3 s
+    C+St    +0.9 / +0.5 / -0.8 / -0.6   (gap 1.7), fights 50.5 s
+    C+Sd    +1.4 / +0.3 / -1.6 / -0.2   (gap 3.0)
+  A speed point at lv 1-7 / 8-14 / 15-20: now +15.9 / +12.5 / +11.7; C+St
+  +20.3 / +16.7 / +14.5; C+Sp20 +21.5 / +15.8 / +15.1 (the others: about
+  +26..+36 / +17..+20 / +10..+14) -- low levels stay speed's weak spot
 """
 import math
 
@@ -333,3 +348,49 @@ def Cfree():
 
 def Chalf():
     _counter_refund(0.5)
+
+
+# Speed (2026-10-23). Speed only sets how often a fighter acts (and how fast it
+# recovers from stuns/falls); agility drives hit, dodge, block, counter and
+# critical chances, strength damage and block power.
+#   Sd   dodge chance from (agility + speed) / 2 instead of agility
+#   Sp   strike power from (strength + speed) / 2 instead of strength
+#   Sp20 strike power from 0.8 * strength + 0.2 * speed
+#   St   action time cost / speed^1.5 instead of / speed, normalized to the
+#        level's typical speed so fights keep their length
+
+S0, S_PER_LV = 3.517, 0.257  # speed_full ~ S0 + S_PER_LV * level (generated fighters)
+
+
+def Sd():
+    oc = F.calc_dfs
+    def calc_dfs(self):
+        oc(self)
+        if self.agility_full:
+            self.to_dodge *= (self.agility_full + self.speed_full) / 2 / self.agility_full
+    F.calc_dfs = calc_dfs
+
+
+def _sp(w):
+    oa = F.calc_atk
+    def calc_atk(self, action):
+        oa(self, action)
+        if self.strength_full:
+            self.atk_pwr *= ((1 - w) * self.strength_full + w * self.speed_full) / self.strength_full
+    F.calc_atk = calc_atk
+
+
+def Sp():
+    _sp(0.5)
+
+
+def Sp20():
+    _sp(0.2)
+
+
+def St():
+    ot = F.get_move_time_cost
+    def get_move_time_cost(self, move_obj):
+        ref = S0 + S_PER_LV * self.level
+        return round(ot(self, move_obj) * (ref / self.speed_full) ** 0.5)
+    F.get_move_time_cost = get_move_time_cost

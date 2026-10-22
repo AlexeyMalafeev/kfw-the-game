@@ -11,6 +11,10 @@ seeded fighter pairs, so techs compare against each other with less noise.
     python run_test_tech_ab.py "Shadow Slips Away" --scale dodge_mult=1.5
     python run_test_tech_ab.py "Advanced Guard" --set GUARD_POWER=2.0
     python run_test_tech_ab.py "Advanced Guard" --variants path/to/variants.py:Ga+Gb
+    python run_test_tech_ab.py +strength +agility +speed +health --levels 1-7
+
+A name '+ATT' (+strength, +agility, +speed, +health) gives one extra point of that
+attribute instead of a tech: what an attribute point is worth.
 
 --set CONST=VALUE overrides a Fighter class constant; --scale PARAM=FACTOR multiplies
 that param in every Tech (e.g. to try another boost value); --variants FILE:NAMES calls
@@ -68,7 +72,8 @@ def play(job):
     from kf_lib.fighting import fight
     from kf_lib.kung_fu import techniques
     tech_name, n, seed, lv_min, lv_max = job
-    tech = techniques.get_tech_obj(tech_name)
+    att = tech_name[1:] if tech_name.startswith('+') else None
+    tech = None if att else techniques.get_tech_obj(tech_name)
     random.seed(seed)
     wins = played = 0
     for _ in range(n):
@@ -78,9 +83,13 @@ def play(job):
         f2 = ff.new_fighter(lv=lv)
         f2.name = 'Dummy B'
         treated = f1 if random.random() < 0.5 else f2
-        if tech in treated.techs:
+        if att:
+            treated.change_att(att, 1)
+            treated.refresh_dependent_atts()  # HP, counter/critical chance
+        elif tech in treated.techs:
             continue
-        treated.add_tech(tech)
+        else:
+            treated.add_tech(tech)
         f = fight.AutoFight([f1], [f2])
         if f.winners:
             played += 1
@@ -107,8 +116,12 @@ def main():
         names += [t.name for t in techniques.get_upgradable_techs() if t.name not in names]
     if not names:
         parser.error('name some techs or pass --all-general')
-    for name in names:
-        techniques.get_tech_obj(name)  # fail fast on a typo
+    for name in names:  # fail fast on a typo
+        if name.startswith('+'):
+            if name[1:] not in ('strength', 'agility', 'speed', 'health'):
+                parser.error(f'unknown attribute: {name}')
+        else:
+            techniques.get_tech_obj(name)
     lv_min, lv_max = (int(x) for x in args.levels.split('-'))
     if args.variants:
         path, rest = args.variants.rsplit(':', 1)

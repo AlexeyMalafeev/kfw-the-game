@@ -414,6 +414,17 @@ code 1 instead of hanging (verified 2026-10-22). Parallel like the harness
 (spawned workers, `__main__` guard, runs from any cwd); prints only, no
 report file.
 
+A name `+ATT` (`+strength`, `+agility`, `+speed`, `+health`) gives the
+treated side one extra point of that attribute instead of a tech — what an
+attribute point is worth, e.g. per level band with `--levels 1-7`.
+
+It runs one worker per name, so with fewer names than cores, several
+invocations side by side do use the spare cores (unlike the harness). Start
+them with `&`, collect each `$!`, and `wait` on each PID. Don't loop over
+`$(jobs -p)`: in zsh the `$(...)` runs in a subshell with no jobs (bash
+special-cases it), so `for j in $(jobs -p); do wait $j; done` returns at
+once while the runs go on unwatched.
+
 Works: verified 2026-10-22 — a 300-fight run matches a single-process
 reference run fight for fight, with and without `--scale`. (`--scale` must
 run after `style_gen` is imported, which builds the generated styles' techs;

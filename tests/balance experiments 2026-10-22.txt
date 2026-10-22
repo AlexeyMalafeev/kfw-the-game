@@ -340,3 +340,137 @@ techs Vitality Breathing      ±6.9          -4.46         -10.94          -3.50
 techs Hero's Resilience       ±8.3         -17.77         -20.44         -12.31         -15.21         -21.30
 techs Lightning-Fast Strike   ±6.7          30.53          22.13          26.66          21.52          24.24
 techs Explosive Strikes       ±8.4          12.40           8.24           0.31           2.52           1.18
+
+
+=== Speed (2026-10-23) ===
+
+Why speed is weak. Speed only sets how often a fighter acts (and how fast it
+recovers from stuns and falls); strength sets strike damage AND block power,
+agility hit, dodge, block, counter and critical chances.
+
+What one attribute point is worth (run_test_tech_ab.py +ATT, 16,000 mirror
+matches per cell, seed 11, margins +-1.5; units: 2 x win rate - 1, in %):
+
+                         lv 1-7   lv 8-14  lv 15-20
+  +agility                +36.2     +21.3     +12.7
+  +strength               +32.5     +22.3     +13.5
+  +health                 +26.6     +13.1      +9.2
+  +speed                  +15.9     +12.5     +11.7
+  +speed, toughness off   +17.3     +13.1     +10.3
+
+So speed is weakest at low levels, and toughness (the flat damage reduction)
+is not the cause. A probe of 3,000 lv 1-7 fights per row, one side given the
+point (per fight, treated vs untreated):
+
+                    turns  strikes  damaging strikes  damage dealt
+  +1 speed           +26%     +22%              +19%          +17%
+  +1 strength         +6%      +7%              +21%          +45%
+
+Extra turns partly go to Guard / Catch Breath / maneuvers, and extra strikes
+meet the same blocks. A block subtracts the defender's strength-based block
+power; at low levels strikes are barely stronger than blocks, so a strength
+point turns many full blocks into damage (and strengthens the fighter's own
+blocks).
+
+Fixes, on current rules (Sd: dodge chance from (agility + speed) / 2; Sp /
+Sp20: strike power from 50% / 20% speed and the rest strength; St: action
+time cost / speed^1.5, normalized to the level's typical speed):
+
+                                             base             Sd             Sp           Sp20             St
+stat len                                    62.70          63.60          61.10          61.40          64.20
+stat strikes                                11.20          11.40          10.30          10.70          11.30
+stat stuns                                   0.94           0.92           0.88           0.90           0.92
+stat ctr                                     0.59           0.57           0.53           0.55           0.59
+stat dodged                                 19.40          19.60          19.30          19.30          19.50
+stat full                                    8.30           8.50           7.90           7.90           8.40
+stat part                                   10.90          11.10          11.40          11.30          10.90
+stat guard                                  28.70          28.60          29.90          29.30          28.50
+stat focus                                   5.20           5.10           5.50           5.30           5.10
+stat breath                                  6.50           6.80           6.20           6.30           6.70
+stat qp                                     31.00          31.10          31.30          31.20          31.00
+stat stam                                   62.50          62.20          63.10          62.60          62.10
+atts strength                 ±0.1           2.05           2.04          -2.92           0.03           1.50
+atts agility                  ±0.1           1.77           1.04           1.81           1.87           1.35
+atts speed                    ±0.1          -1.86          -1.15           2.98           0.13          -0.24
+atts health                   ±0.1          -1.97          -1.93          -1.87          -2.03          -2.61
+style strength                ±1.6          13.00          14.81           0.97           9.45          14.04
+style agility                 ±1.7          12.84          10.60          12.84          13.02          13.68
+style speed                   ±1.8          -0.30           1.45          11.32           3.58           5.54
+style health                  ±1.8           3.38           3.40           2.85           3.29           1.77
+style attack                  ±1.3          12.22          11.01          12.64          12.83          11.76
+style guard                   ±1.5         -11.79         -12.07         -12.85         -13.54         -12.00
+style counters                ±1.3         -12.45         -12.56         -11.97         -14.09         -11.87
+style qi                      ±1.2          -3.62          -3.77          -3.82          -3.05          -4.25
+style dodge                   ±1.4           0.02           1.68           1.42           0.60           1.05
+style HP gain                 ±1.3          12.15          11.39           9.50          12.02          11.25
+style stamina                 ±1.4          -2.61          -3.13          -2.55          -2.88          -3.00
+style fury                    ±1.5           8.00           8.18           7.55           8.39           8.05
+style resist KO               ±1.8         -10.85         -11.19          -8.29         -12.50          -9.03
+techs Health Breathing        ±2.7           3.46           2.34           3.92           3.81           2.37
+techs Iron Vest               ±2.5           0.02          -0.26           0.81           1.10           1.27
+techs Brawler's Resilience    ±2.6          -4.35          -7.41          -3.85          -9.24          -5.38
+techs Horse-like Stamina      ±2.7          -4.16          -3.13          -0.86          -3.60          -6.55
+techs Fist of Fury            ±2.5           6.35           5.28           4.41           4.57           5.46
+techs Advanced Guard          ±2.9          -8.48          -6.38          -9.45          -9.37          -6.96
+techs Superior Iron Vest      ±7.8          11.50          13.44          12.73          16.55          12.33
+techs Vitality Breathing      ±6.9          -4.46          -9.62          -5.23          -0.44         -11.36
+techs Hero's Resilience       ±8.3         -17.77         -20.18         -14.37         -18.81         -20.00
+techs Lightning-Fast Strike   ±6.7          30.53          33.96          22.01          28.36          28.96
+techs Explosive Strikes       ±8.4          12.40           0.91           2.25           6.01           5.55
+
+The same on top of setup C (Hp40+HbT20S30):
+
+                                             base              C         C+Sp20           C+St           C+Sd
+stat len                                    62.70          49.40          48.30          50.50          49.80
+stat strikes                                11.20           8.40           8.00           8.50           8.40
+stat stuns                                   0.94           1.15           1.15           1.16           1.16
+stat ctr                                     0.59           0.45           0.43           0.47           0.44
+stat dodged                                 19.40          18.60          18.50          18.70          18.70
+stat full                                    8.30           8.30           7.70           8.30           8.30
+stat part                                   10.90          10.40          10.80          10.50          10.50
+stat guard                                  28.70          31.70          32.50          31.40          31.70
+stat focus                                   5.20           6.40           6.70           6.40           6.40
+stat breath                                  6.50           4.40           4.10           4.60           4.50
+stat qp                                     31.00          29.90          30.10          29.90          29.90
+stat stam                                   62.50          67.50          68.10          67.30          67.70
+atts strength                 ±0.1           2.05           1.31          -0.72           0.91           1.43
+atts agility                  ±0.1           1.77           1.06           1.07           0.54           0.31
+atts speed                    ±0.1          -1.86          -2.24          -0.21          -0.83          -1.59
+atts health                   ±0.1          -1.97          -0.12          -0.14          -0.62          -0.16
+style strength                ±1.6          13.00          13.29           9.51          12.67          12.84
+style agility                 ±1.7          12.84          12.00          14.80          12.54          11.35
+style speed                   ±1.8          -0.30           0.72           5.58           4.75           1.88
+style health                  ±1.8           3.38          10.80           9.45          11.24          11.05
+style attack                  ±1.3          12.22          12.10          12.57          11.77          11.93
+style guard                   ±1.5         -11.79         -10.26          -9.86         -12.20         -11.07
+style counters                ±1.3         -12.45         -11.28         -12.49         -11.74         -12.22
+style qi                      ±1.2          -3.62          -3.19          -2.83          -4.13          -3.30
+style dodge                   ±1.4           0.02           2.27           2.65           0.83           1.96
+style HP gain                 ±1.3          12.15           4.22           3.06           5.00           4.06
+style stamina                 ±1.4          -2.61          -3.69          -6.05          -5.10          -3.84
+style fury                    ±1.5           8.00           4.19           3.49           4.28           5.21
+style resist KO               ±1.8         -10.85          -8.91          -9.36          -8.64          -8.77
+techs Health Breathing        ±2.7           3.46           0.00          -1.31           1.94          -0.53
+techs Iron Vest               ±2.5           0.02           2.87           1.82          -0.23           0.83
+techs Brawler's Resilience    ±2.6          -4.35          -7.95          -5.64          -3.74          -2.81
+techs Horse-like Stamina      ±2.7          -4.16          -2.44          -4.32          -3.58          -2.89
+techs Fist of Fury            ±2.5           6.35           1.24           1.00           1.20           3.00
+techs Advanced Guard          ±2.9          -8.48          -8.20          -6.22          -9.00          -6.23
+techs Superior Iron Vest      ±7.8          11.50           8.50          14.37          12.38          12.35
+techs Vitality Breathing      ±6.9          -4.46         -12.55         -11.86          -6.13          -2.43
+techs Hero's Resilience       ±8.3         -17.77         -15.21         -14.55         -14.06         -17.31
+techs Lightning-Fast Strike   ±6.7          30.53          21.52          22.62          19.80          24.67
+techs Explosive Strikes       ±8.4          12.40           2.52           1.12          11.25           2.47
+
+What one attribute point is worth per level band on top of the two best
+combinations (same A/B settings as above):
+
+                       C+St: lv 1-7   8-14  15-20   C+Sp20: lv 1-7   8-14  15-20
+  +strength                   +30.9  +20.1  +13.2           +25.6  +16.6  +10.0
+  +agility                    +34.2  +20.2  +13.5           +34.3  +18.3  +13.5
+  +health                     +35.5  +18.0  +10.6           +34.4  +19.3   +9.9
+  +speed                      +20.3  +16.7  +14.5           +21.5  +15.8  +15.1
+
+Both lift low-level speed by about a third (+15.9 -> +20.3 / +21.5) but
+don't close the gap there; mid levels come out about even, and at lv 15-20
+speed becomes slightly the best point.

@@ -361,6 +361,19 @@ below are decided:
     40–50 HP; fights 49.4 s (the pre-batch length); 'health' techs +10.8
     (on par with strength/agility techs), HP gain +12.2 → +4.2, fury
     +8.0 → +4.2
+  - **Speed** (2026-10-23): speed only sets how often a fighter acts;
+    strength sets damage *and* block power. An attribute point is worth
+    +15.9 for speed vs +26.6…+36.2 for the others at levels 1–7 (about even
+    at 15–20; toughness is not the cause): extra turns partly go to Guard /
+    Catch Breath, and extra strikes meet the same blocks, while a strength
+    point turns many full blocks into damage. Fixes tested: dodge from
+    (agility + speed) / 2 (speed −1.9 → −1.2); strike power from 20% speed
+    + 80% strength (speed +0.1, strength 0.0); action time ∝ 1/speed^1.5
+    (speed −0.2, health −2.6). On top of setup C the last two give the most
+    even attributes yet (gap 1.8 / 1.7; all four within ±1.1). Per level
+    band both lift a speed point at levels 1–7 from +15.9 to +20–21.5, but
+    the others stay at +26…+36 there; mid levels even out, and at 15–20
+    speed becomes slightly the best point
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
