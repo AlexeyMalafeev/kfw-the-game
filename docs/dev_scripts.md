@@ -342,8 +342,16 @@ slot scores). A single 10k run is too noisy for techs (margins ±9 for
 techs 1, ±25 for techs 2); committed samples of the old single-process
 harness exist for n = 50…50000.
 
+Options (2026-10-22): `-n`, `--seed`, `--out PATH` (default: the tracked
+report in `tests/`), and `--variants FILE:NAMES`, which runs FILE's
+`apply(NAMES)` in every worker before its fights — rule experiments as
+runtime monkeypatches, e.g. `--variants rule_variants.py:Gc+Hb25`. Relative
+paths resolve against the folder you run from. Give variant runs an `--out`,
+so they don't overwrite the tracked report.
+
 Works: verified 2026-10-20 — 100k in 93 s on 10 cores; worker count 1 vs 2
-gives byte-identical reports.
+gives byte-identical reports; 2026-10-22 — a `--variants` run matches the
+scratch driver it replaced fight for fight.
 
 ### run_test_tech_ab.py — what is a technique worth
 
@@ -379,6 +387,18 @@ the two reports' combined noise margin (√(m1² + m2²), from the `+-95%`
 column — old single-process reports have no margins, so no `*`).
 `--section "techs 1"` and `--key guard` narrow the output. Works:
 verified 2026-10-22 on the tracked 10k and 100k reports.
+
+### rule_variants.py — rule experiments of the 2026-10 balance pass
+
+Not a script: a module of functions that monkeypatch `Fighter` to try a rule
+change without editing the engine (Guard recovering stamina/qi, stored
+guard, cheaper counters, qi shield, qi-charged strikes, health-based
+toughness/stamina, …), with `apply('A+B')` to combine them. Feed it to
+`run_test_fb.py --variants` or `run_test_tech_ab.py --variants`. Its header
+lists every variant with its measured effect; the full tables are in
+`tests/balance experiments 2026-10-22.txt`. When a variant is adopted, it
+becomes engine code and should be removed from this file; the rest stay as
+a record of what was tried.
 
 ### run_test_lv_vs_crowds.py
 

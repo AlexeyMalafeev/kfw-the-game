@@ -57,6 +57,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   reproducible for a given seed), `run_test_tech_ab.py` (what a tech is
   worth: A/B mirror matches with one side given the tech; the tool for
   setting boost values), `compare_fb_reports.py` (reports side by side),
+  `rule_variants.py` (rule experiments as monkeypatches, fed to both via
+  `--variants`),
   `run_test_lv_vs_crowds.py`,
   `run_test_level_sign.py`; also `sim_group_ffa.py` (group-FFA effective
   opposition experiment, stdout only — the evidence behind the RMS-of-group-

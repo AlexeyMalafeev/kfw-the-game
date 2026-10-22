@@ -110,6 +110,23 @@ def _fight_balance_chunk(rand_actions, n, seed):
     return {'tables': t, 'stats': stats, 'durations': durations}
 
 
+def _apply_variants(variants):
+    """'FILE:NAMES' -> FILE's apply(NAMES) (rule experiments); '' does nothing."""
+    if not variants:
+        return
+    import importlib.util
+    path, names = variants.rsplit(':', 1)
+    spec = importlib.util.spec_from_file_location('fb_variants', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    module.apply(names)
+
+
+def _fb_worker_init(cwd, variants):
+    os.chdir(cwd)  # workers import kf_lib, which reads data files relative to the cwd
+    _apply_variants(variants)
+
+
 def _fight_balance_chunk_indexed(i_chunk):
     i, chunk = i_chunk
     return i, _fight_balance_chunk(*chunk)
@@ -323,29 +340,38 @@ class Tester(object):
 
     def test_fight_balance(self, rand_actions=True, n=100_000, seed=42,
                            chunk_size=FB_CHUNK_SIZE, workers=None,
-                           file_name_prefix='test f.b.'):
+                           file_name_prefix='test f.b.', variants='', out_path=None):
         """Mirror matches at random levels, tallying what winners vs losers had.
 
         The n fights are split into chunks of chunk_size; chunk i is seeded with
         seed + i, so the report depends only on (n, seed, chunk_size), not on how
         many worker processes play the chunks. The chunk-to-chunk spread gives
         each row's 95% noise margin.
+
+        variants='FILE:NAMES' calls FILE's apply(NAMES) in every worker before
+        its fights — monkeypatched rule experiments, see
+        dev_scripts/testing/rule_variants.py. out_path overrides the report path.
         """
         file_name = f'{file_name_prefix} rand.act.={rand_actions} n={n}.txt'
-        file_path = Path(TESTS_FOLDER, file_name)
+        file_path = Path(out_path) if out_path else Path(TESTS_FOLDER, file_name)
+        if variants:
+            path, names = variants.rsplit(':', 1)
+            variants = f'{Path(path).resolve()}:{names}'  # workers start elsewhere
         chunks = [(rand_actions, min(chunk_size, n - start), seed + i)
                   for i, start in enumerate(range(0, n, chunk_size))]
         output = '-' * 40 + '\n\n'
         if not rand_actions:
             output += f'fight AI={fight_ai.DefaultFightAI.__name__}\n'
         output += (f'rand_actions={rand_actions}\nseed={seed}\nn={n}\n'
-                   f'chunks={len(chunks)} x {chunk_size} fights (chunk i: seed + i)\n\n')
+                   f'chunks={len(chunks)} x {chunk_size} fights (chunk i: seed + i)\n'
+                   + (f'variants={variants}\n' if variants else '') + '\n')
         print(output, end='')
 
         results = [None] * len(chunks)
         workers = min(workers or os.cpu_count() or 1, len(chunks))
         with tqdm(total=n) as bar:
             if workers == 1:
+                _apply_variants(variants)
                 for i, chunk in enumerate(chunks):
                     results[i] = _fight_balance_chunk(*chunk)
                     bar.update(chunk[1])
@@ -353,9 +379,8 @@ class Tester(object):
                 # spawn (the default on macOS/Windows) everywhere: fresh worker
                 # processes, so results never depend on the platform
                 ctx = multiprocessing.get_context('spawn')
-                # workers import kf_lib, which reads data files relative to the cwd
-                with ctx.Pool(workers, initializer=os.chdir,
-                              initargs=(os.getcwd(),)) as pool:
+                with ctx.Pool(workers, initializer=_fb_worker_init,
+                              initargs=(os.getcwd(), variants)) as pool:
                     for i, res in pool.imap_unordered(_fight_balance_chunk_indexed,
                                                       enumerate(chunks)):
                         results[i] = res

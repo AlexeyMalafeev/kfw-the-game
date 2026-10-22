@@ -317,19 +317,33 @@ still lose. Re-run and refresh the snapshot once the author's follow-ups
 below are decided:
 - **Defense rework follow-ups** (author 2026-10-20/22). Done 2026-10-22:
   the 'dodge' buff raises dodge chance only (`EVADE1/2` 0.4/0.8 → 0.7/1.4,
-  modeled); qi regeneration 20% → 10% of max per turn (Lotus Stance A/B
-  +6.9 → +10.4). Being tested as rule variants (100k harness each), the
-  author to choose:
-  - Guard: (a) Guard doubles counter chance until the next turn; (b) Guard
-    ×1.5 → ×2.0; (a)+(b)
-  - counters: (a) counter with the best available move instead of a random
-    one; (a) + Guard (a); (b) partial blocks also open counters — only for
-    fighters with a counter tech
-  - qi, for qi techs only: (b) qi shield — a partial block spends qi to
-    absorb the rest; (c) qi-charged strikes; (b)+(c)
-  - health: (a) block power from (strength + health) / 2; (b) toughness and
-    stamina from health instead of level; then max qi and qi flow from
-    health too, if those aren't enough
+  modeled); qi regeneration 20% → 10% of max per turn (qi buff −7.5 → −3.6,
+  Lotus Stance A/B +6.9 → +10.4). **Tested 2026-10-22 as rule variants, author
+  to decide** (`dev_scripts/testing/rule_variants.py`, full tables in
+  `tests/balance experiments 2026-10-22.txt`; baseline fights 62.7 s, +27%
+  vs 49.5 s before the ⚠️ batches). Then implement the chosen ones in the
+  engine (docs, tests, i18n), drop them from `rule_variants.py`, and run the
+  final re-run:
+  - **Guard**: the AI guards only when it can't attack, and 92% of Guard
+    turns receive no strike, so a stronger Guard (×2.0) or Guard doubling
+    counter chance changes nothing. Guard also recovering 10 stamina + 10
+    qi (× guard bonus) makes fights 62.7 → 53.9 s and Guard turns 29% → 21%,
+    but guard techs stay dead; a stored guard (the bonus waits for the next
+    incoming strike) lifts the guard buff −11.8 → −8.2. Untested: stored
+    guard + ×2.0; guarding chosen by the AI with guard techs in mind
+  - **Counters**: best-move counters, partial-block counters for counter
+    techs, free counters — no effect; free counters + counter techs ×3:
+    counters buff −12.5 → −8.5. The limit is frequency (~0.3 counters per
+    fighter per fight). Untested: counter techs ×5–10 with free or
+    half-price counters
+  - **Qi** (qi techs only): qi shield (a partial block spends qi to absorb
+    the rest) −3.6 → −1.1; qi-charged strikes at +10% → +3.0, with the
+    shield +7.2 (at +30%: +16.9, too strong)
+  - **Health**: block power from (strength + health) / 2: −2.0 → −1.7
+    (negligible); 25% of toughness and stamina from health: health → +0.2
+    (neutral), fights +2 s, but the 'health' techs +3.4 → +11.8 and speed
+    −1.9 → −2.7; 100% from health: +5.8 (too strong). Speed is the next
+    weakest attribute
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser

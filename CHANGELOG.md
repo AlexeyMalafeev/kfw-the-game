@@ -74,7 +74,10 @@ All notable changes to KFW are documented here. Format loosely follows
   the end. Two companion dev scripts: `run_test_tech_ab.py` measures what
   a technique is worth (mirror matches where one side gets it — how this
   pass set its boost values) and `compare_fb_reports.py` puts reports side
-  by side, marking changes beyond noise. For the harness stats, fighters'
+  by side, marking changes beyond noise. Both the harness and the A/B tool
+  take `--variants`, to try rule changes as runtime patches before writing
+  them into the engine (`rule_variants.py` keeps this pass's experiments).
+  For the harness stats, fighters'
   in-fight stats now also
   count dodges, blocks, full blocks, stuns suffered, counters and
   preemptives. No gameplay change
