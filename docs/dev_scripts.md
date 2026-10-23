@@ -325,7 +325,10 @@ hits — from the defender-side counters in `fight_stats`, see
 `docs/stats.md`), the action mix (strikes, Guard, Focus, Catch Breath,
 other maneuvers — from `fight_stats['moves_used']`), and what's left at the end (winner's HP, both fighters'
 stamina and QP). Then, for winners vs losers: sums of the four base atts
-and full atts, a histogram of att spread (max − min), tech description
+(overall, then per level tier — `atts lv 1-7`, `lv 8-14`, `lv 15-20`, since
+2026-10-23: averaging over all levels hid that speed is weak early and
+strong late; each tier has a third of the fights, so its margins are ~1.7×
+wider) and full atts, a histogram of att spread (max − min), tech description
 features ("style buffs"), upgradable techs, advanced techs, and move
 features — each a `compare_dicts` table, `D1` = winner count, `D2` = loser
 count, `Diff%` = (D1 − D2) / Sum, `Sum`, plus **`+-95%`**: the noise margin

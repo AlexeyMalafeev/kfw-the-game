@@ -22,6 +22,9 @@ from . import tech_test
 FB_CHUNK_SIZE = 2000  # fights per seeded chunk of test_fight_balance
 FB_TABLES = (
     ('atts', 'atts:'),
+    ('atts_t1', 'atts lv 1-7:'),
+    ('atts_t2', 'atts lv 8-14:'),
+    ('atts_t3', 'atts lv 15-20:'),
     ('full_atts', 'full atts:'),
     ('att_diffs', 'att diffs:'),
     ('buffs', 'style buffs:'),
@@ -29,6 +32,9 @@ FB_TABLES = (
     ('techs2', 'techs 2:'),
     ('moves', 'moves:'),
 )
+# level tiers for the per-tier att tables (early / mid / late game)
+FB_TIER_TABLE = {lv: 'atts_t1' if lv <= 7 else 'atts_t2' if lv <= 14 else 'atts_t3'
+                 for lv in range(1, 21)}
 FB_LEGEND = (
     'D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of '
     'Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, '
@@ -46,7 +52,7 @@ def _fight_balance_chunk(rand_actions, n, seed):
     att_names = dummy.att_names
     t = {key: ({}, {}) for key, _ in FB_TABLES}  # (winners, losers)
     for att in att_names:
-        for d in t['atts'] + t['full_atts']:
+        for d in t['atts'] + t['full_atts'] + t['atts_t1'] + t['atts_t2'] + t['atts_t3']:
             d[att] = 0
     stats = {key: 0 for key in (
         'fights', 'no_winner', 'thrown', 'dodges', 'blocks', 'full_blocks',
@@ -88,6 +94,7 @@ def _fight_balance_chunk(rand_actions, n, seed):
             # att values
             for att in att_names:
                 t['atts'][i][att] += getattr(ftr, att)
+                t[FB_TIER_TABLE[lv]][i][att] += getattr(ftr, att)  # same, per level tier
                 t['full_atts'][i][att] += getattr(ftr, att + '_full')
             # att diffs
             att_vals = [getattr(ftr, att) for att in att_names]

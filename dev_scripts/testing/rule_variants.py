@@ -71,6 +71,20 @@ lv 1-7, about even at lv 15-20; strength wins via block power, see the tables):
   A speed point at lv 1-7 / 8-14 / 15-20: now +15.9 / +12.5 / +11.7; C+St
   +20.3 / +16.7 / +14.5; C+Sp20 +21.5 / +15.8 / +15.1 (the others: about
   +26..+36 / +17..+20 / +10..+14) -- low levels stay speed's weak spot
+Round 2 (harness with per-tier att rows; "gap" = strongest minus weakest att,
+overall and at lv 1-7 / 8-14 / 15-20):
+  C           gap 3.55   per tier 6.2 / 4.6 / 2.1   (speed -2.2)
+  C+St        gap 1.74   per tier 4.4 / 2.6 / 2.9
+  C+Stc       gap 1.41   per tier 4.4 / 2.4 / 3.3   (normalization doesn't matter)
+  C+Sa2       gap 1.49   per tier 2.6 / 2.0 / 3.0   (best at lv 1-7)
+  C+Sp20      gap 1.79   per tier 3.9 / 1.3 / 2.7
+  C+Sdef      gap 3.53   speed +0.9, agility -2.2 (agility loses its defense)
+  C+Sdef50    gap 2.04   speed -0.7, agility -0.5, strength +1.3
+  C+Pre       gap 1.55   speed -0.7; preemptives 0.09 -> 0.48 per fight
+  C+Sdef+Pre  gap 5.11   speed +2.5, agility -2.6
+  D           gap 3.36   per tier 6.3 / 3.9 / 1.4   (health +0.5, strength +0.7)
+  D+Sdef      gap 2.94;  D+Sdef+Pre gap 5.13
+  D+Sa2       gap 0.88   per tier 2.9 / 1.1 / 2.2   (all four within +-0.6)
 """
 import math
 
@@ -394,3 +408,76 @@ def St():
         ref = S0 + S_PER_LV * self.level
         return round(ot(self, move_obj) * (ref / self.speed_full) ** 0.5)
     F.get_move_time_cost = get_move_time_cost
+
+
+# Speed and block power, round 2 (2026-10-23, the author's setups):
+#   Sdef  dodge and block chance from speed instead of agility
+#   Pre   a defender faster than its attacker gets a 15% preemptive chance by
+#         default (like a default counter chance), on top of preemptive techs
+#   Hblk  block power from health instead of strength ("D" = Hp40+HbT20S30+Hblk)
+#   Stc   St with a fixed reference speed (6, about lv 10) instead of the
+#         level's typical speed: same relative tempo, no level normalization
+#   Sa2   linear tempo from speed above a base of 2: time cost / (speed - 2),
+#         rescaled to leave a speed-6 fighter unchanged
+
+PRE_BASE = 0.15
+S_REF, S_OFFSET = 6, 2
+
+
+def Sdef():
+    oc = F.calc_dfs
+    def calc_dfs(self):
+        oc(self)  # dodge/block chance are linear in agility_full
+        if self.agility_full:
+            self.to_dodge *= self.speed_full / self.agility_full
+            self.to_block *= self.speed_full / self.agility_full
+    F.calc_dfs = calc_dfs
+
+
+def Pre():
+    def check_preemptive(self):
+        atkr = self.current_fight.current_fighter
+        chance = self.preemptive_chance
+        if atkr is not None and atkr is not self and atkr.speed_full < self.speed_full:
+            chance += PRE_BASE
+        return chance and rnd() <= chance
+    F.check_preemptive = check_preemptive
+
+
+def Hblk():
+    oc = F.calc_dfs
+    def calc_dfs(self):
+        oc(self)
+        if self.strength_full:
+            self.dfs_pwr *= self.health_full / self.strength_full
+    F.calc_dfs = calc_dfs
+
+
+def Stc():
+    ot = F.get_move_time_cost
+    def get_move_time_cost(self, move_obj):
+        return round(ot(self, move_obj) * (S_REF / self.speed_full) ** 0.5)
+    F.get_move_time_cost = get_move_time_cost
+
+
+def Sa2():
+    ot = F.get_move_time_cost
+    scale = (S_REF - S_OFFSET) / S_REF
+    def get_move_time_cost(self, move_obj):
+        s = self.speed_full
+        return round(ot(self, move_obj) * s / max(s - S_OFFSET, 1) * scale)
+    F.get_move_time_cost = get_move_time_cost
+
+
+#   Sdef50  dodge and block chance from (agility + speed) / 2 (halfway Sdef)
+
+
+def Sdef50():
+    oc = F.calc_dfs
+    def calc_dfs(self):
+        oc(self)
+        if self.agility_full:
+            k = (self.agility_full + self.speed_full) / 2 / self.agility_full
+            self.to_dodge *= k
+            self.to_block *= k
+    F.calc_dfs = calc_dfs

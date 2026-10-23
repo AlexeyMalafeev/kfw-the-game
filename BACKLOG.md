@@ -147,6 +147,13 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## Fight mechanics
 
+- **Coarse fight clock** (found 2026-10-23): `get_move_time_cost` rounds
+  `time_cost / speed` to whole time units — 36–70 / speed 4–9 gives 4–18
+  units, so rounding moves a single action's time by up to ±10% and some
+  moves cost the same at speed 8 and 9. Unbiased on average (no balance
+  effect measured), but any tempo rule that shortens actions further makes
+  it worse; then consider finer units (×10 on move time costs, status
+  durations and `TIME_TO_SEC_DIVISOR` together)
 - qi rethink: shouldn't increase by default (maybe decrease unless focused);
   increase on successful defense/attack; modify qi_when_atk; lose qi when defend?
 - penalize repeated actions more, for more interesting fights
@@ -373,7 +380,16 @@ below are decided:
     even attributes yet (gap 1.8 / 1.7; all four within ±1.1). Per level
     band both lift a speed point at levels 1–7 from +15.9 to +20–21.5, but
     the others stay at +26…+36 there; mid levels even out, and at 15–20
-    speed becomes slightly the best point
+    speed becomes slightly the best point. Round 2 (harness now reports
+    attributes per level tier; "gap" = strongest minus weakest attribute):
+    the author's speed-in-defense rule (dodge and block from speed instead
+    of agility) overshoots — agility falls to −2.2 (gap 3.5); default
+    preemptives for the faster defender add ~+1.5 to speed (gap 1.6 alone,
+    5.1 with speed-in-defense); block power from health ("D") evens strength
+    and health. Best: D + linear tempo from speed above 2 (`Sa2`) — gap
+    0.9 overall, 2.9 / 1.1 / 2.2 per tier; low levels still favor health
+    over speed (+1.3 vs −1.6). Tempo normalization by level doesn't matter
+    for balance (only the clock)
 
 **Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
@@ -480,6 +496,14 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
   argument (students fight); school challenges only when you go to school /
   sequential challenges; more interactive school training (disobey master,
   practice aspects, injury risk); fight master when disobeying
+- **Master's teachings during "Practice at school"** (author 2026-10-23):
+  now and then the master shares a random *true* fact about the fight
+  mechanics, phrased as kung-fu wisdom rather than a rule ("Improving your
+  strength makes your block harder" → something like "A strong arm turns
+  the blow; a weak one only meets it"). Keep the facts true as mechanics
+  change: tie each to the `docs/` paragraph it paraphrases (or to the
+  constant it depends on) so a rule change flags the saying; new strings
+  go through i18n
 - on defeating your master: become head of your school instead of opening a
   new one?; master retires?; create a new style?
 - join a school early in the game? beg the master?
@@ -584,6 +608,17 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 
 ## Traits
 
+- **Natural physique** (author 2026-10-23): drawn at random at game start, a
+  permanent ±25% to one of the four basic attributes that nothing can
+  change ("naturally healthy" / "frail", "dexterous" / "clumsy", "strong" /
+  "weak", "quick" / "sluggish"). Notes: 25% is about one attribute point at
+  levels 1–7 and two at level 20, and one point at levels 1–7 is worth
+  +16…+36 Diff% (58–68% win rate in mirror matches, 2026-10-23 A/B), so a
+  penalty draw makes the early game noticeably harder — consider pairing
+  each bonus with a smaller penalty elsewhere, or showing it at creation
+  with a reroll. Implement as its own multiplier next to the `*_mult` ones
+  (techs change those); it must be saved (`savable_atts` /
+  `get_init_atts`, see the save-format pitfalls in AGENTS.md)
 - observant: see fighters' atk/dfs/fcs; observe opponent selectively, with ??
 - gullible (easy to fool; plot twists, lured into traps) — vs careless?
 - honest / unscrupulous; prone to depression?

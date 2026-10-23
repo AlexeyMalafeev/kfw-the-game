@@ -71,7 +71,9 @@ All notable changes to KFW are documented here. Format loosely follows
   length, strikes, counters, criticals and stuns per fight, how strikes end
   (dodged / fully blocked / partly blocked / clean hit), how often fighters
   strike, guard, focus or catch their breath, and the stamina and qi left at
-  the end. Two companion dev scripts: `run_test_tech_ab.py` measures what
+  the end; the attribute table also comes per level tier (1–7, 8–14,
+  15–20), since an average over all levels can hide an attribute that is
+  weak early and strong late. Two companion dev scripts: `run_test_tech_ab.py` measures what
   a technique is worth (mirror matches where one side gets it — how this
   pass set its boost values) and `compare_fb_reports.py` puts reports side
   by side, marking changes beyond noise. Both the harness and the A/B tool
