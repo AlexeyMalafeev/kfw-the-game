@@ -56,9 +56,11 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   moves with a ±95% noise margin per row into `tests/test f.b. *.txt`;
   reproducible for a given seed), `run_test_tech_ab.py` (what a tech is
   worth: A/B mirror matches with one side given the tech; the tool for
-  setting boost values), `compare_fb_reports.py` (reports side by side),
-  `rule_variants.py` (rule experiments as monkeypatches, fed to both via
-  `--variants`),
+  setting boost values), `run_test_guard.py` (staged "A guards, B strikes
+  once" exchanges, replaying the same rolls per condition: what Guard does
+  without the fight AI's habits), `compare_fb_reports.py` (reports side by
+  side), `rule_variants.py` (rule experiments as monkeypatches, fed to all
+  three via `--variants`),
   `run_test_lv_vs_crowds.py`,
   `run_test_level_sign.py`; also `sim_group_ffa.py` (group-FFA effective
   opposition experiment, stdout only — the evidence behind the RMS-of-group-

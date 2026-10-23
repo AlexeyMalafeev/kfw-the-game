@@ -440,6 +440,31 @@ reference run fight for fight, with and without `--scale`. (`--scale` must
 run after `style_gen` is imported, which builds the generated styles' techs;
 the script imports everything first.)
 
+### run_test_guard.py — what Guard does, without the fight AI
+
+Controlled exchanges (2026-10-23): the harness and the A/B tool can't price
+Guard, because the default fight AI guards only when it can't attack and
+92% of its Guard turns then receive no strike. Here, for each of `-n`
+samples (default 100,000), two fresh random fighters at the same random
+level (`--levels`, default 1–20) get a random mid-fight stamina and qi
+(25–100% of max, full HP); B picks a random attack move it can afford
+against a standing target, at that move's distance. A then takes one turn
+under each condition — `nothing` (defense as is), `Guard` (with A's own
+guard techs), `G+AG` / `G+DG` (A's guard bonus as given by Advanced Guard /
+Dragon Guards a Treasure alone) — and B strikes once. Every condition
+replays the same pair, states and random rolls (seeded per sample), so the
+columns differ by the condition alone; B's damage value starts at 0, as a
+fresh fighter's. It prints, per condition: how B's strike ended (preempted,
+missed, dodged, fully/partly blocked, hit), HP lost by A (also paired
+against `nothing`), A's counters and the HP they cost B, the net HP swing,
+what A's turn recovered, and HP lost per level tier as % of `nothing` in
+that tier. Each `--variants FILE:NAMES` (repeatable) adds a column set,
+run in its own worker pool, e.g. `--variants rule_variants.py:Gb+Grec`.
+Parallel like the harness (chunks of 2,000 samples, spawned workers, runs
+from any cwd); prints only. Works: verified 2026-10-23 — the engine's
+`G+DG` column (guard ×1.5 × bonus 2.0) equals `Gb+Grec`'s `G+AG` (×2.0 ×
+1.5) to the last digit, as it must.
+
 ### compare_fb_reports.py — reports side by side
 
 `python compare_fb_reports.py OLD.txt NEW.txt [MORE.txt ...]` prints each
@@ -531,6 +556,7 @@ tracked report was restored.
 | `ml/ML_gen_data.py` | Yes — reproducible (`random` seeded) | two 50-example runs byte-identical; full 10,000-row run earlier restored |
 | `ml/ML_learn.py` | No — `'../../ml/...'` resolves outside the repo | ran, `FileNotFoundError` |
 | `testing/run_test_fb.py` | Yes | n=10000 ran to completion; report restored |
+| `testing/run_test_guard.py` | Yes | 100k-pair run with `--variants rule_variants.py:Gb+Grec` to completion (2026-10-23); shared columns match to the digit |
 | `testing/run_test_lv_vs_crowds.py` | Yes | all 5 tables ran to completion; reports restored |
 | `testing/run_test_ffa.py` | Yes | both tables ran to completion; report committed |
 | `testing/sim_group_ffa.py` | Yes | full three-tier run to completion (~27 min); stdout only, no report file |

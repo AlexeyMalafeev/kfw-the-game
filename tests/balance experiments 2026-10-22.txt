@@ -713,3 +713,180 @@ weighs higher levels more than the A/B average does (style techs arrive at
 lv 3/5/7, advanced twins from lv 10), so 0.25 overshoots there: +16.6 vs
 +11.1..+13.0. 0.20 lands just below the others (+10.4) and leaves the
 attribute rows within noise.
+
+
+=== Guard round 2: controlled exchanges (2026-10-23) ===
+
+The harness can't price Guard: the default fight AI guards only when it can't
+attack, and 92% of its Guard turns then receive no strike. So these are staged
+exchanges instead (dev_scripts/testing/run_test_guard.py, on the engine of
+commit 94950c1, i.e. with the health/speed rework): 100,000 pairs of fresh
+random fighters at the same random level 1-20, both at a random 25-100% of
+max stamina and qi. A takes one turn, then B strikes A once with a random
+affordable attack move. Columns: "nothing" = A's defense as is; "Guard" = A
+uses the Guard move with its own guard techs; G+AG / G+DG = A's guard bonus
+as from Advanced Guard / Dragon Guards a Treasure alone. "engine" = the old
+Guard (x1.5); "Gb+Grec" = the author's new Guard (x2.0, plus half of Catch
+Breath's stamina and half of Focus's qi). Every column replays the same
+pairs, states and dice rolls, so the differences come from the column alone.
+Reproduce with
+  python dev_scripts/testing/run_test_guard.py --variants dev_scripts/testing/rule_variants.py:Gb+Grec
+
+Guard exchanges: n=100000 pairs, lv 1-20, seed 7; one column per rule set and condition
+                                       engine       engine       engine       engine      Gb+Grec      Gb+Grec      Gb+Grec
+                                      nothing        Guard         G+AG         G+DG        Guard         G+AG         G+DG
+B preempted by A, %                      1.23         1.23         1.23         1.23         1.23         1.23         1.23
+B missed (move failed), %                7.83         7.83         7.83         7.83         7.83         7.83         7.83
+dodged, % of strikes              14.31+-0.23  22.79+-0.27  32.09+-0.30  42.08+-0.32  30.20+-0.30  42.08+-0.32  54.47+-0.33
+fully blocked, %                   7.48+-0.17  10.31+-0.20  12.49+-0.22  13.49+-0.22  12.04+-0.21  13.49+-0.22  12.87+-0.22
+partly blocked, %                  8.71+-0.18  11.85+-0.21  14.23+-0.23  15.25+-0.23  13.68+-0.22  15.25+-0.23  14.62+-0.23
+hit, %                            69.50+-0.30  55.05+-0.32  41.19+-0.32  29.18+-0.30  44.08+-0.32  29.18+-0.30  18.04+-0.25
+  of which 0 HP (toughness), %           3.35         2.61         1.99         1.38         2.10         1.38         0.85
+HP lost by A                      47.47+-0.41  39.06+-0.39  31.32+-0.37  24.11+-0.34  32.70+-0.37  24.12+-0.34  16.92+-0.29
+  vs nothing (paired)              0.00+-0.00  -8.40+-0.19 -16.14+-0.25 -23.35+-0.30 -14.77+-0.25 -23.35+-0.30 -30.54+-0.33
+A counters per strike                    0.06         0.08         0.10         0.12         0.10         0.12         0.14
+  of which after a miss                  0.01         0.01         0.01         0.01         0.01         0.01         0.01
+HP lost by B (counters etc.)             4.56         5.75         6.89         7.87         6.78         7.91         8.83
+net HP, A lost - B lost           42.90+-0.46  33.31+-0.45  24.43+-0.44  16.24+-0.41  25.92+-0.44  16.20+-0.41   8.10+-0.38
+A recovered stamina                      0.00         0.00         0.00         0.00         8.15         8.15         8.15
+A recovered qi                           0.00         0.00         0.00         0.00         6.69         6.69         6.69
+lv 1-7: HP lost, % of nothing          100.00        82.82        63.10        46.49        68.45        46.49        30.07
+lv 8-14: HP lost, % of nothing         100.00        82.40        64.91        49.52        68.48        49.52        33.74
+lv 15-20: HP lost, % of nothing        100.00        82.01        67.90        53.41        69.33        53.42        39.21
+
+Guard multiplies dodge and block chance (not block power), so it mostly turns
+hits into dodges. Per incoming strike, the old Guard saves 8.4 of 47.5 HP
+(18%); the new one saves 14.8 (31%), 1.76x as much. With Advanced Guard:
+34% -> 49%; with Dragon Guards a Treasure: 49% -> 64% (54% of strikes
+dodged, 18% land). The engine's G+DG (x1.5 x 2.0) and the new Guard's G+AG
+(x2.0 x 1.5) are the same multiplier and match to the digit, a check on the
+script. Counters rise with Guard because more strikes are fully negated:
+0.06 per strike doing nothing, 0.08 with the old Guard, 0.10 with the new.
+Recovery averages 8.2 stamina and 6.7 qi (not 10/10: capped at the max).
+The effect is even across level tiers (new Guard: 68-69% of the HP lost
+doing nothing). For scale: B's strike costs A 47.5 HP on average, about what
+A's own attack would deal, so when one strike comes in, even the strongest
+Guard (31 HP saved) is worth less than attacking; it pays off when the
+opponent is about to strike more than once before A's next turn, against
+several attackers, or when A needs the stamina/qi.
+
+Side effects in the harness (100k, seed 42, on commit 94950c1). "engine" =
+no variant; Gb+Grec = the new Guard; Cg = guaranteed counters (see the
+counters section below); Gb+Grec+Cg = both:
+
+                                  engine   Gb+Grec        Cg  Gb+Grec+Cg
+fight length, s                    58.60     51.00     59.10     51.50
+strikes / fight                     8.60      8.70      8.70      8.80
+counters / fight                    0.49      0.50      0.63      0.67
+Guard, % of actions                31.20     23.30     31.30     23.20
+strikes, % of actions              50.80     58.70     50.60     58.80
+Focus, % of actions                 6.30      5.20      6.20      5.10
+QP left at fight end, %            29.90     31.40     29.90     31.40
+dodged %                           18.80     19.30     18.70     19.50
+all agility            ±0.10        0.45      0.51      0.55      0.57
+all strength           ±0.10        0.05     -0.01      0.12      0.08
+all speed              ±0.10       -0.40     -0.31     -0.61     -0.53
+all health             ±0.10       -0.10     -0.19     -0.06     -0.11
+lv 1-7 gap (max - min)              3.27      2.66      3.01      2.96
+lv 8-14 gap                         1.25      1.31      1.97      1.60
+lv 15-20 gap                        2.24      2.27      2.00      1.95
+style buffs guard      ±1.3       -11.83    -10.98    -12.78    -11.59
+style buffs counters   ±1.5       -12.44    -11.26     -9.84     -7.58
+style buffs qi         ±1.4        -3.91     -3.62     -3.88     -2.14
+Advanced Guard         ±2.9        -7.81     -8.82     -9.39     -6.48
+Retaliative Blows      ±2.6        -7.54     -6.01     -4.87     -3.48
+
+The new Guard shortens fights by 13% (58.6 -> 51.0 s, about the 49.5 s before
+the 2026-10 batches): the AI still guards when it can't attack, but each such
+turn now also refills stamina and qi, so it gets back to attacking sooner
+(Guard 31% -> 23% of actions). Attributes stay within noise. As expected,
+the harness still can't see Guard's value (guard buff -11.8 -> -11.0): the
+fight AI decides when Guard is used, not the rules.
+
+
+=== Counters round 2: guaranteed counters for counter techs (2026-10-23) ===
+
+The author's idea (rule_variants.py Cg): a fighter with counter techs counters
+every incoming strike that did no damage (fully dodged, fully blocked or
+missed), once per counter tech (an advanced one counts as two: Vengeful Fox
+counters twice in a row), while it can afford an attack move; such a fighter
+no longer rolls the default counter chance. Counters still cost the move's
+stamina and qi and no time. Default counters (fighters without counter
+techs) are unchanged.
+
+How often it fires (300-600 fights at lv 13-20): a Retaliative Blows owner
+counters 0.4 -> 0.9-1.3 times per fight. 90% of its chances become counters
+(5% lack stamina/qi for a move at that distance, 3% have no attack move at
+that distance, 2% the opponent is already down). For Vengeful Fox, 64% of
+its chances give both counters, 22% one, 15% none: the first counter often
+uses up the stamina or changes the distance.
+
+A/B (run_test_tech_ab.py, lv 13-20, 16,000 fights per tech, seed 11, +-1.6;
+a tech that does nothing scores 0). On this engine the median general tech
+scores +8.1:
+
+                                  Retaliative Blows   Vengeful Fox
+engine (default counter roll)           +2.2              +2.3
+Cg                                      +5.3              +6.9
+Cg + half-price counters (Chalf)        +7.5             +10.8
+
+So guaranteed counters more than double the counter techs' value, but leave
+Retaliative Blows at about two thirds of an average tech. What holds them
+back is the cost, not the frequency: the fight AI mostly guards when it
+can't afford an attack, so a counter paid in stamina partly replaces a later
+attack instead of adding one (half-price counters, measured before the
+author ruled out cheaper counters, reach the median). The author asked for
+an attack bonus instead. A defense penalty on the attacker and a hit bonus
+on the counter are the same rule (dodge and block chance are the defender's
+numbers divided by the attacker's to_hit), so the variants are a hit bonus
+(CbH) and a critical-chance bonus (CbK), for counter-tech counters only; the
+attacker is already off-balance at the counter (x0.75 defense):
+
+                                  Retaliative Blows   Vengeful Fox
+Cg + hit x1.5 (CbH15)                   +7.3             +10.4
+Cg + hit x2.0 (CbH20)                   +8.3             +12.0
+Cg + critical x2 (CbK2)                 +7.0              +9.9
+Cg + critical x3 (CbK3)                 +9.0             +12.2
+Cg + hit x1.5 + critical x2             +9.1             +13.5
+
+Yardsticks on this engine (A/B, 16,000 fights per tech unless noted): median
+general tech +8.1 (lv 13-20), median advanced tech +13.4 (lv 13-20; Vengeful
+Fox +2.3 and Dragon Guards a Treasure +1.8 are the 2nd and 3rd lowest),
+median first-tier style tech +15.3 (lv 1-7, 8,000 fights each, +-2.2; the
+generated styles learn these at lv 3/5/7, among them Retaliation, the same
++50% counter tech as Retaliative Blows: +0.8 there, the lowest of 32).
+Relative to the yardstick of each column:
+
+                                  Ret. Blows   Vengeful Fox   Retaliation
+                                  lv 13-20     lv 13-20       lv 1-7
+yardstick (median)                  +8.1         +13.4          +15.3
+engine                              +2.2  27%     +2.3  17%      +0.8   5%
+Cg                                  +5.3  65%     +6.9  51%      +2.2  14%
+Cg + hit x2.0                       +8.3 102%    +12.0  90%      +7.2  47%
+Cg + critical x3                    +9.0 111%    +12.2  91%      +4.5  29%
+Cg + hit x1.5 + critical x2         +9.1 112%    +13.5 101%      +6.7  44%
+
+At lv 13-20 three setups bring both techs to an average tech. At lv 1-7
+counter techs stay weak with any of them: fighters dodge and block less there
+(fewer counter chances), and critical chance is (agility - 3) x 5%, about 4-13%
+at lv 1-7 vs 20-29% at lv 13-20, so a critical bonus does little early.
+
+Harness (100k, seed 42) for the candidates; the 'counters' row = fighters
+owning any counter tech (general or style), winners vs losers:
+
+                               engine        Cg    Cg+H20    Cg+K3  Cg+H15+K2
+fight length, s                 58.60     59.10     58.90     58.90     58.80
+counters / fight                 0.49      0.63      0.62      0.61      0.62
+style buffs counters ±1.5      -12.44     -9.84     -5.34     -4.25     -3.05
+Retaliative Blows    ±2.6       -7.54     -4.87     -2.63      0.67      4.22
+Vengeful Fox         ±5.6      -15.90    -15.23     -8.17     -5.88      1.09
+all agility          ±0.10       0.45      0.55      0.51      0.54      0.63
+all strength         ±0.10       0.05      0.12      0.11      0.08      0.04
+all speed            ±0.10      -0.40     -0.61     -0.64     -0.56     -0.69
+all health           ±0.10      -0.10     -0.06      0.02     -0.06      0.01
+
+Fight length doesn't move. Hit x2.0 leaves agility within noise; adding a
+critical bonus makes agility a little more valuable (critical chance comes
+from agility): +0.18 with hit x1.5 + critical x2. Speed is 0.2 lower in all
+counter variants, Cg included (counters are strikes that cost no time, so
+acting more often matters a little less).

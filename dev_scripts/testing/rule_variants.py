@@ -100,6 +100,21 @@ day (SPEED1/2 0.2/0.4) and both removed from this file:
   (A/B per tier: at 0.20 the tech is worth 73 / 87 / 117% of the others at
   lv 1-7 / 8-14 / 15-20, the same as a speed point vs other points -- the
   rest is the speed attribute's level trend)
+Guard and counters, round 2 (2026-10-23, on commit 94950c1; tables in the
+experiments file, sections "Guard round 2" and "Counters round 2"):
+  Gb+Grec  the author's new Guard (x2.0 + half of Catch Breath's stamina and
+           Focus's qi). Staged exchanges (run_test_guard.py): per incoming
+           strike Guard saves 18% -> 31% of the HP (Advanced Guard 34 -> 49%,
+           Dragon Guards a Treasure 49 -> 64%); harness fights 58.6 -> 51.0 s,
+           Guard 31% -> 23% of actions, attributes within noise
+  Cg       guaranteed counters for counter techs. A/B lv 13-20 (median general
+           tech +8.1, advanced +13.4): Retaliative Blows +2.2 -> +5.3, Vengeful
+           Fox +2.3 -> +6.9; harness counters buff -12.4 -> -9.8
+  Cg+Chalf (cheaper counters, ruled out by the author) -> +7.5 / +10.8
+  Cg + CbH20 / CbK3 / CbH15+CbK2 -> RB +8.3 / +9.0 / +9.1, VF +12.0 / +12.2 /
+           +13.5; harness counters buff -5.3 / -4.3 / -3.1, agility +0.06 /
+           +0.09 / +0.18 (margin 0.1); Retaliation at lv 1-7 (median style
+           tech +15.3): +7.2 / +4.5 / +6.7
 """
 import math
 
@@ -474,3 +489,121 @@ def Sdef50():
             self.to_dodge *= k
             self.to_block *= k
     F.calc_dfs = calc_dfs
+
+
+# Guard and counters, round 2 (2026-10-23, the author's setups):
+#   Grec  Guard also recovers half of what Catch Breath / Focus restore (their
+#         move data: 20 stamina / 20 qi, so 10 / 10), flat; with Gb ("G-str",
+#         Guard x2.0) it is the author's new Guard
+#   Cg    guaranteed counters: a fighter with counter techs counters every
+#         incoming strike that did no damage, once per counter tech (an advanced
+#         one counts as two), in a row while it can afford an attack move; no
+#         counter-chance roll for it. Fighters without counter techs keep the
+#         default roll.
+
+
+def Grec():
+    from kf_lib.kung_fu import moves
+    stam = round(-moves.get_move_obj('Catch Breath').stam_cost / 2)
+    qi = round(-moves.get_move_obj('Focus').qi_cost / 2)
+    og = F.guard
+    def guard(self):
+        og(self)
+        self.change_stamina(stam)
+        self.change_qp(qi)
+    F.guard = guard
+
+
+def n_counter_techs(f):
+    from kf_lib.kung_fu import boosts
+    return round((f.counter_chance_mult - 1.0) / boosts.COUNTER_CH_MULT1)
+
+
+def Cg():
+    ot = F.try_counter
+    def try_counter(self):
+        n = n_counter_techs(self)
+        if n <= 0:
+            ot(self)
+            return
+        atkr = self.target
+        if atkr.dam:
+            return
+        for _i in range(n):
+            if self.hp <= 0 or atkr.hp <= 0:
+                break
+            if not self.get_av_moves(attack_moves_only=True):
+                break
+            self.do_counter()
+    F.try_counter = try_counter
+
+
+# Counter-tech counters with an attack bonus (2026-10-23, the author's setups,
+# on top of Cg; default counters unchanged). The attacker is already
+# off-balance at the counter (x0.75 defense, engine since 2026-10). A defense
+# penalty on the attacker and a hit bonus on the counter are the same rule:
+# dodge and block chance are the defender's numbers divided by to_hit.
+#   CbH15 / CbH20  the counter's to_hit x1.5 / x2.0
+#   CbK2 / CbK3    the counter's critical chance x2 / x3 (an undefended hit
+#                  is still needed, as for any critical)
+
+COUNTER_HIT = 1.0
+COUNTER_CRIT = 1.0
+_counter_bonus_on = False
+
+
+def _counter_bonus():
+    global _counter_bonus_on
+    if _counter_bonus_on:
+        return
+    _counter_bonus_on = True
+    odc, oca, otc = F.do_counter, F.calc_atk, F.try_critical
+    def do_counter(self):
+        self._tech_counter = n_counter_techs(self) > 0
+        try:
+            odc(self)
+        finally:
+            self._tech_counter = False
+    def calc_atk(self, action):
+        oca(self, action)
+        if getattr(self, '_tech_counter', False):
+            self.to_hit *= COUNTER_HIT
+    def try_critical(self):
+        if getattr(self, '_tech_counter', False):
+            c = self.critical_chance
+            self.critical_chance = min(1.0, c * COUNTER_CRIT)
+            try:
+                otc(self)
+            finally:
+                self.critical_chance = c
+        else:
+            otc(self)
+    F.do_counter, F.calc_atk, F.try_critical = do_counter, calc_atk, try_critical
+
+
+def _set_counter_hit(k):
+    global COUNTER_HIT
+    COUNTER_HIT = k
+    _counter_bonus()
+
+
+def _set_counter_crit(k):
+    global COUNTER_CRIT
+    COUNTER_CRIT = k
+    _counter_bonus()
+
+
+def CbH15():
+    _set_counter_hit(1.5)
+
+
+def CbH20():
+    _set_counter_hit(2.0)
+
+
+def CbK2():
+    _set_counter_crit(2.0)
+
+
+def CbK3():
+    _set_counter_crit(3.0)
