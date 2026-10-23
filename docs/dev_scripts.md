@@ -400,7 +400,14 @@ random fighters at the same level (`--levels`, default 13–20, where general
 techs are learned); one side, picked at random, is given the tech (pairs
 where it already had it are skipped). It prints Diff% = 2 × win rate − 1
 (the harness's units) with a ±95% margin. Every tech plays the same seeded
-fighter pairs, so techs compare against each other with less noise.
+fighter pairs, with the same side treated, so techs compare against each
+other with less noise: each fight is seeded from `--seed` and its index.
+Until 2026-10-23 the run was seeded once, and since each tech's fights use
+up a different amount of the random stream, the pairs drifted apart after
+the first fight (2 of 30 pairs matched between two techs; now all do).
+Names of the generated styles' techs ("Emphasis on Speed", "Strength
+Training", ...) were rejected as unknown until the same day, because the
+names were checked before `style_gen` built those techs.
 `--all-general` adds every general tech and prints their median — the
 yardstick: a tech scoring near the median is "an average technique".
 Overrides for "what if" runs, applied in every worker: `--set CONST=VALUE`

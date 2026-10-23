@@ -74,9 +74,12 @@ def play(job):
     tech_name, n, seed, lv_min, lv_max = job
     att = tech_name[1:] if tech_name.startswith('+') else None
     tech = None if att else techniques.get_tech_obj(tech_name)
-    random.seed(seed)
     wins = played = 0
-    for _ in range(n):
+    for i in range(n):
+        # reseeded per fight: a fight uses up a different amount of the random
+        # stream for each tech, so one seed per run gave different pairs after
+        # the first fight (until 2026-10-23)
+        random.seed(seed * 1_000_003 + i)
         lv = random.randint(lv_min, lv_max)
         f1 = ff.new_fighter(lv=lv)
         f1.name = 'Dummy A'
@@ -110,6 +113,7 @@ def main():
     parser.add_argument('--workers', type=int, default=None)
     args = parser.parse_args()
 
+    from kf_lib.actors import fighter_factory  # noqa: F401 (style_gen registers the generated styles' techs)
     from kf_lib.kung_fu import techniques
     names = list(args.techs)
     if args.all_general:

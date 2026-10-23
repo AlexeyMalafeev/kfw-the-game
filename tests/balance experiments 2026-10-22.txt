@@ -628,3 +628,88 @@ lv 8-14 gap (max - min)             4.81        1.13        1.12
 lv 15-20 strength      ±0.20        1.43       -0.19       -0.21
 lv 15-20 agility       ±0.20        1.15        0.49        0.49
 lv 15-20 speed         ±0.20       -0.18        0.95        0.94
+
+
+=== Speed techs: what boost value (2026-10-23) ===
+
+Speed techs (SPEED1 = 0.15, advanced twins 0.30) scored +5.1 in the harness's
+'style buffs' row vs +11.4 / +12.9 / +13.8 for strength / agility / health
+techs (STRENGTH1 = AGILITY1 = HEALTH1 = 0.20). That row counts how much more
+often winners than losers own such a tech, so it also carries the rest of
+the styles that have them; the A/B tool gives the tech to one random side of
+an otherwise identical pair, so it measures the tech alone.
+
+A boost is rounded to whole points (full att = round(base * (1 + boost))).
+Mean points added, from 1,500 generated fighters per tier:
+
+  tier (mean base speed)   speed 0.15  0.20  0.25  0.30   strength 0.20
+  lv 1-7   (4.5)                 0.78  1.01  1.17  1.17            1.02
+  lv 8-14  (6.3)                 1.01  1.21  1.67  1.75            1.21
+  lv 15-20 (7.9)                 1.21  1.56  1.99  2.29            1.58
+
+A/B (run_test_tech_ab.py, n=16000 per row, seed 11, every row ±1.5; Diff% =
+2 * win rate - 1). The A/B tool now seeds every fight from the seed and its
+index, so all rows play the same fighter pairs.
+
+                        lv 1-7   lv 8-14  lv 15-20
+  Strength Training      +28.9     +21.1     +15.5
+  Dance-Like Form        +35.1     +22.3     +17.6
+  Toughness              +37.7     +21.5     +15.9
+  average of the three   +33.9     +21.6     +16.3
+  Emphasis on Speed 0.15 +16.0     +15.4     +15.7
+                    0.20 +24.7     +18.7     +19.1
+                    0.25 +27.5     +24.2     +23.4
+                    0.30 +27.8     +24.8     +26.9
+
+  one extra point (+ATT)
+  +strength              +29.0     +19.6     +12.0
+  +agility               +35.0     +20.4     +12.9
+  +health                +37.6     +19.1     +10.9
+  average of the three   +33.9     +19.7     +11.9
+  +speed                 +25.0     +16.4     +14.2
+
+  advanced twins (doubled), from lv 10    lv 8-14  lv 15-20
+  Advanced Strength Training                +35.0     +27.4
+  Advanced Dance-Like Form                  +38.6     +31.7
+  Advanced Toughness                        +41.6     +30.3
+  average of the three                      +38.4     +29.8
+  Advanced Emphasis on Speed 0.30           +25.3     +27.8
+                             0.40           +33.3     +36.4
+                             0.50           +40.5     +44.1
+
+Relative to the average of the other three in the same tier:
+
+                                   lv 1-7   lv 8-14  lv 15-20
+  one speed point                     74%       83%      119%
+  speed tech 0.15                     47%       71%       96%
+  speed tech 0.20                     73%       87%      117%
+  speed tech 0.25                     81%      112%      144%
+  advanced speed tech 0.40              -       87%      122%
+  advanced speed tech 0.50              -      105%      148%
+
+At 0.20 the speed tech gives as many points as the other attribute techs,
+and its value relative to them in each tier equals a speed point's value
+relative to other points (73 / 87 / 117% vs 74 / 83 / 119%). So what is left
+is the speed attribute's own level trend, not something about the techs. A
+single boost value cannot fix it: 0.25 and 0.30 add the same points at lv
+1-7 (rounding), so low levels stay short while lv 15-20 overshoots.
+
+Harness (100k, seed 42), speed techs at 0.15 (engine) / 0.20 / 0.25
+(rule_variants.py SpdTech20 / SpdTech25):
+
+                                    0.15      0.20      0.25
+fight length, s                    59.50     58.60     59.10
+style buffs speed      ±1.8         5.09     10.35     16.60
+style buffs strength   ±1.6        11.41     11.15     11.09
+style buffs agility    ±1.7        12.92     12.47     13.02
+style buffs health     ±1.8        13.75     12.02     12.84
+all speed              ±0.10       -0.33     -0.40     -0.60
+lv 1-7 speed           ±0.20       -1.63     -1.93     -1.63
+lv 8-14 speed          ±0.10       -0.76     -0.77     -1.07
+lv 15-20 speed         ±0.20        0.94      0.98      0.52
+
+Strike outcomes and action shares are the same in all three. The harness
+weighs higher levels more than the A/B average does (style techs arrive at
+lv 3/5/7, advanced twins from lv 10), so 0.25 overshoots there: +16.6 vs
++11.1..+13.0. 0.20 lands just below the others (+10.4) and leaves the
+attribute rows within noise.

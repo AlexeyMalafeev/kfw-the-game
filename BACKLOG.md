@@ -378,8 +378,15 @@ below are decided:
   - **Speed — adopted 2026-10-23** (tempo `1.5 * (speed - 2)` instead of
     `speed`). Left over: speed is a bit weak at levels 1–7 (−1.6) and a bit
     strong at 15–20 (+1.0); techs that boost speed score ~+5 vs ~+12…+15
-    for the other attributes' techs — re-price their boost values with
-    `run_test_tech_ab.py`. History: speed only sets how often a fighter acts;
+    for the other attributes' techs. **Speed techs priced 2026-10-23, author
+    to pick the value** (tables in `tests/balance experiments 2026-10-22.txt`,
+    variants `SpdTech20` / `SpdTech25`): `SPEED1` 0.15 → 0.20 (the other
+    attribute techs' value) lifts the harness row +5.1 → +10.4 (others
+    +11.1…+13.8); 0.25 → +16.6 overshoots. At 0.20 the A/B tool puts the
+    tech at 73 / 87 / 117% of the other attribute techs at lv 1–7 / 8–14 /
+    15–20 — the same ratios as a speed point vs other points, so the rest
+    is the speed attribute's level trend, which no single boost value can
+    fix. History: speed only sets how often a fighter acts;
     strength sets damage *and* block power. An attribute point is worth
     +15.9 for speed vs +26.6…+36.2 for the others at levels 1–7 (about even
     at 15–20; toughness is not the cause): extra turns partly go to Guard /
