@@ -103,6 +103,26 @@ option).
 | quotes / flavor text | dim |
 | HP bar | green → yellow → red by fill %; SP bar yellow; QP bar magenta |
 
+## Status marks
+
+`Fighter.get_status_marks(right=False)` (`fighter/_fight_attributes.py`)
+returns plain one-character marks appended to a fighter's name in the fight
+header (`see_fight_info`) and in the target menu (`choose_target`), so the
+player can see at a glance who is open or dangerous:
+
+| mark | meaning |
+|---|---|
+| `+` | guarding: used the Guard move, defense raised until the fighter's next turn (since 2026-10-23) |
+| `#` | fury |
+| `;` | bleeding |
+| `,` | slowed down |
+| `'` | off-balance |
+| `...` | lying on the ground |
+| `!` / `!!` | stunned / shocked (can't act) |
+| ` >>` / ` <<` | momentum, one arrow per step, pointing the way the fighter last moved (mirrored for the right-hand side, `right=True`) |
+
+The marks are uncolored, so they read the same with colors off.
+
 ## Alignment and width math
 
 All width-sensitive code measures **visible** length (`visible_len`), so tags

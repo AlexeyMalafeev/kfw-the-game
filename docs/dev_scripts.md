@@ -411,7 +411,7 @@ names were checked before `style_gen` built those techs.
 `--all-general` adds every general tech and prints their median — the
 yardstick: a tech scoring near the median is "an average technique".
 Overrides for "what if" runs, applied in every worker: `--set CONST=VALUE`
-(a `Fighter` class constant, e.g. `GUARD_POWER=2.0`), `--scale PARAM=FACTOR`
+(a `Fighter` class constant, e.g. `GUARD_POWER=2.5`), `--scale PARAM=FACTOR`
 (multiplies that param in every Tech, i.e. tries another boost value), and
 `--variants FILE:NAMES`, which calls `FILE`'s `apply(NAMES)` — a module of
 monkeypatched rule experiments (e.g. a `def Ga(): ...` that patches
@@ -459,7 +459,8 @@ missed, dodged, fully/partly blocked, hit), HP lost by A (also paired
 against `nothing`), A's counters and the HP they cost B, the net HP swing,
 what A's turn recovered, and HP lost per level tier as % of `nothing` in
 that tier. Each `--variants FILE:NAMES` (repeatable) adds a column set,
-run in its own worker pool, e.g. `--variants rule_variants.py:Gb+Grec`.
+run in its own worker pool (the new Guard was measured this way as
+`rule_variants.py:Gb+Grec` at commit ae74b9f, before it was adopted).
 Parallel like the harness (chunks of 2,000 samples, spawned workers, runs
 from any cwd); prints only. Works: verified 2026-10-23 — the engine's
 `G+DG` column (guard ×1.5 × bonus 2.0) equals `Gb+Grec`'s `G+AG` (×2.0 ×

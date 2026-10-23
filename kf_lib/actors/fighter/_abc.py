@@ -82,6 +82,7 @@ class FighterAPI(ABC):
     fury_chance: float = None
     guard_dfs_bonus: float = None
     guard_while_attacking: float = None
+    guarding: bool = None
     health: int = None
     health_full: int = None
     health_mult: float = None

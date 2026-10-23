@@ -398,6 +398,20 @@ class TestDefenseAndCounters:
         fb.attack()
         assert fb.dfs_bonus == pytest.approx(1.4)
 
+    def test_guard_raises_defense_recovers_and_is_marked(self):
+        # x2.0 and the recovery since 2026-10-23 (x1.5, no recovery before)
+        fa, fb = self.duel()
+        fa.stamina = fa.qp = 0
+        fa.guard()
+        assert Fighter.GUARD_POWER == 2.0
+        assert fa.dfs_bonus == pytest.approx(fa.guard_dfs_bonus * 2.0)
+        assert fa.stamina == Fighter.GUARD_STAMINA_GAIN
+        assert fa.qp == min(Fighter.GUARD_QI_GAIN, fa.qp_max)  # lv 1: max qi is 5
+        assert fa.get_status_marks().startswith('+')
+        fa.start_fight_turn()  # the guard lasts until the fighter's next turn
+        assert fa.dfs_bonus == 1.0
+        assert '+' not in fa.get_status_marks()
+
     def strike_with_sure_crit(self, fa, fb, defended):
         """fb strikes fa for 30 with a guaranteed critical and epic."""
         fb.dam = 30 if not defended else 20  # 20: what got past a block

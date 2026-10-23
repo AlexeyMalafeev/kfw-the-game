@@ -9,7 +9,7 @@ seeded fighter pairs, so techs compare against each other with less noise.
     python run_test_tech_ab.py "Iron Fist" "18 Defense Forms"
     python run_test_tech_ab.py --all-general -n 8000        # every general tech + median
     python run_test_tech_ab.py "Shadow Slips Away" --scale dodge_mult=1.5
-    python run_test_tech_ab.py "Advanced Guard" --set GUARD_POWER=2.0
+    python run_test_tech_ab.py "Advanced Guard" --set GUARD_POWER=2.5
     python run_test_tech_ab.py "Advanced Guard" --variants path/to/variants.py:Ga+Gb
     python run_test_tech_ab.py +strength +agility +speed +health --levels 1-7
 

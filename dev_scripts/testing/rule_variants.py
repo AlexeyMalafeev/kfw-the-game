@@ -18,7 +18,7 @@ winner-vs-loser correlation; a tech that does nothing scores about -9 to -13.
 
 Guard (baseline: guard buff -11.8, Advanced Guard -8.5, fights 62.7 s):
   Ga   Guard doubles counter chance until the next turn       -> no effect
-  Gb   Guard x1.5 -> x2.0                                     -> no effect
+  Gb   Guard x1.5 -> x2.0 (adopted 2026-10-23, removed)       -> no effect
   Gc   Guard also recovers 10 stamina + 10 qi (x guard bonus) -> fights 53.9 s,
        Guard 29% -> 21% of actions; guard techs unchanged
   Gs   stored guard: the bonus waits for the next incoming strike instead of
@@ -103,7 +103,7 @@ day (SPEED1/2 0.2/0.4) and both removed from this file:
 Guard and counters, round 2 (2026-10-23, on commit 94950c1; tables in the
 experiments file, sections "Guard round 2" and "Counters round 2"):
   Gb+Grec  the author's new Guard (x2.0 + half of Catch Breath's stamina and
-           Focus's qi). Staged exchanges (run_test_guard.py): per incoming
+           Focus's qi; ADOPTED 2026-10-23, removed). Staged exchanges (run_test_guard.py): per incoming
            strike Guard saves 18% -> 31% of the HP (Advanced Guard 34 -> 49%,
            Dragon Guards a Treasure 49 -> 64%); harness fights 58.6 -> 51.0 s,
            Guard 31% -> 23% of actions, attributes within noise
@@ -149,10 +149,6 @@ def Ga():
         else:
             ot(self)
     F.guard, F.start_fight_turn, F.try_counter = guard, start_fight_turn, try_counter
-
-
-def Gb():
-    F.GUARD_POWER = 2.0
 
 
 def Ca():
@@ -492,26 +488,14 @@ def Sdef50():
 
 
 # Guard and counters, round 2 (2026-10-23, the author's setups):
-#   Grec  Guard also recovers half of what Catch Breath / Focus restore (their
-#         move data: 20 stamina / 20 qi, so 10 / 10), flat; with Gb ("G-str",
-#         Guard x2.0) it is the author's new Guard
+#   Grec  Guard also recovers half of what Catch Breath / Focus restore (20 /
+#         20, so 10 / 10), flat; with Gb (Guard x2.0) the author's new Guard
+#         (both ADOPTED 2026-10-23 and removed; Ga, Gc and Gs now stack on it)
 #   Cg    guaranteed counters: a fighter with counter techs counters every
 #         incoming strike that did no damage, once per counter tech (an advanced
 #         one counts as two), in a row while it can afford an attack move; no
 #         counter-chance roll for it. Fighters without counter techs keep the
 #         default roll.
-
-
-def Grec():
-    from kf_lib.kung_fu import moves
-    stam = round(-moves.get_move_obj('Catch Breath').stam_cost / 2)
-    qi = round(-moves.get_move_obj('Focus').qi_cost / 2)
-    og = F.guard
-    def guard(self):
-        og(self)
-        self.change_stamina(stam)
-        self.change_qp(qi)
-    F.guard = guard
 
 
 def n_counter_techs(f):

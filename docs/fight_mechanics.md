@@ -268,7 +268,16 @@ fighter can be shown stunned/knocked back/falling before the KNOCK-OUT line;
 
 `maneuver()`: apply `dist_change` (clamped to 1–4 by `change_distance`), roll
 `check_move_failed`, run `functions`. `Guard` (`functions=['guard']`) sets
-`dfs_bonus *= guard_dfs_bonus * 1.5`, lasting until the fighter's next turn.
+`dfs_bonus *= guard_dfs_bonus * GUARD_POWER` (2.0; 1.5 until 2026-10-23),
+lasting until the fighter's next turn, and recovers 10 stamina and 10 qi
+(`GUARD_STAMINA_GAIN` / `GUARD_QI_GAIN`, half of what Catch Breath / Focus
+restore; since 2026-10-23). Meanwhile `guarding` is set, shown as a `+`
+status mark (see `ui.md`); `start_fight_turn` clears both. `dfs_bonus`
+multiplies dodge and block chance, not block power: in staged exchanges
+(`dev_scripts/testing/run_test_guard.py`) Guard saves 31% of the HP an
+incoming strike would cost (18% at ×1.5), 49% with Advanced Guard, 64% with
+Dragon Guards a Treasure. The default fight AI guards mostly when it can't
+afford an attack, so whole-fight harness runs can't price Guard.
 `guard_while_attacking` (tech) instead multiplies `dfs_bonus` by
 `1 + guard_while_attacking` inside `attack()` (until 2026-10 also by the
 Guard move's 1.5, so the +50% tech gave a free ×2.25 on every attack — more

@@ -78,6 +78,7 @@ class FightAttributes(FighterAPI, ABC):
         self.defended = False
         self.dfs_pwr = 0.0
         self.distances = {}  # fighter_obj: int
+        self.guarding = False  # used the Guard move; until the fighter's next turn
         self.is_auto_fighting = True
         self.kos_this_fight = 0
         self.momentum = 0  # (-3, 3)
@@ -200,6 +201,7 @@ class FightAttributes(FighterAPI, ABC):
         return bool(self.status.get(status, 0))
 
     def get_status_marks(self, right: bool = False) -> str:
+        guarding = '+' if self.guarding else ''
         bleeding = ';' if self.bleeding else ''
         fury = '#' if self.check_status('fury') else ''
         slowed_down = ',' if self.check_status('slowed down') else ''
@@ -226,7 +228,7 @@ class FightAttributes(FighterAPI, ABC):
             mom_s = f' {mom_s}'
         else:
             mom_s = ''
-        return f'{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
+        return f'{guarding}{fury}{bleeding}{slowed_down}{off_bal}{lying}{inact}{mom_s}'
 
     def refresh_dependent_atts(self) -> None:
         self.hp_max = self.health_full * self.HP_PER_HEALTH_LV

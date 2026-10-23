@@ -327,25 +327,42 @@ below are decided:
   modeled); qi regeneration 20% → 10% of max per turn (qi buff −7.5 → −3.6,
   Lotus Stance A/B +6.9 → +10.4). Done 2026-10-23: health and speed —
   setup D + linear tempo adopted, then speed techs +15% → +20% (see the
-  Health and Speed items and CHANGELOG). **Guard, counters, qi: tested 2026-10-22 as rule variants,
-  author to decide** (`dev_scripts/testing/rule_variants.py`, full tables in
+  Health and Speed items and CHANGELOG). Done 2026-10-23: Guard (below).
+  **Counters: round 2 tested, author to decide; qi: next session**
+  (`dev_scripts/testing/rule_variants.py`, full tables in
   `tests/balance experiments 2026-10-22.txt`; baseline fights 62.7 s, +27%
   vs 49.5 s before the ⚠️ batches). Then implement the chosen ones in the
   engine (docs, tests, i18n), drop them from `rule_variants.py`, and run the
   final re-run:
-  - **Guard**: the AI guards only when it can't attack, and 92% of Guard
-    turns receive no strike, so a stronger Guard (×2.0) or Guard doubling
-    counter chance changes nothing. Guard also recovering 10 stamina + 10
-    qi (× guard bonus) makes fights 62.7 → 53.9 s and Guard turns 29% → 21%,
-    but guard techs stay dead; a stored guard (the bonus waits for the next
-    incoming strike) lifts the guard buff −11.8 → −8.2. Untested: stored
-    guard + ×2.0; guarding chosen by the AI with guard techs in mind
+  - **Guard — adopted 2026-10-23** (the author's pick): ×2.0 instead of
+    ×1.5, plus half of Catch Breath's stamina and half of Focus's qi (10 /
+    10); guarding fighters show a `+` status mark. Measured with staged
+    exchanges (`run_test_guard.py`), since the AI guards only when it can't
+    attack: Guard saves 31% of an incoming strike's HP (18% before), 49%
+    with Advanced Guard, 64% with Dragon Guards a Treasure; harness fights
+    58.6 → 51.0 s, Guard 31% → 23% of actions, attributes within noise.
+    Rejected by the author: stored guard (Guard should help only while
+    guarding; attack/defense stances will come later). Guard techs still
+    look dead in whole fights until the AI learns when to guard (AI item)
   - **Counters**: best-move counters, partial-block counters for counter
     techs, free counters — no effect; free counters + counter techs ×3:
     counters buff −12.5 → −8.5. The limit is frequency (~0.3 counters per
     fighter per fight). Untested: counter techs ×5–10 with free or
-    half-price counters
-  - **Qi** (qi techs only): qi shield (a partial block spends qi to absorb
+    half-price counters. **Round 2 (2026-10-23, the author's idea)**:
+    counter techs give guaranteed counters — every incoming strike that did
+    no damage, one counter per counter tech in a row (advanced = two), no
+    roll; default counters unchanged; full stamina/qi cost (the author ruled
+    out cheaper counters). A/B lv 13–20 (median general tech +8.1):
+    Retaliative Blows +2.2 → +5.3, Vengeful Fox +2.3 → +6.9; plus an attack
+    bonus on those counters: hit ×2.0 → +8.3 / +12.0, critical ×3 → +9.0 /
+    +12.2, hit ×1.5 + critical ×2 → +9.1 / +13.5. Author to pick
+  - **Counters: two suspected bugs, author's verdict pending** (found
+    2026-10-23): a strike that misses (move failed) leaves the attacker's
+    damage value from its previous strike, so whether the miss can be
+    countered depends on that older strike (and on the previous fight for
+    the first strike); and an undefended hit whose damage toughness absorbs
+    completely counts as "no damage", so it can be countered
+  - **Qi** (next session, the author 2026-10-23; qi techs only): qi shield (a partial block spends qi to absorb
     the rest) −3.6 → −1.1; qi-charged strikes at +10% → +3.0, with the
     shield +7.2 (at +30%: +16.9, too strong)
   - **Health — adopted 2026-10-23** (setup D: 40 HP per health point, 20%

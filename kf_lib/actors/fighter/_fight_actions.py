@@ -17,7 +17,11 @@ class FighterWithActions(FighterAPI, ABC):
     # per-fighter block power factor, a hook for future techs (non-tech-based);
     # NOT to be confused with StrikeMechanics.BLOCK_POWER (the global constant)
     BLOCK_DEFAULT_POWER: Final = 1.0
-    GUARD_POWER: Final = 1.5
+    GUARD_POWER: Final = 2.0  # 1.5 until 2026-10-23
+    # Guard also recovers half of what Catch Breath / Focus restore (20 stamina /
+    # 20 qi in moves/extra_moves.txt), since 2026-10-23
+    GUARD_STAMINA_GAIN: Final = 10
+    GUARD_QI_GAIN: Final = 10
     DUR_FURY_MIN: Final = 500
     DUR_FURY_MAX: Final = 1000
 
@@ -249,8 +253,10 @@ class FighterWithActions(FighterAPI, ABC):
 
     def guard(self) -> None:
         """This is called with eval as a function of the Guard move."""
-        # print('giving guard dfs bonus:', self.dfs_bonus, '+', self.guard_dfs_bonus)
         self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
+        self.guarding = True  # until the next turn; shown as a status mark
+        self.change_stamina(self.GUARD_STAMINA_GAIN)
+        self.change_qp(self.GUARD_QI_GAIN)
 
     def hit_or_miss(self) -> None:
         # todo use skip list here for functions not to be applied twice
@@ -304,6 +310,7 @@ class FighterWithActions(FighterAPI, ABC):
         self.is_auto_fighting = True
         self.set_distances_before_fight()
         self.status = {}
+        self.guarding = False
         self.exp_yield = self.get_exp_worth()
         self.took_damage = False
         self.kos_this_fight = 0
@@ -325,6 +332,7 @@ class FighterWithActions(FighterAPI, ABC):
         self.act_allies = cur_fight.get_act_allies(self)
         self.action = None
         self.dfs_bonus = 1.0
+        self.guarding = False
         self.dfs_penalty_mult = 1.0
         self.target = None
         # breathing techs and other automatic actions

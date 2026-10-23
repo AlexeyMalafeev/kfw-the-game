@@ -729,7 +729,8 @@ as from Advanced Guard / Dragon Guards a Treasure alone. "engine" = the old
 Guard (x1.5); "Gb+Grec" = the author's new Guard (x2.0, plus half of Catch
 Breath's stamina and half of Focus's qi). Every column replays the same
 pairs, states and dice rolls, so the differences come from the column alone.
-Reproduce with
+Reproduce at commit ae74b9f (Gb and Grec were adopted into the engine and
+removed from rule_variants.py right after) with
   python dev_scripts/testing/run_test_guard.py --variants dev_scripts/testing/rule_variants.py:Gb+Grec
 
 Guard exchanges: n=100000 pairs, lv 1-20, seed 7; one column per rule set and condition

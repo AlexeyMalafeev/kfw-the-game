@@ -5,6 +5,14 @@ All notable changes to KFW are documented here. Format loosely follows
 
 ## [Unreleased]
 
+### Added
+- **Guarding fighters are marked**: a `+` after a fighter's name, in the
+  fight header and in the target menu, shows that they used Guard and
+  defend much better until their next turn — attacking them risks a dodged
+  or blocked strike and a counter. It joins the other marks (`'`
+  off-balance, `...` on the ground, `!` stunned, `#` fury, `;` bleeding,
+  `,` slowed down), which are now listed in `docs/ui.md`
+
 ### Changed
 - **Blocking works as its own chance** (balance-affecting): dodge and block
   used to share one random roll, so a fighter's real block chance was their
@@ -80,6 +88,16 @@ All notable changes to KFW are documented here. Format loosely follows
   Fly Herb, Super Fly Herb and the Super Mega Herb's speed part. In the
   fight-balance harness, owning a speed tech went from +5 to +10 Diff%
   points (strength, agility and health techs: +11 to +14)
+- **Guard is stronger and restores some stamina and qi**
+  (balance-affecting): Guard multiplies dodge and block chance by 2 instead
+  of 1.5 until the fighter's next turn, and also restores half of what
+  Catch Breath and Focus would (10 stamina and 10 qi). In staged exchanges
+  (a fighter guards, then takes one strike), Guard now saves 31% of the HP
+  that strike would cost instead of 18%; with Advanced Guard 49% (was 34%),
+  with Dragon Guards a Treasure 64% (was 49%). The fight AI still guards
+  mostly when it can't attack, but those turns now refill it, so fights got
+  shorter (58.6 → 51.0 s on average) and fighters spend 23% of their turns
+  on Guard instead of 31%
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so
@@ -95,7 +113,9 @@ All notable changes to KFW are documented here. Format loosely follows
   weak early and strong late. Two companion dev scripts: `run_test_tech_ab.py` measures what
   a technique is worth (mirror matches where one side gets it — how this
   pass set its boost values) and `compare_fb_reports.py` puts reports side
-  by side, marking changes beyond noise. Both the harness and the A/B tool
+  by side, marking changes beyond noise; `run_test_guard.py` stages
+  "one fighter guards, then takes one strike" exchanges, since the fight AI's
+  habits hide what Guard does in whole fights. Both the harness and the A/B tool
   take `--variants`, to try rule changes as runtime patches before writing
   them into the engine (`rule_variants.py` keeps this pass's experiments).
   For the harness stats, fighters'

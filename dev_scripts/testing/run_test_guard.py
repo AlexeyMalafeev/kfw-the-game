@@ -12,10 +12,11 @@ turn under each condition, then B strikes:
 Every condition replays the same pair, states and random rolls, so differences
 come from the conditions alone (B's damage value starts at 0, a fresh
 fighter's). Each --variants FILE:NAMES (repeatable) adds a column set run in its
-own worker pool, e.g. rule_variants.py:Gb+Grec (the author's new Guard).
+own worker pool (the author's new Guard was measured as rule_variants.py:Gb+Grec
+at commit ae74b9f, before it was adopted).
 
     python run_test_guard.py
-    python run_test_guard.py --variants rule_variants.py:Gb+Grec
+    python run_test_guard.py --variants rule_variants.py:Ga
 Prints a table only (no report file). Runs from any cwd.
 """
 import argparse
