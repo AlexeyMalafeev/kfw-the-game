@@ -41,6 +41,13 @@ Qi, qi techs only (baseline: qi buff -3.6, Lotus Stance +2.6):
   Qc   qi-charged strikes, atk x (1 + 0.3 * qp / qp_max)        -> qi +16.9 (too strong)
   Qc10 the same at 0.1                                           -> qi +3.0
   Qb+Qc10                                                        -> qi +7.2
+  Re-measured 2026-10-24 on 9dd6f67 (final engine; qi -3.3; experiments file
+  section "Qi round 2", with A/B per level and the qi flow variants below):
+  Qb -0.8, Qc5 +1.0, Qc10 +5.0, Qb+Qc10 +6.9; Qr5 +0.1 (fights +3 s, speed
+  -0.52 -> -0.83), Qrel -3.4 (no effect), QF +0.4 (agility +1.06, speed
+  -1.09), QF2 -2.4. A/B, the qi style tech as % of the median style tech at
+  lv 1-7 / 8-14 / 15-20: engine 10 / 51 / 119%, Qb 41 / 75 / 156%, Qc5 46 /
+  76 / 163%, Qc10 82 / 108 / 186%, Qr5 14 / 78 / 164%
 Health (baseline: health -2.0, strength +2.1, agility +1.8, speed -1.9):
   Ha   block power from (strength + health) / 2                  -> health -1.7
   Hb   toughness and stamina from health, not level              -> health +5.8 (too strong)
@@ -505,3 +512,64 @@ def Sdef50():
 # on top of Cg; default counters unchanged): CbH15 / CbH20 the counter's
 # to_hit x1.5 / x2.0, CbK2 / CbK3 its critical chance x2 / x3. CbH20 ADOPTED
 # 2026-10-23 (COUNTER_TECH_HIT_MULT); all removed, code at commit ae74b9f.
+
+
+# Qi flow, all fighters (2026-10-24; qi isn't scarce: fighters strike with
+# 48-72% of their max qi, and Focus's flat +20 / Guard's flat +10 fill a low
+# fighter's whole bar):
+#   Qr5    qi regeneration 10% -> 5% of max per own turn (also halves the qi a
+#          dodge / block gives, which are qp_gain-based)
+#   Qrel   Focus restores 40% of max qi and Guard 20% instead of a flat 20 / 10
+#          (the same at lv 10; less below, more above)
+#   QF     earned qi: no regeneration at turn start; a strike that does damage
+#          gives the attacker qp_gain (dodge / block / Focus / Guard unchanged)
+#   QF2    the same with 2 x qp_gain per damaging strike
+
+QI_FOCUS_SHARE, QI_GUARD_SHARE = 0.4, 0.2
+QF_HIT = 1
+
+
+def Qr5():
+    F.QP_PORTION_RESTORED_PER_TURN = 0.05
+
+
+def Qrel():
+    orf, oa = F.refresh_dependent_atts, F.apply_move_cost
+    def refresh(self):
+        orf(self)
+        self.GUARD_QI_GAIN = round(QI_GUARD_SHARE * self.qp_max)  # read by guard()
+    def apply_move_cost(self):
+        m = self.action
+        if m.qi_cost < 0:  # Focus
+            self.change_stamina(-m.stam_cost)
+            self.change_qp(round(QI_FOCUS_SHARE * self.qp_max))
+        else:
+            oa(self)
+    F.refresh_dependent_atts, F.apply_move_cost = refresh, apply_move_cost
+
+
+def QF():
+    os_, ods = F.start_fight_turn, F.do_strike
+    def start_fight_turn(self):
+        g, self.qp_gain = self.qp_gain, 0
+        try:
+            os_(self)
+        finally:
+            self.qp_gain = g
+    def do_strike(self):
+        ods(self)
+        if self.dam > 0:  # after toughness: clean hits and partial blocks
+            self.change_qp(round(QF_HIT * self.qp_gain))
+    F.start_fight_turn, F.do_strike = start_fight_turn, do_strike
+
+
+def QF2():
+    global QF_HIT
+    QF_HIT = 2
+    QF()
+
+
+def Qc5():  # qi-charged strikes at 0.05
+    global QI_CHARGE
+    QI_CHARGE = 0.05
+    Qc()

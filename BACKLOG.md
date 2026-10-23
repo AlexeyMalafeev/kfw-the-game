@@ -363,9 +363,18 @@ below are decided:
     the attacker's damage (it kept the previous strike's value, which
     decided whether the miss could be countered), and only a dodge, a full
     block or a miss opens a counter (a hit toughness fully absorbed did too)
-  - **Qi** (next session, the author 2026-10-23; qi techs only): qi shield (a partial block spends qi to absorb
+  - **Qi** (the author 2026-10-23; qi techs only): qi shield (a partial block spends qi to absorb
     the rest) −3.6 → −1.1; qi-charged strikes at +10% → +3.0, with the
-    shield +7.2 (at +30%: +16.9, too strong)
+    shield +7.2 (at +30%: +16.9, too strong). **Re-measured 2026-10-24 on
+    the final engine** (qi −3.3; experiments file, "Qi round 2"), awaiting
+    the author's pick: shield −0.8, charged strikes +5% → +1.0, +10% →
+    +5.0; also qi-flow rules for everyone: regeneration 5% → +0.1 (fights
+    +3 s, speed weaker), Focus/Guard qi relative to max → no effect,
+    earned qi (no regeneration, damaging strikes pay qi) → +0.4 but the
+    attribute gap doubles. Why qi techs are weak: fighters strike with
+    48–72% of their max qi and half a bar pays for any known move
+    (`run_test_qi_flow.py`); by A/B the qi style tech is worth 10% / 51% /
+    119% of an average style tech at lv 1–7 / 8–14 / 15–20
   - **Health — adopted 2026-10-23** (setup D: 40 HP per health point, 20%
     of toughness and 30% of stamina from health, block power from health;
     with the Speed item's linear tempo the four attributes end within ±0.6,

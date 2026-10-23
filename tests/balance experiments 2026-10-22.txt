@@ -924,3 +924,99 @@ gap (max - min)                  0.85      1.12
 Agility gains 0.15 (beyond noise): counter chances come from dodges and full
 blocks, i.e. from agility, and counter-tech owners now use every one of them.
 The attribute gap stays near the 0.88 adopted with the health/speed rework.
+
+
+=== Qi round 2: re-measured on the final engine, plus qi flow (2026-10-24) ===
+
+On commit 9dd6f67 (new Guard, guaranteed counters; the tech rename in that
+commit doesn't change results: the baseline is identical on 0f69fa5).
+Variants: rule_variants.py, section "Qi flow" for Qr5 / Qrel / QF / QF2.
+
+Why the qi techs are weak. Qi ledger (run_test_qi_flow.py, 3,000 fights),
+per fighter and fight:
+
+                                   lv 1-7    lv 8-14   lv 15-20
+max qi                              20.1      56.0      90.0
+qi held when striking, % of max       72        60        48
+mean qi cost of a strike             1.4       4.7       8.5
+qi lost to the cap                  31.5      21.4      12.1
+qi-based damage, % of damage         0.2       1.1       1.1
+
+Fighters aren't short of qi, and half a qi bar pays for every attack move
+a fighter knows, at every level (the dearest move costs 2.5 x level, max qi
+is 5 x level). So extra qi buys little, and at lv 1-7 nothing at all:
+moves there cost almost no qi, and Focus's flat +20 / Guard's flat +10 fill
+most of a low fighter's bar (Guard alone loses 16.9 qi per fight to the cap
+at lv 1-7). Qi-based damage (do_qi_based_dam, 1-2 x the attacker's qi) is
+rare: 0.04 such hits per fighter and fight.
+
+A/B of the qi style tech (Mystic Power = QI1, Lotus Stance's boosts: max qi
++10%, qi gain +10%, start with half the bar; the generated styles learn it
+at lv 3 or 5) against the median of the 35 first-tier style techs (one per
+distinct set of boosts), 8,000 fights each, seed 11; % = of the median:
+
+                lv 1-7          lv 8-14         lv 15-20
+median          +14.2           +11.0            +8.4
+engine          +1.4   10%      +5.6   51%      +10.0  119%
+Qb              +5.8   41%      +8.3   75%      +13.1  156%
+Qc5             +6.6   46%      +8.4   76%      +13.7  163%
+Qc10            +11.7  82%      +11.9 108%      +15.6  186%
+Qr5             +2.0   14%      +8.6   78%      +13.8  164%
+
+(the medians were measured on the engine; Qr5 changes every fighter, so its
+row is only roughly comparable). The lv 1-7 median was +15.3 on 94950c1.
+
+General techs, lv 13-20, 16,000 fights (median general tech +8.1, advanced
++13.4, measured 2026-10-23; the reference techs came out the same on
+9dd6f67: Iron Fist +10.9, Fist of Fury +9.8, Enraged Mantis +19.9):
+
+                Lotus Stance    Golden Lotus Stance
+engine          +12.1  149%     +13.1   98%
+Qb              +15.5  191%     +16.7  125%
+Qc5             +14.4  178%     +16.4  122%
+Qc10            +16.9  209%     +19.1  143%
+Qr5             +14.1  174%     +17.1  128%
+(under Qr5 the references: Iron Fist +12.5, Fist of Fury +11.0, Enraged
+Mantis +17.9)
+
+Harness (100k, seed 42; base2 = the engine again with seed 1042, to show
+how much two samples of the same engine differ). Every rule change shifts
+the random stream, so each column plays a different set of fighters; with
+~150 rows a few land beyond the margin by chance (base vs base2: blocks
+-0.56 / -3.71, grappling, disarm, environment).
+
+                         base  base2     Qb    Qc5   Qc10 Qb+Qc10   Qr5   Qrel     QF    QF2
+fight length, s          50.8   50.7   50.5   50.1   50.1   50.0   53.9   51.8   54.2   53.3
+Focus, % of actions       5.2    5.2    5.2    5.3    5.2    5.2    6.6    5.4    7.2    6.2
+qi left at the end, %    31.4   31.3   31.3   31.4   31.5   31.5   28.4   31.3   31.5   35.9
+style buffs qi   +-1.2  -3.33  -3.05  -0.78   0.96   5.00   6.91   0.07  -3.39   0.38  -2.37
+Lotus Stance     +-2.8   3.38   4.71   6.05   6.83   9.02  10.08   6.97   5.27   9.46   4.38
+all agility      +-0.1   0.60   0.64   0.61   0.47   0.66   0.63   0.69   0.57   1.06   1.09
+all strength     +-0.1   0.02   0.01   0.09   0.21   0.08   0.04   0.11   0.14   0.12   0.07
+all health       +-0.1  -0.10  -0.04  -0.14  -0.20  -0.06  -0.14   0.02  -0.12  -0.09  -0.13
+all speed        +-0.1  -0.52  -0.61  -0.55  -0.48  -0.68  -0.53  -0.83  -0.58  -1.09  -1.03
+gap (max - min)          1.12   1.25   1.16   0.95   1.34   1.16   1.52   1.15   2.15   2.12
+
+In the harness an average tech scores about 0 (median of the techs tables
+-0.1..+0.6 for general techs, +1.1..+1.6 for advanced ones), a useless one
+-9 to -13. Golden Lotus Stance's row (+-6.8) is too noisy to read.
+
+Qi shield in use (Qb, 4,000 fights): a qi-tech fighter's shield fires 0.43 /
+0.30 / 0.25 times per fight at lv 1-7 / 8-14 / 15-20 and absorbs about 3% of
+its max HP per fight at every level.
+
+Reading: Qb (qi shield) and Qc5 (qi-charged strikes at +5%) bring the qi row
+to an average tech (-0.8 / +1.0). Neither changes fight length, Focus or
+qi left; Qc5's strength row (+0.21) is beyond the margin, probably by
+chance (nothing in the rule favours strength; base and base2 agree). Qc10
+and Qb+Qc10 overshoot. Qr5 (regen 5%) reaches 0.1 too but changes every
+fight: +3 s, more Focus, speed -0.52 -> -0.83 (gap 1.12 -> 1.52), and it
+leaves lv 1-7 where it was (14%). Qrel does nothing for qi techs: at lv 1-7
+qi is still plentiful, and the qi Guard/Focus lost to the cap simply isn't
+lost any more. QF (earned qi: no regeneration, a damaging strike pays
+qp_gain) reaches 0.4 but doubles the attribute gap (agility +1.06, speed
+-1.09: hits pay qi, so hit chance gains; turns no longer do, so speed
+loses); QF2 (2 x qp_gain per hit) adds qi back and the qi row falls to -2.4.
+Every option lifts all levels about equally, so the level trend stays:
+the qi techs are weak at lv 1-7 and above average at lv 15-20 (Lotus
+Stance already 149% of the median general tech).

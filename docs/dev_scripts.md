@@ -470,6 +470,24 @@ from any cwd); prints only. Works: verified 2026-10-23 — the engine's
 `G+DG` column (guard ×1.5 × bonus 2.0) equals `Gb+Grec`'s `G+AG` (×2.0 ×
 1.5) to the last digit, as it must.
 
+### run_test_qi_flow.py — where fighters' qi comes from and goes
+
+A qi ledger (2026-10-24): `-n` mirror matches (default 6,000) like the
+harness's — two fresh random fighters at the same random level 1–20, the
+default fight AI — in one process. Every change of a fighter's qi is booked
+by its source: regeneration at turn start, Focus, Guard, dodge/block, a
+damaging strike (only under rules that pay qi for hits) and move costs; the
+part of a gain that the max cut off is booked as lost to the cap. Per level
+tier (1–7, 8–14, 15–20) it prints max qi, actions/strikes/Focus per fighter
+and fight, qi in by source with shares, qi lost to the cap, qi out, the
+share of max qi a fighter holds when it strikes and at fight end, the mean
+qi cost of a strike, and qi-based damage's share of strike damage.
+`--variants FILE:NAMES` applies rule experiments first (the ledger's own
+patches wrap them). Prints only; runs from any cwd. Works: verified
+2026-10-24 (3,000 fights in ~30 s; identical numbers from the repo root and
+from `/tmp`; under `rule_variants.py:QF` the qi paid for hits is booked as
+`hit`).
+
 ### compare_fb_reports.py — reports side by side
 
 `python compare_fb_reports.py OLD.txt NEW.txt [MORE.txt ...]` prints each
@@ -562,6 +580,7 @@ tracked report was restored.
 | `ml/ML_learn.py` | No — `'../../ml/...'` resolves outside the repo | ran, `FileNotFoundError` |
 | `testing/run_test_fb.py` | Yes | n=10000 ran to completion; report restored |
 | `testing/run_test_guard.py` | Yes | 100k-pair run with `--variants rule_variants.py:Gb+Grec` to completion (2026-10-23); shared columns match to the digit |
+| `testing/run_test_qi_flow.py` | Yes | 3,000-fight runs from the repo root and from `/tmp` identical (2026-10-24); `--variants rule_variants.py:QF` books hit qi |
 | `testing/run_test_lv_vs_crowds.py` | Yes | all 5 tables ran to completion; reports restored |
 | `testing/run_test_ffa.py` | Yes | both tables ran to completion; report committed |
 | `testing/sim_group_ffa.py` | Yes | full three-tier run to completion (~27 min); stdout only, no report file |
