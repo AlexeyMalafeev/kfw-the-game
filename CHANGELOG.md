@@ -204,6 +204,16 @@ All notable changes to KFW are documented here. Format loosely follows
     an environment multiplier of 0 instead of a neutral 1 — unused there,
     since environment techs can't trigger in those fights, but a trap for
     any future code; the attribute is also renamed `environment_bonus_mult`
+- **Translation scripts dropped catalog comments and review marks**
+  (`dev_scripts/i18n_common.py`): the shared `.po` reader ignored the
+  comment lines above each entry — the source location (`#: file:line`)
+  and flags such as `#, fuzzy`, the standard "this translation needs
+  review" mark. `translate_names.py` therefore wiped the source locations,
+  and any run of the extractor would have silently cleared a review mark,
+  making a doubtful translation look final (and `i18n_coverage.py` always
+  reported 0 fuzzy). No catalog had lost anything yet. A catalog read and
+  written back is now unchanged; a test checks this on the committed
+  catalogs. No gameplay change
 
 ## [v0.7.5-beta "Palladius Palm"] — 2026-10-19
 

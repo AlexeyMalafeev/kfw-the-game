@@ -1,5 +1,7 @@
 """Russian localization: catalogs, display-name layer, quotes, render patterns."""
+import importlib.util
 import random
+from pathlib import Path
 
 import pytest
 
@@ -121,3 +123,49 @@ class TestRussian:
         m = moves.ALL_MOVES_DICT['Punch']
         assert m.name == 'Punch'  # identifier unchanged
         assert m.display_name == 'Удар кулаком'
+
+
+@pytest.fixture(scope='module')
+def i18n_common():
+    # dev_scripts/ is not a package; load the catalog helpers from their file
+    spec = importlib.util.spec_from_file_location(
+        'i18n_common', Path('dev_scripts') / 'i18n_common.py'
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class TestCatalogTools:
+    """dev_scripts/i18n_common.py: a .po read and written back is unchanged.
+
+    Until 2026-10-24 parse_po dropped the '#:' source references and '#,'
+    flags (e.g. fuzzy, "needs review"), because they come before the msgid
+    they belong to; translate_names.py rewrites kfw_names.po without
+    rescanning the code, so it lost them."""
+
+    def test_comments_and_review_marks_kept(self, i18n_common, tmp_path):
+        po = tmp_path / 'sample.po'
+        po.write_text(
+            'msgid ""\nmsgstr ""\n"Language: ru\\n"\n\n'
+            '#, fuzzy\n#: kf_lib/b.py:2\nmsgid "Got Married"\nmsgstr "Свадьба"\n\n'
+            '#: kf_lib/a.py:1 kf_lib/c.py:3\nmsgid "Lucky Devil"\nmsgstr "Везучий чёрт"\n\n'
+            '#~ msgid "Vengeful Fox"\n#~ msgstr "Мстительная лиса"\n',
+            encoding='utf-8',
+        )
+        entries = {e['msgid']: e for e in i18n_common.parse_po(po)}
+        assert entries['Got Married']['flags'] == {'fuzzy'}
+        assert entries['Got Married']['refs'] == ['kf_lib/b.py:2']
+        assert entries['Lucky Devil']['flags'] == set()
+        assert entries['Lucky Devil']['refs'] == ['kf_lib/a.py:1', 'kf_lib/c.py:3']
+        assert entries['Vengeful Fox']['obsolete']
+        out = tmp_path / 'out.po'
+        i18n_common.write_po(list(entries.values()), out)
+        assert out.read_text(encoding='utf-8') == po.read_text(encoding='utf-8')
+
+    @pytest.mark.parametrize('name', ['kfw.po', 'kfw_names.po'])
+    def test_committed_catalogs_round_trip(self, i18n_common, tmp_path, name):
+        po = Path('locale') / 'ru' / 'LC_MESSAGES' / name
+        out = tmp_path / name
+        i18n_common.write_po(i18n_common.parse_po(po), out)
+        assert out.read_text(encoding='utf-8') == po.read_text(encoding='utf-8')

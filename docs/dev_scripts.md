@@ -129,7 +129,11 @@ Shared library, not run directly: minimal .po parse/write helpers and a
 pure-Python .po→.mo compiler, so catalog maintenance needs no gettext
 binaries. Gotcha baked into it: the header `msgstr` must contain real
 newlines — writing a literal `\n` sequence produces a catalog gettext
-cannot parse (`UnicodeDecodeError` on the charset line).
+cannot parse (`UnicodeDecodeError` on the charset line). A catalog read
+with `parse_po` and written back with `write_po` comes out unchanged,
+including the `#:` source references and `#,` flags (`fuzzy`) that sit
+above each `msgid`; `test/test_i18n.py` checks this on the committed
+catalogs.
 
 ### i18n_extract.py
 

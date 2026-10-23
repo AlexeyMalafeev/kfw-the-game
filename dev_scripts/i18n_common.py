@@ -1,14 +1,15 @@
 """Shared minimal .po parsing/writing and .mo compilation (stdlib only).
 
-Used by i18n_extract.py, compile_locale.py and i18n_coverage.py. The game ships
-committed .mo files, so players never need gettext tooling.
+Used by i18n_extract.py, translate_names.py, compile_locale.py and
+i18n_coverage.py. The game ships committed .mo files, so players never need
+gettext tooling.
 
 Entry model: dict with keys
     msgid        str
     msgid_plural str or None
     msgstr       str, or dict[int, str] for plural entries
     flags        set[str]      e.g. {'fuzzy'}
-    refs         list[str]     '#:' source references, extractor only
+    refs         list[str]     '#:' source references (the extractor rebuilds them)
     obsolete     bool
 """
 
@@ -70,6 +71,9 @@ def parse_po(path):
     cur = None  # current entry dict
     last_field = None  # 'msgid' | 'msgid_plural' | 'msgstr' | int (plural index)
     obsolete = False
+    # '#:' refs and '#,' flags come before the msgid they belong to
+    pending_refs = []
+    pending_flags = set()
 
     def flush():
         nonlocal cur
@@ -90,10 +94,10 @@ def parse_po(path):
             if not line:
                 continue
         elif line.startswith('#'):
-            if line.startswith('#:') and cur is not None:
-                cur['refs'].extend(line[2:].split())
-            elif line.startswith('#,') and cur is not None:
-                cur['flags'] |= {f.strip() for f in line[2:].split(',') if f.strip()}
+            if line.startswith('#:'):
+                pending_refs.extend(line[2:].split())
+            elif line.startswith('#,'):
+                pending_flags |= {f.strip() for f in line[2:].split(',') if f.strip()}
             continue
         if line.startswith('msgid_plural'):
             cur['msgid_plural'] = _unquote(line[len('msgid_plural'):].strip()[1:-1])
@@ -104,9 +108,10 @@ def parse_po(path):
                 'msgid': _unquote(line[len('msgid'):].strip()[1:-1]),
                 'msgid_plural': None,
                 'msgstr': '',
-                'flags': set(),
-                'refs': [],
+                'flags': pending_flags,
+                'refs': pending_refs,
             }
+            pending_refs, pending_flags = [], set()
             last_field = 'msgid'
         elif line.startswith('msgstr['):
             idx = int(line[line.index('[') + 1: line.index(']')])
