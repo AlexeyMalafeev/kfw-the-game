@@ -14,14 +14,22 @@ class FightAttributes(FighterAPI, ABC):
     CRITICAL_PER_AGILITY_POINT: Final = 0.05
     EPIC_CHANCE_BASE: Final = 0.0
     EPIC_CHANCE_INCR_PER_LV: Final = 0.005
-    HP_PER_HEALTH_LV: Final = 50
+    # toughness and max stamina come partly from health (since 2026-10; level
+    # only before), via a "health level": the level whose typical generated
+    # fighter has this much health (health_full ~ 3.449 + 0.267 * level)
+    HEALTH_LV_INTERCEPT: Final = 3.449
+    HEALTH_PER_LV: Final = 0.267
+    HP_PER_HEALTH_LV: Final = 40  # 50 until 2026-10
     MAX_RESIST_KO: Final = 0.5
     QP_BASE: Final = 0
     QP_INCR_PER_LV: Final = 5
     QP_PORTION_RESTORED_PER_TURN: Final = 0.1  # 0.2 until 2026-10, when qi wasn't scarce
     STAMINA_BASE: Final = 50  # for all fighter levels
+    STAMINA_FROM_HEALTH: Final = 0.3  # share of max stamina set by the health level
+    STAMINA_FROM_HEALTH_MIN: Final = 30  # floor of that share's source, for very low health
     STAMINA_INCR_PER_LV: Final = 10
     STAMINA_PORTION_RESTORED_PER_TURN: Final = 0.1
+    TOUGHNESS_FROM_HEALTH: Final = 0.2  # share of toughness set by the health level
     TOUGHNESS_PER_LV: Final = 3
 
     # strike multipliers
@@ -223,9 +231,16 @@ class FightAttributes(FighterAPI, ABC):
     def refresh_dependent_atts(self) -> None:
         self.hp_max = self.health_full * self.HP_PER_HEALTH_LV
         self.hp_gain = round(self.hp_max * self.hp_gain_mult)
-        self.stamina_max = round(
+        health_lv = (self.health_full - self.HEALTH_LV_INTERCEPT) / self.HEALTH_PER_LV
+        stamina_by_lv = round(
             (self.STAMINA_BASE + self.STAMINA_INCR_PER_LV * self.level) * self.stamina_max_mult
         )
+        stamina_by_health = max(
+            self.STAMINA_FROM_HEALTH_MIN,
+            (self.STAMINA_BASE + self.STAMINA_INCR_PER_LV * health_lv) * self.stamina_max_mult,
+        )
+        self.stamina_max = round((1 - self.STAMINA_FROM_HEALTH) * stamina_by_lv
+                                 + self.STAMINA_FROM_HEALTH * stamina_by_health)
         self.stamina_gain = round(self.stamina_max * self.STAMINA_PORTION_RESTORED_PER_TURN *
                                   self.stamina_gain_mult)
         self.qp_max = round(
@@ -244,7 +259,10 @@ class FightAttributes(FighterAPI, ABC):
             (self.EPIC_CHANCE_BASE + self.EPIC_CHANCE_INCR_PER_LV * self.level)
             * self.epic_chance_mult
         )
-        self.toughness = (self.level - 1) * self.TOUGHNESS_PER_LV
+        toughness_by_lv = (self.level - 1) * self.TOUGHNESS_PER_LV
+        toughness_by_health = max(0, (health_lv - 1) * self.TOUGHNESS_PER_LV)
+        self.toughness = round((1 - self.TOUGHNESS_FROM_HEALTH) * toughness_by_lv
+                               + self.TOUGHNESS_FROM_HEALTH * toughness_by_health)
         # re-clamp pools in case their maxes just shrank (e.g. an item effect expiring)
         self.hp = min(self.hp, self.hp_max)
         self.stamina = min(self.stamina, self.stamina_max)

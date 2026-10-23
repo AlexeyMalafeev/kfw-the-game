@@ -586,3 +586,45 @@ buff preemptive         ±1.3       -1.12       -2.71       -0.45       -0.54   
 buff counters           ±1.3      -11.28      -12.35      -10.87      -11.35       -9.59      -10.92      -11.50      -11.71
 buff HP gain            ±1.4        4.22        3.41        4.40        4.90        6.36        3.29        4.72        5.63
 buff fury               ±1.3        4.19        5.41        5.01        5.53        5.07        5.70        4.30        3.63
+
+
+=== Adopted: D + Sa2 in the engine (2026-10-23) ===
+
+The engine now has setup D + Sa2 built in (40 HP per health point, 20% of
+toughness and 30% of stamina from health, block power from health, tempo
+1.5 * (speed - 2)). Derived values (HP, toughness, stamina, block power) of
+2,000 seeded fighters equal the variant run's exactly; action times differ
+by at most 1 time unit in 20% of cases (the variant rounded twice, the
+engine once). A 100k run of the engine (no variants) against the variant
+run:
+
+                                    base       D+Sa2      engine
+fight length, s                    62.70       59.10       59.50
+strikes / fight                    11.20        8.60        8.60
+preemptives / fight                 0.12        0.09        0.09
+counters / fight                    0.59        0.48        0.48
+dodged %                           19.40       18.90       18.80
+fully blocked %                     8.30       10.90       11.00
+partly blocked %                   10.90        7.80        7.80
+
+all strength           ±0.10        2.05       -0.13       -0.09
+all agility            ±0.10        1.77        0.55        0.56
+all speed              ±0.10       -1.86       -0.33       -0.33
+all health             ±0.10       -1.97       -0.09       -0.13
+all gap (max - min)                 4.02        0.88        0.89
+
+lv 1-7 strength        ±0.20        2.26       -0.59       -0.54
+lv 1-7 agility         ±0.10        2.92        0.95        0.93
+lv 1-7 speed           ±0.20       -3.86       -1.61       -1.63
+lv 1-7 health          ±0.20       -1.33        1.25        1.23
+lv 1-7 gap (max - min)              6.78        2.86        2.86
+
+lv 8-14 strength       ±0.20        2.57        0.28        0.35
+lv 8-14 agility        ±0.20        1.63        0.33        0.36
+lv 8-14 speed          ±0.10       -2.24       -0.80       -0.76
+lv 8-14 health         ±0.20       -1.96        0.19        0.04
+lv 8-14 gap (max - min)             4.81        1.13        1.12
+
+lv 15-20 strength      ±0.20        1.43       -0.19       -0.21
+lv 15-20 agility       ±0.20        1.15        0.49        0.49
+lv 15-20 speed         ±0.20       -0.18        0.95        0.94

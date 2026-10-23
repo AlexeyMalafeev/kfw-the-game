@@ -1,5 +1,12 @@
 """Rule experiments of the 2026-10 balance pass, as runtime monkeypatches.
 
+ADOPTED 2026-10-23 into the engine and removed from this file: setup D + Sa2
+(Hp40 + HbT20S30 + Hblk + Sa2: 40 HP per health point, 20% of toughness and
+30% of stamina from health, block power from health, tempo 1.5 * (speed - 2)).
+Everything below was measured against the engine BEFORE that; variants that
+patch the same rules (the Hb* family, Ha, Hp20, St, Stc) now stack on top of
+the adopted ones and need re-deriving before reuse.
+
 Not game code: each function below patches `Fighter` to try a rule change
 without editing the engine. Use them with
     run_test_fb.py --variants rule_variants.py:Gc+Hb25     (100k harness)
@@ -304,10 +311,6 @@ def Hp20():
     F.HP_PER_HEALTH_LV = 20
 
 
-def Hp40():
-    F.HP_PER_HEALTH_LV = 40
-
-
 def _hb_ts(toughness, stamina):
     _hb(toughness, stamina=False)
     _hb(stamina, toughness=False)  # wraps the first patch; level-based stamina is untouched by it
@@ -317,8 +320,6 @@ def HbT10S25():
     _hb_ts(0.1, 0.25)
 
 
-def HbT20S30():
-    _hb_ts(0.2, 0.3)
 
 
 #   Gs     stored guard: Guard's bonus waits for the next incoming strike instead
@@ -414,14 +415,15 @@ def St():
 #   Sdef  dodge and block chance from speed instead of agility
 #   Pre   a defender faster than its attacker gets a 15% preemptive chance by
 #         default (like a default counter chance), on top of preemptive techs
-#   Hblk  block power from health instead of strength ("D" = Hp40+HbT20S30+Hblk)
+#   Hblk  block power from health instead of strength ("D" = Hp40+HbT20S30+Hblk;
+#         adopted, removed)
 #   Stc   St with a fixed reference speed (6, about lv 10) instead of the
 #         level's typical speed: same relative tempo, no level normalization
 #   Sa2   linear tempo from speed above a base of 2: time cost / (speed - 2),
-#         rescaled to leave a speed-6 fighter unchanged
+#         rescaled to leave a speed-6 fighter unchanged (adopted, removed)
 
 PRE_BASE = 0.15
-S_REF, S_OFFSET = 6, 2
+S_REF = 6
 
 
 def Sdef():
@@ -444,29 +446,12 @@ def Pre():
     F.check_preemptive = check_preemptive
 
 
-def Hblk():
-    oc = F.calc_dfs
-    def calc_dfs(self):
-        oc(self)
-        if self.strength_full:
-            self.dfs_pwr *= self.health_full / self.strength_full
-    F.calc_dfs = calc_dfs
-
-
 def Stc():
     ot = F.get_move_time_cost
     def get_move_time_cost(self, move_obj):
         return round(ot(self, move_obj) * (S_REF / self.speed_full) ** 0.5)
     F.get_move_time_cost = get_move_time_cost
 
-
-def Sa2():
-    ot = F.get_move_time_cost
-    scale = (S_REF - S_OFFSET) / S_REF
-    def get_move_time_cost(self, move_obj):
-        s = self.speed_full
-        return round(ot(self, move_obj) * s / max(s - S_OFFSET, 1) * scale)
-    F.get_move_time_cost = get_move_time_cost
 
 
 #   Sdef50  dodge and block chance from (agility + speed) / 2 (halfway Sdef)

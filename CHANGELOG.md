@@ -61,6 +61,17 @@ All notable changes to KFW are documented here. Format loosely follows
   their qi unspent, so the qi techs bought almost nothing; Lotus Stance, for
   example, now helps about as much as an average technique (in head-to-head
   tests its edge rose from +6.9 to +10.4)
+- **The four attributes are worth about the same** (balance-affecting):
+  strength and agility used to win fights while speed and health lost
+  them — speed especially at low levels, where a speed point was worth half
+  a point of anything else. Health now gives 40 HP per point instead of 50,
+  but also sets a fifth of a fighter's toughness and almost a third of its
+  stamina (both came from level alone) and its block power (which came from
+  strength). Speed counts from a base of 2, so each point matters more at
+  low speed: going from 4 to 5 now means acting 50% more often instead of
+  25%. In the fight-balance harness the gap between the most and the least
+  useful attribute fell from 4.0 to 0.9 Diff% points, and fights take about
+  a quarter fewer strikes (8.6 instead of 11.2) because HP is lower
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so

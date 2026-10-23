@@ -325,8 +325,10 @@ below are decided:
 - **Defense rework follow-ups** (author 2026-10-20/22). Done 2026-10-22:
   the 'dodge' buff raises dodge chance only (`EVADE1/2` 0.4/0.8 → 0.7/1.4,
   modeled); qi regeneration 20% → 10% of max per turn (qi buff −7.5 → −3.6,
-  Lotus Stance A/B +6.9 → +10.4). **Tested 2026-10-22 as rule variants, author
-  to decide** (`dev_scripts/testing/rule_variants.py`, full tables in
+  Lotus Stance A/B +6.9 → +10.4). Done 2026-10-23: health and speed —
+  setup D + linear tempo adopted (see the Health and Speed items and
+  CHANGELOG). **Guard, counters, qi: tested 2026-10-22 as rule variants,
+  author to decide** (`dev_scripts/testing/rule_variants.py`, full tables in
   `tests/balance experiments 2026-10-22.txt`; baseline fights 62.7 s, +27%
   vs 49.5 s before the ⚠️ batches). Then implement the chosen ones in the
   engine (docs, tests, i18n), drop them from `rule_variants.py`, and run the
@@ -346,7 +348,12 @@ below are decided:
   - **Qi** (qi techs only): qi shield (a partial block spends qi to absorb
     the rest) −3.6 → −1.1; qi-charged strikes at +10% → +3.0, with the
     shield +7.2 (at +30%: +16.9, too strong)
-  - **Health**: block power from (strength + health) / 2: −2.0 → −1.7
+  - **Health — adopted 2026-10-23** (setup D: 40 HP per health point, 20%
+    of toughness and 30% of stamina from health, block power from health;
+    with the Speed item's linear tempo the four attributes end within ±0.6,
+    gap 4.0 → 0.9). Left over: health is a bit strong at levels 1–7 (+1.3)
+    and weak at 15–20 (−1.3); HP gain techs +12.2 → ~+5 and fury +8.0 → ~+5
+    after the HP cut. History of the tests: block power from (strength + health) / 2: −2.0 → −1.7
     (negligible); 25% of toughness and stamina from health: health → +0.2
     (neutral), fights +2 s, but the 'health' techs +3.4 → +11.8 and speed
     −1.9 → −2.7; 100% from health: +5.8 (too strong). Speed is the next
@@ -368,7 +375,11 @@ below are decided:
     40–50 HP; fights 49.4 s (the pre-batch length); 'health' techs +10.8
     (on par with strength/agility techs), HP gain +12.2 → +4.2, fury
     +8.0 → +4.2
-  - **Speed** (2026-10-23): speed only sets how often a fighter acts;
+  - **Speed — adopted 2026-10-23** (tempo `1.5 * (speed - 2)` instead of
+    `speed`). Left over: speed is a bit weak at levels 1–7 (−1.6) and a bit
+    strong at 15–20 (+1.0); techs that boost speed score ~+5 vs ~+12…+15
+    for the other attributes' techs — re-price their boost values with
+    `run_test_tech_ab.py`. History: speed only sets how often a fighter acts;
     strength sets damage *and* block power. An attribute point is worth
     +15.9 for speed vs +26.6…+36.2 for the others at levels 1–7 (about even
     at 15–20; toughness is not the cause): extra turns partly go to Guard /

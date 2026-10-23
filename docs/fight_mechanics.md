@@ -134,7 +134,7 @@ if stunned:     x *= STUN_DFS_MULT          # 0.8
 to_dodge = x * dodge_mult / DODGE_DIVISOR   # /3
 to_block = x / BLOCK_DIVISOR * wp_dfs_bonus * block_mult  # /2
 dfs_pwr  = dfs_penalty_mult * BLOCK_DEFAULT_POWER * block_mult * BLOCK_POWER
-           * strength_full * stamina_factor * wp_dfs_bonus
+           * health_full * stamina_factor * wp_dfs_bonus
 if fury: dfs_pwr *= fury_to_all_mult
 if stunned: dfs_pwr *= STUN_DFS_MULT          # 0.8
 ```
@@ -144,6 +144,16 @@ The three defensive buffs each do what their name says: `dodge_mult`
 *and* block power, `dfs_mult` ('defense') raises both chances. Until 2026-10
 `dfs_mult` was set by its techs but read nowhere, `block_mult` raised only
 block power, and `dodge_mult` sat in `x`, raising block chance too.
+
+Block power comes from **health** since 2026-10 (strength before). A
+blocked strike deals strike power minus block power, so with strength on
+both sides one strength point raised the fighter's strikes *and* blocks,
+and near the point where strikes and blocks are equal (low levels) it
+turned many full blocks into damage: an extra strength point gave +45%
+damage dealt at levels 1–7, an extra speed point +17%. Health's share of
+toughness and stamina and the new tempo rule (below) came in the same
+change; together they brought the four attributes within ±0.6 of neutral
+in the fight-balance harness (strongest minus weakest: 4.0 → 0.9).
 
 `rep_actions_factor` punishes repetitive attackers: `1 + 0.33 * n`, where `n` =
 how many of the attacker's last 3 actions (`previous_actions`, a maxlen-3 deque)
@@ -224,7 +234,8 @@ In order (steps 1–2 only if the target didn't defend — see below):
    reaches `hit_or_miss` anyway. With `BLOCK_POWER` 12 (2026-10) partial
    blocks are ~11% of strikes in the fight-balance harness, so the rule
    bites more often than it did at 20 (~4%).
-3. `dam = max(dam - toughness, 0)`; `toughness = (level - 1) * 3`.
+3. `dam = max(dam - toughness, 0)`; `toughness` from level and health, see
+   "Pools and derived attributes".
 4. `dam_reduc` (tech): `dam *= 1 - dam_reduc`.
 5. `target.take_damage(dam)` → `change_hp(-dam)`, sets `took_damage`.
 6. `try_cause_bleeding()`: `chance_cause_bleeding` roll → target's `bleeding`
@@ -264,9 +275,17 @@ Guard move's 1.5, so the +50% tech gave a free ×2.25 on every attack — more
 than an untrained Guard move costing a whole turn). Any move without
 `dist_change` resets `momentum` to 0.
 
-`get_move_time_cost = time_cost / (speed_full * (0.7 if slowed down))`, then ×
+`get_move_time_cost = time_cost / (tempo * (0.7 if slowed down))`, with
+`tempo = 1.5 * max(speed_full - 2, 1)` (`TEMPO_PER_SPEED`, `TEMPO_SPEED_BASE`):
+speed counts from a base of 2, like agility's `(agility_full - 3)` in
+counter chance, so each point is a bigger step at low speed (4 → 5 acts 50%
+more often, 8 → 9 about 17%); the 1.5 keeps a speed-6 fighter's action times
+unchanged. Until 2026-10 tempo was plain `speed_full`, and a speed point was
+worth half an average other attribute point at levels 1–7. Then ×
 `strike_time_cost_mult` (if `power`) or × `maneuver_time_cost_mult` (elif
-`dist_change`); Guard/Focus-type moves get neither multiplier.
+`dist_change`); Guard/Focus-type moves get neither multiplier. The result is
+rounded to whole time units (4–18 for most moves, so one action's time can
+be off by up to ~10%; unbiased on average — see BACKLOG "Coarse fight clock").
 
 Momentum: `change_distance(d, targ)` sets `self.momentum = -d` — closing in
 (negative `dist_change`) builds positive momentum (≤ +2 via `Rush Forward`),
@@ -302,15 +321,22 @@ faster fighters shed statuses in fewer time units. Durations tick down by
 
 `_fight_attributes.py`:
 
-- `hp_max = health_full * 50`; `change_hp` clamps to `[0, hp_max]` and zeroes
+- `hp_max = health_full * 40` (50 until 2026-10); `change_hp` clamps to `[0, hp_max]` and zeroes
   `qp` when `hp` hits 0. `hp` never goes negative, so all `hp <= 0` checks are
   effectively `hp == 0`.
-- `stamina_max = (50 + 10 * level) * stamina_max_mult`; `stamina_gain` = 10% of
+- **Health level**: `health_lv = (health_full - 3.449) / 0.267`, the level
+  whose typical generated fighter has this much health. Since 2026-10
+  toughness and max stamina come partly from it (level only before), so
+  health buys more than HP.
+- `stamina_max = 0.7 * (50 + 10 * level) * stamina_max_mult
+  + 0.3 * max(30, (50 + 10 * health_lv) * stamina_max_mult)` (the level part
+  rounded first); `stamina_gain` = 10% of
   max per own turn. `qp_max = 5 * level * qp_max_mult`; `qp_gain` = 10% of max
   per own turn (plus full/half `qp_gain` on successful dodge/block). Both clamp.
   Qi regeneration was 20% until 2026-10, when fighters ended fights with ~37%
   of their qi unspent, so the qi buffs barely mattered.
-- `toughness = (level - 1) * 3` — flat subtraction from every hit.
+- `toughness = 0.8 * (level - 1) * 3 + 0.2 * max(0, (health_lv - 1) * 3)`,
+  rounded — flat subtraction from every hit.
 - `*_full = round(base * *_mult)` for the four base atts
   (`_basic_attributes.py`).
 - `counter_chance = (agility_full - 3) * 0.05 * counter_chance_mult`;

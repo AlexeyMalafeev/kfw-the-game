@@ -46,6 +46,11 @@ class StrikeMechanics(FighterAPI, ABC):
     STAT_BASED_DAM_UPPER_MULT = 5
     STUN_DFS_MULT = 0.8  # dodge/block chances and block power while stunned
     STUN_HP_DIVISOR = 2.8  # todo make STUN_HP_DIVISOR into threshold
+    # tempo = how fast a fighter acts: TEMPO_PER_SPEED * (speed_full - TEMPO_SPEED_BASE),
+    # since 2026-10 (plain speed_full before, which made speed the weakest
+    # attribute at low levels); 1.5 keeps a speed-6 fighter's action times as before
+    TEMPO_PER_SPEED = 1.5
+    TEMPO_SPEED_BASE = 2
     TIME_UNIT_MULTIPLIER = 20
 
     def calc_atk(self, action: Move) -> None:
@@ -102,9 +107,11 @@ class StrikeMechanics(FighterAPI, ABC):
             self.to_block *= self.block_mult
             # print('to dodge, to block', self.to_dodge, self.to_block)
             # todo divide dfs_pwr by sth?
+            # block power from health since 2026-10 (strength before, which
+            # then set both sides of a blocked strike: strike minus block)
             self.dfs_pwr = (self.dfs_penalty_mult
                             * self.BLOCK_DEFAULT_POWER * self.block_mult * self.BLOCK_POWER
-                            * self.strength_full * self.stamina_factor * self.wp_dfs_bonus)
+                            * self.health_full * self.stamina_factor * self.wp_dfs_bonus)
             if self.check_status('fury'):
                 self.dfs_pwr *= self.fury_to_all_mult
             if self.check_status('stunned'):
@@ -287,7 +294,8 @@ class StrikeMechanics(FighterAPI, ABC):
             mob_mod = 1 - self.MOB_DAM_PENALTY
         else:
             mob_mod = 1
-        cost = move_obj.time_cost / (self.speed_full * mob_mod)
+        tempo = self.TEMPO_PER_SPEED * max(self.speed_full - self.TEMPO_SPEED_BASE, 1)
+        cost = move_obj.time_cost / (tempo * mob_mod)
         if move_obj.power:
             cost *= self.strike_time_cost_mult
         elif move_obj.dist_change:
