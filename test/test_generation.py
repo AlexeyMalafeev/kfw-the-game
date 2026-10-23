@@ -112,7 +112,7 @@ class TestTechDescriptions:
         # a param missing from boosts.PMAP still applies but is silently left
         # out of Tech.descr (head_/claw_strike_mult were, until 2026-10)
         style_gen.generate_new_styles(1)  # make sure generated-style techs exist
-        described = {param for param, _short, _long in boosts.PMAP}
+        described = {row[0] for row in boosts.PMAP}  # rows may add a formatter
         for t in techniques.get_all_techs_dict().values():
             missing = set(t.params) - described
             assert not missing, f'{t.name}: {sorted(missing)}'

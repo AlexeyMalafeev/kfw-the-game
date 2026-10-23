@@ -327,8 +327,8 @@ below are decided:
   modeled); qi regeneration 20% → 10% of max per turn (qi buff −7.5 → −3.6,
   Lotus Stance A/B +6.9 → +10.4). Done 2026-10-23: health and speed —
   setup D + linear tempo adopted, then speed techs +15% → +20% (see the
-  Health and Speed items and CHANGELOG). Done 2026-10-23: Guard (below).
-  **Counters: round 2 tested, author to decide; qi: next session**
+  Health and Speed items and CHANGELOG). Done 2026-10-23: Guard and
+  counters (below). **Qi: next session**
   (`dev_scripts/testing/rule_variants.py`, full tables in
   `tests/balance experiments 2026-10-22.txt`; baseline fights 62.7 s, +27%
   vs 49.5 s before the ⚠️ batches). Then implement the chosen ones in the
@@ -336,7 +336,8 @@ below are decided:
   final re-run:
   - **Guard — adopted 2026-10-23** (the author's pick): ×2.0 instead of
     ×1.5, plus half of Catch Breath's stamina and half of Focus's qi (10 /
-    10); guarding fighters show a `+` status mark. Measured with staged
+    10); guarding fighters show a `[]` status mark (also after an attack
+    with a guard-while-attacking tech). Measured with staged
     exchanges (`run_test_guard.py`), since the AI guards only when it can't
     attack: Guard saves 31% of an incoming strike's HP (18% before), 49%
     with Advanced Guard, 64% with Dragon Guards a Treasure; harness fights
@@ -355,13 +356,13 @@ below are decided:
     out cheaper counters). A/B lv 13–20 (median general tech +8.1):
     Retaliative Blows +2.2 → +5.3, Vengeful Fox +2.3 → +6.9; plus an attack
     bonus on those counters: hit ×2.0 → +8.3 / +12.0, critical ×3 → +9.0 /
-    +12.2, hit ×1.5 + critical ×2 → +9.1 / +13.5. Author to pick
-  - **Counters: two suspected bugs, author's verdict pending** (found
-    2026-10-23): a strike that misses (move failed) leaves the attacker's
-    damage value from its previous strike, so whether the miss can be
-    countered depends on that older strike (and on the previous fight for
-    the first strike); and an undefended hit whose damage toughness absorbs
-    completely counts as "no damage", so it can be countered
+    +12.2, hit ×1.5 + critical ×2 → +9.1 / +13.5. **Adopted 2026-10-23**:
+    guaranteed counters + hit ×2.0 (the author agreed with my pick; it
+    leaves the agility row within noise, the critical bonus didn't). Also
+    fixed the same day (the author's verdicts): a missed strike now resets
+    the attacker's damage (it kept the previous strike's value, which
+    decided whether the miss could be countered), and only a dodge, a full
+    block or a miss opens a counter (a hit toughness fully absorbed did too)
   - **Qi** (next session, the author 2026-10-23; qi techs only): qi shield (a partial block spends qi to absorb
     the rest) −3.6 → −1.1; qi-charged strikes at +10% → +3.0, with the
     shield +7.2 (at +30%: +16.9, too strong)

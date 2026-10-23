@@ -891,3 +891,36 @@ critical bonus makes agility a little more valuable (critical chance comes
 from agility): +0.18 with hit x1.5 + critical x2. Speed is 0.2 lower in all
 counter variants, Cg included (counters are strikes that cost no time, so
 acting more often matters a little less).
+
+
+=== Adopted: new Guard, guaranteed counters + hit x2.0 (2026-10-23) ===
+
+The author picked guaranteed counters with hit x2.0 (CbH20). Built into the
+engine with the new Guard and two counter fixes the author approved: a miss
+now resets the attacker's damage (it kept the previous strike's value), and
+only a dodge, a full block or a miss opens a counter (until then also a hit
+that toughness fully absorbed). Final engine vs the engine of 94950c1:
+
+A/B (lv 13-20, 16,000 fights, seed 11; reference techs to show the yardstick
+held: Iron Fist +10.7 -> +10.9, Fist of Fury +10.2 -> +9.8, Golden Lotus
+Stance +13.1 -> +13.1, Enraged Mantis +19.0 -> +19.9):
+  Retaliative Blows   +2.2 -> +8.5   (median general tech +8.1)
+  Vengeful Fox        +2.3 -> +12.1  (median advanced tech +13.4)
+
+Harness (100k, seed 42):
+                                engine     final
+fight length, s                  58.60     50.80
+counters / fight                  0.49      0.66
+Guard, % of actions              31.20     23.50
+style buffs counters  ±1.2      -12.44     -2.60
+Retaliative Blows     ±2.9       -7.54      0.76   (median general tech ~+0.8)
+Vengeful Fox          ±6.7      -15.90      0.00   (median advanced tech ~+2.4)
+all agility           ±0.10      0.45      0.60
+all strength          ±0.10      0.05      0.02
+all speed             ±0.10     -0.40     -0.52
+all health            ±0.10     -0.10     -0.10
+gap (max - min)                  0.85      1.12
+
+Agility gains 0.15 (beyond noise): counter chances come from dodges and full
+blocks, i.e. from agility, and counter-tech owners now use every one of them.
+The attribute gap stays near the 0.88 adopted with the health/speed rework.

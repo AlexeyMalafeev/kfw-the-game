@@ -16,6 +16,7 @@ class StrikeMechanics(FighterAPI, ABC):
     BLEEDING_PART_OF_DAM = 0.15
     BLOCK_DIVISOR = 2
     BLOCK_POWER = 12  # 20 until 2026-10 (most blocks then absorbed the whole strike)
+    COUNTER_TECH_HIT_MULT = 2.0  # to_hit of a counter-tech counter (since 2026-10-23)
     DAM_DIVISOR = 2
     DODGE_DIVISOR = 3
     DUR_LYING_MAX = 200
@@ -73,6 +74,9 @@ class StrikeMechanics(FighterAPI, ABC):
         if self.check_status('fury'):
             self.atk_pwr *= self.fury_to_all_mult
             self.to_hit *= self.fury_to_all_mult
+        # a counter-tech counter is twice as hard to dodge or block (since 2026-10-23)
+        if self.is_countering and self.guaranteed_counters:
+            self.to_hit *= self.COUNTER_TECH_HIT_MULT
 
     # todo how is calc_dfs used? why not relative to attacker?
     def calc_dfs(self) -> None:

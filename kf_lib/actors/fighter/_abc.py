@@ -83,6 +83,7 @@ class FighterAPI(ABC):
     guard_dfs_bonus: float = None
     guard_while_attacking: float = None
     guarding: bool = None
+    guaranteed_counters: int = None
     health: int = None
     health_full: int = None
     health_mult: float = None
@@ -93,6 +94,7 @@ class FighterAPI(ABC):
     hp_gain_mult: float = None
     in_fight_impro_wp_chance: float = None
     is_auto_fighting: bool = None
+    is_countering: bool = None
     is_human: bool = None
     is_player: bool = None
     kos_this_fight: int = None

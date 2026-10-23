@@ -229,8 +229,8 @@ LINKED_TECHS = [
         Tech('Attack Is Defense', guard_while_attacking=b.GUARD_WHILE_ATTACKING2, is_advanced=True),
     ),
     (
-        Tech('Retaliative Blows', counter_chance_mult=b.COUNTER_CH_MULT1, is_upgradable=True),
-        Tech('Vengeful Fox', counter_chance_mult=b.COUNTER_CH_MULT2, is_advanced=True),
+        Tech('Retaliative Blows', guaranteed_counters=b.GUARANTEED_COUNTERS1, is_upgradable=True),
+        Tech('Vengeful Fox', guaranteed_counters=b.GUARANTEED_COUNTERS2, is_advanced=True),
     ),
     (
         Tech('Preemptive Strikes', preemptive_chance=b.PREEMPTIVE_CH1, is_upgradable=True),

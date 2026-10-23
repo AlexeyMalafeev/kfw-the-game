@@ -60,6 +60,7 @@ class FighterWithActions(FighterAPI, ABC):
             # until 2026-10 also * GUARD_POWER (the Guard move's x1.5), which made
             # +50% guard-while-attacking a free x2.25 on every attack
             self.dfs_bonus *= 1.0 + self.guard_while_attacking
+            self.guarding = True  # marked like the Guard move (since 2026-10-23)
         self.current_fight.display('=' * len(s))
         if self.target.check_preemptive():
             self.target.do_preemptive()
@@ -72,7 +73,10 @@ class FighterWithActions(FighterAPI, ABC):
         f_ch = self.get_move_fail_chance(self.action)
         if rnd() <= f_ch:
             if self.action.power:
-                self.to_hit = 0
+                self.to_hit = 0  # also tells try_counter that the strike missed
+                # until 2026-10-23 dam kept the previous strike's value, which then
+                # decided whether this miss could be countered
+                self.dam = 0
                 if compl >= 1:
                     self.current_fight.display(yellow(_('Miss!')))
                     self.cause_off_balance()
@@ -168,7 +172,11 @@ class FighterWithActions(FighterAPI, ABC):
                 n2=tr_fighter_name(self.target.name),
             )
             self.current_fight.display(s)
-            self.try_strike()
+            self.is_countering = True  # calc_atk: counter techs' hit bonus
+            try:
+                self.try_strike()
+            finally:
+                self.is_countering = False
             # stamina/qi cost, like a preemptive strike (counters were free
             # until 2026-10)
             self.apply_move_cost()
@@ -361,8 +369,24 @@ class FighterWithActions(FighterAPI, ABC):
             )
 
     def try_counter(self) -> None:
-        # print(f'{self.name}: {self.counter_chance=}')
-        if not self.target.dam and self.hp > 0 and rnd() <= self.counter_chance:
+        atkr = self.target
+        if self.hp <= 0:
+            return
+        # a counter answers a strike that missed or was fully dodged/blocked; until
+        # 2026-10-23 any strike that did no damage, incl. a hit toughness absorbed
+        missed = not atkr.to_hit  # check_move_failed zeroes it
+        if not (missed or (self.defended and not atkr.dam)):
+            return
+        if self.guaranteed_counters:
+            # counter techs (since 2026-10-23): one sure counter per tech, in a
+            # row while affordable, instead of the counter_chance roll
+            for _i in range(self.guaranteed_counters):
+                if atkr.hp <= 0 or self.hp <= 0:
+                    break
+                if not self.get_av_moves(attack_moves_only=True):
+                    break
+                self.do_counter()
+        elif rnd() <= self.counter_chance:
             self.do_counter()
 
     def try_fury(self) -> None:

@@ -26,7 +26,9 @@ Guard (baseline: guard buff -11.8, Advanced Guard -8.5, fights 62.7 s):
        (Gs+Gc: guard -9.4, fights 56.8 s)
   (why a/b fail: the default AI guards only when it can't attack, and 92% of
   Guard turns receive no strike at all)
-Counters (baseline: counters buff -12.5, Retaliative Blows -5.5, 0.59/fight):
+Counters (baseline: counters buff -12.5, Retaliative Blows -5.5, 0.59/fight;
+the C* variants below scale counter_chance_mult, which no tech sets since
+2026-10-23, so they now do nothing):
   Ca   counter with the best move (max atk_pwr * to_hit)       -> no effect
   Cb   counter-tech fighters also counter after a partial block -> no effect
   Cx3, Cx5  counter techs' counter_chance_mult x3 / x5          -> -10.9 / -11.3
@@ -107,7 +109,8 @@ experiments file, sections "Guard round 2" and "Counters round 2"):
            strike Guard saves 18% -> 31% of the HP (Advanced Guard 34 -> 49%,
            Dragon Guards a Treasure 49 -> 64%); harness fights 58.6 -> 51.0 s,
            Guard 31% -> 23% of actions, attributes within noise
-  Cg       guaranteed counters for counter techs. A/B lv 13-20 (median general
+  Cg       guaranteed counters for counter techs (ADOPTED 2026-10-23 with
+           CbH20, removed). A/B lv 13-20 (median general
            tech +8.1, advanced +13.4): Retaliative Blows +2.2 -> +5.3, Vengeful
            Fox +2.3 -> +6.9; harness counters buff -12.4 -> -9.8
   Cg+Chalf (cheaper counters, ruled out by the author) -> +7.5 / +10.8
@@ -495,99 +498,10 @@ def Sdef50():
 #         incoming strike that did no damage, once per counter tech (an advanced
 #         one counts as two), in a row while it can afford an attack move; no
 #         counter-chance roll for it. Fighters without counter techs keep the
-#         default roll.
-
-
-def n_counter_techs(f):
-    from kf_lib.kung_fu import boosts
-    return round((f.counter_chance_mult - 1.0) / boosts.COUNTER_CH_MULT1)
-
-
-def Cg():
-    ot = F.try_counter
-    def try_counter(self):
-        n = n_counter_techs(self)
-        if n <= 0:
-            ot(self)
-            return
-        atkr = self.target
-        if atkr.dam:
-            return
-        for _i in range(n):
-            if self.hp <= 0 or atkr.hp <= 0:
-                break
-            if not self.get_av_moves(attack_moves_only=True):
-                break
-            self.do_counter()
-    F.try_counter = try_counter
+#         default roll. ADOPTED 2026-10-23 with CbH20 (below) and removed
 
 
 # Counter-tech counters with an attack bonus (2026-10-23, the author's setups,
-# on top of Cg; default counters unchanged). The attacker is already
-# off-balance at the counter (x0.75 defense, engine since 2026-10). A defense
-# penalty on the attacker and a hit bonus on the counter are the same rule:
-# dodge and block chance are the defender's numbers divided by to_hit.
-#   CbH15 / CbH20  the counter's to_hit x1.5 / x2.0
-#   CbK2 / CbK3    the counter's critical chance x2 / x3 (an undefended hit
-#                  is still needed, as for any critical)
-
-COUNTER_HIT = 1.0
-COUNTER_CRIT = 1.0
-_counter_bonus_on = False
-
-
-def _counter_bonus():
-    global _counter_bonus_on
-    if _counter_bonus_on:
-        return
-    _counter_bonus_on = True
-    odc, oca, otc = F.do_counter, F.calc_atk, F.try_critical
-    def do_counter(self):
-        self._tech_counter = n_counter_techs(self) > 0
-        try:
-            odc(self)
-        finally:
-            self._tech_counter = False
-    def calc_atk(self, action):
-        oca(self, action)
-        if getattr(self, '_tech_counter', False):
-            self.to_hit *= COUNTER_HIT
-    def try_critical(self):
-        if getattr(self, '_tech_counter', False):
-            c = self.critical_chance
-            self.critical_chance = min(1.0, c * COUNTER_CRIT)
-            try:
-                otc(self)
-            finally:
-                self.critical_chance = c
-        else:
-            otc(self)
-    F.do_counter, F.calc_atk, F.try_critical = do_counter, calc_atk, try_critical
-
-
-def _set_counter_hit(k):
-    global COUNTER_HIT
-    COUNTER_HIT = k
-    _counter_bonus()
-
-
-def _set_counter_crit(k):
-    global COUNTER_CRIT
-    COUNTER_CRIT = k
-    _counter_bonus()
-
-
-def CbH15():
-    _set_counter_hit(1.5)
-
-
-def CbH20():
-    _set_counter_hit(2.0)
-
-
-def CbK2():
-    _set_counter_crit(2.0)
-
-
-def CbK3():
-    _set_counter_crit(3.0)
+# on top of Cg; default counters unchanged): CbH15 / CbH20 the counter's
+# to_hit x1.5 / x2.0, CbK2 / CbK3 its critical chance x2 / x3. CbH20 ADOPTED
+# 2026-10-23 (COUNTER_TECH_HIT_MULT); all removed, code at commit ae74b9f.

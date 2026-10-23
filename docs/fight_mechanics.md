@@ -271,7 +271,7 @@ fighter can be shown stunned/knocked back/falling before the KNOCK-OUT line;
 `dfs_bonus *= guard_dfs_bonus * GUARD_POWER` (2.0; 1.5 until 2026-10-23),
 lasting until the fighter's next turn, and recovers 10 stamina and 10 qi
 (`GUARD_STAMINA_GAIN` / `GUARD_QI_GAIN`, half of what Catch Breath / Focus
-restore; since 2026-10-23). Meanwhile `guarding` is set, shown as a `+`
+restore; since 2026-10-23). Meanwhile `guarding` is set, shown as a `[]`
 status mark (see `ui.md`); `start_fight_turn` clears both. `dfs_bonus`
 multiplies dodge and block chance, not block power: in staged exchanges
 (`dev_scripts/testing/run_test_guard.py`) Guard saves 31% of the HP an
@@ -279,7 +279,8 @@ incoming strike would cost (18% at ×1.5), 49% with Advanced Guard, 64% with
 Dragon Guards a Treasure. The default fight AI guards mostly when it can't
 afford an attack, so whole-fight harness runs can't price Guard.
 `guard_while_attacking` (tech) instead multiplies `dfs_bonus` by
-`1 + guard_while_attacking` inside `attack()` (until 2026-10 also by the
+`1 + guard_while_attacking` inside `attack()`, and sets `guarding` too, so
+such a fighter is marked `[]` after attacking (until 2026-10 also by the
 Guard move's 1.5, so the +50% tech gave a free ×2.25 on every attack — more
 than an untrained Guard move costing a whole turn). Any move without
 `dist_change` resets `momentum` to 0.
@@ -348,16 +349,32 @@ faster fighters shed statuses in fewer time units. Durations tick down by
   rounded — flat subtraction from every hit.
 - `*_full = round(base * *_mult)` for the four base atts
   (`_basic_attributes.py`).
-- `counter_chance = (agility_full - 3) * 0.05 * counter_chance_mult`;
+- `counter_chance = (agility_full - 3) * 0.05 * counter_chance_mult`
+  (`counter_chance_mult` is a hook: no tech sets it since 2026-10-23);
   `epic_chance = 0.005 * level * epic_chance_mult`.
 
-Counter-attacks (`try_counter`): after the defender fully negated a strike
-(`attacker.dam == 0`) and is alive, roll `counter_chance` → `do_counter()` runs
-the full strike pipeline back at the attacker with a random available attack
-move, and pays that move's stamina/qi cost (`apply_move_cost`) exactly like
-`do_preemptive` (counters were free until 2026-10). The attacker is
-off-balance at that moment (see `defend`), so the counter meets ×0.75
-defense.
+Counter-attacks (`try_counter`) answer a strike that missed
+(`check_move_failed` zeroes the attacker's `to_hit` and, since 2026-10-23,
+its `dam`, which until then kept the previous strike's value) or was fully
+dodged/blocked (`defended` and `attacker.dam == 0`), if the defender is
+alive. Until
+2026-10-23 any strike with `dam == 0` qualified, including an undefended hit
+that toughness fully absorbed. A fighter without counter techs then rolls
+`counter_chance`; one with counter techs counters for sure,
+`guaranteed_counters` times in a row (1 per counter tech, 2 for Vengeful Fox
+or an upgraded style counter tech), stopping early if either fighter is down
+or it can't afford an attack move at that distance; it never rolls. Each
+counter (`do_counter`) runs the full strike pipeline back at the attacker
+with a random available attack move, and pays that move's stamina/qi cost
+(`apply_move_cost`) exactly like `do_preemptive` (counters were free until
+2026-10), but no time. A counter-tech counter has `to_hit ×
+COUNTER_TECH_HIT_MULT` (2.0; `do_counter` sets `is_countering` for
+`calc_atk`), i.e. half the attacker's usual dodge and block chance. The
+attacker is off-balance at that moment (see `defend`), so every counter
+meets ×0.75 defense on top. Until 2026-10-23 counter techs raised
+`counter_chance_mult` by +50% / +100%; that left them at a quarter of an
+average tech (A/B tool), and guaranteed counters plus the hit bonus bring
+them to about average (tables in `tests/balance experiments 2026-10-22.txt`).
 
 ## Techs, moves, boosts
 

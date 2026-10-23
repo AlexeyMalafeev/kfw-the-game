@@ -6,12 +6,13 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
-- **Guarding fighters are marked**: a `+` after a fighter's name, in the
-  fight header and in the target menu, shows that they used Guard and
-  defend much better until their next turn — attacking them risks a dodged
-  or blocked strike and a counter. It joins the other marks (`'`
-  off-balance, `...` on the ground, `!` stunned, `#` fury, `;` bleeding,
-  `,` slowed down), which are now listed in `docs/ui.md`
+- **Guarding fighters are marked**: `[]` after a fighter's name, in the
+  fight header and in the target menu, shows that they defend much better
+  until their next turn — they used Guard, or attacked with a
+  guard-while-attacking technique — so attacking them risks a dodged or
+  blocked strike and a counter. It joins the other marks (`'` off-balance,
+  `...` on the ground, `!` stunned, `#` fury, `;` bleeding, `,` slowed
+  down), which are now listed in `docs/ui.md`
 
 ### Changed
 - **Blocking works as its own chance** (balance-affecting): dodge and block
@@ -98,6 +99,18 @@ All notable changes to KFW are documented here. Format loosely follows
   mostly when it can't attack, but those turns now refill it, so fights got
   shorter (58.6 → 51.0 s on average) and fighters spend 23% of their turns
   on Guard instead of 31%
+- **Counter techniques give sure counters** (balance-affecting): Retaliative
+  Blows and the style counter techs (Retaliation, Strikes of Vengeance, Fox
+  Strikes Back) used to raise the counterattack chance by 50%, which made
+  them about a quarter as useful as an average technique. Now their owner
+  counters *every* enemy strike it dodges or fully blocks, or that misses,
+  and those counters are twice as hard to dodge or block. Vengeful Fox and
+  upgraded style counter techs counter twice in a row, and each further
+  counter tech adds one more, as long as the fighter can afford an attack
+  move. Counters still cost the move's stamina and qi. Fighters without
+  counter techs counter by chance as before. In mirror matches, Retaliative
+  Blows went from +2 to +8 (an average general technique: +8) and Vengeful
+  Fox from +2 to +12 (an average advanced one: +13)
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so
@@ -124,6 +137,14 @@ All notable changes to KFW are documented here. Format loosely follows
   preemptives. No gameplay change
 
 ### Fixed
+- **A missed strike could not always be countered**: a strike that misses
+  kept the damage of the attacker's previous strike (even from an earlier
+  fight), and a counter needs a strike that did no damage, so whether the
+  miss could be countered depended on that older strike. A miss now always
+  opens a counter
+- **A hit that toughness absorbed counted as defended**: an undefended hit
+  whose damage the target's toughness absorbed completely opened a counter,
+  just like a dodge. Now only a dodge, a full block or a miss does
 - **Co-op '2x2' / '3x3' could silently create no teams**: the new-game menu
   offered both team modes for any player count, but '2x2' only worked with
   exactly 4 players and '3x3' with exactly 6 — picking the wrong one quietly

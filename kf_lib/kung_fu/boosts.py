@@ -15,8 +15,6 @@ BLOCK1 = 0.3  # block chance and power; 0.5 until 2026-10 (power only)
 BLOCK2 = 0.6
 BLOCK_DISARM1 = 0.5
 BLOCK_DISARM2 = 1.0
-COUNTER_CH_MULT1 = 0.5
-COUNTER_CH_MULT2 = 1.0
 CRIT_CH1 = 0.15
 CRIT_CH2 = 0.3
 CRIT_M1 = 0.5
@@ -46,6 +44,8 @@ FURY_CH1 = 0.3
 FURY_CH2 = 0.5
 GRAB_CH1 = 0.2  # placeholder, no tech yet (BACKLOG: techs for placeholder boosts)
 GRAB_CH2 = 0.4
+GUARANTEED_COUNTERS1 = 1  # sure counters in a row; until 2026-10-23 counter
+GUARANTEED_COUNTERS2 = 2  # techs gave +50% / +100% counter chance instead
 GUARD_DFS1 = 0.5
 GUARD_DFS2 = 1.0
 GUARD_WHILE_ATTACKING1 = 0.4  # 0.5 until 2026-10, then worth x2.25 (see attack())
@@ -100,7 +100,7 @@ WP_STRIKE_MULT1 = 0.25
 WP_STRIKE_MULT2 = 0.5
 
 
-# att_name, short_descr, long_descr, funcs
+# att_name, short_descr, long_descr[, value formatters (default: as a signed %)]
 PMAP = (
     ('agility_mult', _('agility'), _('agility')),
     ('atk_mult', _('attack'), _('attack')),
@@ -108,6 +108,12 @@ PMAP = (
     ('block_disarm', _('disarm'), _('disarm chance when defending')),
     ('block_mult', _('blocks'), _('block efficiency')),
     ('counter_chance_mult', _('counters'), _('counterattack chance')),
+    (
+        'guaranteed_counters',
+        _('counters'),
+        _('guaranteed counterattack(s) when an enemy strike fails'),
+        (add_sign,),  # a count, not a share: no percent formatting
+    ),
     ('critical_chance_mult', _('criticals'), _('critical attack chance')),
     ('critical_dam_mult', _('criticals'), _('critical attack power')),
     ('dam_reduc', _('dam.reduc.'), _('damage reduction')),
@@ -185,10 +191,10 @@ PMAP = (
 def set_descr(obj):
     descr_list = []
     descr_short_set = set()
-    for param, short, long in PMAP:
+    for param, short, long, *funcs in PMAP:
         if param in obj.params:
             v = obj.params[param]
-            for f in (hund, add_sign, add_pcnt):
+            for f in (funcs[0] if funcs else (hund, add_sign, add_pcnt)):
                 v = f(v)
             descr_list.append(f'{v} {long}')
             descr_short_set.add(short)

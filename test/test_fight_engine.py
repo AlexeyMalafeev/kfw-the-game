@@ -397,6 +397,7 @@ class TestDefenseAndCounters:
         monkeypatch.setattr(fa, 'try_counter', lambda: None)
         fb.attack()
         assert fb.dfs_bonus == pytest.approx(1.4)
+        assert fb.get_status_marks().startswith('[]')  # marked like Guard
 
     def test_guard_raises_defense_recovers_and_is_marked(self):
         # x2.0 and the recovery since 2026-10-23 (x1.5, no recovery before)
@@ -407,10 +408,10 @@ class TestDefenseAndCounters:
         assert fa.dfs_bonus == pytest.approx(fa.guard_dfs_bonus * 2.0)
         assert fa.stamina == Fighter.GUARD_STAMINA_GAIN
         assert fa.qp == min(Fighter.GUARD_QI_GAIN, fa.qp_max)  # lv 1: max qi is 5
-        assert fa.get_status_marks().startswith('+')
+        assert fa.get_status_marks().startswith('[]')
         fa.start_fight_turn()  # the guard lasts until the fighter's next turn
         assert fa.dfs_bonus == 1.0
-        assert '+' not in fa.get_status_marks()
+        assert '[]' not in fa.get_status_marks()
 
     def strike_with_sure_crit(self, fa, fb, defended):
         """fb strikes fa for 30 with a guaranteed critical and epic."""
@@ -430,6 +431,54 @@ class TestDefenseAndCounters:
         fa, fb = self.duel()
         stats = self.strike_with_sure_crit(fa, fb, defended=False)
         assert stats['criticals'] == stats['epics'] == 1
+
+    def test_missed_strike_resets_damage(self, monkeypatch):
+        # until 2026-10-23 dam kept the previous strike's value
+        fa, fb = self.duel()
+        fb.action = next(m for m in fb.moves if m.name == 'Punch')
+        fb.dam = 30
+        monkeypatch.setattr(fb, 'get_move_fail_chance', lambda move: 1.0)
+        assert fb.check_move_failed()
+        assert fb.dam == 0 and fb.to_hit == 0
+
+    def counters_after(self, monkeypatch, defended, dam, to_hit, guaranteed=0):
+        """How many times fa counters fb's strike with the given outcome."""
+        fa, fb = self.duel()
+        fa.counter_chance = 1.0  # a default counter would always fire
+        fa.guaranteed_counters = guaranteed
+        fa.defended, fb.dam, fb.to_hit = defended, dam, to_hit
+        calls = []
+        monkeypatch.setattr(fa, 'do_counter', lambda: calls.append(1))
+        fa.try_counter()
+        return len(calls)
+
+    def test_counter_answers_dodge_block_or_miss_only(self, monkeypatch):
+        assert self.counters_after(monkeypatch, True, 0, 50) == 1  # full dodge/block
+        assert self.counters_after(monkeypatch, False, 0, 0) == 1  # missed
+        # until 2026-10-23 a hit toughness fully absorbed (dam 0) opened one too
+        assert self.counters_after(monkeypatch, False, 0, 50) == 0
+        assert self.counters_after(monkeypatch, True, 5, 50) == 0  # partial block
+
+    def test_counter_techs_give_sure_counters_in_a_row(self, monkeypatch):
+        # one per counter tech, no counter_chance roll (since 2026-10-23)
+        assert self.counters_after(monkeypatch, True, 0, 50, guaranteed=2) == 2
+        assert self.counters_after(monkeypatch, True, 7, 50, guaranteed=2) == 0
+
+    def test_counter_tech_counter_is_harder_to_defend(self):
+        fa, fb = self.duel()
+        punch = next(m for m in fa.moves if m.name == 'Punch')
+        fa.calc_atk(punch)
+        plain = fa.to_hit
+        fa.is_countering = True
+        fa.calc_atk(punch)
+        assert fa.to_hit == plain  # a default counter: no bonus
+        fa.guaranteed_counters = 1
+        fa.calc_atk(punch)
+        assert fa.to_hit == pytest.approx(plain * Fighter.COUNTER_TECH_HIT_MULT)
+
+    def test_counter_tech_description_shows_a_count(self):
+        from kf_lib.kung_fu import techniques
+        assert techniques.get_tech_obj('Vengeful Fox').descr.startswith('+2 guaranteed')
 
     def test_counter_pays_the_move_cost(self, monkeypatch):
         fa, fb = self.duel()

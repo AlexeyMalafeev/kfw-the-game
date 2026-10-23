@@ -78,7 +78,8 @@ class FightAttributes(FighterAPI, ABC):
         self.defended = False
         self.dfs_pwr = 0.0
         self.distances = {}  # fighter_obj: int
-        self.guarding = False  # used the Guard move; until the fighter's next turn
+        self.guarding = False  # Guard or guard while attacking; until the next turn
+        self.is_countering = False  # set by do_counter during the counter strike
         self.is_auto_fighting = True
         self.kos_this_fight = 0
         self.momentum = 0  # (-3, 3)
@@ -96,7 +97,8 @@ class FightAttributes(FighterAPI, ABC):
         self.block_mult = 1.0  # tech-based
         self.chance_cause_bleeding = 0.03  # tech-dependent
         self.counter_chance = 0.0  # NB! level-dependent
-        self.counter_chance_mult = 1.0  # tech-dependent
+        self.counter_chance_mult = 1.0  # a hook; no tech uses it since 2026-10-23
+        self.guaranteed_counters = 0  # tech-dependent: counter techs, see try_counter
         self.critical_chance = 0.05  # NB! level-dependent
         self.critical_chance_mult = 1.0  # tech-dependent
         self.critical_dam_mult = 1.5
@@ -201,7 +203,7 @@ class FightAttributes(FighterAPI, ABC):
         return bool(self.status.get(status, 0))
 
     def get_status_marks(self, right: bool = False) -> str:
-        guarding = '+' if self.guarding else ''
+        guarding = '[]' if self.guarding else ''
         bleeding = ';' if self.bleeding else ''
         fury = '#' if self.check_status('fury') else ''
         slowed_down = ',' if self.check_status('slowed down') else ''

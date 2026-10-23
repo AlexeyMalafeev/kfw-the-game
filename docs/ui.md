@@ -112,7 +112,7 @@ player can see at a glance who is open or dangerous:
 
 | mark | meaning |
 |---|---|
-| `+` | guarding: used the Guard move, defense raised until the fighter's next turn (since 2026-10-23) |
+| `[]` | guarding: used the Guard move, or attacked with a guard-while-attacking tech; defense raised until the fighter's next turn (since 2026-10-23) |
 | `#` | fury |
 | `;` | bleeding |
 | `,` | slowed down |
