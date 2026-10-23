@@ -354,7 +354,7 @@ below are decided:
     no damage, one counter per counter tech in a row (advanced = two), no
     roll; default counters unchanged; full stamina/qi cost (the author ruled
     out cheaper counters). A/B lv 13–20 (median general tech +8.1):
-    Retaliative Blows +2.2 → +5.3, Vengeful Fox +2.3 → +6.9; plus an attack
+    Retaliative Blows +2.2 → +5.3, Double Revenge (then Vengeful Fox) +2.3 → +6.9; plus an attack
     bonus on those counters: hit ×2.0 → +8.3 / +12.0, critical ×3 → +9.0 /
     +12.2, hit ×1.5 + critical ×2 → +9.1 / +13.5. **Adopted 2026-10-23**:
     guaranteed counters + hit ×2.0 (the author agreed with my pick; it

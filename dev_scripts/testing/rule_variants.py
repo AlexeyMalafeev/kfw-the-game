@@ -111,10 +111,10 @@ experiments file, sections "Guard round 2" and "Counters round 2"):
            Guard 31% -> 23% of actions, attributes within noise
   Cg       guaranteed counters for counter techs (ADOPTED 2026-10-23 with
            CbH20, removed). A/B lv 13-20 (median general
-           tech +8.1, advanced +13.4): Retaliative Blows +2.2 -> +5.3, Vengeful
-           Fox +2.3 -> +6.9; harness counters buff -12.4 -> -9.8
+           tech +8.1, advanced +13.4): Retaliative Blows +2.2 -> +5.3, Double
+           Revenge +2.3 -> +6.9; harness counters buff -12.4 -> -9.8
   Cg+Chalf (cheaper counters, ruled out by the author) -> +7.5 / +10.8
-  Cg + CbH20 / CbK3 / CbH15+CbK2 -> RB +8.3 / +9.0 / +9.1, VF +12.0 / +12.2 /
+  Cg + CbH20 / CbK3 / CbH15+CbK2 -> RB +8.3 / +9.0 / +9.1, DR +12.0 / +12.2 /
            +13.5; harness counters buff -5.3 / -4.3 / -3.1, agility +0.06 /
            +0.09 / +0.18 (margin 0.1); Retaliation at lv 1-7 (median style
            tech +15.3): +7.2 / +4.5 / +6.7

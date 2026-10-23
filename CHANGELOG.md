@@ -104,13 +104,14 @@ All notable changes to KFW are documented here. Format loosely follows
   Strikes Back) used to raise the counterattack chance by 50%, which made
   them about a quarter as useful as an average technique. Now their owner
   counters *every* enemy strike it dodges or fully blocks, or that misses,
-  and those counters are twice as hard to dodge or block. Vengeful Fox and
+  and those counters are twice as hard to dodge or block. Double Revenge
+  (until now called Vengeful Fox; old saves with it no longer load) and
   upgraded style counter techs counter twice in a row, and each further
   counter tech adds one more, as long as the fighter can afford an attack
   move. Counters still cost the move's stamina and qi. Fighters without
   counter techs counter by chance as before. In mirror matches, Retaliative
-  Blows went from +2 to +8 (an average general technique: +8) and Vengeful
-  Fox from +2 to +12 (an average advanced one: +13)
+  Blows went from +2 to +8 (an average general technique: +8) and Double
+  Revenge from +2 to +12 (an average advanced one: +13)
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so

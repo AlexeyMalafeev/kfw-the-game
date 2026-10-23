@@ -478,7 +478,7 @@ class TestDefenseAndCounters:
 
     def test_counter_tech_description_shows_a_count(self):
         from kf_lib.kung_fu import techniques
-        assert techniques.get_tech_obj('Vengeful Fox').descr.startswith('+2 guaranteed')
+        assert techniques.get_tech_obj('Double Revenge').descr.startswith('+2 guaranteed')
 
     def test_counter_pays_the_move_cost(self, monkeypatch):
         fa, fb = self.duel()

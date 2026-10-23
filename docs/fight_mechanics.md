@@ -361,7 +361,7 @@ alive. Until
 2026-10-23 any strike with `dam == 0` qualified, including an undefended hit
 that toughness fully absorbed. A fighter without counter techs then rolls
 `counter_chance`; one with counter techs counters for sure,
-`guaranteed_counters` times in a row (1 per counter tech, 2 for Vengeful Fox
+`guaranteed_counters` times in a row (1 per counter tech, 2 for Double Revenge
 or an upgraded style counter tech), stopping early if either fighter is down
 or it can't afford an attack move at that distance; it never rolls. Each
 counter (`do_counter`) runs the full strike pipeline back at the attacker

@@ -230,7 +230,7 @@ LINKED_TECHS = [
     ),
     (
         Tech('Retaliative Blows', guaranteed_counters=b.GUARANTEED_COUNTERS1, is_upgradable=True),
-        Tech('Vengeful Fox', guaranteed_counters=b.GUARANTEED_COUNTERS2, is_advanced=True),
+        Tech('Double Revenge', guaranteed_counters=b.GUARANTEED_COUNTERS2, is_advanced=True),
     ),
     (
         Tech('Preemptive Strikes', preemptive_chance=b.PREEMPTIVE_CH1, is_upgradable=True),
