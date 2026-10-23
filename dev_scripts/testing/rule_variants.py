@@ -93,7 +93,8 @@ overall and at lv 1-7 / 8-14 / 15-20):
   D+Sdef      gap 2.94;  D+Sdef+Pre gap 5.13
   D+Sa2       gap 0.88   per tier 2.9 / 1.1 / 2.2   (all four within +-0.6)
 Speed techs, on the adopted engine (2026-10-23; harness 'style buffs' row,
-strength / agility / health techs at +11.1..+13.8):
+strength / agility / health techs at +11.1..+13.8); SpdTech20 ADOPTED the same
+day (SPEED1/2 0.2/0.4) and both removed from this file:
   SpdTech20  speed techs +20% (as the other attribute techs) -> speed +5.1 -> +10.4
   SpdTech25  +25%                                           -> +16.6 (overshoots)
   (A/B per tier: at 0.20 the tech is worth 73 / 87 / 117% of the others at
@@ -473,15 +474,3 @@ def Sdef50():
             self.to_dodge *= k
             self.to_block *= k
     F.calc_dfs = calc_dfs
-
-
-#   SpdTech20/25  speed techs boost speed by 20% / 25% instead of 15%
-#                 (SPEED1; the advanced twins double it)
-
-
-def SpdTech20():
-    _scale_param('speed_mult', 0.20 / 0.15)
-
-
-def SpdTech25():
-    _scale_param('speed_mult', 0.25 / 0.15)

@@ -72,6 +72,14 @@ All notable changes to KFW are documented here. Format loosely follows
   25%. In the fight-balance harness the gap between the most and the least
   useful attribute fell from 4.0 to 0.9 Diff% points, and fights take about
   a quarter fewer strikes (8.6 instead of 11.2) because HP is lower
+- **Speed techs boost speed by 20%, like the other attribute techs**
+  (balance-affecting): Leopard I, Xing Yi I, Wing Chun III and the other
+  speed techs gave +15% (+30% advanced), while strength, agility and health
+  techs give +20% (+40%). Attributes are whole numbers, so +15% often added
+  no point at all at low speed. They now give +20% / +40%, and so do the
+  Fly Herb, Super Fly Herb and the Super Mega Herb's speed part. In the
+  fight-balance harness, owning a speed tech went from +5 to +10 Diff%
+  points (strength, agility and health techs: +11 to +14)
 - **Fight-balance harness: 100k fights, noise margins, fight stats**
   (`dev_scripts/testing/run_test_fb.py`): one 10k report was too noisy to
   judge techs (±9 Diff% points for common techs, ±25 for advanced ones), so

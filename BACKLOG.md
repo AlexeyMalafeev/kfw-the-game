@@ -326,8 +326,8 @@ below are decided:
   the 'dodge' buff raises dodge chance only (`EVADE1/2` 0.4/0.8 → 0.7/1.4,
   modeled); qi regeneration 20% → 10% of max per turn (qi buff −7.5 → −3.6,
   Lotus Stance A/B +6.9 → +10.4). Done 2026-10-23: health and speed —
-  setup D + linear tempo adopted (see the Health and Speed items and
-  CHANGELOG). **Guard, counters, qi: tested 2026-10-22 as rule variants,
+  setup D + linear tempo adopted, then speed techs +15% → +20% (see the
+  Health and Speed items and CHANGELOG). **Guard, counters, qi: tested 2026-10-22 as rule variants,
   author to decide** (`dev_scripts/testing/rule_variants.py`, full tables in
   `tests/balance experiments 2026-10-22.txt`; baseline fights 62.7 s, +27%
   vs 49.5 s before the ⚠️ batches). Then implement the chosen ones in the
@@ -377,16 +377,15 @@ below are decided:
     +8.0 → +4.2
   - **Speed — adopted 2026-10-23** (tempo `1.5 * (speed - 2)` instead of
     `speed`). Left over: speed is a bit weak at levels 1–7 (−1.6) and a bit
-    strong at 15–20 (+1.0); techs that boost speed score ~+5 vs ~+12…+15
-    for the other attributes' techs. **Speed techs priced 2026-10-23, author
-    to pick the value** (tables in `tests/balance experiments 2026-10-22.txt`,
-    variants `SpdTech20` / `SpdTech25`): `SPEED1` 0.15 → 0.20 (the other
-    attribute techs' value) lifts the harness row +5.1 → +10.4 (others
-    +11.1…+13.8); 0.25 → +16.6 overshoots. At 0.20 the A/B tool puts the
-    tech at 73 / 87 / 117% of the other attribute techs at lv 1–7 / 8–14 /
-    15–20 — the same ratios as a speed point vs other points, so the rest
-    is the speed attribute's level trend, which no single boost value can
-    fix. History: speed only sets how often a fighter acts;
+    strong at 15–20 (+1.0). **Speed techs: adopted 2026-10-23** —
+    `SPEED1/2` 0.15/0.3 → 0.2/0.4, the other attribute techs' values
+    (tables in `tests/balance experiments 2026-10-22.txt`): the harness
+    'style buffs' speed row +5.1 → +10.4 (others +11.1…+13.8; 0.25 gave
+    +16.6, overshooting). At 0.20 the A/B tool puts the tech at 73 / 87 /
+    117% of the other attribute techs at lv 1–7 / 8–14 / 15–20 — the same
+    ratios as a speed point vs other points, so what is left is the speed
+    attribute's level trend; fixing that would also lift speed techs at
+    low levels. History: speed only sets how often a fighter acts;
     strength sets damage *and* block power. An attribute point is worth
     +15.9 for speed vs +26.6…+36.2 for the others at levels 1–7 (about even
     at 15–20; toughness is not the cause): extra turns partly go to Guard /
