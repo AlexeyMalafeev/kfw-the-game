@@ -283,6 +283,14 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## AI
 
+- **Experiment with a non-genetic fight AI** (author 2026-10-25): try a
+  fight AI that isn't a set of genetically tuned action weights — e.g.
+  hand-written rules (guard when the opponent is about to strike, focus
+  when qi is short for the best move), one-move lookahead scoring expected
+  damage dealt vs taken, or Monte Carlo rollouts of the next few actions.
+  Compare it with the genetic AI in mirror matches and in the balance
+  harness: an AI that uses Guard, counters and qi well would show whether
+  those techs are weak or only badly played
 - **Retrain the genetic fight AI's weights** (`kf_lib/ai/fight_ai_gen.py`;
   author 2026-10-22, action item once the 2026-10 balance pass is polished):
   `prob_atk` / `prob_guard` / `prob_focus` … were tuned for the old rules, and
