@@ -5,6 +5,10 @@ engine), `kf_lib/actors/fighter/` (`_fight_actions.py`, `_strike_mechanics.py`,
 `_fight_attributes.py`, `_distances.py`), `kf_lib/fighting/distances.py`,
 `kf_lib/kung_fu/` (moves, techniques, boosts), `kf_lib/ai/fight_ai.py`.
 Items marked ⚠️ look unintentional or surprising — verify before building on them.
+The master's teachings (`kf_lib/happenings/teachings.py`, see `encounters.md`)
+paraphrase many rules below for players; `test/test_teachings.py` pins the
+values they quote, so when a rule changes, reword the saying it flags (and its
+Russian translation).
 
 ## Overview
 

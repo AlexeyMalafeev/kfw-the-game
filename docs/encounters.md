@@ -77,6 +77,8 @@ Trigger points (`game/_playing.py:126` `game_loop`):
   (`encounters/__init__.py`): shuffle **all** registered random encounter classes
   and instantiate each one, giving every encounter exactly one
   `check_if_happens` roll per call.
+- Classes with `thematic_only = True` (`MasterTeaching`) are not registered
+  in that pool; they roll only from their day action's own list.
 - 'Go for a walk' gets `WALK_EXTRA_ENC` (2) additional `rand_enc()` calls.
 - Most day actions first run their own thematic list:
   `practice_school` → `PRACTICE_SCHOOL_ENCS`, `buy_items` → `BUY_ITEMS_ENCS`,
@@ -223,6 +225,14 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   and a win moves you to the defeated opponent's slot (see School rank in
   `docs/gameplay.md`). Reaching rank 1 earns the master's
   praise, +25 exp and +2 rep.
+- `MasterTeaching`: on a paid practice visit (`ENC_CH_MASTER_TEACHING`, 20%)
+  the master shares a random saying from `kf_lib/happenings/teachings.py`
+  followed by the plain rule in brackets; AI players get it in their log.
+  Never the same saying twice in a row (`MasterTeaching.last_id`, a class
+  attribute, not saved). Each teaching names the `docs/` section it
+  paraphrases and the values/rules it relies on, and `test/test_teachings.py`
+  pins those, so a fight-rule change fails a test naming the saying to reword.
+  `thematic_only = True` keeps it out of the daily random pool (see below).
 - `MasterTrial`: at rank 1 and `MASTER_LV` (11+), beat your master in a spar,
   pay 1000 c., and found a school — flips `is_master`, which changes the day
   action list and excludes the player from many encounters. The school name

@@ -545,16 +545,6 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 
 ## Game systems & gameplay
 
-- **Master's teachings during "Practice at school"** (HIGH priority, author
-  2026-10-23: do it next, once the current fight-balance pass is finished,
-  so the sayings describe the final rules):
-  now and then the master shares a random *true* fact about the fight
-  mechanics, phrased as kung-fu wisdom rather than a rule ("Improving your
-  strength makes your block harder" → something like "A strong arm turns
-  the blow; a weak one only meets it"). Keep the facts true as mechanics
-  change: tie each to the `docs/` paragraph it paraphrases (or to the
-  constant it depends on) so a rule change flags the saying; new strings
-  go through i18n
 - **Refine game victory balance**: review the victory conditions (incl. the
   new 'Uniter of Schools') for relative difficulty, pacing and how long a
   typical winning run takes

@@ -36,7 +36,9 @@ PICK_FIGHTS_ENCS = (
         [Brawler] * 3 + [GChallenger] + [Challenger] * 3 + [FriendMatch] * 3 + [PlayerMatch] * 3
         + [StreetBrawl] * 2
 )
-PRACTICE_SCHOOL_ENCS = [MasterTrial] * 3 + [SchoolChallenge] * 3 + [SchoolBullying]
+PRACTICE_SCHOOL_ENCS = (
+    [MasterTeaching] + [MasterTrial] * 3 + [SchoolChallenge] * 3 + [SchoolBullying]
+)
 SEEDY_PLACES_ENCS = (
     [GGambler] * 1
     + [GDrunkard] * 1

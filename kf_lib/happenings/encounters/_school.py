@@ -1,6 +1,7 @@
 import random
 
 from kf_lib.actors import fighter_factory, quotes
+from kf_lib.happenings.teachings import get_teachings
 from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import yn
 from kf_lib.utils import rnd, rndint
@@ -10,6 +11,7 @@ from ._utils import get_escape_chance, try_escape
 
 # constants
 # encounter chances
+ENC_CH_MASTER_TEACHING = 0.2  # per paid practice visit
 ENC_CH_MASTER_TRIAL = 0.05
 # ENC_CH_SCHOOL_CHALL = 0.05
 ENC_CH_SCHOOL_BULLYING = 0.03
@@ -33,6 +35,32 @@ NUM_STUD_CHALLENGERS = (2, 5)
 # rewards for reaching school rank 1
 RANK1_EXP = 25
 RANK1_REP = 2
+
+
+class MasterTeaching(BaseEncounter):
+    """The master shares a true fight fact as a saying (see happenings/teachings.py)."""
+    thematic_only = True  # practice at school only
+    last_id = None  # not saved: just avoids the same saying twice in a row
+
+    def check_if_happens(self):
+        p = self.p
+        return not p.is_master and rnd() <= ENC_CH_MASTER_TEACHING
+
+    def run(self):
+        p = self.player
+        m = p.get_master()
+        teachings = [t for t in get_teachings() if t.id != MasterTeaching.last_id]
+        t = random.choice(teachings)
+        MasterTeaching.last_id = t.id
+        p.show(
+            _('{m_name} stops the practice to share a teaching:').format(
+                m_name=tr_fighter_name(m.name)
+            )
+        )
+        p.show(_('{m_name}: "{saying}"').format(m_name=tr_fighter_name(m.name), saying=t.saying))
+        p.show(_('({fact})').format(fact=t.fact))
+        p.log(_('Hears a teaching: "{saying}" ({fact})').format(saying=t.saying, fact=t.fact))
+        p.pak()
 
 
 class MasterTrial(BaseEncounter):

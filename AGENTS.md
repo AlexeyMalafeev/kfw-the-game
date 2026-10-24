@@ -38,7 +38,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - `kf_lib/fighting/fight/` — fight engine: `BaseFight`, `AutoFight` (headless), `NormalFight`
 - `kf_lib/game/` — `Game` god-class (`_game.py`) = LoadGame + NewGame + Playing + SaveGame + StateMenu
 - `kf_lib/happenings/` — content: `encounters/` (random street encounters), `story/`
-  (quest lines), `events.py`, `tournament.py`
+  (quest lines), `events.py`, `tournament.py`, `teachings.py` (the master's
+  sayings about fight rules, pinned by `test/test_teachings.py`)
 - `kf_lib/kung_fu/` — moves, styles, techniques, boosts; loads `moves/all_moves.txt` at import
 - `kf_lib/i18n/` — optional Russian localization (stdlib gettext wrapper, leaf
   package; see `docs/i18n.md`); catalogs in `locale/<lang>/LC_MESSAGES/`

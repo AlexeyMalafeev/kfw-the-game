@@ -6,6 +6,7 @@ all_random_encounter_classes = []
 
 class BaseEncounter(ABC):
     guaranteed = False
+    thematic_only = False  # True: only in a day action's own list, not the daily pool
 
     def __init__(
             self,
@@ -25,7 +26,7 @@ class BaseEncounter(ABC):
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        if not cls.guaranteed:
+        if not cls.guaranteed and not cls.thematic_only:
             all_random_encounter_classes.append(cls)
 
     @abstractmethod

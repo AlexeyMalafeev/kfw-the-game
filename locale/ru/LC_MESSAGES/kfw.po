@@ -204,6 +204,26 @@ msgstr[0] "\"{n} монета! Моя {n} монета!\""
 msgstr[1] "\"{n} монеты! Мои {n} монеты!\""
 msgstr[2] "\"{n} монет! Мои {n} монет!\""
 
+#: kf_lib/happenings/teachings.py:287
+msgid "'Claw' moves (all but Dragon Claw) and 'Slashing' moves cause bleeding, which costs HP at the start of each of the target's turns until the fight ends."
+msgstr "Приёмы «Коготь» (кроме Когтя дракона) и «Рубящий» вызывают кровотечение: противник теряет ОЗ в начале каждого своего хода до конца боя."
+
+#: kf_lib/happenings/teachings.py:280
+msgid "'Debilitating' moves shock the target, slow them down and drain their stamina, all at once."
+msgstr "«Ослабляющие» приёмы разом вводят противника в шок, замедляют его и отнимают выносливость."
+
+#: kf_lib/happenings/teachings.py:264
+msgid "'Nerve' moves slow the target down: for a while, all their actions take about 40% longer."
+msgstr "«Нервные» приёмы замедляют противника: какое-то время все его действия длятся примерно на 40% дольше."
+
+#: kf_lib/happenings/teachings.py:257
+msgid "'Shocking' moves make the target skip their turn with no chance to dodge or block until the shock passes."
+msgstr "«Шокирующие» приёмы заставляют противника пропустить ход, и пока шок не пройдёт, он не может ни уклониться, ни поставить блок."
+
+#: kf_lib/happenings/teachings.py:273
+msgid "'Solar' moves drain 20% of the target's maximum stamina."
+msgstr "«Солнечные» приёмы отнимают у противника 20% его максимальной выносливости."
+
 #: kf_lib/actors/player/_human_player.py:59
 msgid "(nothing else)"
 msgstr "(ничего больше)"
@@ -211,6 +231,10 @@ msgstr "(ничего больше)"
 #: kf_lib/ui/_interactive.py:51
 msgid "(Press any key)"
 msgstr "(Нажмите любую клавишу)"
+
+#: kf_lib/happenings/encounters/_school.py:61
+msgid "({fact})"
+msgstr "({fact})"
 
 #: kf_lib/happenings/tournament.py:214
 msgid "({} level)"
@@ -282,6 +306,26 @@ msgstr "Рождается дочь."
 msgid "A baby son is born."
 msgstr "Рождается сын."
 
+#: kf_lib/happenings/teachings.py:81
+msgid "A block is held up by the body behind it, not by the fist in front of it."
+msgstr "Блок держит тело, что стоит за ним, а не кулак, что стоит впереди."
+
+#: kf_lib/happenings/teachings.py:220
+msgid "A blow that is even partly blocked can never be a perfect blow."
+msgstr "Удар, хоть немного принятый на блок, уже никогда не станет совершенным."
+
+#: kf_lib/happenings/teachings.py:51
+msgid "A blow that meets only air or a closed door pulls its owner off balance. That is the moment to answer."
+msgstr "Удар, встретивший лишь воздух или запертую дверь, уводит хозяина из равновесия. Это и есть миг для ответа."
+
+#: kf_lib/happenings/teachings.py:230
+msgid "A blow that takes half of what remains puts a fighter on the ground."
+msgstr "Удар, отнявший половину оставшегося, кладёт бойца на землю."
+
+#: kf_lib/happenings/teachings.py:271
+msgid "A blow to the solar plexus steals the breath, and with the breath goes the strength."
+msgstr "Удар в солнечное сплетение крадёт дыхание, а вместе с дыханием уходит и сила."
+
 #: kf_lib/happenings/story/_bandit_fiance.py:21
 msgid ""
 "A coversation in {town}'s tavern:\n"
@@ -294,13 +338,37 @@ msgstr ""
 "Подручный ({name}): \"Если она вам так нравится, босс, почему бы на ней не жениться?\"\n"
 "{name}: \"Хм...\""
 
+#: kf_lib/happenings/teachings.py:116
+msgid "A fallen fighter invites the blows that strike downward."
+msgstr "Упавший боец сам зовёт удары, что бьют сверху вниз."
+
 #: kf_lib/happenings/events.py:168
 msgid "A fight breaks out between students of {} and {}!"
 msgstr "Вспыхивает драка между учениками школ {} и {}!"
 
+#: kf_lib/happenings/teachings.py:63
+msgid "A fighter off balance strikes and defends with only three quarters of their strength."
+msgstr "Боец без равновесия бьёт и защищается лишь в три четверти своей силы."
+
 #: kf_lib/happenings/story/_grand_melee.py:29
 msgid "A flashy stranger arrives in {town} and starts putting up posters: \"THE GRAND MELEE! Eight fighters enter, one fighter leaves with a fat purse! No rules, no teams, no honor!\" The local masters shake their heads in disapproval..."
 msgstr "В {town} прибывает эффектный незнакомец и начинает расклеивать плакаты: \"БОЛЬШАЯ СВАЛКА! Восемь бойцов выходят, один уходит с тугим кошельком! Никаких правил, никаких команд, никакой чести!\" Местные мастера неодобрительно качают головами..."
+
+#: kf_lib/happenings/teachings.py:53
+msgid "A full dodge, or a block that stops all the damage, leaves the attacker off-balance for a moment and gives you a chance to counter."
+msgstr "Полное уклонение или блок, остановивший весь урон, на миг лишает атакующего равновесия и даёт шанс на контратаку."
+
+#: kf_lib/happenings/teachings.py:245
+msgid "A heavy enough blow freezes a fighter for a moment. They lose their turn, but not their eyes."
+msgstr "Достаточно тяжёлый удар на миг сковывает бойца. Ход он теряет, но не зоркость."
+
+#: kf_lib/happenings/teachings.py:231
+msgid "A hit that deals at least half of the target's remaining HP knocks them down."
+msgstr "Удар, отнявший не меньше половины оставшихся у противника ОЗ, сбивает его с ног."
+
+#: kf_lib/happenings/teachings.py:247
+msgid "A hit that deals more than about a third of the target's maximum HP stuns them: they skip their turn and defend at 80%."
+msgstr "Удар, отнявший больше примерно трети максимальных ОЗ противника, вводит его в ступор: он пропускает ход и защищается на 80%."
 
 #: kf_lib/happenings/story/_jade_table.py:77
 msgid "A knife flashes. A table is flipped. \"TREACHERY!\" — and in a heartbeat the private room turns into a battlefield, every boss for himself!"
@@ -326,6 +394,10 @@ msgstr ""
 msgid "A mountain courtyard. {name} sits motionless as eight disciples of eight different styles step into a circle drawn in the dust. {name}: \"No weapons. No tricks. The Eight Gates do not open for the faint-hearted. BEGIN!\""
 msgstr "Горный двор. {name} сидит неподвижно, пока восемь учеников восьми разных стилей входят в начерченный в пыли круг. {name}: \"Никакого оружия. Никаких уловок. Восемь Врат не открываются для слабодушных. НАЧАЛИ!\""
 
+#: kf_lib/happenings/teachings.py:187
+msgid "A move's stamina and qi are spent even if it misses or fails."
+msgstr "Выносливость и ци за приём тратятся, даже если он прошёл мимо или не удался."
+
 #: kf_lib/actors/player/_base_player.py:261
 msgid "A new student joins {name}'s school."
 msgstr "В школу {name} приходит новый ученик."
@@ -334,13 +406,29 @@ msgstr "В школу {name} приходит новый ученик."
 msgid "A nimble figure bumps into {name}, apologizes profusely, and disappears into the crowd. A moment later {name} realizes the money pouch is gone. "
 msgstr "Какой-то ловкач врезается в {name}, обильно извиняется и исчезает в толпе. Мгновение спустя {name} понимает, что кошелёк с деньгами пропал. "
 
+#: kf_lib/happenings/teachings.py:413
+msgid "A player knocked out in a real fight is injured and must spend one or more days recovering."
+msgstr "Игрок, нокаутированный в настоящем бою, получает травму и выбывает на один или несколько дней."
+
 #: kf_lib/happenings/encounters/_romance.py:74
 msgid "A romance begins between {p_name} and {name}."
 msgstr "Между {p_name} и {name} начинается роман."
 
+#: kf_lib/happenings/teachings.py:255
+msgid "A stun dims the eyes; a shock blinds them. The shocked can neither dodge nor block."
+msgstr "Ступор туманит глаза, шок их ослепляет. Тот, кто в шоке, не может ни уклониться, ни закрыться."
+
+#: kf_lib/happenings/teachings.py:123
+msgid "A successful dodge gives you a turn's worth of qi; a block gives half of that."
+msgstr "Удачное уклонение даёт столько ци, сколько восстанавливается за ход; блок — вдвое меньше."
+
 #: kf_lib/happenings/story/_ninja_turtles.py:14
 msgid "A sudden flash pierces the deep darkness of the night... Four figures appear, muscular and not quite human. They are wielding traditional Japanese weapons. Looking around in confusion, they speak in hushed tones, clearly deciding what to do next..."
 msgstr "Внезапная вспышка пронзает глубокую тьму ночи... Появляются четыре фигуры, мускулистые и не совсем человеческие. В руках у них традиционное японское оружие. Они растерянно озираются и переговариваются шёпотом, явно решая, что делать дальше..."
+
+#: kf_lib/happenings/teachings.py:398
+msgid "A swift victory, an unscratched one, or one over many teaches more than an ordinary win."
+msgstr "Быстрая победа, победа без единой царапины или победа над многими учит большему, чем обычная."
 
 #: kf_lib/happenings/encounters/_crime.py:454
 msgid "A thief fails to find anything to steal from {}."
@@ -377,6 +465,14 @@ msgstr ""
 "Вор пытается что-то украсть у {name}, но ничего не находит!\n"
 "Вор: \"Что за дела? Ты что, совсем нищий?\""
 
+#: kf_lib/happenings/teachings.py:320
+msgid "A tired body fights at half its worth. Guard your breath as you guard your face."
+msgstr "Усталое тело сражается вполсилы. Береги дыхание, как бережёшь лицо."
+
+#: kf_lib/happenings/teachings.py:371
+msgid "A trained spirit refuses to fall. Where another would sleep, it stands on its last breath."
+msgstr "Закалённый дух не желает падать. Там, где другой уснёт, он стоит на последнем вздохе."
+
 #: kf_lib/happenings/encounters/_items.py:104
 msgid ""
 "A very strange-looking man bumps into {name}.\n"
@@ -384,6 +480,18 @@ msgid ""
 msgstr ""
 "{name} сталкивается с очень странного вида человеком.\n"
 "Чудак: \"Быстрее! Мне нужен предмет: {item}!\""
+
+#: kf_lib/happenings/teachings.py:186
+msgid "A wasted strike still costs its breath."
+msgstr "Даже напрасный удар стоит дыхания."
+
+#: kf_lib/happenings/teachings.py:87
+msgid "A weapon lengthens the arm that blocks, never the legs that dodge."
+msgstr "Оружие удлиняет руку, что ставит блок, но не ноги, что уклоняются."
+
+#: kf_lib/happenings/teachings.py:88
+msgid "A weapon's defense bonus improves blocking, not dodging."
+msgstr "Защитный бонус оружия улучшает блок, но не уклонение."
 
 #: kf_lib/happenings/encounters/_romance.py:38
 msgid "a young man"
@@ -401,7 +509,7 @@ msgstr "Побед в ТВШ"
 msgid "Acc"
 msgstr "Точн"
 
-#: kf_lib/happenings/encounters/_school.py:241
+#: kf_lib/happenings/encounters/_school.py:269
 msgid "Accept the young man?"
 msgstr "Принять юношу?"
 
@@ -436,6 +544,10 @@ msgstr "акроб.уд."
 #: kf_lib/kung_fu/boosts.py:173
 msgid "acrobatic strike efficiency"
 msgstr "эффективность акробатических ударов"
+
+#: kf_lib/happenings/teachings.py:100
+msgid "Against many, every blow that comes at you makes the next one harder to stop."
+msgstr "Против многих каждый летящий в тебя удар делает следующий труднее остановить."
 
 #: kf_lib/actors/fighter/_basic_attributes.py:49
 msgid "Agi"
@@ -479,6 +591,10 @@ msgstr ""
 #~ msgid "allows home training"
 #~ msgstr "позволяет тренироваться дома"
 
+#: kf_lib/happenings/teachings.py:296
+msgid "Any hit has a small chance (3% for most fighters) to cause bleeding worth 15% of its damage, and new wounds add to the bleeding."
+msgstr "Любой удар с небольшим шансом (3% у большинства бойцов) вызывает кровотечение в 15% его урона, а новые раны его усиливают."
+
 #: kf_lib/happenings/encounters/_people.py:126
 msgid "Apologizes."
 msgstr "Извиняется."
@@ -486,6 +602,10 @@ msgstr "Извиняется."
 #: kf_lib/game/_new_game.py:118
 msgid "Are these styles ok?"
 msgstr "Эти стили подходят?"
+
+#: kf_lib/happenings/teachings.py:322
+msgid "As your stamina runs out, your attack, defense and block power fall, down to half when it is empty."
+msgstr "С убылью выносливости падают атака, защита и сила блока — до половины, когда выносливость на нуле."
 
 #: kf_lib/happenings/story/_stolen_treasures.py:170
 msgid "As {name} comes to, he realizes that {boss} and his men have disappeared. They took all the treasures, too. {name} is lucky to be alive..."
@@ -502,6 +622,10 @@ msgid ""
 msgstr ""
 "Когда {name} уже собирается уйти, нищий останавливает его.\n"
 "Нищий: \"В благодарность за твою доброту, юноша, позволь научить тебя особому кунг-фу из {bname}!\""
+
+#: kf_lib/happenings/teachings.py:331
+msgid "At the start of each of your turns you recover 10% of your maximum stamina and qi."
+msgstr "В начале каждого своего хода ты восстанавливаешь 10% максимальной выносливости и ци."
 
 #: kf_lib/kung_fu/boosts.py:106
 msgid "attack"
@@ -535,6 +659,10 @@ msgstr "НЕ ПОВЕЗЛО!"
 msgid "barely"
 msgstr "едва "
 
+#: kf_lib/happenings/teachings.py:412
+msgid "Be knocked out in a real fight and your body will pay for days."
+msgstr "Пропусти нокаут в настоящем бою — и тело будет расплачиваться днями."
+
 #: kf_lib/happenings/story/_sweetheart_kidnapped.py:110
 msgid ""
 "Beaten and barely conscious, {p_name} suddenly hears the guards screaming... {sw_name} has broken free and driven the bandits off — {sw_name} is a martial artist, after all.\n"
@@ -542,6 +670,10 @@ msgid ""
 msgstr ""
 "Избитый и почти без сознания, {p_name} вдруг слышит крики стражи... {sw_name} вырывается на свободу и прогоняет бандитов — {sw_name} ведь тоже мастер боевых искусств.\n"
 "{sw_name}: \"Ты пришёл за мной, и это главное. Но тебе стоит больше тренироваться, любовь моя.\""
+
+#: kf_lib/happenings/teachings.py:391
+msgid "Beating the weak teaches little. Beating the strong teaches much."
+msgstr "Победа над слабым учит малому. Победа над сильным учит многому."
 
 #: kf_lib/happenings/story/_student_rivalry.py:123
 msgid "Beats both quarreling students in a spar."
@@ -551,17 +683,25 @@ msgstr "Побеждает в спарринге обоих поссоривши
 msgid "Became master"
 msgstr "Стал мастером"
 
-#: kf_lib/happenings/encounters/_school.py:78
+#: kf_lib/happenings/encounters/_school.py:106
 msgid "Becomes a master and founds his own school."
 msgstr "Становится мастером и основывает собственную школу."
 
-#: kf_lib/happenings/encounters/_school.py:194
+#: kf_lib/happenings/encounters/_school.py:222
 msgid "Becomes the best student of his school."
 msgstr "Становится лучшим учеником своей школы."
 
 #: kf_lib/actors/player/_base_player.py:348
 msgid "Begs the master for forgiveness, in vain."
 msgstr "Безуспешно молит мастера о прощении."
+
+#: kf_lib/happenings/teachings.py:239
+msgid "Being knocked down costs 25 to 50 HP from the fall itself."
+msgstr "Падение само по себе отнимает от 25 до 50 ОЗ."
+
+#: kf_lib/happenings/teachings.py:65
+msgid "Being off-balance multiplies your attack and defense by 0.75."
+msgstr "Потеря равновесия умножает твою атаку и защиту на 0,75."
 
 #: kf_lib/kung_fu/boosts.py:107
 msgid "bleeding"
@@ -570,6 +710,10 @@ msgstr "кровотечение"
 #: kf_lib/kung_fu/boosts.py:109
 msgid "block efficiency"
 msgstr "эффективность блока"
+
+#: kf_lib/happenings/teachings.py:82
+msgid "Block power comes from health, not strength."
+msgstr "Сила блока зависит от здоровья, а не от силы."
 
 #: kf_lib/kung_fu/boosts.py:109
 msgid "blocks"
@@ -582,6 +726,10 @@ msgstr "Куплено/всего"
 #: kf_lib/happenings/encounters/_people.py:130
 msgid "Brawler: \"That's not good enough!\""
 msgstr "Задира: \"Этого недостаточно!\""
+
+#: kf_lib/happenings/teachings.py:329
+msgid "Breath and qi return a little with every turn. Patience refills what haste empties."
+msgstr "Дыхание и ци понемногу возвращаются с каждым ходом. Терпение наполняет то, что опустошила спешка."
 
 #: kf_lib/game/biographies.py:34
 msgid "But her most feared move was the {move}."
@@ -602,6 +750,10 @@ msgstr "Покупает {item} за {price}."
 #: kf_lib/game/debug_menu.py:151
 msgid "Cannot parse {!r} as a Python literal, not setting anything!"
 msgstr "Не удаётся разобрать {!r} как литерал Python — ничего не установлено!"
+
+#: kf_lib/happenings/teachings.py:340
+msgid "Catch Breath restores 20 stamina and Focus restores 20 qi, each at the cost of a turn."
+msgstr "«Перевести дыхание» восстанавливает 20 выносливости, а «Фокус» — 20 ци; каждый стоит хода."
 
 #: kf_lib/kung_fu/boosts.py:107
 msgid "cause bleeding"
@@ -683,6 +835,10 @@ msgstr "Решает проигнорировать вызов."
 msgid "Chooses to ignore the offer."
 msgstr "Решает проигнорировать предложение."
 
+#: kf_lib/happenings/teachings.py:286
+msgid "Claw and slash open wounds that do not close until the fight is over."
+msgstr "Коготь и рубящий удар открывают раны, что не закроются до конца боя."
+
 #: kf_lib/kung_fu/boosts.py:174
 msgid "claw strike efficiency"
 msgstr "эффективность ударов когтем"
@@ -707,9 +863,17 @@ msgstr "Слож"
 msgid "Co-op mode?"
 msgstr "Кооперативный режим?"
 
+#: kf_lib/happenings/teachings.py:181
+msgid "Complex moves fail more often, and agility lowers that chance."
+msgstr "Сложные приёмы чаще срываются, а ловкость уменьшает этот шанс."
+
 #: kf_lib/kung_fu/moves.py:83
 msgid "Cost"
 msgstr "Цена"
+
+#: kf_lib/happenings/teachings.py:141
+msgid "Counter techniques make counters certain, and those counters are twice as hard to dodge or block."
+msgstr "Техники контратаки делают контратаку неизбежной, и от неё вдвое труднее уклониться или закрыться."
 
 #: kf_lib/kung_fu/boosts.py:110
 msgid "counterattack chance"
@@ -738,6 +902,10 @@ msgstr "Ускоренный курс (быстрая прокачка)"
 #: kf_lib/game/_new_game.py:154
 msgid "Crime rate?"
 msgstr "Уровень преступности?"
+
+#: kf_lib/happenings/teachings.py:221
+msgid "Critical and epic hits happen only on strikes that were not blocked at all."
+msgstr "Критические и эпичные удары бывают только тогда, когда удар вовсе не приняли на блок."
 
 #: kf_lib/kung_fu/boosts.py:117
 msgid "critical attack chance"
@@ -903,6 +1071,30 @@ msgstr "Пьяница: \"Ты что, слишком хорош, чтобы в�
 msgid "drunken strike efficiency"
 msgstr "эффективность пьяных ударов"
 
+#: kf_lib/happenings/teachings.py:174
+msgid "Each attack move works only at one distance (1 to 4); step in or out to use the others."
+msgstr "Каждый атакующий приём работает только на одной дистанции (от 1 до 4); чтобы применить другие, сблизься или отступи."
+
+#: kf_lib/happenings/teachings.py:201
+msgid "Each point of agility above 3 adds 5% to your chance of a critical hit, which deals 1.5 times the damage."
+msgstr "Каждое очко ловкости выше 3 добавляет 5% к шансу критического удара, наносящего в 1,5 раза больше урона."
+
+#: kf_lib/happenings/teachings.py:132
+msgid "Each point of agility above 3 adds 5% to your chance to counter a strike that missed or was fully stopped."
+msgstr "Каждое очко ловкости выше 3 добавляет 5% к шансу контратаковать удар, который прошёл мимо или был полностью остановлен."
+
+#: kf_lib/happenings/teachings.py:357
+msgid "Each point of health gives 40 maximum HP."
+msgstr "Каждое очко здоровья даёт 40 максимальных ОЗ."
+
+#: kf_lib/happenings/teachings.py:94
+msgid "Each repeat of a move among your last three actions makes it easier to dodge or block, up to about twice as easy."
+msgstr "Каждый повтор приёма среди трёх последних действий облегчает противнику уклонение и блок — вплоть до почти двукратного."
+
+#: kf_lib/happenings/teachings.py:102
+msgid "Each strike aimed at you between your own turns lowers your defense by 20%."
+msgstr "Каждый удар по тебе между твоими ходами снижает твою защиту на 20%."
+
 #: kf_lib/actors/player/_base_player.py:641
 msgid "Earns {} c."
 msgstr "Зарабатывает {} монет."
@@ -974,9 +1166,33 @@ msgstr ""
 msgid "environment"
 msgstr "окружение"
 
+#: kf_lib/happenings/teachings.py:122
+msgid "Evasion feeds the qi. A block feeds it too, but only half as well."
+msgstr "Уклонение питает ци. Блок тоже питает, но лишь вполовину."
+
+#: kf_lib/happenings/teachings.py:406
+msgid "Even a friendly bout teaches, and it leaves no lasting wounds."
+msgstr "Даже дружеский поединок учит и не оставляет долгих ран."
+
+#: kf_lib/happenings/teachings.py:294
+msgid "Even a plain blow can open the skin. Do not ignore the drop that becomes a stream."
+msgstr "Даже простой удар может рассечь кожу. Не пренебрегай каплей, что становится ручьём."
+
+#: kf_lib/happenings/teachings.py:346
+msgid "Every fight begins with an empty cup of qi. Only the trained arrive with some already poured."
+msgstr "Каждый бой начинается с пустой чаши ци. Лишь обученные приходят с чашей, уже отчасти полной."
+
+#: kf_lib/happenings/teachings.py:212
+msgid "Every fighter has a 0.5% chance per level to land an epic hit, which deals double damage; an epic critical hit deals triple."
+msgstr "У каждого бойца есть шанс 0,5% за уровень нанести эпичный удар с двойным уроном; эпичный критический удар наносит тройной."
+
 #: kf_lib/happenings/story/_strange_dreams.py:14
 msgid "Every so often one has some really unusual dreams..."
 msgstr "Время от времени снятся по-настоящему необычные сны..."
+
+#: kf_lib/happenings/teachings.py:172
+msgid "Every strike has its distance. Too near or too far, the finest technique is useless."
+msgstr "У каждого удара своя дистанция. Слишком близко или слишком далеко — и лучшая техника бесполезна."
 
 #: kf_lib/happenings/story/_stolen_treasures.py:20
 msgid "Everybody in {town} talks about national treasures being stolen and sold to foreign buyers. Who could be responsible for such horrible crimes?"
@@ -989,6 +1205,10 @@ msgstr "Бонусы опыта"
 #: kf_lib/actors/player/_base_player.py:813
 msgid "exp:{exp}/{next_lv} money:{money}"
 msgstr "опыт:{exp}/{next_lv} деньги:{money}"
+
+#: kf_lib/happenings/teachings.py:392
+msgid "Experience from a win grows faster than the opponent's strength relative to yours."
+msgstr "Опыт за победу растёт быстрее, чем сила противника по сравнению с твоей."
 
 #: kf_lib/actors/fighter/_fight_actions.py:87
 msgid "Fail!"
@@ -1070,6 +1290,18 @@ msgstr "В бой! ({})"
 msgid "Fight:"
 msgstr "Бой:"
 
+#: kf_lib/happenings/teachings.py:348
+msgid "Fighters start a fight with no qi unless a qi technique gives them a head start."
+msgstr "Бойцы начинают бой без ци, если только техника ци не даёт им запас на старте."
+
+#: kf_lib/happenings/teachings.py:382
+msgid "Fighters with a fury technique may fly into a fury, more likely the more HP they have lost; in fury, attack power, accuracy and block power rise by 60%."
+msgstr "Бойцы с техникой ярости могут впасть в ярость — тем вероятнее, чем больше ОЗ потеряно; в ярости сила удара, точность и сила блока растут на 60%."
+
+#: kf_lib/happenings/teachings.py:73
+msgid "Fighters with qi training spend qi, 1 point per 2 HP, to absorb the damage that gets past their block."
+msgstr "Бойцы, обученные работе с ци, тратят ци — 1 очко за 2 ОЗ, — чтобы поглотить урон, прошедший сквозь блок."
+
 #: kf_lib/game/game_stats.py:108
 msgid "Fights ({})"
 msgstr "Бои ({})"
@@ -1102,7 +1334,7 @@ msgstr "Найдено,потеряно"
 msgid "Founds the kung-fu federation."
 msgstr "Основывает федерацию кунг-фу."
 
-#: kf_lib/happenings/encounters/_school.py:93
+#: kf_lib/happenings/encounters/_school.py:121
 msgid "Founds the {} school and style."
 msgstr "Основывает школу и стиль: {}."
 
@@ -1114,7 +1346,7 @@ msgstr "Друзья"
 msgid "friends:{}"
 msgstr "друзья:{}"
 
-#: kf_lib/happenings/encounters/_school.py:89
+#: kf_lib/happenings/encounters/_school.py:117
 msgid "From now on, {name}'s kung-fu style will be known as {school}."
 msgstr "Отныне стиль кунг-фу {name} будет известен как {school}."
 
@@ -1298,6 +1530,18 @@ msgstr "гарантированные контратаки после неуд�
 msgid "guard"
 msgstr "защитная стойка"
 
+#: kf_lib/happenings/teachings.py:45
+msgid "Guard also restores 10 stamina and 10 qi."
+msgstr "«Защита» также восстанавливает 10 выносливости и 10 ци."
+
+#: kf_lib/happenings/teachings.py:44
+msgid "Guard does not strike, yet it lets breath and qi return."
+msgstr "Защита не бьёт, но возвращает дыхание и ци."
+
+#: kf_lib/happenings/teachings.py:37
+msgid "Guard doubles your chances to dodge and block until your next turn."
+msgstr "«Защита» удваивает шансы уклониться и поставить блок до твоего следующего хода."
+
 #: kf_lib/kung_fu/boosts.py:135
 msgid "guard efficiency"
 msgstr "эффективность защитной стойки"
@@ -1380,6 +1624,14 @@ msgstr "Здоровье"
 #: kf_lib/kung_fu/boosts.py:141
 msgid "health"
 msgstr "здоровье"
+
+#: kf_lib/happenings/teachings.py:355
+msgid "Health is the bowl that holds your life. The bigger the bowl, the more blows it takes to empty."
+msgstr "Здоровье — чаша, что хранит твою жизнь. Чем больше чаша, тем больше ударов нужно, чтобы её опустошить."
+
+#: kf_lib/happenings/encounters/_school.py:62
+msgid "Hears a teaching: \"{saying}\" ({fact})"
+msgstr "Слушает наставление: \"{saying}\" ({fact})"
 
 #: kf_lib/happenings/encounters/_people.py:329
 msgid "Hears the rumors."
@@ -1527,6 +1779,10 @@ msgstr "Намеревается помогать бедным."
 msgid "Intends to pick fights."
 msgstr "Намеревается ввязываться в драки."
 
+#: kf_lib/happenings/teachings.py:180
+msgid "Intricate forms betray clumsy limbs."
+msgstr "Замысловатые формы выдают неуклюжие руки."
+
 #: kf_lib/ui/_interactive.py:11 kf_lib/ui/_interactive.py:30
 msgid "invalid input, try again"
 msgstr "неверный ввод, попробуйте ещё раз"
@@ -1546,11 +1802,11 @@ msgstr[0] "Попадает в засаду: {enemy} с {n} головорезо
 msgstr[1] "Попадает в засаду: {enemy} с {n} головорезами."
 msgstr[2] "Попадает в засаду: {enemy} с {n} головорезами."
 
-#: kf_lib/happenings/encounters/_school.py:220
+#: kf_lib/happenings/encounters/_school.py:248
 msgid "Is approached by a group of potential students."
 msgstr "К нему подходит группа потенциальных учеников."
 
-#: kf_lib/happenings/encounters/_school.py:239
+#: kf_lib/happenings/encounters/_school.py:267
 msgid "Is approached by a potential student."
 msgstr "К нему подходит потенциальный ученик."
 
@@ -1570,7 +1826,7 @@ msgstr "Обвинён в беспорядках на День святого."
 msgid "is BLEEDING!"
 msgstr "ИСТЕКАЕТ КРОВЬЮ!"
 
-#: kf_lib/happenings/encounters/_school.py:117
+#: kf_lib/happenings/encounters/_school.py:145
 msgid "Is bullied at his school."
 msgstr "Терпит издевательства в своей школе."
 
@@ -1606,11 +1862,11 @@ msgstr "Выбит в нокаут в драке в притоне. Деньги
 msgid "Is knocked out in the Saint's Day riot."
 msgstr "Нокаутирован в беспорядках на День святого."
 
-#: kf_lib/happenings/encounters/_school.py:161
+#: kf_lib/happenings/encounters/_school.py:189
 msgid "Is offered a trial at his school."
 msgstr "В его школе ему предлагают пройти испытание."
 
-#: kf_lib/happenings/encounters/_school.py:62
+#: kf_lib/happenings/encounters/_school.py:90
 msgid "Is offered a trial to become a master."
 msgstr "Получает предложение пройти испытание на звание мастера."
 
@@ -1817,6 +2073,10 @@ msgstr "ур.{}"
 msgid "lying dfs"
 msgstr "защита лёжа"
 
+#: kf_lib/happenings/teachings.py:110
+msgid "Lying on the ground halves your chances to dodge and block."
+msgstr "Лёжа на земле, ты уклоняешься и ставишь блок вдвое хуже."
+
 #: kf_lib/game/_new_game.py:38 kf_lib/happenings/encounters/_crime.py:418
 msgid "Man"
 msgstr "Мужчина"
@@ -1925,6 +2185,10 @@ msgstr "Промах!"
 msgid "Misses the Grand Melee, being broke."
 msgstr "Пропускает Большую Свалку из-за пустых карманов."
 
+#: kf_lib/happenings/teachings.py:167
+msgid "Momentum from moving closer reduces how far a hit knocks you back."
+msgstr "Напор от сближения уменьшает, насколько далеко тебя отбрасывает удар."
+
 #: kf_lib/game/game_stats.py:140
 msgid "Money"
 msgstr "Деньги"
@@ -1952,6 +2216,10 @@ msgstr "Приёмы"
 #: kf_lib/game/_state_menu.py:56
 msgid "Moves:"
 msgstr "Приёмы:"
+
+#: kf_lib/happenings/teachings.py:159
+msgid "Moving closer builds momentum, and each point of momentum adds 10% to your attack power and accuracy."
+msgstr "Сближение даёт напор, и каждое очко напора добавляет 10% к силе удара и точности."
 
 #: kf_lib/happenings/encounters/_challenger.py:29
 msgid "much "
@@ -2053,6 +2321,14 @@ msgstr "Старуха: Многие в {} теперь недоедают..."
 msgid "Old woman: There are not as many poor and homeless people in {} as before..."
 msgstr "Старуха: Бедных и бездомных в городе {} стало не так много, как раньше..."
 
+#: kf_lib/happenings/teachings.py:109
+msgid "On the ground you defend with half your strength. Rise, or be finished."
+msgstr "На земле ты защищаешься вполсилы. Поднимись — или тебя добьют."
+
+#: kf_lib/happenings/teachings.py:209
+msgid "Once in a long while, heaven itself moves the fist, and the blow is told of for generations. The longer you walk the path, the more often heaven moves."
+msgstr "Изредка кулак направляет само Небо, и о таком ударе рассказывают поколениями. Чем дольше идёшь по Пути, тем чаще Небо вмешивается."
+
 #: kf_lib/happenings/story/_eight_gates.py:72
 msgid "One by one, the eight disciples fall. Finally, only {p_name} is left standing in the circle. {b_name} slowly rises and bows."
 msgstr "Один за другим падают восемь учеников. Наконец на ногах в кругу остаётся только {p_name}. {b_name} медленно поднимается и кланяется."
@@ -2065,6 +2341,14 @@ msgstr "Один из них говорит: \"Не слыхали? {} на ур
 msgid "One of them says: \"Haven't you heard? {} at lv.{} shamefully lost to {}. What a disgrace to kung-fu!\""
 msgstr "Один из них говорит: \"Не слышали? {} (ур.{}) позорно проиграл {}. Какой позор для кунг-фу!\""
 
+#: kf_lib/happenings/teachings.py:139
+msgid "One who has trained the counter does not wait for luck. The answer comes every time, and it is hard to stop."
+msgstr "Тот, кто отточил контратаку, не ждёт удачи. Ответ приходит всякий раз, и остановить его трудно."
+
+#: kf_lib/happenings/teachings.py:166
+msgid "One who rushes forward is hard to push back."
+msgstr "Того, кто рвётся вперёд, трудно отбросить назад."
+
 #: kf_lib/happenings/encounters/_people.py:358
 msgid "Overhears a conversation."
 msgstr "Подслушивает разговор."
@@ -2072,6 +2356,10 @@ msgstr "Подслушивает разговор."
 #: kf_lib/actors/human_controlled_fighter.py:229
 msgid "P"
 msgstr "М"
+
+#: kf_lib/happenings/teachings.py:380
+msgid "Pain is fuel to those who have learned to burn it. The deeper the wounds, the nearer the storm."
+msgstr "Боль — топливо для тех, кто научился её сжигать. Чем глубже раны, тем ближе буря."
 
 #: kf_lib/kung_fu/boosts.py:185
 msgid "palm str."
@@ -2176,6 +2464,10 @@ msgstr "Тренируется в школе."
 msgid "Practices kung-fu with the child."
 msgstr "Занимается кунг-фу с ребёнком."
 
+#: kf_lib/happenings/teachings.py:200
+msgid "Precise hands find the weak point. The nimble strike true more often."
+msgstr "Точные руки находят слабое место. Ловкий чаще бьёт без промаха."
+
 #: kf_lib/kung_fu/boosts.py:153
 msgid "preemptive"
 msgstr "упреждение"
@@ -2183,6 +2475,10 @@ msgstr "упреждение"
 #: kf_lib/kung_fu/boosts.py:154
 msgid "preemptive strike chance"
 msgstr "шанс упреждающего удара"
+
+#: kf_lib/happenings/teachings.py:150
+msgid "Preemptive techniques give a chance to hit an attacker first, so that their attack never happens."
+msgstr "Техники упреждения дают шанс ударить атакующего первым, и его атака так и не состоится."
 
 #: kf_lib/ui/_interactive.py:56
 msgid "Press Enter"
@@ -2295,6 +2591,10 @@ msgstr "Репутация"
 #: kf_lib/actors/player/_base_player.py:698
 msgid "Reputation: {} ({})"
 msgstr "Репутация: {} ({})"
+
+#: kf_lib/happenings/teachings.py:373
+msgid "Resilience techniques give a chance, up to 50%, to stay on your feet with 1 HP instead of being knocked out."
+msgstr "Техники стойкости дают шанс, до 50%, устоять на ногах с 1 ОЗ вместо нокаута."
 
 #: kf_lib/kung_fu/boosts.py:163
 msgid "resist KO"
@@ -2466,6 +2766,10 @@ msgstr "Хозяин лавки: \"О боги... Вы, мастера един�
 msgid "Shop owner: \"Thank you, thank you young man!\""
 msgstr "Хозяин лавки: \"Спасибо, спасибо, юноша!\""
 
+#: kf_lib/happenings/teachings.py:93
+msgid "Show the same strike three times and the third will be waited for."
+msgstr "Покажи один и тот же удар трижды — и третьего уже будут ждать."
+
 #: kf_lib/actors/player/_base_player.py:746
 msgid "sick"
 msgstr "болезнь"
@@ -2477,6 +2781,18 @@ msgstr "просто "
 #: kf_lib/fighting/fight/_base_fight.py:385
 msgid "Slideshow ({n})"
 msgstr "Слайд-шоу ({n})"
+
+#: kf_lib/happenings/teachings.py:363
+msgid "Small blows break on a seasoned body like rain on a rock."
+msgstr "Мелкие удары разбиваются о закалённое тело, как дождь о скалу."
+
+#: kf_lib/happenings/teachings.py:192
+msgid "Some blows go around the arm. Against those, only the feet can save you."
+msgstr "Некоторые удары обходят руку. От них спасут только ноги."
+
+#: kf_lib/happenings/teachings.py:117
+msgid "Some moves can only be used against an opponent lying on the ground."
+msgstr "Некоторые приёмы можно применить только против лежащего на земле противника."
 
 #: kf_lib/happenings/encounters/_people.py:391
 msgid "Something about {}'s astonishing victory."
@@ -2498,6 +2814,10 @@ msgstr "ВН:{}"
 msgid "Spar"
 msgstr "Спарринг"
 
+#: kf_lib/happenings/teachings.py:407
+msgid "Sparring gives experience but causes no injuries."
+msgstr "Спарринг даёт опыт, но не приносит травм."
+
 #: kf_lib/actors/fighter/_basic_attributes.py:50
 msgid "Spd"
 msgstr "Скр"
@@ -2509,6 +2829,10 @@ msgstr "Скорость"
 #: kf_lib/kung_fu/boosts.py:164
 msgid "speed"
 msgstr "скорость"
+
+#: kf_lib/happenings/teachings.py:313
+msgid "Speed counts from a base of 2, so each point of speed matters more when you are slow."
+msgstr "Скорость отсчитывается от 2, поэтому каждое её очко значит тем больше, чем ты медленнее."
 
 #: kf_lib/actors/player/_base_player.py:1258
 msgid "Spends the day with {sw}."
@@ -2538,6 +2862,10 @@ msgstr "Этап {}"
 msgid "stamina"
 msgstr "выносливость"
 
+#: kf_lib/happenings/teachings.py:36
+msgid "Stand on guard and you are twice as hard to touch, until you move again."
+msgstr "Встань в защиту — и тебя вдвое труднее коснуться, пока не двинешься снова."
+
 #: kf_lib/actors/player/_human_player.py:34
 msgid "State"
 msgstr "Состояние"
@@ -2545,6 +2873,10 @@ msgstr "Состояние"
 #: kf_lib/fighting/fight/_base_fight.py:383
 msgid "Stats"
 msgstr "Статистика"
+
+#: kf_lib/happenings/teachings.py:158
+msgid "Step in as you strike, and your strike carries your step."
+msgstr "Шагни вперёд, нанося удар, — и удар понесёт в себе твой шаг."
 
 #: kf_lib/game/game_stats.py:151
 msgid "Stolen by th."
@@ -2565,6 +2897,10 @@ msgstr "Сила"
 #: kf_lib/kung_fu/boosts.py:167
 msgid "strength"
 msgstr "сила"
+
+#: kf_lib/happenings/teachings.py:263
+msgid "Strike the nerve and the whole body grows slow."
+msgstr "Порази нерв — и всё тело станет медленным."
 
 #: kf_lib/kung_fu/boosts.py:168
 msgid "strike time"
@@ -2597,6 +2933,10 @@ msgstr "оглушение"
 #: kf_lib/kung_fu/boosts.py:169
 msgid "stun chance"
 msgstr "шанс оглушения"
+
+#: kf_lib/happenings/teachings.py:304
+msgid "Stuns, shocks, falls, being off-balance and being slowed down all wear off sooner for faster fighters."
+msgstr "Ступор, шок, падение, потеря равновесия и замедление проходят быстрее у более быстрых бойцов."
 
 #: kf_lib/fighting/fight/_helpers.py:24
 msgid "STYLE"
@@ -2700,6 +3040,10 @@ msgstr "Суматоха привлекает ещё {} человек — на�
 msgid "The criminal pulls out a weapon!"
 msgstr "Преступник выхватывает оружие!"
 
+#: kf_lib/happenings/teachings.py:279
+msgid "The cruelest strike takes breath, speed and senses all at once."
+msgstr "Самый жестокий удар разом отнимает дыхание, быстроту и чувства."
+
 #: kf_lib/happenings/encounters/_people.py:194
 msgid "The drunkard attacks {}."
 msgstr "Пьяница нападает на {}."
@@ -2726,6 +3070,14 @@ msgid_plural "The Grand Melee begins! {boss} waves at {name}: \"Last chance! {fe
 msgstr[0] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монета, {purse} — последнему устоявшему на ногах!\""
 msgstr[1] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монеты, {purse} — последнему устоявшему на ногах!\""
 msgstr[2] "Большая Свалка начинается! {boss} машет рукой {name}: \"Последний шанс! Вход: {fee} монет, {purse} — последнему устоявшему на ногах!\""
+
+#: kf_lib/happenings/teachings.py:238
+msgid "The ground strikes too, and it never misses."
+msgstr "Земля тоже бьёт, и она никогда не промахивается."
+
+#: kf_lib/happenings/teachings.py:149
+msgid "The highest defense is to strike before the strike."
+msgstr "Высшая защита — ударить прежде удара."
 
 #: kf_lib/happenings/story/_jade_table.py:63
 msgid "The Jade Table restaurant, private room. Silk robes, gold teeth, cold smiles. {b_name} raises a cup: \"To peace!\" Everyone drinks. Nobody believes a word. {p_name} notices a bodyguard slowly reaching under the table..."
@@ -2758,6 +3110,10 @@ msgstr "Мастера города {} собираются на Турнир в
 #: kf_lib/happenings/story/_saints_day_riot.py:97
 msgid "The morning after, {town} counts the broken stalls and broken noses. The elders demand that someone answer for the riot. All eyes turn to {name}..."
 msgstr "На следующее утро {town} подсчитывает разбитые лотки и сломанные носы. Старейшины требуют, чтобы кто-то ответил за бунт. Все взгляды устремляются на {name}..."
+
+#: kf_lib/happenings/teachings.py:130
+msgid "The nimble find openings. Every empty strike is a door, and agility opens it more often."
+msgstr "Ловкий находит бреши. Каждый пустой удар — это дверь, и ловкость открывает её чаще."
 
 #: kf_lib/happenings/story/_sweetheart_kidnapped.py:88
 msgid ""
@@ -2818,6 +3174,10 @@ msgstr "Головорезы грабят и наполовину сжигают
 msgid "The students bow and disperse. Order is kept — for now."
 msgstr "Ученики кланяются и расходятся. Порядок сохранён — пока что."
 
+#: kf_lib/happenings/teachings.py:303
+msgid "The swift shake off a stun the way a dog shakes off water."
+msgstr "Быстрый стряхивает ступор, как собака стряхивает воду."
+
 #: kf_lib/happenings/encounters/_crime.py:524
 msgid "The thief attacks {}."
 msgstr "Вор нападает на {}."
@@ -2866,13 +3226,21 @@ msgstr "Время"
 msgid "Timeline"
 msgstr "Хронология"
 
-#: kf_lib/happenings/encounters/_school.py:70
+#: kf_lib/happenings/encounters/_school.py:98
 msgid "To open a martial arts school, {} needs to make the initial outlay of {} coins."
 msgstr "Чтобы открыть школу боевых искусств, {} нужно внести первоначальный взнос: {} монет."
+
+#: kf_lib/happenings/teachings.py:311
+msgid "To the slow, a little more speed is a great gift. To the swift, it is a small one."
+msgstr "Медленному немного быстроты — великий дар. Быстрому — малый."
 
 #: kf_lib/happenings/encounters/_people.py:520
 msgid "Too bad {} doesn't have enough money to treat the wise man to lunch and talk to him."
 msgstr "Жаль, что у {} недостаточно денег, чтобы угостить мудреца обедом и поговорить с ним."
+
+#: kf_lib/happenings/teachings.py:364
+msgid "Toughness, which grows with your level and a little with your health, is subtracted from every hit you take."
+msgstr "Стойкость, растущая с уровнем и немного со здоровьем, вычитается из каждого пропущенного удара."
 
 #: kf_lib/game/game_stats.py:124
 msgid "Tourn.won"
@@ -2901,6 +3269,10 @@ msgstr "неблок."
 #: kf_lib/kung_fu/boosts.py:170
 msgid "unblockable attack"
 msgstr "неблокируемая атака"
+
+#: kf_lib/happenings/teachings.py:193
+msgid "Unblockable techniques give a chance that a strike cannot be blocked, only dodged."
+msgstr "Техники неблокируемого удара дают шанс, что удар нельзя будет заблокировать — только увернуться."
 
 #: kf_lib/actors/fighter/_strike_mechanics.py:412
 msgid "UNBLOCKABLE!"
@@ -2990,6 +3362,14 @@ msgstr "Какое позорное поражение! ({ratio})"
 msgid "What an astonishing victory! ({ratio})"
 msgstr "Какая поразительная победа! ({ratio})"
 
+#: kf_lib/happenings/teachings.py:338
+msgid "When breath runs short, stop and breathe. When qi runs dry, stop and gather it."
+msgstr "Когда не хватает дыхания — остановись и отдышись. Когда иссякает ци — остановись и собери её."
+
+#: kf_lib/happenings/teachings.py:71
+msgid "When the arm cannot stop it all, trained qi takes what the block lets through."
+msgstr "Когда рука не может остановить всё, обученная ци принимает то, что пропустил блок."
+
 #: kf_lib/happenings/story/_saints_day_riot.py:81
 msgid "When the dust settles, {name} is the only one still standing in the square. Somebody in the crowd starts a slow clap..."
 msgstr "Когда пыль оседает, на площади на ногах остаётся только {name}. Кто-то в толпе начинает медленно хлопать..."
@@ -3009,6 +3389,10 @@ msgstr "Гуляя по городу, {p_name} буквально сносит �
 #: kf_lib/actors/player/_human_player.py:138
 msgid "Who wins?"
 msgstr "Кто победит?"
+
+#: kf_lib/happenings/teachings.py:400
+msgid "Winning within 10 seconds, without taking damage, or with 3 or more knockouts each adds 25% experience."
+msgstr "Победа за 10 секунд, победа без полученного урона и 3 или больше нокаутов добавляют по 25% опыта каждая."
 
 #: kf_lib/happenings/all_schools.py:148
 msgid "Wins the All-Schools Tournament with {}."
@@ -3070,19 +3454,19 @@ msgstr "У вас пока нет учеников."
 msgid "You know, I need {} coins to buy medicine for my sick grandma. Wanna share?"
 msgstr "Понимаете, мне нужно {} монет на лекарство для больной бабушки. Не поделитесь?"
 
-#: kf_lib/happenings/encounters/_school.py:235
+#: kf_lib/happenings/encounters/_school.py:263
 msgid "Young man: \"Master {}! Please accept me as your student!\""
 msgstr "Юноша: \"Мастер {}! Прошу вас, примите меня в ученики!\""
 
-#: kf_lib/happenings/encounters/_school.py:217
+#: kf_lib/happenings/encounters/_school.py:245
 msgid "Young men: \"Master {}! We want to learn kung-fu. Please show us your skill!\""
 msgstr "Юноши: \"Мастер {}! Мы хотим изучать кунг-фу. Пожалуйста, покажите нам своё мастерство!\""
 
-#: kf_lib/happenings/encounters/_school.py:231
+#: kf_lib/happenings/encounters/_school.py:259
 msgid "Young men: \"Sorry, Master, we'll learn kung-fu elsewhere.\""
 msgstr "Юноши: \"Простите, мастер, мы будем учиться кунг-фу в другом месте.\""
 
-#: kf_lib/happenings/encounters/_school.py:226
+#: kf_lib/happenings/encounters/_school.py:254
 msgid "Young men: \"Thank you Master, now we see that you're very strong! Please teach us to be strong too!\""
 msgstr "Юноши: \"Спасибо, мастер, теперь мы видим, как вы сильны! Пожалуйста, научите нас, как стать такими же сильными!\""
 
@@ -3213,13 +3597,21 @@ msgstr "{item} ({descr}) ({count})"
 msgid "{item}: {delta}({total})"
 msgstr "{item}: {delta}({total})"
 
-#: kf_lib/happenings/encounters/_school.py:189
+#: kf_lib/happenings/encounters/_school.py:56
+msgid "{m_name} stops the practice to share a teaching:"
+msgstr "{m_name} прерывает тренировку, чтобы поделиться наставлением:"
+
+#: kf_lib/happenings/encounters/_school.py:217
 msgid "{m_name}: \"Well done, {p_name}. You are now the best student of our school. You make me proud — but remember, there is always more to learn.\""
 msgstr "{m_name}: \"Молодец, {p_name}. Теперь ты лучший ученик нашей школы. Я горжусь тобой — но помни: всегда есть чему учиться.\""
 
-#: kf_lib/happenings/encounters/_school.py:178
+#: kf_lib/happenings/encounters/_school.py:206
 msgid "{m_name}: \"{p_name}, I can see that you have mastered some aspects of {style}. However, you must keep practicing as you still have a long way to go.\""
 msgstr "{m_name}: \"{p_name}, я вижу, что вы освоили некоторые аспекты {style}. Но вам нужно продолжать тренироваться — вам ещё долго идти.\""
+
+#: kf_lib/happenings/encounters/_school.py:60
+msgid "{m_name}: \"{saying}\""
+msgstr "{m_name}: \"{saying}\""
 
 #: kf_lib/actors/player/_base_player.py:337
 msgid "{master} forgives {name} and lifts the ban."
@@ -3774,7 +4166,7 @@ msgstr "{name}: \"Позволь, я помогу тебе, любовь моя!
 msgid "{name}: \"Let me help, Master!\""
 msgstr "{name}: \"Позвольте помочь, мастер!\""
 
-#: kf_lib/happenings/encounters/_school.py:97
+#: kf_lib/happenings/encounters/_school.py:125
 msgid "{name}: \"No, you are not ready yet. Practice some more.\""
 msgstr "{name}: \"Нет, ты ещё не готов. Тренируйся дальше.\""
 
@@ -3822,7 +4214,7 @@ msgstr "{name}: \"Почему школы должны идти за вами? �
 msgid "{name}: \"Words are wind. Show me your kung-fu!\""
 msgstr "{name}: \"Слова — это ветер. Покажите мне ваше кунг-фу!\""
 
-#: kf_lib/happenings/encounters/_school.py:66
+#: kf_lib/happenings/encounters/_school.py:94
 msgid "{name}: \"Yes, you ARE ready!\""
 msgstr "{name}: \"Да, ты ДЕЙСТВИТЕЛЬНО готов!\""
 
@@ -3869,7 +4261,7 @@ msgstr "{name}: {bonus}"
 msgid "{name}: {move}"
 msgstr "{name}: {move}"
 
-#: kf_lib/happenings/encounters/_school.py:199
+#: kf_lib/happenings/encounters/_school.py:227
 msgid "{name}: {react}"
 msgstr "{name}: {react}"
 
@@ -3921,7 +4313,7 @@ msgstr "{p_name} узнаёт, что {b_name} победил {f_st}! Неуже
 msgid "{p_name} is approached by a polite gentleman with a scar: \"{b_name} sends his regards. The sit-down at the Jade Table needs... outside muscle. Someone neutral, to keep things honest. The pay is good.\" {p_name} has heard the rumors — every boss coming to that table plans treachery. But the pay IS good."
 msgstr "К {p_name} подходит вежливый господин со шрамом: \"{b_name} передаёт привет. Встреча за Нефритовым столом требует... сторонней силы. Кого-то нейтрального, чтобы все играли честно. Плата хорошая.\" {p_name} слышал слухи — каждый босс, идущий к тому столу, замышляет предательство. Но плата ДЕЙСТВИТЕЛЬНО хорошая."
 
-#: kf_lib/happenings/encounters/_school.py:113
+#: kf_lib/happenings/encounters/_school.py:141
 msgid "{p_name} is bullied at his school while {m_name} is away."
 msgstr "{p_name} терпит издевательства в своей школе, пока {m_name} в отъезде."
 
@@ -3935,7 +4327,7 @@ msgstr ""
 "{p_name}: \"Не волнуйтесь! Когда я был на горе Утайшань, настоятель обучил меня буддийским Законам Логики. Теперь я могу уговорить любого, даже твёрдого, как железо. Уверен, {b_name} выслушает.\"\n"
 "Старик: \"Какое же это счастье, что я смог встретить вас сегодня!\""
 
-#: kf_lib/happenings/encounters/_school.py:156
+#: kf_lib/happenings/encounters/_school.py:184
 msgid ""
 "{p_name} meets his master.\n"
 "{m_name}: \"{p_name}, you have been practicing hard. It is now time to test your kung-fu!\""
@@ -3943,7 +4335,7 @@ msgstr ""
 "{p_name} встречает своего мастера.\n"
 "{m_name}: \"{p_name}, ты усердно тренировался. Пришло время испытать твоё кунг-фу!\""
 
-#: kf_lib/happenings/encounters/_school.py:52
+#: kf_lib/happenings/encounters/_school.py:80
 msgid ""
 "{p_name} meets his master. \n"
 "{m_name}: \"{p_name}, you are one of my best students. You have made a lot of progress in {style}. But you might be ready to found your own kung-fu school... Let's find that out!\""

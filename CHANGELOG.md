@@ -6,6 +6,18 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **The master's teachings**: now and then (20% of paid visits) during
+  "Practice at school", your master stops the class to share a saying about
+  how fights really work — "A blow that meets only air or a closed door
+  pulls its owner off balance. That is the moment to answer." — followed by
+  the plain rule in brackets. 49 sayings cover guarding, blocking and
+  dodging, counters, qi, speed, stamina, momentum, knockdowns, bleeding,
+  stun, shock, slowing and stamina-draining moves (and the move names that
+  give them away: Claw, Slashing, Shocking, Nerve, Solar, Debilitating),
+  criticals and epic hits, fury, resisting a knockout, and experience.
+  Each saying is tied by a test to the values and rules it describes, so a
+  later rule change can't leave the master teaching something false.
+  Translated into Russian
 - **Guarding fighters are marked**: `[]` after a fighter's name, in the
   fight header and in the target menu, shows that they defend much better
   until their next turn — they used Guard, or attacked with a
