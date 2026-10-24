@@ -1,5 +1,6 @@
 from __future__ import annotations
 from abc import ABC
+import math
 import random
 from typing import Final, List, TYPE_CHECKING
 
@@ -22,6 +23,8 @@ class FighterWithActions(FighterAPI, ABC):
     # 20 qi in moves/extra_moves.txt), since 2026-10-23
     GUARD_STAMINA_GAIN: Final = 10
     GUARD_QI_GAIN: Final = 10
+    # qi shield (since 2026-10-24): HP absorbed per point of qi spent
+    QI_SHIELD_HP_PER_QP: Final = 2
     DUR_FURY_MIN: Final = 500
     DUR_FURY_MAX: Final = 1000
 
@@ -148,6 +151,8 @@ class FighterWithActions(FighterAPI, ABC):
             self.set_ascii(prefix + 'Hit')
         # this is necessary here, do not remove, otherwise dam will be a float on hit / block
         atkr.dam = round(atkr.dam)
+        if blocked and atkr.dam:
+            self.try_qi_shield()  # may turn a partial block into a full one
         if blocked and self.fight_stats is not None:
             self.fight_stats['blocks'] += 1
             if not atkr.dam:  # full block: no damage got through
@@ -367,6 +372,24 @@ class FighterWithActions(FighterAPI, ABC):
                     n2=tr_fighter_name(atkr.name),
                 )
             )
+
+    def try_qi_shield(self) -> None:
+        """A fighter with qi training (boosted qi gain or max qi, from techs or
+        items) spends qi to absorb what got past its block, 1 QP per
+        QI_SHIELD_HP_PER_QP HP (since 2026-10-24)."""
+        atkr = self.target
+        if not self.qp or (self.qp_gain_mult <= 1.0 and self.qp_max_mult <= 1.0):
+            return
+        absorbed = min(atkr.dam, self.qp * self.QI_SHIELD_HP_PER_QP)
+        self.change_qp(-math.ceil(absorbed / self.QI_SHIELD_HP_PER_QP))
+        atkr.dam -= absorbed
+        self.current_fight.display(
+            cyan(
+                _("{name}'s qi absorbs {hp} HP!").format(
+                    name=tr_fighter_name(self.name), hp=absorbed
+                )
+            )
+        )
 
     def try_counter(self) -> None:
         atkr = self.target

@@ -288,11 +288,15 @@ class TestDefenseAndCounters:
         fa.target, fb.target = fb, fa
         return fa, fb
 
-    def defend_with_rolls(self, monkeypatch, rolls):
-        """fa defends against fb: dodge 30%, block 25%, block power 10."""
+    def defend_with_rolls(self, monkeypatch, rolls, qp=0, qi_trained=False):
+        """fa defends against fb: dodge 30%, block 25%, block power 10.
+        qp: fa's qi; qi_trained: fa has a qi boost (and so the qi shield)."""
         fa, fb = self.duel()
         fb.atk_pwr, fb.to_hit = 30, 1.0
         fa.to_dodge, fa.to_block, fa.dfs_pwr = 0.30, 0.25, 10
+        fa.qp_max, fa.qp, fa.qp_gain = 100, qp, 0  # no qi from the block itself
+        if qi_trained:
+            fa.qp_gain_mult = 1.1
         rolls = iter(rolls + [0.99] * 10)  # 0.99: any later roll fails
         monkeypatch.setattr(fight_actions_mod, 'rnd', lambda: next(rolls))
         fa.defend()
@@ -314,6 +318,40 @@ class TestDefenseAndCounters:
         fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.5])
         assert not fa.defended
         assert fb.dam == 30
+
+    def test_qi_shield_absorbs_what_got_past_a_block(self, monkeypatch):
+        # since 2026-10-24: 1 QP per 2 HP, as far as the qi lasts
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.2], qp=6, qi_trained=True)
+        assert fb.dam == 8  # 20 got past the block, 12 absorbed
+        assert fa.qp == 0
+        assert not fb.check_status('off-balance')
+
+    def test_qi_shield_can_complete_a_block(self, monkeypatch):
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.2], qp=15, qi_trained=True)
+        assert fb.dam == 0
+        assert fa.qp == 5  # 20 HP cost 10 QP
+        assert fa.fight_stats['full_blocks'] == 1
+        assert fb.check_status('off-balance')  # a full block, like any other
+
+    def test_qi_shield_rounds_the_qi_cost_up(self, monkeypatch):
+        fa, fb = self.duel()
+        fa.qp_max, fa.qp, fa.qp_gain_mult = 100, 10, 1.1
+        fb.dam = 7
+        fa.try_qi_shield()
+        assert fb.dam == 0 and fa.qp == 6  # 7 HP cost 4 QP
+
+    def test_no_qi_shield_without_qi_training_or_on_a_hit(self, monkeypatch):
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.2], qp=15)
+        assert fb.dam == 20 and fa.qp == 15  # untrained: the block as is
+        fa, fb = self.defend_with_rolls(monkeypatch, [0.5, 0.5], qp=15, qi_trained=True)
+        assert fb.dam == 30 and fa.qp == 15  # a clean hit isn't shielded
+
+    def test_qi_techs_start_with_less_qi(self):
+        # the head start was nearly all of a qi tech's value, and only at high
+        # levels; halved 2026-10-24 (0.5 / 1.0 before)
+        from kf_lib.kung_fu import techniques
+        assert techniques.get_tech_obj('Lotus Stance').params['qp_start'] == 0.25
+        assert techniques.get_tech_obj('Golden Lotus Stance').params['qp_start'] == 0.5
 
     def test_stun_weakens_defense_only_while_it_lasts(self):
         fa, fb = self.duel()

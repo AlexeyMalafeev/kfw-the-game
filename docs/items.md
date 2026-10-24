@@ -31,7 +31,9 @@ Three real item categories, all defined as name constants in
   versions) plus the 'Super Mega Herb' boosting everything. Effects are additive
   increments to the fighter's `*_mult` attributes (`ef_boost` →
   `Fighter.boost`, values from `kung_fu/boosts.py`, e.g. `STRENGTH1 = 0.2`),
-  the same mechanism techniques use.
+  the same mechanism techniques use. The herbs that boost qi (Dragon Herbs,
+  Super Mega Herb) also give the qi shield (see `fight_mechanics.md`,
+  `defend`), as qi techs do.
 - **Medicine** (`MEDICINE` = 'Ginseng Root'): `ef_recover` → `recover()`,
   clears injury/sickness. Not a fight item.
 - **Mock items** (`MOCK_ITEMS`): 'constipation medicine', 'cough medicine',

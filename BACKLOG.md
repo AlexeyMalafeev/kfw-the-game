@@ -328,7 +328,7 @@ below are decided:
   Lotus Stance A/B +6.9 → +10.4). Done 2026-10-23: health and speed —
   setup D + linear tempo adopted, then speed techs +15% → +20% (see the
   Health and Speed items and CHANGELOG). Done 2026-10-23: Guard and
-  counters (below). **Qi: next session**
+  counters (below). Done 2026-10-24: qi (below)
   (`dev_scripts/testing/rule_variants.py`, full tables in
   `tests/balance experiments 2026-10-22.txt`; baseline fights 62.7 s, +27%
   vs 49.5 s before the ⚠️ batches). Then implement the chosen ones in the
@@ -363,7 +363,9 @@ below are decided:
     the attacker's damage (it kept the previous strike's value, which
     decided whether the miss could be countered), and only a dodge, a full
     block or a miss opens a counter (a hit toughness fully absorbed did too)
-  - **Qi** (the author 2026-10-23; qi techs only): qi shield (a partial block spends qi to absorb
+  - **Qi — adopted 2026-10-24** (the author's pick: the qi shield plus
+    half the head start; `QP_START1/2` 0.5/1.0 → 0.25/0.5). History, qi
+    techs only: qi shield (a partial block spends qi to absorb
     the rest) −3.6 → −1.1; qi-charged strikes at +10% → +3.0, with the
     shield +7.2 (at +30%: +16.9, too strong). **Re-measured 2026-10-24 on
     the final engine** (qi −3.3; experiments file, "Qi round 2"), awaiting
@@ -378,7 +380,8 @@ below are decided:
     a qi tech's value is its head start (fighters start fights with 0 qi;
     without `qp_start` Lotus Stance +12.1 → +3.1), which pays only at high
     levels. Shield + half the head start: qi −0.9, no row worse than the
-    engine, Lotus Stance stays at 140% (shield alone: 191%) ("Qi round 3")
+    engine, Lotus Stance stays at 140% (shield alone: 191%) ("Qi round 3");
+    the engine reproduces that variant's 100k report exactly
   - **Health — adopted 2026-10-23** (setup D: 40 HP per health point, 20%
     of toughness and 30% of stamina from health, block power from health;
     with the Speed item's linear tempo the four attributes end within ±0.6,

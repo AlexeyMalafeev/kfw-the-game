@@ -800,6 +800,10 @@ class FighterAPI(ABC):
         pass
 
     @abstractmethod
+    def try_qi_shield(self) -> None:
+        pass
+
+    @abstractmethod
     def try_shock_move(self) -> None:
         pass
 

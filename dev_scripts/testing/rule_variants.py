@@ -36,7 +36,9 @@ the C* variants below scale counter_chance_mult, which no tech sets since
   Cfree+Cx3, Chalf+Cx3                                          -> -8.5 / -10.5
   (why: a counter needs a full dodge/block (28% of incoming strikes) and a ~15%
   roll — ~0.3 counters per fighter per fight, so per-counter changes barely show)
-Qi, qi techs only (baseline: qi buff -3.6, Lotus Stance +2.6):
+Qi, qi techs only (baseline: qi buff -3.6, Lotus Stance +2.6; Qb and Qs50
+ADOPTED 2026-10-24 and removed, code at commit af6ac5a -- the Qb+... rows
+below can't be re-run as named):
   Qb   qi shield: a partial block spends qi (1 QP per 2 HP)      -> qi -1.1
   Qc   qi-charged strikes, atk x (1 + 0.3 * qp / qp_max)        -> qi +16.9 (too strong)
   Qc10 the same at 0.1                                           -> qi +3.0
@@ -226,25 +228,6 @@ def Hc():
         self.qp_gain = round(self.qp_max * self.QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult)
         self.qp = min(self.qp, self.qp_max)
     F.refresh_dependent_atts = refresh
-
-
-QI_SHIELD_HP_PER_QP = 2
-
-
-def Qb():
-    od = F.defend
-    def defend(self):
-        od(self)
-        atkr = self.target
-        if self.defended and atkr.dam > 0 and self.qp > 0 and is_qi(self):
-            absorb = min(atkr.dam, self.qp * QI_SHIELD_HP_PER_QP)
-            self.qp -= math.ceil(absorb / QI_SHIELD_HP_PER_QP)
-            atkr.dam = round(atkr.dam - absorb)
-            if not atkr.dam:  # the shield completed the block
-                if self.fight_stats is not None:
-                    self.fight_stats['full_blocks'] += 1
-                atkr.cause_off_balance(brief=True)
-    F.defend = defend
 
 
 QI_CHARGE = 0.3
@@ -580,12 +563,9 @@ def Qc5():  # qi-charged strikes at 0.05
 
 # Qi head start (2026-10-24): almost all of a qi tech's value is qp_start (a
 # fighter starts a fight with 0 qi otherwise; Lotus Stance +12.1 -> +3.1
-# without it, lv 13-20). Qs50 / Qs0: qp_start x0.5 / x0 in every tech (half a
-# bar -> a quarter, a full bar -> half). Measured with the shield: Qb+Qs50.
-
-
-def Qs50():
-    _scale_param('qp_start', 0.5)
+# without it, lv 13-20). Qs0: no head start (qp_start x0 in every tech).
+# Qs50 (qp_start x0.5) with the shield (Qb) ADOPTED 2026-10-24 and removed,
+# code at commit af6ac5a.
 
 
 def Qs0():

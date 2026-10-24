@@ -99,6 +99,19 @@ All notable changes to KFW are documented here. Format loosely follows
   mostly when it can't attack, but those turns now refill it, so fights got
   shorter (58.6 → 51.0 s on average) and fighters spend 23% of their turns
   on Guard instead of 31%
+- **Qi techniques shield blocks, and give a smaller head start**
+  (balance-affecting): a fighter with a qi technique (or a qi herb) now
+  spends qi to absorb what gets past a block, 1 qi per 2 HP; if that stops
+  the whole strike, it counts as a full block, with its off-balance attacker
+  and counter chance. Qi techniques and herbs also start a fight with half
+  the qi they used to (a quarter of the bar instead of half, half instead of
+  a full bar). The head start was nearly all these techs were worth, and
+  only at high levels, where it let a fighter open with its best moves; at
+  low levels moves cost almost no qi, and qi techs were nearly useless.
+  Now the qi style techs help at every level (in head-to-head tests at
+  levels 1–7, 10% of an average style tech's edge became 44%), Lotus Stance
+  stays about as strong as before, and Golden Lotus Stance gains a real
+  edge over the Lotus Stance it upgrades (+1.0 → +5.9)
 - **Counter techniques give sure counters** (balance-affecting): Retaliative
   Blows and the style counter techs (Retaliation, Strikes of Vengeance, Fox
   Strikes Back) used to raise the counterattack chance by 50%, which made

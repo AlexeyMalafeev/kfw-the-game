@@ -36,6 +36,12 @@ was `environment_bonus` and was `0.0` when disallowed.)
 `stamina = stamina_max`, `qp = round(qp_max * qp_start)`, `bleeding = 0`,
 `status = {}`, `momentum = 0`, `took_damage = False`, `kos_this_fight = 0`,
 `exp_yield = get_exp_worth()`, `set_distances_before_fight()`.
+`qp_start` is 0 unless a qi tech or qi herb raises it, so most fighters start
+a fight with no qi. That head start is nearly all a qi tech is worth, and it
+pays only at high levels, where moves cost up to 2.5 × level qi and fights
+are short (at low levels moves cost almost no qi); the qi boosts give a
+quarter bar (`QP_START1`) or half a bar (`QP_START2`) since 2026-10-24
+(half / a full bar before).
 
 Distances (`fighting/distances.py`, `fighter/_distances.py`): every pair of
 fighters gets a random starting distance in 1–4, stored symmetrically in
@@ -198,7 +204,19 @@ if rnd() <= dodge_chance: dodge — attacker.dam = 0, defender gains qp_gain
 elif rnd() <= block_chance: block — dam = max(dam - round(dfs_pwr), 0),
     defender gains qp_gain // 2, try_block_disarm()
 else: clean hit
+if blocked and dam > 0: try_qi_shield()
 ```
+
+**Qi shield** (`try_qi_shield`, since 2026-10-24): a fighter with qi training
+— `qp_gain_mult` or `qp_max_mult` above 1.0, from a qi tech or a qi herb —
+spends qi to absorb what got past its block, 1 QP per
+`QI_SHIELD_HP_PER_QP` (2) HP, rounded up, as far as its qi lasts. If it
+absorbs everything, the block counts as a full one (off-balance attacker,
+counter chance, `full_blocks` stat). Dodges and clean hits aren't shielded.
+It gives qi techs a use at every level: their extra qi did almost nothing,
+since fighters rarely lack qi once a fight is under way (half a bar pays
+for any move a fighter knows). In the harness it fires about 0.3 times per
+fight for a qi-trained fighter and absorbs about 3% of its max HP.
 
 So a strike is dodged with `dodge_chance`, blocked with
 `(1 - dodge_chance) * block_chance`, and hits otherwise. A **full defense**
