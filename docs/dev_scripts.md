@@ -37,8 +37,9 @@ left behind (`git status` clean).
   repo. Most instances found in 2026-09 were fixed; `ml/ML_learn.py` still
   has one (see its verdict below). Keep the gotcha in mind when adding paths
   to these scripts.
-- Most scripts end with `input('Press Enter to exit')` — harmless with piped
-  stdin if you send one newline (`echo | ...`), an EOFError otherwise.
+- The scripts don't pause at the end. The old `input('Press Enter to exit')`
+  pauses were removed 2026-10-25; on an exception a script prints the
+  traceback and exits with code 1.
 - Interactive prompts (`ui.menu`/`ui.yn`) go through termios
   (`kf_lib/ui/_keyboard.py`) and need a real TTY, same TTY pitfall as the
   minigames.
@@ -68,8 +69,7 @@ matrix, tier/qi scaling, quality variants — is documented in
 running it.
 
 - Run: `cd dev_scripts && ../.venv/bin/python move_gen.py`. Needs pandas
-  (dev venv). Takes seconds; prints `generated N moves` and waits on
-  `input()`.
+  (dev venv). Takes seconds; prints `generated N moves`.
 - Reads `moves/base_moves.txt`, `extra_moves.txt`, `style_moves.txt`,
   `move_word_combinations.csv`. Writes `moves/all_moves.txt`,
   `moves/all_moves.csv` — and also **rewrites the three source files in
@@ -330,7 +330,7 @@ overwriting six committed sample reports.
 **Broken** (verified): the input path is hardcoded as
 `'../../ml/ML_fight_data m=10000, ...csv'`, which post-chdir resolves
 outside the repo → `FileNotFoundError` at the first `pd.read_csv`. The
-script exits through its `except` + `input()` handler.
+script prints the traceback and exits with code 1.
 
 ## testing/ — balance harnesses
 
@@ -410,8 +410,8 @@ remain. Two silent failures to guard against:
   hands the script one argument, argparse rejects it, and the run exits in
   under a second. Write the flag literally, with its value quoted.
 - A loop that doesn't check exit codes reports a batch of failed runs as
-  done. Stop at the first failure, and give the script `< /dev/null`: on an
-  error it waits on `input()`, which would block a background job.
+  done. Stop at the first failure (the scripts exit with code 1 on an
+  error).
 
 ```zsh
 cd dev_scripts/testing

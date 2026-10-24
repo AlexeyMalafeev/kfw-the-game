@@ -20,10 +20,9 @@ try:
     for method in (ml_fighter_pwr.learn_rfc, ml_fighter_pwr.learn_logreg):
         for feat_list in feature_lists:
             method(file_name, feat_list)
-    input('Press Enter to exit')
 
 
 except Exception:
     import traceback
     traceback.print_exc()
-    input('Press Enter to exit')
+    sys.exit(1)

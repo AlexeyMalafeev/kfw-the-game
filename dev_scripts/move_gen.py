@@ -611,7 +611,6 @@ def main():
     df['features'] = df['features'].map(repr_deterministic)
     df.to_csv(Path(MOVES_FOLDER, 'all_moves.csv'), sep=';')
     print(f'generated {len(moves)} moves')
-    input('Press Enter to exit')
 
 
 if __name__ == '__main__':

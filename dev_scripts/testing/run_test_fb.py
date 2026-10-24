@@ -51,4 +51,4 @@ if __name__ == '__main__':  # required: worker processes import this module
     except Exception:  # noqa
         import traceback
         traceback.print_exc()
-        input('Press Enter to exit')
+        sys.exit(1)

@@ -72,10 +72,9 @@ try:
         print(
             '{}\n\n{}'.format(get_time(), pretty_table(tups)),
             file=open(Path('tests', 'fight AI comparison.txt'), 'w', encoding='utf-8'))
-    input('Press Enter to exit')
 
 
 except Exception:  # noqa
     import traceback
     traceback.print_exc()
-    input('Press Enter to exit')
+    sys.exit(1)

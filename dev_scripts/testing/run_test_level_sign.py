@@ -16,10 +16,9 @@ try:
     t = testing_tools.Tester(g)
     print('Testing level significance')
     t.test_level_significance(rep=100)
-    input('Press Enter to exit')
 
 
 except Exception:
     import traceback
     traceback.print_exc()
-    input('Press Enter to exit')
+    sys.exit(1)

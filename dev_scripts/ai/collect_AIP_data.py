@@ -34,5 +34,4 @@ except Exception:
     try:
         g.save_game('emergency_save.txt')
     except:
-        input('-FAILED TO SAVE GAME-')
-    input('Press Enter to exit')
+        print('-FAILED TO SAVE GAME-')

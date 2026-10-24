@@ -25,4 +25,3 @@ for root, dirs, files in os.walk('.'):
 
 print(count, 'non-empty lines of code')
 print(n_files, 'files with code')
-input('Press Enter to exit')

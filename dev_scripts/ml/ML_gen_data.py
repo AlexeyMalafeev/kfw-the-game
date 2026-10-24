@@ -18,4 +18,4 @@ try:
 except Exception:
     import traceback
     traceback.print_exc()
-    input('Press Enter to exit')
+    sys.exit(1)

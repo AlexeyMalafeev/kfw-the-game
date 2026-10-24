@@ -33,7 +33,6 @@ try:
     with open(Path('tests', 'AI players comparison.txt'), 'w', encoding='utf-8') as f:
         lines = [f'{ai_class}: {av_days}' for ai_class, av_days in results.items()]
         f.write('\n'.join(lines))
-    input('Press Enter to exit')
 
 
 except Exception:
@@ -44,5 +43,4 @@ except Exception:
     try:
         g.save_game('emergency_save.txt')
     except:
-        input('-FAILED TO SAVE GAME-')
-    input('Press Enter to exit')
+        print('-FAILED TO SAVE GAME-')
