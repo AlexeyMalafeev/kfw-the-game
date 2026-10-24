@@ -296,7 +296,16 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
   `prob_atk` / `prob_guard` / `prob_focus` … were tuned for the old rules, and
   the AI now spends ~25% of its turns on Guard. Retrain after the defense
   rework, the Guard/counter/qi/health follow-ups and the final
-  `run_test_fb.py` re-run, then re-run the harness once more
+  `run_test_fb.py` re-run, then re-run the harness once more.
+  **Postponed 2026-10-25** (the author: retrain once the fight engine is
+  settled — Catch Breath / Focus / Guard are still changing). A trial run
+  that day (trainer now fixed, parallel and seeded, `--eval` to score
+  weights; see `docs/dev_scripts.md`): both modes converged on "guard when
+  you can't attack" (focus / catch / move weights near 0), +1 point 1-on-1
+  (51.1% ±0.7) and +2–4 in crowds over the current weights, ~9% more
+  actions per fight; Guard 21% → 31% of actions. When retraining: train
+  with `--seed`, many fights per individual (e.g. `--n1 1000 --nc 250`),
+  pick by `--eval`, then re-run `run_test_fb.py` and watch the guard row
 - different fight AI behaviors: aggressive, defensive, cautious, sneaky, erratic
 - different AIs for common fighters vs masters/bosses; difficulty levels via AI choice
 - style-specific AI retraining pipeline

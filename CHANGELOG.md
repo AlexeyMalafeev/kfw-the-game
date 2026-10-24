@@ -161,6 +161,15 @@ All notable changes to KFW are documented here. Format loosely follows
   in-fight stats now also
   count dodges, blocks, full blocks, stuns suffered, counters and
   preemptives. No gameplay change
+- **Fight-AI trainer fixed and sped up** (`dev_scripts/ai/run_fight_ai_gen.py`):
+  the genetic trainer tuned a different AI from the one the game uses; it
+  now trains the game's own fight AI. It plays its fights in parallel
+  (`--workers`), can be seeded for reproducible runs (`--seed`), gives every
+  candidate in a generation the same fighters to face so the comparison is
+  fairer, and takes the run sizes as flags; `--eval` scores any set of
+  weights against the current AI (win rates, action shares, fight length).
+  No gameplay change: the AI's weights stay as they are until the fight
+  engine settles
 
 ### Fixed
 - **A missed strike could not always be countered**: a strike that misses

@@ -220,24 +220,60 @@ so the handler runs and writes its traceback to `errors.txt`.
 ### run_fight_ai_gen.py
 
 Trains fight-AI weights with the hand-rolled genetic algorithm
-(`kf_lib/ai/fight_ai_gen.py`). Two runs back to back, 128 generations each:
+(`kf_lib/ai/fight_ai_gen.py`). It trains copies of the class the game uses,
+`GeneticAIAttackWhenReady` (`DefaultGeneticAIforTraining` /
+`...2` in `fight_ai.py`; until 2026-10 it trained `GeneticAIMoreAggro`
+instead). Fitness = wins in `FightAITest` (1-on-1, random lv 1–20) plus
+`CrowdVsCrowdFair` fights, each rep played twice with sides swapped.
 
-1. `pop_size=16, n_fights_1on1=8, n_fights_crowd=2, infighting=True` —
-   every individual fights every other (4,800 fights per generation, ~615k
-   total);
-2. `pop_size=32, n_fights_1on1=64, n_fights_crowd=16, infighting=False` —
-   against the current `DefaultFightAI` (~1.3M fights total).
+    python run_fight_ai_gen.py                         # the two classic runs below
+    python run_fight_ai_gen.py --mode vs-default --pop 32 --n1 1000 --nc 250 \
+        --gens 128 --workers 15 --seed 1
+    python run_fight_ai_gen.py --eval W1,W2,W3,W4,W5 --workers 15
+
+With no flags it does two runs back to back, 128 generations each, in one
+process:
+
+1. `--mode infight`: `pop_size=16, n_fights_1on1=8, n_fights_crowd=2` —
+   every individual fights every other;
+2. `--mode vs-default`: `pop_size=32, n_fights_1on1=64, n_fights_crowd=16` —
+   against the current `DefaultFightAI`.
+
+`--pop/--n1/--nc/--gens/--mutation` override the sizes. `--workers N` plays
+the fitness fights in N spawned processes (one pool per run). `--seed S`
+makes a run reproducible whatever the worker count (checked: 1 and 4
+workers give identical files), and seeds every generation's fights
+`S + 1e6 * generation` (plus the opponent's index in infighting), so all
+individuals of a generation meet the same fighters — common random
+numbers, so fitness gaps are less noisy. The classic sizes are noisy: 160
+fights per individual is a ±8% win-rate margin, so the "record holder" is
+mostly the luckiest one. Speed: ~1.3 ms per 1-on-1 fight and ~6 ms per
+crowd fight per core; `--pop 32 --n1 1000 --nc 250 --gens 128` takes ~70
+min on 8 workers.
+
+`--eval` plays the given weights (`prob_atk, prob_move, prob_focus,
+prob_guard, prob_catch`) against the current `DefaultFightAI`, or against
+`--vs` weights (`fight_ai_gen.evaluate`): `--n1`/`--nc` reps (default
+10,000 / 2,500, i.e. 25,000 fights; ~7 s on 15 workers) in seeded chunks of
+250, printing the win rates with a ±95% binomial margin, the tested AI's
+actions per 1-on-1 fight and its action shares (attack, maneuver, guard,
+focus, catch breath). The current weights against themselves: 49.7% / 51.3%.
 
 `output()` dumps the top half of each generation (fit values, gene vectors,
-all-time record) to `tests/genetic/pop=... fights=... n_gen=... gen=N.txt`.
-The dir is gitignored, so the script creates it (`mkdir`) before the runs;
-`output()` also tolerates an all-zero generation 0 (no record set yet —
-`record_generation` stays `None` and the generation suffix is omitted).
+all-time record) to `tests/genetic/pop=... fights=... n_gen=... [seed=S]
+gen=N.txt`. The dir is gitignored, so the script creates it (`mkdir`) before
+the runs; `output()` also tolerates an all-zero generation 0 (no record set
+yet — `record_generation` stays `None` and the generation suffix is omitted).
 
 - The committed `tests/fight_ai_gen output*.txt` logs predate the current
   per-generation file naming.
-- Budget note: nothing here is interrupt-safe — a crash loses all
-  generations since the last `output()` (which, today, means everything).
+- Budget note: nothing here is interrupt-safe — a crash loses the running
+  generation; the per-generation files keep the earlier ones.
+- Trial retrain 2026-10-25 (not adopted — the restorative moves were still
+  changing): both modes converged on "when you can't attack, guard" (focus /
+  catch breath / move weights near 0); the best sets beat the current AI by
+  only ~1 point 1-on-1 (51.1% ±0.7) and 2–4 in crowds, with ~9% more
+  actions per fight.
 
 ### run_fight_ai_test.py
 
@@ -574,7 +610,7 @@ tracked report was restored.
 | `try_rich.py` | No — `rich` not installed | ran, `ModuleNotFoundError` |
 | `ai/collect_AIP_data.py` | Only interactively ("yes" × 100); persists nothing | headless `termios.error`; pty run (game completes) |
 | `ai/compare_AIPs.py` | No — `game.BaselineAIP` doesn't exist | ran, `AttributeError` at line 14 |
-| `ai/run_fight_ai_gen.py` | Should run — creates `tests/genetic/` itself; not re-run end-to-end (hours-scale) | `output()` verified on a synthetic all-zero generation (no `TypeError`) |
+| `ai/run_fight_ai_gen.py` | Yes — creates `tests/genetic/` itself; seeded runs reproducible | 2026-10-25: two 128-generation runs (~70 min each, parallel); seeded 1- vs 4-worker smoke runs byte-identical |
 | `ai/run_fight_ai_test.py` | Should run — creates `tests/AI actions/` itself; not re-run end-to-end (hours-scale) | short `FightAITest` with `write_log=True` completed after the mkdir |
 | `ml/ML_gen_data.py` | Yes — reproducible (`random` seeded) | two 50-example runs byte-identical; full 10,000-row run earlier restored |
 | `ml/ML_learn.py` | No — `'../../ml/...'` resolves outside the repo | ran, `FileNotFoundError` |

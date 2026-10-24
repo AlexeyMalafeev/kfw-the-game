@@ -313,6 +313,15 @@ class GeneticAIMoreAggroClone2(GeneticAIMoreAggro):
     pass
 
 
+# training clones of the default AI (fight_ai_gen sets their params)
+class GeneticAIAttackWhenReadyClone(GeneticAIAttackWhenReady):
+    pass
+
+
+class GeneticAIAttackWhenReadyClone2(GeneticAIAttackWhenReady):
+    pass
+
+
 class GeneticAIMoreAggroTrainedTop(GeneticAIMoreAggro):
     pass
 
@@ -342,8 +351,9 @@ class GeneticAIMoreAggroTrainedRecordCrowd(GeneticAIMoreAggro):
 DefaultFightAI = GeneticAIAttackWhenReady
 # this AI is the strongest, yet it is too defensive and boring; todo fix fight AI defensiveness
 # DefaultFightAI = GeneticAIMoreAggroTrainedRecord  # trained Feb 11, 2022
-DefaultGeneticAIforTraining = GeneticAIMoreAggroClone
-DefaultGeneticAIforTraining2 = GeneticAIMoreAggroClone2
+# train the class the game uses (until 2026-10 this trained GeneticAIMoreAggro)
+DefaultGeneticAIforTraining = GeneticAIAttackWhenReadyClone
+DefaultGeneticAIforTraining2 = GeneticAIAttackWhenReadyClone2
 GENETIC_AI_PARAM_NAMES = ['prob_atk', 'prob_move', 'prob_focus', 'prob_guard', 'prob_catch']
 
 params8 = [
