@@ -311,7 +311,8 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## Balance & analysis
 
-**Pending final `run_test_fb.py` re-run** — the defense rework of
+**Final `run_test_fb.py` re-run: done 2026-10-25** (tracked report
+refreshed; see "Snapshot 2026-10-25" below). History: the defense rework of
 2026-10-20 (the 'defense' buff works, block techs raise block chance,
 guard-while-attacking nerfed, a full defense leaves the attacker briefly
 off-balance, block power 20 → 12; values set by A/B modeling against the
@@ -320,8 +321,7 @@ median general tech) is balance-affecting. An interim 100k run against
 rework, first report of the 100k harness): defense −12.7 → −1.3, guard
 while atk +15.5 → −1.2, blocks −12.0 → −4.1, full blocks 81% → 43% of
 blocks, fights 59.7 → 57.1 s; guard (−12), counters (−12) and qi (−7.5)
-still lose. Re-run and refresh the snapshot once the author's follow-ups
-below are decided:
+still lose. The author's follow-ups, all decided by 2026-10-24:
 - **Defense rework follow-ups** (author 2026-10-20/22). Done 2026-10-22:
   the 'dodge' buff raises dodge chance only (`EVADE1/2` 0.4/0.8 → 0.7/1.4,
   modeled); qi regeneration 20% → 10% of max per turn (qi buff −7.5 → −3.6,
@@ -442,7 +442,26 @@ below are decided:
     over speed (+1.3 vs −1.6). Tempo normalization by level doesn't matter
     for balance (only the clock)
 
-**Snapshot 2026-10** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
+**Snapshot 2026-10-25** (`tests/test f.b. rand.act.=False n=100000.txt`,
+seed 42, commit 8a401c6: the end of the 2026-10 balance pass), against the
+first 100k report (2026-10-20, before the defense rework). Diff% =
+winner-vs-loser correlation; an average tech scores about 0, a useless one
+about −9 to −13:
+- **Fights shorter**: mean 59.7 → 50.8 s (median 36 → 31), strikes per
+  fight 11.2 → 8.7; dodged 19.9 → 18.9%, fully blocked 15.9 → 11.5%, partly
+  blocked 3.7 → 7.2%, clean hits 60.5 → 62.4%. Guard 23.5% of actions.
+- **Attributes even**: agility +1.99 → +0.58, strength +1.19 → +0.09,
+  health −1.77 → −0.12, speed −1.41 → −0.56 (gap 3.8 → 1.1).
+- **Dead or broken buffs now near average**: defense −12.7 → −0.5, blocks
+  −12.0 → −2.7, counters −12.1 → −3.1, qi −7.7 → −0.9, guard while atk
+  +15.5 → −4.1 (was the strongest buff); health techs +3.9 → +12.4, speed
+  techs +2.3 → +9.4, in line with strength/agility (+11.0 / +14.1).
+- **Still at dead-slot level**: guard −9.9 (the fight AI guards only when it
+  can't attack — see the AI item), resist KO −10.4, close-range −14.5,
+  grappling −15.7, maneuv.time −7.5; vs crowd −7.4 can't show in 1-on-1
+  fights. Candidates for a later pass.
+
+**Snapshot 2026-10-20** (`tests/test f.b. rand.act.=False n=10000.txt`, seed 42,
 re-run 2026-10-20 after the ⚠️ batches; Diff% = winner-vs-loser
 correlation). The pre-batch code (4f157e9) reproduces the 2026-09 report
 byte-for-byte, so every shift comes from the batch fixes. **One 10k report is
