@@ -374,7 +374,11 @@ below are decided:
     attribute gap doubles. Why qi techs are weak: fighters strike with
     48–72% of their max qi and half a bar pays for any known move
     (`run_test_qi_flow.py`); by A/B the qi style tech is worth 10% / 51% /
-    119% of an average style tech at lv 1–7 / 8–14 / 15–20
+    119% of an average style tech at lv 1–7 / 8–14 / 15–20. Nearly all of
+    a qi tech's value is its head start (fighters start fights with 0 qi;
+    without `qp_start` Lotus Stance +12.1 → +3.1), which pays only at high
+    levels. Shield + half the head start: qi −0.9, no row worse than the
+    engine, Lotus Stance stays at 140% (shield alone: 191%) ("Qi round 3")
   - **Health — adopted 2026-10-23** (setup D: 40 HP per health point, 20%
     of toughness and 30% of stamina from health, block power from health;
     with the Speed item's linear tempo the four attributes end within ±0.6,

@@ -1020,3 +1020,46 @@ loses); QF2 (2 x qp_gain per hit) adds qi back and the qi row falls to -2.4.
 Every option lifts all levels about equally, so the level trend stays:
 the qi techs are weak at lv 1-7 and above average at lv 15-20 (Lotus
 Stance already 149% of the median general tech).
+
+
+=== Qi round 3: the head start, and the shield with a smaller one (2026-10-24) ===
+
+Every fighter starts a fight with 0 qi; qi techs raise qp_start (Lotus Stance
+and the qi style techs: half a bar, Golden Lotus Stance: a full bar). A/B
+with qp_start switched off in every tech (--scale qp_start=0), the techs'
++max qi / +qi gain kept:
+
+                                  as is    without the head start
+Lotus Stance, lv 13-20            +12.1    +3.1
+Golden Lotus Stance, lv 13-20     +13.1    +5.0
+qi style tech, lv 15-20           +10.0    +1.5
+qi style tech, lv 1-7              +1.4    +0.4
+
+So nearly all of a qi tech's value is the head start, and it pays only where
+moves cost much qi and fights are short (lv 15-20: up to 50 qi a move, ~5.5
+actions per fighter); at lv 1-7 moves cost ~1.4 qi on average.
+
+Shield plus a smaller head start: Qb+Qs50 (qp_start x0.5: half a bar -> a
+quarter, a full bar -> half), with Qb+Qs0 (no head start) as a bracket.
+A/B as in round 2, % of the same medians (style techs lv 1-7 / 8-14 / 15-20:
++14.2 / +11.0 / +8.4; general +8.1, advanced +13.4, lv 13-20):
+
+                qi style tech                           Lotus St.     Golden L. St.
+                lv 1-7       lv 8-14      lv 15-20      lv 13-20      lv 13-20
+engine          +1.4  10%    +5.6  51%    +10.0 119%    +12.1 149%    +13.1  98%
+Qb              +5.8  41%    +8.3  75%    +13.1 156%    +15.5 191%    +16.7 125%
+Qb+Qs50         +6.3  44%    +6.1  55%    +11.1 132%    +11.3 140%    +17.2 128%
+Qb+Qs0          +4.7  33%    +3.2  29%     +2.8  33%     +5.1  63%     +6.9  51%
+
+Harness (100k, seed 42), engine -> Qb+Qs50: qi row -3.33 -> -0.88 (Qb alone
+-0.78), Lotus Stance 3.42 -> 4.59, attributes within noise (agility 0.58,
+strength 0.09, health -0.12, speed -0.56), fights 50.8 -> 50.8 s, Focus
+5.2 -> 5.4% of actions.
+
+Reading: Qb+Qs50 has the same average effect as the shield alone, and no row
+is worse than on the engine: low levels gain as much as with Qb (the head
+start was worthless there anyway), high levels gain less (Lotus Stance stays
+at 140% instead of rising to 191%). The price: lv 8-14 gains little (51 ->
+55%, vs 75% with Qb alone). Golden Lotus Stance loses nothing by starting
+with half a bar instead of a full one (+16.7 vs +17.2, within noise): half a
+bar already pays for any move.

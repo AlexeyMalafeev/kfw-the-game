@@ -48,6 +48,9 @@ Qi, qi techs only (baseline: qi buff -3.6, Lotus Stance +2.6):
   -1.09), QF2 -2.4. A/B, the qi style tech as % of the median style tech at
   lv 1-7 / 8-14 / 15-20: engine 10 / 51 / 119%, Qb 41 / 75 / 156%, Qc5 46 /
   76 / 163%, Qc10 82 / 108 / 186%, Qr5 14 / 78 / 164%
+  Head start (section "Qi round 3"): without qp_start Lotus Stance +12.1 ->
+  +3.1; Qb+Qs50 (shield, qp_start x0.5) -> qi -0.9, style tech 44 / 55 /
+  132%, Lotus Stance 149 -> 140% of the median general tech (Qb: 191%)
 Health (baseline: health -2.0, strength +2.1, agility +1.8, speed -1.9):
   Ha   block power from (strength + health) / 2                  -> health -1.7
   Hb   toughness and stamina from health, not level              -> health +5.8 (too strong)
@@ -573,3 +576,17 @@ def Qc5():  # qi-charged strikes at 0.05
     global QI_CHARGE
     QI_CHARGE = 0.05
     Qc()
+
+
+# Qi head start (2026-10-24): almost all of a qi tech's value is qp_start (a
+# fighter starts a fight with 0 qi otherwise; Lotus Stance +12.1 -> +3.1
+# without it, lv 13-20). Qs50 / Qs0: qp_start x0.5 / x0 in every tech (half a
+# bar -> a quarter, a full bar -> half). Measured with the shield: Qb+Qs50.
+
+
+def Qs50():
+    _scale_param('qp_start', 0.5)
+
+
+def Qs0():
+    _scale_param('qp_start', 0)
