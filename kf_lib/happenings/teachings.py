@@ -37,14 +37,18 @@ def get_teachings():
             _('Guard doubles your chances to dodge and block until your next turn.'),
             FM + 'Maneuvers',
             {'GUARD_POWER': 2.0},
-            (FE + 'test_guard_raises_defense_recovers_and_is_marked',),
+            (FE + 'test_guard_raises_defense_and_is_marked',),
         ),
         Teaching(
-            'guard_rests',
-            _('Guard does not strike, yet it lets breath and qi return.'),
-            _('Guard also restores 10 stamina and 10 qi.'),
+            'guard_techs',
+            _('An untrained guard only shields. A trained guard also lets breath and qi '
+              'return.'),
+            _('Guard restores nothing by itself. Advanced Guard makes it restore one '
+              "turn's worth of stamina and qi, Dragon Guards a Treasure two."),
             FM + 'Maneuvers',
-            {'GUARD_STAMINA_GAIN': 10, 'GUARD_QI_GAIN': 10},
+            {'guard_restore': 0.0},
+            ('test/test_fight_engine.py::TestDefenseAndCounters::'
+             'test_guard_techs_restore_turns_worth_of_stamina_and_qi',),
         ),
         Teaching(
             'full_defense_opening',
@@ -337,9 +341,18 @@ def get_teachings():
             'catch_breath_focus',
             _('When breath runs short, stop and breathe. When qi runs dry, stop and '
               'gather it.'),
-            _('Catch Breath restores 20 stamina and Focus restores 20 qi, each at the '
-              'cost of a turn.'),
-            FM + 'Action selection',
+            _("Catch Breath restores two turns' worth of stamina and Focus two turns' "
+              "worth of qi, each in the time of a Guard."),
+            FM + 'Maneuvers',
+            {'CATCH_BREATH_GAIN_MULT': 2, 'FOCUS_GAIN_MULT': 2},
+        ),
+        Teaching(
+            'breath_grows',
+            _('A rookie who stops to breathe catches a sip. A master catches a lungful.'),
+            _('Catch Breath and Focus restore twice your per-turn recovery, so they grow '
+              'with your level and with stamina and qi techniques.'),
+            FM + 'Maneuvers',
+            {'CATCH_BREATH_GAIN_MULT': 2, 'FOCUS_GAIN_MULT': 2},
         ),
         Teaching(
             'empty_qi_cup',

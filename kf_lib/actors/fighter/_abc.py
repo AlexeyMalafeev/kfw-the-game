@@ -81,6 +81,7 @@ class FighterAPI(ABC):
     fury_to_all_mult: float = None
     fury_chance: float = None
     guard_dfs_bonus: float = None
+    guard_restore: float = None
     guard_while_attacking: float = None
     guarding: bool = None
     guaranteed_counters: int = None
@@ -576,6 +577,14 @@ class FighterAPI(ABC):
 
     @abstractmethod
     def guard(self) -> None:
+        pass
+
+    @abstractmethod
+    def catch_breath(self) -> None:
+        pass
+
+    @abstractmethod
+    def focus(self) -> None:
         pass
 
     @abstractmethod

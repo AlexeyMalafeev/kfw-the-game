@@ -148,8 +148,10 @@ LINKED_TECHS = [
         Tech('36 Defense Forms', dfs_mult=b.DEFENSE2, is_advanced=True),
     ),
     (
-        Tech('Advanced Guard', guard_dfs_bonus=b.GUARD_DFS1, is_upgradable=True),
-        Tech('Dragon Guards a Treasure', guard_dfs_bonus=b.GUARD_DFS2, is_advanced=True),
+        Tech('Advanced Guard', guard_dfs_bonus=b.GUARD_DFS1, guard_restore=b.GUARD_RESTORE1,
+             is_upgradable=True),
+        Tech('Dragon Guards a Treasure', guard_dfs_bonus=b.GUARD_DFS2,
+             guard_restore=b.GUARD_RESTORE2, is_advanced=True),
     ),
     (
         Tech('Lotus Stance', **bc.QI1, is_upgradable=True),

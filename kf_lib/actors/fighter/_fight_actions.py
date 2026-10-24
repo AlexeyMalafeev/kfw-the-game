@@ -19,10 +19,10 @@ class FighterWithActions(FighterAPI, ABC):
     # NOT to be confused with StrikeMechanics.BLOCK_POWER (the global constant)
     BLOCK_DEFAULT_POWER: Final = 1.0
     GUARD_POWER: Final = 2.0  # 1.5 until 2026-10-23
-    # Guard also recovers half of what Catch Breath / Focus restore (20 stamina /
-    # 20 qi in moves/extra_moves.txt), since 2026-10-23
-    GUARD_STAMINA_GAIN: Final = 10
-    GUARD_QI_GAIN: Final = 10
+    # Catch Breath / Focus restore this many turns' worth of stamina / qi
+    # regeneration (since 2026-10-25; a flat 20 before, the same at every level)
+    CATCH_BREATH_GAIN_MULT: Final = 2
+    FOCUS_GAIN_MULT: Final = 2
     # qi shield (since 2026-10-24): HP absorbed per point of qi spent
     QI_SHIELD_HP_PER_QP: Final = 2
     DUR_FURY_MIN: Final = 500
@@ -264,12 +264,23 @@ class FighterWithActions(FighterAPI, ABC):
             av_moves = [m for m in av_moves if m.power]
         return av_moves
 
+    def catch_breath(self) -> None:
+        """A function of the Catch Breath move."""
+        self.change_stamina(self.CATCH_BREATH_GAIN_MULT * self.stamina_gain)
+
+    def focus(self) -> None:
+        """A function of the Focus move."""
+        self.change_qp(self.FOCUS_GAIN_MULT * self.qp_gain)
+
     def guard(self) -> None:
         """This is called with eval as a function of the Guard move."""
         self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
         self.guarding = True  # until the next turn; shown as a status mark
-        self.change_stamina(self.GUARD_STAMINA_GAIN)
-        self.change_qp(self.GUARD_QI_GAIN)
+        # only the Guard techs make it restore (since 2026-10-25; a flat 10
+        # stamina and 10 qi for everyone from 2026-10-23)
+        if self.guard_restore:
+            self.change_stamina(round(self.guard_restore * self.stamina_gain))
+            self.change_qp(round(self.guard_restore * self.qp_gain))
 
     def hit_or_miss(self) -> None:
         # todo use skip list here for functions not to be applied twice

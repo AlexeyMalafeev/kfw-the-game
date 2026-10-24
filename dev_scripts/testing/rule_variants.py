@@ -506,32 +506,18 @@ def Sdef50():
 #   Qr5    qi regeneration 10% -> 5% of max per own turn (also halves the qi a
 #          dodge / block gives, which are qp_gain-based)
 #   Qrel   Focus restores 40% of max qi and Guard 20% instead of a flat 20 / 10
-#          (the same at lv 10; less below, more above)
+#          (the same at lv 10; less below, more above). Removed 2026-10-25,
+#          when Focus / Catch Breath came to restore 2 turns' worth of
+#          regeneration and Guard nothing without a Guard tech; code at c76c5f1
 #   QF     earned qi: no regeneration at turn start; a strike that does damage
 #          gives the attacker qp_gain (dodge / block / Focus / Guard unchanged)
 #   QF2    the same with 2 x qp_gain per damaging strike
 
-QI_FOCUS_SHARE, QI_GUARD_SHARE = 0.4, 0.2
 QF_HIT = 1
 
 
 def Qr5():
     F.QP_PORTION_RESTORED_PER_TURN = 0.05
-
-
-def Qrel():
-    orf, oa = F.refresh_dependent_atts, F.apply_move_cost
-    def refresh(self):
-        orf(self)
-        self.GUARD_QI_GAIN = round(QI_GUARD_SHARE * self.qp_max)  # read by guard()
-    def apply_move_cost(self):
-        m = self.action
-        if m.qi_cost < 0:  # Focus
-            self.change_stamina(-m.stam_cost)
-            self.change_qp(round(QI_FOCUS_SHARE * self.qp_max))
-        else:
-            oa(self)
-    F.refresh_dependent_atts, F.apply_move_cost = refresh, apply_move_cost
 
 
 def QF():

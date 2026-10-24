@@ -437,19 +437,41 @@ class TestDefenseAndCounters:
         assert fb.dfs_bonus == pytest.approx(1.4)
         assert fb.get_status_marks().startswith('[]')  # marked like Guard
 
-    def test_guard_raises_defense_recovers_and_is_marked(self):
-        # x2.0 and the recovery since 2026-10-23 (x1.5, no recovery before)
+    def test_guard_raises_defense_and_is_marked(self):
+        # x2.0 since 2026-10-23 (x1.5 before); restores nothing without a
+        # Guard tech since 2026-10-25 (10 stamina and 10 qi for everyone before)
         fa, fb = self.duel()
         fa.stamina = fa.qp = 0
         fa.guard()
         assert Fighter.GUARD_POWER == 2.0
         assert fa.dfs_bonus == pytest.approx(fa.guard_dfs_bonus * 2.0)
-        assert fa.stamina == Fighter.GUARD_STAMINA_GAIN
-        assert fa.qp == min(Fighter.GUARD_QI_GAIN, fa.qp_max)  # lv 1: max qi is 5
+        assert fa.stamina == fa.qp == 0
         assert fa.get_status_marks().startswith('[]')
         fa.start_fight_turn()  # the guard lasts until the fighter's next turn
         assert fa.dfs_bonus == 1.0
         assert '[]' not in fa.get_status_marks()
+
+    def test_guard_techs_restore_turns_worth_of_stamina_and_qi(self):
+        for tech, turns in (('Advanced Guard', 1), ('Dragon Guards a Treasure', 2)):
+            random.seed(0)
+            f = Fighter('A', 'Long Fist', level=10, tech_names=[tech], move_names=[])
+            BaseFight([f], [lv1_fighter('B')]).prepare_fighters()
+            f.stamina = f.qp = 0
+            f.guard()
+            assert f.guard_restore == turns
+            assert f.stamina == turns * f.stamina_gain > 0
+            assert f.qp == turns * f.qp_gain > 0
+
+    def test_catch_breath_and_focus_restore_two_turns_worth(self):
+        # since 2026-10-25 (a flat 20 stamina / 20 qi before)
+        random.seed(0)
+        f = Fighter('A', 'Long Fist', level=10, tech_names=[], move_names=[])
+        BaseFight([f], [lv1_fighter('B')]).prepare_fighters()
+        f.stamina = f.qp = 0
+        f.catch_breath()
+        f.focus()
+        assert f.stamina == 2 * f.stamina_gain > 0
+        assert f.qp == 2 * f.qp_gain > 0
 
     def strike_with_sure_crit(self, fa, fb, defended):
         """fb strikes fa for 30 with a guaranteed critical and epic."""

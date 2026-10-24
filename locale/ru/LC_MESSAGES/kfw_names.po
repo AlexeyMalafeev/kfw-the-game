@@ -7732,6 +7732,9 @@ msgstr "Атакующая дистанция кота"
 msgid "Catch Breath"
 msgstr "Перевести дыхание"
 
+msgid "catch_breath"
+msgstr "дыхание"
+
 msgid "cause_bleeding"
 msgstr "кровотечение"
 
@@ -16522,6 +16525,9 @@ msgstr "Летающий удары"
 
 msgid "Focus"
 msgstr "Фокус"
+
+msgid "focus"
+msgstr "сосредоточение"
 
 msgid "Folk Hero"
 msgstr "Народный герой"

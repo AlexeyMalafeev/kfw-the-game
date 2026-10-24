@@ -93,8 +93,9 @@ a lying target, all other distance moves require a standing one. Moves with
 `dist_change`, `power`, `accuracy`, `complexity`, `stam_cost`, `time_cost`,
 `qi_cost`, `features` (a `distN` feature is auto-added from `distance`),
 `functions` (names of `Fighter` methods run on hit/execution), `tier`, `freq`.
-`power > 0` = strike, else maneuver. Negative costs *restore* a pool
-(`Catch Breath` has `stam_cost = -20`, `Focus` has `qi_cost = -20`).
+`power > 0` = strike, else maneuver. A negative cost would *restore* a
+pool; no move uses that since 2026-10-25, when Catch Breath and Focus moved to
+move functions (see Maneuvers).
 
 Humans (`human_controlled_fighter.py`) pick from a menu when `is_auto_fighting`
 is `False` (set by `NormalFight`); otherwise `fight_ai` chooses (see AI note).
@@ -291,9 +292,19 @@ fighter can be shown stunned/knocked back/falling before the KNOCK-OUT line;
 `maneuver()`: apply `dist_change` (clamped to 1–4 by `change_distance`), roll
 `check_move_failed`, run `functions`. `Guard` (`functions=['guard']`) sets
 `dfs_bonus *= guard_dfs_bonus * GUARD_POWER` (2.0; 1.5 until 2026-10-23),
-lasting until the fighter's next turn, and recovers 10 stamina and 10 qi
-(`GUARD_STAMINA_GAIN` / `GUARD_QI_GAIN`, half of what Catch Breath / Focus
-restore; since 2026-10-23). Meanwhile `guarding` is set, shown as a `[]`
+lasting until the fighter's next turn. It restores stamina and qi only with
+a Guard tech: `guard_restore` turns' worth of each (`stamina_gain` /
+`qp_gain`, rounded) — 1 with Advanced Guard, 2 with Dragon Guards a Treasure
+(`GUARD_RESTORE1/2`; the style techs that raise `guard_dfs_bonus` don't
+restore). From 2026-10-23 to 2026-10-25 every Guard restored a flat 10
+stamina and 10 qi. Catch Breath and Focus (functions `catch_breath` /
+`focus`) restore `CATCH_BREATH_GAIN_MULT` / `FOCUS_GAIN_MULT` (2) turns'
+worth of stamina / qi, so with the next turn's regeneration the fighter gets
+3 turns' worth, and stamina/qi techs raise them through `stamina_gain_mult` /
+`qp_gain_mult`; all three take 60 time units. Until 2026-10-25 Catch Breath
+and Focus restored a flat 20 (the same at every level) and Catch Breath took
+80. At level 1 `qp_gain` rounds to 0, so Focus restores no qi there (the
+fighter's moves are all qi-free at that level anyway). Meanwhile `guarding` is set, shown as a `[]`
 status mark (see `ui.md`); `start_fight_turn` clears both. `dfs_bonus`
 multiplies dodge and block chance, not block power: in staged exchanges
 (`dev_scripts/testing/run_test_guard.py`) Guard saves 31% of the HP an

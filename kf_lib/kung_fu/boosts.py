@@ -48,6 +48,8 @@ GUARANTEED_COUNTERS1 = 1  # sure counters in a row; until 2026-10-23 counter
 GUARANTEED_COUNTERS2 = 2  # techs gave +50% / +100% counter chance instead
 GUARD_DFS1 = 0.5
 GUARD_DFS2 = 1.0
+GUARD_RESTORE1 = 1  # turns' worth of stamina/qi regeneration (since 2026-10-25)
+GUARD_RESTORE2 = 2
 GUARD_WHILE_ATTACKING1 = 0.4  # 0.5 until 2026-10, then worth x2.25 (see attack())
 GUARD_WHILE_ATTACKING2 = 0.8
 HEALTH1 = 0.2
@@ -133,6 +135,12 @@ PMAP = (
         _('grab chance'),
     ),  # todo use grab_chance boost
     ('guard_dfs_bonus', _('guard'), _('guard efficiency')),
+    (
+        'guard_restore',
+        _('guard'),
+        _("turn(s)' worth of stamina and qi restored by Guard"),
+        (add_sign,),  # a count of turns, not a share
+    ),
     (
         'guard_while_attacking',
         _('guard while atk'),

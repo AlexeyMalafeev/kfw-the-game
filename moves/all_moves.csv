@@ -13788,8 +13788,8 @@
 13786;Step Forward;0;-1;0;0;1;5;50;0;{'non-attack'};[];0;5
 13787;Step Back;0;1;0;0;1;5;60;0;{'non-attack'};[];0;5
 13788;Guard;0;0;0;0;0;0;60;0;{'non-attack'};['guard'];0;5
-13789;Focus;0;0;0;0;0;0;60;-20;{'non-attack'};[];0;5
-13790;Catch Breath;0;0;0;0;0;-20;80;0;{'non-attack'};[];0;5
+13789;Focus;0;0;0;0;0;0;60;0;{'non-attack'};['focus'];0;5
+13790;Catch Breath;0;0;0;0;0;0;60;0;{'non-attack'};['catch_breath'];0;5
 13791;Rush Forward;0;-2;0;0;1;15;75;0;{'non-attack'};[];0;5
 13792;Retreat;0;2;0;0;1;15;85;0;{'non-attack'};[];0;5
 13793;Do Nothing;0;0;0;0;0;0;100;0;{'non-attack'};[];0;5

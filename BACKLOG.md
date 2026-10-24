@@ -280,6 +280,11 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 - when choosing new moves, always offer at least some that the fighter's
   techs give a bonus to (the `*` moves)
 - organize the move list, remove unused moves
+- (low priority; default styles are legacy) level-1 fighters can't use
+  the default styles' qi-costing signature moves (Short Fast Punch 5 qi,
+  Dragon Claw 3, …): they start fights with no qi, regenerate 0 qi per turn
+  at level 1 (10% of 5, rounded) and, since 2026-10-25, Focus gives 2 × that.
+  Probably intended — they still have Punch, Kick etc.
 
 ## AI
 

@@ -57,8 +57,6 @@ def main():
         if not amount:
             return
         src = ctx['src'] or 'other'
-        if src == 'move cost' and amount > 0:
-            src = 'Focus'  # Focus is a move with qi_cost -20
         led[(self.tier_, ('in:' if amount > 0 else 'out:') + src)] += abs(self.qp - before)
         if amount > 0:
             led[(self.tier_, 'capped:' + src)] += amount - (self.qp - before)
@@ -76,6 +74,7 @@ def main():
         setattr(F, name, wrapper)
     tag('start_fight_turn', 'regen')
     tag('guard', 'Guard')
+    tag('focus', 'Focus')
     tag('defend', 'dodge/block')  # nested inside the attacker's do_strike
     tag('do_strike', 'hit')
     tag('apply_move_cost', 'move cost')

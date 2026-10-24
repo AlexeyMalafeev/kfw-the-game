@@ -116,6 +116,7 @@ class FightAttributes(FighterAPI, ABC):
         self.fury_to_all_mult = 1.6
         self.fury_chance = 0.0  # this gets multiplied by ratio of hp to max hp
         self.guard_dfs_bonus = 1.0  # the tech-dependent bonus to Guard
+        self.guard_restore = 0.0  # turns' worth of stamina/qi Guard restores; tech-based
         self.guard_while_attacking = 0.0
         self.health_mult = 1.0
         self.hit_disarm = 0.005

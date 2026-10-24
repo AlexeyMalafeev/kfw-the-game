@@ -101,16 +101,27 @@ All notable changes to KFW are documented here. Format loosely follows
   Fly Herb, Super Fly Herb and the Super Mega Herb's speed part. In the
   fight-balance harness, owning a speed tech went from +5 to +10 Diff%
   points (strength, agility and health techs: +11 to +14)
-- **Guard is stronger and restores some stamina and qi**
+- **Guard is stronger, and Guard techniques make it restore stamina and qi**
   (balance-affecting): Guard multiplies dodge and block chance by 2 instead
-  of 1.5 until the fighter's next turn, and also restores half of what
-  Catch Breath and Focus would (10 stamina and 10 qi). In staged exchanges
-  (a fighter guards, then takes one strike), Guard now saves 31% of the HP
-  that strike would cost instead of 18%; with Advanced Guard 49% (was 34%),
-  with Dragon Guards a Treasure 64% (was 49%). The fight AI still guards
-  mostly when it can't attack, but those turns now refill it, so fights got
-  shorter (58.6 → 51.0 s on average) and fighters spend 23% of their turns
-  on Guard instead of 31%
+  of 1.5 until the fighter's next turn. In staged exchanges (a fighter
+  guards, then takes one strike), Guard now saves 31% of the HP that strike
+  would cost instead of 18%; with Advanced Guard 49% (was 34%), with Dragon
+  Guards a Treasure 64% (was 49%). Guard itself restores nothing, but
+  Advanced Guard now also makes it restore one turn's worth of stamina and
+  qi regeneration, and Dragon Guards a Treasure two turns' worth
+- **Dev scripts no longer wait for Enter at the end**: the old `input('Press
+  Enter to exit')` pauses are gone; on an error a script prints the
+  traceback and exits with code 1, so batch runs can tell failures apart
+- **Catch Breath and Focus grow with the fighter** (balance-affecting):
+  they restored a flat 20 stamina / 20 qi, the same for a rookie and a
+  master. Now each restores two turns' worth of the fighter's own stamina /
+  qi regeneration (so three with the next turn's), which grows with level
+  and with stamina and qi techniques; Catch Breath also takes as long as
+  Focus and Guard now (80 → 60 time units). Qi gets scarcer below about
+  level 13 and more plentiful above it. In the fight-balance harness the
+  current fight AI, tuned for the old rules, wastes many turns on Guard and
+  Focus when it runs out of stamina, so fights ran about three times as long
+  (same number of strikes) until the AI is retrained
 - **Qi techniques shield blocks, and give a smaller head start**
   (balance-affecting): a fighter with a qi technique (or a qi herb) now
   spends qi to absorb what gets past a block, 1 qi per 2 HP; if that stops

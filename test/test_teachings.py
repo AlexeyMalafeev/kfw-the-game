@@ -197,8 +197,9 @@ def check_statuses_speed(monkeypatch):
 
 
 def check_catch_breath_focus():
-    assert ALL_MOVES_DICT['Catch Breath'].stam_cost == -20
-    assert ALL_MOVES_DICT['Focus'].qi_cost == -20
+    cb, focus, guard = (ALL_MOVES_DICT[n] for n in ('Catch Breath', 'Focus', 'Guard'))
+    assert cb.functions == ['catch_breath'] and focus.functions == ['focus']
+    assert cb.time_cost == focus.time_cost == guard.time_cost
 
 
 def check_exp_strong():
