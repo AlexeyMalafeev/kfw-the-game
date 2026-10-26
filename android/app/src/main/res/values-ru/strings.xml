@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KFW: Мир кунг-фу</string>
+    <string name="title">МИР КУНГ-ФУ</string>
+    <string name="subtitle">Текстовая ролевая игра</string>
+    <string name="new_game">Новая игра</string>
+    <string name="continue_game">Продолжить</string>
+    <string name="load_game">Загрузить игру</string>
+    <string name="watch_ai">Наблюдать за игрой ИИ</string>
+    <string name="language">Язык: русский</string>
+    <string name="choose_language">Выберите язык</string>
+    <string name="import_save">Импортировать сохранение</string>
+    <string name="export_save">Экспортировать сохранение</string>
+    <string name="about">Справка и о программе</string>
+    <string name="choose_save">Выберите сохранение</string>
+    <string name="no_saves">Сохранений пока нет</string>
+    <string name="save_imported">Сохранение импортировано</string>
+    <string name="save_exported">Сохранение экспортировано</string>
+    <string name="import_failed">Не удалось импортировать файл. Выберите сохранение KFW.</string>
+    <string name="export_failed">Не удалось экспортировать сохранение.</string>
+    <string name="main_menu">Главное меню</string>
+    <string name="text_smaller">Уменьшить текст</string>
+    <string name="text_larger">Увеличить текст</string>
+    <string name="send">Ввести</string>
+    <string name="text_input_hint">Ваш ответ</string>
+    <string name="continue_input">Далее</string>
+    <string name="menu_option">%1$s. %2$s</string>
+    <string name="dismiss_menu">Назад</string>
+    <string name="quit_to_title">Выйти в главное меню</string>
+    <string name="unsaved_warning">Вернуться на титульный экран? Прогресс после последнего сохранения будет потерян. В игре можно сохраниться через «Состояние» → «Сохранить и выйти».</string>
+    <string name="cancel">Отмена</string>
+    <string name="leave_without_saving">Выйти без сохранения</string>
+    <string name="game_finished">Игра завершена</string>
+    <string name="error_title">Игра неожиданно остановилась</string>
+    <string name="error_emergency">Подробности записаны в errors.txt. Если возможно, создано аварийное сохранение.</string>
+    <string name="loading">Загрузка…</string>
+    <string name="ok">ОК</string>
+    <string name="about_text">KFW — пошаговая текстовая ролевая игра с режимом hot-seat. Android-версия запускает полную оригинальную игру на Python без упрощения содержимого.\n\nПункт «Состояние» в дневном меню открывает сведения о персонаже, сохранение, загрузку и выход. Широкие таблицы и ASCII-рисунки можно листать по горизонтали. A− / A+ меняют размер текста.\n\nТребуется Android 7.0 или новее. Сохранения совместимы с настольной версией. Старые сохранения Python содержат исполняемый код: импортируйте их только из надёжных источников.</string>
+    <string name="license_title">Лицензия KFW</string>
+    <string name="third_party_licenses">Лицензии компонентов</string>
+    <string name="language_restart">Применяю язык и перезапускаю…</string>
+</resources>

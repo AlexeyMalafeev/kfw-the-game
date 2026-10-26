@@ -1,5 +1,6 @@
 from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.ui import cls, get_key, pak
+from kf_lib.ui._frontend import present_menu
 from ._base_game import BaseGame
 
 
@@ -38,6 +39,7 @@ class StateMenu(BaseGame):
             print(' ' + '  '.join(f'{k} - {opt[0]}' for k, opt in zip(sys_keys, sys_options)))
             options += sys_options
             keys += sys_keys
+            present_menu(keys, [opt[0] for opt in options])
             while True:
                 key = get_key()
                 if key in keys:

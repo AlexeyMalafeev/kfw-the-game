@@ -44,7 +44,13 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
 - `kf_lib/i18n/` — optional Russian localization (stdlib gettext wrapper, leaf
   package; see `docs/i18n.md`); catalogs in `locale/<lang>/LC_MESSAGES/`
   (committed `.po` + compiled `.mo`), translated quotes in `quotes/ru/`
-- `kf_lib/ui/` — terminal UI; `kf_lib/utils/` — helpers; both star-export via `__init__.py`
+- `kf_lib/ui/` — terminal UI; `kf_lib/utils/` — helpers; both star-export via `__init__.py`.
+  `ui/_frontend.py` holds optional platform hooks (key input, clear, current-menu
+  presentation); leave them disabled on desktop
+- `android/` — complete Android port: native Java touch UI, embedded CPython via
+  Chaquopy, Gradle wrapper, JVM and instrumentation tests, adb/UIAutomator smoke
+  script. See `docs/android.md` for build/device commands and architecture; local
+  toolchains, build outputs and APKs are gitignored
 - `moves/` — move source data. Edit the `*_moves.txt` files, regenerate with
   `dev_scripts/move_gen.py` (see `moves/_moves_readme.txt`); `all_moves.txt` is generated
 - `quotes/` — dialogue text files loaded at import; `quotes/ru/` holds the
@@ -75,7 +81,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   content), `items.md`, `stats.md` (stats/accomplishments/gossip/bios),
   `social_and_traits.md`, `text_content.md` (quotes/names/ASCII art),
   `minigames.md`, `debug_menu.md`, `dev_scripts.md`, `ui.md` (output funnels,
-  color markup), `i18n.md` (Russian localization); plus `style notes.txt`
+  color markup), `i18n.md` (Russian localization), `android.md` (Android port,
+  build, native UI, save transfer and device verification); plus `style notes.txt`
   (research notes on real kung-fu styles, reference for style design).
   Raw bug reports and ideas go to `BACKLOG.md`, not into loose note files.
   Changelog lives at repo root (`CHANGELOG.md`, Keep-a-Changelog-ish with

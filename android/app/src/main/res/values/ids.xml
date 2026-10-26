@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="main_root" type="id" />
+    <item name="game_root" type="id" />
+    <item name="new_game" type="id" />
+    <item name="continue_game" type="id" />
+    <item name="load_game" type="id" />
+    <item name="watch_ai" type="id" />
+    <item name="language_button" type="id" />
+    <item name="import_save" type="id" />
+    <item name="export_save" type="id" />
+    <item name="about" type="id" />
+    <item name="home_button" type="id" />
+    <item name="text_smaller" type="id" />
+    <item name="text_larger" type="id" />
+    <item name="console" type="id" />
+    <item name="console_scroll" type="id" />
+    <item name="input_scroll" type="id" />
+    <item name="input_container" type="id" />
+    <item name="line_container" type="id" />
+    <item name="line_input" type="id" />
+    <item name="send_button" type="id" />
+    <item name="continue_button" type="id" />
+    <item name="dismiss_menu" type="id" />
+</resources>

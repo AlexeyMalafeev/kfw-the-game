@@ -33,6 +33,10 @@ To load a previously saved game:
 
 Run it from the command line — it won't work correctly in an IDE like PyCharm. For more ways to run the game (autoplay, profiling, tests), see "For the curious" below.
 
+## Android
+
+The complete game is also available as a native Android app for Android 7.0+, with touch menus, color text and ASCII art, English/Russian localization and desktop-compatible saves. To build the installable debug APK, install JDK 17, Python 3.13 and Android SDK 35, then run `cd android && ./gradlew assembleDebug`. See [the Android guide](docs/android.md) for installation, release signing, save transfer, architecture and device tests.
+
 ## How to play
 
 In this game, you play as a beginner kung-fu practitioner. You train hard to improve your fighting skills, protect the weak against oppressors and, one day, even found your own martial arts school. You have to compete with other practitioners as well as stand up against thugs and wrongdoers to prove your worth. Become stronger by either practicing or defeating foes in the streets of Foshan, learn new moves and techniques, take part in tournaments and enjoy your life in this fantasy Kung-Fu World.

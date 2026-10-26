@@ -14,3 +14,9 @@ kfw.log
 .DS_Store
 /DEV_MEMORY.md
 /epic screens/
+/android/.toolchain/
+/android/.gradle/
+/android/local.properties
+/android/build/
+/android/app/build/
+/android/.idea/

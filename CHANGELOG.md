@@ -6,6 +6,13 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Full Android port**: the complete original game now runs as a native Android
+  app (Android 7.0+) through an embedded Python 3.13 runtime. Includes touch
+  buttons for every game menu, color console output and horizontally scrollable
+  ASCII art, adjustable text size, hot-seat and AI games, English and Russian,
+  desktop-compatible save/load plus safe save import/export, rotation and
+  background handling, emergency saves, Gradle builds, JVM and on-device tests,
+  and an end-to-end UIAutomator smoke scenario. See `docs/android.md`
 - **The master's teachings**: now and then (20% of paid visits) during
   "Practice at school", your master stops the class to share a saying about
   how fights really work — "A blow that meets only air or a closed door
