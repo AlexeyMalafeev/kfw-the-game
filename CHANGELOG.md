@@ -3,14 +3,14 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
-## [Unreleased]
+## [v0.7.6-beta "The Closed Door"] — 2026-10-28
 
 ### Added
 - **The master's teachings**: now and then (20% of paid visits) during
   "Practice at school", your master stops the class to share a saying about
   how fights really work — "A blow that meets only air or a closed door
   pulls its owner off balance. That is the moment to answer." — followed by
-  the plain rule in brackets. 49 sayings cover guarding, blocking and
+  the plain rule in brackets. 48 sayings cover guarding, blocking and
   dodging, counters, qi, speed, stamina, momentum, knockdowns, bleeding,
   stun, shock, slowing and stamina-draining moves (and the move names that
   give them away: Claw, Slashing, Shocking, Nerve, Solar, Debilitating),
@@ -78,7 +78,7 @@ All notable changes to KFW are documented here. Format loosely follows
   (both). To keep the dodge techs as useful as an average technique, their
   bonus went from +40% to +70% (+80% to +140% for the advanced one)
 - **Qi regenerates half as fast** (balance-affecting): 10% of max qi per
-  turn instead of 20%. Fighters used to end fights with over a third of
+  turn instead of 20%, rounded up (so a level-1 fighter still regains 1). Fighters used to end fights with over a third of
   their qi unspent, so the qi techs bought almost nothing; Lotus Stance, for
   example, now helps about as much as an average technique (in head-to-head
   tests its edge rose from +6.9 to +10.4)
@@ -120,30 +120,16 @@ All notable changes to KFW are documented here. Format loosely follows
   technique also makes forward maneuvers (Step Forward, Rush Forward...)
   count as Guard ("closing in counts as Guard"); the close-range buff stays
   +40%, and grappling buffs go +25% -> +40%. Mid-range +25% -> +20%, attack
-  +15% -> +10% (18/36 Attack Forms +30% -> +20%), punches +25% -> +20%
+  +15% -> +10% (36 Attack Forms +30% -> +20%), punches +25% -> +20%
   (Cannon Fist +50% -> +40%); kicks, palms and the other strike buffs are
   unchanged
-- **Qi regeneration is rounded up** (balance-affecting): 10% of max qi
-  per turn was rounded to nearest, so a level-1 fighter (5 qi) regenerated
-  none and Focus restored nothing, yet the fight AI still chose it. Now it
-  rounds up: 1 qi per turn at level 1, and one more than before at levels
-  5, 9, 13, 17... wherever 10% ends in .5. Level-1 fights had been stalling
-  in Focus loops (48% of all actions, ~10x longer than now); over all
-  levels Focus fell from 25% to 6% of actions and the mean fight from 145
-  to 64 s
-- **The fight-balance report gives fight stats per level tier**: fight
-  length, action mix, strike outcomes and what's left at the end, for levels
-  1-7, 8-14 and 15-20 as well as overall (`run_test_fb.py`)
 - **Catch Breath and Focus grow with the fighter** (balance-affecting):
   they restored a flat 20 stamina / 20 qi, the same for a rookie and a
   master. Now each restores two turns' worth of the fighter's own stamina /
   qi regeneration (so three with the next turn's), which grows with level
   and with stamina and qi techniques; Catch Breath also takes as long as
   Focus and Guard now (80 → 60 time units). Qi gets scarcer below about
-  level 13 and more plentiful above it. In the fight-balance harness the
-  current fight AI, tuned for the old rules, wastes many turns on Guard and
-  Focus when it runs out of stamina, so fights ran about three times as long
-  (same number of strikes) until the AI is retrained
+  level 13 and more plentiful above it
 - **Qi techniques shield blocks, and give a smaller head start**
   (balance-affecting): a fighter with a qi technique (or a qi herb) now
   spends qi to absorb what gets past a block, 1 qi per 2 HP; if that stops
@@ -180,20 +166,19 @@ All notable changes to KFW are documented here. Format loosely follows
   length, strikes, counters, criticals and stuns per fight, how strikes end
   (dodged / fully blocked / partly blocked / clean hit), how often fighters
   strike, guard, focus or catch their breath, and the stamina and qi left at
-  the end; the attribute table also comes per level tier (1–7, 8–14,
-  15–20), since an average over all levels can hide an attribute that is
-  weak early and strong late. Two companion dev scripts: `run_test_tech_ab.py` measures what
-  a technique is worth (mirror matches where one side gets it — how this
-  pass set its boost values) and `compare_fb_reports.py` puts reports side
-  by side, marking changes beyond noise; `run_test_guard.py` stages
-  "one fighter guards, then takes one strike" exchanges, since the fight AI's
-  habits hide what Guard does in whole fights. Both the harness and the A/B tool
-  take `--variants`, to try rule changes as runtime patches before writing
-  them into the engine (`rule_variants.py` keeps this pass's experiments).
-  For the harness stats, fighters'
-  in-fight stats now also
-  count dodges, blocks, full blocks, stuns suffered, counters and
-  preemptives. No gameplay change
+  the end; the fight stats and the attribute table also come per level tier
+  (1–7, 8–14, 15–20), since an average over all levels can hide an
+  attribute that is weak early and strong late. Companion dev scripts:
+  `run_test_tech_ab.py` measures what a technique is worth (mirror matches
+  where one side gets it — how this pass set its boost values),
+  `compare_fb_reports.py` puts reports side by side, marking changes beyond
+  noise, and `run_test_guard.py` stages "one fighter guards, then takes one
+  strike" exchanges, since the fight AI's habits hide what Guard does in
+  whole fights. Both the harness and the A/B tool take `--variants`, to try
+  rule changes as runtime patches before writing them into the engine
+  (`rule_variants.py` keeps this pass's experiments). For the harness
+  stats, fighters' in-fight stats now also count dodges, blocks, full
+  blocks, stuns suffered, counters and preemptives. No gameplay change
 - **Fight-AI trainer fixed and sped up** (`dev_scripts/ai/run_fight_ai_gen.py`):
   the genetic trainer tuned a different AI from the one the game uses; it
   now trains the game's own fight AI. It plays its fights in parallel
