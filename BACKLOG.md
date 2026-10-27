@@ -339,6 +339,20 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## Balance & analysis
 
+- **Advanced techs are too widely spread** (HIGH priority, author
+  2026-10-28): the next balance pass. In the 2026-10-27 100k report
+  (`tests/test f.b. rand.act.=False n=100000.txt`, "techs 2") advanced
+  techs run from +27.0 (Lightning-Fast Strikes, 36 Attack Forms +22.4,
+  Advanced Drunken Moves +17.8) down to −24.9 (Flying Monkey and Golden
+  Fox, Hero's Resilience −24.3, Behind You All −19.0) — a 52-point range,
+  against 21 points (+11.2…−9.4) for regular techs; the per-row noise
+  margin is only ±6–10, and 21 of 30 rows fall outside it. Most advanced
+  techs magnify their regular version's deviation (attack forms, fast
+  strikes and iron fist up; resilience, monkey-and-fox and behind-you
+  down), so the fix is per boost, not a flat scale: pull the outliers
+  toward 0 with `run_test_tech_ab.py` (value per tech by A/B, per level
+  tier), then re-run `run_test_fb.py`.
+
 **Final `run_test_fb.py` re-run: done 2026-10-25** (tracked report
 refreshed; see "Snapshot 2026-10-25" below). History: the defense rework of
 2026-10-20 (the 'defense' buff works, block techs raise block chance,
