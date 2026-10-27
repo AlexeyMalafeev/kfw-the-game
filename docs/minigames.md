@@ -17,12 +17,11 @@ accurate.
 
 ## Shared conventions
 
-- Both scripts start with the same `Path('..')` chdir/sys.path hack as
-  `dev_scripts/`: they resolve the parent of the cwd and chdir into it. **They
-  must be run from the `minigames/` directory** (e.g.
-  `cd minigames && ../.venv/bin/python RING_mini_game.py`). Run from the repo
-  root they chdir one level too far up and die with
-  `ModuleNotFoundError: No module named 'kf_lib'` (verified).
+- Both scripts start with a chdir/sys.path hack: they resolve the repo root
+  from their own location (`Path(__file__).resolve().parent.parent`), chdir
+  into it and put it on `sys.path`, so they run from any working directory
+  (e.g. `python minigames/RING_mini_game.py` from the repo root). Unlike
+  `dev_scripts/`, which still use a cwd-relative `Path('..')`.
 - Both call `main()` at import time (no `__main__` guard) inside a
   try/except that prints the traceback and then waits on
   `input('Press Enter to exit')`.
@@ -118,5 +117,5 @@ Not wired into the game; nothing in `kf_lib/` references it.
 
 | Minigame | Runs today | Referenced by the game |
 |---|---|---|
-| `RING_mini_game.py` | Yes — from `minigames/`, needs a TTY (verified via pty run) | No |
+| `RING_mini_game.py` | Yes — from any folder, needs a TTY (verified via pty run) | No |
 | `Chocolate_mini_game.py` | No — `ImportError` at line 16, plus deeper rot (verified) | No |

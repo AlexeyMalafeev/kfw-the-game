@@ -2,7 +2,7 @@ import os
 import sys
 from pathlib import Path
 # this has to be before imports from kf_lib
-lib_path = Path('..').resolve()
+lib_path = Path(__file__).resolve().parent.parent
 os.chdir(lib_path)
 if lib_path not in sys.path:
     sys.path.append(str(lib_path))

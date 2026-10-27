@@ -190,6 +190,11 @@ All notable changes to KFW are documented here. Format loosely follows
   engine settles
 
 ### Fixed
+- **RING mini-game crashed when started from the repo root** with
+  `No module named 'kf_lib'`: it looked for the game one folder above the
+  current folder instead of above its own file. RING (and the still-broken
+  Chocolate prototype) now find the repo from their own location, so
+  `python minigames/RING_mini_game.py` works from anywhere
 - **A missed strike could not always be countered**: a strike that misses
   kept the damage of the attacker's previous strike (even from an earlier
   fight), and a counter needs a strike that did no damage, so whether the
