@@ -204,6 +204,17 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 
 ## Moves, styles, techniques, weapons
 
+- **Close range: why fighters rarely fight there, and a 'guard while moving'
+  tech** (author 2026-10-28). Only ~11-14% of strikes are thrown at distance 1,
+  and a close-range buff barely changes that: with +75% (Short Strikes) its
+  holder's close-range share went from 10.5% to 11.1%, so the buff pays only
+  on the few strikes that happen there (A/B +9.2, below the +12.5 median of
+  the strike buffs). The author's reading: approaching is hard (you're struck
+  on the way in) and holding the distance is hard (you're pushed away). Ideas:
+  (1) a new `guard_while_moving` modifier, like `guard_while_attacking` but on
+  maneuvers, as a tech that pairs with close-range styles; (2) give close-range
+  styles defense/agility techs; (3) check how the fight AI's `get_a_maneuver`
+  and knockback/push moves keep fighters out of distance 1 before tuning more.
 - **Techs for the placeholder boosts** (HIGH priority, author 2026-10-20).
   These boost constants exist but no tech uses them, and two of them need a
   new combat mechanic before any tech can do something:

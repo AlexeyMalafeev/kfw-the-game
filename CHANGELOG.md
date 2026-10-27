@@ -112,6 +112,13 @@ All notable changes to KFW are documented here. Format loosely follows
 - **Dev scripts no longer wait for Enter at the end**: the old `input('Press
   Enter to exit')` pauses are gone; on an error a script prints the
   traceback and exits with code 1, so batch runs can tell failures apart
+- **Close-range strikes pay more; attack, punch and mid-range buffs are
+  smaller** (balance-affecting): fighters land only ~14% of their strikes
+  at close range, so the +40% close-range buff was the weakest distance
+  buff in practice. Close-range buffs go to +75% (advanced tier +150%),
+  mid-range +25% -> +20%, attack +15% -> +10% (18/36 Attack Forms +30% ->
+  +20%), punches +25% -> +20% (Cannon Fist +50% -> +40%); kicks, palms and
+  the other strike buffs are unchanged
 - **Qi regeneration is rounded up** (balance-affecting): 10% of max qi
   per turn was rounded to nearest, so a level-1 fighter (5 qi) regenerated
   none and Focus restored nothing, yet the fight AI still chose it. Now it

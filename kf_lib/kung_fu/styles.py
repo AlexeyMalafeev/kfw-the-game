@@ -174,7 +174,7 @@ default_styles = [
     Style(
         'Hung Ga',
         {
-            3: Tech('Hung Ga I', punch_strike_mult=b.STRIKE_MULT1),
+            3: Tech('Hung Ga I', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
             5: Tech(
                 'Hung Ga II', stamina_max_mult=b.STAM_MAX1, stamina_gain_mult=b.STAM_RESTORE1
             ),
@@ -230,7 +230,7 @@ default_styles = [
         # todo a tech: if a strike connects, give a speed boost (combo)
         {
             3: Tech('Poking Foot I', kick_strike_mult=b.STRIKE_MULT1),
-            5: Tech('Poking Foot II', punch_strike_mult=b.STRIKE_MULT1),
+            5: Tech('Poking Foot II', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
             7: Tech('Falling Meteorites', speed_mult=b.SPEED1),
         },
         {
@@ -329,7 +329,7 @@ default_styles = [
     Style(
         'Wing Chun',
         {
-            3: Tech('Wing Chun I', punch_strike_mult=b.STRIKE_MULT1),
+            3: Tech('Wing Chun I', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
             5: Tech('Wing Chun II', dist1_strike_mult=b.DIST1_MULT1),
             7: Tech('Wing Chun III', speed_mult=b.SPEED1),
         },
@@ -411,9 +411,9 @@ FOREIGN_STYLES = {
     'England': Style(
         'English Boxing',
         {
-            3: Tech('English Boxing I', punch_strike_mult=b.STRIKE_MULT1),
+            3: Tech('English Boxing I', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
             5: Tech('English Boxing II', block_mult=b.BLOCK1),
-            7: Tech('English Boxing III', punch_strike_mult=b.STRIKE_MULT1),
+            7: Tech('English Boxing III', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
         },
         None,
     ),
@@ -430,7 +430,7 @@ FOREIGN_STYLES = {
     'Japan': Style(
         'Karate',
         {
-            3: Tech('Karate I', punch_strike_mult=b.STRIKE_MULT1),
+            3: Tech('Karate I', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
             5: Tech('Karate II', kick_strike_mult=b.STRIKE_MULT1),
             7: Tech('Karate III', block_mult=b.BLOCK1),
         },

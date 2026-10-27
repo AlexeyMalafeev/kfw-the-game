@@ -6,8 +6,8 @@ ACROBATIC_STRIKE_MULT1 = 0.1
 ACROBATIC_STRIKE_MULT2 = 0.2
 AGILITY1 = 0.2
 AGILITY2 = 0.4
-ATTACK1 = 0.15
-ATTACK2 = 0.3
+ATTACK1 = 0.1  # 0.15 / 0.3 until 2026-10-28
+ATTACK2 = 0.2
 ATTACK_HALF = round(ATTACK1 / 2, 2)
 BLEEDING_CH1 = 0.3
 BLEEDING_CH2 = 0.6
@@ -26,10 +26,13 @@ DEFENSE2 = 0.6
 DEFENSE_HALF = round(DEFENSE1 / 2, 2)
 DFS_PEN1 = -0.1
 DFS_PEN2 = -0.2  # this effectively reduces defense penalty down to zero
-DIST1_MULT1 = 0.4
-DIST1_MULT2 = 0.8
-DIST2_MULT1 = 0.25
-DIST2_MULT2 = 0.5
+# close range is hard to reach and hold (the opponent strikes or pushes you away
+# on the way in), so it pays more: since 2026-10-28 close 0.75 (was 0.4), mid
+# 0.2 (was 0.25); strikes thrown: ~14% close, ~42% mid, ~43% long range
+DIST1_MULT1 = 0.75
+DIST1_MULT2 = 1.5
+DIST2_MULT1 = 0.2
+DIST2_MULT2 = 0.4
 DIST3_MULT1 = 0.2
 DIST3_MULT2 = 0.4
 DRUNKEN_STRIKE_MULT1 = 0.1
@@ -73,6 +76,8 @@ PREEMPTIVE_CH2 = 0.20
 QI_WHEN_ATK = 0.5  # placeholder, no tech yet (BACKLOG: techs for placeholder boosts)
 QP_GAIN1 = 0.1
 QP_GAIN2 = 0.2
+PUNCH_STRIKE_MULT1 = 0.2  # STRIKE_MULT1 / 2 (0.25 / 0.5) until 2026-10-28
+PUNCH_STRIKE_MULT2 = 0.4
 QP_MAX1 = 0.1
 QP_MAX2 = 0.2
 QP_START1 = 0.25  # 0.5 / 1.0 until 2026-10-24: the head start was nearly

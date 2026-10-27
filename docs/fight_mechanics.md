@@ -416,11 +416,18 @@ them to about average (tables in `tests/balance experiments 2026-10-22.txt`).
 `kung_fu/techniques.py`: a `Tech` is a name + flat dict of attribute deltas,
 applied by *addition* (`Tech.apply`: `setattr(f, p, getattr(f, p) + delta)`),
 then `refresh_full_atts`/`refresh_dependent_atts`. Multiplicative-sounding
-params are additive increments to a `1.0` base (e.g. `atk_mult +0.15`), so
+params are additive increments to a `1.0` base (e.g. `atk_mult +0.1`), so
 stacked techs add rather than compound. Strike-multiplier techs
 (`punch_strike_mult` etc.) multiply into `atk_bonus` per matching move feature
 in `calc_atk`, and add the feature to `fav_move_features` (biases random move
 learning). Values live in `kung_fu/boosts.py` / `boost_combos.py`.
+A distance buff (`dist1/2/3_strike_mult`) is worth roughly its value times
+the share of strikes thrown at that distance, and fighters throw only ~14%
+of their strikes at close range (it is hard to reach and hold: the opponent
+strikes or pushes you away on the way in) against ~42% mid and ~43% long
+range. So since 2026-10-28 close range pays the most (+75% at style level,
+was +40%) and mid range +20% (was +25%), alongside the general cuts to
+attack (+10%, was +15%) and punches (+20%, was +25%).
 
 Unfinished features, not bugs (placeholders kept on purpose; the techs that
 would use them are queued in `BACKLOG.md`): the boost constants `GRAB_CH1/2`

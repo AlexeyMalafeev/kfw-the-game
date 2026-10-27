@@ -182,8 +182,8 @@ LINKED_TECHS = [
         Tech('Behind You All', dfs_penalty_step=b.DFS_PEN2, is_advanced=True),
     ),
     (
-        Tech('Iron Fist', punch_strike_mult=b.STRIKE_MULT1, is_upgradable=True),
-        Tech('Cannon Fist', punch_strike_mult=b.STRIKE_MULT2, is_advanced=True),
+        Tech('Iron Fist', punch_strike_mult=b.PUNCH_STRIKE_MULT1, is_upgradable=True),
+        Tech('Cannon Fist', punch_strike_mult=b.PUNCH_STRIKE_MULT2, is_advanced=True),
     ),
     (
         Tech('Powerful Kicks', kick_strike_mult=b.STRIKE_MULT1, is_upgradable=True),
