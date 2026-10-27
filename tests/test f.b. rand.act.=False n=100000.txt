@@ -1,4 +1,4 @@
-Sun Oct 25 02:17:24 2026
+Tue Oct 27 23:49:39 2026
 ----------------------------------------
 
 fight AI=GeneticAIAttackWhenReady
@@ -10,24 +10,54 @@ chunks=50 x 2000 fights (chunk i: seed + i)
 fight stats:
 
 
-fights: 100000, no winner: 4
-fight length, s: mean 144.5, median 42.0, slowest 10% from 171
-per fight: strikes 8.7, counters 0.66, preemptives 0.09, criticals 0.91, epics 0.272, stuns 1.15
-strike outcomes: dodged 19.1%, fully blocked 11.5%, partly blocked 7.3%, clean hits 62.1%
-actions (counters included): strikes 27.7%, Guard 40.9%, Focus 24.9%, Catch Breath 2.7%, other maneuvers 3.8%
-at fight end: winner's HP 70.4% of max; stamina 67.1%, QP 27.0% of max (both fighters)
+fights: 100000, no winner: 1
+fight length, s: mean 64.0, median 40.0, slowest 10% from 144
+per fight: strikes 8.7, counters 0.64, preemptives 0.09, criticals 0.9, epics 0.273, stuns 1.15
+strike outcomes: dodged 19.2%, fully blocked 11.4%, partly blocked 7.3%, clean hits 62.1%
+actions (counters included): strikes 47.0%, Guard 35.5%, Focus 6.2%, Catch Breath 4.9%, other maneuvers 6.4%
+at fight end: winner's HP 70.4% of max; stamina 66.8%, QP 29.7% of max (both fighters)
+
+fight stats lv 1-7:
+
+
+fights: 34840, no winner: 0
+fight length, s: mean 117.7, median 88.0, slowest 10% from 235
+per fight: strikes 9.8, counters 0.38, preemptives 0.03, criticals 0.49, epics 0.118, stuns 0.83
+strike outcomes: dodged 21.1%, fully blocked 13.1%, partly blocked 8.1%, clean hits 57.8%
+actions (counters included): strikes 39.9%, Guard 40.0%, Focus 5.2%, Catch Breath 9.3%, other maneuvers 5.7%
+at fight end: winner's HP 63.9% of max; stamina 48.6%, QP 39.4% of max (both fighters)
+
+fight stats lv 8-14:
+
+
+fights: 35164, no winner: 0
+fight length, s: mean 46.3, median 38.0, slowest 10% from 86
+per fight: strikes 9.2, counters 0.77, preemptives 0.1, criticals 1.04, epics 0.322, stuns 1.18
+strike outcomes: dodged 18.6%, fully blocked 11.1%, partly blocked 6.8%, clean hits 63.5%
+actions (counters included): strikes 51.6%, Guard 33.2%, Focus 6.8%, Catch Breath 1.6%, other maneuvers 6.8%
+at fight end: winner's HP 70.4% of max; stamina 70.9%, QP 27.1% of max (both fighters)
+
+fight stats lv 15-20:
+
+
+fights: 29996, no winner: 1
+fight length, s: mean 22.2, median 18.0, slowest 10% from 44
+per fight: strikes 6.8, counters 0.79, preemptives 0.15, criticals 1.22, epics 0.396, stuns 1.47
+strike outcomes: dodged 16.9%, fully blocked 9.2%, partly blocked 6.8%, clean hits 67.0%
+actions (counters included): strikes 55.7%, Guard 29.0%, Focus 7.6%, Catch Breath 0.1%, other maneuvers 7.6%
+at fight end: winner's HP 78.0% of max; stamina 83.0%, QP 21.6% of max (both fighters)
 
 atts:
 
 
 
 #  Key       D1      D2      Diff%  Sum      +-95%   
-1  agility   617224  606333  0.89   1223557  0.1    *
-2  strength  614001  610977  0.25   1224978  0.1    *
-3  health    612135  612952  -0.07  1225087  0.1     
-4  speed     605974  619072  -1.07  1225046  0.1    *
+1  agility   617508  607349  0.83   1224857  0.1    *
+2  strength  614238  612158  0.17   1226396  0.1    *
+3  health    613272  612298  0.08   1225570  0.1     
+4  speed     606022  619235  -1.08  1225257  0.1    *
 
-Min: 605974, Max: 617224, Range: 11250, Median: 613068.0, Mean: 612333.5
+Min: 606022, Max: 617508, Range: 11486, Median: 613755.0, Mean: 612760.0
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 atts lv 1-7:
@@ -35,12 +65,12 @@ atts lv 1-7:
 
 
 #  Key       D1      D2      Diff%  Sum     +-95%   
-1  agility   160029  155329  1.49   315358  0.2    *
-2  health    160030  155900  1.31   315930  0.2    *
-3  strength  157571  157281  0.09   314852  0.2     
-4  speed     153316  162436  -2.89  315752  0.2    *
+1  health    159434  154470  1.58   313904  0.2    *
+2  agility   159156  154236  1.57   313392  0.2    *
+3  strength  156388  157414  -0.33  313802  0.2    *
+4  speed     152410  161268  -2.82  313678  0.1    *
 
-Min: 153316, Max: 160030, Range: 6714, Median: 158800.0, Mean: 157736.5
+Min: 152410, Max: 159434, Range: 7024, Median: 157772.0, Mean: 156847.0
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 atts lv 8-14:
@@ -48,12 +78,12 @@ atts lv 8-14:
 
 
 #  Key       D1      D2      Diff%  Sum     +-95%   
-1  agility   219406  215979  0.79   435385  0.2    *
-2  strength  219569  217163  0.55   436732  0.2    *
-3  health    218373  217687  0.16   436060  0.2     
-4  speed     214626  221145  -1.5   435771  0.2    *
+1  strength  221185  218569  0.59   439754  0.2    *
+2  agility   220965  218577  0.54   439542  0.2    *
+3  health    220374  219053  0.3    439427  0.2    *
+4  speed     216324  222649  -1.44  438973  0.2    *
 
-Min: 214626, Max: 219569, Range: 4943, Median: 218889.5, Mean: 217993.5
+Min: 216324, Max: 221185, Range: 4861, Median: 220669.5, Mean: 219712.0
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 atts lv 15-20:
@@ -61,12 +91,12 @@ atts lv 15-20:
 
 
 #  Key       D1      D2      Diff%  Sum     +-95%   
-1  agility   237789  235025  0.58   472814  0.2    *
-2  speed     238032  235491  0.54   473523  0.2    *
-3  strength  236861  236533  0.07   473394  0.2     
-4  health    233732  239365  -1.19  473097  0.2    *
+1  agility   237387  234536  0.6    471923  0.2    *
+2  speed     237288  235318  0.42   472606  0.2    *
+3  strength  236665  236175  0.1    472840  0.2     
+4  health    233464  238775  -1.12  472239  0.2    *
 
-Min: 233732, Max: 238032, Range: 4300, Median: 237325.0, Mean: 236603.5
+Min: 233464, Max: 237387, Range: 3923, Median: 236976.5, Mean: 236201.0
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 full atts:
@@ -74,12 +104,12 @@ full atts:
 
 
 #  Key       D1      D2      Diff%  Sum      +-95%   
-1  agility   630437  616313  1.13   1246750  0.1    *
-2  strength  626993  621254  0.46   1248247  0.1    *
-3  health    624932  622847  0.17   1247779  0.1    *
-4  speed     618826  629251  -0.84  1248077  0.1    *
+1  agility   630525  617134  1.07   1247659  0.1    *
+2  strength  626902  622588  0.35   1249490  0.1    *
+3  health    626423  622451  0.32   1248874  0.1    *
+4  speed     618534  629555  -0.88  1248089  0.1    *
 
-Min: 618826, Max: 630437, Range: 11611, Median: 625962.5, Mean: 625297.0
+Min: 618534, Max: 630525, Range: 11991, Median: 626662.5, Mean: 625596.0
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 att diffs:
@@ -87,23 +117,24 @@ att diffs:
 
 
 #   Key  D1     D2     Diff%   Sum    +-95%   
-1   13   5      2      42.86   7      57.1    
-2   0    1021   704    18.38   1725   4.4    *
-3   1    10460  7966   13.54   18426  1.6    *
-4   2    24790  21269  7.64    46059  0.7    *
-5   3    23627  23118  1.09    46745  0.7    *
-6   4    17843  18553  -1.95   36396  0.9    *
-7   5    11139  13012  -7.76   24151  1.0    *
-8   6    6183   8048   -13.11  14231  1.5    *
-9   7    3018   4174   -16.07  7192   2.2    *
-10  8    1233   1932   -22.09  3165   3.2    *
-11  9    472    784    -24.84  1256   6.0    *
-12  10   151    281    -30.09  432    9.7    *
-13  12   14     35     -42.86  49     26.3   *
-14  11   39     115    -49.35  154    12.5   *
-15  14   1      3      -50.0   4      85.7    
+1   15   1      0      100.0   1      0.0    *
+2   0    1025   767    14.4    1792   4.2    *
+3   1    10351  8105   12.17   18456  1.2    *
+4   2    24506  21258  7.1     45764  0.8    *
+5   3    23773  22846  1.99    46619  0.7    *
+6   4    18053  18689  -1.73   36742  1.1    *
+7   5    11145  13109  -8.1    24254  1.1    *
+8   6    6170   7752   -11.36  13922  1.6    *
+9   7    2988   4326   -18.29  7314   2.0    *
+10  8    1289   1917   -19.59  3206   3.0    *
+11  9    477    784    -24.35  1261   5.7    *
+12  10   164    312    -31.09  476    9.4    *
+13  11   46     98     -36.11  144    15.7   *
+14  12   9      24     -45.45  33     31.1   *
+15  13   2      9      -63.64  11     55.5   *
+16  14   0      3      -100.0  3      0.0    *
 
-Min: 1, Max: 24790, Range: 24789, Median: 1233, Mean: 6666.4
+Min: 0, Max: 24506, Range: 24506, Median: 1157.0, Mean: 6249.94
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 style buffs:
@@ -111,55 +142,55 @@ style buffs:
 
 
 #   Key              D1     D2     Diff%   Sum    +-95%   
-1   agility          7974   6217   12.38   14191  1.9    *
-2   health           7811   6146   11.93   13957  1.4    *
-3   attack           11100  8840   11.33   19940  1.3    *
-4   punches          11055  8882   10.9    19937  1.4    *
-5   strength         7847   6319   10.79   14166  2.0    *
-6   speed            7629   6361   9.06    13990  1.6    *
-7   HP gain          10600  9638   4.75    20238  1.4    *
-8   environment      3110   2864   4.12    5974   2.3    *
-9   fury             10518  9724   3.92    20242  1.4    *
-10  kicks            10260  9665   2.99    19925  1.4    *
-11  jumps            10385  9783   2.98    20168  1.4    *
-12  long-range       9126   8733   2.2     17859  1.4    *
-13  defense          10040  9818   1.12    19858  1.5     
-14  improv.weapons   3042   2982   1.0     6024   2.7     
-15  mid-range        9018   8849   0.95    17867  1.6     
-16  dam.reduc.       10148  9963   0.92    20111  1.5     
-17  dodge            10293  10107  0.91    20400  1.4     
-18  acrob.str        10106  9940   0.83    20046  1.2     
-19  low fall dam     10106  9940   0.83    20046  1.2     
-20  move cplx.       10106  9940   0.83    20046  1.2     
-21  claws            10099  10086  0.06    20185  1.2     
-22  palm str.        10099  10086  0.06    20185  1.2     
-23  strike time      9946   9989   -0.22   19935  1.1     
-24  unblock.         6948   7055   -0.76   14003  1.7     
-25  qi               9981   10165  -0.91   20146  1.5     
-26  preemptive       9950   10221  -1.34   20171  1.5     
-27  drun.str.        9945   10296  -1.73   20241  1.3    *
-28  lying dfs        9945   10296  -1.73   20241  1.3    *
-29  off-bal.atk      9945   10296  -1.73   20241  1.3    *
-30  off-bal.dfs      9945   10296  -1.73   20241  1.3    *
-31  guard while atk  9821   10272  -2.24   20093  1.5    *
-32  blocks           9796   10264  -2.33   20060  1.2    *
-33  elbows           7357   7739   -2.53   15096  1.6    *
-34  headbutts        7357   7739   -2.53   15096  1.6    *
-35  knees            7357   7739   -2.53   15096  1.6    *
-36  criticals        9737   10324  -2.93   20061  1.5    *
-37  stun             9620   10281  -3.32   19901  1.5    *
-38  bleeding         9663   10437  -3.85   20100  1.4    *
-39  disarm           12544  13576  -3.95   26120  1.1    *
-40  stamina          9578   10533  -4.75   20111  1.3    *
-41  counters         9593   10568  -4.84   20161  1.4    *
-42  vs crowd         2820   3228   -6.75   6048   2.2    *
-43  maneuv.time      9263   10956  -8.37   20219  1.3    *
-44  resist KO        6676   7907   -8.44   14583  1.5    *
-45  grappling        1631   2096   -12.48  3727   2.9    *
-46  guard            8796   11367  -12.75  20163  1.2    *
-47  close-range      6053   8156   -14.8   14209  1.5    *
+1   agility          7873   6046   13.13   13919  1.5    *
+2   health           7956   6211   12.32   14167  1.5    *
+3   attack           11377  8896   12.24   20273  1.3    *
+4   strength         7731   6349   9.82    14080  1.5    *
+5   punches          11074  9205   9.22    20279  1.3    *
+6   speed            7512   6366   8.26    13878  1.7    *
+7   environment      3133   2777   6.02    5910   2.6    *
+8   fury             10593  9622   4.8     20215  1.3    *
+9   HP gain          10584  9789   3.9     20373  1.3    *
+10  jumps            10340  9732   3.03    20072  1.2    *
+11  strike time      10223  9689   2.68    19912  1.3    *
+12  kicks            10037  9645   1.99    19682  1.5    *
+13  dodge            10238  9909   1.63    20147  1.4    *
+14  long-range       9076   8833   1.36    17909  1.3    *
+15  mid-range        9088   8889   1.11    17977  1.5     
+16  unblock.         7105   6970   0.96    14075  1.6     
+17  defense          10255  10081  0.86    20336  1.1     
+18  acrob.str        10136  10007  0.64    20143  1.5     
+19  low fall dam     10136  10007  0.64    20143  1.5     
+20  move cplx.       10136  10007  0.64    20143  1.5     
+21  dam.reduc.       10070  9958   0.56    20028  1.4     
+22  claws            10088  10067  0.1     20155  1.6     
+23  palm str.        10088  10067  0.1     20155  1.6     
+24  improv.weapons   2989   3012   -0.38   6001   2.2     
+25  elbows           7631   7886   -1.64   15517  1.4    *
+26  headbutts        7631   7886   -1.64   15517  1.4    *
+27  knees            7631   7886   -1.64   15517  1.4    *
+28  qi               9766   10193  -2.14   19959  1.4    *
+29  preemptive       9845   10289  -2.21   20134  1.6    *
+30  criticals        9781   10258  -2.38   20039  1.3    *
+31  guard while atk  9849   10375  -2.6    20224  1.2    *
+32  bleeding         9761   10380  -3.07   20141  1.1    *
+33  stun             9676   10298  -3.11   19974  1.4    *
+34  counters         9674   10306  -3.16   19980  1.5    *
+35  drun.str.        9696   10402  -3.51   20098  1.4    *
+36  lying dfs        9696   10402  -3.51   20098  1.4    *
+37  off-bal.atk      9696   10402  -3.51   20098  1.4    *
+38  off-bal.dfs      9696   10402  -3.51   20098  1.4    *
+39  blocks           9702   10523  -4.06   20225  1.5    *
+40  stamina          9682   10543  -4.26   20225  1.4    *
+41  disarm           12395  13888  -5.68   26283  1.2    *
+42  vs crowd         2851   3239   -6.37   6090   1.9    *
+43  maneuv.time      9199   10676  -7.43   19875  1.2    *
+44  resist KO        6584   8011   -9.78   14595  1.6    *
+45  guard            8918   11321  -11.87  20239  1.4    *
+46  grappling        1664   2177   -13.36  3841   2.9    *
+47  close-range      5972   8127   -15.28  14099  1.5    *
 
-Min: 1631, Max: 12544, Range: 10913, Median: 9796, Mean: 8824.23
+Min: 1664, Max: 12395, Range: 10731, Median: 9696, Mean: 8826.26
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 techs 1:
@@ -167,38 +198,38 @@ techs 1:
 
 
 #   Key                   D1    D2    Diff%  Sum   +-95%   
-1   Flying Strikes        2901  2365  10.18  5266  2.5    *
-2   18 Attack Forms       2915  2387  9.96   5302  3.2    *
-3   Iron Fist             2832  2542  5.4    5374  2.3    *
-4   Lotus Stance          2813  2603  3.88   5416  2.5    *
-5   18 Defense Forms      2752  2579  3.25   5331  2.7    *
-6   Unlikely Weapons      2782  2616  3.08   5398  2.9    *
-7   Environment Fighting  2745  2587  2.96   5332  2.4    *
-8   Fist of Fury          2753  2601  2.84   5354  2.5    *
-9   Hardened Palms        2745  2631  2.12   5376  2.4     
-10  Powerful Kicks        2762  2664  1.81   5426  2.7     
-11  Fast Strikes          2670  2594  1.44   5264  2.7     
-12  Shadow Slips Away     2758  2700  1.06   5458  3.0     
-13  Drunken Moves         2673  2630  0.81   5303  2.0     
-14  Acrobatic Training    2669  2631  0.72   5300  2.4     
-15  Iron Vest             2698  2666  0.6    5364  3.0     
-16  Preemptive Strikes    2701  2669  0.6    5370  2.7     
-17  Fierce Strikes        2647  2635  0.23   5282  2.4     
-18  Guard While Striking  2664  2672  -0.15  5336  3.1     
-19  Wall-like Protection  2657  2680  -0.43  5337  2.1     
-20  Exotic Boxing         2611  2691  -1.51  5302  2.7     
-21  Health Breathing      2626  2753  -2.36  5379  3.1     
-22  Retaliative Blows     2616  2752  -2.53  5368  2.7     
-23  Debilitating Strikes  2516  2696  -3.45  5212  2.5    *
-24  Blood Strikes         2502  2725  -4.27  5227  2.5    *
-25  Horse-like Stamina    2544  2780  -4.43  5324  2.5    *
-26  Brawler's Resilience  2586  2836  -4.61  5422  2.9    *
-27  Fast Movement         2556  2863  -5.67  5419  2.2    *
-28  Behind You            2495  2828  -6.26  5323  2.4    *
-29  Monkey and Fox        2508  2883  -6.96  5391  2.8    *
-30  Advanced Guard        2355  2793  -8.51  5148  2.4    *
+1   Flying Strikes        2970  2371  11.22  5341  2.8    *
+2   18 Attack Forms       2996  2397  11.11  5393  2.6    *
+3   Iron Fist             2890  2453  8.18   5343  2.7    *
+4   Fast Strikes          2770  2498  5.16   5268  2.9    *
+5   Environment Fighting  2789  2520  5.07   5309  2.8    *
+6   Lotus Stance          2797  2553  4.56   5350  2.7    *
+7   Shadow Slips Away     2726  2603  2.31   5329  2.6     
+8   Fist of Fury          2733  2612  2.26   5345  2.7     
+9   18 Defense Forms      2744  2666  1.44   5410  2.2     
+10  Retaliative Blows     2669  2604  1.23   5273  2.3     
+11  Unlikely Weapons      2700  2663  0.69   5363  2.5     
+12  Fierce Strikes        2654  2627  0.51   5281  2.6     
+13  Debilitating Strikes  2624  2598  0.5    5222  2.5     
+14  Iron Vest             2665  2639  0.49   5304  2.6     
+15  Hardened Palms        2649  2641  0.15   5290  2.8     
+16  Preemptive Strikes    2640  2690  -0.94  5330  2.3     
+17  Blood Strikes         2644  2711  -1.25  5355  2.0     
+18  Guard While Striking  2638  2719  -1.51  5357  2.4     
+19  Powerful Kicks        2554  2647  -1.79  5201  2.5     
+20  Health Breathing      2653  2760  -1.98  5413  2.3     
+21  Exotic Boxing         2644  2763  -2.2   5407  2.3     
+22  Horse-like Stamina    2608  2737  -2.41  5345  2.5     
+23  Fast Movement         2584  2719  -2.55  5303  2.5    *
+24  Acrobatic Training    2564  2726  -3.06  5290  3.2     
+25  Drunken Moves         2612  2807  -3.6   5419  2.8    *
+26  Wall-like Protection  2605  2804  -3.68  5409  3.0    *
+27  Behind You            2580  2841  -4.81  5421  2.3    *
+28  Brawler's Resilience  2477  2866  -7.28  5343  2.5    *
+29  Advanced Guard        2472  2906  -8.07  5378  3.0    *
+30  Monkey and Fox        2449  2959  -9.43  5408  2.2    *
 
-Min: 2355, Max: 2915, Range: 560, Median: 2669.5, Mean: 2668.4
+Min: 2449, Max: 2996, Range: 547, Median: 2646.5, Mean: 2670.0
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 techs 2:
@@ -206,38 +237,38 @@ techs 2:
 
 
 #   Key                           D1   D2   Diff%   Sum  +-95%   
-1   36 Attack Forms               403  259  21.75   662  7.1    *
-2   Lightning-Fast Strikes        398  266  19.88   664  7.9    *
-3   Cannon Fist                   396  271  18.74   667  7.9    *
-4   Sky Dragon                    401  276  18.46   677  7.8    *
-5   Advanced Drunken Moves        418  302  16.11   720  7.6    *
-6   Environment Domination        365  277  13.71   642  7.6    *
-7   Enraged Mantis                395  312  11.74   707  6.4    *
-8   Superior Iron Vest            391  317  10.45   708  7.1    *
-9   Advanced Exotic Boxing        336  274  10.16   610  7.7    *
-10  Shadow of a Shadow            375  313  9.01    688  8.0    *
-11  Explosive Strikes             368  324  6.36    692  7.8     
-12  Palms of Justice              346  307  5.97    653  7.2     
-13  Crippling Strikes             329  292  5.96    621  7.0     
-14  36 Defense Forms              327  312  2.35    639  7.8     
-15  Hurricane Legs                331  317  2.16    648  8.9     
-16  Golden Lotus Stance           339  326  1.95    665  7.9     
-17  Double Revenge                333  331  0.3     664  7.4     
-18  Advanced Acrobatic Training   318  338  -3.05   656  7.7     
-19  Emperor's Fortress            314  338  -3.68   652  7.4     
-20  Attack Is Defense             313  355  -6.29   668  7.5     
-21  Fist of Fury II               295  348  -8.24   643  6.5    *
-22  Behind You All                325  400  -10.34  725  7.7    *
-23  Advanced Blood Strikes        295  370  -11.28  665  7.3    *
-24  Lightning-Fast Movement       305  399  -13.35  704  7.2    *
-25  Hero's Resilience             263  355  -14.89  618  8.2    *
-26  Vitality Breathing            274  371  -15.04  645  6.3    *
-27  Anything Is a Weapon          260  366  -16.93  626  8.5    *
-28  Strong as an Ox               254  380  -19.87  634  7.8    *
-29  Dragon Guards a Treasure      259  441  -26.0   700  7.4    *
-30  Flying Monkey and Golden Fox  240  429  -28.25  669  6.7    *
+1   Lightning-Fast Strikes        426  245  26.97   671  6.5    *
+2   36 Attack Forms               426  270  22.41   696  7.9    *
+3   Advanced Drunken Moves        387  270  17.81   657  6.9    *
+4   Sky Dragon                    367  263  16.51   630  10.1   *
+5   Environment Domination        344  257  14.48   601  7.6    *
+6   Cannon Fist                   371  279  14.15   650  6.9    *
+7   Hurricane Legs                371  285  13.11   656  6.8    *
+8   Superior Iron Vest            328  265  10.62   593  7.6    *
+9   Shadow of a Shadow            375  308  9.81    683  6.9    *
+10  36 Defense Forms              381  316  9.33    697  5.5    *
+11  Advanced Acrobatic Training   361  304  8.57    665  7.3    *
+12  Advanced Exotic Boxing        360  341  2.71    701  7.2     
+13  Palms of Justice              359  346  1.84    705  6.4     
+14  Explosive Strikes             342  332  1.48    674  7.5     
+15  Attack Is Defense             348  343  0.72    691  6.1     
+16  Enraged Mantis                332  337  -0.75   669  6.2     
+17  Crippling Strikes             328  333  -0.76   661  5.8     
+18  Golden Lotus Stance           330  341  -1.64   671  8.6     
+19  Fist of Fury II               323  365  -6.1    688  6.3     
+20  Emperor's Fortress            295  350  -8.53   645  9.0     
+21  Anything Is a Weapon          289  349  -9.4    638  7.9    *
+22  Vitality Breathing            310  375  -9.49   685  8.0    *
+23  Lightning-Fast Movement       311  377  -9.59   688  6.2    *
+24  Double Revenge                296  368  -10.84  664  7.6    *
+25  Dragon Guards a Treasure      283  368  -13.06  651  6.3    *
+26  Strong as an Ox               284  388  -15.48  672  7.8    *
+27  Advanced Blood Strikes        269  368  -15.54  637  7.5    *
+28  Behind You All                271  398  -18.98  669  6.5    *
+29  Hero's Resilience             255  419  -24.33  674  6.6    *
+30  Flying Monkey and Golden Fox  244  406  -24.92  650  7.1    *
 
-Min: 240, Max: 418, Range: 178, Median: 330.0, Mean: 332.2
+Min: 244, Max: 426, Range: 182, Median: 331.0, Mean: 332.2
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 
 moves:
@@ -245,59 +276,59 @@ moves:
 
 
 #   Key              D1      D2      Diff%  Sum      +-95%   
-1   flying           65795   59312   5.18   125107   1.0    *
-2   dist4            22939   20798   4.9    43737    1.3    *
-3   long             42783   40702   2.49   83485    0.6    *
-4   ultra long       14565   13869   2.45   28434    1.3    *
-5   onslaught        21407   20531   2.09   41938    0.9    *
-6   dist3            236558  228793  1.67   465351   0.2    *
-7   strong           37650   36589   1.43   74239    0.6    *
-8   energy           22770   22311   1.02   45081    0.9    *
-9   punch            403534  395404  1.02   798938   0.2    *
-10  slashing         16919   16712   0.62   33631    1.1     
-11  heavy            29326   29022   0.52   58348    0.7     
-12  debilitating     11720   11615   0.45   23335    1.2     
-13  dist2            394278  390970  0.42   785248   0.2    *
-14  surprise         56666   56218   0.4    112884   0.5     
-15  ultimate         35978   35718   0.36   71696    0.5     
-16  precise          36561   36313   0.34   72874    0.7     
-17  palm             76444   76019   0.28   152463   0.6     
-18  expert           38677   38505   0.22   77182    0.6     
-19  kick             306491  305195  0.21   611686   0.2    *
-20  advanced         45996   45823   0.19   91819    0.6     
-21  solar            27116   27035   0.15   54151    0.9     
-22  shocking         31880   31845   0.05   63725    0.8     
-23  nerve            27140   27119   0.04   54259    0.6     
-24  antiground only  199992  199992  0.0    399984   0.0     
-25  knockback        99996   99996   0.0    199992   0.0     
-26  non-attack       801499  801649  -0.01  1603148  0.0    *
-27  skillful         87373   87454   -0.05  174827   0.4     
-28  head             37839   38032   -0.25  75871    0.7     
-29  charging         41227   41478   -0.3   82705    0.7     
-30  superior         59229   59644   -0.35  118873   0.5     
-31  lethal           7796    7861    -0.42  15657    1.4     
-32  short            124292  125431  -0.46  249723   0.2    *
-33  acrobatic        49689   50321   -0.63  100010   1.0     
-34  lightning        14222   14447   -0.78  28669    1.1     
-35  drunken          46806   47552   -0.79  94358    1.2     
-36  pushing          25840   26285   -0.85  52125    0.7    *
-37  power            16811   17102   -0.86  33913    1.1     
-38  elbow            53213   54505   -1.2   107718   0.5    *
-39  grappling        124362  127447  -1.23  251809   0.2    *
-40  fast             45848   47090   -1.34  92938    0.6    *
-41  dist1            444386  457450  -1.45  901836   0.1    *
-42  piercing         10501   10842   -1.6   21343    1.1    *
-43  ferocious        8753    9058    -1.71  17811    1.5    *
-44  claw             54753   56758   -1.8   111511   0.7    *
-45  light            26448   27597   -2.13  54045    0.8    *
-46  trick            17481   18363   -2.46  35844    0.9    *
-47  retreating       37714   40029   -2.98  77743    0.6    *
-48  takedown         40971   43861   -3.41  84832    0.8    *
-49  knee             41525   44651   -3.63  86176    0.7    *
-50  jump             1531    1681    -4.67  3212     3.9    *
-51  vanishing        15088   16872   -5.58  31960    1.2    *
-52  ultra short      3943    4609    -7.79  8552     2.5    *
+1   flying           65606   59234   5.1    124840   0.9    *
+2   dist4            23078   21422   3.72   44500    0.9    *
+3   long             43175   40494   3.2    83669    0.7    *
+4   ultra long       14792   13985   2.8    28777    1.1    *
+5   slashing         16862   16327   1.61   33189    1.2    *
+6   dist3            236270  229141  1.53   465411   0.3    *
+7   strong           37591   36511   1.46   74102    0.7    *
+8   energy           22873   22338   1.18   45211    0.9    *
+9   punch            404055  395475  1.07   799530   0.2    *
+10  heavy            29598   29055   0.93   58653    0.9    *
+11  onslaught        21321   20927   0.93   42248    0.8    *
+12  palm             76936   75536   0.92   152472   0.6    *
+13  debilitating     11727   11561   0.71   23288    1.2     
+14  dist2            395402  391399  0.51   786801   0.2    *
+15  lethal           7955    7887    0.43   15842    1.3     
+16  piercing         10812   10731   0.38   21543    1.3     
+17  surprise         56679   56341   0.3    113020   0.5     
+18  ultimate         35736   35542   0.27   71278    0.5     
+19  head             38375   38192   0.24   76567    0.7     
+20  nerve            27030   26981   0.09   54011    0.7     
+21  antiground only  199998  199998  0.0    399996   0.0     
+22  knockback        99999   99999   0.0    199998   0.0     
+23  non-attack       801517  801554  -0.0   1603071  0.0     
+24  expert           38894   38942   -0.06  77836    0.6     
+25  kick             305761  306116  -0.06  611877   0.2     
+26  superior         59358   59427   -0.06  118785   0.5     
+27  advanced         46069   46159   -0.1   92228    0.5     
+28  skillful         87789   88107   -0.18  175896   0.3     
+29  charging         41930   42158   -0.27  84088    0.8     
+30  solar            26997   27207   -0.39  54204    0.9     
+31  shocking         31893   32152   -0.4   64045    0.8     
+32  fast             46450   46852   -0.43  93302    0.7     
+33  short            124191  125409  -0.49  249600   0.2    *
+34  acrobatic        49684   50420   -0.74  100104   1.3     
+35  pushing          26203   26645   -0.84  52848    0.8    *
+36  jump             1525    1562    -1.2   3087     3.3     
+37  precise          35898   36774   -1.21  72672    0.6    *
+38  lightning        14196   14546   -1.22  28742    1.3     
+39  trick            17791   18259   -1.3   36050    1.1    *
+40  grappling        124251  127746  -1.39  251997   0.2    *
+41  dist1            444313  457064  -1.41  901377   0.1    *
+42  ferocious        8610    8878    -1.53  17488    1.5     
+43  light            26451   27334   -1.64  53785    0.9    *
+44  power            16722   17320   -1.76  34042    1.0    *
+45  claw             54636   56634   -1.8   111270   0.7    *
+46  elbow            53095   55120   -1.87  108215   0.7    *
+47  retreating       38122   39588   -1.89  77710    0.7    *
+48  drunken          46007   48475   -2.61  94482    1.6    *
+49  knee             41954   44207   -2.61  86161    0.6    *
+50  takedown         40934   44316   -3.97  85250    0.8    *
+51  vanishing        15267   16686   -4.44  31953    0.9    *
+52  ultra short      3898    4522    -7.41  8420     3.2    *
 
-Min: 1531, Max: 801499, Range: 799968, Median: 38258.0, Mean: 87352.33
+Min: 1525, Max: 801517, Range: 799992, Median: 38634.5, Mean: 87428.38
 D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, a few * are expected by chance alone.
 

@@ -25,8 +25,9 @@ def parse(path):
             section = line[:-1]
             tables[section] = {}
             continue
-        if section == 'fight stats' and line.strip():
-            stats.append(line)
+        if section and section.startswith('fight stats') and line.strip():
+            # per-tier stats (since 2026-10-27) prefixed with their tier
+            stats.append(line if section == 'fight stats' else f'{section[12:]}: {line}')
             continue
         m = ROW.match(line)
         if m and section:

@@ -116,7 +116,13 @@ All notable changes to KFW are documented here. Format loosely follows
   per turn was rounded to nearest, so a level-1 fighter (5 qi) regenerated
   none and Focus restored nothing, yet the fight AI still chose it. Now it
   rounds up: 1 qi per turn at level 1, and one more than before at levels
-  5, 9, 13, 17... wherever 10% ends in .5
+  5, 9, 13, 17... wherever 10% ends in .5. Level-1 fights had been stalling
+  in Focus loops (48% of all actions, ~10x longer than now); over all
+  levels Focus fell from 25% to 6% of actions and the mean fight from 145
+  to 64 s
+- **The fight-balance report gives fight stats per level tier**: fight
+  length, action mix, strike outcomes and what's left at the end, for levels
+  1-7, 8-14 and 15-20 as well as overall (`run_test_fb.py`)
 - **Catch Breath and Focus grow with the fighter** (balance-affecting):
   they restored a flat 20 stamina / 20 qi, the same for a rookie and a
   master. Now each restores two turns' worth of the fighter's own stamina /

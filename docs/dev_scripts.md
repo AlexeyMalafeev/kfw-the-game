@@ -364,7 +364,8 @@ per fight, strike outcomes (dodged, fully blocked, partly blocked, clean
 hits — from the defender-side counters in `fight_stats`, see
 `docs/stats.md`), the action mix (strikes, Guard, Focus, Catch Breath,
 other maneuvers — from `fight_stats['moves_used']`), and what's left at the end (winner's HP, both fighters'
-stamina and QP). Then, for winners vs losers: sums of the four base atts
+stamina and QP); the same stats follow per level tier (`fight stats lv 1-7`,
+`lv 8-14`, `lv 15-20`, since 2026-10-27). Then, for winners vs losers: sums of the four base atts
 (overall, then per level tier — `atts lv 1-7`, `lv 8-14`, `lv 15-20`, since
 2026-10-23: averaging over all levels hid that speed is weak early and
 strong late; each tier has a third of the fights, so its margins are ~1.7×

@@ -32,9 +32,15 @@ FB_TABLES = (
     ('techs2', 'techs 2:'),
     ('moves', 'moves:'),
 )
-# level tiers for the per-tier att tables (early / mid / late game)
+# level tiers for the per-tier att tables and fight stats (early / mid / late game)
 FB_TIER_TABLE = {lv: 'atts_t1' if lv <= 7 else 'atts_t2' if lv <= 14 else 'atts_t3'
                  for lv in range(1, 21)}
+FB_STAT_TIERS = (
+    ('all', 'fight stats:'),
+    ('atts_t1', 'fight stats lv 1-7:'),
+    ('atts_t2', 'fight stats lv 8-14:'),
+    ('atts_t3', 'fight stats lv 15-20:'),
+)
 FB_LEGEND = (
     'D1 = winners, D2 = losers, Diff% = (D1 - D2) / Sum. +-95% = noise margin of '
     'Diff% from the chunk-to-chunk spread; * = |Diff%| beyond it. With ~150 rows, '
@@ -54,12 +60,18 @@ def _fight_balance_chunk(rand_actions, n, seed):
     for att in att_names:
         for d in t['atts'] + t['full_atts'] + t['atts_t1'] + t['atts_t2'] + t['atts_t3']:
             d[att] = 0
-    stats = {key: 0 for key in (
-        'fights', 'no_winner', 'thrown', 'dodges', 'blocks', 'full_blocks',
-        'counters', 'preemptives', 'stunned', 'criticals', 'epics')}
-    stats.update(winner_hp=0.0, stamina_left=0.0, qp_left=0.0, actions=0,
-                 guards=0, focuses=0, breaths=0)
-    durations = []
+
+    def new_stats():
+        st = {key: 0 for key in (
+            'fights', 'no_winner', 'thrown', 'dodges', 'blocks', 'full_blocks',
+            'counters', 'preemptives', 'stunned', 'criticals', 'epics')}
+        st.update(winner_hp=0.0, stamina_left=0.0, qp_left=0.0, actions=0,
+                  guards=0, focuses=0, breaths=0)
+        return st
+
+    # fight stats overall ('all') and per level tier (keyed like the att tables)
+    all_stats = {tier: new_stats() for tier, _ in FB_STAT_TIERS}
+    all_durations = {tier: [] for tier, _ in FB_STAT_TIERS}
     for _ in range(n):
         lv = random.randint(1, 20)
         f1 = ff.new_fighter(lv=lv)
@@ -70,26 +82,31 @@ def _fight_balance_chunk(rand_actions, n, seed):
             f1.set_fight_ai(fight_ai.BaseAI)
             f2.set_fight_ai(fight_ai.BaseAI)
         fgt = fight.AutoFight([f1], [f2])
-        stats['fights'] += 1
-        durations.append(fgt.get_seconds())
-        for ftr in (f1, f2):
-            fs = ftr.fight_stats
-            for key in ('thrown', 'dodges', 'blocks', 'full_blocks', 'counters',
-                        'preemptives', 'stunned', 'criticals', 'epics'):
-                stats[key] += fs[key]
-            used = fs['moves_used']  # strikes (incl. counters) and maneuvers
-            stats['actions'] += sum(used.values())
-            stats['guards'] += used.get('Guard', 0)
-            stats['focuses'] += used.get('Focus', 0)
-            stats['breaths'] += used.get('Catch Breath', 0)
-            stats['stamina_left'] += ftr.stamina / ftr.stamina_max
-            stats['qp_left'] += ftr.qp / ftr.qp_max if ftr.qp_max else 0
+        tiers = ('all', FB_TIER_TABLE[lv])
+        for tier in tiers:
+            stats = all_stats[tier]
+            stats['fights'] += 1
+            all_durations[tier].append(fgt.get_seconds())
+            for ftr in (f1, f2):
+                fs = ftr.fight_stats
+                for key in ('thrown', 'dodges', 'blocks', 'full_blocks', 'counters',
+                            'preemptives', 'stunned', 'criticals', 'epics'):
+                    stats[key] += fs[key]
+                used = fs['moves_used']  # strikes (incl. counters) and maneuvers
+                stats['actions'] += sum(used.values())
+                stats['guards'] += used.get('Guard', 0)
+                stats['focuses'] += used.get('Focus', 0)
+                stats['breaths'] += used.get('Catch Breath', 0)
+                stats['stamina_left'] += ftr.stamina / ftr.stamina_max
+                stats['qp_left'] += ftr.qp / ftr.qp_max if ftr.qp_max else 0
+            if not fgt.winners:
+                stats['no_winner'] += 1
+            else:
+                stats['winner_hp'] += fgt.winners[0].hp / fgt.winners[0].hp_max
         if not fgt.winners:
-            stats['no_winner'] += 1
             continue
         wnr = fgt.winners[0]
         lsr = fgt.losers[0]
-        stats['winner_hp'] += wnr.hp / wnr.hp_max
         for i, ftr in enumerate((wnr, lsr)):
             # att values
             for att in att_names:
@@ -114,7 +131,7 @@ def _fight_balance_chunk(rand_actions, n, seed):
             for m in ftr.moves:
                 for feat in m.features:
                     add_to_dict(t['moves'][i], feat, 1)
-    return {'tables': t, 'stats': stats, 'durations': durations}
+    return {'tables': t, 'stats': all_stats, 'durations': all_durations}
 
 
 def _apply_variants(variants):
@@ -172,13 +189,13 @@ def _format_fb_table(results, key):
     return '\n'.join(lines)
 
 
-def _format_fight_stats(results):
+def _format_fight_stats(results, tier='all'):
     st = {}
     durations = []
     for r in results:
-        for k, v in r['stats'].items():
+        for k, v in r['stats'][tier].items():
             st[k] = st.get(k, 0) + v
-        durations.extend(r['durations'])
+        durations.extend(r['durations'][tier])
     durations.sort()
     n_f = st['fights']
     n_won = n_f - st['no_winner']
@@ -398,7 +415,8 @@ class Tester(object):
         with open(file_path, 'w', encoding='utf-8') as fh:
             print(get_time(), file=fh)
             fh.write(output)
-            sections = [('fight stats:', _format_fight_stats(results))]
+            sections = [(legend, _format_fight_stats(results, tier))
+                        for tier, legend in FB_STAT_TIERS]
             for key, legend in FB_TABLES:
                 sections.append((legend, _format_fb_table(results, key)))
             for legend, s in sections:
