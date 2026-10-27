@@ -39,8 +39,9 @@ class StateMenu(BaseGame):
             print(' ' + '  '.join(f'{k} - {opt[0]}' for k, opt in zip(sys_keys, sys_options)))
             options += sys_options
             keys += sys_keys
-            present_menu(keys, [opt[0] for opt in options])
             while True:
+                # re-present after an invalid key (see menu())
+                present_menu(keys, [opt[0] for opt in options])
                 key = get_key()
                 if key in keys:
                     choice = options[keys.index(key)][1]

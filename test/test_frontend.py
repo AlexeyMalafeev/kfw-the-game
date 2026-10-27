@@ -61,3 +61,50 @@ def test_key_frontend_and_desktop_fallback(monkeypatch):
 
     _frontend.uninstall_frontend()
     assert __import__("kf_lib.ui", fromlist=["get_key"]).get_key() == "d"
+
+
+class ConsumingFrontend:
+    """Like GameHost: each key read consumes the presented menu."""
+
+    def __init__(self, keys):
+        self.keys = list(keys)
+        self.pending = None
+        self.menus_at_read = []
+
+    def present(self, keys, options, weak):
+        self.pending = keys
+
+    def read_key(self):
+        self.menus_at_read.append(self.pending)
+        self.pending = None
+        return self.keys.pop(0)
+
+    def install(self):
+        _frontend.install_frontend(key_reader=self.read_key, menu_handler=self.present)
+
+
+def test_menu_is_presented_again_after_invalid_key():
+    frontend = ConsumingFrontend(["z", "\n", "2"])
+    frontend.install()
+
+    assert menu([("One", 1), ("Two", 2)]) == 2
+    assert frontend.menus_at_read == ["12", "12", "12"]
+
+
+def test_state_menu_is_presented_again_after_invalid_key(monkeypatch):
+    from types import SimpleNamespace
+
+    from kf_lib.game._state_menu import StateMenu
+
+    monkeypatch.setattr("kf_lib.game._state_menu.cls", lambda: None)
+    game = StateMenu.__new__(StateMenu)
+    game.current_player = SimpleNamespace(
+        get_p_info_verbose=lambda: "info", is_master=False
+    )
+    game.play_indefinitely = False
+    frontend = ConsumingFrontend(["z", "b"])
+    frontend.install()
+
+    game.state_menu()
+
+    assert frontend.menus_at_read == ["iamtbSLQXD", "iamtbSLQXD"]

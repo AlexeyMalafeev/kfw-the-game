@@ -677,9 +677,9 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        if (isFinishing()) {
-            stopGameThread();
-        }
+        // A recreated activity starts at the title and cannot reattach to the old
+        // game, so always stop it rather than leave its thread blocked on input.
+        stopGameThread();
         super.onDestroy();
     }
 

@@ -290,6 +290,10 @@ def run(args):
     device.capture("title")
 
     device.click_id("new_game")
+    # a key outside the menu must leave the menu buttons in place
+    device.wait(desc="no")
+    device.shell("input", "keyevent", "KEYCODE_Z")
+    time.sleep(0.8)
     device.choose("no")
     device.shell("input", "keyevent", "KEYCODE_HOME")
     time.sleep(0.8)
@@ -300,6 +304,18 @@ def run(args):
     device.wait(resource_id="line_input")
     device.shell("settings", "put", "system", "user_rotation", "0")
     time.sleep(0.8)
+    # a system font-size change must not drop the running game to the title
+    font_scale = device.shell("settings", "get", "system", "font_scale").strip()
+    if font_scale in ("", "null"):
+        font_scale = "1.0"
+    device.shell("settings", "put", "system", "font_scale", "1.15")
+    time.sleep(0.8)
+    try:
+        device.wait(resource_id="line_input", timeout=10)
+    finally:
+        device.shell("settings", "put", "system", "font_scale", font_scale)
+        time.sleep(0.8)
+    device.wait(resource_id="line_input")
     device.enter("1")
     device.choose("no")
     device.choose("yes")

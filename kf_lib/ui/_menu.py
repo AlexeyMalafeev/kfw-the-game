@@ -56,8 +56,10 @@ def menu(
         else:
             st = '; '
         print(render(st.join([f' {cyan(curr_keys[j])} - {grey(curr_options[j])}' for j in range(len(curr_keys))])))
-        present_menu(curr_keys, curr_options, weak)
         while True:
+            # every key read consumes the presented menu, so present it again
+            # after an invalid key or the frontend loses the options
+            present_menu(curr_keys, curr_options, weak)
             choice = get_key()
             if back and choice == BACK_KEY:
                 return None

@@ -139,7 +139,8 @@ tags inside art would corrupt the picture. Whole-message colors around art
 ## Android frontend
 
 `kf_lib/ui/_frontend.py` provides optional key-reader, clear-screen and current-menu
-hooks. `menu()` and `StateMenu` report their key/label pairs through these hooks; weak
+hooks. `menu()` and `StateMenu` report their key/label pairs through these hooks before every
+key read (a read consumes the presented menu, so an invalid key must not lose it); weak
 menus also report that the frontend must offer a way to dismiss them. With no frontend
 installed, every hook falls back to the original terminal behavior.
 

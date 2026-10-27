@@ -62,14 +62,17 @@ locations, not files under `app/build/generated/`. No manual copy step is needed
   more moves or actions. The optional Back button closes weak menus such as the post-fight
   menu.
 - Text and numeric answers use the Android keyboard. A hardware keyboard also works for
-  menu keys; use Shift for the uppercase State commands.
+  menu keys; use Shift for the uppercase State commands. A key that is not on the menu
+  is ignored and the menu buttons stay.
 - The console keeps the original ANSI colors and monospace ASCII art. Scroll vertically
   for history and horizontally for wide tables/art. A− / A+ changes text size and remembers
   it. Long transcripts are capped at 400,000 characters to bound memory use.
 - **State** in the day menu opens character information and the original Save / Load /
   Save and Quit commands. Returning to the title with the Android Back button or the ‹
   button asks for confirmation because it discards progress after the last save.
-- Rotation and moving the app to the background do not restart the running game. As with
+- Rotation, moving the app to the background, connecting a keyboard and changing the
+  system font size, bold text or language do not restart the running game (a new system
+  font size reaches the console on the next game). As with
   any mobile app, the operating system may eventually reclaim a background process;
   autosave or manual saves protect progress.
 - The language button restarts the app to apply English or Russian before any game content
@@ -141,7 +144,8 @@ cd ..
 
 The instrumentation suite executes localized resources, new game, interactive combat and
 save/load in an isolated app-private HOME. The UIAutomator script drives the real native UI:
-new game, keyboard input, background/resume, rotation, State/Save, title, Continue, a
+new game, a key outside the menu, keyboard input, background/resume, rotation, a system
+font-size change, State/Save, title, Continue, a
 deterministic NormalFight (launched through the game's Debug Menu) with manual move
 selection, post-fight Back and another save. Screenshots
 are written to the artifacts directory. Add `--reset` only on a disposable test device: it
