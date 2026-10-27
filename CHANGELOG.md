@@ -112,6 +112,11 @@ All notable changes to KFW are documented here. Format loosely follows
 - **Dev scripts no longer wait for Enter at the end**: the old `input('Press
   Enter to exit')` pauses are gone; on an error a script prints the
   traceback and exits with code 1, so batch runs can tell failures apart
+- **Qi regeneration is rounded up** (balance-affecting): 10% of max qi
+  per turn was rounded to nearest, so a level-1 fighter (5 qi) regenerated
+  none and Focus restored nothing, yet the fight AI still chose it. Now it
+  rounds up: 1 qi per turn at level 1, and one more than before at levels
+  5, 9, 13, 17... wherever 10% ends in .5
 - **Catch Breath and Focus grow with the fighter** (balance-affecting):
   they restored a flat 20 stamina / 20 qi, the same for a rookie and a
   master. Now each restores two turns' worth of the fighter's own stamina /

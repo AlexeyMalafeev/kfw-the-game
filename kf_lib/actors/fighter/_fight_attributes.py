@@ -1,5 +1,6 @@
 from abc import ABC
 from collections import deque
+import math
 from typing import Final, Union
 
 from kf_lib.actors.fighter._abc import FighterAPI
@@ -251,7 +252,12 @@ class FightAttributes(FighterAPI, ABC):
         self.qp_max = round(
             (self.QP_BASE + self.QP_INCR_PER_LV * self.level) * self.qp_max_mult
         )
-        self.qp_gain = round(self.qp_max * self.QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult)
+        # rounded up (since 2026-10-27; to nearest before, which gave level 1 no qi
+        # regeneration and made Focus restore nothing there); the inner round()
+        # drops float noise, so 30 * 0.1 stays 3 instead of ceiling to 4
+        self.qp_gain = math.ceil(
+            round(self.qp_max * self.QP_PORTION_RESTORED_PER_TURN * self.qp_gain_mult, 9)
+        )
         self.counter_chance = (
             (self.agility_full - self.COUNTER_AGILITY_ADJUST) * self.COUNTER_PER_AGILITY_POINT
             * self.counter_chance_mult

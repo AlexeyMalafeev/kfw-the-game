@@ -303,8 +303,7 @@ worth of stamina / qi, so with the next turn's regeneration the fighter gets
 3 turns' worth, and stamina/qi techs raise them through `stamina_gain_mult` /
 `qp_gain_mult`; all three take 60 time units. Until 2026-10-25 Catch Breath
 and Focus restored a flat 20 (the same at every level) and Catch Breath took
-80. At level 1 `qp_gain` rounds to 0, so Focus restores no qi there (the
-fighter's moves are all qi-free at that level anyway). Meanwhile `guarding` is set, shown as a `[]`
+80. Meanwhile `guarding` is set, shown as a `[]`
 status mark (see `ui.md`); `start_fight_turn` clears both. `dfs_bonus`
 multiplies dodge and block chance, not block power: in staged exchanges
 (`dev_scripts/testing/run_test_guard.py`) Guard saves 31% of the HP an
@@ -375,7 +374,10 @@ faster fighters shed statuses in fewer time units. Durations tick down by
   + 0.3 * max(30, (50 + 10 * health_lv) * stamina_max_mult)` (the level part
   rounded first); `stamina_gain` = 10% of
   max per own turn. `qp_max = 5 * level * qp_max_mult`; `qp_gain` = 10% of max
-  per own turn (plus full/half `qp_gain` on successful dodge/block). Both clamp.
+  per own turn, rounded up (plus full/half `qp_gain` on successful dodge/block,
+  the half rounded down). Both clamp. Until 2026-10-27 `qp_gain` was rounded
+  to nearest, so a level-1 fighter (`qp_max` 5) regenerated no qi at all and
+  Focus restored nothing — yet the fight AI still chose it; now it is 1.
   Qi regeneration was 20% until 2026-10, when fighters ended fights with ~37%
   of their qi unspent, so the qi buffs barely mattered.
 - `toughness = 0.8 * (level - 1) * 3 + 0.2 * max(0, (health_lv - 1) * 3)`,
