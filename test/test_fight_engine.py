@@ -451,6 +451,21 @@ class TestDefenseAndCounters:
         assert fa.dfs_bonus == 1.0
         assert '[]' not in fa.get_status_marks()
 
+    def test_guard_while_advancing_guards_only_when_closing_in(self, monkeypatch):
+        # close-range and grappling techs, since 2026-10-28
+        from kf_lib.kung_fu.moves import ALL_MOVES_DICT
+        monkeypatch.setattr(fight_actions_mod, 'rnd', lambda: 1.0)  # moves never fail
+        for move, flag, guarded in (('Step Forward', 1, True), ('Step Back', 1, False),
+                                    ('Step Forward', 0, False)):
+            fa, fb = self.duel()
+            fa.guard_while_advancing = flag
+            fa.distances[fb] = fb.distances[fa] = 3
+            fa.action = ALL_MOVES_DICT[move]
+            fa.maneuver()
+            assert fa.guarding == guarded
+            assert fa.dfs_bonus == pytest.approx(
+                fa.guard_dfs_bonus * Fighter.GUARD_POWER if guarded else 1.0)
+
     def test_guard_techs_restore_turns_worth_of_stamina_and_qi(self):
         for tech, turns in (('Advanced Guard', 1), ('Dragon Guards a Treasure', 2)):
             random.seed(0)

@@ -321,6 +321,12 @@ class FighterWithActions(FighterAPI, ABC):
         if m.dist_change:
             self.change_distance(m.dist_change, self.target)
             self.check_move_failed()
+            if m.dist_change < 0 and self.guard_while_advancing:
+                # closing in counts as Guard (since 2026-10-28), without the
+                # Guard techs' restore
+                self.current_fight.display(_(' (guarding while closing in)'))
+                self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
+                self.guarding = True
         else:
             self.momentum = 0
         self.do_move_functions(m)

@@ -83,6 +83,7 @@ class FighterAPI(ABC):
     guard_dfs_bonus: float = None
     guard_restore: float = None
     guard_while_attacking: float = None
+    guard_while_advancing: int = None
     guarding: bool = None
     guaranteed_counters: int = None
     health: int = None

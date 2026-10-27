@@ -106,6 +106,10 @@ msgstr " (эпично!)"
 msgid " (guarding while attacking)"
 msgstr " (защищается в атаке)"
 
+#: kf_lib/actors/fighter/_fight_actions.py:327
+msgid " (guarding while closing in)"
+msgstr " (сближается в защитной стойке)"
+
 #: kf_lib/actors/fighter/_fight_actions.py:55
 msgid " *FURY*"
 msgstr " *ЯРОСТЬ*"
@@ -134,7 +138,7 @@ msgstr " задыхается!"
 msgid " It is a battle royale: all participants fight at once, last man standing wins!"
 msgstr " Это королевская битва: все участники дерутся одновременно, побеждает последний оставшийся на ногах!"
 
-#: kf_lib/actors/fighter/_fight_actions.py:477
+#: kf_lib/actors/fighter/_fight_actions.py:483
 msgid " KNOCK-OUT!"
 msgstr " НОКАУТ!"
 
@@ -541,11 +545,11 @@ msgstr "Достижение: {label}"
 msgid "Accomplishments"
 msgstr "Достижения"
 
-#: kf_lib/kung_fu/boosts.py:181
+#: kf_lib/kung_fu/boosts.py:196
 msgid "acrob.str"
 msgstr "акроб.уд."
 
-#: kf_lib/kung_fu/boosts.py:181
+#: kf_lib/kung_fu/boosts.py:196
 msgid "acrobatic strike efficiency"
 msgstr "эффективность акробатических ударов"
 
@@ -561,7 +565,7 @@ msgstr "Лов"
 msgid "Agility"
 msgstr "Ловкость"
 
-#: kf_lib/kung_fu/boosts.py:107
+#: kf_lib/kung_fu/boosts.py:116
 msgid "agility"
 msgstr "ловкость"
 
@@ -635,7 +639,7 @@ msgstr ""
 msgid "At the start of each of your turns you recover 10% of your maximum stamina and qi."
 msgstr "В начале каждого своего хода ты восстанавливаешь 10% максимальной выносливости и ци."
 
-#: kf_lib/kung_fu/boosts.py:108
+#: kf_lib/kung_fu/boosts.py:117
 msgid "attack"
 msgstr "атака"
 
@@ -711,11 +715,11 @@ msgstr "Падение само по себе отнимает от 25 до 50 �
 msgid "Being off-balance multiplies your attack and defense by 0.75."
 msgstr "Потеря равновесия умножает твою атаку и защиту на 0,75."
 
-#: kf_lib/kung_fu/boosts.py:109
+#: kf_lib/kung_fu/boosts.py:118
 msgid "bleeding"
 msgstr "кровотечение"
 
-#: kf_lib/kung_fu/boosts.py:111
+#: kf_lib/kung_fu/boosts.py:120
 msgid "block efficiency"
 msgstr "эффективность блока"
 
@@ -723,7 +727,7 @@ msgstr "эффективность блока"
 msgid "Block power comes from health, not strength."
 msgstr "Сила блока зависит от здоровья, а не от силы."
 
-#: kf_lib/kung_fu/boosts.py:111
+#: kf_lib/kung_fu/boosts.py:120
 msgid "blocks"
 msgstr "блоки"
 
@@ -771,7 +775,7 @@ msgstr "«Перевести дыхание» и «Фокус» восстана
 msgid "Catch Breath restores two turns' worth of stamina and Focus two turns' worth of qi, each in the time of a Guard."
 msgstr "«Перевести дыхание» восстанавливает выносливость за два хода, а «Фокус» — ци за два хода, и каждый занимает столько же времени, сколько «Защита»."
 
-#: kf_lib/kung_fu/boosts.py:109
+#: kf_lib/kung_fu/boosts.py:118
 msgid "cause bleeding"
 msgstr "вызов кровотечения"
 
@@ -791,11 +795,11 @@ msgstr "Вызов бросает {name}, номер {rank} в школе {schoo
 msgid "Challenged by {}."
 msgstr "{} вызывает его на поединок."
 
-#: kf_lib/kung_fu/boosts.py:171
+#: kf_lib/kung_fu/boosts.py:186
 msgid "chance to resist KO"
 msgstr "шанс устоять при нокауте"
 
-#: kf_lib/kung_fu/boosts.py:129
+#: kf_lib/kung_fu/boosts.py:138
 msgid "chance to use environment"
 msgstr "шанс использовать окружение"
 
@@ -855,21 +859,25 @@ msgstr "Решает проигнорировать предложение."
 msgid "Claw and slash open wounds that do not close until the fight is over."
 msgstr "Коготь и рубящий удар открывают раны, что не закроются до конца боя."
 
-#: kf_lib/kung_fu/boosts.py:182
+#: kf_lib/kung_fu/boosts.py:197
 msgid "claw strike efficiency"
 msgstr "эффективность ударов когтем"
 
-#: kf_lib/kung_fu/boosts.py:182
+#: kf_lib/kung_fu/boosts.py:197
 msgid "claws"
 msgstr "когти"
 
-#: kf_lib/kung_fu/boosts.py:183
+#: kf_lib/kung_fu/boosts.py:198
 msgid "close-range"
 msgstr "ближняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:183
+#: kf_lib/kung_fu/boosts.py:198
 msgid "close-range strike efficiency"
 msgstr "эффективность ударов вблизи"
+
+#: kf_lib/kung_fu/boosts.py:161
+msgid "closing in counts as Guard"
+msgstr "сближение в защитной стойке"
 
 #: kf_lib/actors/human_controlled_fighter.py:91
 msgid "Cmpl"
@@ -891,11 +899,11 @@ msgstr "Цена"
 msgid "Counter techniques make counters certain, and those counters are twice as hard to dodge or block."
 msgstr "Техники контратаки делают контратаку неизбежной, и от неё вдвое труднее уклониться или закрыться."
 
-#: kf_lib/kung_fu/boosts.py:112
+#: kf_lib/kung_fu/boosts.py:121
 msgid "counterattack chance"
 msgstr "шанс контратаки"
 
-#: kf_lib/kung_fu/boosts.py:112 kf_lib/kung_fu/boosts.py:115
+#: kf_lib/kung_fu/boosts.py:121 kf_lib/kung_fu/boosts.py:124
 msgid "counters"
 msgstr "контратаки"
 
@@ -923,11 +931,11 @@ msgstr "Уровень преступности?"
 msgid "Critical and epic hits happen only on strikes that were not blocked at all."
 msgstr "Критические и эпичные удары бывают только тогда, когда удар вовсе не приняли на блок."
 
-#: kf_lib/kung_fu/boosts.py:119
+#: kf_lib/kung_fu/boosts.py:128
 msgid "critical attack chance"
 msgstr "шанс критической атаки"
 
-#: kf_lib/kung_fu/boosts.py:120
+#: kf_lib/kung_fu/boosts.py:129
 msgid "critical attack power"
 msgstr "сила критической атаки"
 
@@ -935,7 +943,7 @@ msgstr "сила критической атаки"
 msgid "CRITICAL!"
 msgstr "КРИТИЧЕСКИЙ УДАР!"
 
-#: kf_lib/kung_fu/boosts.py:119 kf_lib/kung_fu/boosts.py:120
+#: kf_lib/kung_fu/boosts.py:128 kf_lib/kung_fu/boosts.py:129
 msgid "criticals"
 msgstr "критические удары"
 
@@ -951,7 +959,7 @@ msgstr "Настроить параметры игры? (ответьте \"не
 msgid "daily home training"
 msgstr "ежедневная тренировка дома"
 
-#: kf_lib/kung_fu/boosts.py:121
+#: kf_lib/kung_fu/boosts.py:130
 msgid "dam.reduc."
 msgstr "сниж.урона"
 
@@ -963,7 +971,7 @@ msgstr "Нанесено урона"
 msgid "damage is reduced!"
 msgstr "урон снижен!"
 
-#: kf_lib/kung_fu/boosts.py:121
+#: kf_lib/kung_fu/boosts.py:130
 msgid "damage reduction"
 msgstr "снижение урона"
 
@@ -995,31 +1003,31 @@ msgstr "Побеждает ревнивого соперника: {r_name}. {sw_
 msgid "Defends the school against a night attack."
 msgstr "Отбивает ночное нападение на школу."
 
-#: kf_lib/kung_fu/boosts.py:122
+#: kf_lib/kung_fu/boosts.py:131
 msgid "defense"
 msgstr "защита"
 
-#: kf_lib/kung_fu/boosts.py:126
+#: kf_lib/kung_fu/boosts.py:135
 msgid "defense penalty (20% by default)"
 msgstr "штраф защиты (по умолчанию 20%)"
 
-#: kf_lib/kung_fu/boosts.py:157
+#: kf_lib/kung_fu/boosts.py:172
 msgid "defense while lying"
 msgstr "защита лёжа"
 
-#: kf_lib/kung_fu/boosts.py:110 kf_lib/kung_fu/boosts.py:150
+#: kf_lib/kung_fu/boosts.py:119 kf_lib/kung_fu/boosts.py:165
 msgid "disarm"
 msgstr "обезоруживание"
 
-#: kf_lib/kung_fu/boosts.py:150
+#: kf_lib/kung_fu/boosts.py:165
 msgid "disarm chance when attacking"
 msgstr "шанс обезоружить в атаке"
 
-#: kf_lib/kung_fu/boosts.py:110
+#: kf_lib/kung_fu/boosts.py:119
 msgid "disarm chance when defending"
 msgstr "шанс обезоружить в защите"
 
-#: kf_lib/actors/fighter/_fight_actions.py:382 kf_lib/actors/fighter/_strike_mechanics.py:364
+#: kf_lib/actors/fighter/_fight_actions.py:388 kf_lib/actors/fighter/_strike_mechanics.py:364
 msgid "disarms"
 msgstr "обезоруживает"
 
@@ -1035,11 +1043,11 @@ msgstr "Не использовать предметы"
 msgid "Do you want to see what AI players do?"
 msgstr "Хотите видеть действия ИИ-игроков?"
 
-#: kf_lib/kung_fu/boosts.py:128
+#: kf_lib/kung_fu/boosts.py:137
 msgid "dodge"
 msgstr "уклонение"
 
-#: kf_lib/kung_fu/boosts.py:128
+#: kf_lib/kung_fu/boosts.py:137
 msgid "dodge efficiency"
 msgstr "эффективность уклонения"
 
@@ -1071,7 +1079,7 @@ msgstr "Ничья!"
 msgid "Drinks wine."
 msgstr "Пьёт вино."
 
-#: kf_lib/kung_fu/boosts.py:186
+#: kf_lib/kung_fu/boosts.py:201
 msgid "drun.str."
 msgstr "пьян.уд."
 
@@ -1083,7 +1091,7 @@ msgstr "Пьяница: \"Что? Перед вами сам {} Легендар
 msgid "Drunkard: \"You think you're too good for drinkin' with me?\""
 msgstr "Пьяница: \"Ты что, слишком хорош, чтобы выпить со мной?\""
 
-#: kf_lib/kung_fu/boosts.py:186
+#: kf_lib/kung_fu/boosts.py:201
 msgid "drunken strike efficiency"
 msgstr "эффективность пьяных ударов"
 
@@ -1119,11 +1127,11 @@ msgstr "Зарабатывает {} монет."
 msgid "easily"
 msgstr "легко "
 
-#: kf_lib/kung_fu/boosts.py:187
+#: kf_lib/kung_fu/boosts.py:202
 msgid "elbow strike efficiency"
 msgstr "эффективность ударов локтем"
 
-#: kf_lib/kung_fu/boosts.py:187
+#: kf_lib/kung_fu/boosts.py:202
 msgid "elbows"
 msgstr "локти"
 
@@ -1178,7 +1186,7 @@ msgstr ""
 "Введите значение:\n"
 " > "
 
-#: kf_lib/kung_fu/boosts.py:129
+#: kf_lib/kung_fu/boosts.py:138
 msgid "environment"
 msgstr "окружение"
 
@@ -1246,7 +1254,7 @@ msgstr "Не удаётся сбежать."
 msgid "fair fight"
 msgstr "равный бой"
 
-#: kf_lib/kung_fu/boosts.py:130
+#: kf_lib/kung_fu/boosts.py:139
 msgid "fall damage"
 msgstr "урон от падения"
 
@@ -1374,11 +1382,11 @@ msgstr "Полный кооператив"
 msgid "Func"
 msgstr "Функ"
 
-#: kf_lib/kung_fu/boosts.py:131
+#: kf_lib/kung_fu/boosts.py:140
 msgid "fury"
 msgstr "ярость"
 
-#: kf_lib/kung_fu/boosts.py:131
+#: kf_lib/kung_fu/boosts.py:140
 msgid "fury chance"
 msgstr "шанс ярости"
 
@@ -1514,15 +1522,15 @@ msgstr "Идёт на работу."
 msgid "Got drunk"
 msgstr "Напился"
 
-#: kf_lib/kung_fu/boosts.py:135
+#: kf_lib/kung_fu/boosts.py:144
 msgid "grab chance"
 msgstr "шанс захвата"
 
-#: kf_lib/kung_fu/boosts.py:134
+#: kf_lib/kung_fu/boosts.py:143
 msgid "grabs"
 msgstr "захваты"
 
-#: kf_lib/actors/fighter/_fight_actions.py:453
+#: kf_lib/actors/fighter/_fight_actions.py:459
 msgid "grabs an improvised weapon!"
 msgstr "хватает подручное оружие!"
 
@@ -1530,19 +1538,19 @@ msgstr "хватает подручное оружие!"
 msgid "Grabs an improvised weapon."
 msgstr "Хватает подручное оружие."
 
-#: kf_lib/kung_fu/boosts.py:189
+#: kf_lib/kung_fu/boosts.py:204
 msgid "grappling"
 msgstr "борьба"
 
-#: kf_lib/kung_fu/boosts.py:189
+#: kf_lib/kung_fu/boosts.py:204
 msgid "grappling efficiency"
 msgstr "эффективность борьбы"
 
-#: kf_lib/kung_fu/boosts.py:116
+#: kf_lib/kung_fu/boosts.py:125
 msgid "guaranteed counterattack(s) when an enemy strike fails"
 msgstr "гарантированные контратаки после неудачного удара противника"
 
-#: kf_lib/kung_fu/boosts.py:137 kf_lib/kung_fu/boosts.py:140
+#: kf_lib/kung_fu/boosts.py:146 kf_lib/kung_fu/boosts.py:149
 msgid "guard"
 msgstr "защитная стойка"
 
@@ -1558,7 +1566,7 @@ msgstr "защитная стойка"
 msgid "Guard doubles your chances to dodge and block until your next turn."
 msgstr "«Защита» удваивает шансы уклониться и поставить блок до твоего следующего хода."
 
-#: kf_lib/kung_fu/boosts.py:137
+#: kf_lib/kung_fu/boosts.py:146
 msgid "guard efficiency"
 msgstr "эффективность защитной стойки"
 
@@ -1566,11 +1574,15 @@ msgstr "эффективность защитной стойки"
 msgid "Guard restores nothing by itself. Advanced Guard makes it restore one turn's worth of stamina and qi, Dragon Guards a Treasure two."
 msgstr "Сама по себе «Защита» ничего не восстанавливает. С техникой «Защита (продвинутый)» она возвращает выносливость и ци за один ход, с «Дракон стережёт сокровище» — за два."
 
-#: kf_lib/kung_fu/boosts.py:146
+#: kf_lib/kung_fu/boosts.py:160
+msgid "guard while adv."
+msgstr "защита при сбл."
+
+#: kf_lib/kung_fu/boosts.py:155
 msgid "guard while atk"
 msgstr "защита в атаке"
 
-#: kf_lib/kung_fu/boosts.py:147
+#: kf_lib/kung_fu/boosts.py:156
 msgid "guard while attacking"
 msgstr "защита во время атаки"
 
@@ -1629,11 +1641,11 @@ msgstr "О нём говорили, что у него почти нечелов
 msgid "He was uniquely versatile, having equally great {atts}."
 msgstr "Он был удивительно разносторонним — все качества были одинаково велики: {atts}."
 
-#: kf_lib/kung_fu/boosts.py:190
+#: kf_lib/kung_fu/boosts.py:205
 msgid "headbutt efficiency"
 msgstr "эффективность ударов головой"
 
-#: kf_lib/kung_fu/boosts.py:190
+#: kf_lib/kung_fu/boosts.py:205
 msgid "headbutts"
 msgstr "удары головой"
 
@@ -1641,7 +1653,7 @@ msgstr "удары головой"
 msgid "Health"
 msgstr "Здоровье"
 
-#: kf_lib/kung_fu/boosts.py:149
+#: kf_lib/kung_fu/boosts.py:164
 msgid "health"
 msgstr "здоровье"
 
@@ -1731,11 +1743,11 @@ msgstr "Однако {item} оказывается очень низкого к�
 msgid "HP"
 msgstr "ОЗ"
 
-#: kf_lib/kung_fu/boosts.py:151
+#: kf_lib/kung_fu/boosts.py:166
 msgid "HP gain"
 msgstr "восстановление ОЗ"
 
-#: kf_lib/kung_fu/boosts.py:151
+#: kf_lib/kung_fu/boosts.py:166
 msgid "HP gain per turn"
 msgstr "ОЗ за ход"
 
@@ -1755,7 +1767,7 @@ msgstr "Игнорировать"
 msgid "impossible"
 msgstr "невозможно"
 
-#: kf_lib/kung_fu/boosts.py:154
+#: kf_lib/kung_fu/boosts.py:169
 msgid "improv.weapons"
 msgstr "подруч.оружие"
 
@@ -1763,7 +1775,7 @@ msgstr "подруч.оружие"
 msgid "Improve:"
 msgstr "Улучшить:"
 
-#: kf_lib/kung_fu/boosts.py:155
+#: kf_lib/kung_fu/boosts.py:170
 msgid "in-fight improvised weapon chance"
 msgstr "шанс подручного оружия в бою"
 
@@ -1858,7 +1870,7 @@ msgstr "Получает вызов от ревнивого соперника: 
 msgid "Is hired by {b_name} as muscle for the Jade Table sit-down."
 msgstr "{b_name} нанимает его силовиком на сходку в «Нефритовом столе»."
 
-#: kf_lib/actors/fighter/_fight_actions.py:437
+#: kf_lib/actors/fighter/_fight_actions.py:443
 msgid "is in FURY!"
 msgstr "в ЯРОСТИ!"
 
@@ -1933,11 +1945,11 @@ msgstr "Предметы"
 msgid "Joins the brawl."
 msgstr "Ввязывается в драку."
 
-#: kf_lib/kung_fu/boosts.py:188
+#: kf_lib/kung_fu/boosts.py:203
 msgid "jumping strike efficiency"
 msgstr "эффективность ударов в прыжке"
 
-#: kf_lib/kung_fu/boosts.py:188
+#: kf_lib/kung_fu/boosts.py:203
 msgid "jumps"
 msgstr "прыжки"
 
@@ -1949,27 +1961,27 @@ msgstr "Хлам купл."
 msgid "Keep playing indefinitely?"
 msgstr "Продолжать играть бессрочно?"
 
-#: kf_lib/kung_fu/boosts.py:191
+#: kf_lib/kung_fu/boosts.py:206
 msgid "kick efficiency"
 msgstr "эффективность пинков"
 
-#: kf_lib/kung_fu/boosts.py:191
+#: kf_lib/kung_fu/boosts.py:206
 msgid "kicks"
 msgstr "пинки"
 
-#: kf_lib/kung_fu/boosts.py:192
+#: kf_lib/kung_fu/boosts.py:207
 msgid "knee strike efficiency"
 msgstr "эффективность ударов коленом"
 
-#: kf_lib/kung_fu/boosts.py:192
+#: kf_lib/kung_fu/boosts.py:207
 msgid "knees"
 msgstr "колени"
 
-#: kf_lib/actors/fighter/_fight_actions.py:474
+#: kf_lib/actors/fighter/_fight_actions.py:480
 msgid "Knocked out by {name}."
 msgstr "Нокаут от {name}."
 
-#: kf_lib/actors/fighter/_fight_actions.py:473
+#: kf_lib/actors/fighter/_fight_actions.py:479
 msgid "Knocks out {name}."
 msgstr "Нокаутирует: {name}."
 
@@ -2041,11 +2053,11 @@ msgstr "Повысить уровень"
 msgid "Load"
 msgstr "Загрузить"
 
-#: kf_lib/kung_fu/boosts.py:185
+#: kf_lib/kung_fu/boosts.py:200
 msgid "long-range"
 msgstr "дальняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:185
+#: kf_lib/kung_fu/boosts.py:200
 msgid "long-range strike efficiency"
 msgstr "эффективность ударов издалека"
 
@@ -2073,7 +2085,7 @@ msgstr "Теряет: {}."
 msgid "Loses."
 msgstr "Проигрывает."
 
-#: kf_lib/kung_fu/boosts.py:130
+#: kf_lib/kung_fu/boosts.py:139
 msgid "low fall dam"
 msgstr "малый урон от падения"
 
@@ -2089,7 +2101,7 @@ msgstr "УДАЧА!"
 msgid "lv.{}"
 msgstr "ур.{}"
 
-#: kf_lib/kung_fu/boosts.py:157
+#: kf_lib/kung_fu/boosts.py:172
 msgid "lying dfs"
 msgstr "защита лёжа"
 
@@ -2105,11 +2117,11 @@ msgstr "Мужчина"
 msgid "Man: Master {name}! Why are you here?"
 msgstr "Мужчина: Мастер {name}! Что вы здесь делаете?"
 
-#: kf_lib/kung_fu/boosts.py:158
+#: kf_lib/kung_fu/boosts.py:173
 msgid "maneuv.time"
 msgstr "время манёвра"
 
-#: kf_lib/kung_fu/boosts.py:158
+#: kf_lib/kung_fu/boosts.py:173
 msgid "maneuver time cost"
 msgstr "стоимость манёвра по времени"
 
@@ -2129,11 +2141,11 @@ msgstr "Макс. удар"
 msgid "Max level?"
 msgstr "Макс. уровень?"
 
-#: kf_lib/kung_fu/boosts.py:169
+#: kf_lib/kung_fu/boosts.py:184
 msgid "max QP"
 msgstr "макс. Ци"
 
-#: kf_lib/kung_fu/boosts.py:173
+#: kf_lib/kung_fu/boosts.py:188
 msgid "max stamina"
 msgstr "макс. выносливость"
 
@@ -2185,11 +2197,11 @@ msgstr "Встречает {name}."
 msgid "Meets {}"
 msgstr "Встречает {}"
 
-#: kf_lib/kung_fu/boosts.py:184
+#: kf_lib/kung_fu/boosts.py:199
 msgid "mid-range"
 msgstr "средняя дистанция"
 
-#: kf_lib/kung_fu/boosts.py:184
+#: kf_lib/kung_fu/boosts.py:199
 msgid "mid-range strike efficiency"
 msgstr "эффективность ударов со средней дистанции"
 
@@ -2221,11 +2233,11 @@ msgstr "Заработано"
 msgid "Move"
 msgstr "Приём"
 
-#: kf_lib/kung_fu/boosts.py:164
+#: kf_lib/kung_fu/boosts.py:179
 msgid "move complexity"
 msgstr "сложность приёмов"
 
-#: kf_lib/kung_fu/boosts.py:164
+#: kf_lib/kung_fu/boosts.py:179
 msgid "move cplx."
 msgstr "сложн. приёмов"
 
@@ -2305,19 +2317,19 @@ msgstr "Ничего интересного."
 msgid "Number of players?"
 msgstr "Количество игроков?"
 
-#: kf_lib/kung_fu/boosts.py:165
+#: kf_lib/kung_fu/boosts.py:180
 msgid "off-bal.atk"
 msgstr "дисб.атк"
 
-#: kf_lib/kung_fu/boosts.py:166
+#: kf_lib/kung_fu/boosts.py:181
 msgid "off-bal.dfs"
 msgstr "дисб.зщт"
 
-#: kf_lib/kung_fu/boosts.py:165
+#: kf_lib/kung_fu/boosts.py:180
 msgid "off-balance attack"
 msgstr "атака при потере равновесия"
 
-#: kf_lib/kung_fu/boosts.py:166
+#: kf_lib/kung_fu/boosts.py:181
 msgid "off-balance defense"
 msgstr "защита при потере равновесия"
 
@@ -2381,11 +2393,11 @@ msgstr "М"
 msgid "Pain is fuel to those who have learned to burn it. The deeper the wounds, the nearer the storm."
 msgstr "Боль — топливо для тех, кто научился её сжигать. Чем глубже раны, тем ближе буря."
 
-#: kf_lib/kung_fu/boosts.py:193
+#: kf_lib/kung_fu/boosts.py:208
 msgid "palm str."
 msgstr "ладонь"
 
-#: kf_lib/kung_fu/boosts.py:193
+#: kf_lib/kung_fu/boosts.py:208
 msgid "palm strike efficiency"
 msgstr "эффективность ударов ладонью"
 
@@ -2488,11 +2500,11 @@ msgstr "Занимается кунг-фу с ребёнком."
 msgid "Precise hands find the weak point. The nimble strike true more often."
 msgstr "Точные руки находят слабое место. Ловкий чаще бьёт без промаха."
 
-#: kf_lib/kung_fu/boosts.py:161
+#: kf_lib/kung_fu/boosts.py:176
 msgid "preemptive"
 msgstr "упреждение"
 
-#: kf_lib/kung_fu/boosts.py:162
+#: kf_lib/kung_fu/boosts.py:177
 msgid "preemptive strike chance"
 msgstr "шанс упреждающего удара"
 
@@ -2520,11 +2532,11 @@ msgstr "Сделать предложение ({sw})?"
 msgid "Prosperous (low poverty)"
 msgstr "Благополучный (низкая бедность)"
 
-#: kf_lib/kung_fu/boosts.py:194
+#: kf_lib/kung_fu/boosts.py:209
 msgid "punch efficiency"
 msgstr "эффективность ударов кулаком"
 
-#: kf_lib/kung_fu/boosts.py:194
+#: kf_lib/kung_fu/boosts.py:209
 msgid "punches"
 msgstr "удары кулаком"
 
@@ -2540,15 +2552,15 @@ msgstr "Мощь"
 msgid "Qi"
 msgstr "Ци"
 
-#: kf_lib/kung_fu/boosts.py:168 kf_lib/kung_fu/boosts.py:169 kf_lib/kung_fu/boosts.py:170
+#: kf_lib/kung_fu/boosts.py:183 kf_lib/kung_fu/boosts.py:184 kf_lib/kung_fu/boosts.py:185
 msgid "qi"
 msgstr "ци"
 
-#: kf_lib/kung_fu/boosts.py:167
+#: kf_lib/kung_fu/boosts.py:182
 msgid "qi when attacking"
 msgstr "ци при атаке"
 
-#: kf_lib/kung_fu/boosts.py:167
+#: kf_lib/kung_fu/boosts.py:182
 msgid "qi/atk"
 msgstr "ци/атака"
 
@@ -2556,11 +2568,11 @@ msgstr "ци/атака"
 msgid "QP"
 msgstr "Ци"
 
-#: kf_lib/kung_fu/boosts.py:170
+#: kf_lib/kung_fu/boosts.py:185
 msgid "QP to start with"
 msgstr "начальное Ци"
 
-#: kf_lib/kung_fu/boosts.py:168
+#: kf_lib/kung_fu/boosts.py:183
 msgid "QP/turn"
 msgstr "Ци/ход"
 
@@ -2616,11 +2628,11 @@ msgstr "Репутация: {} ({})"
 msgid "Resilience techniques give a chance, up to 50%, to stay on your feet with 1 HP instead of being knocked out."
 msgstr "Техники стойкости дают шанс, до 50%, устоять на ногах с 1 ОЗ вместо нокаута."
 
-#: kf_lib/kung_fu/boosts.py:171
+#: kf_lib/kung_fu/boosts.py:186
 msgid "resist KO"
 msgstr "сопротивление нокауту"
 
-#: kf_lib/actors/fighter/_fight_actions.py:468
+#: kf_lib/actors/fighter/_fight_actions.py:474
 msgid "resists being knocked out!"
 msgstr "удерживается на ногах!"
 
@@ -2628,7 +2640,7 @@ msgstr "удерживается на ногах!"
 msgid "Rest"
 msgstr "Отдых"
 
-#: kf_lib/kung_fu/boosts.py:174
+#: kf_lib/kung_fu/boosts.py:189
 msgid "restore stamina"
 msgstr "восстановление выносливости"
 
@@ -2846,7 +2858,7 @@ msgstr "Скр"
 msgid "Speed"
 msgstr "Скорость"
 
-#: kf_lib/kung_fu/boosts.py:172
+#: kf_lib/kung_fu/boosts.py:187
 msgid "speed"
 msgstr "скорость"
 
@@ -2878,7 +2890,7 @@ msgstr "Вын"
 msgid "Stage {}"
 msgstr "Этап {}"
 
-#: kf_lib/kung_fu/boosts.py:173 kf_lib/kung_fu/boosts.py:174
+#: kf_lib/kung_fu/boosts.py:188 kf_lib/kung_fu/boosts.py:189
 msgid "stamina"
 msgstr "выносливость"
 
@@ -2914,7 +2926,7 @@ msgstr "Сил"
 msgid "Strength"
 msgstr "Сила"
 
-#: kf_lib/kung_fu/boosts.py:175
+#: kf_lib/kung_fu/boosts.py:190
 msgid "strength"
 msgstr "сила"
 
@@ -2922,11 +2934,11 @@ msgstr "сила"
 msgid "Strike the nerve and the whole body grows slow."
 msgstr "Порази нерв — и всё тело станет медленным."
 
-#: kf_lib/kung_fu/boosts.py:176
+#: kf_lib/kung_fu/boosts.py:191
 msgid "strike time"
 msgstr "время удара"
 
-#: kf_lib/kung_fu/boosts.py:176
+#: kf_lib/kung_fu/boosts.py:191
 msgid "strike time cost"
 msgstr "стоимость удара по времени"
 
@@ -2946,11 +2958,11 @@ msgstr "Ученики"
 msgid "students:{}"
 msgstr "ученики:{}"
 
-#: kf_lib/kung_fu/boosts.py:177
+#: kf_lib/kung_fu/boosts.py:192
 msgid "stun"
 msgstr "оглушение"
 
-#: kf_lib/kung_fu/boosts.py:177
+#: kf_lib/kung_fu/boosts.py:192
 msgid "stun chance"
 msgstr "шанс оглушения"
 
@@ -3282,15 +3294,15 @@ msgstr "черты: {}"
 msgid "Treat the wise man to lunch and talk to him?"
 msgstr "Угостить мудреца обедом и поговорить с ним?"
 
-#: kf_lib/kung_fu/boosts.py:141
+#: kf_lib/kung_fu/boosts.py:150
 msgid "turn(s)' worth of stamina and qi restored by Guard"
 msgstr "ход(а) восстановления выносливости и ци от «Защиты»"
 
-#: kf_lib/kung_fu/boosts.py:178
+#: kf_lib/kung_fu/boosts.py:193
 msgid "unblock."
 msgstr "неблок."
 
-#: kf_lib/kung_fu/boosts.py:178
+#: kf_lib/kung_fu/boosts.py:193
 msgid "unblockable attack"
 msgstr "неблокируемая атака"
 
@@ -3354,7 +3366,7 @@ msgstr "Навещает других мастеров, продвигая ид�
 msgid "vs"
 msgstr "против"
 
-#: kf_lib/kung_fu/boosts.py:125
+#: kf_lib/kung_fu/boosts.py:134
 msgid "vs crowd"
 msgstr "против толпы"
 
@@ -3370,11 +3382,11 @@ msgstr "куда "
 msgid "WEAPON"
 msgstr "ОРУЖИЕ"
 
-#: kf_lib/kung_fu/boosts.py:195
+#: kf_lib/kung_fu/boosts.py:210
 msgid "weapon efficiency"
 msgstr "эффективность оружия"
 
-#: kf_lib/kung_fu/boosts.py:195
+#: kf_lib/kung_fu/boosts.py:210
 msgid "weapons"
 msgstr "оружие"
 
@@ -3695,7 +3707,7 @@ msgstr "{min} мин. {sec} сек."
 msgid "{n1} {verb} {n2} while attacking"
 msgstr "{n1} {verb} {n2} в атаке"
 
-#: kf_lib/actors/fighter/_fight_actions.py:380
+#: kf_lib/actors/fighter/_fight_actions.py:386
 msgid "{n1} {verb} {n2} while blocking"
 msgstr "{n1} {verb} {n2} в блоке"
 
@@ -4076,7 +4088,7 @@ msgstr "{name} {adv}уклоняется!"
 msgid "{name} {exp_msg}"
 msgstr "{name} {exp_msg}"
 
-#: kf_lib/actors/fighter/_fight_actions.py:36 kf_lib/actors/fighter/_fight_actions.py:436 kf_lib/actors/fighter/_fight_actions.py:452 kf_lib/actors/fighter/_fight_actions.py:466 kf_lib/actors/fighter/_strike_mechanics.py:133 kf_lib/actors/fighter/_strike_mechanics.py:343
+#: kf_lib/actors/fighter/_fight_actions.py:36 kf_lib/actors/fighter/_fight_actions.py:442 kf_lib/actors/fighter/_fight_actions.py:458 kf_lib/actors/fighter/_fight_actions.py:472 kf_lib/actors/fighter/_strike_mechanics.py:133 kf_lib/actors/fighter/_strike_mechanics.py:343
 msgid "{name} {msg}"
 msgstr "{name} {msg}"
 
@@ -4092,7 +4104,7 @@ msgstr "Предметы {name}:"
 msgid "{name}'s log"
 msgstr "Лог ({name})"
 
-#: kf_lib/actors/fighter/_fight_actions.py:399
+#: kf_lib/actors/fighter/_fight_actions.py:405
 msgid "{name}'s qi absorbs {hp} HP!"
 msgstr "{name}: ци поглощает {hp} ОЗ!"
 

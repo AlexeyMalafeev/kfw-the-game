@@ -155,7 +155,7 @@ default_styles = [
         'Eight Extremities Fist',
         # todo opens the opponent's arms forcibly? fast movement?
         {
-            3: Tech('Eight Extremities Fist I', dist1_strike_mult=b.DIST1_MULT1),
+            3: Tech('Eight Extremities Fist I', **bc.CLOSE_RANGE1),
             5: Tech('Eight Extremities Fist II', elbow_strike_mult=b.RARE_STRIKE_MULT1),
             7: Tech('Eight Extremities Fist III', speed_mult=b.SPEED1),
         },
@@ -321,7 +321,7 @@ default_styles = [
         'White Crane',
         {
             3: Tech('White Crane I', dfs_mult=b.DEFENSE1),
-            5: Tech('White Crane II', dist1_strike_mult=b.DIST1_MULT1),
+            5: Tech('White Crane II', **bc.CLOSE_RANGE1),
             7: Tech('White Crane III', block_mult=b.BLOCK1),
         },
         {2: '1,claw', 4: '2,claw', 6: '3,dist1', 8: '4,kick'},  # todo "Crane's Beak"
@@ -330,7 +330,7 @@ default_styles = [
         'Wing Chun',
         {
             3: Tech('Wing Chun I', punch_strike_mult=b.PUNCH_STRIKE_MULT1),
-            5: Tech('Wing Chun II', dist1_strike_mult=b.DIST1_MULT1),
+            5: Tech('Wing Chun II', **bc.CLOSE_RANGE1),
             7: Tech('Wing Chun III', speed_mult=b.SPEED1),
         },
         {
@@ -421,7 +421,7 @@ FOREIGN_STYLES = {
         'Wrestling',
         # todo add grabbing to wreslers (a defense move)
         {
-            3: Tech('Wrestling I', grappling_strike_mult=b.STRIKE_MULT1),
+            3: Tech('Wrestling I', **bc.GRAPPLING1),
             5: Tech('Wrestling II', strength_mult=b.STRENGTH1),
             7: Tech('Wrestling III', hp_gain_mult=b.HP_GAIN1),
         },

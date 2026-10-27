@@ -119,6 +119,7 @@ class FightAttributes(FighterAPI, ABC):
         self.guard_dfs_bonus = 1.0  # the tech-dependent bonus to Guard
         self.guard_restore = 0.0  # turns' worth of stamina/qi Guard restores; tech-based
         self.guard_while_attacking = 0.0
+        self.guard_while_advancing = 0  # a flag (> 0: on); tech-based
         self.health_mult = 1.0
         self.hit_disarm = 0.005
         self.hp = 0

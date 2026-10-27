@@ -27,10 +27,11 @@ DEFENSE_HALF = round(DEFENSE1 / 2, 2)
 DFS_PEN1 = -0.1
 DFS_PEN2 = -0.2  # this effectively reduces defense penalty down to zero
 # close range is hard to reach and hold (the opponent strikes or pushes you away
-# on the way in), so it pays more: since 2026-10-28 close 0.75 (was 0.4), mid
-# 0.2 (was 0.25); strikes thrown: ~14% close, ~42% mid, ~43% long range
-DIST1_MULT1 = 0.75
-DIST1_MULT2 = 1.5
+# on the way in), so it pays more: since 2026-10-28 close 0.5 (was 0.4) plus
+# GUARD_WHILE_ADVANCING on the same techs, mid 0.2 (was 0.25); strikes thrown:
+# ~11-14% close, ~42% mid, ~43% long range
+DIST1_MULT1 = 0.5
+DIST1_MULT2 = 1.0
 DIST2_MULT1 = 0.2
 DIST2_MULT2 = 0.4
 DIST3_MULT1 = 0.2
@@ -55,6 +56,9 @@ GUARD_RESTORE1 = 1  # turns' worth of stamina/qi regeneration (since 2026-10-25)
 GUARD_RESTORE2 = 2
 GUARD_WHILE_ATTACKING1 = 0.4  # 0.5 until 2026-10, then worth x2.25 (see attack())
 GUARD_WHILE_ATTACKING2 = 0.8
+# a flag (since 2026-10-28, on close-range and grappling techs): every maneuver
+# that closes the distance counts as Guard, so you aren't hit as hard going in
+GUARD_WHILE_ADVANCING = 1
 HEALTH1 = 0.2
 HEALTH2 = 0.4
 HIT_DISARM1 = 0.5
@@ -151,6 +155,12 @@ PMAP = (
         _('guard while atk'),
         _('guard while attacking'),
     ),
+    (
+        'guard_while_advancing',
+        _('guard while adv.'),
+        _('closing in counts as Guard'),
+        (),  # a flag: the description alone, no number
+    ),
     ('health_mult', _('health'), _('health')),
     ('hit_disarm', _('disarm'), _('disarm chance when attacking')),
     ('hp_gain_mult', _('HP gain'), _('HP gain per turn')),
@@ -207,9 +217,10 @@ def set_descr(obj):
     for param, short, long, *funcs in PMAP:
         if param in obj.params:
             v = obj.params[param]
-            for f in (funcs[0] if funcs else (hund, add_sign, add_pcnt)):
+            fmt = funcs[0] if funcs else (hund, add_sign, add_pcnt)
+            for f in fmt:
                 v = f(v)
-            descr_list.append(f'{v} {long}')
+            descr_list.append(f'{v} {long}' if fmt else long)
             descr_short_set.add(short)
     obj.descr = '; '.join(descr_list)
     obj.descr_short = ', '.join(sorted(descr_short_set))

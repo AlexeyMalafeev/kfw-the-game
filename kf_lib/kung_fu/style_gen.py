@@ -15,7 +15,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     'Averting': Tech('Avert Attacks', preemptive_chance=b.PREEMPTIVE_CH1),
     'Balanced': Tech('Mid-Range Strikes', dist2_strike_mult=b.DIST2_MULT1),
     'Cautious': Tech('Cautious Attacks', guard_while_attacking=b.GUARD_WHILE_ATTACKING1),
-    'Clinging': Tech('Short Strikes', dist1_strike_mult=b.DIST1_MULT1),
+    'Clinging': Tech('Short Strikes', **bc.CLOSE_RANGE1),
     'Dancing': Tech('Dance-Like Form', agility_mult=b.AGILITY1),
     'Defending': Tech('Defense Stance', dfs_mult=b.DEFENSE1),
     'Drunken': Tech('Drunken Form', **bc.DRUNKEN1),
@@ -23,7 +23,7 @@ W1 = {  # add dfs_penalty_step=b.DFS_PEN1, but 1 or 2 words, not 3
     'Exotic': Tech('Exotic Strikes Training', **bc.EXOTIC1),
     'Flying': Tech('Jump Technique', flying_strike_mult=b.STRIKE_MULT1),
     'Furious': Tech('Kung-Fu Fury', fury_chance=b.FURY_CH1),
-    'Grappling': Tech('Grappling Training', grappling_strike_mult=b.STRIKE_MULT1),
+    'Grappling': Tech('Grappling Training', **bc.GRAPPLING1),
     'Guarding': Tech('Guard Form', guard_dfs_bonus=b.GUARD_DFS1),
     'Indestructible': Tech('Indestructible Body', **bc.BLOCKS1),
     'Invulnerable': Tech('Invulnerable', dam_reduc=b.DAM_REDUC1),
@@ -58,7 +58,7 @@ W2 = {
     'Avalanche': Tech('Avalanche Strikes', unblock_chance=b.UNBLOCK_CHANCE1),
     'Bizarre': Tech('Bizarre Forms', **bc.EXOTIC1),
     'Burning': Tech('Burning Fury', fury_chance=b.FURY_CH1),
-    'Earth': Tech('Earth\'s Orbit', dist1_strike_mult=b.DIST1_MULT1),
+    'Earth': Tech('Earth\'s Orbit', **bc.CLOSE_RANGE1),
     'Emerald': Tech('Emerald Flow', **bc.QI1),
     'Fire': Tech('Inferno', atk_mult=b.ATTACK1),
     'Formless': Tech('Formless Form', agility_mult=b.AGILITY1),
@@ -96,7 +96,7 @@ W2 = {
 
 W3 = {  # todo add grappling stike multiplier
     'Bear': Tech('Bear\'s Strength', strength_mult=b.STRENGTH1),
-    'Boar': Tech('Rusher Boar', dist1_strike_mult=b.DIST1_MULT1),
+    'Boar': Tech('Rusher Boar', **bc.CLOSE_RANGE1),
     'Butterfly': Tech(
         'Fluttering Butterfly', maneuver_time_cost_mult=b.MANEUVER_TIME_COST_MULT1
     ),

@@ -425,9 +425,18 @@ A distance buff (`dist1/2/3_strike_mult`) is worth roughly its value times
 the share of strikes thrown at that distance, and fighters throw only ~14%
 of their strikes at close range (it is hard to reach and hold: the opponent
 strikes or pushes you away on the way in) against ~42% mid and ~43% long
-range. So since 2026-10-28 close range pays the most (+75% at style level,
+range. So since 2026-10-28 close range pays the most (+50% at style level,
 was +40%) and mid range +20% (was +25%), alongside the general cuts to
-attack (+10%, was +15%) and punches (+20%, was +25%).
+attack (+10%, was +15%) and punches (+20%, was +25%). Close-range and
+grappling techs also carry `guard_while_advancing` (a flag): every maneuver
+that closes the distance (`dist_change < 0`: Step Forward, Rush Forward,
+Charging Step, Leap Forward) also acts as Guard — `dfs_bonus *=
+guard_dfs_bonus * GUARD_POWER` and `guarding` set until the fighter's next
+turn, without the Guard techs' restore. Charging strikes don't count: they
+are attacks, not maneuvers. In A/B tests (`run_test_tech_ab.py`, levels
+1-20) the flag alone is worth about +7 Diff%, as much as the close-range
+buff itself; it doesn't make fighters strike at close range more often
+(~11% of strikes either way), it makes approaching cheaper.
 
 Unfinished features, not bugs (placeholders kept on purpose; the techs that
 would use them are queued in `BACKLOG.md`): the boost constants `GRAB_CH1/2`

@@ -19,6 +19,11 @@ BLOCKS2 = dict(
     block_mult=b.BLOCK2,
     block_disarm=b.BLOCK_DISARM2
 )
+# close range and grappling are hard to reach: closing in counts as Guard
+CLOSE_RANGE1 = dict(
+    dist1_strike_mult=b.DIST1_MULT1,
+    guard_while_advancing=b.GUARD_WHILE_ADVANCING,
+)
 CRITICAL1 = dict(
     critical_chance_mult=b.CRIT_CH1,
     critical_dam_mult=b.CRIT_M1,
@@ -48,6 +53,10 @@ EXOTIC2 = dict(
     knee_strike_mult=b.STRIKE_MULT2,
     elbow_strike_mult=b.STRIKE_MULT2,
     head_strike_mult=b.STRIKE_MULT2,
+)
+GRAPPLING1 = dict(
+    grappling_strike_mult=b.STRIKE_MULT1,
+    guard_while_advancing=b.GUARD_WHILE_ADVANCING,
 )
 PALM_AND_CLAW1 = dict(
     palm_strike_mult=b.STRIKE_MULT1,
