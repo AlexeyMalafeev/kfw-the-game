@@ -118,8 +118,8 @@ All notable changes to KFW are documented here. Format loosely follows
   means being struck on the way in, so the +40% close-range buff was the
   weakest distance buff in practice. Now every close-range and grappling
   technique also makes forward maneuvers (Step Forward, Rush Forward...)
-  count as Guard ("closing in counts as Guard"), and the close-range buff
-  goes to +50% (advanced tier +100%). Mid-range +25% -> +20%, attack
+  count as Guard ("closing in counts as Guard"); the close-range buff stays
+  +40%, and grappling buffs go +25% -> +40%. Mid-range +25% -> +20%, attack
   +15% -> +10% (18/36 Attack Forms +30% -> +20%), punches +25% -> +20%
   (Cannon Fist +50% -> +40%); kicks, palms and the other strike buffs are
   unchanged

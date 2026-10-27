@@ -55,7 +55,7 @@ EXOTIC2 = dict(
     head_strike_mult=b.STRIKE_MULT2,
 )
 GRAPPLING1 = dict(
-    grappling_strike_mult=b.STRIKE_MULT1,
+    grappling_strike_mult=b.GRAPPLING_STRIKE_MULT1,
     guard_while_advancing=b.GUARD_WHILE_ADVANCING,
 )
 PALM_AND_CLAW1 = dict(

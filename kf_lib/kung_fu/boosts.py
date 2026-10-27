@@ -27,11 +27,11 @@ DEFENSE_HALF = round(DEFENSE1 / 2, 2)
 DFS_PEN1 = -0.1
 DFS_PEN2 = -0.2  # this effectively reduces defense penalty down to zero
 # close range is hard to reach and hold (the opponent strikes or pushes you away
-# on the way in), so it pays more: since 2026-10-28 close 0.5 (was 0.4) plus
-# GUARD_WHILE_ADVANCING on the same techs, mid 0.2 (was 0.25); strikes thrown:
+# on the way in), so since 2026-10-28 the close-range techs also carry
+# GUARD_WHILE_ADVANCING and mid range dropped to 0.2 (was 0.25); strikes thrown:
 # ~11-14% close, ~42% mid, ~43% long range
-DIST1_MULT1 = 0.5
-DIST1_MULT2 = 1.0
+DIST1_MULT1 = 0.4
+DIST1_MULT2 = 0.8
 DIST2_MULT1 = 0.2
 DIST2_MULT2 = 0.4
 DIST3_MULT1 = 0.2
@@ -48,6 +48,10 @@ FURY_CH1 = 0.3
 FURY_CH2 = 0.5
 GRAB_CH1 = 0.2  # placeholder, no tech yet (BACKLOG: techs for placeholder boosts)
 GRAB_CH2 = 0.4
+# grappling is close range too, so it pays more than the other strike buffs
+# (0.25 / 0.5 = STRIKE_MULT1 / 2 until 2026-10-28), plus GUARD_WHILE_ADVANCING
+GRAPPLING_STRIKE_MULT1 = 0.4
+GRAPPLING_STRIKE_MULT2 = 0.8
 GUARANTEED_COUNTERS1 = 1  # sure counters in a row; until 2026-10-23 counter
 GUARANTEED_COUNTERS2 = 2  # techs gave +50% / +100% counter chance instead
 GUARD_DFS1 = 0.5
