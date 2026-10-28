@@ -1,7 +1,7 @@
 # Audio: music and sound effects
 
 The Android app plays a chiptune soundtrack (22 tunes) and fight sound effects
-(27 effects, 3 jingles). The desktop terminal game stays silent: the game code
+(28 effects, 3 jingles). The desktop terminal game stays silent: the game code
 names tunes and effects everywhere, but only a frontend that installs a player
 makes them audible, and only Android does.
 
@@ -49,7 +49,7 @@ measured on the loop.
 - `kf_lib/ui/_sound.py` (star-exported by `kf_lib.ui`): `play_music`,
   `play_sound`, the `music(tune, enabled=...)` block that plays a tune and then
   returns to the previous one, `fight_music(tune)` that sets the tune of fights
-  started inside it, and the tune table `MUSIC` plus the two rotation pools.
+  started inside it (and, optionally, their opening effect), and the tune table `MUSIC` plus the two rotation pools.
 - **Who hears it.** Music changes only for scenes someone watches: players have
   `shows_output` (True for `HumanPlayer` and `SmartAIPVisible`), so an
   invisible AI player's turn never switches the music. Fight effects come only
@@ -57,6 +57,10 @@ measured on the loop.
   with "Auto fight?" plays only the end jingle. None of the hooks draws random
   numbers, so seeded fights end the same with or without sound
   (`test/test_sound.py`).
+- **Re-rendering.** Vorbis files get a random stream serial number, so the
+  same audio encodes to different bytes each time. `render.py --game` keeps an
+  existing file whose decoded audio is unchanged, so a re-render after editing
+  one score commits only that tune's files.
 
 ### Where each tune plays
 
@@ -93,6 +97,7 @@ pool. After a scene or fight the previous tune comes back, from its intro.
 | Effect | Fired by |
 |---|---|
 | fight_start | Start of a shown fight, after the prefight quotes |
+| gong_clash | Replaces fight_start in tournament and All-Schools Tournament fights (set by their `fight_music` block) |
 | whiff | "Miss!": the attacker's own move fails (`check_move_failed`) |
 | dodge | The defender dodges (`defend`) |
 | block / block_full | A block that lets some damage through / none (after the qi shield) |
@@ -104,7 +109,7 @@ pool. After a scene or fight the previous tune comes back, from its intro.
 | fury | "is in FURY!" |
 | guard, focus, catch_breath | The Guard, Focus and Catch Breath moves |
 | step / rush / retreat | Maneuvers: one step either way / two or more steps forward / two or more back |
-| bleeding | A wound starts bleeding, and each turn's bleeding damage |
+| bleeding | A wound starts bleeding ("is BLEEDING!"); the later per-turn bleeding damage is silent |
 | disarm | Disarming while blocking or attacking |
 | item_use | A human player uses an item before a fight |
 | victory / defeat | End of a fight watched by a human: the fight music stops, then the jingle for the watching player (a draw counts as defeat) |

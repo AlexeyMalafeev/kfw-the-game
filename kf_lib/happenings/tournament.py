@@ -213,7 +213,8 @@ class Tournament(object):
 
     def run(self):
         watched = any(p.shows_output for p in self.g.players)
-        with music(MUSIC['tournament'], enabled=watched), fight_music(MUSIC['tournament']):
+        with music(MUSIC['tournament'], enabled=watched), \
+                fight_music(MUSIC['tournament'], start_sound='gong_clash'):
             self._run()
 
     def _run(self):

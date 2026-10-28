@@ -14,7 +14,8 @@ All notable changes to KFW are documented here. Format loosely follows
   victory screen each have their own. Fights shown blow by blow play effects
   for hits, criticals, EPIC hits, blocks, dodges, misses, counters,
   knockbacks, falls, stuns, shocks, knock-outs, fury, footwork, guard, focus
-  and more; won and lost fights and level-ups get jingles. ♪ and FX toolbar
+  and more, and tournament bouts open with a gong clash; won and lost fights
+  and level-ups get jingles. ♪ and FX toolbar
   buttons turn music and effects on or off. The desktop game stays silent.
   The APK grows by about 9 MB. See `docs/audio.md`
 - Five new fight quotes for heroes, challengers and thugs ("Let's end

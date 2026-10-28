@@ -1,5 +1,5 @@
 from ._base_fight import BaseFight
-from kf_lib.ui import music
+from kf_lib.ui import fight_start_sound, music
 
 
 class AutoFight(BaseFight):
@@ -40,7 +40,7 @@ class AutoFight(BaseFight):
         tune = self.choose_music() if self.plays_sound and watched else None
         with music(tune, enabled=tune is not None):
             self.handle_prefight_quote()
-            self.sound('fight_start')
+            self.sound(fight_start_sound())
             self.fight_loop()
             self.disarm_all()
             self.cancel_items_for_all()

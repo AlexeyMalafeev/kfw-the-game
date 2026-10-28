@@ -51,6 +51,7 @@ tournament won.
 | File | When |
 |---|---|
 | fight_start | Fight begins (gong and drums) |
+| gong_clash | Tournament fight begins (one big gong, no drums) |
 | whiff | "Miss!": the attacker's move fails |
 | dodge | "dodges!": the defender evades |
 | hit | Clean hit |
@@ -74,7 +75,7 @@ tournament won.
 | retreat | Retreat |
 | focus | Focus (qi) |
 | catch_breath | Catch Breath (stamina) |
-| bleeding | Bleeding damage at turn start |
+| bleeding | A wound starts bleeding |
 | disarm | Weapon knocked away |
 | item_use | Item used in a fight (potion etc.) |
 | victory | Jingle: fight won |

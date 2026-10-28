@@ -14,6 +14,7 @@ from kf_lib.ui import (
     TOWN_TUNES,
     fight_music,
     fight_music_override,
+    fight_start_sound,
     music,
     play_music,
 )
@@ -55,11 +56,32 @@ def test_music_block_restores_previous_tune(heard):
 
 
 def test_fight_music_override_nests():
-    with fight_music('13_tournament_day'):
+    with fight_music('13_tournament_day', start_sound='gong_clash'):
         with fight_music('14_the_final_platform'):
             assert fight_music_override() == '14_the_final_platform'
+            assert fight_start_sound() == 'gong_clash'  # kept by the inner block
         assert fight_music_override() == '13_tournament_day'
     assert fight_music_override() is None
+    assert fight_start_sound() == 'fight_start'
+
+
+def test_tournament_fight_opens_with_gong_clash(heard):
+    _tunes, effects = heard
+    random.seed(3)
+    with fight_music('13_tournament_day', start_sound='gong_clash'):
+        NormalFight([new_fighter(5)], [new_fighter(5)])
+    assert effects[0] == 'gong_clash'
+    assert 'fight_start' not in effects
+
+
+def test_bleeding_sounds_once_per_wound(heard):
+    _tunes, effects = heard
+    for seed in range(40):
+        effects.clear()
+        random.seed(seed)
+        f = NormalFight([new_fighter(8)], [new_fighter(8)])
+        wounds = sum('BLEEDING' in line for line in f.timeline)
+        assert effects.count('bleeding') == wounds
 
 
 def test_shown_fight_plays_existing_effects(heard):

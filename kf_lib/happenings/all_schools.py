@@ -29,7 +29,8 @@ class AllSchoolsTournament:
         self.final_fighter = None  # the last fighter standing
         self.champion = None
         watched = any(p.shows_output for p in game.players)
-        with music(MUSIC['tournament'], enabled=watched), fight_music(MUSIC['tournament']):
+        with music(MUSIC['tournament'], enabled=watched), \
+                fight_music(MUSIC['tournament'], start_sound='gong_clash'):
             self.run()
 
     def _gather_rosters(self):

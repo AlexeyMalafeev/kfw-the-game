@@ -20,6 +20,7 @@ __all__ = [
     'TOWN_TUNES',
     'fight_music',
     'fight_music_override',
+    'fight_start_sound',
     'music',
     'next_street_fight_tune',
     'play_music',
@@ -50,6 +51,7 @@ MUSIC = {
 }
 
 _fight_override = None  # tune for fights inside a `fight_music` block
+_fight_start = 'fight_start'  # the effect that opens a shown fight
 _street_fights = 0
 
 
@@ -81,19 +83,26 @@ def music(tune, enabled=True):
 
 
 @contextmanager
-def fight_music(tune):
-    """Fights watched inside the block play `tune` (tournaments)."""
-    global _fight_override
-    previous = _fight_override
+def fight_music(tune, start_sound=None):
+    """Fights watched inside the block play `tune` (tournaments), and open
+    with `start_sound` instead of the usual effect when it is given."""
+    global _fight_override, _fight_start
+    previous = _fight_override, _fight_start
     _fight_override = tune
+    if start_sound:
+        _fight_start = start_sound
     try:
         yield
     finally:
-        _fight_override = previous
+        _fight_override, _fight_start = previous
 
 
 def fight_music_override():
     return _fight_override
+
+
+def fight_start_sound():
+    return _fight_start
 
 
 def next_street_fight_tune():

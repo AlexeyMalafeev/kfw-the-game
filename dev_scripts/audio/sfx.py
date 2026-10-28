@@ -250,6 +250,23 @@ def fight_start():
                (DRUMS['k'], 0.28, 0.9))
 
 
+def gong_clash():
+    """Tournament fight start: one big gong struck hard, no drums.
+
+    A bright metallic crash over a deep, long-ringing gong body (lower and
+    longer than the kit gong in fight_start), with a mallet thump.
+    """
+    dur = 3.5
+    body = [(tone('pulse', 73 * r, 71 * r, dur=dur, tau=1.3, duty=0.5, a=0.004,
+                  vib=0.1, vib_rate=2.5 + r), 0, g)
+            for r, g in [(1, 0.55), (1.48, 0.4), (2.03, 0.3), (2.71, 0.25),
+                         (3.16, 0.18), (4.13, 0.12), (5.4, 0.08)]]
+    crash = tone('metal', 16000, 7000, dur=1.6, tau=0.35)
+    hiss = tone('noise', 12000, 3000, dur=0.6, tau=0.15)
+    return mix(*body, (crash, 0, 0.45), (hiss, 0, 0.4),
+               (DRUMS['T'], 0, 1.0), (DRUMS['g'], 0.01, 0.5))
+
+
 _LEAD = Inst('pulse', 0.25, a=0.005, d=0.1, s=0.7, r=0.1, vib=0.25,
              vib_delay=0.15)
 _TRI = Inst('tri', a=0.002, d=0.0, s=1.0, r=0.05)
@@ -291,7 +308,7 @@ def level_up():
 # Loudness of each effect's loudest 50 ms, dBFS: hits are the reference,
 # footwork and breathing sit well under them.
 SFX = {
-    fight_start: -12, whiff: -20, dodge: -19, hit: -12, hit_weapon: -12,
+    fight_start: -12, gong_clash: -11, whiff: -20, dodge: -19, hit: -12, hit_weapon: -12,
     critical: -10, epic: -9, block: -14, block_full: -13, qi_shield: -16,
     counter: -12, knockback: -14, knockdown: -12, stun: -18, shock: -14,
     ko: -10, resist_ko: -14, fury: -11, guard: -17, step: -24, rush: -19,

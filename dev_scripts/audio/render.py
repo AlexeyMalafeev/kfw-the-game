@@ -9,6 +9,7 @@ each tune plays intro + its loop twice, fading out at the end.
 `game_files`), and every effect and jingle as a one-shot.
 """
 import argparse
+import io
 from pathlib import Path
 
 import numpy as np
@@ -116,9 +117,23 @@ def write_game_files():
 
 
 def _write_ogg(path, x):
-    soundfile.write(str(path), np.clip(x, -1, 1), SR, format='OGG',
+    """Encode; keep an existing file whose decoded audio is the same.
+
+    Vorbis stamps each file with a random stream serial number, so every
+    render changes every file's bytes; rewriting unchanged files would add
+    the whole folder to git history again on each re-render.
+    """
+    buf = io.BytesIO()
+    soundfile.write(buf, np.clip(x, -1, 1), SR, format='OGG',
                     subtype='VORBIS', compression_level=VORBIS_LEVEL)
-    return path.stat().st_size
+    data = buf.getvalue()
+    if path.exists():
+        new = soundfile.read(io.BytesIO(data))[0]
+        old = soundfile.read(str(path))[0]
+        if new.shape == old.shape and np.array_equal(new, old):
+            return path.stat().st_size
+    path.write_bytes(data)
+    return len(data)
 
 
 def write_index():

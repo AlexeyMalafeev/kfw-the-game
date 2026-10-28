@@ -37,7 +37,6 @@ class FighterWithActions(FighterAPI, ABC):
     def apply_bleeding(self) -> None:
         if self.bleeding:
             self.change_hp(-self.bleeding)
-            self.current_fight.sound('bleeding')
             if self.hp <= 0:
                 self.current_fight.sound('ko')
                 self.current_fight.display(
