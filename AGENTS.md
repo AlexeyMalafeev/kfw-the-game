@@ -115,10 +115,23 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   'vX.Y.Z-beta "Codename"' --notes-file <notes>` — a normal release, not a
   pre-release, so it becomes "Latest" and the README's "grab the latest
   release" lands on it. Notes: a one-line intro (`python kfw.py`, Python
-  3.8+, `--lang ru`), then the released changelog section with its `###`
-  headings promoted to `##`, then a link to `CHANGELOG.md` at the tag; no
-  zip asset unless asked. Needs `gh` logged in (`gh auth status`; the `repo`
-  scope suffices — same write access as pushing).
+  3.8+, `--lang ru`, and the attached APK for Android 7.0+), then the
+  released changelog section with its `###` headings promoted to `##`, then
+  a link to `CHANGELOG.md` at the tag. Needs `gh` logged in (`gh auth
+  status`; the `repo` scope suffices — same write access as pushing).
+  Every release (since the Android port) attaches a debug APK, which the
+  README promises; no zip asset unless asked. Build it from a clean checkout
+  at the tag — Gradle copies `kf_lib/`, `moves/`, `quotes/` and `locale/`
+  from the working tree, so uncommitted changes would ship — using the local
+  toolchain in `android/.toolchain/` (no system Java):
+  `cd android && JAVA_HOME="$PWD/.toolchain/jdk/Contents/Home" ./gradlew
+  clean assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk
+  build/kfw-vX.Y.Z-beta-debug.apk`, then pass
+  `android/build/kfw-vX.Y.Z-beta-debug.apk` as the last argument of
+  `gh release create`. Build on this machine: the APK is signed with
+  `~/.android/debug.keystore`, and Android refuses to update an installed
+  app from an APK signed with a different key (players would have to
+  uninstall, which deletes their saves).
 - Release codenames: kung-fu flavored but **not necessarily movie references** —
   most are puns or literal winks at the release's own content ('ASCII-fu',
   'Superbug, Victory, Stats', 'Den'gi', 'Nasty Bugs and Small Fixes',
