@@ -3,6 +3,24 @@ plugins {
     id("com.chaquo.python")
 }
 
+// The app version comes from the latest release tag (vX.Y.Z-beta), like the
+// desktop game, which has no version string in code. Between releases git
+// describe adds "-N-g<hash>", and "-dirty" for uncommitted changes. Without
+// git or tags (e.g. a source zip) the build falls back to 0.0.0-dev.
+val gitDescribe: String = runCatching {
+    providers.exec {
+        commandLine("git", "describe", "--tags", "--match", "v[0-9]*", "--dirty")
+        workingDir = rootDir
+        isIgnoreExitValue = true
+    }.standardOutput.asText.get().trim()
+}.getOrDefault("")
+val appVersionName = gitDescribe.removePrefix("v").ifEmpty { "0.0.0-dev" }
+// X.Y.Z -> X*10000 + Y*100 + Z: grows with every release, so Android accepts
+// each new APK as an update.
+val appVersionCode = Regex("""^(\d+)\.(\d+)\.(\d+)""").find(appVersionName)
+    ?.destructured?.let { (x, y, z) -> x.toInt() * 10000 + y.toInt() * 100 + z.toInt() }
+    ?.coerceAtLeast(1) ?: 1
+
 android {
     namespace = "com.alexeymalafeev.kfw"
     compileSdk = 35
@@ -11,8 +29,8 @@ android {
         applicationId = "com.alexeymalafeev.kfw"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters += setOf("arm64-v8a", "x86_64")

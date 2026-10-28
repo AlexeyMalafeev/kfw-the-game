@@ -47,6 +47,13 @@ upload key before distribution; no release private key is stored in this reposit
 and release packages have the same application ID, so installing one replaces the other.
 Export saves first. Release builds exclude `python_debug/` and its self-test module.
 
+The app version comes from the latest git release tag, read by `git describe` at build
+time, so no version string lives in code. A build at tag `v0.8.0-beta` is version
+`0.8.0-beta` (debug builds append `-debug`); builds between releases add the commit count
+and hash, and `-dirty` when the working tree has uncommitted changes. The version code is
+`X*10000 + Y*100 + Z` from the tag's `X.Y.Z`, so every release installs as an update over
+the previous one. Without git or tags (a source zip) the version is `0.0.0-dev`, code 1.
+
 The Gradle `Sync` tasks copy the canonical desktop sources and data into a clean generated
 source tree on every build. Edit `kf_lib/`, `moves/`, `quotes/` and `locale/` in their normal
 locations, not files under `app/build/generated/`. No manual copy step is needed.

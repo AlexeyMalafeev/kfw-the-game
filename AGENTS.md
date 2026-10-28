@@ -126,7 +126,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   toolchain in `android/.toolchain/` (no system Java):
   `cd android && JAVA_HOME="$PWD/.toolchain/jdk/Contents/Home" ./gradlew
   clean assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk
-  build/kfw-vX.Y.Z-beta-debug.apk`, then pass
+  build/kfw-vX.Y.Z-beta-debug.apk` (the app's version is read from the
+  tag; it must not end in `-dirty`), then pass
   `android/build/kfw-vX.Y.Z-beta-debug.apk` as the last argument of
   `gh release create`. Build on this machine: the APK is signed with
   `~/.android/debug.keystore`, and Android refuses to update an installed
