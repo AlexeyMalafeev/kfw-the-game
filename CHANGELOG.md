@@ -6,6 +6,13 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Full Android port**: the complete original game now runs as a native Android
+  app (Android 7.0+) through an embedded Python 3.13 runtime. Includes touch
+  buttons for every game menu, color console output and horizontally scrollable
+  ASCII art, adjustable text size, hot-seat and AI games, English and Russian,
+  desktop-compatible save/load plus safe save import/export, rotation and
+  background handling, emergency saves, Gradle builds, JVM and on-device tests,
+  and an end-to-end UIAutomator smoke scenario. See `docs/android.md`
 - **Music and sound effects on Android**: a 22-tune chiptune soundtrack and
   fight sound effects. Town days rotate through three tunes, ordinary fights
   through three more, and tournaments, the tournament final, story bosses,
@@ -31,18 +38,16 @@ All notable changes to KFW are documented here. Format loosely follows
   practice visits instead of 20%
 
 ### Fixed
+- **RING mini-game crashed when started from the repo root** with
+  `No module named 'kf_lib'`: it looked for the game one folder above the
+  current folder instead of above its own file. RING (and the still-broken
+  Chocolate prototype) now find the repo from their own location, so
+  `python minigames/RING_mini_game.py` works from anywhere
 - Typo in a hero quote: "This is as far you'll go."
 
 ## [v0.7.6-beta "The Closed Door"] — 2026-10-28
 
 ### Added
-- **Full Android port**: the complete original game now runs as a native Android
-  app (Android 7.0+) through an embedded Python 3.13 runtime. Includes touch
-  buttons for every game menu, color console output and horizontally scrollable
-  ASCII art, adjustable text size, hot-seat and AI games, English and Russian,
-  desktop-compatible save/load plus safe save import/export, rotation and
-  background handling, emergency saves, Gradle builds, JVM and on-device tests,
-  and an end-to-end UIAutomator smoke scenario. See `docs/android.md`
 - **The master's teachings**: now and then (20% of paid visits) during
   "Practice at school", your master stops the class to share a saying about
   how fights really work — "A blow that meets only air or a closed door
@@ -227,11 +232,6 @@ All notable changes to KFW are documented here. Format loosely follows
   engine settles
 
 ### Fixed
-- **RING mini-game crashed when started from the repo root** with
-  `No module named 'kf_lib'`: it looked for the game one folder above the
-  current folder instead of above its own file. RING (and the still-broken
-  Chocolate prototype) now find the repo from their own location, so
-  `python minigames/RING_mini_game.py` works from anywhere
 - **A missed strike could not always be countered**: a strike that misses
   kept the damage of the attacker's previous strike (even from an earlier
   fight), and a counter needs a strike that did no damage, so whether the
