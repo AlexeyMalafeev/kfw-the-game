@@ -225,7 +225,7 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   and a win moves you to the defeated opponent's slot (see School rank in
   `docs/gameplay.md`). Reaching rank 1 earns the master's
   praise, +25 exp and +2 rep.
-- `MasterTeaching`: on a paid practice visit (`ENC_CH_MASTER_TEACHING`, 20%)
+- `MasterTeaching`: on a paid practice visit (`ENC_CH_MASTER_TEACHING`, 15%)
   the master shares a random saying from `kf_lib/happenings/teachings.py`
   followed by the plain rule in brackets; AI players get it in their log.
   Never the same saying twice in a row (`MasterTeaching.last_id`, a class

@@ -15,6 +15,8 @@ All notable changes to KFW are documented here. Format loosely follows
   size and re-wraps on A− / A+ and rotation, instead of running off the right
   edge in portrait. Tables, fighter panels and ASCII art keep their layout and
   still scroll sideways when wider than the screen
+- The master's teachings come a little less often: 15% of paid school
+  practice visits instead of 20%
 
 ### Fixed
 - Typo in a hero quote: "This is as far you'll go."

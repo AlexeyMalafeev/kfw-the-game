@@ -11,7 +11,7 @@ from ._utils import get_escape_chance, try_escape
 
 # constants
 # encounter chances
-ENC_CH_MASTER_TEACHING = 0.2  # per paid practice visit
+ENC_CH_MASTER_TEACHING = 0.15  # per paid practice visit
 ENC_CH_MASTER_TRIAL = 0.05
 # ENC_CH_SCHOOL_CHALL = 0.05
 ENC_CH_SCHOOL_BULLYING = 0.03
