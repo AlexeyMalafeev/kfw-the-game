@@ -35,17 +35,18 @@ Run it from the command line — it won't work correctly in an IDE like PyCharm.
 
 ## Android
 
-The complete game is also available as a native Android app for Android 7.0+, with touch menus, color text and ASCII art, English/Russian localization and desktop-compatible saves. To build the installable debug APK, install JDK 17, Python 3.13 and Android SDK 35, then run `cd android && ./gradlew assembleDebug`. See [the Android guide](docs/android.md) for installation, release signing, save transfer, architecture and device tests.
+The complete game is also available as a native Android app for Android 7.0+, with touch menus, color text and ASCII art, English/Russian localization and desktop-compatible saves. Every release comes with a ready-to-install APK: download it from the release page and open it on your phone. See [the Android guide](docs/android.md) for installation, save transfer and building the app yourself.
 
 ## How to play
 
 In this game, you play as a beginner kung-fu practitioner. You train hard to improve your fighting skills, protect the weak against oppressors and, one day, even found your own martial arts school. You have to compete with other practitioners as well as stand up against thugs and wrongdoers to prove your worth. Become stronger by either practicing or defeating foes in the streets of Foshan, learn new moves and techniques, take part in tournaments and enjoy your life in this fantasy Kung-Fu World.
 
-There are four ways to win in this game:
+There are five ways to win in this game:
 1. **Grandmaster**: simply reach level 20
 2. **Folk Hero**: become known for doing good deeds such as protecting the weak and helping the poor
-3. **Kung-fu Legend**: perform a few of unique Accomplishments
+3. **Kung-fu Legend**: perform a few unique Accomplishments
 4. **Greatest Fighter**: win in a crazy number of fights
+5. **Uniter of Schools**: as a master, bring every other kung-fu school in town into your federation
 
 ## For the curious
 
@@ -56,10 +57,6 @@ A few more things you can do from the command line:
 * `python kfw.py --load "auto save.txt"` — load the autosave instead of the manual save
 * `python dev_scripts/profile_game.py` — profile the game with cProfile (developer tool)
 * `.venv/bin/python -m pytest` — run the automated test suite (developer tool; needs the dev requirements installed)
-
-## Note about the code
-
-Should you want to take a peek at the code, since we're on GitHub and all: the bulk of it was written back when my Python kung-fu was still weak, and the technical debt accrued is being cleaned up gradually. The code base in its present state is somewhat readable, covered by a growing test suite, and hopefully free of major bugs. See `CHANGELOG.md` for what's changed and `BACKLOG.md` for what's planned.
 
 ## Russian version / Русская версия
 
