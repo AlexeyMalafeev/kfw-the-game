@@ -8,11 +8,14 @@ All notable changes to KFW are documented here. Format loosely follows
 ### Added
 - **Full Android port**: the complete original game now runs as a native Android
   app (Android 7.0+) through an embedded Python 3.13 runtime. Includes touch
-  buttons for every game menu, color console output and horizontally scrollable
-  ASCII art, adjustable text size, hot-seat and AI games, English and Russian,
-  desktop-compatible save/load plus safe save import/export, rotation and
-  background handling, emergency saves, Gradle builds, JVM and on-device tests,
-  and an end-to-end UIAutomator smoke scenario. See `docs/android.md`
+  buttons for every game menu, color console output, adjustable text size,
+  hot-seat and AI games, English and Russian, desktop-compatible save/load
+  plus safe save import/export, rotation and background handling, emergency
+  saves, Gradle builds, JVM and on-device tests, and an end-to-end
+  UIAutomator smoke scenario. Console text word-wraps to the screen width and
+  re-wraps when the text size (A− / A+) or the orientation changes; tables,
+  fighter panels and ASCII art keep their layout and scroll sideways when
+  wider than the screen. See `docs/android.md`
 - **Music and sound effects on Android**: a 22-tune chiptune soundtrack and
   fight sound effects. Town days rotate through three tunes, ordinary fights
   through three more, and tournaments, the tournament final, story bosses,
@@ -22,18 +25,13 @@ All notable changes to KFW are documented here. Format loosely follows
   for hits, criticals, EPIC hits, blocks, dodges, misses, counters,
   knockbacks, falls, stuns, shocks, knock-outs, fury, footwork, guard, focus
   and more, and tournament bouts open with a gong clash; won and lost fights
-  and level-ups get jingles. ♪ and FX toolbar
-  buttons turn music and effects on or off. The desktop game stays silent.
-  The APK grows by about 9 MB. See `docs/audio.md`
+  and level-ups get jingles. ♪ and FX toolbar buttons turn music and effects
+  on or off. The desktop game stays silent. See `docs/audio.md`
 - Five new fight quotes for heroes, challengers and thugs ("Let's end
   this here and now.", "Don't be so sure of yourself." and others), with
   Russian translations
 
 ### Changed
-- Android: console text now word-wraps to the screen width at the current text
-  size and re-wraps on A− / A+ and rotation, instead of running off the right
-  edge in portrait. Tables, fighter panels and ASCII art keep their layout and
-  still scroll sideways when wider than the screen
 - The master's teachings come a little less often: 15% of paid school
   practice visits instead of 20%
 
