@@ -1,5 +1,6 @@
 from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.ui import cls, get_key, pak
+from kf_lib.ui._frontend import present_menu
 from ._base_game import BaseGame
 
 
@@ -39,6 +40,8 @@ class StateMenu(BaseGame):
             options += sys_options
             keys += sys_keys
             while True:
+                # re-present after an invalid key (see menu())
+                present_menu(keys, [opt[0] for opt in options])
                 key = get_key()
                 if key in keys:
                     choice = options[keys.index(key)][1]

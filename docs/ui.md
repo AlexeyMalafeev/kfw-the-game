@@ -135,3 +135,19 @@ padding), and the two-column HP/SP/QP header in
 horizontally, and even the current monochrome `concat` is fragile — embedding
 tags inside art would corrupt the picture. Whole-message colors around art
 (like the win message) are fine.
+
+## Android frontend
+
+`kf_lib/ui/_frontend.py` provides optional key-reader, clear-screen and current-menu
+hooks. `menu()` and `StateMenu` report their key/label pairs through these hooks before every
+key read (a read consumes the presented menu, so an invalid key must not lose it); weak
+menus also report that the frontend must offer a way to dismiss them. With no frontend
+installed, every hook falls back to the original terminal behavior.
+
+On Android, `android/python/kfw_android.py` installs the hooks and redirects standard
+input/output to `GameHost`. Native buttons present the same choices as the terminal,
+while `AnsiParser` and `ConsoleView` preserve the colors emitted by `render()` rather
+than stripping them. The console supports vertical history and horizontal table/art
+scrolling. The frontend is removed after every session, including errors, so it cannot
+leak into later desktop runs. See `docs/android.md` for the complete mobile UI and
+build/test pipeline.

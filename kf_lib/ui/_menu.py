@@ -1,6 +1,7 @@
 import string
 
 from kf_lib.i18n import _
+from ._frontend import present_menu
 from ._keyboard import get_key
 from ._rich_format import cyan, green, grey, red, render
 from ._screen import cls
@@ -56,6 +57,9 @@ def menu(
             st = '; '
         print(render(st.join([f' {cyan(curr_keys[j])} - {grey(curr_options[j])}' for j in range(len(curr_keys))])))
         while True:
+            # every key read consumes the presented menu, so present it again
+            # after an invalid key or the frontend loses the options
+            present_menu(curr_keys, curr_options, weak)
             choice = get_key()
             if back and choice == BACK_KEY:
                 return None

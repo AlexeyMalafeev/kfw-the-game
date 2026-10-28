@@ -33,4 +33,6 @@ def get_key():
     # DEBUG MODE
     # return input('key:')
     # NORMAL MODE
-    return getch()
+    from ._frontend import read_key
+
+    return read_key(getch)
