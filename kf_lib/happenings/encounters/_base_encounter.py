@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from kf_lib.ui import MUSIC, music
+
 
 all_random_encounter_classes = []
 
@@ -7,6 +9,7 @@ all_random_encounter_classes = []
 class BaseEncounter(ABC):
     guaranteed = False
     thematic_only = False  # True: only in a day action's own list, not the daily pool
+    music = None  # a ui.MUSIC key: the scene's tune while it runs (see docs/audio.md)
 
     def __init__(
             self,
@@ -22,7 +25,9 @@ class BaseEncounter(ABC):
             else:
                 enc_dict[enc_name] = 1
             self.p.refresh_screen()
-            self.run()
+            tune = MUSIC.get(self.music)
+            with music(tune, enabled=bool(tune) and self.p.shows_output):
+                self.run()
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)

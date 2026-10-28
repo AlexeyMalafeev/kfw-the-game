@@ -6,6 +6,17 @@ All notable changes to KFW are documented here. Format loosely follows
 ## [Unreleased]
 
 ### Added
+- **Music and sound effects on Android**: a 22-tune chiptune soundtrack and
+  fight sound effects. Town days rotate through three tunes, ordinary fights
+  through three more, and tournaments, the tournament final, story bosses,
+  stories, crime, gambling, romance, the master's teachings, school practice,
+  master mode, injured days, fights against a crowd, free-for-alls and the
+  victory screen each have their own. Fights shown blow by blow play effects
+  for hits, criticals, EPIC hits, blocks, dodges, misses, counters,
+  knockbacks, falls, stuns, shocks, knock-outs, fury, footwork, guard, focus
+  and more; won and lost fights and level-ups get jingles. ♪ and FX toolbar
+  buttons turn music and effects on or off. The desktop game stays silent.
+  The APK grows by about 9 MB. See `docs/audio.md`
 - Five new fight quotes for heroes, challengers and thugs ("Let's end
   this here and now.", "Don't be so sure of yourself." and others), with
   Russian translations

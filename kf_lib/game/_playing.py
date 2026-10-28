@@ -9,7 +9,7 @@ from kf_lib.game._base_game import BaseGame
 from kf_lib.happenings import events
 from kf_lib.i18n import _, tr_fighter_name, tr_name
 from kf_lib.things import items
-from kf_lib.ui import cls, grey, pak, render, yn
+from kf_lib.ui import MUSIC, cls, grey, music, pak, play_music, render, town_tune, yn
 from kf_lib.utils import rnd, SAVE_FOLDER
 
 
@@ -76,12 +76,11 @@ class Playing(BaseGame):
                     )
                 )
         if wins:
-            days, months, years = [int(x) for x in self.get_date().split('/')]
-            n_days = (years - 1) * 360 + (months - 1) * 30 + days
-            self.n_days_to_win = n_days
+            self.n_days_to_win = self.get_day_number()
             if not self.silent_ending:
-                self.show_victory(wins, winners)
-                self.play_indefinitely = yn(_('Keep playing indefinitely?'))
+                with music(MUSIC['game_won']):
+                    self.show_victory(wins, winners)
+                    self.play_indefinitely = yn(_('Keep playing indefinitely?'))
             return True
 
     @staticmethod
@@ -148,6 +147,7 @@ class Playing(BaseGame):
                     continue
                 self.current_player = p
                 while True:
+                    self.play_day_music(p)
                     # output info if human player
                     p.see_day_info()
                     # inactivity check
@@ -186,6 +186,16 @@ class Playing(BaseGame):
             if self.check_victory():
                 return
             self.next_day()
+
+    def get_day_number(self):
+        """Days since the game began, counting the first day as 1."""
+        days, months, years = [int(x) for x in self.get_date().split('/')]
+        return (years - 1) * 360 + (months - 1) * 30 + days
+
+    def play_day_music(self, p):
+        """Town days rotate through the town tunes; injured days are quieter."""
+        if p.shows_output:
+            play_music(MUSIC['injured'] if p.inactive else town_tune(self.get_day_number()))
 
     def hook_up_players(self):
         for p in self.players:

@@ -3,4 +3,6 @@ numpy
 pandas
 pytest
 scikit-learn
+scipy
+soundfile
 tqdm

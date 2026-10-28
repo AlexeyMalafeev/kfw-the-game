@@ -1,5 +1,7 @@
 import logging
 
+from kf_lib.ui import MUSIC, music
+
 
 logger = logging.getLogger()
 
@@ -37,7 +39,8 @@ class BaseStory:
             logger.warning(f'{self.name} has no scene{self.state}; ending the story')
             self.end()
             return
-        scene()
+        with music(MUSIC['story'], enabled=p.shows_output):
+            scene()
 
     def check_hasnt_started(self):
         return self.state is None
@@ -73,7 +76,8 @@ class BaseStory:
         p.current_story = self
         p.change_stat('num_stories', 1)
         self.state = 0
-        self.intro()
+        with music(MUSIC['story'], enabled=p.shows_output):
+            self.intro()
 
     def test(self, player):
         p = player

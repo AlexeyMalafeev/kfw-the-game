@@ -151,6 +151,8 @@ Man: "Hey you! Apologize or I'll beat you up!\"''').format(
 
 
 class Drunkard(BaseEncounter):
+    music = 'seedy'
+
     def check_if_happens(self):
         return rnd() <= ENC_CH_DRUNKARD
 

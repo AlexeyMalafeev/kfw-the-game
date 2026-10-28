@@ -1,13 +1,14 @@
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
 from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.things.items import get_item_descr, MEDICINE
-from kf_lib.ui import cls, menu, style, yn
+from kf_lib.ui import cls, menu, play_sound, style, yn
 from kf_lib.utils import enum_words, float_to_pcnt
 from ._base_player import BasePlayer, NUM_SCHOOL_TECHS
 
 
 class HumanPlayer(HumanControlledFighter, BasePlayer):
     is_human = True
+    shows_output = True
 
     def bet_on_tourn_or_not(self):
         return yn(_('{}: Bet on the tournament?').format(tr_fighter_name(self.name)))
@@ -128,6 +129,7 @@ class HumanPlayer(HumanControlledFighter, BasePlayer):
             )
         )
         cls()
+        play_sound('level_up')
         self.show(banner)
         # do not change BasePlayer to super(), will cause bugs; todo investigate this
         BasePlayer.level_up(self, times)

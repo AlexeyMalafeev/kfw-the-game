@@ -1,4 +1,7 @@
-# KFW soundtrack plan (draft)
+# KFW soundtrack plan
+
+Wired into the Android app; `docs/audio.md` has the exact game events and
+code behind each row.
 
 Chiptune in the NES style: two pulse voices, a stepped triangle bass, a noise
 drum channel. Kung-fu flavour comes from pentatonic melodies, parallel
@@ -7,7 +10,8 @@ fourths, erhu-like slides and vibrato, pipa-like tremolo, woodblocks and gongs.
 To keep the music from wearing thin, the contexts that come up every day get a
 small pool to rotate through (town days: 3, street fights: 3), while rare
 moments get one tune each. All 22 are composed (scores in `tunes.py`;
-`python render.py` writes previews to `out/`).
+`python render.py` writes previews to `out/`, `python render.py --game` the
+game's files to `audio/`).
 
 ## Tunes
 

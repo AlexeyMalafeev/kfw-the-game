@@ -16,6 +16,8 @@ class FightHost:
         self.output = []
         self.menu_count = 0
         self.closed = False
+        self.tunes = []
+        self.effects = []
 
     def isClosed(self):
         return self.closed
@@ -25,6 +27,12 @@ class FightHost:
 
     def clear(self):
         pass
+
+    def playMusic(self, tune):
+        self.tunes.append(tune)
+
+    def playSound(self, effect):
+        self.effects.append(effect)
 
     def presentMenu(self, keys, labels, weak):
         self.pending = (keys, json.loads(labels), weak)
@@ -81,3 +89,11 @@ def test_android_runtime_runs_interactive_fight_to_completion(tmp_path):
     assert "HP " in transcript
     assert "wins" in transcript or "Android Tester" in transcript
     assert player.game.fights_total == 1
+    # the fight plays its tune, effects and the victory jingle, then the music
+    # goes back to what played before it (silence here)
+    assert host.tunes[0] in ("08_fists_like_rain", "09_alley_cats", "10_thugs_at_the_bridge")
+    assert host.tunes[1:] == [""]
+    assert host.effects[0] == "fight_start"
+    assert "victory" in host.effects
+    for name in host.effects:
+        assert (REPO_ROOT / "audio" / "sfx" / f"{name}.ogg").is_file(), name

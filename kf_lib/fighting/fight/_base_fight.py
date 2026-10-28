@@ -3,7 +3,19 @@ import random
 from kf_lib.actors.names import GROUP_NAMES
 from kf_lib.constants import experience
 from kf_lib.i18n import _, tr_fighter_name, tr_name
-from kf_lib.ui import cls, menu, pak, render, style, yellow
+from kf_lib.ui import (
+    MUSIC,
+    cls,
+    fight_music_override,
+    menu,
+    next_street_fight_tune,
+    pak,
+    play_music,
+    play_sound,
+    render,
+    style,
+    yellow,
+)
 
 
 ASTON_VICTORY_MIN_RATIO = 1.2
@@ -20,6 +32,7 @@ TIME_TO_SEC_DIVISOR = 2
 
 class BaseFight(object):
     is_free_for_all = False
+    plays_sound = False  # fights shown blow by blow (NormalFight) play effects
 
     def __init__(self, side_a, side_b, environment_allowed=True):
         # fight participants
@@ -103,6 +116,21 @@ class BaseFight(object):
             if f in fs:
                 return True
         return False
+
+    def choose_music(self):
+        """The tune for this fight, from the watching player's point of view."""
+        override = fight_music_override()
+        if override:
+            return override
+        story = getattr(self.main_player, 'current_story', None)
+        if story is not None and story.boss in self.all_fighters:
+            return MUSIC['boss']
+        if self.is_free_for_all:
+            return MUSIC['free_for_all']
+        allies = self.get_act_allies(self.main_player)
+        if len(self.get_act_targets(self.main_player)) > len(allies):
+            return MUSIC['outnumbered']
+        return next_street_fight_tune()
 
     def cls(self):
         pass
@@ -312,6 +340,8 @@ class BaseFight(object):
                     if choice:
                         p.used_item = choice
                         p.use_item(p.used_item)
+                        if p.is_human:
+                            play_sound('item_use')
                     else:
                         p.used_item = ''
 
@@ -400,6 +430,12 @@ class BaseFight(object):
             if self.hp_carry and f in self.hp_carry:
                 f.hp = min(self.hp_carry[f], f.hp_max)
 
+    def play_end_jingle(self):
+        """Victory or defeat, for the player watching the result."""
+        if self.plays_sound:
+            play_music(None)  # the jingle ends the fight music
+        play_sound('victory' if self.main_player in self.winners else 'defeat')
+
     def queue(self, f, i):
         if i not in self.order:
             self.order[i] = []
@@ -433,6 +469,10 @@ class BaseFight(object):
 
     def show(self, *args, **kwargs):
         pass
+
+    def sound(self, effect):
+        if self.plays_sound:
+            play_sound(effect)
 
     def show_win_message(self, who_shows_ascii=None, alternative_printing_fn=None):
         self.cls()

@@ -39,6 +39,8 @@ RANK1_REP = 2
 
 class MasterTeaching(BaseEncounter):
     """The master shares a true fight fact as a saying (see happenings/teachings.py)."""
+    music = 'teaching'
+
     thematic_only = True  # practice at school only
     last_id = None  # not saved: just avoids the same saying twice in a row
 
@@ -64,6 +66,8 @@ class MasterTeaching(BaseEncounter):
 
 
 class MasterTrial(BaseEncounter):
+    music = 'practice'
+
     def check_if_happens(self):
         p = self.player
         return (
@@ -131,6 +135,8 @@ class MasterTrial(BaseEncounter):
 
 
 class SchoolBullying(BaseEncounter):
+    music = 'practice'
+
     def check_if_happens(self):
         p = self.p
         return not p.is_master and p.school_rank > 1 and rnd() <= ENC_CH_SCHOOL_BULLYING
@@ -157,6 +163,8 @@ class SchoolBullying(BaseEncounter):
 
 
 class SchoolChallenge(BaseEncounter):
+    music = 'practice'
+
     def check_if_happens(self):
         p = self.p
         return (
@@ -230,6 +238,8 @@ class SchoolChallenge(BaseEncounter):
 
 
 class Students(BaseEncounter):
+    music = 'own_school'
+
     def check_if_happens(self):
         return (
             self.p.is_master

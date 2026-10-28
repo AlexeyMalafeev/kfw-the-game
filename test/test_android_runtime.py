@@ -18,6 +18,13 @@ class FakeHost:
         self.finished_states = []
         self.saved = False
         self.line_answers = ["1"]
+        self.tunes = []
+
+    def playMusic(self, tune):
+        self.tunes.append(tune)
+
+    def playSound(self, effect):
+        pass
 
     def isClosed(self):
         return False
@@ -92,6 +99,8 @@ def test_android_runtime_new_game_save_and_load(tmp_path):
 
     assert status == "finished"
     assert host.finished_states == ["finished"]
+    # character creation, then the first town day
+    assert host.tunes[:2] == ["02_choosing_a_style", "03_morning_market"]
     save_path = home / "save" / "save.txt"
     assert save_path.is_file()
     save_data = json.loads(save_path.read_text())

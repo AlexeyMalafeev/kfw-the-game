@@ -21,6 +21,10 @@
     <string name="main_menu">Главное меню</string>
     <string name="text_smaller">Уменьшить текст</string>
     <string name="text_larger">Увеличить текст</string>
+    <string name="music_toggle">Музыка</string>
+    <string name="effects_toggle">Звуковые эффекты</string>
+    <string name="state_on">Вкл.</string>
+    <string name="state_off">Выкл.</string>
     <string name="send">Ввести</string>
     <string name="text_input_hint">Ваш ответ</string>
     <string name="continue_input">Далее</string>

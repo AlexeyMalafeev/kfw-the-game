@@ -79,6 +79,10 @@ locations, not files under `app/build/generated/`. No manual copy step is needed
   horizontally when they are wider than the screen. Scroll vertically for history.
   A− / A+ changes text size and remembers it. Long transcripts are capped at 400,000
   characters to bound memory use.
+- Music and fight sound effects play throughout (see `docs/audio.md`). The ♪ and FX
+  toolbar buttons turn music and effects on or off (dimmed when off, remembered); the
+  phone's media volume sets the loudness. Music pauses while the app is in the
+  background.
 - **State** in the day menu opens character information and the original Save / Load /
   Save and Quit commands. Returning to the title with the Android Back button or the ‹
   button asks for confirmation because it discards progress after the last save.
@@ -129,12 +133,16 @@ be loaded and exported. Python diagnostics also go to Logcat.
   unwrapped lines and rebuilds the displayed text from them whenever the wrap width
   changes; `LineWrapper.java` picks the break points from measured glyph widths (so
   Cyrillic fallback glyphs and odd font sizes are measured, not guessed).
+- `GameAudio.java` plays the soundtrack and effects from the APK's `audio/` assets
+  (copied from the repository's `audio/` folder by `syncAssetsMain`); Python reaches it
+  through `GameHost.playMusic` / `playSound`. Details in `docs/audio.md`.
 - `SaveRepository.java` validates, lists, imports and exports saves, including canonical
   path checks and duplicate-name handling.
 - The only changes to desktop UI code are optional frontend hooks in
-  `kf_lib/ui/_frontend.py`: key input, clear-screen, presentation of the current menu
-  and a `wraps_lines` flag that makes `show()` skip its fixed-width justification. With
-  no frontend installed, terminal behavior is unchanged.
+  `kf_lib/ui/_frontend.py`: key input, clear-screen, presentation of the current menu,
+  a `wraps_lines` flag that makes `show()` skip its fixed-width justification, and the
+  music and sound players. With no frontend installed, terminal behavior is unchanged
+  and the game is silent.
 
 ## Verification
 

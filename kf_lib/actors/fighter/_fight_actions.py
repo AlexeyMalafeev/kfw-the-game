@@ -14,6 +14,12 @@ from kf_lib.ui import cyan, get_bar, green, red, style, yellow
 from kf_lib.utils import choose_adverb, rnd, rndint_2d
 
 
+# move features of a bladed strike: it plays the 'hit_weapon' sound
+BLADED_FEATURES: Final = frozenset(
+    {'slash', 'stab', 'chop', 'sword', 'saber', 'spear', 'knife', 'axe'}
+)
+
+
 class FighterWithActions(FighterAPI, ABC):
     # per-fighter block power factor, a hook for future techs (non-tech-based);
     # NOT to be confused with StrikeMechanics.BLOCK_POWER (the global constant)
@@ -31,7 +37,9 @@ class FighterWithActions(FighterAPI, ABC):
     def apply_bleeding(self) -> None:
         if self.bleeding:
             self.change_hp(-self.bleeding)
+            self.current_fight.sound('bleeding')
             if self.hp <= 0:
+                self.current_fight.sound('ko')
                 self.current_fight.display(
                     _('{name} {msg}').format(
                         name=tr_fighter_name(self.name),
@@ -82,6 +90,7 @@ class FighterWithActions(FighterAPI, ABC):
                 self.dam = 0
                 if compl >= 1:
                     self.current_fight.display(yellow(_('Miss!')))
+                    self.current_fight.sound('whiff')
                     self.cause_off_balance()
             if self.action.dist_change:
                 self.current_fight.display(yellow(_('Fail!')))
@@ -127,6 +136,7 @@ class FighterWithActions(FighterAPI, ABC):
                     )
                 )
             )
+            self.current_fight.sound('dodge')
             self.set_ascii(prefix + 'Dodge')
             self.defended = True
             if self.fight_stats is not None:
@@ -153,6 +163,8 @@ class FighterWithActions(FighterAPI, ABC):
         atkr.dam = round(atkr.dam)
         if blocked and atkr.dam:
             self.try_qi_shield()  # may turn a partial block into a full one
+        if blocked:
+            self.current_fight.sound('block' if atkr.dam else 'block_full')
         if blocked and self.fight_stats is not None:
             self.fight_stats['blocks'] += 1
             if not atkr.dam:  # full block: no damage got through
@@ -169,6 +181,7 @@ class FighterWithActions(FighterAPI, ABC):
             if self.fight_stats is not None:
                 self.fight_stats['counters'] += 1
             self.current_fight.display(yellow(_('+COUNTER!+')))
+            self.current_fight.sound('counter')
             new_action = random.choice(cand_moves)
             self.action = new_action
             s = _('{n1}: {move} @ {n2}').format(
@@ -267,15 +280,18 @@ class FighterWithActions(FighterAPI, ABC):
     def catch_breath(self) -> None:
         """A function of the Catch Breath move."""
         self.change_stamina(self.CATCH_BREATH_GAIN_MULT * self.stamina_gain)
+        self.current_fight.sound('catch_breath')
 
     def focus(self) -> None:
         """A function of the Focus move."""
         self.change_qp(self.FOCUS_GAIN_MULT * self.qp_gain)
+        self.current_fight.sound('focus')
 
     def guard(self) -> None:
         """This is called with eval as a function of the Guard move."""
         self.dfs_bonus *= self.guard_dfs_bonus * self.GUARD_POWER
         self.guarding = True  # until the next turn; shown as a status mark
+        self.current_fight.sound('guard')
         # only the Guard techs make it restore (since 2026-10-25; a flat 10
         # stamina and 10 qi for everyone from 2026-10-23)
         if self.guard_restore:
@@ -287,11 +303,23 @@ class FighterWithActions(FighterAPI, ABC):
         # todo let try_* functions return True or False to determine skip
         tgt = self.target
         if self.dam > 0:
+            fs = self.fight_stats
+            crits, epics = fs['criticals'], fs['epics']
             # criticals/epics need an undefended strike: a block, even one that
             # absorbs only part of the damage, denies them (since 2026-10)
             if not tgt.defended:
                 self.try_critical()
                 self.try_epic()
+                # a partial block already played its own sound in defend()
+                if fs['epics'] > epics:
+                    effect = 'epic'
+                elif fs['criticals'] > crits:
+                    effect = 'critical'
+                elif self.action.features & BLADED_FEATURES:
+                    effect = 'hit_weapon'
+                else:
+                    effect = 'hit'
+                self.current_fight.sound(effect)
             self.dam = max(self.dam - tgt.toughness, 0)
             if tgt.dam_reduc:
                 self.dam *= (1 - tgt.dam_reduc)
@@ -319,6 +347,10 @@ class FighterWithActions(FighterAPI, ABC):
         self.current_fight.display(s)
         self.current_fight.display('=' * len(s))
         if m.dist_change:
+            if abs(m.dist_change) >= 2:
+                self.current_fight.sound('rush' if m.dist_change < 0 else 'retreat')
+            else:
+                self.current_fight.sound('step')
             self.change_distance(m.dist_change, self.target)
             self.check_move_failed()
             if m.dist_change < 0 and self.guard_while_advancing:
@@ -382,6 +414,7 @@ class FighterWithActions(FighterAPI, ABC):
         atkr = self.target
         if atkr.weapon and self.block_disarm and rnd() <= self.block_disarm:
             atkr.disarm()
+            self.current_fight.sound('disarm')
             self.current_fight.display(
                 _('{n1} {verb} {n2} while blocking').format(
                     n1=tr_fighter_name(self.name),
@@ -400,6 +433,7 @@ class FighterWithActions(FighterAPI, ABC):
         absorbed = min(atkr.dam, self.qp * self.QI_SHIELD_HP_PER_QP)
         self.change_qp(-math.ceil(absorbed / self.QI_SHIELD_HP_PER_QP))
         atkr.dam -= absorbed
+        self.current_fight.sound('qi_shield')
         self.current_fight.display(
             cyan(
                 _("{name}'s qi absorbs {hp} HP!").format(
@@ -437,6 +471,7 @@ class FighterWithActions(FighterAPI, ABC):
         ):
             fury_dur = rndint_2d(self.DUR_FURY_MIN, self.DUR_FURY_MAX) // self.speed_full
             self.add_status('fury', fury_dur)
+            self.current_fight.sound('fury')
             s = self.current_fight.get_f_name_string(self)
             self.current_fight.display(
                 _('{name} {msg}').format(
@@ -466,6 +501,7 @@ class FighterWithActions(FighterAPI, ABC):
         if not tgt.hp:
             if tgt.resist_ko and rnd() <= tgt.resist_ko:
                 tgt.hp = 1
+                self.current_fight.sound('resist_ko')
                 # self.log(f'{tgt.name} resists being knocked out.')
                 # tgt.log('Resists being knocked out.')
                 self.current_fight.display(
@@ -476,6 +512,7 @@ class FighterWithActions(FighterAPI, ABC):
                 )
             else:
                 self.kos_this_fight += 1
+                self.current_fight.sound('ko')
                 self.log(_('Knocks out {name}.').format(name=tr_fighter_name(tgt.name)))
                 tgt.log(_('Knocked out by {name}.').format(name=tr_fighter_name(self.name)))
                 if not tgt.ascii_name.startswith('Lying'):

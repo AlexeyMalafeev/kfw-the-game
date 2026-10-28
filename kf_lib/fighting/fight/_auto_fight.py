@@ -1,4 +1,5 @@
 from ._base_fight import BaseFight
+from kf_lib.ui import music
 
 
 class AutoFight(BaseFight):
@@ -34,13 +35,19 @@ class AutoFight(BaseFight):
             self.main_player = self.side_a[0]
         self.handle_items()
         self.prepare_fighters()
-        self.handle_prefight_quote()
-        self.fight_loop()
-        self.disarm_all()
-        self.cancel_items_for_all()
-        if self.main_player.is_human and not self.main_player.auto_fight_all:
-            self.show_win_message()
-            self.post_fight_menu()
+        watched = self.main_player.is_human and not self.main_player.auto_fight_all
+        # the fight music only for fights shown blow by blow (NormalFight)
+        tune = self.choose_music() if self.plays_sound and watched else None
+        with music(tune, enabled=tune is not None):
+            self.handle_prefight_quote()
+            self.sound('fight_start')
+            self.fight_loop()
+            self.disarm_all()
+            self.cancel_items_for_all()
+            if watched:
+                self.play_end_jingle()
+                self.show_win_message()
+                self.post_fight_menu()
         if self.main_player.is_player:
             self.handle_injuries()
             self.handle_gossip()

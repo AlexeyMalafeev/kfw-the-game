@@ -9,7 +9,7 @@ from kf_lib.constants import experience
 from kf_lib.happenings import story
 from kf_lib.i18n import _
 from kf_lib.kung_fu import styles
-from kf_lib.ui import cls, get_int_from_user, grey, menu, yn
+from kf_lib.ui import MUSIC, cls, get_int_from_user, grey, menu, play_music, yn
 from kf_lib.utils import rndint
 from ._base_game import BaseGame, DEFAULT_TOWN_STAT
 
@@ -80,6 +80,7 @@ class NewGame(BaseGame):
         customize_settings='?',
     ):
         self.silent_ending = silent_ending
+        play_music(MUSIC['new_game'])
         # options
         if not num_players:
             num_players = get_int_from_user(_('Number of players?'), 1, MAX_NUM_PLAYERS)

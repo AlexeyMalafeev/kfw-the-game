@@ -53,6 +53,18 @@ public final class GameHost {
         }
     }
 
+    public void playMusic(String tune) {
+        if (!closed) {
+            activity.playMusic(this, tune);
+        }
+    }
+
+    public void playSound(String effect) {
+        if (!closed) {
+            activity.playSound(this, effect);
+        }
+    }
+
     public synchronized void presentMenu(String keys, String labelsJson, boolean weak) {
         if (closed) {
             return;

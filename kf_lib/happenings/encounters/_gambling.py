@@ -30,6 +30,8 @@ REP_PEN_PRIZE_FIGHTING = -5
 
 
 class Gambler(BaseEncounter):
+    music = 'seedy'
+
     def __init__(self, player, check_if_happens=True):
         self.bet = 0
         self.won = 0
@@ -154,6 +156,8 @@ class Gambler(BaseEncounter):
 
 
 class PrizeFighting(BaseEncounter):
+    music = 'seedy'
+
     def check_if_happens(self):
         return rnd() <= ENC_CH_PRIZE_FIGHTING
 

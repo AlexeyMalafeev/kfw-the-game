@@ -118,11 +118,11 @@ package; see `docs/ui.md`.)
 
 ## audio/ — chiptune soundtrack and sound effects
 
-Generates the game's music and sound effects as code, for the Android
-release (not wired into the game yet). Like `try_rich.py`, it imports
-nothing from `kf_lib` and has no chdir hack; run it from its directory:
-`cd dev_scripts/audio && ../../.venv/bin/python render.py` (about 8 s).
-Needs numpy and scipy from the dev venv.
+Generates the game's music and sound effects as code; the Android app plays
+them (the audio system as built is in `docs/audio.md`). Like `try_rich.py`,
+it imports nothing from `kf_lib` and has no chdir hack; run it from its
+directory: `cd dev_scripts/audio && ../../.venv/bin/python render.py`.
+Needs numpy, scipy and (for `--game`) soundfile from the dev venv.
 
 - `chipsynth.py` — a small synth imitating the NES sound chip: pulse waves
   (12.5/25/50% duty, band-limited), a 16-step triangle, sample-and-hold noise
@@ -131,17 +131,24 @@ Needs numpy and scipy from the dev venv.
   notation on a 16th-note grid: `E5:4` (note, length in 16ths), `r:2`
   (rest), `[E4G4B4]:8` (chord as a fast arpeggio), `D5>E5:8` (slide),
   `|` bar lines, which the parser checks; drums are one character per
-  step. Supports 3/4 time and swing. `write_wav` sets loudness (RMS of the
-  whole file, or of its loudest window) rather than peak.
+  step. Supports 3/4 time and swing. `finish` masters a render and sets its
+  loudness (RMS of the whole file, of its loudest window, or of a given
+  slice) rather than peak; `write_wav` also writes it.
 - `tunes.py` — the 22 scores; accompaniment is generated from chord names
   by `chord_line`. Each tune has a loudness target (calm ones sit lower).
 - `sfx.py` — the fight sound effects and jingles, each with a loudness
   target relative to a hit.
-- `render.py` — writes `out/music/*.wav` (each tune's intro, its loop twice,
-  and a fade: a listening preview, not a loop file), `out/sfx/*.wav`, and
-  `out/index.html`, a page with a player for every file. `out/` is
-  gitignored (about 170 MB of WAV).
-- `playlist.md` — which tune plays where, and what each effect is for.
+- `render.py` — with no flag (or `--previews`, about 8 s) writes listening
+  previews: `out/music/*.wav` (each tune's intro, its loop twice, and a
+  fade), `out/sfx/*.wav`, and `out/index.html`, a page with a player for
+  every file. `out/` is gitignored (about 170 MB of WAV). `--game` (about
+  20 s) writes the files the game plays to the committed `audio/` folder:
+  per tune an intro file and a seamless loop file whose end wraps the
+  ringing tail into its start (method in `docs/audio.md`), and every effect
+  and jingle as a one-shot, all OGG Vorbis (about 9 MB). Re-run `--game`
+  and commit `audio/` after changing a score.
+- `playlist.md` — the soundtrack plan: which tune plays where, and what each
+  effect is for (as wired into the game: `docs/audio.md`).
 
 ## i18n — localization catalog tooling
 

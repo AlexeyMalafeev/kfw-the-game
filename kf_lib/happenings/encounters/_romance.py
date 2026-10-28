@@ -21,6 +21,7 @@ RIVAL_LOSS_PROGRESS = 3
 
 class NewRomance(BaseEncounter):
     """Meet a potential love interest (only while not courting or married)."""
+    music = 'romance'
 
     def check_if_happens(self):
         p = self.p
@@ -80,6 +81,7 @@ class NewRomance(BaseEncounter):
 
 class RomanticDate(BaseEncounter):
     """A date while courting; raises the player's romance_progress."""
+    music = 'romance'
 
     def check_if_happens(self):
         p = self.p
@@ -107,6 +109,7 @@ class RomanticDate(BaseEncounter):
 
 class JealousRival(BaseEncounter):
     """A rival suitor challenges the player to a duel while courting."""
+    music = 'romance'
 
     def check_if_happens(self):
         p = self.p

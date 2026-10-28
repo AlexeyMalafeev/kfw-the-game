@@ -13,6 +13,8 @@
     <item name="home_button" type="id" />
     <item name="text_smaller" type="id" />
     <item name="text_larger" type="id" />
+    <item name="music_toggle" type="id" />
+    <item name="effects_toggle" type="id" />
     <item name="console" type="id" />
     <item name="console_scroll" type="id" />
     <item name="input_scroll" type="id" />

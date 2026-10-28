@@ -1,3 +1,4 @@
+import functools
 import random
 
 from kf_lib.actors import quotes
@@ -13,8 +14,19 @@ from kf_lib.happenings import encounters
 from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
 from kf_lib.kung_fu import techniques
 from kf_lib.things import items
-from kf_lib.ui import bold, green, strip_tags, yellow, yn
+from kf_lib.ui import MUSIC, bold, green, music, strip_tags, yellow, yn
 from kf_lib.utils import add_sign, enum_words, Integer, rnd, rndint
+
+
+def scene_music(context):
+    """Decorator: the day action plays MUSIC[context] for a watching player."""
+    def decorate(method):
+        @functools.wraps(method)
+        def wrapper(self, *args, **kwargs):
+            with music(MUSIC[context], enabled=self.shows_output):
+                return method(self, *args, **kwargs)
+        return wrapper
+    return decorate
 
 
 # todo refactor _base_player into specific modules
@@ -61,6 +73,7 @@ CH_CHILD_COST = 0.05  # daily per-child chance of a small expense
 
 class BasePlayer(Fighter):
     is_player = True
+    shows_output = False  # the game's screens are shown for this player's turns
     savable_atts = '''exp is_master new_school_name money reputation 
     inactive inact_status inventory ended_turn accompl accompl_dates stats_dict
     move_usage banned_from_school schools_allied school_techs
@@ -1111,6 +1124,7 @@ class BasePlayer(Fighter):
         self.money -= amount
         self.change_stat('stolen_from', amount)
 
+    @scene_music('own_school')
     def teach_students(self):
         if not self.students:
             self.msg(_('You don\'t have any students yet.'))
@@ -1169,6 +1183,7 @@ class BasePlayer(Fighter):
         if item in items.FIGHT_ITEMS:
             self.change_stat('fight_items_used', 1)
 
+    @scene_music('own_school')
     def visit_masters(self):
         """Master-only day action: convince another school's master to join the
         kung-fu federation — by persuasion (reputation) or in a spar."""
@@ -1235,6 +1250,7 @@ class BasePlayer(Fighter):
             self.pak()
         return True  # to end turn
 
+    @scene_music('romance')
     def visit_sweetheart(self):
         """Day action: court the sweetheart / spend time with the spouse."""
         p = self

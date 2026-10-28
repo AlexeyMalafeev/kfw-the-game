@@ -7,6 +7,8 @@ CH_STORY_DEVELOPS = 0.07
 
 
 class ContinueStory(BaseEncounter):
+    music = 'story'
+
     def check_if_happens(self):
         p = self.player
         s = p.current_story

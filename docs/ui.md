@@ -146,6 +146,10 @@ key read (a read consumes the presented menu, so an invalid key must not lose it
 menus also report that the frontend must offer a way to dismiss them. With no frontend
 installed, every hook falls back to the original terminal behavior.
 
+Two more hooks, `music_player` and `sound_player`, receive the tunes and effects the
+game names through `kf_lib/ui/_sound.py`; with none installed (desktop) the game is
+silent. See `docs/audio.md`.
+
 On Android, `android/python/kfw_android.py` installs the hooks and redirects standard
 input/output to `GameHost`. Native buttons present the same choices as the terminal,
 while `AnsiParser` and `ConsoleView` preserve the colors emitted by `render()` rather

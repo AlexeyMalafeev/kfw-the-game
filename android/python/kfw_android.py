@@ -92,6 +92,8 @@ class AndroidRuntime:
             clear_handler=self.clear,
             menu_handler=self.present_menu,
             wraps_lines=True,
+            music_player=self.play_music,
+            sound_player=self.play_sound,
         )
         _rich_format.set_colors_enabled(True)
 
@@ -140,6 +142,15 @@ class AndroidRuntime:
     def clear(self):
         self.ensure_open()
         self.host.clear()
+
+    def play_music(self, tune):
+        # never raises: a closing session just goes quiet
+        if not self.closed and not self.host.isClosed():
+            self.host.playMusic(tune or "")
+
+    def play_sound(self, effect):
+        if not self.closed and not self.host.isClosed():
+            self.host.playSound(effect)
 
     def present_menu(self, keys, options, weak=False):
         from kf_lib.ui import strip_tags

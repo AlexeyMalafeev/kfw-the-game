@@ -6,6 +6,7 @@ from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
 from kf_lib.actors.player import AIPlayer, HumanPlayer
 from kf_lib.fighting import fight
 from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
+from kf_lib.ui import MUSIC, fight_music, music
 
 
 BET_REPUTATION_PENALTY = -3
@@ -95,11 +96,13 @@ class Tournament(object):
                 except IndexError:
                     winners_list.append(f1)
                     break
-                fight_obj = fight.fight(f1, f2,
-                                        environment_allowed=False,
-                                        items_allowed=False,
-                                        return_fight_obj=True,
-                                        )
+                final = n_remaining_participants == 2
+                with fight_music(MUSIC['tournament_final' if final else 'tournament']):
+                    fight_obj = fight.fight(f1, f2,
+                                            environment_allowed=False,
+                                            items_allowed=False,
+                                            return_fight_obj=True,
+                                            )
                 winners_list.extend(fight_obj.winners)
             remaining_participants = winners_list
             n_remaining_participants = len(remaining_participants)
@@ -209,6 +212,11 @@ class Tournament(object):
                 p.record_gamble_lost(bet_amount)
 
     def run(self):
+        watched = any(p.shows_output for p in self.g.players)
+        with music(MUSIC['tournament'], enabled=watched), fight_music(MUSIC['tournament']):
+            self._run()
+
+    def _run(self):
         self.g.cls()
         if self.tourn_type:
             tourn_type_str = _('({} level)').format(tr_name(self.tourn_type))

@@ -13,6 +13,8 @@ REP_REFORM_ENEMY = 10
 
 
 class Ambush(BaseEncounter):
+    music = 'crime'
+
     def __init__(self, player, check_if_happens=True):
         self.e = None
         self.thugs = []

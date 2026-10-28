@@ -21,6 +21,11 @@
     <string name="main_menu">Main menu</string>
     <string name="text_smaller">Smaller text</string>
     <string name="text_larger">Larger text</string>
+    <string name="music_toggle">Music</string>
+    <string name="effects_toggle">Sound effects</string>
+    <string name="state_on">On</string>
+    <string name="toggle_state" translatable="false">%1$s: %2$s</string>
+    <string name="state_off">Off</string>
     <string name="send">Send</string>
     <string name="text_input_hint">Your answer</string>
     <string name="continue_input">Continue</string>

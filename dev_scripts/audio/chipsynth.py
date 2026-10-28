@@ -376,20 +376,33 @@ def loudness_db(x, window_s=None):
     return 10 * np.log10(p)
 
 
-def write_wav(path, x, loudness=-16.0, window_s=None, max_peak=0.97):
-    """Master, set loudness (see `loudness_db`), cap the peak, write.
+def finish(x, loudness=-16.0, window_s=None, max_peak=0.97, ref=None):
+    """Master, set loudness (see `loudness_db`) and cap the peak.
 
-    Returns the final peak level, so callers can spot capped files.
+    `ref` (a slice of the mastered signal) is what the loudness is measured
+    on; by default the whole signal. Returns (signal, final peak), so callers
+    can spot capped files.
     """
     x = master(np.asarray(x, dtype=float))
-    x = x * 10 ** ((loudness - loudness_db(x, window_s)) / 20)
-    peak = np.max(np.abs(x))
+    m = x if ref is None else x[ref]
+    x = x * 10 ** ((loudness - loudness_db(m, window_s)) / 20)
+    peak = np.max(np.abs(x if ref is None else x[ref]))
     if peak > max_peak:
         x *= max_peak / peak
-    data = (x * 32767).astype('<i2').tobytes()
+    return x, min(peak, max_peak)
+
+
+def write_wav(path, x, loudness=-16.0, window_s=None, max_peak=0.97):
+    """`finish`, then write a 16-bit mono WAV. Returns the final peak."""
+    x, peak = finish(x, loudness, window_s, max_peak)
+    write_pcm(path, x)
+    return peak
+
+
+def write_pcm(path, x):
+    data = (np.clip(x, -1, 1) * 32767).astype('<i2').tobytes()
     with wave.open(str(path), 'wb') as w:
         w.setnchannels(1)
         w.setsampwidth(2)
         w.setframerate(SR)
         w.writeframes(data)
-    return min(peak, max_peak)

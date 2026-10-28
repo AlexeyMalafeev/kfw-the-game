@@ -54,6 +54,8 @@ REP_PEN_BREAK_NOT_PAY = -1
 
 
 class Criminal(BaseEncounter):
+    music = 'crime'
+
     def __init__(self, player, check_if_happens=True):
         self.c = None
         self.allies = None
@@ -109,6 +111,8 @@ class Criminal(BaseEncounter):
 
 
 class Extorters(BaseEncounter):
+    music = 'crime'
+
     def check_if_happens(self):
         return rnd() <= self.p.game.crime / 4
 
@@ -178,6 +182,8 @@ class Extorters(BaseEncounter):
 
 
 class GangWar(BaseEncounter):
+    music = 'crime'
+
     def check_if_happens(self):
         return rnd() <= self.player.game.crime / 8
 
@@ -215,6 +221,8 @@ class GangWar(BaseEncounter):
 
 
 class HelpPolice(BaseEncounter):
+    music = 'crime'
+
     def check_if_happens(self):
         return rnd() <= self.player.game.crime / 4
 
@@ -277,6 +285,8 @@ class HelpPolice(BaseEncounter):
 
 
 class Robbers(BaseEncounter):
+    music = 'crime'
+
     def __init__(self, player, check_if_happens=True):
         self.num_r = 0
         self.r = None
@@ -389,6 +399,8 @@ class Robbers(BaseEncounter):
 
 
 class RobbingSomeone(BaseEncounter):
+    music = 'crime'
+
     def check_if_happens(self):
         return rnd() <= self.player.game.crime / 4
 
@@ -424,6 +436,8 @@ class RobbingSomeone(BaseEncounter):
 
 
 class Thief(BaseEncounter):
+    music = 'crime'
+
     def __init__(self, player, check_if_happens=True):
         self.players_items = None
         BaseEncounter.__init__(self, player, check_if_happens)

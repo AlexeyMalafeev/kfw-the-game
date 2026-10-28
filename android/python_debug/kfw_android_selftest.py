@@ -18,6 +18,8 @@ class ScriptedHost:
         self.saved = False
         self.line_answers = ["1"]
         self.menu_count = 0
+        self.tunes = []
+        self.effects = []
 
     def isClosed(self):
         return False
@@ -27,6 +29,12 @@ class ScriptedHost:
 
     def clear(self):
         self.output.append("\n--- clear ---\n")
+
+    def playMusic(self, tune):
+        self.tunes.append(tune)
+
+    def playSound(self, effect):
+        self.effects.append(effect)
 
     def presentMenu(self, keys, labels, weak):
         self.pending = (keys, json.loads(labels), weak)

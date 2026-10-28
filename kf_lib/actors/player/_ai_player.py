@@ -198,6 +198,8 @@ class SmartAIP(AIPlayer):
 
 
 class SmartAIPVisible(SmartAIP):
+    shows_output = True
+
     def cls(self):
         cls()
 

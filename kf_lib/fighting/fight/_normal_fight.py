@@ -5,6 +5,8 @@ from ._auto_fight import AutoFight
 class NormalFight(AutoFight):
     """Does not only have fight constants, but also outputs what happens during the fight."""
 
+    plays_sound = True
+
     def cls(self):
         self.main_player.cls()
 

@@ -49,6 +49,7 @@ public final class MainActivity extends Activity {
 
     private SharedPreferences preferences;
     private SaveRepository saves;
+    private GameAudio audio;
     private GameHost currentHost;
     private Thread gameThread;
     private ConsoleView console;
@@ -88,6 +89,7 @@ public final class MainActivity extends Activity {
         }
         textSize = preferences.getFloat(TEXT_SIZE, 13);
         saves = new SaveRepository(getFilesDir());
+        audio = new GameAudio(this, preferences);
         showMain();
     }
 
@@ -104,6 +106,7 @@ public final class MainActivity extends Activity {
         lineContainer = null;
         lineInput = null;
         inputPanel = null;
+        audio.playMusic(GameAudio.TITLE_TUNE);
 
         ScrollView scroll = new ScrollView(this);
         scroll.setId(R.id.main_root);
@@ -232,6 +235,20 @@ public final class MainActivity extends Activity {
         Button larger = toolbarButton(R.id.text_larger, "A+", R.string.text_larger);
         larger.setOnClickListener(view -> changeTextSize(1));
         toolbar.addView(larger);
+        Button musicToggle = toolbarButton(R.id.music_toggle, "♪", R.string.music_toggle);
+        musicToggle.setOnClickListener(view -> {
+            audio.setMusicOn(!audio.isMusicOn());
+            showToggle(musicToggle, R.string.music_toggle, audio.isMusicOn());
+        });
+        showToggle(musicToggle, R.string.music_toggle, audio.isMusicOn());
+        toolbar.addView(musicToggle);
+        Button effectsToggle = toolbarButton(R.id.effects_toggle, "FX", R.string.effects_toggle);
+        effectsToggle.setOnClickListener(view -> {
+            audio.setEffectsOn(!audio.isEffectsOn());
+            showToggle(effectsToggle, R.string.effects_toggle, audio.isEffectsOn());
+        });
+        showToggle(effectsToggle, R.string.effects_toggle, audio.isEffectsOn());
+        toolbar.addView(effectsToggle);
         root.addView(toolbar, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(52)));
 
@@ -296,6 +313,29 @@ public final class MainActivity extends Activity {
                 dp(58), ViewGroup.LayoutParams.WRAP_CONTENT);
         button.setLayoutParams(params);
         return button;
+    }
+
+    /** A toolbar on/off toggle: dimmed when off; the state is also announced. */
+    private void showToggle(Button button, int label, boolean on) {
+        button.setAlpha(on ? 1f : 0.35f);
+        button.setContentDescription(getString(R.string.toggle_state, getString(label),
+                getString(on ? R.string.state_on : R.string.state_off)));
+    }
+
+    void playMusic(GameHost source, String tune) {
+        runOnUiThread(() -> {
+            if (source == currentHost) {
+                audio.playMusic(tune);
+            }
+        });
+    }
+
+    void playSound(GameHost source, String effect) {
+        runOnUiThread(() -> {
+            if (source == currentHost) {
+                audio.playEffect(effect);
+            }
+        });
     }
 
     void appendConsole(GameHost source, String text) {
@@ -676,10 +716,23 @@ public final class MainActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        audio.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        audio.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
         // A recreated activity starts at the title and cannot reattach to the old
         // game, so always stop it rather than leave its thread blocked on input.
         stopGameThread();
+        audio.release();
         super.onDestroy();
     }
 

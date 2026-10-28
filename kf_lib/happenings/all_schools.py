@@ -3,7 +3,7 @@ from collections import deque
 
 from kf_lib.fighting import fight
 from kf_lib.i18n import _, tr_fighter_name, tr_name
-from kf_lib.ui import yn
+from kf_lib.ui import MUSIC, fight_music, music, yn
 
 
 ALL_SCHOOLS_PART_EXP = 20  # small exp for winning-roster players who were not the final winner
@@ -28,7 +28,9 @@ class AllSchoolsTournament:
         self.rosters = {}  # {school_name: [fighters weakest first]}
         self.final_fighter = None  # the last fighter standing
         self.champion = None
-        self.run()
+        watched = any(p.shows_output for p in game.players)
+        with music(MUSIC['tournament'], enabled=watched), fight_music(MUSIC['tournament']):
+            self.run()
 
     def _gather_rosters(self):
         g = self.g

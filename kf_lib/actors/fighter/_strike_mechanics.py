@@ -135,6 +135,7 @@ class StrikeMechanics(FighterAPI, ABC):
             )
         )
         self.target.bleeding += max(1, round(self.dam * self.BLEEDING_PART_OF_DAM))
+        self.current_fight.sound('bleeding')
 
     def cause_fall(self) -> None:
         lying_dur = rndint_2d(self.DUR_LYING_MIN, self.DUR_LYING_MAX) // self.speed_full
@@ -143,6 +144,7 @@ class StrikeMechanics(FighterAPI, ABC):
         fall_dam = int(rndint(*self.FALL_DAMAGE) * self.fall_damage_mult)
         self.change_hp(-fall_dam)
         self.set_ascii('Falling')
+        self.current_fight.sound('knockdown')
         self.current_fight.display(
             _(' falls to the ground! {dmg} ({hp})').format(
                 dmg=red(_('-{dam} HP').format(dam=fall_dam)), hp=self.hp
@@ -155,6 +157,7 @@ class StrikeMechanics(FighterAPI, ABC):
         opp = self.target
         self.change_distance(dist, opp)
         self.set_ascii('Knockback')
+        self.current_fight.sound('knockback')
         self.ascii_buffer += dist
         self.current_fight.display(
             ngettext(
@@ -183,6 +186,7 @@ class StrikeMechanics(FighterAPI, ABC):
         """Shock is worse than stun."""
         shock_dur = rndint_2d(self.DUR_SHOCK_MIN, self.DUR_SHOCK_MAX) // self.speed_full
         self.add_status('shocked', shock_dur)
+        self.current_fight.sound('shock')
         self.add_status('skip', shock_dur)
         prefix = 'Lying ' if self.ascii_name.startswith('Lying') else ''
         self.set_ascii(prefix + 'Hit Effect')
@@ -200,6 +204,7 @@ class StrikeMechanics(FighterAPI, ABC):
         """Stun is not as bad as shock."""
         stun_dur = rndint_2d(self.DUR_STUN_MIN, self.DUR_STUN_MAX) // self.speed_full
         self.add_status('stunned', stun_dur)
+        self.current_fight.sound('stun')
         self.add_status('skip', stun_dur)
         if self.fight_stats is not None:
             self.fight_stats['stunned'] += 1
@@ -358,6 +363,7 @@ class StrikeMechanics(FighterAPI, ABC):
         tgt = self.target
         if tgt.weapon and self.hit_disarm and rnd() <= self.hit_disarm:
             tgt.disarm()
+            self.current_fight.sound('disarm')
             self.current_fight.display(
                 _('{n1} {verb} {n2} while attacking').format(
                     n1=tr_fighter_name(self.name),

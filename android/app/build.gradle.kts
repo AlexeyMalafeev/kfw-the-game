@@ -118,6 +118,11 @@ val syncAssetsMain by tasks.registering(Sync::class) {
         include("LICENSE")
         rename("LICENSE", "LICENSE.txt")
     }
+    // music and sound effects, rendered by dev_scripts/audio/render.py --game
+    from(repositoryRoot) {
+        include("audio/music/*.ogg")
+        include("audio/sfx/*.ogg")
+    }
     into("$buildDir/generated/assets/main")
 }
 
