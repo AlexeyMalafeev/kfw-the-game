@@ -1,8 +1,8 @@
 # Dev scripts
 
 Developer utilities in `dev_scripts/`: move generation, profiling, balance
-harnesses, fight-AI training/evaluation, the ML experiment runners, and the
-localization catalog tooling.
+harnesses, fight-AI training/evaluation, the ML experiment runners, the
+localization catalog tooling, and the chiptune music/sound-effect generator.
 Sources: `dev_scripts/` itself plus the modules the scripts drive —
 `kf_lib/testing/testing_tools.py`, `kf_lib/ai/fight_ai_gen.py`,
 `kf_lib/ai/fight_ai_test.py`, `ml/ml_fighter_pwr.py`. Items marked ⚠️ look
@@ -115,6 +115,33 @@ commented-out `from rich import print` in
 shipped in v0.7.4 lives in `kf_lib/ui/_rich_format.py` — a hand-rolled,
 dependency-free module that borrows rich's tag syntax but does not use the
 package; see `docs/ui.md`.)
+
+## audio/ — chiptune soundtrack and sound effects
+
+Generates the game's music and sound effects as code, for the Android
+release (not wired into the game yet). Like `try_rich.py`, it imports
+nothing from `kf_lib` and has no chdir hack; run it from its directory:
+`cd dev_scripts/audio && ../../.venv/bin/python render.py` (about 8 s).
+Needs numpy and scipy from the dev venv.
+
+- `chipsynth.py` — a small synth imitating the NES sound chip: pulse waves
+  (12.5/25/50% duty, band-limited), a 16-step triangle, sample-and-hold noise
+  (long, or a short "metallic" period), 16-level volume, and a drum kit
+  (kick, snare, hats, toms, woodblocks, gong, crash). Scores use a text
+  notation on a 16th-note grid: `E5:4` (note, length in 16ths), `r:2`
+  (rest), `[E4G4B4]:8` (chord as a fast arpeggio), `D5>E5:8` (slide),
+  `|` bar lines, which the parser checks; drums are one character per
+  step. Supports 3/4 time and swing. `write_wav` sets loudness (RMS of the
+  whole file, or of its loudest window) rather than peak.
+- `tunes.py` — the 22 scores; accompaniment is generated from chord names
+  by `chord_line`. Each tune has a loudness target (calm ones sit lower).
+- `sfx.py` — the fight sound effects and jingles, each with a loudness
+  target relative to a hit.
+- `render.py` — writes `out/music/*.wav` (each tune's intro, its loop twice,
+  and a fade: a listening preview, not a loop file), `out/sfx/*.wav`, and
+  `out/index.html`, a page with a player for every file. `out/` is
+  gitignored (about 170 MB of WAV).
+- `playlist.md` — which tune plays where, and what each effect is for.
 
 ## i18n — localization catalog tooling
 
