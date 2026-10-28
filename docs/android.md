@@ -71,9 +71,14 @@ locations, not files under `app/build/generated/`. No manual copy step is needed
 - Text and numeric answers use the Android keyboard. A hardware keyboard also works for
   menu keys; use Shift for the uppercase State commands. A key that is not on the menu
   is ignored and the menu buttons stay.
-- The console keeps the original ANSI colors and monospace ASCII art. Scroll vertically
-  for history and horizontally for wide tables/art. A− / A+ changes text size and remembers
-  it. Long transcripts are capped at 400,000 characters to bound memory use.
+- The console keeps the original ANSI colors and monospace ASCII art. Prose word-wraps
+  to the screen width at the current text size and re-wraps the whole history when the
+  text size or the width (rotation) changes; the game's own 60-column justification is
+  turned off on Android for this. Lines laid out with runs of spaces or of a repeated
+  symbol (tables, fighter panels, HP bars, ASCII art) are never wrapped: scroll them
+  horizontally when they are wider than the screen. Scroll vertically for history.
+  A− / A+ changes text size and remembers it. Long transcripts are capped at 400,000
+  characters to bound memory use.
 - **State** in the day menu opens character information and the original Save / Load /
   Save and Quit commands. Returning to the title with the Android Back button or the ‹
   button asks for confirmation because it discards progress after the last save.
@@ -120,12 +125,16 @@ be loaded and exported. Python diagnostics also go to Logcat.
   any hooks, preventing rapid restart races without freezing the Android UI.
 - `MainActivity.java` owns navigation, native widgets, save transfer and language changes.
 - `ConsoleView.java` and `AnsiParser.java` render streaming ANSI output with bounded
-  history, horizontal art scrolling and text-size controls.
+  history, horizontal art scrolling and text-size controls. The console keeps the
+  unwrapped lines and rebuilds the displayed text from them whenever the wrap width
+  changes; `LineWrapper.java` picks the break points from measured glyph widths (so
+  Cyrillic fallback glyphs and odd font sizes are measured, not guessed).
 - `SaveRepository.java` validates, lists, imports and exports saves, including canonical
   path checks and duplicate-name handling.
 - The only changes to desktop UI code are optional frontend hooks in
-  `kf_lib/ui/_frontend.py`: key input, clear-screen and presentation of the current menu.
-  With no frontend installed, terminal behavior is unchanged.
+  `kf_lib/ui/_frontend.py`: key input, clear-screen, presentation of the current menu
+  and a `wraps_lines` flag that makes `show()` skip its fixed-width justification. With
+  no frontend installed, terminal behavior is unchanged.
 
 ## Verification
 

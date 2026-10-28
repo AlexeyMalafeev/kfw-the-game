@@ -14,7 +14,8 @@ choke points, all of which resolve color markup (see below) before printing:
 - `HumanControlledFighter.show(text, align=True)` — the dominant funnel
   (~370 `.show()` / `.write()` / `.msg()` call sites). `align=True` word-wraps
   and justifies each paragraph to 60 columns via `align_text`
-  (`kf_lib/ui/_align.py`); `align=False` prints as-is. `write()` = `show()` +
+  (`kf_lib/ui/_align.py`), unless the installed frontend wraps lines itself
+  (Android); `align=False` prints as-is. `write()` = `show()` +
   `log()`; `msg()` = `write()` + `pak()`. `NormalFight.display` delegates to
   the human player's `show`, so all interactive fight output passes through
   here too.
@@ -139,7 +140,8 @@ tags inside art would corrupt the picture. Whole-message colors around art
 ## Android frontend
 
 `kf_lib/ui/_frontend.py` provides optional key-reader, clear-screen and current-menu
-hooks. `menu()` and `StateMenu` report their key/label pairs through these hooks before every
+hooks, plus a `wraps_lines` flag: a frontend that word-wraps to its own width sets it so
+`show()` prints paragraphs unjustified instead of hard-wrapping them at 60 columns. `menu()` and `StateMenu` report their key/label pairs through these hooks before every
 key read (a read consumes the presented menu, so an invalid key must not lose it); weak
 menus also report that the frontend must offer a way to dismiss them. With no frontend
 installed, every hook falls back to the original terminal behavior.

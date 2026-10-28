@@ -108,3 +108,15 @@ def test_state_menu_is_presented_again_after_invalid_key(monkeypatch):
     game.state_menu()
 
     assert frontend.menus_at_read == ["iamtbSLQXD", "iamtbSLQXD"]
+
+
+def test_show_skips_fixed_column_wrap_when_frontend_wraps(capsys):
+    from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
+
+    long_text = " ".join(["word"] * 30)
+    HumanControlledFighter.show(None, long_text)
+    assert all(len(line) <= 60 for line in capsys.readouterr().out.splitlines())
+
+    _frontend.install_frontend(wraps_lines=True)
+    HumanControlledFighter.show(None, long_text)
+    assert capsys.readouterr().out == long_text + "\n"

@@ -14,6 +14,7 @@ from kf_lib.ui import (
     visible_len,
     yellow,
 )
+from kf_lib.ui._frontend import frontend_wraps_lines
 from kf_lib.utils import roman
 from .fighter import Fighter
 
@@ -393,7 +394,7 @@ class HumanControlledFighter(Fighter):
 
     def show(self, text, align=True):
         """Print aligned text in paragraphs (markup tags resolved to colors)."""
-        if align:
+        if align and not frontend_wraps_lines():
             pars = [align_text(t, INDENT, ALIGN) for t in text.split('\n')]
             for p in pars:
                 print(render(p))

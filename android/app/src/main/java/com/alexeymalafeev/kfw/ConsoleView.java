@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ConsoleView extends LinearLayout {
@@ -23,6 +24,13 @@ public final class ConsoleView extends LinearLayout {
     private final ScrollView verticalScroll;
     private final HorizontalScrollView horizontalScroll;
     private final TextView textView;
+    // Unwrapped history: finished lines and the line still being printed. The
+    // rendered text is rebuilt from it when the width or the text size changes.
+    private final List<List<AnsiParser.Segment>> lines = new ArrayList<>();
+    private List<AnsiParser.Segment> partial = new ArrayList<>();
+    private int historyLength;
+    private int partialStart;
+    private float wrapWidth;
 
     public ConsoleView(Context context) {
         super(context);
@@ -58,34 +66,41 @@ public final class ConsoleView extends LinearLayout {
 
     public void append(String text) {
         boolean follow = isNearBottom();
-        List<AnsiParser.Segment> segments = parser.parse(text);
-        for (AnsiParser.Segment segment : segments) {
-            int start = content.length();
-            content.append(segment.text);
-            int end = content.length();
-            AnsiParser.Style style = segment.style;
-            int color = colorFor(style.color);
-            if (style.dim) {
-                color = Color.argb(165, Color.red(color), Color.green(color), Color.blue(color));
+        int completed = lines.size();
+        for (AnsiParser.Segment segment : parser.parse(text)) {
+            String rest = segment.text;
+            int newline;
+            while ((newline = rest.indexOf('\n')) >= 0) {
+                addToPartial(rest.substring(0, newline), segment.style);
+                lines.add(partial);
+                partial = new ArrayList<>();
+                rest = rest.substring(newline + 1);
             }
-            content.setSpan(new ForegroundColorSpan(color), start, end,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (style.bold) {
-                content.setSpan(new StyleSpan(Typeface.BOLD), start, end,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            if (style.italic) {
-                content.setSpan(new StyleSpan(Typeface.ITALIC), start, end,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
+            addToPartial(rest, segment.style);
+            historyLength += segment.text.length();
         }
-        trimHistory();
+        if (historyLength > MAX_CHARACTERS) {
+            trimHistory();
+            render();
+        } else {
+            content.delete(partialStart, content.length());
+            for (int i = completed; i < lines.size(); i++) {
+                renderLine(lines.get(i));
+                content.append('\n');
+            }
+            partialStart = content.length();
+            renderLine(partial);
+        }
         if (follow) {
-            verticalScroll.post(() -> verticalScroll.fullScroll(View.FOCUS_DOWN));
+            scrollToBottom();
         }
     }
 
     public void clear() {
+        lines.clear();
+        partial = new ArrayList<>();
+        historyLength = 0;
+        partialStart = 0;
         content.clear();
         horizontalScroll.scrollTo(0, 0);
         verticalScroll.scrollTo(0, 0);
@@ -93,6 +108,29 @@ public final class ConsoleView extends LinearLayout {
 
     public void setConsoleTextSize(float sizeSp) {
         textView.setTextSize(sizeSp);
+        updateWrapWidth(getWidth());
+    }
+
+    @Override
+    protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
+        super.onSizeChanged(width, height, oldWidth, oldHeight);
+        // changing the text during layout is not allowed
+        post(() -> updateWrapWidth(getWidth()));
+    }
+
+    private void updateWrapWidth(int viewWidth) {
+        float width = viewWidth - textView.getPaddingLeft() - textView.getPaddingRight();
+        // a little slack so bold glyphs and rounding never push a wrapped line over
+        width -= textView.getPaint().measureText(" ") / 2;
+        if (viewWidth <= 0 || width == wrapWidth) {
+            return;
+        }
+        boolean follow = isNearBottom();
+        wrapWidth = width;
+        render();
+        if (follow) {
+            scrollToBottom();
+        }
     }
 
     public String getPlainText() {
@@ -109,12 +147,79 @@ public final class ConsoleView extends LinearLayout {
     }
 
     private void trimHistory() {
-        int excess = content.length() - MAX_CHARACTERS;
-        if (excess <= 0) {
-            return;
+        while (historyLength > MAX_CHARACTERS && !lines.isEmpty()) {
+            for (AnsiParser.Segment segment : lines.remove(0)) {
+                historyLength -= segment.text.length();
+            }
+            historyLength -= 1;
         }
-        int newline = content.toString().indexOf('\n', excess);
-        content.delete(0, newline >= 0 ? newline + 1 : excess);
+    }
+
+    private void addToPartial(String text, AnsiParser.Style style) {
+        if (!text.isEmpty()) {
+            partial.add(new AnsiParser.Segment(text, style));
+        }
+    }
+
+    private void scrollToBottom() {
+        verticalScroll.post(() -> verticalScroll.fullScroll(View.FOCUS_DOWN));
+    }
+
+    private void render() {
+        content.clear();
+        for (List<AnsiParser.Segment> line : lines) {
+            renderLine(line);
+            content.append('\n');
+        }
+        partialStart = content.length();
+        renderLine(partial);
+    }
+
+    private void renderLine(List<AnsiParser.Segment> line) {
+        StringBuilder plain = new StringBuilder();
+        for (AnsiParser.Segment segment : line) {
+            plain.append(segment.text);
+        }
+        String text = plain.toString();
+        float[] widths = new float[text.length()];
+        textView.getPaint().getTextWidths(text, widths);
+        int[] breaks = LineWrapper.breaks(text, widths, wrapWidth);
+        String indent = "\n" + text.substring(0, LineWrapper.indentLength(text));
+        int position = 0;
+        int nextBreak = 0;
+        for (AnsiParser.Segment segment : line) {
+            StringBuilder wrapped = new StringBuilder(segment.text);
+            int end = position + segment.text.length();
+            int inserted = 0;
+            while (nextBreak < breaks.length && breaks[nextBreak] < end) {
+                int at = breaks[nextBreak] - position + inserted;
+                wrapped.replace(at, at + 1, indent);
+                inserted += indent.length() - 1;
+                nextBreak++;
+            }
+            position = end;
+            appendStyled(wrapped.toString(), segment.style);
+        }
+    }
+
+    private void appendStyled(String text, AnsiParser.Style style) {
+        int start = content.length();
+        content.append(text);
+        int end = content.length();
+        int color = colorFor(style.color);
+        if (style.dim) {
+            color = Color.argb(165, Color.red(color), Color.green(color), Color.blue(color));
+        }
+        content.setSpan(new ForegroundColorSpan(color), start, end,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (style.bold) {
+            content.setSpan(new StyleSpan(Typeface.BOLD), start, end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        if (style.italic) {
+            content.setSpan(new StyleSpan(Typeface.ITALIC), start, end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 
     private int colorFor(int ansi) {

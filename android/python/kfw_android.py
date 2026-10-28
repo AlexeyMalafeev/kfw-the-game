@@ -91,6 +91,7 @@ class AndroidRuntime:
             key_reader=self.read_key,
             clear_handler=self.clear,
             menu_handler=self.present_menu,
+            wraps_lines=True,
         )
         _rich_format.set_colors_enabled(True)
 

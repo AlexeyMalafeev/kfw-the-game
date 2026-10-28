@@ -1,20 +1,31 @@
 _key_reader = None
 _clear_handler = None
 _menu_handler = None
+_wraps_lines = False
 
 
-def install_frontend(key_reader=None, clear_handler=None, menu_handler=None):
-    global _key_reader, _clear_handler, _menu_handler
+def install_frontend(
+    key_reader=None, clear_handler=None, menu_handler=None, wraps_lines=False
+):
+    """wraps_lines: the frontend word-wraps long lines to its own width, so the
+    game should not hard-wrap paragraphs at a fixed column."""
+    global _key_reader, _clear_handler, _menu_handler, _wraps_lines
     _key_reader = key_reader
     _clear_handler = clear_handler
     _menu_handler = menu_handler
+    _wraps_lines = wraps_lines
 
 
 def uninstall_frontend():
-    global _key_reader, _clear_handler, _menu_handler
+    global _key_reader, _clear_handler, _menu_handler, _wraps_lines
     _key_reader = None
     _clear_handler = None
     _menu_handler = None
+    _wraps_lines = False
+
+
+def frontend_wraps_lines():
+    return _wraps_lines
 
 
 def read_key(fallback):

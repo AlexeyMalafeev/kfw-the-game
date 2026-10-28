@@ -10,6 +10,12 @@ All notable changes to KFW are documented here. Format loosely follows
   this here and now.", "Don't be so sure of yourself." and others), with
   Russian translations
 
+### Changed
+- Android: console text now word-wraps to the screen width at the current text
+  size and re-wraps on A− / A+ and rotation, instead of running off the right
+  edge in portrait. Tables, fighter panels and ASCII art keep their layout and
+  still scroll sideways when wider than the screen
+
 ### Fixed
 - Typo in a hero quote: "This is as far you'll go."
 
