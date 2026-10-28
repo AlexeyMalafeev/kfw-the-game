@@ -146,7 +146,9 @@ Needs numpy, scipy and (for `--game`) soundfile from the dev venv.
   per tune an intro file and a seamless loop file whose end wraps the
   ringing tail into its start (method in `docs/audio.md`), and every effect
   and jingle as a one-shot, all OGG Vorbis (about 9 MB). Re-run `--game`
-  and commit `audio/` after changing a score.
+  and commit `audio/` after changing a score; files whose decoded audio is
+  unchanged are left as they are, so only the changed tune's files show up
+  in git.
 - `playlist.md` — the soundtrack plan: which tune plays where, and what each
   effect is for (as wired into the game: `docs/audio.md`).
 
