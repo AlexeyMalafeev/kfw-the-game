@@ -197,7 +197,8 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
 - nerve blocking
 - multishadow kick (attack several enemies at once)
 - catch breath & others restore stamina relatively?
-- yell (as a move function?)
+- yell (as a move function?) — or a technique that lowers the enemy's
+  defense
 - tests of strength/speed/health/agility in encounters and stories — new
   mechanics beyond fighting
 - make status attacks (stun, shock, …) level-dependent
@@ -656,6 +657,7 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 - accompl: Crime Fighter; 3 exp bonuses at a time → accomplishment?
 - display hp as percentage/string?
 - donate to friends / to charity
+- rankings between schools (tournament results etc.)
 
 ## Content: encounters, events, stories
 
@@ -668,6 +670,8 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
   of robbers attacks Foshan; strong robber + accomplishment; criminal
   protected by thugs; more rare things (suddenly a very strong robber);
   unique encounters per location (school, walk, etc.)
+- robbers should take all the player's money, not a fixed sum
+  (`MONEY_GIVE_ROBBERS`, 40–180)
 - stories: righteous sect vs evil sect, triads; thugs burn down school;
   arrest gang leader to prove innocence; school attacked; 10 masters from the
   North; powerful item; style stories (drunken, Wong Fei-Hung master of fan);

@@ -18,6 +18,7 @@ Come out and settle this once and for all!
 Conquer the unyielding with the yielding!
 Death doesn't scare me.
 Don't be so sure of that...
+Don't be so sure of yourself.
 Don't push me too far. You'll force me to retaliate!
 Enough of idle chatter!
 Enough.
@@ -98,6 +99,7 @@ Isn't that disgraceful?
 It sure has brightened the day I met you.
 It's easy!
 It's not that simple!
+It's tearing me apart!
 Joy, sadness, melancholy, happiness!
 Just watch...
 Just you wait and see!
@@ -107,6 +109,8 @@ Let me see what this is all about.
 Let me show you...
 Let me teach this low life a lesson!
 Let them cut your flesh so you can kick their ass
+Let's end this here and now.
+Let's end this.
 Let's get started.
 Let's have a little fun!
 Let's see it then.
@@ -155,7 +159,7 @@ The lion shakes its head and here comes the end!
 There's no other way.
 There's nothing I can do to avoid this fight.
 There's nothing I can do to clear up this misunderstanding...
-This is as far you'll go.
+This is as far as you'll go.
 This is preposterous!
 This seems like fun.
 This time I won't hold back.

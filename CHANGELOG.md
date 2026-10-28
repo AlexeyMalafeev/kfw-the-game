@@ -3,6 +3,16 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
+## [Unreleased]
+
+### Added
+- Five new fight quotes for heroes, challengers and thugs ("Let's end
+  this here and now.", "Don't be so sure of yourself." and others), with
+  Russian translations
+
+### Fixed
+- Typo in a hero quote: "This is as far you'll go."
+
 ## [v0.7.6-beta "The Closed Door"] — 2026-10-28
 
 ### Added
