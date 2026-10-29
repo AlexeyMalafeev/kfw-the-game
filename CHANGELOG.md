@@ -3,7 +3,7 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
-## [Unreleased]
+## [v0.7.7-beta "Android Strikes the Gong"] — 2026-10-29
 
 ### Added
 - **Full Android port**: the complete original game now runs as a native Android
