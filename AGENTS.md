@@ -115,7 +115,11 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   `## [vX.Y.Z-beta "Codename"] — YYYY-MM-DD`, commit with
   `RELEASE: vX.Y.Z-beta "Codename"` (changelog-only commit), tag `vX.Y.Z-beta`,
   push with tags. No version string exists in code — the changelog, the git
-  tag and its GitHub Release are the release. Before tagging, re-read the
+  tag and its GitHub Release are the release. Version numbers are a project
+  tradition, not semver: every release adds 1 to the last digit, and after
+  a 9 the middle digit goes up instead (v0.6.9-beta was followed by
+  v0.7.0-beta), however big or small the release. Don't propose other
+  bumps. Before tagging, re-read the
   section being released and prune entries describing mid-cycle states that
   never shipped (workarounds that were reverted in the same cycle etc.) — the
   Fixed entries already tell that story. After pushing the tag, publish a
