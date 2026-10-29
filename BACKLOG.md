@@ -6,20 +6,14 @@ Resolved entries were pruned 2026-09 — see `CHANGELOG.md` for what shipped.
 
 ## Engineering (tech debt)
 
-1. **Merge the Android port (`android-port` branch) — high priority, next
-   release**: the complete port (native Java UI, Chaquopy, Gradle, tests;
-   `docs/android.md`) is finished on its branch but held out of the current
-   release. Merge it into `master` right after this release ships, rebasing
-   or merging any fight-rule changes made on `master` meanwhile, and re-run
-   the device smoke test from `docs/android.md`.
-2. **Broaden test coverage**: the initial suite (`test/`: seeded deterministic
+1. **Broaden test coverage**: the initial suite (`test/`: seeded deterministic
    `AutoFight` tests, generation invariants, headless autoplay) is in place;
    next targets are saves, encounters, stories.
-3. **Retire the legacy save loader** (`LoadGame._load_legacy`): while the
+2. **Retire the legacy save loader** (`LoadGame._load_legacy`): while the
    exec()-based shim exists, class names, `Fighter.__init__` argument order,
    and `savable_atts` remain frozen. Drop it once old-save support is
    abandoned.
-4. Smaller code items from the old backlog:
+3. Smaller code items from the old backlog:
    - subclass `Fight` more (spectator/no spectator; exp/no exp; stats/no stats)
    - `.__repr__`/`.__str__` in all classes instead of `get_init_string()`
    - generic Saver component saving relevant atts
@@ -44,7 +38,7 @@ out first), and the index of ⚠️ points in `docs/*.md`. Fixed entries move to
 - `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
   (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
   tech/move names no longer in the data files, `learn_tech` now takes Tech
-  objects. RING works (needs a TTY; run from `minigames/`).
+  objects. RING works (needs a TTY).
 - some dev scripts remain broken (details + per-script verdicts in
   `docs/dev_scripts.md`; the output-path, missing-dir, determinism and
   `count_lines.py` defects were fixed 2026-09):
