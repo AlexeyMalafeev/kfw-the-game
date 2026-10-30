@@ -9,8 +9,7 @@ All notable changes to KFW are documented here. Format loosely follows
 - **The gossipmonger tells a free rumor**: before asking for money, the
   gossipmonger now shares one random rumor about another player, built from
   what townsfolk would know: their school and master (or the school they
-  run), their favorite and most feared strikes (basic ones like Punch and
-  Kick don't count), sweethearts, marriages and
+  run), their favorite and most feared strikes, sweethearts, marriages and
   children, sworn enemies, tournament wins, debts, robberies, drinking,
   luck at dice, injuries, and who is the strongest or richest young fighter
   in town. Paying still shows the full stats table, now for 10–25 coins
@@ -19,6 +18,13 @@ All notable changes to KFW are documented here. Format loosely follows
   challenger, officials, love rivals, dream opponents and other fighters
   without a quote pool used to fight in silence. They now have their own
   prefight and victory lines (36 and 22, in English and Russian)
+
+### Changed
+- **Basic strikes are nobody's signature move**: Punch, Kick, Weak Short
+  Punch, Shove and the finishing strikes cost no qi, so everyone uses them
+  most. The favorite and most feared moves in rumors, the stats table and
+  the ending biography now skip them; a biography names the most feared
+  move even when the player has no signature move yet
 
 ### Changed
 - **Your spouse can help against the Fat Girl**: when she ambushes a married

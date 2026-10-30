@@ -73,15 +73,14 @@ def _personal_rumors(s):
         )
 
     # moves
-    # basic strikes (Punch, Kick...) are everyone's habit: they cost no qi
-    fav_move = s.get_favorite_move(attack_only=True, exclude_basic=True)
+    fav_move = s.get_favorite_move(attack_only=True)  # basic strikes never count
     if fav_move:
         r.append(
             _('Folks say {name} loves the {move}. Watch out for it!').format(
                 name=name, move=tr_name(fav_move)
             )
         )
-    feared_move = s.get_most_feared_move(exclude=fav_move, exclude_basic=True)
+    feared_move = s.get_most_feared_move(exclude=fav_move)
     if feared_move:
         r.append(
             _("Nobody wants to be on the receiving end of {name}'s {move}.").format(

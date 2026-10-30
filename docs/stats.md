@@ -151,9 +151,8 @@ Two systems share the theme and are easily confused:
     plausibly know rather than exact career numbers: their school and master,
     or the school they run and its student count; being thrown out of the
     school; their favorite strike (`get_favorite_move`) and their
-    highest-tier strike (`get_most_feared_move`), both skipping the basic
-    moves (`Move.is_basic`: Punch, Kick, Weak Short Punch, Shove, Finishing
-    Punch/Kick), which everyone uses a lot because they cost no qi;
+    highest-tier strike (`get_most_feared_move`), both never basic moves
+    (see "In-fight stats and move usage" below);
     sweetheart, marriage and children; an enemy; many friends (≥ 3);
     tournaments won; many accomplishments (≥ 5); many KOs dealt (≥ 10) or
     taken (≥ 3); being injured or sick right now; debt; having been robbed;
@@ -223,12 +222,16 @@ fight (`max_blow` / `max_blow_move` in `fight_stats`, measured as the target's
 hp delta, criticals and EPICs included); at fight end it replaces the
 persistent `max_blow_dam` / `max_blow_move` stats if larger.
 `get_favorite_move(attack_only=...)` reads the all-time
-leader; the full report shows strikes landed, damage dealt, crits/EPICs, the
+leader, never counting the basic moves (`Move.is_basic`: Punch, Kick, Weak
+Short Punch, Shove, Finishing Punch/Kick, Guard, Focus, the steps...) —
+they cost no qi, so everyone uses them most and they'd say nothing about
+the fighter; the full report shows strikes landed, damage dealt, crits/EPICs, the
 favorite move, the most feared move and the max single blow (damage and move),
 and biographies name the signature move — both filtered to
 strikes only (`attack_only=True`), since defensive moves like Guard otherwise
 dominate the usage counts. `get_most_feared_move()` returns the highest-tier
-attack move the player has (ties broken by times used) and is shown in the
+non-basic attack move the player has (ties broken by times used; '-' in the
+report if there is none) and is shown in the
 full report and used in biographies.
 
 ## Biographies
@@ -240,7 +243,7 @@ generated text covers: the victory title(s), the style name, the signature
 move (most-used strike, from `move_usage`, since 2026-09), the most feared
 move (highest-tier attack move, ties broken by times used; the signature move
 is excluded so a distinct feared move is always named when another strike
-exists), and a
+exists; named even when there is no signature move), and a
 3-sentence attribute-spread blurb derived from the gap between the player's
 best and worst full attribute (≤ 2 "rather versatile", ≤ 5 "outstanding", else
 "almost inhuman ... at the cost of ..."), and — for married winners — a family

@@ -658,8 +658,13 @@ class TestInFightStats:
 
     def test_favorite_move_and_biography(self):
         _, p, _, _ = self.fight_with_player()
+        from kf_lib.kung_fu.moves import ALL_MOVES_DICT
+
         fav = p.get_favorite_move()
-        assert fav == max(p.move_usage.items(), key=lambda kv: kv[1])[0]
+        non_basic = {
+            n: c for n, c in p.move_usage.items() if not ALL_MOVES_DICT[n].is_basic
+        }
+        assert fav == (max(non_basic.items(), key=lambda kv: kv[1])[0] if non_basic else '')
         from kf_lib.game.biographies import generate_bio
         fav_strike = p.get_favorite_move(attack_only=True)
         if fav_strike:  # the player threw at least one strike
@@ -669,10 +674,21 @@ class TestInFightStats:
         # the "Fav. move" row must match the biography's signature move:
         # Guard/maneuvers are recorded but never shown as the favorite
         _, p, _, _ = self.fight_with_player()
-        p.move_usage = {'Guard': 100, 'Punch': 5}
+        p.move_usage = {'Guard': 100, 'Heavy Kick': 5}
         from kf_lib.game.game_stats import get_player_data
         rows = dict(get_player_data(p))
-        assert rows['Fav. move'] == 'Punch'
+        assert rows['Fav. move'] == 'Heavy Kick'
+
+    def test_basic_strikes_never_favorite_or_feared(self):
+        # Punch, Kick etc. cost no qi, so everyone uses them: they'd say nothing
+        _, p, _, _ = self.fight_with_player()
+        p.move_usage = {'Punch': 100, 'Kick': 50}
+        assert p.get_favorite_move(attack_only=True) == ''
+        p.moves = [m for m in p.moves if m.is_basic]
+        assert p.get_most_feared_move() == ''
+        from kf_lib.game.game_stats import get_player_data
+        rows = dict(get_player_data(p))
+        assert rows['Fav. move'] == '-' and rows['Feared move'] == '-'
 
 
 class TestExpMath:

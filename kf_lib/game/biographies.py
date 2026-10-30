@@ -24,27 +24,28 @@ def generate_bio(player_instance) -> Text:
         bio.append(_('Her kung-fu style was {style}.').format(style=style))
     else:
         bio.append(_('His kung-fu style was {style}.').format(style=style))
-    if fav_move := p.get_favorite_move(attack_only=True):
+    # basic strikes (Punch, Kick...) never count as either move
+    fav_move = p.get_favorite_move(attack_only=True)
+    if fav_move:
         if female:
             bio.append(
                 _('Her signature move was the {move}.').format(move=tr_name(fav_move))
             )
-            if feared_move := p.get_most_feared_move(exclude=fav_move):
-                bio.append(
-                    _('But her most feared move was the {move}.').format(
-                        move=tr_name(feared_move)
-                    )
-                )
         else:
             bio.append(
                 _('His signature move was the {move}.').format(move=tr_name(fav_move))
             )
-            if feared_move := p.get_most_feared_move(exclude=fav_move):
-                bio.append(
-                    _('But his most feared move was the {move}.').format(
-                        move=tr_name(feared_move)
-                    )
-                )
+    if feared_move := p.get_most_feared_move(exclude=fav_move):
+        if not fav_move:
+            if female:
+                t = _('Her most feared move was the {move}.')
+            else:
+                t = _('His most feared move was the {move}.')
+        elif female:
+            t = _('But her most feared move was the {move}.')
+        else:
+            t = _('But his most feared move was the {move}.')
+        bio.append(t.format(move=tr_name(feared_move)))
     full_atts = p.get_att_values_full()
     max_att, min_att = max(full_atts), min(full_atts)
     att_diff = max_att - min_att

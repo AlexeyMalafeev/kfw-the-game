@@ -16159,7 +16159,7 @@ msgstr "Толстый"
 msgid "Fat Girl"
 msgstr "Толстушка"
 
-#: kf_lib/happenings/encounters/_people.py:268
+#: kf_lib/happenings/encounters/_people.py:273
 msgid "Fat Girl Defeated"
 msgstr "Побита толстая девушка"
 
@@ -16595,7 +16595,7 @@ msgstr "Корень женьшеня"
 msgid "Golden Lotus Stance"
 msgstr "Стойка золотого лотоса"
 
-#: kf_lib/actors/player/_base_player.py:1349
+#: kf_lib/actors/player/_base_player.py:1374
 msgid "Got Married"
 msgstr "Свадьба"
 
@@ -18250,7 +18250,7 @@ msgstr "Дальнобойный удары"
 msgid "Lotus Stance"
 msgstr "Стойка лотоса"
 
-#: kf_lib/actors/player/_base_player.py:533
+#: kf_lib/actors/player/_base_player.py:537
 msgid "Lucky Devil"
 msgstr "Везучий чёрт"
 
@@ -18863,7 +18863,7 @@ msgstr "Упорство"
 msgid "Persevering"
 msgstr "Упорный"
 
-#: kf_lib/happenings/encounters/_people.py:521
+#: kf_lib/happenings/encounters/_people.py:526
 msgid "Personality Change"
 msgstr "Смена личности"
 
@@ -19480,7 +19480,7 @@ msgstr "Призовой боец"
 msgid "Promoter"
 msgstr "Промоутер"
 
-#: kf_lib/actors/player/_base_player.py:620
+#: kf_lib/actors/player/_base_player.py:624
 msgid "Proud Parent"
 msgstr "Гордый родитель"
 
@@ -35699,7 +35699,7 @@ msgstr "Крепкий"
 msgid "Toughness"
 msgstr "Крепость"
 
-#: kf_lib/actors/player/_base_player.py:1369
+#: kf_lib/actors/player/_base_player.py:1394
 msgid "Tournament Champion"
 msgstr "Чемпион турнира"
 
@@ -43197,7 +43197,7 @@ msgstr "Неизвестный"
 msgid "Unlikely Weapons"
 msgstr "Неожиданное оружие"
 
-#: kf_lib/actors/player/_base_player.py:526
+#: kf_lib/actors/player/_base_player.py:530
 msgid "Unlucky Devil"
 msgstr "Невезучий чёрт"
 
