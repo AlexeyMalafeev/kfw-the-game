@@ -7496,6 +7496,12 @@ msgstr "Чемпион всех школ"
 msgid "Anything Is a Weapon"
 msgstr "Всё — оружие"
 
+msgid "Armed Butcher"
+msgstr "Вооружённый мясник"
+
+msgid "Armed Worker"
+msgstr "Вооружённый рабочий"
+
 msgid "Astral"
 msgstr "Астральный"
 
@@ -7695,6 +7701,9 @@ msgstr "Пылающий"
 
 msgid "Burning Fury"
 msgstr "Пылающая ярость"
+
+msgid "Butcher"
+msgstr "Мясник"
 
 msgid "Butterfly"
 msgstr "Бабочка"
@@ -18293,6 +18302,12 @@ msgstr "Бой на средней дистанции"
 
 msgid "Mid-Range Strikes"
 msgstr "Среднедистанционный удары"
+
+msgid "Mighty Elbows"
+msgstr "Могучие локти"
+
+msgid "Mighty Knees"
+msgstr "Могучие колени"
 
 msgid "Misty"
 msgstr "Туманный"
@@ -35593,6 +35608,9 @@ msgstr "Взмах мечом"
 msgid "Sword Thrust"
 msgstr "Выпад мечом"
 
+msgid "Swordsman"
+msgstr "Мечник"
+
 msgid "Taekwondo"
 msgstr "Тхэквондо"
 
@@ -35616,6 +35634,9 @@ msgstr "Тайцзи II"
 
 msgid "Taiji III"
 msgstr "Тайцзи III"
+
+msgid "Teen Thug"
+msgstr "Юный хулиган"
 
 msgid "Thailand"
 msgstr "Таиланд"
@@ -35695,6 +35716,9 @@ msgstr "Крепость жабы"
 
 msgid "Tough"
 msgstr "Крепкий"
+
+msgid "Tough Thug"
+msgstr "Крепкий головорез"
 
 msgid "Toughness"
 msgstr "Крепость"
@@ -35813,6 +35837,9 @@ msgstr "Панцирь черепахи"
 
 msgid "Twisting Snake"
 msgstr "Извивающаяся змея"
+
+msgid "Twitching Fighter"
+msgstr "Дёргающийся боец"
 
 msgid "Ultimate Acrobatic Charging Claw"
 msgstr "Высший Акробатический Рвущийся коготь"
@@ -43631,6 +43658,9 @@ msgstr "Деревянные конечности"
 msgid "wooden mannequin"
 msgstr "деревянный манекен"
 
+msgid "Worker"
+msgstr "Рабочий"
+
 msgid "Wrestling"
 msgstr "Борьба"
 
@@ -43654,3 +43684,6 @@ msgstr "Синъи II"
 
 msgid "Xing Yi III"
 msgstr "Синъи III"
+
+msgid "Zen"
+msgstr "Зен"

@@ -15,8 +15,7 @@ left behind (`git status` clean).
 
 ## Shared conventions
 
-- Every script except `try_rich.py` starts with the same hack as the
-  minigames (see `docs/minigames.md`): it resolves `Path('..')` (top-level
+- Every script except `try_rich.py` starts with a path hack: it resolves `Path('..')` (top-level
   scripts) or `Path('..', '..')` (`ai/`, `ml/`, `testing/`) from the cwd,
   chdirs there and appends it to `sys.path`. **Run each script from its own
   directory**, e.g.:
@@ -41,8 +40,8 @@ left behind (`git status` clean).
   pauses were removed 2026-10-25; on an exception a script prints the
   traceback and exits with code 1.
 - Interactive prompts (`ui.menu`/`ui.yn`) go through termios
-  (`kf_lib/ui/_keyboard.py`) and need a real TTY, same TTY pitfall as the
-  minigames.
+  (`kf_lib/ui/_keyboard.py`) and need a real TTY (the TTY pitfall in
+  AGENTS.md).
 - The output dirs `tests/genetic/` and `tests/AI actions/` are gitignored and
   not created by `kf_lib/utils/_folders.py` (which mkdirs only `moves/` and
   `tests/`), so the two scripts that need them

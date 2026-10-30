@@ -1,5 +1,6 @@
 import random
 
+from kf_lib.i18n import _
 from kf_lib.kung_fu import styles, style_gen
 from kf_lib.ui import get_int_from_user, grey, menu
 from kf_lib.utils import rnd, rndint
@@ -105,15 +106,15 @@ def new_craftsman():
 
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
 def new_custom_hcf():
-    name = input('Name: ')
+    name = input(_('Name: '))
     max_len = max((len(s.name) for s in styles.default_styles))
     legend = [
         ('{:<{}} {}'.format(s.name, max_len, grey(s.descr_short)), s)
         for s in styles.default_styles
     ]
     # todo select starting atts
-    style = menu(legend, 'Choose a style:')
-    level = get_int_from_user('Level:', 1, 20)
+    style = menu(legend, _('Choose a style:'))
+    level = get_int_from_user(_('Level:'), 1, 20)
     f = HumanControlledFighter(name=name, style=style)
     if level > 1:
         f.level_up(level - 1)

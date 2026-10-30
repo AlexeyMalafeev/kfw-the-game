@@ -9,6 +9,7 @@ Usage examples:
     python kfw.py --load "auto save.txt"
     python kfw.py --no-color             play without terminal colors
     python kfw.py --lang ru              play in Russian (default: English)
+    python kfw.py --minigame chocolate   play a mini-game (chocolate, ring)
 """
 import argparse
 
@@ -24,6 +25,8 @@ def main():
     parser.add_argument('--no-color', action='store_true', help='disable terminal colors')
     parser.add_argument('--lang', choices=('en', 'ru'), default=None,
                         help="interface language (default: en, or $KFW_LANG)")
+    parser.add_argument('--minigame', choices=('chocolate', 'ring'), default=None,
+                        help='play a mini-game instead of the main game')
     args = parser.parse_args()
 
     # language must be set before content modules load (quotes, descriptions and
@@ -39,6 +42,14 @@ def main():
     from kf_lib.ui import yn
 
     ui.init_colors(no_color_flag=args.no_color)
+
+    if args.minigame:
+        from kf_lib.minigames import MINIGAMES
+        try:
+            MINIGAMES[args.minigame]()
+        except KeyboardInterrupt:
+            print('\n' + _('Farewell, brave warrior!'))
+        return
 
     g = game.Game()
     try:

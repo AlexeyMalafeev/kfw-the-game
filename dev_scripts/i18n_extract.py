@@ -54,6 +54,9 @@ EXTRA_NAMES = {
     'beginner', 'intermediate', 'advanced', 'master',
     # misc display names
     'Unknown', 'Gang Leader', 'Foshan',
+    # Chocolate mini-game (kf_lib/minigames/_chocolate.py): hero, gang bases, techs
+    'Zen', 'Teen Thug', 'Worker', 'Armed Worker', 'Butcher', 'Armed Butcher',
+    'Tough Thug', 'Twitching Fighter', 'Swordsman', 'Mighty Elbows', 'Mighty Knees',
 }
 
 

@@ -35,10 +35,6 @@ out first), and the index of ⚠️ points in `docs/*.md`. Fixed entries move to
 
 ### Confirmed bugs
 
-- `minigames/Chocolate_mini_game.py` is broken — root-caused 2026-09
-  (docs/minigames.md): stale import (`kf_lib.human_player` gone), scene
-  tech/move names no longer in the data files, `learn_tech` now takes Tech
-  objects. RING works (needs a TTY).
 - some dev scripts remain broken (details + per-script verdicts in
   `docs/dev_scripts.md`; the output-path, missing-dir, determinism and
   `count_lines.py` defects were fixed 2026-09):
@@ -100,8 +96,6 @@ styles, techniques, weapons. The 50 that remain, by doc → pointer:
     fallback; `check_partners` (friends joining training) never called
   - `stats.md` — no trait modifies the luck roll
   - `encounters.md` — `enc_count_dict` is write-only (show it or drop it)
-  - `minigames.md` Chocolate — 4 stale-API points: revive or retire (see
-    the Chocolate entry under Confirmed bugs)
 - **(d) Informational / intended / harmless:**
   - `kung_fu.md` — tier 12–14 moves unreachable (author: reserved);
     `Move.descr_short` dead; move_gen CSV name lookup and collision-chain
@@ -126,8 +120,7 @@ styles, techniques, weapons. The 50 that remain, by doc → pointer:
   - `text_content.md` — `MISC` dead; only `Thug 1`/`Robber 1` get group
     names; unused name constants; terminal `'Flying'` art branch (3 moves
     on Stance); `concat` correct only at `BUFFER_WIDTH = 1`
-  - `minigames.md` RING — `from_exp_worth` retry loop unbounded; `play`
-    flag never cleared
+  - `minigames.md` RING — `from_exp_worth` retry loop unbounded
 
 ## Fight mechanics
 

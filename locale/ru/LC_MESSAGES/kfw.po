@@ -110,6 +110,22 @@ msgstr " (защищается в атаке)"
 msgid " (guarding while closing in)"
 msgstr " (сближается в защитной стойке)"
 
+#: kf_lib/minigames/_ring.py:29
+msgid " ***Game over***"
+msgstr " ***Игра окончена***"
+
+#: kf_lib/minigames/_chocolate.py:174
+msgid " ***The End***"
+msgstr " ***Конец***"
+
+#: kf_lib/minigames/_chocolate.py:167
+msgid " ***Welcome to [bold]Chocolate[/bold]***"
+msgstr " ***Добро пожаловать в [bold]«Шоколад»[/bold]***"
+
+#: kf_lib/minigames/_ring.py:12
+msgid " ***Welcome to [bold]RING[/bold]***"
+msgstr " ***Добро пожаловать на [bold]РИНГ[/bold]***"
+
 #: kf_lib/actors/fighter/_fight_actions.py:62
 msgid " *FURY*"
 msgstr " *ЯРОСТЬ*"
@@ -161,6 +177,10 @@ msgstr " теряет равновесие!"
 msgid " qi-based {dmg} ({hp})"
 msgstr " {dmg} (от ци) ({hp})"
 
+#: kf_lib/minigames/_ring.py:26
+msgid " Remaining attempts: {n}"
+msgstr " Осталось попыток: {n}"
+
 #: kf_lib/actors/fighter/_strike_mechanics.py:193
 msgid " shocked!"
 msgstr " в шоке!"
@@ -184,6 +204,21 @@ msgstr " в ступоре!"
 #: kf_lib/actors/player/_human_player.py:44
 msgid " What is the name of {}'s school? >"
 msgstr " Как называется школа {}? >"
+
+#: kf_lib/minigames/_ring.py:28
+msgid " You have reached level {lv}."
+msgstr " Вы достигли уровня {lv}."
+
+#: kf_lib/minigames/_chocolate.py:184
+msgid " Zen fought her way through without a single defeat!"
+msgstr " Зен пробилась до конца без единого поражения!"
+
+#: kf_lib/minigames/_chocolate.py:177
+msgid " Zen fought her way through, losing {n} fight on the way."
+msgid_plural " Zen fought her way through, losing {n} fights on the way."
+msgstr[0] " Зен пробилась до конца, проиграв по пути {n} бой."
+msgstr[1] " Зен пробилась до конца, проиграв по пути {n} боя."
+msgstr[2] " Зен пробилась до конца, проиграв по пути {n} боёв."
 
 #: kf_lib/happenings/story/_student_rivalry.py:102
 msgid "\"Enough! You will both spar ME.\""
@@ -823,6 +858,10 @@ msgstr "Выберите историю"
 msgid "Choose a style"
 msgstr "Выберите стиль"
 
+#: kf_lib/actors/fighter_factory.py:116
+msgid "Choose a style:"
+msgstr "Выберите стиль:"
+
 #: kf_lib/game/debug_menu.py:116
 msgid "Choose a tech:"
 msgstr "Выберите технику:"
@@ -842,6 +881,10 @@ msgstr "Выберите событие"
 #: kf_lib/actors/human_controlled_fighter.py:161
 msgid "Choose target:"
 msgstr "Выберите цель:"
+
+#: kf_lib/minigames/_ring.py:17
+msgid "Choose the difficulty:"
+msgstr "Выберите сложность:"
 
 #: kf_lib/actors/player/_human_player.py:62
 msgid "Choose the techniques your school will teach:"
@@ -1039,7 +1082,7 @@ msgstr "Дист"
 msgid "Do not use items"
 msgstr "Не использовать предметы"
 
-#: kfw.py:62
+#: kfw.py:73
 msgid "Do you want to see what AI players do?"
 msgstr "Хотите видеть действия ИИ-игроков?"
 
@@ -1126,6 +1169,10 @@ msgstr "Зарабатывает {} монет."
 #: kf_lib/actors/fighter/_fight_actions.py:130 kf_lib/actors/fighter/_fight_actions.py:147
 msgid "easily"
 msgstr "легко "
+
+#: kf_lib/minigames/_ring.py:16
+msgid "easy"
+msgstr "лёгкая"
 
 #: kf_lib/kung_fu/boosts.py:206
 msgid "elbow strike efficiency"
@@ -1234,6 +1281,10 @@ msgstr "опыт:{exp}/{next_lv} деньги:{money}"
 msgid "Experience from a win grows faster than the opponent's strength relative to yours."
 msgstr "Опыт за победу растёт быстрее, чем сила противника по сравнению с твоей."
 
+#: kf_lib/minigames/_ring.py:16
+msgid "extreme"
+msgstr "экстремальная"
+
 #: kf_lib/actors/fighter/_fight_actions.py:95
 msgid "Fail!"
 msgstr "Неудача!"
@@ -1262,7 +1313,7 @@ msgstr "урон от падения"
 msgid "Fame"
 msgstr "Слава"
 
-#: kfw.py:67
+#: kfw.py:51 kfw.py:78
 msgid "Farewell, brave warrior!"
 msgstr "Прощай, храбрый воин!"
 
@@ -1597,6 +1648,10 @@ msgstr "защита во время атаки"
 #: kf_lib/happenings/encounters/_challenger.py:28
 msgid "hands-down "
 msgstr "в чистую "
+
+#: kf_lib/minigames/_ring.py:16
+msgid "hard"
+msgstr "трудная"
 
 #: kf_lib/game/_new_game.py:161
 msgid "Hard Times (high poverty)"
@@ -2065,6 +2120,10 @@ msgstr "Скорость прокачки?"
 msgid "Level up"
 msgstr "Повысить уровень"
 
+#: kf_lib/actors/fighter_factory.py:117
+msgid "Level:"
+msgstr "Уровень:"
+
 #: kf_lib/game/_state_menu.py:30
 msgid "Load"
 msgstr "Загрузить"
@@ -2285,6 +2344,10 @@ msgstr "ИМЯ"
 msgid "Name"
 msgstr "Имя"
 
+#: kf_lib/actors/fighter_factory.py:109
+msgid "Name: "
+msgstr "Имя: "
+
 #: kf_lib/ui/_menu.py:46
 msgid "Next page"
 msgstr "След. страница"
@@ -2324,6 +2387,10 @@ msgstr "Среди молодых бойцов в городе нет никог
 #: kf_lib/happenings/encounters/_rumors.py:86
 msgid "Nobody wants to be on the receiving end of {name}'s {move}."
 msgstr "Самый страшный приём {name} — {move}. Никому не советую под него попасть."
+
+#: kf_lib/minigames/_ring.py:16
+msgid "normal"
+msgstr "обычная"
 
 #: kf_lib/fighting/fight/_base_fight.py:278
 msgid "Not a scratch"
@@ -2755,6 +2822,34 @@ msgstr "Сохранить слайд-шоу"
 #: kf_lib/fighting/fight/_base_fight.py:468
 msgid "Saved successfully."
 msgstr "Сохранено успешно."
+
+#: kf_lib/minigames/_chocolate.py:58
+msgid "Scene 1 - Teen Gang"
+msgstr "Сцена 1 - Юная банда"
+
+#: kf_lib/minigames/_chocolate.py:64
+msgid "Scene 2 - Ice"
+msgstr "Сцена 2 - Лёд"
+
+#: kf_lib/minigames/_chocolate.py:70
+msgid "Scene 3 - Warehouse"
+msgstr "Сцена 3 - Склад"
+
+#: kf_lib/minigames/_chocolate.py:83
+msgid "Scene 4 - Meat"
+msgstr "Сцена 4 - Мясо"
+
+#: kf_lib/minigames/_chocolate.py:96
+msgid "Scene 5 - Tension"
+msgstr "Сцена 5 - Напряжение"
+
+#: kf_lib/minigames/_chocolate.py:102
+msgid "Scene 6 - Katana"
+msgstr "Сцена 6 - Катана"
+
+#: kf_lib/minigames/_chocolate.py:115
+msgid "Scene 7 - Anger"
+msgstr "Сцена 7 - Гнев"
 
 #: kf_lib/actors/player/_human_player.py:163 kf_lib/happenings/encounters/_gambling.py:78
 msgid "Scissors"
@@ -3556,6 +3651,10 @@ msgstr ""
 #: kf_lib/actors/player/_human_player.py:71
 msgid "Your school will teach {}."
 msgstr "В вашей школе будут учить стилю: {}."
+
+#: kf_lib/minigames/_chocolate.py:150
+msgid "Zen picks up a {weapon}."
+msgstr "Зен подбирает оружие: {weapon}."
 
 #: kf_lib/game/debug_menu.py:144
 msgid "{!r} is a method, not overwriting it!"

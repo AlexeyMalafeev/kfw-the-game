@@ -312,6 +312,18 @@ OVERRIDES = {
     'Unknown': 'Неизвестный',
     'Gang Leader': 'Главарь банды',
     'Foshan': 'Фошань',
+    # -- Chocolate mini-game --
+    'Zen': 'Зен',
+    'Teen Thug': 'Юный хулиган',
+    'Worker': 'Рабочий',
+    'Armed Worker': 'Вооружённый рабочий',
+    'Butcher': 'Мясник',
+    'Armed Butcher': 'Вооружённый мясник',
+    'Tough Thug': 'Крепкий головорез',
+    'Twitching Fighter': 'Дёргающийся боец',
+    'Swordsman': 'Мечник',
+    'Mighty Elbows': 'Могучие локти',
+    'Mighty Knees': 'Могучие колени',
     # -- victory conditions --
     'Grandmaster': 'Гроссмейстер',
     'Folk Hero': 'Народный герой',

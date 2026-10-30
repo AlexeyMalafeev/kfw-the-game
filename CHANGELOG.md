@@ -18,6 +18,16 @@ All notable changes to KFW are documented here. Format loosely follows
   challenger, officials, love rivals, dream opponents and other fighters
   without a quote pool used to fight in silence. They now have their own
   prefight and victory lines (36 and 22, in English and Russian)
+- **Chocolate is back**: the years-broken mini-game is playable again with
+  `python kfw.py --minigame chocolate`. Zen, a fixed lv.12 fighter, fights
+  through seven scenes modeled on the 2008 Thai film (a teen gang, an ice
+  factory, a warehouse, a meat plant, three Muay Thai fighters, a two-part
+  katana scene, a final gang leader) and learns new techniques and moves
+  before each one. The last two scenes are new. A lost fight is replayed
+  against a fresh gang and counted at the end. Uses the normal fight
+  screens, colors and `--lang ru`
+- **RING runs from kfw.py too**: `python kfw.py --minigame ring`; the
+  `minigames/` folder and its standalone scripts are gone
 
 ### Changed
 - **Basic strikes are nobody's signature move**: Punch, Kick, Weak Short

@@ -13,7 +13,8 @@ All scripts **must be run from the repo root** — moves, quotes and saves use
 cwd-relative paths.
 
 - `python kfw.py` — single entry point (argparse: `--autoplay`, `-n N`,
-  `--autosave`, `--silent-ending`, `--load FILE`, `--lang {en,ru}`); the only
+  `--autosave`, `--silent-ending`, `--load FILE`, `--lang {en,ru}`,
+  `--minigame {chocolate,ring}`); the only
   script at repo root
 
 There is a small pytest suite in `test/` (run `.venv/bin/python -m pytest` from the
@@ -80,7 +81,8 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   `render.py` makes listening previews or, with `--game`, the files in the
   top-level `audio/`; run from its own directory, no chdir hack)
 - `ml/` — ML fight-outcome prediction experiment; needs the dev venv, not needed to play
-- `minigames/` — standalone prototypes, not wired into the game
+- `kf_lib/minigames/` — Chocolate and RING mini-games (`kfw.py --minigame`);
+  they reuse fighters, fights and UI but no `Game` or saves
 - `docs/` — one file per game system (mechanics-as-implemented, ⚠️ marks
   suspicious behavior): `fight_mechanics.md`, `gameplay.md` (day loop, economy,
   victory), `encounters.md` (encounters/events/stories/tournaments),
