@@ -156,6 +156,26 @@ class TestMarriage:
         p.check_help()
         assert p.sweetheart not in p.allies
 
+    @pytest.mark.parametrize('married', [True, False])
+    def test_only_a_spouse_helps_against_the_fat_girl(self, monkeypatch, married):
+        from kf_lib.happenings.encounters._people import FatGirl
+
+        g = make_game()
+        p = g.players[0]
+        sw = make_sweetheart(g, p)
+        p.is_married = married
+        p.friends.append(g.players[1])  # a friend who'd join any other ambush
+        monkeypatch.setattr(base_player_mod, 'rnd', lambda: 0.0)  # every helper agrees
+        fought_with = []
+        monkeypatch.setattr(
+            p, 'fight', lambda en, allies=None, *a, **kw: fought_with.append(allies)
+        )
+        enc = FatGirl.__new__(FatGirl)  # bypass __init__: don't run the encounter
+        enc.p = enc.player = p
+        enc.g = g.fat_girl
+        enc.do_fight()
+        assert fought_with == [[sw] if married else []]
+
     def test_spouse_daily_gift(self, monkeypatch):
         g = make_game()
         p = g.players[0]

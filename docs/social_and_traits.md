@@ -95,7 +95,10 @@ a list.
 Call sites: `Ambush`, `Extorters`, `RobbingSomeone`, group/armed `Robbers`,
 `Criminal` (direct `check_allies(1)`), plus weapon-only variants in
 `HelpPolice` and `StolenTreasuresStory` (`allies=False, master=False,
-school=False`). Allies join side_a of a real fight — exp, injuries and stats
+school=False`) and the spouse-only `FatGirl` (all four other channels off:
+only a spouse may step in, a small reward for being married by then). With
+every channel off — spouse-only for a single player — `check_help` returns
+with `p.allies = []`. Allies join side_a of a real fight — exp, injuries and stats
 apply to them as usual. In `Criminal`, a joined friend halves the reward money
 (the player still keeps full rep for the bravery — see `docs/encounters.md`).
 

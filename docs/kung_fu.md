@@ -287,8 +287,11 @@ weapon moves are tier-0 `'weapon'`-feature moves from `extra_moves.txt`
 saber, spear, staff, sword), `ImprovisedWeapon` (14: fan, bench, guqin,
 chain, …), `RobberWeapon` (3: axe, bludgeon, knife), `PoliceWeapon` (1:
 baton). `WEAPON_TYPES` groups them by `wp_type`. `get_exp_mult()` =
-`1 + mean(dfs_bonus, atk_mean)` feeds the weapon exp multiplier in
-[fight].
+`1 + mean(dfs_bonus − 1, atk_mean)` (×1.26–1.47 by weapon) feeds the weapon
+exp multiplier in [fight]. `dfs_bonus` is stored as a multiplier (1.25 for
++25%), hence the `− 1`; until 2026-10 the whole multiplier went in and every
+weapon was worth ×1.8–1.9, while in A/B mirror matches an improvised weapon
+wins 65% and a normal one 73% — about what ×1.2–1.4 exp worth wins unarmed.
 
 Arming (`fighter/_weapons.py`): `arm(weapon)` accepts `None` (fully random
 weapon), a type string (`'improvised'` etc.), a `Weapon` instance, or a

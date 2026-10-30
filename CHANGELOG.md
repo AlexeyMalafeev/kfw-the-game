@@ -19,6 +19,29 @@ All notable changes to KFW are documented here. Format loosely follows
   without a quote pool used to fight in silence. They now have their own
   prefight and victory lines (36 and 22, in English and Russian)
 
+### Changed
+- **Your spouse can help against the Fat Girl**: when she ambushes a married
+  player, the spouse may step in (the usual 60% chance). Friends, the master,
+  schoolmates and improvised weapons still stay out of it
+
+### Fixed
+- **Weapons no longer nearly double a fighter's worth**: the weapon exp
+  multiplier counted the weapon's whole defense multiplier instead of its
+  bonus, so every armed fighter was rated ×1.8–1.9 instead of ×1.25–1.5 (A/B
+  mirror matches put a weapon at about ×1.2–1.4). Beating a lone armed robber
+  now pays about 1.65× the exp of the same robber unarmed instead of 2.6×;
+  grabbing an improvised weapon before a fight leaves you 66% of the fight's
+  exp instead of 41%; risk labels and AI players no longer overrate armed
+  opponents. Changes exp income and AI fight choices, not fight balance
+- **Exp bonuses from sparring are counted in the stats**: sparring showed and
+  paid "Quick victory" and the other bonuses but never added them to the
+  stats table, so the gossipmonger's numbers came out lower than what you saw
+- **Becoming quick-witted no longer skips a level**: when the Wise Man made a
+  player quick-witted (or cured slow-wittedness), the discount applied to
+  every past level at once, so a level-15 player jumped two levels on the
+  next exp point. The player's exp is now rescaled with the threshold, keeping
+  their progress toward the next level
+
 ## [v0.7.7-beta "Android Strikes the Gong"] — 2026-10-29
 
 ### Added

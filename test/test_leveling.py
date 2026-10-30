@@ -235,6 +235,28 @@ class TestTraits:
         assert p.next_lv_exp_mult == pytest.approx(0.9)
         assert p.next_level == 90
 
+    @pytest.mark.parametrize(
+        'start_traits, change',
+        [
+            ([], lambda p: p.add_trait('quick-witted')),
+            (['slow-witted'], lambda p: p.remove_trait('slow-witted')),
+        ],
+        ids=['gain quick-witted', 'lose slow-witted'],
+    )
+    def test_mid_game_trait_change_keeps_level_progress(self, start_traits, change):
+        # level thresholds are cumulative (100 × mult × level), so recomputing only
+        # the threshold applied the new mult to all past levels: until 2026-10 a
+        # level-15 player one exp short of level 16 jumped to level 17
+        random.seed(0)
+        p = SmartAIP(name='Test Player', style='Drunken Boxing', traits_list=start_traits)
+        p.gain_exp(round(EXP_PER_LEVEL * p.next_lv_exp_mult * 15) - 1, silent=True)
+        assert p.level == 15
+        change(p)
+        assert p.next_level == round(EXP_PER_LEVEL * p.next_lv_exp_mult * 15)
+        assert p.exp == p.next_level - 1  # still one exp short
+        p.gain_exp(1, silent=True)
+        assert p.level == 16
+
     def test_random_traits_one_negative_one_positive(self):
         random.seed(0)
         p = SmartAIP(name='Test Player', style='Drunken Boxing')

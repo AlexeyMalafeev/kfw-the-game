@@ -262,7 +262,12 @@ class FatGirl(BaseEncounter):
 
     def do_fight(self):
         p = self.player
-        if p.fight(self.g):
+        # only a spouse may step in, not friends, master or schoolmates: a small
+        # reward for being married by the time she shows up
+        p.check_help(allies=False, master=False, impr_wp=False, school=False)
+        if p.fight(self.g, p.allies):
+            # not a mix-up: the *player* runs away, even after winning. Humor: it
+            # was a narrow escape, and who knows, she might get up again
             p.msg(_('{} runs away in fear.').format(tr_fighter_name(self.p.name)))
             p.game.fat_girl = None
             p.add_accompl("Fat Girl Defeated")

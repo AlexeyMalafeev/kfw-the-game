@@ -249,6 +249,15 @@ class TestWeaponsData:
             assert w.name
             assert w.get_exp_mult() >= 1.0
 
+    def test_exp_mult_uses_the_defense_bonus_not_the_multiplier(self):
+        # dfs_bonus is stored as 1 + bonus; until 2026-10 get_exp_mult averaged the
+        # whole multiplier in, so every weapon was worth x1.8-1.9, while in A/B
+        # mirror matches a weapon is worth about x1.2-1.4
+        from kf_lib.things import weapons
+
+        for w in weapons.ALL_WEAPONS_LIST:
+            assert 1.2 < w.get_exp_mult() < 1.5, w.name
+
     def test_get_wp_by_name(self):
         from kf_lib.things import weapons
 

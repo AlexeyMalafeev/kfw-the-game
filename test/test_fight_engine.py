@@ -216,6 +216,18 @@ class TestSparring:
             pa.spar(pb)
             assert pa.inact_status == '' and pb.inact_status == ''
 
+    def test_sparring_counts_exp_bonuses_but_no_other_stats(self):
+        # sparring skips the fight stats, but its exp bonuses are shown and paid,
+        # so the stats table must count them too (until 2026-10 it didn't)
+        g = make_game()
+        p = g.players[0]
+        p.level_up(19)
+        random.seed(0)
+        assert p.spar(lv1_fighter('Novice'))  # sanity for the seed
+        assert p.exp_bonuses > 0  # sanity: a quick win without a scratch
+        assert p.stats_dict['exp_bonuses'] == p.exp_bonuses
+        assert p.stats_dict['num_fights'] == 0
+
 
 class TestExpAndStats:
     def test_fight_gives_exp_and_counts_stats(self):

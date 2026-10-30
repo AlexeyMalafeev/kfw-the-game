@@ -36,7 +36,7 @@ class Weapon(object):
         return '{}({!r}, {}, ({},))'.format(
             self.__class__.__name__,
             self.name,
-            self.dfs_bonus,
+            round(self.dfs_bonus - 1.0, 4),  # the constructor takes the bonus part
             ', '.join((repr(m.name) for m in self.moves)),
         )
 
@@ -50,7 +50,11 @@ class Weapon(object):
         return i18n.tr_name(self.name)
 
     def get_exp_mult(self):
-        return 1.0 + mean((self.dfs_bonus, self.atk_mean))
+        # dfs_bonus is stored as a multiplier (1.25 for +25%), so take its bonus
+        # part; until 2026-10 the whole multiplier went in, making every weapon
+        # worth ×1.8-1.9 instead of ×1.25-1.5 (A/B: a weapon wins 65-73% of
+        # mirror matches, about what ×1.2-1.4 exp worth wins unarmed)
+        return 1.0 + mean((self.dfs_bonus - 1.0, self.atk_mean))
 
 
 class NormalWeapon(Weapon):

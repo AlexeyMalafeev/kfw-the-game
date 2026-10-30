@@ -38,7 +38,8 @@ def spar(
 
 
 class BaseSparring(BaseFight):
-    """Doesn't have items, accomplishments, injuries, stats, quotes or gossip."""
+    """Doesn't have items, accomplishments, injuries, stats, quotes or gossip.
+    The one stat it keeps is exp bonuses: they are shown and paid in sparring too."""
 
     def handle_accompl(self):
         pass
@@ -50,7 +51,9 @@ class BaseSparring(BaseFight):
         pass
 
     def handle_player_stats(self):
-        pass
+        for p in self.players:
+            if p.exp_bonuses:
+                p.change_stat('exp_bonuses', p.exp_bonuses)
 
     def handle_prefight_quote(self):
         pass

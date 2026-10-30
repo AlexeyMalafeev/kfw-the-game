@@ -477,7 +477,10 @@ Everyone down → draw: `winners = []`, `losers = all`, `win = False`.
 - `handle_exp_bonuses`: +25% per bonus — quick victory (≤ 10 s), "Not a
   scratch" (`not took_damage`), multi-knockout (`kos_this_fight >= 3`).
 - `exp_yield = 10 + str*agi*spd*hlt*0.03 + 3 per tech`, × weapon exp mult
-  (`_exp_worth.py`).
+  (×1.26–1.47, see `docs/kung_fu.md`; `_exp_worth.py`). It is fixed at
+  `prepare_for_fight`, so a weapon grabbed before the fight (the `'w'` help
+  channel) counts and lowers the grabber's exp, one grabbed mid-fight
+  (`try_in_fight_impro_wp`) doesn't.
 
 On a draw there are no winners, so the ratio formula above doesn't apply:
 every player gets a flat `BASE_FIGHT_EXP / DRAW_EXP_DIVISOR` (20 / 2 = 10)
@@ -512,7 +515,10 @@ post-fight "Stats" menu option (see `docs/stats.md`).
   `main_player`; humans get `is_auto_fighting = False` (interactive menus).
 - Sparring (`_sparring.py`): `spar()` builds `AutoSparring`/`NormalSparring`;
   `BaseSparring` disables items, accomplishments, injuries, player stats,
-  quotes and gossip — but **not** `give_exp`, so sparring still awards exp.
+  quotes and gossip — but **not** `give_exp`, so sparring still awards exp,
+  exp bonuses included. Its `handle_player_stats` records only those exp
+  bonuses (since 2026-10; before, the player saw bonuses the stats never
+  counted).
 - `SpectateFight` (`_spectating.py`): display-only `NormalFight` with
   `players = []`, so no exp/injuries/stats; prints via plain `print`.
 - `fight()` helper (`_helpers.py`): builds sides, swaps them so a human is on

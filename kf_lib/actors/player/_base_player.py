@@ -312,8 +312,10 @@ class BasePlayer(Fighter):
         Should be used only for adding NEW traits in-game."""
         opp_trait = traits.get_opposite_trait(trait)
         if trait not in self.traits and opp_trait not in self.traits:
+            old_lv_exp_mult = self.next_lv_exp_mult
             self.traits.append(trait)
             self.activate_trait(trait)
+            self.rescale_exp(old_lv_exp_mult)
             self.write(
                 _('{name} becomes {trait}.').format(
                     name=tr_fighter_name(self.name), trait=tr_name(trait)
@@ -436,6 +438,8 @@ class BasePlayer(Fighter):
             hlp.append('s')
         if spouse and self.is_married and self.sweetheart is not None:
             hlp.append('sp')
+        if not hlp:  # e.g. spouse-only help for an unmarried player
+            return
         x = random.choice(hlp)
         if x == 'a':
             p.allies = p.check_allies()
@@ -1094,13 +1098,28 @@ class BasePlayer(Fighter):
         self.game.unregister_fighter(enemy)
 
     def remove_trait(self, trait):
+        old_lv_exp_mult = self.next_lv_exp_mult
         self.traits.remove(trait)
         self.deactivate_trait(trait)
+        self.rescale_exp(old_lv_exp_mult)
         self.write(
             _('{name} is no longer {trait}.').format(
                 name=tr_fighter_name(self.name), trait=tr_name(trait)
             )
         )
+
+    def rescale_exp(self, old_lv_exp_mult):
+        """Keep the progress toward the next level when an in-game trait change
+        (quick-/slow-witted) changes next_lv_exp_mult. Level thresholds are
+        cumulative (EXP_PER_LEVEL × mult × level), so recomputing only the
+        threshold would apply the new mult to all past levels at once: a
+        level-15 player turning quick-witted jumped two levels on the next exp.
+        Scaling the exp by the same ratio keeps the player where they were."""
+        if self.next_lv_exp_mult == old_lv_exp_mult:
+            return
+        self.next_level = self.get_next_lv_exp()
+        exp = round(self.exp * self.next_lv_exp_mult / old_lv_exp_mult)
+        self.exp = min(exp, self.next_level - 1)  # rounding never levels up
 
     @staticmethod
     def rest():

@@ -161,8 +161,16 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
 - `Drunkard`: drink (rep penalty, a sick day) or refuse and risk a fight. The
   persistent legendary `game.drunkard` (lv 8–12) can befriend the player and
   teach a move, then leaves the game.
+- `FatGirl`: the persistent `game.fat_girl` (lv 5–7) ambushes non-master
+  players (2% per sweep) demanding marriage: fight or run. Only a spouse can
+  help (`check_help` with the spouse channel alone, since 2026-10). Winning
+  gives 'Fat Girl Defeated' and removes her from the game — and the *player*
+  runs away in fear. That line is a joke (a narrow escape; she might get up
+  again), not a mix-up of names; a code comment says so.
 - `WiseMan`: pay 10 c. for a conversation; 0.15 chance to gain a positive trait
-  (or lose its opposite) — the only encounter that changes traits.
+  (or lose its opposite) — the only encounter that changes traits. A change
+  of quick-/slow-witted rescales the player's exp so they keep their progress
+  toward the next level (see `docs/gameplay.md`).
 - `Gossip`: the gossipmonger tells one free rumor about another player
   (`_rumors.py`, see `docs/stats.md`), then offers the full stats table for
   10–25 c.; `OverhearConversation` relays recorded `aston_victory` /

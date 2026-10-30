@@ -53,9 +53,11 @@ off robbers (`_crime.py`, `Robbers.pay`), not money robbed from others;
   `num_kos` by `kos_this_fight`, `times_koed` when the player ended at 0 hp.
   It also increments the game-global `g.fights_total` once per fight, which
   the stats report uses for the "Fights (total)" percentage. Sparring
-  overrides `handle_player_stats` (and gossip/accomplishments) with no-ops —
-  sparring stats are not tracked, though sparring still gives exp
-  (`_sparring.py`).
+  overrides `handle_player_stats` (and gossip/accomplishments) — sparring
+  stats are not tracked, though sparring still gives exp and exp bonuses, and
+  its `handle_player_stats` records only `exp_bonuses`, so the stat matches
+  the bonuses the player saw (`_sparring.py`; until 2026-10 sparring bonuses
+  went uncounted).
 - Money/items/training: inline in the corresponding `BasePlayer` methods
   (`earn_money`, `buy_item`, `obtain_item`, `donate`, `drink`, `use_med`,
   `use_item`, `enter_tourn`, `win_tourn`, `record_gamble_win/lost`,

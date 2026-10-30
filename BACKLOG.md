@@ -52,31 +52,18 @@ out first), and the index of ⚠️ points in `docs/*.md`. Fixed entries move to
 
 ### Unverified reports
 
-Old notes nobody has reproduced recently — some may be stale. Check them
-against the current code first, then fix, or delete the entry if it no
-longer applies.
+Reports nobody has reproduced yet. Check them against the current code
+first, then fix, or delete the entry if it no longer applies.
 
-- possible bug in exp progression in lazy/hardworking players
-- bug in careless inactive time?
-- fix style moves; "couldn't find any moves for move string 3,shocking;1,flying;2,flying"
-- some upgradable techs shouldn't be upgradable
-- double knockback! (note: v0.6.8 changelog claims "fix: double knockback (at
-  last!)" — verify whether it regressed or the todo entry was stale)
-- from the old `docs/known bugs.txt` (migrated 2026-10-20; its notes that
-  were already fixed or tracked elsewhere were dropped):
-  - a tier-1 move offered at level 20
-  - exp bonuses don't seem to work / don't register in the statistics
-    (gossip)
-  - shock and similar statuses: reschedule the fighter's turn immediately
-  - exp miscalculated in fights with weapons
-  - Bagua Zhang gets little exp from improvised weapons
-  - Fat Girl encounter: no help from friends
-  - six moves to choose from at level 10 — why?
-  - multiple attempts for defeating beggars? (more a design question)
+None open: the 13 old notes were triaged 2026-10-30. The real bugs among
+them are fixed (see `CHANGELOG.md`), two design points moved to the parked
+balance work (advanced techs; shock timing under Fight mechanics), and the
+rest were stale or intended.
 
 ### Open balance / design questions
 
-- weapons are OP? / remove weapon atk bonus
+- weapons are OP? / remove weapon atk bonus (2026-10-30 A/B: in mirror
+  matches a random improvised weapon wins 65%, a normal one 73%)
 - flower kung-fu has only weak and pathetic moves (intended?)
 
 ### ⚠️ points in the docs
@@ -193,6 +180,11 @@ styles, techniques, weapons. The 50 that remain, by doc → pointer:
 - tests of strength/speed/health/agility in encounters and stories — new
   mechanics beyond fighting
 - make status attacks (stun, shock, …) level-dependent
+- shock and stun delay the victim's turn (an old note: "reschedule the
+  fighter's turn immediately"). Today they only add a `skip` status: the
+  victim can't act before it ends, but a shock landing right after the
+  victim's turn costs them nothing extra. Pushing the queued turn back by the
+  duration would make status strikes stronger — a balance change
 
 ## Moves, styles, techniques, weapons
 
@@ -353,7 +345,12 @@ styles, techniques, weapons. The 50 that remain, by doc → pointer:
   strikes and iron fist up; resilience, monkey-and-fox and behind-you
   down), so the fix is per boost, not a flat scale: pull the outliers
   toward 0 with `run_test_tech_ab.py` (value per tech by A/B, per level
-  tier), then re-run `run_test_fb.py`.
+  tier), then re-run `run_test_fb.py`. Also decide whether every regular
+  tech should have an advanced version (an old note: "some upgradable techs
+  shouldn't be upgradable"). The clearest case: Advanced Acrobatic Training
+  takes `move_complexity_mult` and `fall_damage_mult` from 1.0 to 0 (−1.0
+  each, twice the regular −0.5), so its holder never fails a move and takes
+  no fall damage.
 
 **Final `run_test_fb.py` re-run: done 2026-10-25** (tracked report
 refreshed; see "Snapshot 2026-10-25" below). History: the defense rework of

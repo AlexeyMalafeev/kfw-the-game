@@ -165,7 +165,8 @@ all players have acted. Five types, all independent and combinable:
   extreme luck rolls of the same kind, 5% each per `check_luck`).
 - **Greatest Fighter**: `fights_won >= 75` **and** `num_kos >= 100`
   (`GT_FIGHTER_FIGHTS`). Sparring doesn't count (`BaseSparring.handle_player_stats`
-  is a no-op); crowd fights do — KOs, not fights, are the binding constraint.
+  records only exp bonuses); crowd fights do — KOs, not fights, are the
+  binding constraint.
 - **Uniter of Schools**: a master whose federation includes every NPC school
   (`check_united_schools`). Progress comes from the master-only day action
   **Visit other masters**: meet a random unallied NPC master and either beat
@@ -300,7 +301,13 @@ tweakable at new-game setup — see above). Level thresholds are
 so each level-up effectively costs a flat 100 exp (90 for 'quick-witted');
 reaching lv 20 needs 1900 total. ⚠️ The `× level` in the formula looks like an
 escalating cost but isn't — the per-level cost is constant. Verified by
-script: thresholds 100, 200, …, 1900, deltas all 100.
+script: thresholds 100, 200, …, 1900, deltas all 100. Because the thresholds
+are cumulative, a mid-game change of `next_lv_exp_mult` (the Wise Man making
+a player quick-witted or curing slow-wittedness) rescales the current exp by
+the same ratio (`BasePlayer.rescale_exp`), so the player keeps their progress
+toward the next level; until 2026-10 only the threshold changed, which
+applied the discount to every past level at once (a level-15 player jumped
+two levels on the next exp point).
 
 Per level-up (`Fighter.level_up`): +1 to a chosen attribute (humans pick from
 3 randomly offered atts; AI uniform-random — all `att_weights` end up equal),
