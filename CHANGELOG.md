@@ -9,7 +9,8 @@ All notable changes to KFW are documented here. Format loosely follows
 - **The gossipmonger tells a free rumor**: before asking for money, the
   gossipmonger now shares one random rumor about another player, built from
   what townsfolk would know: their school and master (or the school they
-  run), their favorite and most feared strikes, sweethearts, marriages and
+  run), their favorite and most feared strikes (basic ones like Punch and
+  Kick don't count), sweethearts, marriages and
   children, sworn enemies, tournament wins, debts, robberies, drinking,
   luck at dice, injuries, and who is the strongest or richest young fighter
   in town. Paying still shows the full stats table, now for 10–25 coins

@@ -488,6 +488,22 @@ class TestGossipRumors:
         assert any('owes money' in r for r in rumors)
         assert any('won 2 tournaments' in r for r in rumors)
 
+    def test_basic_strikes_are_neither_favorite_nor_feared(self):
+        from kf_lib.happenings.encounters._rumors import collect_rumors
+
+        g = make_game(seed=3, num_players=2)
+        listener, other = g.players
+        basic = [m.name for m in other.moves if m.is_basic and m.power]
+        other.move_usage = {name: 100 for name in basic}
+        text = ' '.join(collect_rumors(listener))
+        assert 'loves the' not in text
+        assert 'receiving end' not in text  # a fresh fighter knows only basics
+        other.level_up(6)  # learns style strikes
+        style_move = next(m for m in other.moves if m.power and not m.is_basic)
+        other.move_usage[style_move.name] = 1
+        text = ' '.join(collect_rumors(listener))
+        assert f'loves the {style_move.name}' in text
+
     @pytest.mark.parametrize('pays', [True, False])
     def test_gossip_tells_a_free_rumor_then_sells_the_table(self, monkeypatch, pays):
         from kf_lib.happenings.encounters import _people

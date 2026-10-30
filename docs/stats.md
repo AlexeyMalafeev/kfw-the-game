@@ -151,7 +151,9 @@ Two systems share the theme and are easily confused:
     plausibly know rather than exact career numbers: their school and master,
     or the school they run and its student count; being thrown out of the
     school; their favorite strike (`get_favorite_move`) and their
-    highest-tier strike (`get_most_feared_move`, skipped for tier-0 basics);
+    highest-tier strike (`get_most_feared_move`), both skipping the basic
+    moves (`Move.is_basic`: Punch, Kick, Weak Short Punch, Shove, Finishing
+    Punch/Kick), which everyone uses a lot because they cost no qi;
     sweetheart, marriage and children; an enemy; many friends (≥ 3);
     tournaments won; many accomplishments (≥ 5); many KOs dealt (≥ 10) or
     taken (≥ 3); being injured or sick right now; debt; having been robbed;

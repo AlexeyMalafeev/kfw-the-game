@@ -887,27 +887,36 @@ class BasePlayer(Fighter):
             return self.game.schools[self.new_school_name]
         return self.game.schools[self.style.name]
 
-    def get_favorite_move(self, attack_only=False):
+    def get_favorite_move(self, attack_only=False, exclude_basic=False):
         """Most-used move across all fights ('' if none). With attack_only,
-        consider strikes only (defensive moves like Guard otherwise dominate)."""
+        consider strikes only (defensive moves like Guard otherwise dominate).
+        With exclude_basic, skip the basic moves everyone knows (Punch, Kick...),
+        which are used a lot simply because they cost no qi."""
         usage = self.move_usage
-        if attack_only:
+        if attack_only or exclude_basic:
             from kf_lib.kung_fu.moves import ALL_MOVES_DICT
             usage = {
                 name: cnt
                 for name, cnt in usage.items()
-                if name in ALL_MOVES_DICT and ALL_MOVES_DICT[name].power
+                if name in ALL_MOVES_DICT
+                and (ALL_MOVES_DICT[name].power or not attack_only)
+                and not (exclude_basic and ALL_MOVES_DICT[name].is_basic)
             }
         if usage:
             return max(usage.items(), key=lambda kv: kv[1])[0]
         return ''
 
-    def get_most_feared_move(self, exclude=''):
+    def get_most_feared_move(self, exclude='', exclude_basic=False):
         """Highest-tier attack move the player has; ties (same tier) are broken
         by times used across all fights. `exclude` skips a move name (e.g. the
-        signature move) so the bio can name a distinct feared move. '' if the
-        player has no attack moves (other than the excluded one)."""
-        strikes = [m for m in self.moves if m.power and m.name != exclude]
+        signature move) so the bio can name a distinct feared move;
+        exclude_basic skips the basic moves (Punch, Kick...). '' if the player
+        has no attack moves left after that."""
+        strikes = [
+            m
+            for m in self.moves
+            if m.power and m.name != exclude and not (exclude_basic and m.is_basic)
+        ]
         if not strikes:
             return ''
         max_tier = max(m.tier for m in strikes)

@@ -8,11 +8,9 @@ career numbers of the full stats table — that one still costs money.
 import random
 
 from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name, tr_style_name
-from kf_lib.kung_fu.moves import ALL_MOVES_DICT
 
 # thresholds
 MIN_ACCOMPL_LEGEND = 5
-MIN_FEARED_MOVE_TIER = 1  # basic moves (tier 0) scare nobody
 MIN_FRIENDS_MANY = 3
 MIN_GAMBLING_SUM = 50
 MIN_KOS_MANY = 10
@@ -75,15 +73,16 @@ def _personal_rumors(s):
         )
 
     # moves
-    fav_move = s.get_favorite_move(attack_only=True)
+    # basic strikes (Punch, Kick...) are everyone's habit: they cost no qi
+    fav_move = s.get_favorite_move(attack_only=True, exclude_basic=True)
     if fav_move:
         r.append(
             _('Folks say {name} loves the {move}. Watch out for it!').format(
                 name=name, move=tr_name(fav_move)
             )
         )
-    feared_move = s.get_most_feared_move(exclude=fav_move)
-    if feared_move and ALL_MOVES_DICT[feared_move].tier >= MIN_FEARED_MOVE_TIER:
+    feared_move = s.get_most_feared_move(exclude=fav_move, exclude_basic=True)
+    if feared_move:
         r.append(
             _("Nobody wants to be on the receiving end of {name}'s {move}.").format(
                 name=name, move=tr_name(feared_move)
