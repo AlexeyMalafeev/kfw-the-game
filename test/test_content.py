@@ -220,6 +220,8 @@ class TestQuotes:
         for attr in (
             'CHALLENGER_PREFIGHT',
             'CHALLENGER_WIN',
+            'FIGHTER_PREFIGHT',
+            'FIGHTER_WIN',
             'HERO_PREFIGHT',
             'HERO_WIN',
             'THUG_PREFIGHT',
@@ -233,7 +235,7 @@ class TestQuotes:
     def test_prefight_and_win_quote_maps_cover_fighter_classes(self):
         from kf_lib.actors import quotes
 
-        for quotes_key in ('challenger', 'hero', 'master', 'thug'):
+        for quotes_key in ('challenger', 'fighter', 'hero', 'master', 'thug'):
             assert quotes_key in quotes.PREFIGHT_QUOTES
             assert quotes_key in quotes.WIN_QUOTES
 
@@ -431,3 +433,68 @@ class TestGossipOpponentGrouping:
 
         opps = ['Qiu Cao, lv.3 Monkey Fist', 'Qiu Cao, lv.4 Monkey Fist']
         assert group_same_fighters(opps) == opps
+
+
+class TestGossipRumors:
+    def test_fresh_game_always_has_a_rumor_about_someone_else(self):
+        from kf_lib.happenings.encounters._rumors import collect_rumors
+
+        g = make_game(seed=3, num_players=3)
+        listener, *others = g.players
+        rumors = collect_rumors(listener)
+        assert rumors
+        assert all(listener.name not in r for r in rumors)
+        assert any(o.name in r for o in others for r in rumors)
+
+    def test_lone_player_hears_about_themself(self):
+        from kf_lib.happenings.encounters._rumors import collect_rumors
+
+        g = make_game(seed=3, num_players=1)
+        (p,) = g.players
+        rumors = collect_rumors(p)
+        assert rumors and all(p.name in r for r in rumors)
+
+    def test_rumors_never_reveal_true_style_names(self):
+        from kf_lib.happenings.encounters._rumors import collect_rumors
+
+        g = make_game(seed=5, num_players=2)
+        listener, other = g.players
+        assert other.style.name != other.style.public_name
+        other.knows_style_secret = lambda: True  # even if they learned it
+        text = ' '.join(collect_rumors(listener))
+        assert other.style.name not in text
+        assert other.style.public_name in text
+
+    def test_life_events_become_rumors(self):
+        from kf_lib.happenings.encounters._rumors import collect_rumors
+
+        g = make_game(seed=3, num_players=2)
+        listener, other = g.players
+        before = len(collect_rumors(listener))
+        other.money = -10
+        other.stats_dict['tourn_won'] = 2
+        other.stats_dict['got_drunk'] = 5
+        rumors = collect_rumors(listener)
+        assert len(rumors) == before + 3
+        assert any('owes money' in r for r in rumors)
+        assert any('won 2 tournaments' in r for r in rumors)
+
+    @pytest.mark.parametrize('pays', [True, False])
+    def test_gossip_tells_a_free_rumor_then_sells_the_table(self, monkeypatch, pays):
+        from kf_lib.happenings.encounters import _people
+
+        g = make_game(seed=3, num_players=2)
+        p = g.players[0]
+        p.money = 100
+        shown = []
+        monkeypatch.setattr(p, 'show', lambda t, *a, **kw: shown.append(t))
+        monkeypatch.setattr(p, 'hear_rumors_or_not', lambda: pays)
+        tables = []
+        monkeypatch.setattr(g, 'show_stats', lambda *a, **kw: tables.append(1))
+        _people.Gossip(p, check_if_happens=False)
+        assert shown[1].startswith('Gossipmonger: "')
+        spent = 100 - p.money
+        if pays:
+            assert spent in _people.MONEY_GOSSIP_COST and tables == [1]
+        else:
+            assert spent == 0 and tables == []

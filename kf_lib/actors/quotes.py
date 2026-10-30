@@ -23,11 +23,14 @@ MISC = ''
 def reload_quotes():
     """(Re)load all quote pools in the current language. Runs at import time
     and again from i18n.set_language() if the language changes later."""
-    global CHALLENGER_PREFIGHT, CHALLENGER_WIN, HERO_PREFIGHT, HERO_WIN
+    global CHALLENGER_PREFIGHT, CHALLENGER_WIN, FIGHTER_PREFIGHT, FIGHTER_WIN
+    global HERO_PREFIGHT, HERO_WIN
     global THUG_PREFIGHT, THUG_WIN, WISDOM, MASTER_CRITICISM, TRAINING_INJURY
     global PREFIGHT_QUOTES, WIN_QUOTES
     CHALLENGER_PREFIGHT = load_quotes('challenger_prefight.txt')
     CHALLENGER_WIN = load_quotes('challenger_win.txt')
+    FIGHTER_PREFIGHT = load_quotes('fighter_prefight.txt')
+    FIGHTER_WIN = load_quotes('fighter_win.txt')
     HERO_PREFIGHT = load_quotes('hero_prefight.txt')
     HERO_WIN = load_quotes('hero_win.txt')
     THUG_PREFIGHT = load_quotes('thug_prefight.txt')
@@ -38,12 +41,14 @@ def reload_quotes():
 
     PREFIGHT_QUOTES = {
         'challenger': CHALLENGER_PREFIGHT,
+        'fighter': FIGHTER_PREFIGHT,
         'hero': HERO_PREFIGHT,
         'thug': THUG_PREFIGHT,
         'master': WISDOM,
     }
     WIN_QUOTES = {
         'challenger': CHALLENGER_WIN,
+        'fighter': FIGHTER_WIN,
         'hero': HERO_WIN,
         'thug': THUG_WIN,
         'master': WISDOM

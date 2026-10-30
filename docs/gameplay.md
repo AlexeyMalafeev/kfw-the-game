@@ -228,7 +228,7 @@ Income:
   ⚠️ Dominated option: zero EV, negative rep, fight risk.
 
 Expenses: tuition 20/day, merchant items 70–150 (`items.PRICES`), kung-fu book
-100, wooden mannequin 500, tournament fees, gossip 15–35, wise man 10, beggar
+100, wooden mannequin 500, tournament fees, gossip 10–25, wise man 10, beggar
 donation 10, opening your school 1000.
 
 **Debt** (by design): `pay()` never clamps, so money can go negative — a

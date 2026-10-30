@@ -16,33 +16,37 @@ Items marked ⚠️ look unintentional or surprising — verify before building 
 `actors/quotes.py` reads `quotes/*.txt` at import with cwd-relative paths
 (`open(os.path.join('quotes', file_name))`), one quote per line via
 `f.read().split('\n')` — importing from the wrong cwd raises `FileNotFoundError`.
-Nine files are loaded; `quotes/_unused.txt` exists in the folder but is never
+Eleven files are loaded; `quotes/_unused.txt` exists in the folder but is never
 read, and `MISC = ''` is a dead leftover ⚠️.
 
 When the game language is non-English (see `docs/i18n.md`), `load_quotes`
 prefers `quotes/<lang>/<file_name>` if it exists, falling back to the English
 file per file. The pools are (re)bound by `reload_quotes()`, which runs at
 import and again from `i18n.set_language()` if the language changes
-mid-process. `quotes/ru/` holds a full Russian translation of all nine
+mid-process. `quotes/ru/` holds a full Russian translation of all eleven
 loaded files; a translated file should preserve the English line structure
 (pools are `random.choice`d, so extra/missing lines only shrink or grow the
 pool — but a trailing newline adds an empty quote).
 
-Pool sizes (lines per file): hero prefight 211 / hero win 130, thug prefight
-126 / thug win 48, challenger prefight 53 / challenger win 40, wisdom 133,
-master criticism 23, training injury 21. No blank lines, so pool size == line
-count.
+Pool sizes (lines per file): hero prefight 215 / hero win 132, thug prefight
+127 / thug win 48, challenger prefight 57 / challenger win 41, fighter
+prefight 36 / fighter win 22, wisdom 133, master criticism 23, training
+injury 21. No blank lines, so pool size == line count.
 
 ### Occupation → pool mapping
 
 Two dicts at the bottom of `quotes.py` map occupation strings to pools:
 
-- `PREFIGHT_QUOTES` / `WIN_QUOTES`: `challenger` / `hero` / `thug` get their
-  own prefight and win files; `master` maps to `WISDOM` for **both** (masters
-  recite proverbs before and after the fight).
-- The default occupation `'fighter'` (set in `Fighter.__init__`,
-  `actors/fighter/__init__.py`) is in neither dict ⚠️ — generic NPCs are
-  silent. Players are `'hero'` (`actors/player/_base_player.py`).
+- `PREFIGHT_QUOTES` / `WIN_QUOTES`: `challenger` / `fighter` / `hero` /
+  `thug` get their own prefight and win files; `master` maps to `WISDOM` for
+  **both** (masters recite proverbs before and after the fight).
+- `'fighter'` is the default occupation (set in `Fighter.__init__`,
+  `actors/fighter/__init__.py`): rival-school opponents, the foreign
+  challenger, story officials and promoters, love rivals, dream opponents,
+  the turtles, the Fat Girl. Their lines are plain duel talk that fits any of
+  them; the Russian versions avoid gendered past-tense verbs, since speaker
+  and listener can be of either gender. An occupation missing from the dicts
+  stays silent. Players are `'hero'` (`actors/player/_base_player.py`).
 
 On the fighter side (`fighter/_quotes.py`): the property `quotes` just returns
 `self.occupation` (a confusing name — it shadows the imported `quotes` module

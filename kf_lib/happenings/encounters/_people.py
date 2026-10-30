@@ -6,6 +6,7 @@ from kf_lib.fighting import fight
 from kf_lib.i18n import _, get_language, ngettext, tr_fighter_name, tr_name
 from kf_lib.utils import enum_words, rnd, rndint
 from ._base_encounter import BaseEncounter, Guaranteed
+from ._rumors import get_rumor
 from ._utils import check_feeling_greedy, check_scary_fight, get_escape_chance, try_escape
 
 
@@ -80,7 +81,7 @@ REQ_LV_DRUNKARD_FIGHT_STRONG = (5, 10)
 REQ_LV_DRUNKARD_FIGHT_WEAK = (1, 5)
 
 # money
-MONEY_GOSSIP_COST = (15, 20, 25, 30, 35)
+MONEY_GOSSIP_COST = (10, 15, 20, 25)
 MONEY_WISE_MAN = 10
 
 # moves
@@ -319,13 +320,16 @@ class Gossip(BaseEncounter):
     def run(self):
         p = self.player
         cost = random.choice(MONEY_GOSSIP_COST)
-        t = ngettext(
-            '{name} meets a local gossipmonger. Pay {n} coin to hear the latest rumors?',
-            '{name} meets a local gossipmonger. Pay {n} coins to hear the latest rumors?',
-            cost,
-        ).format(name=tr_fighter_name(p.name), n=cost)
-        p.show(t)
+        p.show(_('{} meets a local gossipmonger.').format(tr_fighter_name(p.name)))
         p.log(_('Meets a gossipmonger.'))
+        # a taste for free; the full stats table still costs money
+        p.show(_('Gossipmonger: "{}"').format(get_rumor(p)))
+        t = ngettext(
+            'Pay {n} coin to hear the rest of the rumors?',
+            'Pay {n} coins to hear the rest of the rumors?',
+            cost,
+        ).format(n=cost)
+        p.show(t)
         if p.hear_rumors_or_not() and p.check_money(cost):
             p.pay(cost)
             p.log(_('Hears the rumors.'))

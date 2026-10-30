@@ -89,7 +89,7 @@ fixes in `CHANGELOG.md`). Points confirmed as intended — e.g. negative money
 as debt, WiseMan's unfiltered trait draw, Criminal's full rep — are now
 documented as such; the unused boosts and weapon-tech placeholders became
 the "Techs for the placeholder boosts" and "Weapon techs" items under Moves,
-styles, techniques, weapons. The 52 that remain, by doc → pointer:
+styles, techniques, weapons. The 50 that remain, by doc → pointer:
 
 - **(c) Design questions — probably intended, per the author, 2026-10-19
   ("mostly they are features, not bugs"); to be revisited later.** Not bugs
@@ -111,11 +111,8 @@ styles, techniques, weapons. The 52 that remain, by doc → pointer:
   - `kung_fu.md` Weapons — no durability/breaking
   - `social_and_traits.md` — `check_help` picks one channel with no
     fallback; `check_partners` (friends joining training) never called
-  - `stats.md` — no trait modifies the luck roll; the Gossip encounter
-    shows the full stats table instead of rumors
+  - `stats.md` — no trait modifies the luck roll
   - `encounters.md` — `enc_count_dict` is write-only (show it or drop it)
-  - `text_content.md` Quotes — the default `'fighter'` occupation has no
-    quote pool (generic NPCs are silent)
   - `minigames.md` Chocolate — 4 stale-API points: revive or retire (see
     the Chocolate entry under Confirmed bugs)
 - **(d) Informational / intended / harmless:**

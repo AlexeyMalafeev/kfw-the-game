@@ -3,6 +3,22 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
+## [Unreleased]
+
+### Added
+- **The gossipmonger tells a free rumor**: before asking for money, the
+  gossipmonger now shares one random rumor about another player, built from
+  what townsfolk would know: their school and master (or the school they
+  run), their favorite and most feared strikes, sweethearts, marriages and
+  children, sworn enemies, tournament wins, debts, robberies, drinking,
+  luck at dice, injuries, and who is the strongest or richest young fighter
+  in town. Paying still shows the full stats table, now for 10–25 coins
+  (was 15–35)
+- **Ordinary opponents speak up**: rival-school challengers, the foreign
+  challenger, officials, love rivals, dream opponents and other fighters
+  without a quote pool used to fight in silence. They now have their own
+  prefight and victory lines (36 and 22, in English and Russian)
+
 ## [v0.7.7-beta "Android Strikes the Gong"] — 2026-10-29
 
 ### Added

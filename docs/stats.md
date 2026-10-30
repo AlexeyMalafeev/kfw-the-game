@@ -136,9 +136,27 @@ Two systems share the theme and are easily confused:
   smallest ratio. Only solo fights qualify, and each stat only ever moves
   toward more extreme.
 - Encounters in `happenings/encounters/_people.py`:
-  - `Gossip` ⚠️ — paying the gossipmonger shows... the players' full stats
-    table (`game.show_stats()`), not rumors. It is the only in-game way to see
-    the full report before the ending.
+  - `Gossip` — the gossipmonger first tells one random rumor for free, then
+    offers the players' full stats table (`game.show_stats()`) for 10–25
+    coins (`MONEY_GOSSIP_COST`). Paying is the only in-game way to see the
+    full report before the ending; that is by design (the author: knowledge
+    is power, and in old Foshan you learned about other fighters only by
+    talking to people), so the table is never freely available. AI players
+    never pay (`hear_rumors_or_not` → False). The free rumor comes from
+    `encounters/_rumors.py`: `collect_rumors` builds every rumor that applies
+    right now and `get_rumor` picks one. Rumors are about the *other* players
+    (in a one-player game, about the listener) and use what townsfolk could
+    plausibly know rather than exact career numbers: their school and master,
+    or the school they run and its student count; being thrown out of the
+    school; their favorite strike (`get_favorite_move`) and their
+    highest-tier strike (`get_most_feared_move`, skipped for tier-0 basics);
+    sweetheart, marriage and children; an enemy; many friends (≥ 3);
+    tournaments won; many accomplishments (≥ 5); many KOs dealt (≥ 10) or
+    taken (≥ 3); being injured or sick right now; debt; having been robbed;
+    donations; drinking (≥ 3 times); dice losses or winnings (≥ 50); and
+    being the single strongest (level) or richest (≥ 100 coins) of the
+    players. Styles show their public name only, never the secret true name.
+    Every player has a school, so the list is never empty.
   - `OverhearConversation` — collects every player's non-`None`
     `aston_victory`/`humil_defeat` records and narrates one at random
     ("Haven't you heard? X at lv.N beat Y..."). Same-type numbered opponents

@@ -562,9 +562,16 @@ class TestOccupationQuotes:
         f = fighter_factory.new_fighter(5)
         assert f.occupation == 'fighter'
         assert f.quotes == 'fighter'
-        # no quote pool for plain fighters: no output, no pause
         shown.clear()
         f.current_fight = self.make_fight(shown)
+        assert f.say_prefight_quote() is True
+        assert shown[0].split('"')[1] in quotes.PREFIGHT_QUOTES['fighter']
+        shown.clear()
+        f.say_win_quote()
+        assert shown[0].split('"')[1] in quotes.WIN_QUOTES['fighter']
+        # an occupation without a pool stays silent: no output, no pause
+        f.occupation = 'no such occupation'
+        shown.clear()
         assert f.say_prefight_quote() is False
         assert shown == []
 

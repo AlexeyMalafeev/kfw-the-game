@@ -163,8 +163,10 @@ Grouped by module; examples are representative, not exhaustive. Chance constants
   teach a move, then leaves the game.
 - `WiseMan`: pay 10 c. for a conversation; 0.15 chance to gain a positive trait
   (or lose its opposite) — the only encounter that changes traits.
-- `Gossip` (pay to see game stats), `OverhearConversation` (relays recorded
-  `aston_victory` / `humil_defeat` facts about players).
+- `Gossip`: the gossipmonger tells one free rumor about another player
+  (`_rumors.py`, see `docs/stats.md`), then offers the full stats table for
+  10–25 c.; `OverhearConversation` relays recorded `aston_victory` /
+  `humil_defeat` facts about players.
 - `FriendMatch` / `PlayerMatch`: friendly spars with friends or other AI
   players, chance scaling with friend count. Injured/sick friends and AI
   players are never picked: `FriendMatch` skips player-friends with a non-zero
