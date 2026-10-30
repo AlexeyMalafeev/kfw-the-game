@@ -29,6 +29,25 @@ from _names_ru import ADJ, HEAD, OVERRIDES, POSS
 
 PO_PATH = Path('locale') / 'ru' / 'LC_MESSAGES' / 'kfw_names.po'
 ROMAN = {'I', 'II', 'III'}
+PLURAL = 3  # HEAD gender index of plural nouns ('Strikes' -> 'удары')
+
+
+def adj_form(adj, gender):
+    """Adjective form agreeing with a head noun of the given HEAD gender index."""
+    forms = ADJ[adj]
+    if gender != PLURAL:
+        return forms[gender]
+    # plural from the masculine form: Быстрый -> Быстрые, Летающий -> Летающие,
+    # Рвущийся -> Рвущиеся (-ой only after г/к/х/ж/ш/ч/щ takes -ие)
+    m = forms[0]
+    refl = m.endswith('ся')
+    base = m[:-2] if refl else m
+    stem, ending = base[:-2], base[-2:]
+    if ending == 'ий' or (ending == 'ой' and stem[-1:] in 'гкхжшчщ'):
+        res = stem + 'ие'
+    else:
+        res = stem + 'ые'
+    return res + ('ся' if refl else '')
 
 
 def translate(name):
@@ -59,7 +78,7 @@ def translate(name):
     if head_tok not in HEAD:
         return None
     head_ru, gender = HEAD[head_tok]
-    parts = [ADJ[m][gender] for m in mods] + [head_ru] + poss + suffix
+    parts = [adj_form(m, gender) for m in mods] + [head_ru] + poss + suffix
     res = ' '.join(parts)
     return res[0].upper() + res[1:]
 

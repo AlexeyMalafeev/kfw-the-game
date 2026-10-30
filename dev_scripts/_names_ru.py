@@ -2,7 +2,8 @@
 #
 # Most of the ~14k names are combinatorial move names: [modifiers...] HEAD.
 # ADJ gives Russian adjective forms (m, f, n) agreeing with the head noun's
-# gender; HEAD gives the Russian head noun(s) and gender index (0=m, 1=f, 2=n).
+# gender; HEAD gives the Russian head noun(s) and gender index (0=m, 1=f, 2=n,
+# 3=plural; plural adjective forms are derived from the masculine one).
 # POSS gives genitive forms for "X's Y" names (X's Beak -> 'Клюв журавля').
 # Everything non-compositional (styles, techs, items, weapons, traits,
 # accomplishments, special move names) lives in OVERRIDES.
@@ -122,7 +123,7 @@ HEAD = {
     'Energy': ('энергия', 1),
     'Fist': ('кулак', 0),
     'Form': ('форма', 1),
-    'Forms': ('формы', 1),
+    'Forms': ('формы', 3),
     'Guard': ('блок', 0),
     'Headbutt': ('удар головой', 0),
     'Jump': ('прыжок', 0),
@@ -136,7 +137,7 @@ HEAD = {
     'Stance': ('стойка', 1),
     'Step': ('шаг', 0),
     'Strike': ('удар', 0),
-    'Strikes': ('удары', 0),
+    'Strikes': ('удары', 3),
     'Sweep': ('подсечка', 1),
     'Throw': ('бросок', 0),
     'Trip': ('подножка', 1),

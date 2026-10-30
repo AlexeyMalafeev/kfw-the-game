@@ -7530,7 +7530,7 @@ msgid "Avalanche"
 msgstr "Лавинный"
 
 msgid "Avalanche Strikes"
-msgstr "Лавинный удары"
+msgstr "Лавинные удары"
 
 msgid "Avert Attacks"
 msgstr "Отвод атак"
@@ -7646,7 +7646,7 @@ msgid "Bizarre"
 msgstr "Причудливый"
 
 msgid "Bizarre Forms"
-msgstr "Причудливая формы"
+msgstr "Причудливые формы"
 
 msgid "Blood Strikes"
 msgstr "Кровавые удары"
@@ -8315,7 +8315,7 @@ msgid "Debilitating Punch"
 msgstr "Ослабляющий удар кулаком"
 
 msgid "Debilitating Strikes"
-msgstr "Ослабляющий удары"
+msgstr "Ослабляющие удары"
 
 msgid "Debilitating Sweep"
 msgstr "Ослабляющая подсечка"
@@ -16064,7 +16064,7 @@ msgid "Fast Solar Punch"
 msgstr "Быстрый Солнечный удар кулаком"
 
 msgid "Fast Strikes"
-msgstr "Быстрый удары"
+msgstr "Быстрые удары"
 
 msgid "Fast Sweep"
 msgstr "Быстрая подсечка"
@@ -16530,7 +16530,7 @@ msgid "Flying Solar Punch"
 msgstr "Летающий Солнечный удар кулаком"
 
 msgid "Flying Strikes"
-msgstr "Летающий удары"
+msgstr "Летающие удары"
 
 msgid "Focus"
 msgstr "Фокус"
@@ -18254,7 +18254,7 @@ msgid "Long-Range Fighting"
 msgstr "Бой на дальней дистанции"
 
 msgid "Long-Range Strikes"
-msgstr "Дальнобойный удары"
+msgstr "Дальнобойные удары"
 
 msgid "Lotus Stance"
 msgstr "Стойка лотоса"
@@ -18301,7 +18301,7 @@ msgid "Mid-Range Fighting"
 msgstr "Бой на средней дистанции"
 
 msgid "Mid-Range Strikes"
-msgstr "Среднедистанционный удары"
+msgstr "Среднедистанционные удары"
 
 msgid "Mighty Elbows"
 msgstr "Могучие локти"
@@ -18870,7 +18870,7 @@ msgid "Paralyzing"
 msgstr "Парализующий"
 
 msgid "Paralyzing Strikes"
-msgstr "Парализующий удары"
+msgstr "Парализующие удары"
 
 msgid "Perseverance"
 msgstr "Упорство"
@@ -20212,7 +20212,7 @@ msgid "Shattering"
 msgstr "Сокрушительный"
 
 msgid "Shattering Strikes"
-msgstr "Сокрушительный удары"
+msgstr "Сокрушительные удары"
 
 msgid "Shocking Claw"
 msgstr "Шокирующий коготь"
@@ -20635,7 +20635,7 @@ msgid "Short Solar Punch"
 msgstr "Короткий Солнечный удар кулаком"
 
 msgid "Short Strikes"
-msgstr "Короткий удары"
+msgstr "Короткие удары"
 
 msgid "Short Sweep"
 msgstr "Короткая подсечка"
@@ -27571,7 +27571,7 @@ msgid "Slashing Punch"
 msgstr "Рубящий удар кулаком"
 
 msgid "Slashing Strikes"
-msgstr "Рубящий удары"
+msgstr "Рубящие удары"
 
 msgid "slow-witted"
 msgstr "тугодум"
@@ -35594,7 +35594,7 @@ msgid "Sweep"
 msgstr "Подсечка"
 
 msgid "Swift Strikes"
-msgstr "Стремительный удары"
+msgstr "Стремительные удары"
 
 msgid "Swift-Striking"
 msgstr "Молниеносный"

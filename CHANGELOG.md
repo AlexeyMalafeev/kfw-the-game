@@ -42,6 +42,9 @@ All notable changes to KFW are documented here. Format loosely follows
   schoolmates and improvised weapons still stay out of it
 
 ### Fixed
+- **Russian names ending in "Strikes" or "Forms" agree in number**: twelve
+  move and tech names paired a singular adjective with a plural noun
+  ("Летающий удары"); they now read "Летающие удары", "Причудливые формы"
 - **Weapons no longer nearly double a fighter's worth**: the weapon exp
   multiplier counted the weapon's whole defense multiplier instead of its
   bonus, so every armed fighter was rated ×1.8–1.9 instead of ×1.25–1.5 (A/B
