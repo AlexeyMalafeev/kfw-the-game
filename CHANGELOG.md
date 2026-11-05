@@ -35,6 +35,10 @@ All notable changes to KFW are documented here. Format loosely follows
   the victory tune. Mini-games are not saved; leaving one early says so
 
 ### Changed
+- **RING offers generated styles**: like a new game, character creation
+  lists ten freshly generated styles, with an option to roll other ones,
+  instead of the old hand-made styles. Names are translated under
+  `--lang ru`, and the secret technique shows as `???`
 - **Basic strikes are nobody's signature move**: Punch, Kick, Weak Short
   Punch, Shove and the finishing strikes cost no qi, so everyone uses them
   most. The favorite and most feared moves in rumors, the stats table and
@@ -52,9 +56,8 @@ All notable changes to KFW are documented here. Format loosely follows
   match the player and the game hung while looking for one. Opponents now go
   up to 5 levels above the player, and the search always ends
 - **RING looks like the main game**: the level-up banner is bold green (with
-  its sound on Android), the end screen is colored, style names are
-  translated under `--lang ru`, the style menu hides each style's secret
-  technique as `???` like the main game's, and an empty name is asked again
+  its sound on Android), the end screen is colored, and an empty name is
+  asked again
 - **Russian names ending in "Strikes" or "Forms" agree in number**: twelve
   move and tech names paired a singular adjective with a plural noun
   ("Летающий удары"); they now read "Летающие удары", "Причудливые формы"

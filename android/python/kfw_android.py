@@ -220,7 +220,6 @@ def _play_minigame(name):
 
     if name not in MINIGAMES:
         raise ValueError(f"Unknown mini-game: {name}")
-    _reset_default_styles()  # RING offers the default styles
     MINIGAMES[name]()
 
 

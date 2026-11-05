@@ -123,9 +123,9 @@ be loaded and exported. Python diagnostics also go to Logcat.
 - `android/python/kfw_android.py` owns the embedded runtime. It stages read-only `moves/`,
   `quotes/` and `locale/` into app-private HOME before importing any `kf_lib` module. This
   preserves the desktop cwd-relative resource loaders while keeping saves and logs out of
-  upgrade-managed code directories. Before each new (not loaded) game and each mini-game it
-  also restores the pristine default-style list, so a previous generated-style session
-  cannot leak into the next one. `run()` takes a mode: `new`, `load` (with a save name),
+  upgrade-managed code directories. Before each new (not loaded) game it also restores the
+  pristine default-style list, so a previous generated-style session cannot leak into the
+  next one (the mini-games don't read that list). `run()` takes a mode: `new`, `load` (with a save name),
   `ai`, or `minigame` (with `minigame=` a key of `kf_lib.minigames.MINIGAMES`).
 - `GameHost.java` is the blocking input/output bridge between the Python game thread and
   the Android main thread. Closing a host wakes pending input and unwinds the old session.

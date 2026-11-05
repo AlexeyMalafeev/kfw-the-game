@@ -2,7 +2,7 @@ import random
 
 from kf_lib.i18n import _
 from kf_lib.kung_fu import styles, style_gen
-from kf_lib.ui import get_int_from_user, get_str_from_user, grey, menu
+from kf_lib.ui import cls, get_int_from_user, get_str_from_user, grey, menu
 from kf_lib.utils import rnd, rndint
 from . import names
 from .fighter import Fighter
@@ -29,6 +29,8 @@ STYLE_TECH_LV = 8
 THIEF_LV = (1, 3)
 THUG_LV = (1, 5)
 TOUGH_THIEF_LV = (7, 10)
+
+CUSTOM_HCF_NUM_STYLES = 10  # as many as a new game offers (NUM_STYLES)
 
 
 def from_exp_worth(x, max_lv=20, max_n=5, weapon_chance=0.35, max_tries=300):
@@ -99,23 +101,34 @@ def new_craftsman():
     return f
 
 
+def choose_generated_style(n=CUSTOM_HCF_NUM_STYLES):
+    """Menu of n freshly generated styles; its last option rolls a new list."""
+    while True:
+        style_list = style_gen.generate_new_styles(n)
+        max_len = max(len(s.display_public_name) for s in style_list)
+        legend = [
+            (
+                '{:<{}} {}'.format(
+                    s.display_public_name, max_len, grey(s.public_descr_short)
+                ),
+                s,
+            )
+            for s in style_list
+        ]
+        legend.append((grey(_('(other styles)')), None))
+        style = menu(legend, _('Choose a style:'))
+        if style is not None:
+            return style
+        cls()
+
+
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
 def new_custom_hcf():
     name = ''
     while not name:
         name = get_str_from_user(_('Name:')).strip()
-    max_len = max((len(s.display_public_name) for s in styles.default_styles))
-    legend = [
-        (
-            '{:<{}} {}'.format(
-                s.display_public_name, max_len, grey(s.public_descr_short)
-            ),
-            s,
-        )
-        for s in styles.default_styles
-    ]
     # todo select starting atts
-    style = menu(legend, _('Choose a style:'))
+    style = choose_generated_style()
     level = get_int_from_user(_('Level:'), 1, 20)
     f = HumanControlledFighter(name=name, style=style)
     if level > 1:

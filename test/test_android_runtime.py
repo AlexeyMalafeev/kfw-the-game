@@ -202,24 +202,15 @@ def _run_minigame(tmp_path, name):
     return status, host
 
 
-def test_android_runtime_plays_ring_with_the_default_styles(tmp_path):
-    from kf_lib.kung_fu import style_gen, styles
-
-    previous = list(styles.default_styles)
-    kfw_android._reset_default_styles()  # snapshot the pristine list first
-    # a generated-style game earlier in the same app process replaced the list
-    styles.default_styles = [style_gen.get_new_randomly_generated_style()]
+def test_android_runtime_plays_ring(tmp_path):
     random.seed(1)
-    try:
-        status, host = _run_minigame(tmp_path, "ring")
-    finally:
-        styles.default_styles = previous
+    status, host = _run_minigame(tmp_path, "ring")
 
     assert status == "finished"
     assert host.finished_states == ["finished"]
     assert host.tunes[0] == "02_choosing_a_style"
-    style_menu = next(m for m in host.menus if any("Bagua Zhang" in x for x in m))
-    assert len(style_menu) > 2
+    style_menu = next(m for m in host.menus if m[-1] == "(other styles)")
+    assert len(style_menu) == 11  # ten generated styles
     transcript = "".join(host.output)
     assert transcript.count("Remaining attempts") == 3
     assert "\x1b[1m ***Game over***" in transcript  # colors reach the Android console

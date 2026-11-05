@@ -32,10 +32,8 @@ them.
 
 The title screen's **Mini-games** button opens a picker (Chocolate, RING).
 `MainActivity` starts the session with `kfw_android.run(mode="minigame",
-minigame=<MINIGAMES key>)`, which resets the default-style list (a
-generated-style game earlier in the same app process replaces it, and RING's
-style menu reads it) and calls the `play_*()` function inside the usual
-Android runtime: native menu buttons, the keyboard for RING's name and level,
+minigame=<MINIGAMES key>)`, which calls the `play_*()` function inside the
+usual Android runtime: native menu buttons, the keyboard for RING's name and level,
 colors kept. When the mini-game returns, the app goes back to the title.
 Leaving early with ‹ or Back asks for confirmation with a mini-game message
 (nothing is saved), and a crash dialog mentions only `errors.txt` (there is
@@ -96,11 +94,14 @@ An endless arena ladder around the normal fight engine:
    prompt (`get_str_from_user`; an empty or blank name is asked again), a
    style menu, and a level prompt (1–20) applied via `level_up()` — the
    level-up banner once, then the usual attribute and move choices for every
-   level gained. The style menu lists `styles.default_styles` (the hand-made
-   styles, the ones a main game offers when "Randomly generated styles?" is
-   answered no) the way the main game's style menu does:
-   `display_public_name` (translated) and `public_descr_short`, so the secret
-   technique shows as `???`.
+   level gained. The style menu (`choose_generated_style`) offers ten freshly
+   generated styles (`style_gen.generate_new_styles`, as many as a new game's
+   `NUM_STYLES`) and a last option, "(other styles)", that clears the screen
+   and rolls a new ten — the counterpart of the main game's "Are these
+   styles ok?". Styles are listed the way the main game's style menu lists
+   them: `display_public_name` (translated) and `public_descr_short`, so the
+   secret technique shows as `???` until the fighter learns it. Until 2026-11
+   the menu listed the hand-made `styles.default_styles`.
 3. Each round, opponents come from `fighter_factory.from_exp_worth(
    p.get_exp_worth() * difficulty, max_lv=p.level + OPP_LV_MARGIN)` (margin
    5): it rolls random groups (`new_fighter`, 1 to 5 members of one level

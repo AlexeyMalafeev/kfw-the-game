@@ -267,6 +267,10 @@ msgstr "«Солнечные» приёмы отнимают у противни
 msgid "(nothing else)"
 msgstr "(ничего больше)"
 
+#: kf_lib/actors/fighter_factory.py:118
+msgid "(other styles)"
+msgstr "(другие стили)"
+
 #: kf_lib/ui/_interactive.py:51
 msgid "(Press any key)"
 msgstr "(Нажмите любую клавишу)"
@@ -858,7 +862,7 @@ msgstr "Выберите историю"
 msgid "Choose a style"
 msgstr "Выберите стиль"
 
-#: kf_lib/actors/fighter_factory.py:116
+#: kf_lib/actors/fighter_factory.py:119
 msgid "Choose a style:"
 msgstr "Выберите стиль:"
 
@@ -1810,7 +1814,7 @@ msgstr "Сколько поставить?"
 msgid "However, the {item} turns out to be of very shoddy quality. It breaks immediately as {name} tries a few of his moves on it. Too bad the craftsman has vanished in thin air!"
 msgstr "Однако {item} оказывается очень низкого качества — вещь ломается, едва {name} успевает опробовать на ней пару своих приёмов. Досадно, что ремесленник словно испарился!"
 
-#: kf_lib/actors/human_controlled_fighter.py:368
+#: kf_lib/actors/human_controlled_fighter.py:370
 msgid "HP"
 msgstr "ОЗ"
 
@@ -2088,7 +2092,7 @@ msgstr "Изучить приём"
 msgid "Learn Tech"
 msgstr "Изучить технику"
 
-#: kf_lib/actors/human_controlled_fighter.py:322
+#: kf_lib/actors/human_controlled_fighter.py:324
 msgid "Learns the secret technique of {style}."
 msgstr "Изучает секретную технику: {style}."
 
@@ -2120,7 +2124,7 @@ msgstr "Скорость прокачки?"
 msgid "Level up"
 msgstr "Повысить уровень"
 
-#: kf_lib/actors/fighter_factory.py:117
+#: kf_lib/actors/fighter_factory.py:132
 msgid "Level:"
 msgstr "Уровень:"
 
@@ -2344,7 +2348,7 @@ msgstr "ИМЯ"
 msgid "Name"
 msgstr "Имя"
 
-#: kf_lib/actors/fighter_factory.py:106
+#: kf_lib/actors/fighter_factory.py:129
 msgid "Name:"
 msgstr "Имя:"
 
@@ -2670,7 +2674,7 @@ msgstr "ци при атаке"
 msgid "qi/atk"
 msgstr "ци/атака"
 
-#: kf_lib/actors/human_controlled_fighter.py:380
+#: kf_lib/actors/human_controlled_fighter.py:382
 msgid "QP"
 msgstr "Ци"
 
@@ -2968,7 +2972,7 @@ msgstr "Что-то об ошеломительной победе: {}."
 msgid "Something about {}'s humiliating defeat."
 msgstr "Что-то насчёт позорного поражения: {}."
 
-#: kf_lib/actors/human_controlled_fighter.py:374
+#: kf_lib/actors/human_controlled_fighter.py:376
 msgid "SP"
 msgstr "ВН"
 
@@ -3376,7 +3380,7 @@ msgstr "Вор: \"А сумеешь ли ты остановить пресло�
 msgid "This conversation changes {}'s life."
 msgstr "Этот разговор меняет жизнь {}."
 
-#: kf_lib/actors/human_controlled_fighter.py:312
+#: kf_lib/actors/human_controlled_fighter.py:314
 msgid "Through countless hours of training, {name} finally grasps the deepest secret of {style} — {tech}."
 msgstr "После бесчисленных часов тренировок {name} наконец постигает глубочайшую тайну стиля {style} — {tech}."
 
@@ -4090,7 +4094,7 @@ msgstr "{name} сейчас лечит травму. Самое время вы�
 msgid "{name} is off-balance!"
 msgstr "{name} теряет равновесие!"
 
-#: kf_lib/actors/human_controlled_fighter.py:280
+#: kf_lib/actors/human_controlled_fighter.py:282
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have, so today I can trust you with the inner teaching of our school. The style the outside world knows as {public_style} has a true name, whispered only to the most trusted disciples: {style}! And with it comes the secret technique — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -4098,7 +4102,7 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты, поэтому сегодня я могу доверить тебе внутреннее учение нашей школы. У стиля, который внешний мир знает как {public_style}, есть истинное имя, которое шепотом передают лишь самым доверенным ученикам: {style}! А вместе с ним — секретная техника: {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
-#: kf_lib/actors/human_controlled_fighter.py:298
+#: kf_lib/actors/human_controlled_fighter.py:300
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have. It is time you learned the secret technique of {style} — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -4505,7 +4509,7 @@ msgstr "{name}: \"{sw}, ты согласишься связать со мной
 msgid "{name}: strikes {landed}/{thrown} landed ({accuracy}), damage dealt {dam}, criticals {crits}, epics {epics}, moves: {moves}"
 msgstr "{name}: удары {landed}/{thrown} попали ({accuracy}), нанесено урона {dam}, критических {crits}, эпичных {epics}, приёмы: {moves}"
 
-#: kf_lib/actors/human_controlled_fighter.py:260
+#: kf_lib/actors/human_controlled_fighter.py:261
 msgid "{name}: {banner}"
 msgstr "{name}: {banner}"
 

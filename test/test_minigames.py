@@ -9,6 +9,7 @@ from kf_lib.kung_fu import moves, style_gen, techniques
 from kf_lib.minigames import MINIGAMES
 from kf_lib.minigames import _chocolate as chocolate
 from kf_lib.minigames import _ring as ring
+from kf_lib.kung_fu import styles
 from kf_lib.ui import MUSIC, _frontend
 
 
@@ -74,6 +75,28 @@ def test_from_exp_worth_settles_for_the_closest_group():
     opp = fighter_factory.from_exp_worth(10_000, max_lv=3, max_tries=20)
     assert 1 <= len(opp) <= 5
     assert all(f.level <= 3 for f in opp)
+
+
+def test_ring_styles_are_generated_and_can_be_rerolled(monkeypatch):
+    random.seed(5)
+    shown = []
+
+    def present(keys, options, weak=False):
+        shown.append(options)
+
+    keys = iter('a1')  # 'a' is the 11th option: other styles; then the first
+    _frontend.install_frontend(
+        key_reader=lambda: next(keys), clear_handler=lambda: None, menu_handler=present
+    )
+    try:
+        with redirect_stdout(io.StringIO()):
+            style = fighter_factory.choose_generated_style()
+    finally:
+        _frontend.uninstall_frontend()
+    assert len(shown) == 2 and len(shown[0]) == 11
+    assert style not in styles.default_styles
+    assert style.display_public_name in shown[1][0]
+    assert shown[0][0] != shown[1][0]
 
 
 def test_ring_plays_through_headless(monkeypatch):
