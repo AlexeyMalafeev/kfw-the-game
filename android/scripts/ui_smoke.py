@@ -289,6 +289,47 @@ class Device:
         self.choose("Save and Quit")
         self.wait_main()
 
+    def practice(self):
+        """State > Moves > Punching Bag, 10 moves, then back to the day."""
+        self.choose("State")
+        self.choose("Moves")
+        self.choose("Punching Bag")
+        self.choose("10 moves")
+        moves = 0
+        for _ in range(200):
+            nodes = list(self.nodes())
+            self.check_error(nodes)
+            # back in the State menu (it opens at its first options)
+            if self.find(nodes, desc="Save and Quit") or (
+                self.find(nodes, desc="Items")
+                and self.find(nodes, desc="Accomplishments")
+            ):
+                self.choose("Back")
+                return moves
+            if self.find(nodes, resource_id="continue_button"):
+                self.click_id("continue_button")
+                continue
+            if self.find(nodes, desc="Stats") or self.find(nodes, desc="Timeline"):
+                self.capture("practice-summary")
+                self.click_id("dismiss_menu")
+                continue
+            if self.find(nodes, resource_id="input_container"):
+                console = self.find(nodes, resource_id="console")
+                text = console[0].get("text", "") if console else ""
+                choices = [
+                    n for n in self.find(nodes, text="1. ", prefix=True)
+                    if self.visible_choice(n, nodes)
+                ]
+                if choices:
+                    if "moves left" in text[-400:]:
+                        moves += 1
+                        if moves == 3:
+                            self.capture("practice")
+                    self.click(choices[0])
+                    continue
+            time.sleep(0.35)
+        raise TimeoutError("The practice did not end in 200 input steps")
+
     def play_fight(self):
         self.choose("State")
         self.choose("Debug Menu")
@@ -443,6 +484,9 @@ def run(args):
     device.choose("Man")
     device.choose("yes")
     device.choose_first()
+    # the exact move count is pinned by test/test_punching_bag.py
+    if not device.practice():
+        raise AssertionError("The practice showed no move menu")
     device.save_and_quit()
     device.capture("saved-title")
 

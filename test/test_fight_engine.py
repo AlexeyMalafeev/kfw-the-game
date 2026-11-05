@@ -1051,7 +1051,8 @@ def test_human_menu_hides_plain_retreats_at_max_distance():
     from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
     from kf_lib.fighting import distances
     from kf_lib.kung_fu import style_gen
-    from kf_lib.minigames import _punching_bag as punching_bag
+    from kf_lib.actors.punching_bag import PunchingBag
+    from kf_lib.fighting.fight import TimedBagRound
     from kf_lib.ui import _frontend
 
     random.seed(3)
@@ -1059,7 +1060,7 @@ def test_human_menu_hides_plain_retreats_at_max_distance():
     seen = {'far': [], 'near': []}
     f = HumanControlledFighter('Tester', style_gen.get_new_randomly_generated_style())
     f.learn_move('Leap Back', silent=True)
-    bag = punching_bag.PunchingBag()
+    bag = PunchingBag()
 
     def present(keys, options, weak=False):
         if any('Step Forward' in str(o) for o in options):
@@ -1073,7 +1074,7 @@ def test_human_menu_hides_plain_retreats_at_max_distance():
     )
     try:
         with redirect_stdout(io.StringIO()):
-            punching_bag.BagRound(f, bag)
+            TimedBagRound(f, bag)
     finally:
         _frontend.uninstall_frontend()
     assert seen['far'] and seen['near']

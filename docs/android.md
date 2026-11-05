@@ -71,7 +71,8 @@ locations, not files under `app/build/generated/`. No manual copy step is needed
   ends at the title, and leaving early says so. RING and the Punching Bag keep records in
   the save folder, which the load and export lists skip. See `docs/minigames.md`.
 - Game menus become touch buttons with their real labels. Scroll the bottom panel for
-  more moves or actions. The optional Back button closes weak menus such as the post-fight
+  more moves or actions; each new menu starts scrolled to its first option (the same menu
+  shown again after a key that isn't on it keeps its place). The optional Back button closes weak menus such as the post-fight
   menu.
 - Text and numeric answers use the Android keyboard. A hardware keyboard also works for
   menu keys; use Shift for the uppercase State commands. A key that is not on the menu
@@ -176,7 +177,8 @@ The instrumentation suite executes localized resources, new game, interactive co
 save/load and a complete run of all three mini-games in an isolated app-private HOME. The
 UIAutomator script drives the real native UI:
 new game, a key outside the menu, keyboard input, background/resume, rotation, a system
-font-size change, State/Save, title, Continue, a
+font-size change, a 10-move practice on the punching bag (State → Moves), State/Save,
+title, Continue, a
 deterministic NormalFight (launched through the game's Debug Menu) with manual move
 selection, post-fight Back and another save; then a whole RING run from the Mini-games
 picker (extreme difficulty, auto fights) back to the title, one Punching Bag round (level-ups,

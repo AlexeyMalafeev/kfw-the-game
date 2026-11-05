@@ -1,7 +1,10 @@
-from kf_lib.i18n import _, tr_fighter_name, tr_name
-from kf_lib.ui import cls, get_key, pak
+from kf_lib.fighting.fight import practice_on_bag
+from kf_lib.i18n import _, ngettext, tr_fighter_name, tr_name
+from kf_lib.ui import cls, get_key, menu, pak
 from kf_lib.ui._frontend import present_menu
 from ._base_game import BaseGame
+
+PRACTICE_MOVES = (10, 20)  # session lengths offered for the punching bag
 
 
 class StateMenu(BaseGame):
@@ -57,7 +60,9 @@ class StateMenu(BaseGame):
             elif choice == 'Moves':
                 cls()
                 p.show(p.get_moves_string(header=_('Moves:')))
-                pak()
+                options = [(_('Punching Bag'), True), (_('Back'), False)]
+                if menu(options, keys='pb'):
+                    self.practice_on_bag(p)
             elif choice == 'Techniques':
                 cls()
                 p.show(p.get_techs_string())
@@ -87,6 +92,24 @@ class StateMenu(BaseGame):
                 self.debug_menu()
             else:  # Back
                 return
+
+    @staticmethod
+    def practice_on_bag(p):
+        """Try out moves on a punching bag. Takes no day turn and gives no exp;
+        the fight records no stats either (see BagPractice)."""
+        cls()
+        p.show(
+            _(
+                '{name} practices on the punching bag: a way to try out moves, '
+                'combos and how to deal the most damage. It does not use up the '
+                'day and gives no experience.'
+            ).format(name=tr_fighter_name(p.name))
+        )
+        n = menu(
+            [(ngettext('{n} move', '{n} moves', n).format(n=n), n) for n in PRACTICE_MOVES],
+            _('How long?'),
+        )
+        practice_on_bag(p, n)
 
     def finish_game(self):
         """Voluntarily end the game after winning and continuing: rerun the

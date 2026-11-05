@@ -194,6 +194,7 @@ class BaseFight(object):
                 time_cost = f.get_move_time_cost(f.action)
                 f.exec_move()
                 self.queue(f, self.timer + time_cost)
+                self.handle_move_done(f)
                 self.pak()
             del self.order[self.timer]
 
@@ -222,6 +223,9 @@ class BaseFight(object):
             )
         else:
             return name
+
+    def handle_move_done(self, f):
+        """Called after each executed move (not after a skipped turn)."""
 
     def get_turn_note(self):
         """Extra text for the human's move menu (a timed fight's clock)."""

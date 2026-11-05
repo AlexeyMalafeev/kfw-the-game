@@ -10,6 +10,8 @@ from kf_lib.actors.fighter import Fighter
 from kf_lib.kung_fu import moves, style_gen, techniques
 from kf_lib.minigames import MINIGAMES
 from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
+from kf_lib.actors.punching_bag import BAG_HP, PunchingBag
+from kf_lib.fighting.fight import TimedBagRound
 from kf_lib.minigames import _chocolate as chocolate
 from kf_lib.minigames import _punching_bag as punching_bag
 from kf_lib.minigames import _records
@@ -175,13 +177,13 @@ def test_bag_round_is_one_minute_of_free_hits(first_option_everywhere):
     with redirect_stdout(io.StringIO()) as out:
         f = HumanControlledFighter('Tester', style_gen.get_new_randomly_generated_style())
         f.level_up(punching_bag.FIGHTER_LEVEL - 1)
-        bag = punching_bag.PunchingBag()
-        rnd = punching_bag.BagRound(f, bag)
+        bag = PunchingBag()
+        rnd = TimedBagRound(f, bag)
     text = out.getvalue()
     assert rnd.timer == rnd.time_limit == 60 * 2  # TIME_TO_SEC_DIVISOR per second
     # every move started before the bell
     assert rnd.timeline and all(line.startswith('0:') for line in rnd.timeline)
-    assert rnd.damage == punching_bag.BAG_HP - bag.hp > 0
+    assert rnd.damage == BAG_HP - bag.hp > 0
     fs = f.fight_stats
     assert fs['landed'] == fs['thrown'] > 0  # the bag never dodges or blocks
     assert not bag.status  # never falls, never stunned

@@ -113,9 +113,19 @@ masters (own school):
   their own screen. After winning and continuing (`play_indefinitely`), a
   **Finish Game** option appears that reruns the victory routine (message,
   stats, bio, `game over.txt` save) and quits.
-
-`fight_dummy` (spar vs a lv-1 punching bag) exists in `_base_player.py` but is
-commented out of the menu ⚠️ — dead code, and would be a zero-risk exp trickle.
+- **Punching Bag practice** (State → Moves → Punching Bag, since 2026-11): a
+  session of 10 or 20 of the player's own moves against a punching bag, to
+  try out moves, combos and the most damaging ways to strike. Like the rest
+  of the State menu it takes no day turn, and it gives nothing: the session
+  (`BagPractice`, `kf_lib/fighting/fight/_bag_fights.py`) skips exp, fight
+  stats, move usage (the rumors' favorite move), injuries, gossip and
+  accomplishments, and the day's tune comes back afterwards. The move menu
+  counts the moves left; the session ends with a summary (damage, strikes
+  landed, hardest blow, criticals, epics) and the usual post-fight menu. The
+  bag is the Punching Bag mini-game's (`kf_lib/actors/punching_bag.py`, see
+  `docs/minigames.md`): it never acts, dodges or blocks and can't be knocked
+  out. It replaced `fight_dummy`, a sparring match against a do-nothing
+  dummy that gave exp and had been commented out of the day menu.
 
 ### Encounters
 

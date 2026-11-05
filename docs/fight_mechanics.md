@@ -82,12 +82,19 @@ hours of fight time) is a runaway guard for ordinary fights. The loop checks
 it before the next turn: when the next queued turn would start at or after
 the limit, the timer is set to the limit, `handle_time_limit_exceeded` runs,
 and the fight ends without that turn. The base handler prints debug info and
-sets every active fighter's `hp = -10`, forcing a draw. Timed fights set a
-short `TIME_LIMIT` and their own handler: the Punching Bag mini-game's
-`BagRound` (60 s, the round just ends; see `docs/minigames.md`). Since
-2026-11; the check used to run after a tick's moves, so a move could start
-past the limit. `get_turn_note()` (empty by default) adds a note to the
-human's move menu title; `BagRound` shows the clock there.
+sets every active fighter's `hp = -10`, forcing a draw. Since 2026-11; the
+check used to run after a tick's moves, so a move could start past the
+limit.
+
+Hooks for the punching-bag fights (`kf_lib/fighting/fight/_bag_fights.py`),
+no-ops in ordinary fights: `handle_move_done(f)` runs after each executed
+move (not after a turn skipped while lying or stunned), and `get_turn_note()`
+adds a note to the human's move menu title. `TimedBagRound` (the Punching
+Bag mini-game) sets `TIME_LIMIT` to 60 s and a handler that just ends the
+round, and shows the clock in the note. `BagPractice` (State → Moves →
+Punching Bag in the main game) counts moves in `handle_move_done` and, at
+the last one, moves the time limit to just after the current time, so the
+session ends before the next move; its note counts the moves left.
 
 ## Action selection
 

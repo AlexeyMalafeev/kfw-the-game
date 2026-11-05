@@ -7476,7 +7476,7 @@ msgstr "Синъи II (продвинутый)"
 msgid "Advanced Xing Yi III"
 msgstr "Синъи III (продвинутый)"
 
-#: kf_lib/fighting/fight/_base_fight.py:282
+#: kf_lib/fighting/fight/_base_fight.py:286
 msgid "Against All Odds"
 msgstr "Вопреки всему"
 
@@ -16604,7 +16604,7 @@ msgstr "Корень женьшеня"
 msgid "Golden Lotus Stance"
 msgstr "Стойка золотого лотоса"
 
-#: kf_lib/actors/player/_base_player.py:1374
+#: kf_lib/actors/player/_base_player.py:1367
 msgid "Got Married"
 msgstr "Свадьба"
 
@@ -17745,7 +17745,7 @@ msgstr "Живая легенда"
 msgid "Lizard"
 msgstr "Ящерица"
 
-#: kf_lib/fighting/fight/_base_fight.py:280
+#: kf_lib/fighting/fight/_base_fight.py:284
 msgid "Lone Warrior"
 msgstr "Одинокий воин"
 
@@ -18363,7 +18363,7 @@ msgstr "Мистический"
 msgid "Mystic Power"
 msgstr "Мистическая мощь"
 
-#: kf_lib/fighting/fight/_base_fight.py:284
+#: kf_lib/fighting/fight/_base_fight.py:288
 msgid "Narrow Victory"
 msgstr "Трудная победа"
 
@@ -27633,7 +27633,7 @@ msgstr "Колючий"
 msgid "Spiky Attacks"
 msgstr "Колючие атаки"
 
-#: kf_lib/fighting/fight/_base_fight.py:286
+#: kf_lib/fighting/fight/_base_fight.py:290
 msgid "Split-Second Victory"
 msgstr "Победа в последний миг"
 
@@ -35726,7 +35726,7 @@ msgstr "Крепкий головорез"
 msgid "Toughness"
 msgstr "Крепость"
 
-#: kf_lib/actors/player/_base_player.py:1394
+#: kf_lib/actors/player/_base_player.py:1387
 msgid "Tournament Champion"
 msgstr "Чемпион турнира"
 

@@ -63,6 +63,7 @@ public final class MainActivity extends Activity {
     private View inputPanel;
     private boolean mainVisible;
     private boolean playingMinigame;
+    private String shownMenu;  // keys and labels of the menu on the buttons
     private String pendingExport;
     private float textSize;
 
@@ -391,6 +392,7 @@ public final class MainActivity extends Activity {
                 choiceContainer.addView(proceed);
                 choiceScroll.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                shownMenu = null;  // whatever menu comes next starts at the top
                 return;
             }
             for (int i = 0; i < labels.size(); i++) {
@@ -417,6 +419,13 @@ public final class MainActivity extends Activity {
             int height = labels.size() > 5 ? dp(280) : ViewGroup.LayoutParams.WRAP_CONTENT;
             choiceScroll.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, height));
+            // a new menu starts at its first option; the same menu shown again
+            // (after a key that isn't on it) keeps its place
+            String menu = keys + labels;
+            if (!menu.equals(shownMenu)) {
+                choiceScroll.post(() -> choiceScroll.scrollTo(0, 0));
+            }
+            shownMenu = menu;
         });
     }
 

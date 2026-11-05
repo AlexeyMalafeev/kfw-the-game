@@ -1,4 +1,10 @@
 from ._auto_fight import AutoFight  # used directly in testing scripts
+from ._bag_fights import (
+    BagPractice,
+    TimedBagRound,
+    play_timed_bag_round,
+    practice_on_bag,
+)
 from ._base_fight import BaseFight  # for type annotations
 from ._free_for_all import AutoFreeForAll, AutoGroupFreeForAll, free_for_all, \
     group_free_for_all, NormalFreeForAll, NormalGroupFreeForAll

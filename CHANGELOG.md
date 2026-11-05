@@ -33,8 +33,15 @@ All notable changes to KFW are documented here. Format loosely follows
   fights back, dodges or blocks. Build a level-10 fighter (name, generated
   style, your own level-up choices), then play as many rounds as you like;
   the move menu shows the clock, and the round ends with a gong and a score
-  screen (damage, strikes landed, hardest blow, criticals and epics). Your
-  best damage is kept as a record
+  screen (damage, strikes landed, hardest blow, criticals and epics). The
+  bag has its own ASCII art: it hangs from a chain and swings when you hit
+  it. Your best damage is kept as a record
+- **Practice on a punching bag in the main game**: State → Moves → Punching
+  Bag lets your character try out moves on the same bag for 10 or 20 moves:
+  combos, distances, the hardest-hitting choices. It doesn't use up the day
+  and gives nothing: no exp, no fight stats, no effect on your favorite
+  move in rumors. The old unused sparring-against-a-dummy day action is
+  gone
 - **RING keeps records**: the best run per difficulty (most fights won, with
   the fighter's name, style and levels) shows on the welcome screen and at
   game over, with "New record!" when you beat it. Records of RING and the
@@ -68,6 +75,10 @@ All notable changes to KFW are documented here. Format loosely follows
   schoolmates and improvised weapons still stay out of it
 
 ### Fixed
+- **Android menus open at their first option**: a menu that replaced a
+  longer, scrolled one kept the old scroll position, so the State menu
+  opened from the day menu could hide its first options (Items,
+  Accomplishments, Moves) above the visible buttons
 - **RING no longer freezes at high levels**: opponents were capped at level
   20, so from about level 40 (35 on extreme) no group of opponents could
   match the player and the game hung while looking for one. Opponents now go

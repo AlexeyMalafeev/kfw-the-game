@@ -91,8 +91,7 @@ styles, techniques, weapons. The 50 that remain, by doc → pointer:
     the `× level` formula
   - `gameplay.md` Economy — prize-fighting stage 1 pays 25 < 50 fee;
     gambling is a dominated option (EV 0, −rep, revenge risk)
-  - `gameplay.md` Day actions — `WORK_ENCS` is empty; `fight_dummy` is
-    commented out of the menu
+  - `gameplay.md` Day actions — `WORK_ENCS` is empty
   - `items.md` — merchant price ignores the item (basic vs Super herb); one
     Ginseng Root cures any injury length; mock items invisible to
     `get_items` (can't be stolen/lost)

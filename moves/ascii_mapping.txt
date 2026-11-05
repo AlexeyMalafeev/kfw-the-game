@@ -972,6 +972,20 @@ __\__\____
   \|   s.
   / \  s.
 _|___|___
+# Punching Bag
+ssss|ssss.
+sss_|_sss.
+ss/sss\ss.
+ss|sss|ss.
+ss\___/ss.
+__________
+# Punching Bag Hit
+sssss/ssss.
+sss_/sssss.
+ss/ss\s*ss.
+ss|ss|ssss.
+ss\__/ssss.
+___________
 # Stick Strike, Baton Strike, Bludgeon Strike
           .
     (}   /.

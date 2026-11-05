@@ -691,12 +691,6 @@ class BasePlayer(Fighter):
         encounters.random_encounters(self, encs)
         return True  # to end turn
 
-    def fight_dummy(self):
-        dummy = Fighter('Dummy', style='No Style', atts_tuple=(1, 1, 1, 5))
-        dummy.moves = []
-        dummy.learn_move('Do Nothing')
-        self.spar(dummy, hide_stats=True)
-
     def gain_exp(self, amount, silent=False):
         if not silent:
             self.show(
@@ -740,7 +734,6 @@ class BasePlayer(Fighter):
             else (_('Teach students'), self.teach_students),
             (_('Go to seedy places'), self.go_seedy),
             (_('Go for a walk'), self.go_walk),
-            # ('Dummy', self.fight_dummy)
         ]
         if self.is_master:
             ops.append((_('Visit other masters'), self.visit_masters))

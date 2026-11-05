@@ -150,14 +150,18 @@ An endless arena ladder around the normal fight engine:
 ## Punching Bag — `kf_lib/minigames/_punching_bag.py`
 
 One minute of fight time to deal as much damage as possible to a bag that
-never fights back:
+never fights back. The bag (`kf_lib/actors/punching_bag.py`) and its fights
+(`kf_lib/fighting/fight/_bag_fights.py`) are shared with the main game's
+practice, State → Moves → Punching Bag (`docs/gameplay.md`); the mini-game
+module holds the game flow and the records.
 
 1. The welcome screen states the rules and the record. `new_custom_hcf(
    level=FIGHTER_LEVEL)` builds the fighter: a name, a generated style (the
    same menu as RING's) and a fixed level 10, reached through the usual
    interactive level-ups. The level is fixed so records compare like with
    like.
-2. Each round is a `BagRound`, a `NormalFight` subclass: `TIME_LIMIT = 120`
+2. Each round is a `TimedBagRound` (a `BagFight`, which is a `NormalFight`
+   subclass): `TIME_LIMIT = 120`
    time units (60 s at `TIME_TO_SEC_DIVISOR` 2), no environment, no items,
    no prefight quotes, the Bamboo Courtyard tune (`fight_music`). The move
    menu's title shows the clock ("time left: 0:42", via `get_turn_note`).
@@ -175,7 +179,10 @@ never fights back:
   strike that doesn't fail lands in full. The round never queues it, so it
   never takes a turn (no "Punching Bag: Do Nothing" screens). It can't fall,
   lose balance, be stunned, shocked or slowed (those `cause_*` methods are
-  no-ops) and never counters or speaks. `is_living = False` makes the
+  no-ops) and never counters or speaks. It has its own ASCII art, hanging
+  still or swinging after a hit (`docs/text_content.md`). A bag fight gives
+  no exp and records no stats even for a main-game player (`BagFight`
+  overrides those steps). `is_living = False` makes the
   engine skip bleeding and stamina damage ("gasps for breath!") on it. Heavy
   pushes and knockback moves still swing it away, so footwork matters. A
   single blow can't take its last HP, which only an instant knock-out could
