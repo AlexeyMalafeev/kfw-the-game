@@ -28,13 +28,30 @@ All notable changes to KFW are documented here. Format loosely follows
   screens, colors and `--lang ru`
 - **RING runs from kfw.py too**: `python kfw.py --minigame ring`; the
   `minigames/` folder and its standalone scripts are gone
+- **Punching Bag, a new mini-game**: `python kfw.py --minigame bag`. One
+  minute of fight time to deal as much damage as you can to a bag that never
+  fights back, dodges or blocks. Build a level-10 fighter (name, generated
+  style, your own level-up choices), then play as many rounds as you like;
+  the move menu shows the clock, and the round ends with a gong and a score
+  screen (damage, strikes landed, hardest blow, criticals and epics). Your
+  best damage is kept as a record
+- **RING keeps records**: the best run per difficulty (most fights won, with
+  the fighter's name, style and levels) shows on the welcome screen and at
+  game over, with "New record!" when you beat it. Records of RING and the
+  Punching Bag live in `save/minigame_records.json`
 - **Mini-games on Android**: the title screen's new Mini-games button plays
-  Chocolate and RING with the usual touch menus, colors and Russian
-  translation. They get their own music too: RING's character creation plays
-  the new-game tune, Chocolate's scene cards the story tune and its ending
-  the victory tune. Mini-games are not saved; leaving one early says so
+  Chocolate, RING and the Punching Bag with the usual touch menus, colors
+  and Russian translation. They get their own music too: RING's character
+  creation plays the new-game tune, Chocolate's scene cards the story tune
+  and its ending the victory tune, the Punching Bag the practice tune.
+  Mini-games are not saved (records are); leaving one early says so
 
 ### Changed
+- **The fight menu drops retreats that can't retreat**: at the maximum
+  distance, Step Back, Retreat and Leap Back can't move you further away and
+  only weakened your next strike, so your move menu no longer offers them
+  there (AI fighters choose as before). Step Forward at the closest distance
+  stays: it doesn't move you either, but it does power up your next strike
 - **RING offers generated styles**: like a new game, character creation
   lists ten freshly generated styles, with an option to roll other ones,
   instead of the old hand-made styles. Names are translated under

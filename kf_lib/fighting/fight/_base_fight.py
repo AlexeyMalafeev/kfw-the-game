@@ -33,6 +33,9 @@ TIME_TO_SEC_DIVISOR = 2
 class BaseFight(object):
     is_free_for_all = False
     plays_sound = False  # fights shown blow by blow (NormalFight) play effects
+    # time units (TIME_TO_SEC_DIVISOR per second); for ordinary fights only a
+    # safety net (about 69 hours of fight time), timed fights set their own
+    TIME_LIMIT = 500000
 
     def __init__(self, side_a, side_b, environment_allowed=True):
         # fight participants
@@ -61,7 +64,7 @@ class BaseFight(object):
 
         # fight constants and interface
         self.timer = -1  # NB! not zero, to avoid skipping first fighter in fight_loop
-        self.time_limit = 500000
+        self.time_limit = self.TIME_LIMIT
         self.order = {}  # {time units: [1 or more fighters]}
         self.stats = {}
         self.timeline = []
@@ -158,6 +161,13 @@ class BaseFight(object):
         # main fight loop
         while True:
             nxt = min(self.order)
+            if nxt >= self.time_limit:
+                # time is up before anyone's next move starts
+                self.timer = self.time_limit
+                self.handle_time_limit_exceeded()
+                self.check_fight_over()
+                self.set_end_ascii()
+                return
             elapsed = nxt - self.timer
             self.timer = nxt
             fs = self.order.get(self.timer)
@@ -186,16 +196,17 @@ class BaseFight(object):
                 self.queue(f, self.timer + time_cost)
                 self.pak()
             del self.order[self.timer]
-            if self.timer >= self.time_limit:
-                self.handle_time_limit_exceeded()
 
             # avoid infinite loop if all fighters are down
             if self.check_fight_over():
-                for f in self.winners:
-                    f.set_ascii('Win')
-                for f in self.losers:
-                    f.set_ascii('Lying')
+                self.set_end_ascii()
                 return
+
+    def set_end_ascii(self):
+        for f in self.winners:
+            f.set_ascii('Win')
+        for f in self.losers:
+            f.set_ascii('Lying')
 
     def get_act_allies(self, f):
         return self.active_side_a if f in self.active_side_a else self.active_side_b
@@ -211,6 +222,10 @@ class BaseFight(object):
             )
         else:
             return name
+
+    def get_turn_note(self):
+        """Extra text for the human's move menu (a timed fight's clock)."""
+        return ''
 
     def get_seconds(self):
         return round(self.timer / TIME_TO_SEC_DIVISOR)

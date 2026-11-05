@@ -129,6 +129,8 @@ class StrikeMechanics(FighterAPI, ABC):
         self.stamina_factor = self.stamina / self.stamina_max / 2 + self.STAMINA_FACTOR_BIAS
 
     def cause_bleeding(self) -> None:
+        if not self.target.is_living:
+            return
         self.current_fight.display(
             _('{name} {msg}').format(
                 name=tr_fighter_name(self.target.name), msg=red(_('is BLEEDING!'))
@@ -274,6 +276,8 @@ class StrikeMechanics(FighterAPI, ABC):
 
     def do_stam_dam(self) -> None:
         targ = self.target
+        if not targ.is_living:
+            return
         dam = round(targ.stamina_max * self.STAMINA_DAMAGE)
         targ.change_stamina(-dam)
         prefix = 'lying ' if targ.check_status('lying') else ''

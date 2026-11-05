@@ -69,7 +69,7 @@ measured on the loop.
 | 1 The Path of the Fist | Android title screen (played by the app itself) |
 | 2 Choosing a Style | New game setup (`Game.new_game`); RING's welcome screen and character creation |
 | 3–5 Morning Market, Teahouse Afternoon, Lanterns at Dusk | Town days, by date: day 1 plays 3, day 2 plays 4, day 3 plays 5, day 4 plays 3 again (`Playing.play_day_music`) |
-| 6 Bamboo Courtyard | School encounters during practice: master's trial, school challenge, bullying |
+| 6 Bamboo Courtyard | School encounters during practice: master's trial, school challenge, bullying; the Punching Bag mini-game |
 | 7 Words of the Master | The master's teachings |
 | 8–10 Fists Like Rain, Alley Cats, Thugs at the Bridge | Ordinary fights, taking turns in that order |
 | 11 Outnumbered | Fights where the enemy side has more fighters than yours |
@@ -97,7 +97,7 @@ pool. After a scene or fight the previous tune comes back, from its intro.
 | Effect | Fired by |
 |---|---|
 | fight_start | Start of a shown fight, after the prefight quotes |
-| gong_clash | Replaces fight_start in tournament and All-Schools Tournament fights (set by their `fight_music` block) |
+| gong_clash | Replaces fight_start in tournament and All-Schools Tournament fights (set by their `fight_music` block); ends a Punching Bag round instead of the victory jingle |
 | whiff | "Miss!": the attacker's own move fails (`check_move_failed`) |
 | dodge | The defender dodges (`defend`) |
 | block / block_full | A block that lets some damage through / none (after the qi shield) |

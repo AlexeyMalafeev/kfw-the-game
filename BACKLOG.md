@@ -61,6 +61,11 @@ rest were stale or intended.
 - weapons are OP? / remove weapon atk bonus (2026-10-30 A/B: in mirror
   matches a random improvised weapon wins 65%, a normal one 73%)
 - flower kung-fu has only weak and pathetic moves (intended?)
+- Step Forward at distance 1 doesn't move but still builds +1 momentum (+10%
+  power and accuracy on the next strike) and, with a guard-while-advancing
+  tech, counts as Guard: an intended wind-up or a clamp quirk? Found
+  2026-11 while hiding the pointless retreats at distance 4
+  (`docs/fight_mechanics.md`, Momentum). Changing it affects fight balance
 
 ### ⚠️ points in the docs
 
@@ -725,10 +730,10 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 
 ## Minigames & far-future mods
 
-- punching bag: max damage in limited time; other fight minigames
-  (evade/block as many attacks as possible)
-- RING: score (for exp bonuses); kumite mini-game; tournament betting with
-  non-kung-fu styles
+- other fight minigames (evade/block as many attacks as possible) — the
+  Punching Bag (2026-11) has the timed-round machinery (`BagRound`)
+- RING: turn the records (2026-11) into exp bonuses in the main game; kumite
+  mini-game; tournament betting with non-kung-fu styles
 - Location class (street, mall, home…) affecting impro weapons; rain → slip
 - PyGame?; fighting game mod; fighting game generator (make roster);
   SSS / Tekken / Streets of Rage mods; Jackie Chan mod
@@ -742,8 +747,6 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 - display all player fighter atts in state menu (suboption?)
 - common log for all players; get verbose fighter info
 - add timer to fight screens?
-- hide Step Forward / Step Back in the fight menu when the distance makes
-  them pointless
 
 ## Localization (see `docs/i18n.md`)
 

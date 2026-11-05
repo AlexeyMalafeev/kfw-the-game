@@ -48,7 +48,7 @@ public final class MainActivity extends Activity {
     private static final int REQUEST_IMPORT = 4101;
     private static final int REQUEST_EXPORT = 4102;
     // keys of kf_lib.minigames.MINIGAMES, in the order the picker lists them
-    private static final String[] MINIGAMES = {"chocolate", "ring"};
+    private static final String[] MINIGAMES = {"chocolate", "ring", "bag"};
 
     private SharedPreferences preferences;
     private SaveRepository saves;
@@ -533,7 +533,7 @@ public final class MainActivity extends Activity {
 
     private void showMinigameDialog() {
         String[] labels = {getString(R.string.minigame_chocolate),
-                getString(R.string.minigame_ring)};
+                getString(R.string.minigame_ring), getString(R.string.minigame_bag)};
         new AlertDialog.Builder(this)
                 .setTitle(R.string.choose_minigame)
                 .setItems(labels, (dialog, which) ->

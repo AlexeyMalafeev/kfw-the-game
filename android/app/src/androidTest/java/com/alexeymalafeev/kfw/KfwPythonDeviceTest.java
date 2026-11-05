@@ -31,7 +31,7 @@ public class KfwPythonDeviceTest {
         assertEquals("passed", report.getString("status"));
         assertTrue(report.getInt("fighters") > 50);
         assertTrue(report.getInt("fight_menus") > 0);
-        assertEquals(2, report.getInt("minigames"));
+        assertEquals(3, report.getInt("minigames"));
         assertTrue(report.getBoolean("russian"));
     }
 }

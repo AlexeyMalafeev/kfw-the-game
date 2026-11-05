@@ -209,6 +209,49 @@ class Device:
             time.sleep(0.35)
         raise TimeoutError("RING did not end in 400 input steps")
 
+    def play_bag(self):
+        """One Punching Bag round, first option everywhere, then back to the title."""
+        self.click_id("minigames")
+        self.tap_text("Punching Bag", prefix=True)
+        self.click_id("continue_button")
+        self.enter("Smoke Tester")
+        self.choose_first()  # style; then the level-ups to level 10
+        timed_menus = 0
+        for _ in range(600):
+            nodes = list(self.nodes())
+            self.check_error(nodes)
+            if self.find(nodes, resource_id="new_game"):
+                return timed_menus
+            if self.find(nodes, resource_id="continue_button"):
+                self.click_id("continue_button")
+                continue
+            no = [
+                n for n in self.find(nodes, desc="no") if self.visible_choice(n, nodes)
+            ]
+            if no:
+                self.capture("bag-score")
+                self.choose("no")  # Another round?
+                continue
+            if self.find(nodes, desc="Stats") or self.find(nodes, desc="Timeline"):
+                self.click_id("dismiss_menu")
+                continue
+            if self.find(nodes, resource_id="input_container"):
+                console = self.find(nodes, resource_id="console")
+                text = console[0].get("text", "") if console else ""
+                choices = [
+                    n for n in self.find(nodes, text="1. ", prefix=True)
+                    if self.visible_choice(n, nodes)
+                ]
+                if choices:
+                    if "time left" in text[-400:]:
+                        timed_menus += 1
+                        if timed_menus == 3:
+                            self.capture("bag-round")
+                    self.click(choices[0])
+                    continue
+            time.sleep(0.35)
+        raise TimeoutError("The Punching Bag did not end in 600 input steps")
+
     def leave_chocolate(self):
         """Start Chocolate, then leave it from the toolbar's title button."""
         self.click_id("minigames")
@@ -413,10 +456,13 @@ def run(args):
     ring_fights = device.play_ring()
     if not ring_fights:
         raise AssertionError("RING ended without a fight")
+    bag_moves = device.play_bag()
+    if not bag_moves:
+        raise AssertionError("The Punching Bag round showed no timed move menu")
     device.leave_chocolate()
     print(
         f"UI smoke passed; fight menus exercised: {move_menus}; "
-        f"RING fights: {ring_fights}"
+        f"RING fights: {ring_fights}; Punching Bag moves: {bag_moves}"
     )
 
 

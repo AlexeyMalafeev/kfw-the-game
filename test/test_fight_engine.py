@@ -1040,3 +1040,42 @@ class TestAutoFightAll:
             BaseFight.show_win_message = orig_show
         assert len(yn_calls) == 1
         assert len(f.winners) + len(f.losers) == 3
+
+
+def test_human_menu_hides_plain_retreats_at_max_distance():
+    """At distance 4 Step Back / Retreat / Leap Back can't move away; the menu
+    drops them, while the fight AI's move list keeps them."""
+    import io
+    from contextlib import redirect_stdout
+
+    from kf_lib.actors.human_controlled_fighter import HumanControlledFighter
+    from kf_lib.fighting import distances
+    from kf_lib.kung_fu import style_gen
+    from kf_lib.minigames import _punching_bag as punching_bag
+    from kf_lib.ui import _frontend
+
+    random.seed(3)
+    retreats = {'Step Back', 'Retreat', 'Leap Back'}
+    seen = {'far': [], 'near': []}
+    f = HumanControlledFighter('Tester', style_gen.get_new_randomly_generated_style())
+    f.learn_move('Leap Back', silent=True)
+    bag = punching_bag.PunchingBag()
+
+    def present(keys, options, weak=False):
+        if any('Step Forward' in str(o) for o in options):
+            far = f.distances[bag] >= distances.VALID_DISTANCES_MAX
+            seen['far' if far else 'near'].append(' '.join(map(str, options)))
+            if far:
+                assert {m.name for m in f.get_av_moves()} >= retreats
+
+    _frontend.install_frontend(
+        key_reader=lambda: '1', clear_handler=lambda: None, menu_handler=present
+    )
+    try:
+        with redirect_stdout(io.StringIO()):
+            punching_bag.BagRound(f, bag)
+    finally:
+        _frontend.uninstall_frontend()
+    assert seen['far'] and seen['near']
+    assert not any(r in menu for menu in seen['far'] for r in retreats)
+    assert all('Step Back' in menu for menu in seen['near'])

@@ -43,6 +43,7 @@ class Fighter(
     is_human = False
     is_player = False
     auto_fight_all = False
+    is_living = True  # False for objects (the punching bag): no bleeding or gasping
     gender = None  # set post-init; only players and generated love interests are gendered
 
     # the order of arguments should not be changed, or saving will break

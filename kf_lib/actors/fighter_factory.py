@@ -123,13 +123,15 @@ def choose_generated_style(n=CUSTOM_HCF_NUM_STYLES):
 
 
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
-def new_custom_hcf():
+def new_custom_hcf(level=None):
+    """Name, generated style and (unless given) level chosen by the player."""
     name = ''
     while not name:
         name = get_str_from_user(_('Name:')).strip()
     # todo select starting atts
     style = choose_generated_style()
-    level = get_int_from_user(_('Level:'), 1, 20)
+    if level is None:
+        level = get_int_from_user(_('Level:'), 1, 20)
     f = HumanControlledFighter(name=name, style=style)
     if level > 1:
         f.level_up(level - 1)

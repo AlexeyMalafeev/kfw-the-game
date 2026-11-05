@@ -1,10 +1,12 @@
 # Minigames
 
-Two mini-games, Chocolate and RING, launched from the main entry point with
-`python kfw.py --minigame {chocolate,ring}` (plus the usual `--lang` and
-`--no-color`), or on Android from the title screen's **Mini-games** button.
-Sources: `kf_lib/minigames/` (`_chocolate.py`, `_ring.py`; `MINIGAMES` in
-`__init__.py` maps the flag value to a `play_*()` function), `kfw.py`,
+Three mini-games, Chocolate, RING and the Punching Bag, launched from the
+main entry point with `python kfw.py --minigame {chocolate,ring,bag}` (plus
+the usual `--lang` and `--no-color`), or on Android from the title screen's
+**Mini-games** button. Sources: `kf_lib/minigames/` (`_chocolate.py`,
+`_ring.py`, `_punching_bag.py`, `_records.py`; `MINIGAMES` in `__init__.py`
+maps the flag value to a `play_*()` function; `kfw.py` repeats the keys in
+its `--minigame` choices because it can't import `kf_lib` that early),
 `kf_lib/actors/fighter_factory.py`, `android/python/kfw_android.py`. Tests:
 `test/test_minigames.py`, `test/test_android_runtime.py`.
 Items marked ⚠️ look unintentional or surprising — verify before building on
@@ -20,6 +22,14 @@ them.
   line gets the automatic colors) and the i18n catalogs. They create no
   `Game`, so nothing is saved and no exp, stats or accomplishments are
   recorded (those hooks in `BaseFight` act on players only).
+- Records (`_records.py`): RING and the Punching Bag keep their best results
+  in `save/minigame_records.json` (`{"ring": {difficulty: record}, "bag":
+  {"best": record}}`). A missing or damaged file counts as no records, a
+  damaged field as a score of 0, and a file that can't be written just loses
+  the new record (written via a `.tmp` file and a rename). On Android the
+  file sits in the app's save folder; the load and export lists skip it
+  because they list valid saves only. Tests point `_records.SAVE_FOLDER` at
+  a temporary folder.
 - `kfw.py` sets the language and colors first, then dispatches to the
   mini-game; Ctrl+C ends it with the usual farewell. Crashes print a plain
   traceback (no `crash_report`, which needs a `Game`).
@@ -30,16 +40,19 @@ them.
 
 ## On Android
 
-The title screen's **Mini-games** button opens a picker (Chocolate, RING).
-`MainActivity` starts the session with `kfw_android.run(mode="minigame",
-minigame=<MINIGAMES key>)`, which calls the `play_*()` function inside the
-usual Android runtime: native menu buttons, the keyboard for RING's name and level,
-colors kept. When the mini-game returns, the app goes back to the title.
-Leaving early with ‹ or Back asks for confirmation with a mini-game message
-(nothing is saved), and a crash dialog mentions only `errors.txt` (there is
-no `Game` for an emergency save). The instrumentation self-test plays both
-mini-games on the device; `android/scripts/ui_smoke.py` plays a whole RING
-run from the title screen and leaves Chocolate early.
+The title screen's **Mini-games** button opens a picker (Chocolate, RING,
+Punching Bag; `MINIGAMES` in `MainActivity.java` lists their keys in that
+order). `MainActivity` starts the session with
+`kfw_android.run(mode="minigame", minigame=<MINIGAMES key>)`, which calls the
+`play_*()` function inside the usual Android runtime: native menu buttons,
+the keyboard for names and RING's level, colors kept. When the mini-game
+returns, the app goes back to the title. Leaving early with ‹ or Back asks
+for confirmation with a mini-game message (the game itself isn't saved;
+records are kept as they are set), and a crash dialog mentions only
+`errors.txt` (there is no `Game` for an emergency save). The instrumentation
+self-test plays all three mini-games on the device; `android/scripts/
+ui_smoke.py` plays a whole RING run and a Punching Bag round from the title
+screen, and leaves Chocolate early.
 
 ## Chocolate — `kf_lib/minigames/_chocolate.py`
 
@@ -88,8 +101,9 @@ as comments and were written in the revival.
 
 An endless arena ladder around the normal fight engine:
 
-1. Difficulty menu: easy 0.9 / normal 1.0 / hard 1.1 / extreme 1.2, a
-   multiplier on opponent strength.
+1. The welcome screen lists the records (below), then the difficulty menu:
+   easy 0.9 / normal 1.0 / hard 1.1 / extreme 1.2, a multiplier on opponent
+   strength (`DIFFICULTIES`).
 2. `fighter_factory.new_custom_hcf()` builds the player's fighter: a name
    prompt (`get_str_from_user`; an empty or blank name is asked again), a
    style menu, and a level prompt (1–20) applied via `level_up()` — the
@@ -114,12 +128,66 @@ An endless arena ladder around the normal fight engine:
    2026-11 the cap was a fixed level 20 with no roll limit: five lv.20
    fighters are worth about 850, a lv.40 player about 900, so from about
    level 40 (35 on extreme) the loop never ended.
-4. `p.fight(opp[0], en_allies=opp[1:], hide_stats=difficulty >= 1.0)`. Win →
-   `p.level_up()` (full interactive level-up, bold green banner). Loss → one
-   of 3 attempts is spent; the remaining count shows in yellow, red at 0. At
-   0 attempts it prints the reached level (cyan) and a bold "Game over".
+4. `p.fight(opp[0], en_allies=opp[1:], hide_stats=strength >= 1.0)`, where
+   `strength` is the difficulty's multiplier. Win → `p.level_up()` (full
+   interactive level-up, bold green banner). Loss → one of 3 attempts is
+   spent; the remaining count shows in yellow, red at 0. At 0 attempts it
+   prints the reached level (cyan), the fights won, the record line and a
+   bold "Game over".
 
+- Records: one per difficulty, the run with the most fights won (not the
+  level reached: the starting level is the player's own choice), stored with
+  the name, the style's public name, the starting and the final level. A run
+  that beats it (with at least one win) replaces it and gets a bold green
+  "New record for {difficulty}!"; otherwise the current record is shown.
+  Ties keep the older record.
 - Music: Choosing a Style (the main game's setup tune) from the welcome
   screen through character creation, until the first fight.
-- BACKLOG ("Minigames & far-future mods") has related ideas — RING score for
-  exp bonuses, kumite mini-game, tournament betting — none implemented.
+- BACKLOG ("Minigames & far-future mods") has related ideas — turning RING
+  scores into exp bonuses in the main game, a kumite mini-game, tournament
+  betting with non-kung-fu styles — none implemented.
+
+## Punching Bag — `kf_lib/minigames/_punching_bag.py`
+
+One minute of fight time to deal as much damage as possible to a bag that
+never fights back:
+
+1. The welcome screen states the rules and the record. `new_custom_hcf(
+   level=FIGHTER_LEVEL)` builds the fighter: a name, a generated style (the
+   same menu as RING's) and a fixed level 10, reached through the usual
+   interactive level-ups. The level is fixed so records compare like with
+   like.
+2. Each round is a `BagRound`, a `NormalFight` subclass: `TIME_LIMIT = 120`
+   time units (60 s at `TIME_TO_SEC_DIVISOR` 2), no environment, no items,
+   no prefight quotes, the Bamboo Courtyard tune (`fight_music`). The move
+   menu's title shows the clock ("time left: 0:42", via `get_turn_note`).
+   The engine checks the limit before anyone's next move starts, so no move
+   begins after the bell. A gong (`gong_clash`) ends the round instead of
+   the victory jingle, and a score screen replaces the win message: damage
+   (the HP the bag lost), strikes landed, the hardest blow and its move,
+   criticals and epics. The usual post-fight menu (stats, timeline,
+   slideshow) follows.
+3. "Another round?" repeats the round with the same fighter (HP, stamina
+   and qi are reset by the fight, as always), so the level-ups happen once.
+
+- The bag (`PunchingBag`, a `Fighter` on 'No Style') has 9999 HP, no
+  toughness or damage reduction, and zero dodge and block chances, so every
+  strike that doesn't fail lands in full. The round never queues it, so it
+  never takes a turn (no "Punching Bag: Do Nothing" screens). It can't fall,
+  lose balance, be stunned, shocked or slowed (those `cause_*` methods are
+  no-ops) and never counters or speaks. `is_living = False` makes the
+  engine skip bleeding and stamina damage ("gasps for breath!") on it. Heavy
+  pushes and knockback moves still swing it away, so footwork matters. A
+  single blow can't take its last HP, which only an instant knock-out could
+  (lethal moves are far above level 10).
+- What decides the score: affordable high-power moves, keeping stamina and
+  qi up (Catch Breath and Focus cost time too), closing the distance after
+  knockbacks, and luck with criticals and epics. Measured 2026-11 with the
+  first menu option everywhere (8 fighters × 5 rounds): about 1,100 damage
+  on average; one fighter's rounds ranged 489–1,403, and the build
+  mattered (one fighter averaged about 1,900, another about 600).
+- Records: the best damage, with the name and the style's public name; a
+  better round gets a bold green "New record!".
+- Music: Bamboo Courtyard (the main game's practice tune) from the welcome
+  screen on; the round's end stops it with the gong, and it comes back for
+  "Another round?".

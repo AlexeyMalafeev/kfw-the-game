@@ -98,6 +98,7 @@ class FighterAPI(ABC):
     is_auto_fighting: bool = None
     is_countering: bool = None
     is_human: bool = None
+    is_living: bool = None
     is_player: bool = None
     kos_this_fight: int = None
     _level: int = None

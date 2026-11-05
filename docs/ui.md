@@ -124,6 +124,16 @@ player can see at a glance who is open or dangerous:
 
 The marks are uncolored, so they read the same with colors off.
 
+## Fight move menu
+
+`HumanControlledFighter.choose_move` lists the moves usable at the current
+distance (`get_av_moves`), strikes first, with feature stars and hints. Its
+title is the distance picture plus the fight's `get_turn_note()` (empty
+except in the Punching Bag mini-game, which shows its clock there). At the
+maximum distance it hides the plain retreats (Step Back, Retreat, Leap
+Back: no power, no functions), which can't move further away; the fight AI
+still gets the full list. See the momentum note in `docs/fight_mechanics.md`.
+
 ## Alignment and width math
 
 All width-sensitive code measures **visible** length (`visible_len`), so tags

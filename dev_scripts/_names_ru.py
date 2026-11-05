@@ -325,6 +325,8 @@ OVERRIDES = {
     'Swordsman': 'Мечник',
     'Mighty Elbows': 'Могучие локти',
     'Mighty Knees': 'Могучие колени',
+    # -- Punching Bag mini-game --
+    'Punching Bag': 'Боксёрский мешок',
     # -- victory conditions --
     'Grandmaster': 'Гроссмейстер',
     'Folk Hero': 'Народный герой',

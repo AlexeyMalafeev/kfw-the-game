@@ -1,3 +1,4 @@
+from kf_lib.fighting import distances
 from kf_lib.i18n import _, tr_fighter_name
 from kf_lib.ui import (
     align_text,
@@ -63,26 +64,35 @@ class HumanControlledFighter(Fighter):
         else:
             self.av_moves = self.get_av_moves()  # this depends on target
             self.see_fight_info(show_opp=True)
+            shown = self.av_moves
+            if self.distances[self.target] >= distances.VALID_DISTANCES_MAX:
+                # plain retreats (Step Back, Retreat, Leap Back) can't move further
+                # away; they would only spend time and build negative momentum.
+                # Hidden from the menu only: the fight AI still sees them
+                shown = [
+                    m for m in shown if m.power or m.dist_change <= 0 or m.functions
+                ]
             # print('status', self.status)
             # print('opp status', self.target.status)
             # print(self.dfs_bonus)
             m_names = [
                 f'{m.display_name}{self.get_move_stars(m)}{self.get_move_tier_string(m)}'
-                for m in self.av_moves
+                for m in shown
             ]
             max_len = max((visible_len(m_name) for m_name in m_names))
-            m_hints = [self.get_move_hints(m) for m in self.av_moves]
+            m_hints = [self.get_move_hints(m) for m in shown]
             options = [
                 (
                     m_names[i] + ' ' * (max_len - visible_len(m_names[i])) + ' ' + m_hints[i],
                     m,
                 )
-                for i, m in enumerate(self.av_moves)
+                for i, m in enumerate(shown)
             ]
             options.sort(key=lambda x: not x[1].power)
             # print(self.current_fight.order)
             d = self.get_vis_distance(self.distances[self.target])
-            self.action = menu(options, title=f' {d}')
+            note = self.current_fight.get_turn_note()
+            self.action = menu(options, title=f' {d}{note}')
 
     def choose_new_move(self, sample):
         first_line = (

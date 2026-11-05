@@ -19,12 +19,13 @@ class FakeHost:
         self.saved = False
         self.line_answers = ["1"]
         self.tunes = []
+        self.effects = []
 
     def playMusic(self, tune):
         self.tunes.append(tune)
 
     def playSound(self, effect):
-        pass
+        self.effects.append(effect)
 
     def isClosed(self):
         return False
@@ -177,7 +178,9 @@ class MinigameHost(FakeHost):
     def readKey(self):
         if self.pending is not None:
             keys, labels, weak = self.pending
-            for label in ("extreme", "yes"):
+            # the Punching Bag's "Another round?": one round is enough
+            another = "Another round?" in "".join(self.output)[-300:]
+            for label in ("extreme", "no" if another else "yes"):
                 if label in labels:
                     self.pending = None
                     return keys[labels.index(label)]
@@ -225,6 +228,19 @@ def test_android_runtime_plays_chocolate(tmp_path):
     assert host.tunes[0] == "16_strange_dreams"
     assert "22_a_legend_is_born" in host.tunes
     assert "The End" in "".join(host.output)
+
+
+def test_android_runtime_plays_the_punching_bag(tmp_path):
+    random.seed(1)
+    status, host = _run_minigame(tmp_path, "bag")
+
+    assert status == "finished"
+    assert host.finished_states == ["finished"]
+    assert host.tunes[0] == "06_bamboo_courtyard"
+    assert "gong_clash" in host.effects
+    transcript = "".join(host.output)
+    assert transcript.count("Time!") == 1
+    assert (tmp_path / "android-home" / "save" / "minigame_records.json").is_file()
 
 
 def test_android_runtime_rejects_an_unknown_minigame(tmp_path):

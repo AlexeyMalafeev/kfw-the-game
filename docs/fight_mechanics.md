@@ -77,9 +77,17 @@ offset by their speed deficit.
 4. `check_fight_over()` again; on end, winners get `'Win'` ascii, losers
    `'Lying'`.
 
-`time_limit = 500000` is a runaway guard: on exceed,
-`handle_time_limit_exceeded` prints debug info and sets every active fighter's
-`hp = -10`, forcing a draw.
+`time_limit` (from the class attribute `TIME_LIMIT`, 500000 units, about 69
+hours of fight time) is a runaway guard for ordinary fights. The loop checks
+it before the next turn: when the next queued turn would start at or after
+the limit, the timer is set to the limit, `handle_time_limit_exceeded` runs,
+and the fight ends without that turn. The base handler prints debug info and
+sets every active fighter's `hp = -10`, forcing a draw. Timed fights set a
+short `TIME_LIMIT` and their own handler: the Punching Bag mini-game's
+`BagRound` (60 s, the round just ends; see `docs/minigames.md`). Since
+2026-11; the check used to run after a tick's moves, so a move could start
+past the limit. `get_turn_note()` (empty by default) adds a note to the
+human's move menu title; `BagRound` shows the clock there.
 
 ## Action selection
 
@@ -263,7 +271,10 @@ In order (steps 1–2 only if the target didn't defend — see below):
 5. `target.take_damage(dam)` → `change_hp(-dam)`, sets `took_damage`.
 6. `try_cause_bleeding()`: `chance_cause_bleeding` roll → target's `bleeding`
    pool grows by `max(1, round(dam * 0.15))`; the pool is subtracted from hp at
-   the start of each of the *target's own* turns.
+   the start of each of the *target's own* turns. Targets with
+   `is_living = False` (only the Punching Bag) never bleed: `cause_bleeding`
+   returns after the roll, so the random sequence is unchanged; `do_stam_dam`
+   skips them too.
 7. `try_hit_disarm()`; then the move's `functions` run (`do_move_functions`):
    extra damage (`do_strength_based_dam` & co. = `rndint_2d(1, stat * 5)`;
    qi-based = `rndint_2d(qp, qp * 2)`; level-based = `rndint_2d(1, level * 10)`),
@@ -333,6 +344,15 @@ Momentum: `change_distance(d, targ)` sets `self.momentum = -d` — closing in
 (negative `dist_change`) builds positive momentum (≤ +2 via `Rush Forward`),
 retreat/knockback builds negative (down to −3). It scales `atk_pwr`/`to_hit` by
 ±10% per point and feeds into knockback resistance.
+
+⚠️ Momentum is set before the distance is clamped to 1–4, so a maneuver that
+can't move still builds it: Step Forward at distance 1 stays at distance 1
+but gives +1 momentum (+10% power and accuracy on the next strike), and with
+a guard-while-advancing tech it also counts as Guard. Intended wind-up or a
+clamp quirk: an open question (BACKLOG). Its mirror, Step Back / Retreat /
+Leap Back at distance 4, only builds negative momentum, so the human move
+menu hides those three there (`HumanControlledFighter.choose_move`, since
+2026-11); the fight AI still sees them.
 
 ## Statuses and durations
 

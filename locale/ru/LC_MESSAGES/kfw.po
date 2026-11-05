@@ -94,11 +94,11 @@ msgstr " (лучший ученик)"
 msgid " (best: {name})"
 msgstr " (лучший: {name})"
 
-#: kf_lib/fighting/fight/_base_fight.py:87
+#: kf_lib/fighting/fight/_base_fight.py:90
 msgid " (boring...)"
 msgstr " (скучновато...)"
 
-#: kf_lib/fighting/fight/_base_fight.py:85
+#: kf_lib/fighting/fight/_base_fight.py:88
 msgid " (epic!)"
 msgstr " (эпично!)"
 
@@ -110,7 +110,7 @@ msgstr " (защищается в атаке)"
 msgid " (guarding while closing in)"
 msgstr " (сближается в защитной стойке)"
 
-#: kf_lib/minigames/_ring.py:36
+#: kf_lib/minigames/_ring.py:124
 msgid " ***Game over***"
 msgstr " ***Игра окончена***"
 
@@ -122,9 +122,13 @@ msgstr " ***Конец***"
 msgid " ***Welcome to [bold]Chocolate[/bold]***"
 msgstr " ***Добро пожаловать в [bold]«Шоколад»[/bold]***"
 
-#: kf_lib/minigames/_ring.py:16
+#: kf_lib/minigames/_ring.py:97
 msgid " ***Welcome to [bold]RING[/bold]***"
 msgstr " ***Добро пожаловать на [bold]РИНГ[/bold]***"
+
+#: kf_lib/minigames/_punching_bag.py:179
+msgid " ***Welcome to the [bold]Punching Bag[/bold]***"
+msgstr " ***Добро пожаловать в [bold]«Боксёрский мешок»[/bold]***"
 
 #: kf_lib/actors/fighter/_fight_actions.py:62
 msgid " *FURY*"
@@ -134,7 +138,7 @@ msgstr " *ЯРОСТЬ*"
 msgid " A school with the name \"{}\" already exists."
 msgstr " Школа с названием \"{}\" уже существует."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:220
+#: kf_lib/actors/fighter/_strike_mechanics.py:222
 msgid " agility-based {dmg} ({hp})"
 msgstr " {dmg} (от ловкости) ({hp})"
 
@@ -142,13 +146,21 @@ msgstr " {dmg} (от ловкости) ({hp})"
 msgid " children:{}"
 msgstr " дети:{}"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:149
+#: kf_lib/actors/fighter/_strike_mechanics.py:151
 msgid " falls to the ground! {dmg} ({hp})"
 msgstr " падает на землю! {dmg} ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:281
+#: kf_lib/minigames/_ring.py:122
+msgid " Fights won: {n}."
+msgstr " Побед: {n}."
+
+#: kf_lib/actors/fighter/_strike_mechanics.py:285
 msgid " gasps for breath!"
 msgstr " задыхается!"
+
+#: kf_lib/minigames/_punching_bag.py:181
+msgid " Hit the bag as hard as you can in {sec} seconds of fight time."
+msgstr " Бейте мешок изо всех сил: у вас {sec} секунд боевого времени."
 
 #: kf_lib/happenings/tournament.py:227
 msgid " It is a battle royale: all participants fight at once, last man standing wins!"
@@ -158,54 +170,78 @@ msgstr " Это королевская битва: все участники д�
 msgid " KNOCK-OUT!"
 msgstr " НОКАУТ!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:163
+#: kf_lib/actors/fighter/_strike_mechanics.py:165
 msgid " knocked back {dist} step!"
 msgid_plural " knocked back {dist} steps!"
 msgstr[0] " отлетает на {dist} шаг назад!"
 msgstr[1] " отлетает на {dist} шага назад!"
 msgstr[2] " отлетает на {dist} шагов назад!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:235
+#: kf_lib/actors/fighter/_strike_mechanics.py:237
 msgid " level-based {dmg} ({hp})"
 msgstr " {dmg} (от уровня) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:183
+#: kf_lib/minigames/_ring.py:82
+msgid " New record for {difficulty}!"
+msgstr " Новый рекорд на сложности «{difficulty}»!"
+
+#: kf_lib/minigames/_punching_bag.py:171
+msgid " New record!"
+msgstr " Новый рекорд!"
+
+#: kf_lib/actors/fighter/_strike_mechanics.py:185
 msgid " off-balance!"
 msgstr " теряет равновесие!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:255
+#: kf_lib/actors/fighter/_strike_mechanics.py:257
 msgid " qi-based {dmg} ({hp})"
 msgstr " {dmg} (от ци) ({hp})"
 
-#: kf_lib/minigames/_ring.py:33
+#: kf_lib/minigames/_ring.py:88
+msgid " Record for {difficulty}: {record}"
+msgstr " Рекорд на сложности «{difficulty}»: {record}"
+
+#: kf_lib/minigames/_punching_bag.py:173 kf_lib/minigames/_punching_bag.py:192
+msgid " Record: {record}"
+msgstr " Рекорд: {record}"
+
+#: kf_lib/minigames/_ring.py:60
+msgid " Records:"
+msgstr " Рекорды:"
+
+#: kf_lib/minigames/_ring.py:119
 msgid " Remaining attempts: {n}"
 msgstr " Осталось попыток: {n}"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:193
+#: kf_lib/actors/fighter/_strike_mechanics.py:195
 msgid " shocked!"
 msgstr " в шоке!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:201
+#: kf_lib/actors/fighter/_strike_mechanics.py:203
 msgid " slowed down!"
 msgstr " замедляется!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:269
+#: kf_lib/actors/fighter/_strike_mechanics.py:271
 msgid " speed-based {dmg} ({hp})"
 msgstr " {dmg} (от скорости) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:288
+#: kf_lib/actors/fighter/_strike_mechanics.py:292
 msgid " strength-based {dmg} ({hp})"
 msgstr " {dmg} (от силы) ({hp})"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:213
+#: kf_lib/actors/fighter/_strike_mechanics.py:215
 msgid " stunned!"
 msgstr " в ступоре!"
+
+#: kf_lib/minigames/_punching_bag.py:186
+msgid " The bag never fights back. Your fighter is level {lv}."
+msgstr " Мешок никогда не бьёт в ответ. Уровень вашего бойца: {lv}."
 
 #: kf_lib/actors/player/_human_player.py:44
 msgid " What is the name of {}'s school? >"
 msgstr " Как называется школа {}? >"
 
-#: kf_lib/minigames/_ring.py:35
+#: kf_lib/minigames/_ring.py:121
 msgid " You have reached level {lv}."
 msgstr " Вы достигли уровня {lv}."
 
@@ -283,7 +319,7 @@ msgstr "({fact})"
 msgid "({} level)"
 msgstr "(ур.{})"
 
-#: kf_lib/actors/human_controlled_fighter.py:259
+#: kf_lib/actors/human_controlled_fighter.py:269
 msgid "*LEVEL UP*"
 msgstr "*НОВЫЙ УРОВЕНЬ*"
 
@@ -313,7 +349,7 @@ msgstr ""
 msgid "-vs-"
 msgstr "-против-"
 
-#: kf_lib/actors/fighter/_fight_actions.py:330 kf_lib/actors/fighter/_strike_mechanics.py:150 kf_lib/actors/fighter/_strike_mechanics.py:221 kf_lib/actors/fighter/_strike_mechanics.py:236 kf_lib/actors/fighter/_strike_mechanics.py:256 kf_lib/actors/fighter/_strike_mechanics.py:270 kf_lib/actors/fighter/_strike_mechanics.py:289
+#: kf_lib/actors/fighter/_fight_actions.py:330 kf_lib/actors/fighter/_strike_mechanics.py:152 kf_lib/actors/fighter/_strike_mechanics.py:223 kf_lib/actors/fighter/_strike_mechanics.py:238 kf_lib/actors/fighter/_strike_mechanics.py:258 kf_lib/actors/fighter/_strike_mechanics.py:272 kf_lib/actors/fighter/_strike_mechanics.py:293
 msgid "-{dam} HP"
 msgstr "-{dam} ОЗ"
 
@@ -337,7 +373,7 @@ msgstr "[bold]Каждый сам за себя![/bold]"
 msgid "[bold]Group free for all![/bold]"
 msgstr "[bold]Групповая свалка![/bold]"
 
-#: kf_lib/actors/human_controlled_fighter.py:234
+#: kf_lib/actors/human_controlled_fighter.py:244
 msgid "A"
 msgstr "Т"
 
@@ -552,7 +588,7 @@ msgstr "молодая женщина"
 msgid "A.-S.tourn.won"
 msgstr "Побед в ТВШ"
 
-#: kf_lib/actors/human_controlled_fighter.py:93 kf_lib/kung_fu/moves.py:94
+#: kf_lib/actors/human_controlled_fighter.py:103 kf_lib/kung_fu/moves.py:94
 msgid "Acc"
 msgstr "Точн"
 
@@ -600,7 +636,7 @@ msgstr "Против многих каждый летящий в тебя уда
 msgid "Agi"
 msgstr "Лов"
 
-#: kf_lib/actors/human_controlled_fighter.py:43 kf_lib/game/game_stats.py:102
+#: kf_lib/actors/human_controlled_fighter.py:44 kf_lib/game/game_stats.py:102
 msgid "Agility"
 msgstr "Ловкость"
 
@@ -642,6 +678,10 @@ msgstr ""
 msgid "An untrained guard only shields. A trained guard also lets breath and qi return."
 msgstr "Необученная защита лишь прикрывает. Обученная ещё и возвращает дыхание и ци."
 
+#: kf_lib/minigames/_punching_bag.py:198
+msgid "Another round?"
+msgstr "Ещё раунд?"
+
 #: kf_lib/happenings/teachings.py:300
 msgid "Any hit has a small chance (3% for most fighters) to cause bleeding worth 15% of its damage, and new wounds add to the bleeding."
 msgstr "Любой удар с небольшим шансом (3% у большинства бойцов) вызывает кровотечение в 15% его урона, а новые раны его усиливают."
@@ -662,7 +702,7 @@ msgstr "С убылью выносливости падают атака, защ
 msgid "As {name} comes to, he realizes that {boss} and his men have disappeared. They took all the treasures, too. {name} is lucky to be alive..."
 msgstr "Придя в себя, {name} понимает, что {boss} и его люди исчезли. Они забрали и все сокровища. {name} повезло остаться в живых..."
 
-#: kf_lib/actors/human_controlled_fighter.py:181
+#: kf_lib/actors/human_controlled_fighter.py:191
 msgid "As {name} trains hard, delving deeper into the art of {style}, he discovers a way to improve one of the style's techniques..."
 msgstr "Усердно тренируясь и постигая всё более глубокие тайны стиля {style}, {name} открывает способ улучшить одну из техник стиля..."
 
@@ -850,7 +890,7 @@ msgstr "Дети"
 msgid "Children grow so fast — new clothes. (-{amount} coins)"
 msgstr "Дети так быстро растут — новая одежда. (-{amount} монет)"
 
-#: kf_lib/actors/human_controlled_fighter.py:122
+#: kf_lib/actors/human_controlled_fighter.py:132
 msgid "Choose a move to learn:"
 msgstr "Выберите приём для изучения:"
 
@@ -870,11 +910,11 @@ msgstr "Выберите стиль:"
 msgid "Choose a tech:"
 msgstr "Выберите технику:"
 
-#: kf_lib/actors/human_controlled_fighter.py:170 kf_lib/actors/human_controlled_fighter.py:191
+#: kf_lib/actors/human_controlled_fighter.py:180 kf_lib/actors/human_controlled_fighter.py:201
 msgid "Choose a technique to improve:"
 msgstr "Выберите технику для улучшения:"
 
-#: kf_lib/actors/human_controlled_fighter.py:130
+#: kf_lib/actors/human_controlled_fighter.py:140
 msgid "Choose a technique to learn:"
 msgstr "Выберите технику для изучения:"
 
@@ -882,11 +922,11 @@ msgstr "Выберите технику для изучения:"
 msgid "Choose an encounter"
 msgstr "Выберите событие"
 
-#: kf_lib/actors/human_controlled_fighter.py:163
+#: kf_lib/actors/human_controlled_fighter.py:173
 msgid "Choose target:"
 msgstr "Выберите цель:"
 
-#: kf_lib/minigames/_ring.py:21
+#: kf_lib/minigames/_ring.py:103
 msgid "Choose the difficulty:"
 msgstr "Выберите сложность:"
 
@@ -926,7 +966,7 @@ msgstr "эффективность ударов вблизи"
 msgid "closing in counts as Guard"
 msgstr "сближение в защитной стойке"
 
-#: kf_lib/actors/human_controlled_fighter.py:94
+#: kf_lib/actors/human_controlled_fighter.py:104
 msgid "Cmpl"
 msgstr "Слож"
 
@@ -986,13 +1026,17 @@ msgstr "шанс критической атаки"
 msgid "critical attack power"
 msgstr "сила критической атаки"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:332
+#: kf_lib/actors/fighter/_strike_mechanics.py:336
 msgid "CRITICAL!"
 msgstr "КРИТИЧЕСКИЙ УДАР!"
 
 #: kf_lib/kung_fu/boosts.py:132 kf_lib/kung_fu/boosts.py:133
 msgid "criticals"
 msgstr "критические удары"
+
+#: kf_lib/minigames/_punching_bag.py:138
+msgid "Criticals: {crits}, epics: {epics}"
+msgstr "Критических: {crits}, эпичных: {epics}"
 
 #: kf_lib/game/game_stats.py:112
 msgid "Crits,EPICs"
@@ -1021,6 +1065,10 @@ msgstr "урон снижен!"
 #: kf_lib/kung_fu/boosts.py:134
 msgid "damage reduction"
 msgstr "снижение урона"
+
+#: kf_lib/minigames/_punching_bag.py:126
+msgid "Damage: {dam}"
+msgstr "Урон: {dam}"
 
 #: kf_lib/game/_state_menu.py:33
 msgid "Debug Menu"
@@ -1074,11 +1122,11 @@ msgstr "шанс обезоружить в атаке"
 msgid "disarm chance when defending"
 msgstr "шанс обезоружить в защите"
 
-#: kf_lib/actors/fighter/_fight_actions.py:420 kf_lib/actors/fighter/_strike_mechanics.py:370
+#: kf_lib/actors/fighter/_fight_actions.py:420 kf_lib/actors/fighter/_strike_mechanics.py:374
 msgid "disarms"
 msgstr "обезоруживает"
 
-#: kf_lib/actors/human_controlled_fighter.py:91 kf_lib/kung_fu/moves.py:93 kf_lib/kung_fu/moves.py:96
+#: kf_lib/actors/human_controlled_fighter.py:101 kf_lib/kung_fu/moves.py:93 kf_lib/kung_fu/moves.py:96
 msgid "Dist"
 msgstr "Дист"
 
@@ -1086,7 +1134,7 @@ msgstr "Дист"
 msgid "Do not use items"
 msgstr "Не использовать предметы"
 
-#: kfw.py:73
+#: kfw.py:74
 msgid "Do you want to see what AI players do?"
 msgstr "Хотите видеть действия ИИ-игроков?"
 
@@ -1118,7 +1166,7 @@ msgstr "Пожертв."
 msgid "Donates {} c."
 msgstr "Жертвует {} монет."
 
-#: kf_lib/fighting/fight/_base_fight.py:461
+#: kf_lib/fighting/fight/_base_fight.py:476
 msgid "Draw!"
 msgstr "Ничья!"
 
@@ -1174,7 +1222,7 @@ msgstr "Зарабатывает {} монет."
 msgid "easily"
 msgstr "легко "
 
-#: kf_lib/minigames/_ring.py:20
+#: kf_lib/minigames/_ring.py:33
 msgid "easy"
 msgstr "лёгкая"
 
@@ -1285,7 +1333,7 @@ msgstr "опыт:{exp}/{next_lv} деньги:{money}"
 msgid "Experience from a win grows faster than the opponent's strength relative to yours."
 msgstr "Опыт за победу растёт быстрее, чем сила противника по сравнению с твоей."
 
-#: kf_lib/minigames/_ring.py:20
+#: kf_lib/minigames/_ring.py:36
 msgid "extreme"
 msgstr "экстремальная"
 
@@ -1317,7 +1365,7 @@ msgstr "урон от падения"
 msgid "Fame"
 msgstr "Слава"
 
-#: kfw.py:51 kfw.py:78
+#: kfw.py:52 kfw.py:79
 msgid "Farewell, brave warrior!"
 msgstr "Прощай, храбрый воин!"
 
@@ -1437,7 +1485,7 @@ msgstr "Отныне стиль кунг-фу {name} будет известен
 msgid "Full co-op"
 msgstr "Полный кооператив"
 
-#: kf_lib/actors/human_controlled_fighter.py:98
+#: kf_lib/actors/human_controlled_fighter.py:108
 msgid "Func"
 msgstr "Функ"
 
@@ -1653,13 +1701,17 @@ msgstr "защита во время атаки"
 msgid "hands-down "
 msgstr "в чистую "
 
-#: kf_lib/minigames/_ring.py:20
+#: kf_lib/minigames/_ring.py:35
 msgid "hard"
 msgstr "трудная"
 
 #: kf_lib/game/_new_game.py:161
 msgid "Hard Times (high poverty)"
 msgstr "Тяжёлые времена (высокая бедность)"
+
+#: kf_lib/minigames/_punching_bag.py:133
+msgid "Hardest blow: {dam} ({move})"
+msgstr "Сильнейший удар: {dam} ({move})"
 
 #: kf_lib/happenings/story/_student_rivalry.py:97
 msgid "Has to settle a rivalry between two students."
@@ -1716,7 +1768,7 @@ msgstr "эффективность ударов головой"
 msgid "headbutts"
 msgstr "удары головой"
 
-#: kf_lib/actors/human_controlled_fighter.py:45 kf_lib/game/game_stats.py:104
+#: kf_lib/actors/human_controlled_fighter.py:46 kf_lib/game/game_stats.py:104
 msgid "Health"
 msgstr "Здоровье"
 
@@ -1814,7 +1866,7 @@ msgstr "Сколько поставить?"
 msgid "However, the {item} turns out to be of very shoddy quality. It breaks immediately as {name} tries a few of his moves on it. Too bad the craftsman has vanished in thin air!"
 msgstr "Однако {item} оказывается очень низкого качества — вещь ломается, едва {name} успевает опробовать на ней пару своих приёмов. Досадно, что ремесленник словно испарился!"
 
-#: kf_lib/actors/human_controlled_fighter.py:370
+#: kf_lib/actors/human_controlled_fighter.py:380
 msgid "HP"
 msgstr "ОЗ"
 
@@ -1826,7 +1878,7 @@ msgstr "восстановление ОЗ"
 msgid "HP gain per turn"
 msgstr "ОЗ за ход"
 
-#: kf_lib/actors/human_controlled_fighter.py:156
+#: kf_lib/actors/human_controlled_fighter.py:166
 msgid "HP:{}"
 msgstr "ОЗ:{}"
 
@@ -1846,7 +1898,7 @@ msgstr "невозможно"
 msgid "improv.weapons"
 msgstr "подруч.оружие"
 
-#: kf_lib/actors/human_controlled_fighter.py:48
+#: kf_lib/actors/human_controlled_fighter.py:49
 msgid "Improve:"
 msgstr "Улучшить:"
 
@@ -1862,7 +1914,7 @@ msgstr "травма"
 msgid "Input att (type \"all\" to see all atts)"
 msgstr "Введите атрибут (наберите \"all\", чтобы увидеть все)"
 
-#: kf_lib/fighting/fight/_base_fight.py:465
+#: kf_lib/fighting/fight/_base_fight.py:480
 msgid "Input file name: "
 msgstr "Введите имя файла: "
 
@@ -1870,7 +1922,7 @@ msgstr "Введите имя файла: "
 msgid "Inspect Player"
 msgstr "Осмотреть игрока"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:379
+#: kf_lib/actors/fighter/_strike_mechanics.py:383
 msgid "INSTANT KNOCK-OUT!!!"
 msgstr "МГНОВЕННЫЙ НОКАУТ!!!"
 
@@ -1929,7 +1981,7 @@ msgstr "Терпит поражение от ревнивого соперник
 msgid "Is blamed for the Saint's Day riot."
 msgstr "Обвинён в беспорядках на День святого."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:134
+#: kf_lib/actors/fighter/_strike_mechanics.py:136
 msgid "is BLEEDING!"
 msgstr "ИСТЕКАЕТ КРОВЬЮ!"
 
@@ -2092,7 +2144,7 @@ msgstr "Изучить приём"
 msgid "Learn Tech"
 msgstr "Изучить технику"
 
-#: kf_lib/actors/human_controlled_fighter.py:324
+#: kf_lib/actors/human_controlled_fighter.py:334
 msgid "Learns the secret technique of {style}."
 msgstr "Изучает секретную технику: {style}."
 
@@ -2124,7 +2176,7 @@ msgstr "Скорость прокачки?"
 msgid "Level up"
 msgstr "Повысить уровень"
 
-#: kf_lib/actors/fighter_factory.py:132
+#: kf_lib/actors/fighter_factory.py:134
 msgid "Level:"
 msgstr "Уровень:"
 
@@ -2160,7 +2212,7 @@ msgstr "Проигрывает Ночную свалку."
 msgid "Loses {}."
 msgstr "Теряет: {}."
 
-#: kf_lib/fighting/fight/_base_fight.py:249
+#: kf_lib/fighting/fight/_base_fight.py:264
 msgid "Loses."
 msgstr "Проигрывает."
 
@@ -2176,7 +2228,7 @@ msgstr "низкий риск"
 msgid "LUCKY!"
 msgstr "УДАЧА!"
 
-#: kf_lib/actors/fighter/__init__.py:103 kf_lib/actors/human_controlled_fighter.py:155
+#: kf_lib/actors/fighter/__init__.py:104 kf_lib/actors/human_controlled_fighter.py:165
 msgid "lv.{}"
 msgstr "ур.{}"
 
@@ -2308,7 +2360,7 @@ msgstr "Деньги"
 msgid "Money earned"
 msgstr "Заработано"
 
-#: kf_lib/actors/human_controlled_fighter.py:89
+#: kf_lib/actors/human_controlled_fighter.py:99
 msgid "Move"
 msgstr "Приём"
 
@@ -2336,7 +2388,7 @@ msgstr "Сближение даёт напор, и каждое очко нап�
 msgid "much "
 msgstr "намного "
 
-#: kf_lib/fighting/fight/_base_fight.py:280
+#: kf_lib/fighting/fight/_base_fight.py:295
 msgid "Multi-knockout"
 msgstr "Мультинокаут"
 
@@ -2348,7 +2400,7 @@ msgstr "ИМЯ"
 msgid "Name"
 msgstr "Имя"
 
-#: kf_lib/actors/fighter_factory.py:129
+#: kf_lib/actors/fighter_factory.py:130
 msgid "Name:"
 msgstr "Имя:"
 
@@ -2376,7 +2428,7 @@ msgstr "Без кооператива"
 msgid "no risk"
 msgstr "без риска"
 
-#: kf_lib/fighting/fight/_base_fight.py:528
+#: kf_lib/fighting/fight/_base_fight.py:543
 msgid "No stats recorded."
 msgstr "Статистика не записана."
 
@@ -2396,11 +2448,11 @@ msgstr "Среди молодых бойцов в городе нет никог
 msgid "Nobody wants to be on the receiving end of {name}'s {move}."
 msgstr "Самый страшный приём {name} — {move}. Никому не советую под него попасть."
 
-#: kf_lib/minigames/_ring.py:20
+#: kf_lib/minigames/_ring.py:34
 msgid "normal"
 msgstr "обычная"
 
-#: kf_lib/fighting/fight/_base_fight.py:278
+#: kf_lib/fighting/fight/_base_fight.py:293
 msgid "Not a scratch"
 msgstr "Ни царапины"
 
@@ -2484,7 +2536,7 @@ msgstr "Того, кто рвётся вперёд, трудно отброси�
 msgid "Overhears a conversation."
 msgstr "Подслушивает разговор."
 
-#: kf_lib/actors/human_controlled_fighter.py:232
+#: kf_lib/actors/human_controlled_fighter.py:242
 msgid "P"
 msgstr "М"
 
@@ -2654,11 +2706,11 @@ msgstr "удары кулаком"
 msgid "Pursue the relationship?"
 msgstr "Развивать отношения?"
 
-#: kf_lib/actors/human_controlled_fighter.py:92 kf_lib/kung_fu/moves.py:93
+#: kf_lib/actors/human_controlled_fighter.py:102 kf_lib/kung_fu/moves.py:93
 msgid "Pwr"
 msgstr "Мощь"
 
-#: kf_lib/actors/human_controlled_fighter.py:97 kf_lib/kung_fu/moves.py:84
+#: kf_lib/actors/human_controlled_fighter.py:107 kf_lib/kung_fu/moves.py:84
 msgid "Qi"
 msgstr "Ци"
 
@@ -2674,7 +2726,7 @@ msgstr "ци при атаке"
 msgid "qi/atk"
 msgstr "ци/атака"
 
-#: kf_lib/actors/human_controlled_fighter.py:382
+#: kf_lib/actors/human_controlled_fighter.py:392
 msgid "QP"
 msgstr "Ци"
 
@@ -2686,11 +2738,11 @@ msgstr "начальное Ци"
 msgid "QP/turn"
 msgstr "Ци/ход"
 
-#: kf_lib/actors/human_controlled_fighter.py:158
+#: kf_lib/actors/human_controlled_fighter.py:168
 msgid "QP:{}"
 msgstr "Ци:{}"
 
-#: kf_lib/fighting/fight/_base_fight.py:276
+#: kf_lib/fighting/fight/_base_fight.py:291
 msgid "Quick victory"
 msgstr "Быстрая победа"
 
@@ -2807,7 +2859,7 @@ msgstr "Убежать ({})"
 msgid "Run! ({})"
 msgstr "Бежать! ({})"
 
-#: kf_lib/actors/human_controlled_fighter.py:236
+#: kf_lib/actors/human_controlled_fighter.py:246
 msgid "s"
 msgstr "В"
 
@@ -2823,11 +2875,11 @@ msgstr "Сохранить"
 msgid "Save and Quit"
 msgstr "Сохранить и выйти"
 
-#: kf_lib/fighting/fight/_base_fight.py:416
+#: kf_lib/fighting/fight/_base_fight.py:431
 msgid "Save slideshow"
 msgstr "Сохранить слайд-шоу"
 
-#: kf_lib/fighting/fight/_base_fight.py:468
+#: kf_lib/fighting/fight/_base_fight.py:483
 msgid "Saved successfully."
 msgstr "Сохранено успешно."
 
@@ -2948,7 +3000,7 @@ msgstr "болезнь"
 msgid "simply "
 msgstr "просто "
 
-#: kf_lib/fighting/fight/_base_fight.py:415
+#: kf_lib/fighting/fight/_base_fight.py:430
 msgid "Slideshow ({n})"
 msgstr "Слайд-шоу ({n})"
 
@@ -2972,11 +3024,11 @@ msgstr "Что-то об ошеломительной победе: {}."
 msgid "Something about {}'s humiliating defeat."
 msgstr "Что-то насчёт позорного поражения: {}."
 
-#: kf_lib/actors/human_controlled_fighter.py:376
+#: kf_lib/actors/human_controlled_fighter.py:386
 msgid "SP"
 msgstr "ВН"
 
-#: kf_lib/actors/human_controlled_fighter.py:157
+#: kf_lib/actors/human_controlled_fighter.py:167
 msgid "SP:{}"
 msgstr "ВН:{}"
 
@@ -2992,7 +3044,7 @@ msgstr "Спарринг даёт опыт, но не приносит трав�
 msgid "Spd"
 msgstr "Скр"
 
-#: kf_lib/actors/human_controlled_fighter.py:44 kf_lib/game/game_stats.py:103
+#: kf_lib/actors/human_controlled_fighter.py:45 kf_lib/game/game_stats.py:103
 msgid "Speed"
 msgstr "Скорость"
 
@@ -3020,7 +3072,7 @@ msgstr "супруг(а)"
 msgid "Spouse"
 msgstr "Супруг(а)"
 
-#: kf_lib/actors/human_controlled_fighter.py:95 kf_lib/kung_fu/moves.py:83
+#: kf_lib/actors/human_controlled_fighter.py:105 kf_lib/kung_fu/moves.py:83
 msgid "Sta"
 msgstr "Вын"
 
@@ -3040,7 +3092,7 @@ msgstr "Встань в защиту — и тебя вдвое труднее �
 msgid "State"
 msgstr "Состояние"
 
-#: kf_lib/fighting/fight/_base_fight.py:413
+#: kf_lib/fighting/fight/_base_fight.py:428
 msgid "Stats"
 msgstr "Статистика"
 
@@ -3060,7 +3112,7 @@ msgstr "История"
 msgid "Str"
 msgstr "Сил"
 
-#: kf_lib/actors/human_controlled_fighter.py:42 kf_lib/game/game_stats.py:101
+#: kf_lib/actors/human_controlled_fighter.py:43 kf_lib/game/game_stats.py:101
 msgid "Strength"
 msgstr "Сила"
 
@@ -3083,6 +3135,10 @@ msgstr "стоимость удара по времени"
 #: kf_lib/game/game_stats.py:110
 msgid "Strikes landed"
 msgstr "Удары в цель"
+
+#: kf_lib/minigames/_punching_bag.py:127
+msgid "Strikes landed: {landed} of {thrown}"
+msgstr "Попаданий: {landed} из {thrown}"
 
 #: kf_lib/game/game_stats.py:133
 msgid "Stud.tourn.won"
@@ -3222,7 +3278,7 @@ msgstr "Пьяница нападает на {}."
 msgid "The Elixir turns out to be a {item}."
 msgstr "Эликсир оказывается всего лишь: {item}."
 
-#: kf_lib/fighting/fight/_base_fight.py:493
+#: kf_lib/fighting/fight/_base_fight.py:508
 msgid "The fight lasted {t}"
 msgstr "Бой длился {t}"
 
@@ -3380,7 +3436,7 @@ msgstr "Вор: \"А сумеешь ли ты остановить пресло�
 msgid "This conversation changes {}'s life."
 msgstr "Этот разговор меняет жизнь {}."
 
-#: kf_lib/actors/human_controlled_fighter.py:314
+#: kf_lib/actors/human_controlled_fighter.py:324
 msgid "Through countless hours of training, {name} finally grasps the deepest secret of {style} — {tech}."
 msgstr "После бесчисленных часов тренировок {name} наконец постигает глубочайшую тайну стиля {style} — {tech}."
 
@@ -3388,15 +3444,23 @@ msgstr "После бесчисленных часов тренировок {nam
 msgid "Tie!"
 msgstr "Ничья!"
 
-#: kf_lib/actors/human_controlled_fighter.py:90
+#: kf_lib/actors/human_controlled_fighter.py:100
 msgid "Tier"
 msgstr "Ранг"
 
-#: kf_lib/actors/human_controlled_fighter.py:96 kf_lib/kung_fu/moves.py:84
+#: kf_lib/actors/human_controlled_fighter.py:106 kf_lib/kung_fu/moves.py:84
 msgid "Time"
 msgstr "Время"
 
-#: kf_lib/fighting/fight/_base_fight.py:414
+#: kf_lib/minigames/_punching_bag.py:115
+msgid "time left: {t}"
+msgstr "осталось: {t}"
+
+#: kf_lib/minigames/_punching_bag.py:125
+msgid "Time!"
+msgstr "Время!"
+
+#: kf_lib/fighting/fight/_base_fight.py:429
 msgid "Timeline"
 msgstr "Хронология"
 
@@ -3452,7 +3516,7 @@ msgstr "неблокируемая атака"
 msgid "Unblockable techniques give a chance that a strike cannot be blocked, only dodged."
 msgstr "Техники неблокируемого удара дают шанс, что удар нельзя будет заблокировать — только увернуться."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:418
+#: kf_lib/actors/fighter/_strike_mechanics.py:422
 msgid "UNBLOCKABLE!"
 msgstr "НЕБЛОКИРУЕМЫЙ!"
 
@@ -3472,7 +3536,7 @@ msgstr "Исп:еда,лек"
 msgid "Uses medicine to recover."
 msgstr "Использует лекарство, чтобы восстановиться."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:350
+#: kf_lib/actors/fighter/_strike_mechanics.py:354
 msgid "uses the environment!"
 msgstr "использует окружение!"
 
@@ -3532,11 +3596,11 @@ msgstr "эффективность оружия"
 msgid "weapons"
 msgstr "оружие"
 
-#: kf_lib/fighting/fight/_base_fight.py:325
+#: kf_lib/fighting/fight/_base_fight.py:340
 msgid "What a humiliating defeat! ({ratio})"
 msgstr "Какое позорное поражение! ({ratio})"
 
-#: kf_lib/fighting/fight/_base_fight.py:309
+#: kf_lib/fighting/fight/_base_fight.py:324
 msgid "What an astonishing victory! ({ratio})"
 msgstr "Какая поразительная победа! ({ratio})"
 
@@ -3604,7 +3668,7 @@ msgstr "Выигрывает {}."
 msgid "Wins,KOs"
 msgstr "Победы,нокауты"
 
-#: kf_lib/fighting/fight/_base_fight.py:355
+#: kf_lib/fighting/fight/_base_fight.py:370
 msgid "Wins."
 msgstr "Побеждает."
 
@@ -3751,6 +3815,10 @@ msgstr "{boss}: \"Не может быть... Они же должны были.
 msgid "{boss}: You..."
 msgstr "{boss}: Ты..."
 
+#: kf_lib/minigames/_punching_bag.py:152
+msgid "{dam} damage ({name}, {style})"
+msgstr "урон {dam} ({name}, {style})"
+
 #: kf_lib/actors/player/_base_player.py:1100
 msgid "{enemy} is no longer {name}' enemy."
 msgstr "{enemy} больше не враг для {name}."
@@ -3763,7 +3831,7 @@ msgstr "Теперь {name} и {enemy} — враги."
 msgid "{f_name} of {style}"
 msgstr "{f_name} из {style}"
 
-#: kf_lib/fighting/fight/_base_fight.py:455
+#: kf_lib/fighting/fight/_base_fight.py:470
 msgid "{group} win."
 msgstr "{group} побеждают."
 
@@ -3845,11 +3913,11 @@ msgstr "{master}: \"Ты так ничего и не понял, верно? В�
 msgid "{mates}, who were passing by, join the fight on {name}'s side."
 msgstr "{mates}, проходившие мимо, вступают в бой на стороне {name}."
 
-#: kf_lib/fighting/fight/_base_fight.py:490
+#: kf_lib/fighting/fight/_base_fight.py:505
 msgid "{min} min. {sec} sec."
 msgstr "{min} мин. {sec} сек."
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:368
+#: kf_lib/actors/fighter/_strike_mechanics.py:372
 msgid "{n1} {verb} {n2} while attacking"
 msgstr "{n1} {verb} {n2} в атаке"
 
@@ -3865,7 +3933,7 @@ msgstr "{n1}: {move} @ {n2}"
 msgid "{n1}{fury}: {move} @ {n2}"
 msgstr "{n1}{fury}: {move} @ {n2}"
 
-#: kf_lib/fighting/fight/_base_fight.py:209
+#: kf_lib/fighting/fight/_base_fight.py:220
 msgid "{name} ({style})"
 msgstr "{name} ({style})"
 
@@ -4090,11 +4158,11 @@ msgstr "{name} теперь номер {rank} в своей школе."
 msgid "{name} is nursing an injury. A good time to get ahead!"
 msgstr "{name} сейчас лечит травму. Самое время вырваться вперёд!"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:180
+#: kf_lib/actors/fighter/_strike_mechanics.py:182
 msgid "{name} is off-balance!"
 msgstr "{name} теряет равновесие!"
 
-#: kf_lib/actors/human_controlled_fighter.py:282
+#: kf_lib/actors/human_controlled_fighter.py:292
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have, so today I can trust you with the inner teaching of our school. The style the outside world knows as {public_style} has a true name, whispered only to the most trusted disciples: {style}! And with it comes the secret technique — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -4102,7 +4170,7 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты, поэтому сегодня я могу доверить тебе внутреннее учение нашей школы. У стиля, который внешний мир знает как {public_style}, есть истинное имя, которое шепотом передают лишь самым доверенным ученикам: {style}! А вместе с ним — секретная техника: {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
-#: kf_lib/actors/human_controlled_fighter.py:300
+#: kf_lib/actors/human_controlled_fighter.py:310
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have. It is time you learned the secret technique of {style} — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -4303,7 +4371,7 @@ msgstr[0] "{name} выигрывает {money} монету своей став�
 msgstr[1] "{name} выигрывает {money} монеты своей ставкой!"
 msgstr[2] "{name} выигрывает {money} монет своей ставкой!"
 
-#: kf_lib/fighting/fight/_base_fight.py:457
+#: kf_lib/fighting/fight/_base_fight.py:472
 msgid "{name} wins."
 msgstr "{name} побеждает."
 
@@ -4319,7 +4387,7 @@ msgstr "{name} {adv}уклоняется!"
 msgid "{name} {exp_msg}"
 msgstr "{name} {exp_msg}"
 
-#: kf_lib/actors/fighter/_fight_actions.py:43 kf_lib/actors/fighter/_fight_actions.py:476 kf_lib/actors/fighter/_fight_actions.py:492 kf_lib/actors/fighter/_fight_actions.py:507 kf_lib/actors/fighter/_strike_mechanics.py:133 kf_lib/actors/fighter/_strike_mechanics.py:348
+#: kf_lib/actors/fighter/_fight_actions.py:43 kf_lib/actors/fighter/_fight_actions.py:476 kf_lib/actors/fighter/_fight_actions.py:492 kf_lib/actors/fighter/_fight_actions.py:507 kf_lib/actors/fighter/_strike_mechanics.py:135 kf_lib/actors/fighter/_strike_mechanics.py:352
 msgid "{name} {msg}"
 msgstr "{name} {msg}"
 
@@ -4505,11 +4573,11 @@ msgstr "{name}: \"{sw}, ты согласишься связать со мной
 #~ msgid "{name}: *LEVEL UP*"
 #~ msgstr "{name}: *НОВЫЙ УРОВЕНЬ*"
 
-#: kf_lib/fighting/fight/_base_fight.py:514
+#: kf_lib/fighting/fight/_base_fight.py:529
 msgid "{name}: strikes {landed}/{thrown} landed ({accuracy}), damage dealt {dam}, criticals {crits}, epics {epics}, moves: {moves}"
 msgstr "{name}: удары {landed}/{thrown} попали ({accuracy}), нанесено урона {dam}, критических {crits}, эпичных {epics}, приёмы: {moves}"
 
-#: kf_lib/actors/human_controlled_fighter.py:261
+#: kf_lib/actors/human_controlled_fighter.py:271
 msgid "{name}: {banner}"
 msgstr "{name}: {banner}"
 
@@ -4520,7 +4588,7 @@ msgstr[0] "{name}: ставлю {bet} монету — победит {opponent}
 msgstr[1] "{name}: ставлю {bet} монеты — победит {opponent}!"
 msgstr[2] "{name}: ставлю {bet} монет — победит {opponent}!"
 
-#: kf_lib/fighting/fight/_base_fight.py:283
+#: kf_lib/fighting/fight/_base_fight.py:298
 msgid "{name}: {bonus}"
 msgstr "{name}: {bonus}"
 
@@ -4535,6 +4603,13 @@ msgstr "{name}: {react}"
 #: kf_lib/actors/player/_base_player.py:268
 msgid "{num} students join {name}'s school."
 msgstr "В школу {name} вступают новые ученики: {num}."
+
+#: kf_lib/minigames/_ring.py:42
+msgid "{n} fight won"
+msgid_plural "{n} fights won"
+msgstr[0] "{n} победа"
+msgstr[1] "{n} победы"
+msgstr[2] "{n} побед"
 
 #: kf_lib/actors/player/_base_player.py:219
 msgid "{obj} is now {name}' friend."
@@ -4720,7 +4795,7 @@ msgstr "{s1_name} и {s2_name} стоят перед {p_name}, сжимая ку
 msgid "{school} wins the All-Schools Tournament and is declared the Strongest School in {town}!"
 msgstr "{school} побеждает на Турнире всех школ и объявляется Сильнейшей Школой города {town}!"
 
-#: kf_lib/fighting/fight/_base_fight.py:492
+#: kf_lib/fighting/fight/_base_fight.py:507
 msgid "{sec} sec."
 msgstr "{sec} сек."
 
@@ -4779,6 +4854,10 @@ msgstr "{winner} побеждает в ученической дуэли; про
 #: kf_lib/happenings/story/_student_rivalry.py:62
 msgid "{winner} wins the duel. {loser} bows, gritting his teeth."
 msgstr "{winner} побеждает в поединке. {loser} кланяется, стиснув зубы."
+
+#: kf_lib/minigames/_ring.py:46
+msgid "{wins} ({name}, {style}, lv.{start} to lv.{level})"
+msgstr "{wins} ({name}, {style}, с ур.{start} до ур.{level})"
 
 #~ msgid "{wp_type} weapons"
 #~ msgstr "оружие ({wp_type})"
@@ -5029,6 +5108,6 @@ msgstr "{}: Участвовать?"
 msgid "{}: {}"
 msgstr "{}: {}"
 
-#: kf_lib/actors/fighter/_strike_mechanics.py:360
+#: kf_lib/actors/fighter/_strike_mechanics.py:364
 msgid "~*~*~EPIC!!!~*~*~"
 msgstr "~*~*~ЭПИЧНО!!!~*~*~"

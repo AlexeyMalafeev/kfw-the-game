@@ -89,7 +89,9 @@ class MinigameHost(ScriptedHost):
     def readKey(self):
         if self.pending is not None:
             keys, labels, weak = self.pending
-            for label in ("extreme", "yes"):
+            # the Punching Bag's "Another round?": one round is enough
+            another = "Another round?" in "".join(self.output)[-300:]
+            for label in ("extreme", "no" if another else "yes"):
                 if label in labels:
                     self.pending = None
                     return keys[labels.index(label)]
@@ -98,7 +100,7 @@ class MinigameHost(ScriptedHost):
 
 def check_minigames(home):
     played = 0
-    for name in ("chocolate", "ring"):
+    for name in ("chocolate", "ring", "bag"):
         host = MinigameHost()
         status = kfw_android.run(
             host,

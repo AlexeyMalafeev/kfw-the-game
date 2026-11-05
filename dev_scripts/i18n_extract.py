@@ -57,6 +57,8 @@ EXTRA_NAMES = {
     # Chocolate mini-game (kf_lib/minigames/_chocolate.py): hero, gang bases, techs
     'Zen', 'Teen Thug', 'Worker', 'Armed Worker', 'Butcher', 'Armed Butcher',
     'Tough Thug', 'Twitching Fighter', 'Swordsman', 'Mighty Elbows', 'Mighty Knees',
+    # Punching Bag mini-game (kf_lib/minigames/_punching_bag.py): the target
+    'Punching Bag',
 }
 
 

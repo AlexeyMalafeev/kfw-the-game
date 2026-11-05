@@ -65,9 +65,11 @@ locations, not files under `app/build/generated/`. No manual copy step is needed
 - **Continue** loads the newest valid save. **Load game** offers all valid saves, newest
   first. **Watch an AI game** runs four visible Smart AI players; their pauses use the same
   Continue button as human play.
-- **Mini-games** offers Chocolate (Zen's story in seven scenes) and RING (an endless arena
-  ladder; three lost fights end the run), the same games as `kfw.py --minigame`. They are
-  not saved: the run ends at the title, and leaving early says so. See `docs/minigames.md`.
+- **Mini-games** offers Chocolate (Zen's story in seven scenes), RING (an endless arena
+  ladder; three lost fights end the run) and the Punching Bag (one minute to deal as much
+  damage as you can), the same games as `kfw.py --minigame`. They are not saved: the run
+  ends at the title, and leaving early says so. RING and the Punching Bag keep records in
+  the save folder, which the load and export lists skip. See `docs/minigames.md`.
 - Game menus become touch buttons with their real labels. Scroll the bottom panel for
   more moves or actions. The optional Back button closes weak menus such as the post-fight
   menu.
@@ -171,13 +173,14 @@ cd ..
 ```
 
 The instrumentation suite executes localized resources, new game, interactive combat,
-save/load and a complete run of both mini-games in an isolated app-private HOME. The
+save/load and a complete run of all three mini-games in an isolated app-private HOME. The
 UIAutomator script drives the real native UI:
 new game, a key outside the menu, keyboard input, background/resume, rotation, a system
 font-size change, State/Save, title, Continue, a
 deterministic NormalFight (launched through the game's Debug Menu) with manual move
 selection, post-fight Back and another save; then a whole RING run from the Mini-games
-picker (extreme difficulty, auto fights) back to the title, and Chocolate left early through
+picker (extreme difficulty, auto fights) back to the title, one Punching Bag round (level-ups,
+the timed move menu, the score, "Another round?" no), and Chocolate left early through
 the ‹ button and its mini-game confirmation. Screenshots
 are written to the artifacts directory. Add `--reset` only on a disposable test device: it
 explicitly clears all KFW app data before the run.
