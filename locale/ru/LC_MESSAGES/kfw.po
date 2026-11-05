@@ -110,19 +110,19 @@ msgstr " (защищается в атаке)"
 msgid " (guarding while closing in)"
 msgstr " (сближается в защитной стойке)"
 
-#: kf_lib/minigames/_ring.py:29
+#: kf_lib/minigames/_ring.py:36
 msgid " ***Game over***"
 msgstr " ***Игра окончена***"
 
-#: kf_lib/minigames/_chocolate.py:174
+#: kf_lib/minigames/_chocolate.py:177
 msgid " ***The End***"
 msgstr " ***Конец***"
 
-#: kf_lib/minigames/_chocolate.py:167
+#: kf_lib/minigames/_chocolate.py:169
 msgid " ***Welcome to [bold]Chocolate[/bold]***"
 msgstr " ***Добро пожаловать в [bold]«Шоколад»[/bold]***"
 
-#: kf_lib/minigames/_ring.py:12
+#: kf_lib/minigames/_ring.py:16
 msgid " ***Welcome to [bold]RING[/bold]***"
 msgstr " ***Добро пожаловать на [bold]РИНГ[/bold]***"
 
@@ -177,7 +177,7 @@ msgstr " теряет равновесие!"
 msgid " qi-based {dmg} ({hp})"
 msgstr " {dmg} (от ци) ({hp})"
 
-#: kf_lib/minigames/_ring.py:26
+#: kf_lib/minigames/_ring.py:33
 msgid " Remaining attempts: {n}"
 msgstr " Осталось попыток: {n}"
 
@@ -205,15 +205,15 @@ msgstr " в ступоре!"
 msgid " What is the name of {}'s school? >"
 msgstr " Как называется школа {}? >"
 
-#: kf_lib/minigames/_ring.py:28
+#: kf_lib/minigames/_ring.py:35
 msgid " You have reached level {lv}."
 msgstr " Вы достигли уровня {lv}."
 
-#: kf_lib/minigames/_chocolate.py:184
+#: kf_lib/minigames/_chocolate.py:187
 msgid " Zen fought her way through without a single defeat!"
 msgstr " Зен пробилась до конца без единого поражения!"
 
-#: kf_lib/minigames/_chocolate.py:177
+#: kf_lib/minigames/_chocolate.py:180
 msgid " Zen fought her way through, losing {n} fight on the way."
 msgid_plural " Zen fought her way through, losing {n} fights on the way."
 msgstr[0] " Зен пробилась до конца, проиграв по пути {n} бой."
@@ -279,7 +279,7 @@ msgstr "({fact})"
 msgid "({} level)"
 msgstr "(ур.{})"
 
-#: kf_lib/actors/human_controlled_fighter.py:258 kf_lib/actors/player/_human_player.py:125
+#: kf_lib/actors/human_controlled_fighter.py:259
 msgid "*LEVEL UP*"
 msgstr "*НОВЫЙ УРОВЕНЬ*"
 
@@ -333,7 +333,7 @@ msgstr "[bold]Каждый сам за себя![/bold]"
 msgid "[bold]Group free for all![/bold]"
 msgstr "[bold]Групповая свалка![/bold]"
 
-#: kf_lib/actors/human_controlled_fighter.py:232
+#: kf_lib/actors/human_controlled_fighter.py:234
 msgid "A"
 msgstr "Т"
 
@@ -548,7 +548,7 @@ msgstr "молодая женщина"
 msgid "A.-S.tourn.won"
 msgstr "Побед в ТВШ"
 
-#: kf_lib/actors/human_controlled_fighter.py:91 kf_lib/kung_fu/moves.py:94
+#: kf_lib/actors/human_controlled_fighter.py:93 kf_lib/kung_fu/moves.py:94
 msgid "Acc"
 msgstr "Точн"
 
@@ -596,7 +596,7 @@ msgstr "Против многих каждый летящий в тебя уда
 msgid "Agi"
 msgstr "Лов"
 
-#: kf_lib/actors/human_controlled_fighter.py:41 kf_lib/game/game_stats.py:102
+#: kf_lib/actors/human_controlled_fighter.py:43 kf_lib/game/game_stats.py:102
 msgid "Agility"
 msgstr "Ловкость"
 
@@ -658,7 +658,7 @@ msgstr "С убылью выносливости падают атака, защ
 msgid "As {name} comes to, he realizes that {boss} and his men have disappeared. They took all the treasures, too. {name} is lucky to be alive..."
 msgstr "Придя в себя, {name} понимает, что {boss} и его люди исчезли. Они забрали и все сокровища. {name} повезло остаться в живых..."
 
-#: kf_lib/actors/human_controlled_fighter.py:179
+#: kf_lib/actors/human_controlled_fighter.py:181
 msgid "As {name} trains hard, delving deeper into the art of {style}, he discovers a way to improve one of the style's techniques..."
 msgstr "Усердно тренируясь и постигая всё более глубокие тайны стиля {style}, {name} открывает способ улучшить одну из техник стиля..."
 
@@ -846,7 +846,7 @@ msgstr "Дети"
 msgid "Children grow so fast — new clothes. (-{amount} coins)"
 msgstr "Дети так быстро растут — новая одежда. (-{amount} монет)"
 
-#: kf_lib/actors/human_controlled_fighter.py:120
+#: kf_lib/actors/human_controlled_fighter.py:122
 msgid "Choose a move to learn:"
 msgstr "Выберите приём для изучения:"
 
@@ -866,11 +866,11 @@ msgstr "Выберите стиль:"
 msgid "Choose a tech:"
 msgstr "Выберите технику:"
 
-#: kf_lib/actors/human_controlled_fighter.py:168 kf_lib/actors/human_controlled_fighter.py:189
+#: kf_lib/actors/human_controlled_fighter.py:170 kf_lib/actors/human_controlled_fighter.py:191
 msgid "Choose a technique to improve:"
 msgstr "Выберите технику для улучшения:"
 
-#: kf_lib/actors/human_controlled_fighter.py:128
+#: kf_lib/actors/human_controlled_fighter.py:130
 msgid "Choose a technique to learn:"
 msgstr "Выберите технику для изучения:"
 
@@ -878,11 +878,11 @@ msgstr "Выберите технику для изучения:"
 msgid "Choose an encounter"
 msgstr "Выберите событие"
 
-#: kf_lib/actors/human_controlled_fighter.py:161
+#: kf_lib/actors/human_controlled_fighter.py:163
 msgid "Choose target:"
 msgstr "Выберите цель:"
 
-#: kf_lib/minigames/_ring.py:17
+#: kf_lib/minigames/_ring.py:21
 msgid "Choose the difficulty:"
 msgstr "Выберите сложность:"
 
@@ -922,7 +922,7 @@ msgstr "эффективность ударов вблизи"
 msgid "closing in counts as Guard"
 msgstr "сближение в защитной стойке"
 
-#: kf_lib/actors/human_controlled_fighter.py:92
+#: kf_lib/actors/human_controlled_fighter.py:94
 msgid "Cmpl"
 msgstr "Слож"
 
@@ -1074,11 +1074,11 @@ msgstr "шанс обезоружить в защите"
 msgid "disarms"
 msgstr "обезоруживает"
 
-#: kf_lib/actors/human_controlled_fighter.py:89 kf_lib/kung_fu/moves.py:93 kf_lib/kung_fu/moves.py:96
+#: kf_lib/actors/human_controlled_fighter.py:91 kf_lib/kung_fu/moves.py:93 kf_lib/kung_fu/moves.py:96
 msgid "Dist"
 msgstr "Дист"
 
-#: kf_lib/actors/player/_human_player.py:180
+#: kf_lib/actors/player/_human_player.py:172
 msgid "Do not use items"
 msgstr "Не использовать предметы"
 
@@ -1170,7 +1170,7 @@ msgstr "Зарабатывает {} монет."
 msgid "easily"
 msgstr "легко "
 
-#: kf_lib/minigames/_ring.py:16
+#: kf_lib/minigames/_ring.py:20
 msgid "easy"
 msgstr "лёгкая"
 
@@ -1281,7 +1281,7 @@ msgstr "опыт:{exp}/{next_lv} деньги:{money}"
 msgid "Experience from a win grows faster than the opponent's strength relative to yours."
 msgstr "Опыт за победу растёт быстрее, чем сила противника по сравнению с твоей."
 
-#: kf_lib/minigames/_ring.py:16
+#: kf_lib/minigames/_ring.py:20
 msgid "extreme"
 msgstr "экстремальная"
 
@@ -1433,7 +1433,7 @@ msgstr "Отныне стиль кунг-фу {name} будет известен
 msgid "Full co-op"
 msgstr "Полный кооператив"
 
-#: kf_lib/actors/human_controlled_fighter.py:96
+#: kf_lib/actors/human_controlled_fighter.py:98
 msgid "Func"
 msgstr "Функ"
 
@@ -1649,7 +1649,7 @@ msgstr "защита во время атаки"
 msgid "hands-down "
 msgstr "в чистую "
 
-#: kf_lib/minigames/_ring.py:16
+#: kf_lib/minigames/_ring.py:20
 msgid "hard"
 msgstr "трудная"
 
@@ -1712,7 +1712,7 @@ msgstr "эффективность ударов головой"
 msgid "headbutts"
 msgstr "удары головой"
 
-#: kf_lib/actors/human_controlled_fighter.py:43 kf_lib/game/game_stats.py:104
+#: kf_lib/actors/human_controlled_fighter.py:45 kf_lib/game/game_stats.py:104
 msgid "Health"
 msgstr "Здоровье"
 
@@ -1802,7 +1802,7 @@ msgstr[2] "Сколько: {item}?"
 msgid "How much money?"
 msgstr "Сколько денег?"
 
-#: kf_lib/actors/player/_human_player.py:144
+#: kf_lib/actors/player/_human_player.py:136
 msgid "How much to bet?"
 msgstr "Сколько поставить?"
 
@@ -1810,7 +1810,7 @@ msgstr "Сколько поставить?"
 msgid "However, the {item} turns out to be of very shoddy quality. It breaks immediately as {name} tries a few of his moves on it. Too bad the craftsman has vanished in thin air!"
 msgstr "Однако {item} оказывается очень низкого качества — вещь ломается, едва {name} успевает опробовать на ней пару своих приёмов. Досадно, что ремесленник словно испарился!"
 
-#: kf_lib/actors/human_controlled_fighter.py:360
+#: kf_lib/actors/human_controlled_fighter.py:368
 msgid "HP"
 msgstr "ОЗ"
 
@@ -1822,7 +1822,7 @@ msgstr "восстановление ОЗ"
 msgid "HP gain per turn"
 msgstr "ОЗ за ход"
 
-#: kf_lib/actors/human_controlled_fighter.py:154
+#: kf_lib/actors/human_controlled_fighter.py:156
 msgid "HP:{}"
 msgstr "ОЗ:{}"
 
@@ -1842,7 +1842,7 @@ msgstr "невозможно"
 msgid "improv.weapons"
 msgstr "подруч.оружие"
 
-#: kf_lib/actors/human_controlled_fighter.py:46
+#: kf_lib/actors/human_controlled_fighter.py:48
 msgid "Improve:"
 msgstr "Улучшить:"
 
@@ -2088,7 +2088,7 @@ msgstr "Изучить приём"
 msgid "Learn Tech"
 msgstr "Изучить технику"
 
-#: kf_lib/actors/human_controlled_fighter.py:314
+#: kf_lib/actors/human_controlled_fighter.py:322
 msgid "Learns the secret technique of {style}."
 msgstr "Изучает секретную технику: {style}."
 
@@ -2172,7 +2172,7 @@ msgstr "низкий риск"
 msgid "LUCKY!"
 msgstr "УДАЧА!"
 
-#: kf_lib/actors/fighter/__init__.py:103 kf_lib/actors/human_controlled_fighter.py:153
+#: kf_lib/actors/fighter/__init__.py:103 kf_lib/actors/human_controlled_fighter.py:155
 msgid "lv.{}"
 msgstr "ур.{}"
 
@@ -2304,7 +2304,7 @@ msgstr "Деньги"
 msgid "Money earned"
 msgstr "Заработано"
 
-#: kf_lib/actors/human_controlled_fighter.py:87
+#: kf_lib/actors/human_controlled_fighter.py:89
 msgid "Move"
 msgstr "Приём"
 
@@ -2344,9 +2344,13 @@ msgstr "ИМЯ"
 msgid "Name"
 msgstr "Имя"
 
+#: kf_lib/actors/fighter_factory.py:106
+msgid "Name:"
+msgstr "Имя:"
+
 #: kf_lib/actors/fighter_factory.py:109
-msgid "Name: "
-msgstr "Имя: "
+#~ msgid "Name: "
+#~ msgstr "Имя: "
 
 #: kf_lib/ui/_menu.py:46
 msgid "Next page"
@@ -2388,7 +2392,7 @@ msgstr "Среди молодых бойцов в городе нет никог
 msgid "Nobody wants to be on the receiving end of {name}'s {move}."
 msgstr "Самый страшный приём {name} — {move}. Никому не советую под него попасть."
 
-#: kf_lib/minigames/_ring.py:16
+#: kf_lib/minigames/_ring.py:20
 msgid "normal"
 msgstr "обычная"
 
@@ -2476,7 +2480,7 @@ msgstr "Того, кто рвётся вперёд, трудно отброси�
 msgid "Overhears a conversation."
 msgstr "Подслушивает разговор."
 
-#: kf_lib/actors/human_controlled_fighter.py:230
+#: kf_lib/actors/human_controlled_fighter.py:232
 msgid "P"
 msgstr "М"
 
@@ -2492,7 +2496,7 @@ msgstr "ладонь"
 msgid "palm strike efficiency"
 msgstr "эффективность ударов ладонью"
 
-#: kf_lib/actors/player/_human_player.py:163 kf_lib/happenings/encounters/_gambling.py:78
+#: kf_lib/actors/player/_human_player.py:155 kf_lib/happenings/encounters/_gambling.py:78
 msgid "Paper"
 msgstr "Бумага"
 
@@ -2646,11 +2650,11 @@ msgstr "удары кулаком"
 msgid "Pursue the relationship?"
 msgstr "Развивать отношения?"
 
-#: kf_lib/actors/human_controlled_fighter.py:90 kf_lib/kung_fu/moves.py:93
+#: kf_lib/actors/human_controlled_fighter.py:92 kf_lib/kung_fu/moves.py:93
 msgid "Pwr"
 msgstr "Мощь"
 
-#: kf_lib/actors/human_controlled_fighter.py:95 kf_lib/kung_fu/moves.py:84
+#: kf_lib/actors/human_controlled_fighter.py:97 kf_lib/kung_fu/moves.py:84
 msgid "Qi"
 msgstr "Ци"
 
@@ -2666,7 +2670,7 @@ msgstr "ци при атаке"
 msgid "qi/atk"
 msgstr "ци/атака"
 
-#: kf_lib/actors/human_controlled_fighter.py:372
+#: kf_lib/actors/human_controlled_fighter.py:380
 msgid "QP"
 msgstr "Ци"
 
@@ -2678,7 +2682,7 @@ msgstr "начальное Ци"
 msgid "QP/turn"
 msgstr "Ци/ход"
 
-#: kf_lib/actors/human_controlled_fighter.py:156
+#: kf_lib/actors/human_controlled_fighter.py:158
 msgid "QP:{}"
 msgstr "Ци:{}"
 
@@ -2762,7 +2766,7 @@ msgstr "Ограбл.,кражи"
 msgid "Robber: \"{}\""
 msgstr "Грабитель: \"{}\""
 
-#: kf_lib/actors/player/_human_player.py:163 kf_lib/happenings/encounters/_gambling.py:78
+#: kf_lib/actors/player/_human_player.py:155 kf_lib/happenings/encounters/_gambling.py:78
 msgid "Rock"
 msgstr "Камень"
 
@@ -2799,7 +2803,7 @@ msgstr "Убежать ({})"
 msgid "Run! ({})"
 msgstr "Бежать! ({})"
 
-#: kf_lib/actors/human_controlled_fighter.py:234
+#: kf_lib/actors/human_controlled_fighter.py:236
 msgid "s"
 msgstr "В"
 
@@ -2851,7 +2855,7 @@ msgstr "Сцена 6 - Катана"
 msgid "Scene 7 - Anger"
 msgstr "Сцена 7 - Гнев"
 
-#: kf_lib/actors/player/_human_player.py:163 kf_lib/happenings/encounters/_gambling.py:78
+#: kf_lib/actors/player/_human_player.py:155 kf_lib/happenings/encounters/_gambling.py:78
 msgid "Scissors"
 msgstr "Ножницы"
 
@@ -2964,11 +2968,11 @@ msgstr "Что-то об ошеломительной победе: {}."
 msgid "Something about {}'s humiliating defeat."
 msgstr "Что-то насчёт позорного поражения: {}."
 
-#: kf_lib/actors/human_controlled_fighter.py:366
+#: kf_lib/actors/human_controlled_fighter.py:374
 msgid "SP"
 msgstr "ВН"
 
-#: kf_lib/actors/human_controlled_fighter.py:155
+#: kf_lib/actors/human_controlled_fighter.py:157
 msgid "SP:{}"
 msgstr "ВН:{}"
 
@@ -2984,7 +2988,7 @@ msgstr "Спарринг даёт опыт, но не приносит трав�
 msgid "Spd"
 msgstr "Скр"
 
-#: kf_lib/actors/human_controlled_fighter.py:42 kf_lib/game/game_stats.py:103
+#: kf_lib/actors/human_controlled_fighter.py:44 kf_lib/game/game_stats.py:103
 msgid "Speed"
 msgstr "Скорость"
 
@@ -3012,7 +3016,7 @@ msgstr "супруг(а)"
 msgid "Spouse"
 msgstr "Супруг(а)"
 
-#: kf_lib/actors/human_controlled_fighter.py:93 kf_lib/kung_fu/moves.py:83
+#: kf_lib/actors/human_controlled_fighter.py:95 kf_lib/kung_fu/moves.py:83
 msgid "Sta"
 msgstr "Вын"
 
@@ -3052,7 +3056,7 @@ msgstr "История"
 msgid "Str"
 msgstr "Сил"
 
-#: kf_lib/actors/human_controlled_fighter.py:40 kf_lib/game/game_stats.py:101
+#: kf_lib/actors/human_controlled_fighter.py:42 kf_lib/game/game_stats.py:101
 msgid "Strength"
 msgstr "Сила"
 
@@ -3372,7 +3376,7 @@ msgstr "Вор: \"А сумеешь ли ты остановить пресло�
 msgid "This conversation changes {}'s life."
 msgstr "Этот разговор меняет жизнь {}."
 
-#: kf_lib/actors/human_controlled_fighter.py:304
+#: kf_lib/actors/human_controlled_fighter.py:312
 msgid "Through countless hours of training, {name} finally grasps the deepest secret of {style} — {tech}."
 msgstr "После бесчисленных часов тренировок {name} наконец постигает глубочайшую тайну стиля {style} — {tech}."
 
@@ -3380,11 +3384,11 @@ msgstr "После бесчисленных часов тренировок {nam
 msgid "Tie!"
 msgstr "Ничья!"
 
-#: kf_lib/actors/human_controlled_fighter.py:88
+#: kf_lib/actors/human_controlled_fighter.py:90
 msgid "Tier"
 msgstr "Ранг"
 
-#: kf_lib/actors/human_controlled_fighter.py:94 kf_lib/kung_fu/moves.py:84
+#: kf_lib/actors/human_controlled_fighter.py:96 kf_lib/kung_fu/moves.py:84
 msgid "Time"
 msgstr "Время"
 
@@ -3424,7 +3428,7 @@ msgstr "Обменивает {item} на {reward}."
 msgid "traits: {}"
 msgstr "черты: {}"
 
-#: kf_lib/actors/player/_human_player.py:173
+#: kf_lib/actors/player/_human_player.py:165
 msgid "Treat the wise man to lunch and talk to him?"
 msgstr "Угостить мудреца обедом и поговорить с ним?"
 
@@ -3452,7 +3456,7 @@ msgstr "НЕБЛОКИРУЕМЫЙ!"
 msgid "undoubtedly "
 msgstr "несомненно "
 
-#: kf_lib/actors/player/_human_player.py:195
+#: kf_lib/actors/player/_human_player.py:187
 msgid "Use the {} medicine?"
 msgstr "Использовать лекарство: {}?"
 
@@ -3556,7 +3560,7 @@ msgstr "Какой предмет?"
 msgid "While walking around town, {p_name} bumps into {who} — quite literally. After a moment of confusion, they get to talking. What a charming person! Turns out, {name} is also a martial artist."
 msgstr "Гуляя по городу, {p_name} буквально сносит с ног прохожего ({who}). Минутное замешательство — и они уже разговаривают. Какой обаятельный человек! Оказывается, {name} тоже занимается боевыми искусствами."
 
-#: kf_lib/actors/player/_human_player.py:140
+#: kf_lib/actors/player/_human_player.py:132
 msgid "Who wins?"
 msgstr "Кто победит?"
 
@@ -3652,7 +3656,7 @@ msgstr ""
 msgid "Your school will teach {}."
 msgstr "В вашей школе будут учить стилю: {}."
 
-#: kf_lib/minigames/_chocolate.py:150
+#: kf_lib/minigames/_chocolate.py:151
 msgid "Zen picks up a {weapon}."
 msgstr "Зен подбирает оружие: {weapon}."
 
@@ -3763,7 +3767,7 @@ msgstr "{group} побеждают."
 msgid "{helper} joins the fight on {name}'s side."
 msgstr "{helper} вступает в бой на стороне {name}."
 
-#: kf_lib/actors/player/_human_player.py:183
+#: kf_lib/actors/player/_human_player.py:175
 msgid "{item} ({descr}) ({count})"
 msgstr "{item} ({descr}) ({count})"
 
@@ -4086,7 +4090,7 @@ msgstr "{name} сейчас лечит травму. Самое время вы�
 msgid "{name} is off-balance!"
 msgstr "{name} теряет равновесие!"
 
-#: kf_lib/actors/human_controlled_fighter.py:272
+#: kf_lib/actors/human_controlled_fighter.py:280
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have, so today I can trust you with the inner teaching of our school. The style the outside world knows as {public_style} has a true name, whispered only to the most trusted disciples: {style}! And with it comes the secret technique — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -4094,7 +4098,7 @@ msgstr ""
 "{name} тренируется во дворе школы, когда {master} зовёт в главный зал.\n"
 "{master}: \"{name}, ты был очень прилежен. Немногие ученики заходят так далеко, как ты, поэтому сегодня я могу доверить тебе внутреннее учение нашей школы. У стиля, который внешний мир знает как {public_style}, есть истинное имя, которое шепотом передают лишь самым доверенным ученикам: {style}! А вместе с ним — секретная техника: {tech}. Береги это знание и не говори о нём никому за этими стенами.\""
 
-#: kf_lib/actors/human_controlled_fighter.py:290
+#: kf_lib/actors/human_controlled_fighter.py:298
 msgid ""
 "{name} is practicing in the school's courtyard when {master} calls him to the main hall.\n"
 "{master}: \"{name}, you have been most diligent. Few students go as far as you have. It is time you learned the secret technique of {style} — {tech}. Guard this knowledge, and never speak of it outside these walls.\""
@@ -4494,14 +4498,14 @@ msgid "{name}: \"{sw}, will you marry me?\""
 msgstr "{name}: \"{sw}, ты согласишься связать со мной судьбу?\""
 
 #: kf_lib/actors/human_controlled_fighter.py:256
-msgid "{name}: *LEVEL UP*"
-msgstr "{name}: *НОВЫЙ УРОВЕНЬ*"
+#~ msgid "{name}: *LEVEL UP*"
+#~ msgstr "{name}: *НОВЫЙ УРОВЕНЬ*"
 
 #: kf_lib/fighting/fight/_base_fight.py:514
 msgid "{name}: strikes {landed}/{thrown} landed ({accuracy}), damage dealt {dam}, criticals {crits}, epics {epics}, moves: {moves}"
 msgstr "{name}: удары {landed}/{thrown} попали ({accuracy}), нанесено урона {dam}, критических {crits}, эпичных {epics}, приёмы: {moves}"
 
-#: kf_lib/actors/player/_human_player.py:127
+#: kf_lib/actors/human_controlled_fighter.py:260
 msgid "{name}: {banner}"
 msgstr "{name}: {banner}"
 
@@ -4775,7 +4779,7 @@ msgstr "{winner} побеждает в поединке. {loser} кланяет�
 #~ msgid "{wp_type} weapons"
 #~ msgstr "оружие ({wp_type})"
 
-#: kf_lib/actors/player/_human_player.py:190
+#: kf_lib/actors/player/_human_player.py:182
 msgid "{} - use an item?"
 msgstr "{} - использовать предмет?"
 
@@ -5013,7 +5017,7 @@ msgstr "{}: провести все ваши бои на этом турнире
 msgid "{}: Bet on the tournament?"
 msgstr "{}: Сделать ставку на турнир?"
 
-#: kf_lib/actors/player/_human_player.py:176
+#: kf_lib/actors/player/_human_player.py:168
 msgid "{}: Participate?"
 msgstr "{}: Участвовать?"
 

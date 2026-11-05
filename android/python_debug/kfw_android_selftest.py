@@ -79,6 +79,41 @@ class ScriptedHost:
         self.finished_states.append(status)
 
 
+class MinigameHost(ScriptedHost):
+    """Auto-fights every bout and takes RING's hardest difficulty."""
+
+    def __init__(self):
+        super().__init__()
+        self.line_answers = ["Device Tester", "1"]  # RING's name and level
+
+    def readKey(self):
+        if self.pending is not None:
+            keys, labels, weak = self.pending
+            for label in ("extreme", "yes"):
+                if label in labels:
+                    self.pending = None
+                    return keys[labels.index(label)]
+        return super().readKey()
+
+
+def check_minigames(home):
+    played = 0
+    for name in ("chocolate", "ring"):
+        host = MinigameHost()
+        status = kfw_android.run(
+            host,
+            mode="minigame",
+            language="en",
+            home=home,
+            resource_root=kfw_android.default_resource_root(),
+            minigame=name,
+        )
+        assert status == "finished", (name, status)
+        assert host.finished_states == ["finished"], (name, host.finished_states)
+        played += 1
+    return played
+
+
 def check_russian_resources(home):
     old_cwd = Path.cwd()
     old_home = os.environ.get("HOME")
@@ -172,11 +207,14 @@ def run_suite(files_directory):
     fighters = check_save_and_load(home)
     random.seed(4)
     fight_menus = check_interactive_fight(home)
+    random.seed(4)
+    minigames = check_minigames(home)
     return json.dumps(
         {
             "status": "passed",
             "fighters": fighters,
             "fight_menus": fight_menus,
+            "minigames": minigames,
             "russian": True,
         }
     )

@@ -159,3 +159,85 @@ def test_android_new_game_restores_style_defaults():
     finally:
         styles.default_styles = previous
         kfw_android._DEFAULT_STYLES = previous_cache
+
+
+class MinigameHost(FakeHost):
+    """Auto-fights every bout and takes RING's hardest difficulty, so a run
+    ends after a few fights."""
+
+    def __init__(self):
+        super().__init__()
+        self.line_answers = ["Android Tester", "1"]  # RING's name and level
+        self.menus = []
+
+    def presentMenu(self, keys, labels, weak):
+        super().presentMenu(keys, labels, weak)
+        self.menus.append(self.pending[1])
+
+    def readKey(self):
+        if self.pending is not None:
+            keys, labels, weak = self.pending
+            for label in ("extreme", "yes"):
+                if label in labels:
+                    self.pending = None
+                    return keys[labels.index(label)]
+        return super().readKey()
+
+
+def _run_minigame(tmp_path, name):
+    host = MinigameHost()
+    old_cwd = Path.cwd()
+    os.chdir(tmp_path)
+    try:
+        status = kfw_android.run(
+            host,
+            mode="minigame",
+            language="en",
+            home=tmp_path / "android-home",
+            resource_root=REPO_ROOT,
+            minigame=name,
+        )
+    finally:
+        os.chdir(old_cwd)
+    return status, host
+
+
+def test_android_runtime_plays_ring_with_the_default_styles(tmp_path):
+    from kf_lib.kung_fu import style_gen, styles
+
+    previous = list(styles.default_styles)
+    kfw_android._reset_default_styles()  # snapshot the pristine list first
+    # a generated-style game earlier in the same app process replaced the list
+    styles.default_styles = [style_gen.get_new_randomly_generated_style()]
+    random.seed(1)
+    try:
+        status, host = _run_minigame(tmp_path, "ring")
+    finally:
+        styles.default_styles = previous
+
+    assert status == "finished"
+    assert host.finished_states == ["finished"]
+    assert host.tunes[0] == "02_choosing_a_style"
+    style_menu = next(m for m in host.menus if any("Bagua Zhang" in x for x in m))
+    assert len(style_menu) > 2
+    transcript = "".join(host.output)
+    assert transcript.count("Remaining attempts") == 3
+    assert "\x1b[1m ***Game over***" in transcript  # colors reach the Android console
+
+
+def test_android_runtime_plays_chocolate(tmp_path):
+    random.seed(1)
+    status, host = _run_minigame(tmp_path, "chocolate")
+
+    assert status == "finished"
+    assert host.finished_states == ["finished"]
+    assert host.tunes[0] == "16_strange_dreams"
+    assert "22_a_legend_is_born" in host.tunes
+    assert "The End" in "".join(host.output)
+
+
+def test_android_runtime_rejects_an_unknown_minigame(tmp_path):
+    status, host = _run_minigame(tmp_path, "pong")
+
+    assert status == "error"
+    assert host.finished_states == ["error"]

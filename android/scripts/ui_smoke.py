@@ -149,6 +149,82 @@ class Device:
             self.shell("input", "text", escaped)
         self.click_id("send_button")
 
+    def wait_text(self, text, prefix=False, timeout=60):
+        """Any view showing `text`, clickable or not (dialog items and messages)."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            nodes = list(self.nodes())
+            self.check_error(nodes)
+            found = self.find(nodes, text=text, prefix=prefix)
+            if found:
+                return found[0]
+            time.sleep(0.4)
+        raise TimeoutError(f"Text not found: {text!r}, prefix={prefix}")
+
+    def tap_text(self, text, prefix=False, timeout=60):
+        node = self.wait_text(text, prefix, timeout)
+        print(f"Tap: {text}", flush=True)
+        self.click(node)
+
+    def play_ring(self):
+        """A whole RING run on extreme, auto-fought, until it returns to the title."""
+        self.click_id("minigames")
+        self.tap_text("RING", prefix=True)
+        self.click_id("continue_button")
+        self.choose("extreme")
+        self.enter("Smoke Tester")
+        self.choose_first()
+        self.enter("1")
+        fights = 0
+        for _ in range(400):
+            nodes = list(self.nodes())
+            self.check_error(nodes)
+            if self.find(nodes, resource_id="new_game"):
+                return fights
+            if self.find(nodes, resource_id="line_input"):
+                raise AssertionError("RING asked for text after character creation")
+            if self.find(nodes, resource_id="continue_button"):
+                self.click_id("continue_button")
+                continue
+            yes = [
+                n for n in self.find(nodes, desc="yes") if self.visible_choice(n, nodes)
+            ]
+            if yes:
+                self.choose("yes")  # Auto fight? (RING's only yes/no question)
+                continue
+            if self.find(nodes, desc="Stats") or self.find(nodes, desc="Timeline"):
+                fights += 1
+                if fights == 1:
+                    self.capture("ring-after-fight")
+                self.click_id("dismiss_menu")
+                continue
+            if self.find(nodes, resource_id="input_container"):
+                choices = [
+                    n for n in self.find(nodes, text="1. ", prefix=True)
+                    if self.visible_choice(n, nodes)
+                ]
+                if choices:
+                    self.click(choices[0])
+                    continue
+            time.sleep(0.35)
+        raise TimeoutError("RING did not end in 400 input steps")
+
+    def leave_chocolate(self):
+        """Start Chocolate, then leave it from the toolbar's title button."""
+        self.click_id("minigames")
+        self.tap_text("Chocolate", prefix=True)
+        self.click_id("continue_button")  # the welcome screen
+        self.wait(resource_id="continue_button")  # scene 1 teaches its techniques
+        self.capture("chocolate-scene-1")
+        # a toolbar button, outside the answer panel that wait() looks in
+        self.click(self.find(list(self.nodes()), resource_id="home_button")[0])
+        # the mini-game warning, not the main game's "since your last save" one
+        self.wait_text("Return to the title screen? This mini-game", prefix=True)
+        self.capture("chocolate-leave")
+        # the positive button ("Leave without saving"; themes may capitalize it)
+        self.click(self.find(list(self.nodes()), resource_id="button1")[0])
+        self.wait_main()
+
     def check_error(self, nodes):
         errors = self.find(nodes, text="The game stopped unexpectedly")
         if errors:
@@ -333,7 +409,15 @@ def run(args):
         raise AssertionError("No fight move menus were exercised")
     device.wait_main()
     device.capture("final-title")
-    print(f"UI smoke passed; fight menus exercised: {move_menus}")
+
+    ring_fights = device.play_ring()
+    if not ring_fights:
+        raise AssertionError("RING ended without a fight")
+    device.leave_chocolate()
+    print(
+        f"UI smoke passed; fight menus exercised: {move_menus}; "
+        f"RING fights: {ring_fights}"
+    )
 
 
 def main():

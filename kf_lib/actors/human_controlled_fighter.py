@@ -8,9 +8,11 @@ from kf_lib.ui import (
     magenta,
     menu,
     pak,
+    play_sound,
     pretty_table,
     red,
     render,
+    style,
     visible_len,
     yellow,
 )
@@ -252,10 +254,18 @@ class HumanControlledFighter(Fighter):
                 n += 1
         return yellow('*' * n) if n else ''
 
-    def level_up(self, times=1):
-        self.msg(_('{name}: *LEVEL UP*').format(name=tr_fighter_name(self.name)))
+    def announce_level_up(self):
+        """The level-up banner and sound, before the level-up choices."""
+        banner = style(_('*LEVEL UP*'), 'bold green')
+        self.msg(
+            _('{name}: {banner}').format(name=tr_fighter_name(self.name), banner=banner)
+        )
         self.cls()
-        self.show(_('*LEVEL UP*'))
+        play_sound('level_up')
+        self.show(banner)
+
+    def level_up(self, times=1):
+        self.announce_level_up()
         Fighter.level_up(self, times)
 
     def learn_secret_style_tech(self, tech):

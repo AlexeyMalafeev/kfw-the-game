@@ -28,6 +28,11 @@ All notable changes to KFW are documented here. Format loosely follows
   screens, colors and `--lang ru`
 - **RING runs from kfw.py too**: `python kfw.py --minigame ring`; the
   `minigames/` folder and its standalone scripts are gone
+- **Mini-games on Android**: the title screen's new Mini-games button plays
+  Chocolate and RING with the usual touch menus, colors and Russian
+  translation. They get their own music too: RING's character creation plays
+  the new-game tune, Chocolate's scene cards the story tune and its ending
+  the victory tune. Mini-games are not saved; leaving one early says so
 
 ### Changed
 - **Basic strikes are nobody's signature move**: Punch, Kick, Weak Short
@@ -42,6 +47,14 @@ All notable changes to KFW are documented here. Format loosely follows
   schoolmates and improvised weapons still stay out of it
 
 ### Fixed
+- **RING no longer freezes at high levels**: opponents were capped at level
+  20, so from about level 40 (35 on extreme) no group of opponents could
+  match the player and the game hung while looking for one. Opponents now go
+  up to 5 levels above the player, and the search always ends
+- **RING looks like the main game**: the level-up banner is bold green (with
+  its sound on Android), the end screen is colored, style names are
+  translated under `--lang ru`, the style menu hides each style's secret
+  technique as `???` like the main game's, and an empty name is asked again
 - **Russian names ending in "Strikes" or "Forms" agree in number**: twelve
   move and tech names paired a singular adjective with a plural noun
   ("Летающий удары"); they now read "Летающие удары", "Причудливые формы"

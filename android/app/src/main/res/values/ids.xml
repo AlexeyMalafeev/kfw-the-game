@@ -6,6 +6,7 @@
     <item name="continue_game" type="id" />
     <item name="load_game" type="id" />
     <item name="watch_ai" type="id" />
+    <item name="minigames" type="id" />
     <item name="language_button" type="id" />
     <item name="import_save" type="id" />
     <item name="export_save" type="id" />

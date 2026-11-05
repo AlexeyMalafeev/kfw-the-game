@@ -11,7 +11,7 @@ from kf_lib.i18n import _, ngettext
 from kf_lib.kung_fu import boosts as b
 from kf_lib.kung_fu import styles, techniques
 from kf_lib.kung_fu.techniques import Tech
-from kf_lib.ui import cls, pak, rprint
+from kf_lib.ui import MUSIC, cls, pak, play_music, rprint
 
 
 ZEN_LEVEL = 12
@@ -136,6 +136,7 @@ def new_zen():
 def play_scene(zen, scene):
     """Teach the scene's techs and moves, then fight until every fight is won.
     Return the number of lost fights."""
+    play_music(MUSIC['story'])
     zen.cls()
     zen.show(f'[bold]{scene.title}[/bold]\n')
     zen.learn_tech(*scene.techs)
@@ -163,6 +164,7 @@ def play_scene(zen, scene):
 
 
 def play_chocolate():
+    play_music(MUSIC['story'])
     cls()
     rprint(_(' ***Welcome to [bold]Chocolate[/bold]***'))
     pak()
@@ -170,10 +172,11 @@ def play_chocolate():
     defeats = 0
     for scene in get_scenes():
         defeats += play_scene(zen, scene)
+    play_music(MUSIC['game_won'])
     cls()
     rprint(_(' ***The End***'))
     if defeats:
-        print(
+        rprint(
             ngettext(
                 ' Zen fought her way through, losing {n} fight on the way.',
                 ' Zen fought her way through, losing {n} fights on the way.',
@@ -181,5 +184,5 @@ def play_chocolate():
             ).format(n=defeats)
         )
     else:
-        print(_(' Zen fought her way through without a single defeat!'))
+        rprint(_(' Zen fought her way through without a single defeat!'))
     pak()

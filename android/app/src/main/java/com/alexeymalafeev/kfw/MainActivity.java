@@ -28,6 +28,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chaquo.python.Kwarg;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 
@@ -46,6 +47,8 @@ public final class MainActivity extends Activity {
     private static final String TEXT_SIZE = "text_size";
     private static final int REQUEST_IMPORT = 4101;
     private static final int REQUEST_EXPORT = 4102;
+    // keys of kf_lib.minigames.MINIGAMES, in the order the picker lists them
+    private static final String[] MINIGAMES = {"chocolate", "ring"};
 
     private SharedPreferences preferences;
     private SaveRepository saves;
@@ -59,6 +62,7 @@ public final class MainActivity extends Activity {
     private EditText lineInput;
     private View inputPanel;
     private boolean mainVisible;
+    private boolean playingMinigame;
     private String pendingExport;
     private float textSize;
 
@@ -149,6 +153,8 @@ public final class MainActivity extends Activity {
         content.addView(loadButton);
         content.addView(menuButton(R.id.watch_ai, R.string.watch_ai,
                 () -> startGame("ai", null)));
+        content.addView(menuButton(R.id.minigames, R.string.minigames,
+                this::showMinigameDialog));
         content.addView(menuButton(R.id.language_button, R.string.language,
                 this::showLanguageDialog));
         content.addView(menuButton(R.id.import_save, R.string.import_save, this::launchImport));
@@ -176,9 +182,15 @@ public final class MainActivity extends Activity {
     }
 
     private void startGame(String mode, String saveName) {
+        startGame(mode, saveName, null);
+    }
+
+    /** minigame: a key of MINIGAMES for mode "minigame", otherwise null. */
+    private void startGame(String mode, String saveName, String minigame) {
         Thread previous = gameThread;
         stopGameThread();
         mainVisible = false;
+        playingMinigame = minigame != null;
         buildGameView();
         GameHost host = new GameHost(this);
         currentHost = host;
@@ -192,7 +204,12 @@ public final class MainActivity extends Activity {
                     }
                 }
                 PyObject module = Python.getInstance().getModule("kfw_android");
-                module.callAttr("run", host, mode, language(), saveName);
+                if (minigame != null) {
+                    module.callAttr("run", host, mode, language(), saveName,
+                            new Kwarg("minigame", minigame));
+                } else {
+                    module.callAttr("run", host, mode, language(), saveName);
+                }
             } catch (Throwable error) {
                 Log.e(TAG, "Python game failed", error);
                 host.finished("error");
@@ -471,7 +488,8 @@ public final class MainActivity extends Activity {
             if ("error".equals(status)) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.error_title)
-                        .setMessage(R.string.error_emergency)
+                        .setMessage(playingMinigame
+                                ? R.string.error_details : R.string.error_emergency)
                         .setPositiveButton(R.string.main_menu, (dialog, which) -> showMain())
                         .setOnDismissListener(dialog -> {
                             if (!mainVisible) {
@@ -497,7 +515,8 @@ public final class MainActivity extends Activity {
     private void confirmLeaveGame() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.quit_to_title)
-                .setMessage(R.string.unsaved_warning)
+                .setMessage(playingMinigame
+                        ? R.string.minigame_leave_warning : R.string.unsaved_warning)
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.leave_without_saving,
                         (dialog, which) -> showMain())
@@ -510,6 +529,17 @@ public final class MainActivity extends Activity {
         if (console != null) {
             console.setConsoleTextSize(textSize);
         }
+    }
+
+    private void showMinigameDialog() {
+        String[] labels = {getString(R.string.minigame_chocolate),
+                getString(R.string.minigame_ring)};
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.choose_minigame)
+                .setItems(labels, (dialog, which) ->
+                        startGame("minigame", null, MINIGAMES[which]))
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     private void showLoadDialog() {

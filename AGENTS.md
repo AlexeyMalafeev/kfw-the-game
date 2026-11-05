@@ -81,8 +81,9 @@ changes also `python kfw.py --autoplay --silent-ending`. `kf_lib/ai/fight_ai_tes
   `render.py` makes listening previews or, with `--game`, the files in the
   top-level `audio/`; run from its own directory, no chdir hack)
 - `ml/` — ML fight-outcome prediction experiment; needs the dev venv, not needed to play
-- `kf_lib/minigames/` — Chocolate and RING mini-games (`kfw.py --minigame`);
-  they reuse fighters, fights and UI but no `Game` or saves
+- `kf_lib/minigames/` — Chocolate and RING mini-games (`kfw.py --minigame`,
+  or the Android title screen's Mini-games button); they reuse fighters,
+  fights and UI but no `Game` or saves
 - `docs/` — one file per game system (mechanics-as-implemented, ⚠️ marks
   suspicious behavior): `fight_mechanics.md`, `gameplay.md` (day loop, economy,
   victory), `encounters.md` (encounters/events/stories/tournaments),

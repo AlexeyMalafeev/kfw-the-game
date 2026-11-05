@@ -67,7 +67,7 @@ measured on the loop.
 | Tune | Where |
 |---|---|
 | 1 The Path of the Fist | Android title screen (played by the app itself) |
-| 2 Choosing a Style | New game setup (`Game.new_game`) |
+| 2 Choosing a Style | New game setup (`Game.new_game`); RING's welcome screen and character creation |
 | 3–5 Morning Market, Teahouse Afternoon, Lanterns at Dusk | Town days, by date: day 1 plays 3, day 2 plays 4, day 3 plays 5, day 4 plays 3 again (`Playing.play_day_music`) |
 | 6 Bamboo Courtyard | School encounters during practice: master's trial, school challenge, bullying |
 | 7 Words of the Master | The master's teachings |
@@ -77,13 +77,13 @@ measured on the loop.
 | 13 Tournament Day | Tournaments and the All-Schools Tournament, scenes and fights |
 | 14 The Final Platform | A tournament's final bout (not the All-Schools Tournament's) |
 | 15 Shadow of the Boss | Fights that include the player's current story boss |
-| 16 Strange Dreams | Story scenes (start and every later scene) |
+| 16 Strange Dreams | Story scenes (start and every later scene); Chocolate's welcome screen and scene cards |
 | 17 Dice in the Back Room | Gambling, prize fighting, drunkards |
 | 18 Footsteps Behind You | Crime encounters, thieves, ambushes |
 | 19 Plum Blossom | Romance encounters, visiting the sweetheart or spouse |
 | 20 Healing Herbs | Days the player is injured or sick |
 | 21 Master of the House | Master mode: teaching students, visiting other masters, new students arriving |
-| 22 A Legend Is Born | The victory screen, stats and biography |
+| 22 A Legend Is Born | The victory screen, stats and biography; Chocolate's "The End" |
 
 Encounters pick their tune with a `music` class attribute (a `MUSIC` key),
 applied around `run()` in `BaseEncounter`; day actions use the
@@ -113,7 +113,7 @@ pool. After a scene or fight the previous tune comes back, from its intro.
 | disarm | Disarming while blocking or attacking |
 | item_use | A human player uses an item before a fight |
 | victory / defeat | End of a fight watched by a human: the fight music stops, then the jingle for the watching player (a draw counts as defeat) |
-| level_up | A human player levels up |
+| level_up | A human player (or a mini-game's fighter) levels up |
 
 ## Android side
 

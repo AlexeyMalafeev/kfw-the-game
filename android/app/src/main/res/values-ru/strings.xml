@@ -7,6 +7,10 @@
     <string name="continue_game">Продолжить</string>
     <string name="load_game">Загрузить игру</string>
     <string name="watch_ai">Наблюдать за игрой ИИ</string>
+    <string name="minigames">Мини-игры</string>
+    <string name="choose_minigame">Выберите мини-игру</string>
+    <string name="minigame_chocolate">«Шоколад» — история в семи сценах</string>
+    <string name="minigame_ring">РИНГ — бесконечная лестница боёв на арене</string>
     <string name="language">Язык: русский</string>
     <string name="choose_language">Выберите язык</string>
     <string name="import_save">Импортировать сохранение</string>
@@ -33,13 +37,15 @@
     <string name="quit_to_title">Выйти в главное меню</string>
     <string name="unsaved_warning">Вернуться на титульный экран? Прогресс после последнего сохранения будет потерян. В игре можно сохраниться через «Состояние» → «Сохранить и выйти».</string>
     <string name="cancel">Отмена</string>
+    <string name="minigame_leave_warning">Вернуться на титульный экран? Мини-игра закончится: мини-игры не сохраняются.</string>
     <string name="leave_without_saving">Выйти без сохранения</string>
     <string name="game_finished">Игра завершена</string>
     <string name="error_title">Игра неожиданно остановилась</string>
     <string name="error_emergency">Подробности записаны в errors.txt. Если возможно, создано аварийное сохранение.</string>
+    <string name="error_details">Подробности записаны в errors.txt.</string>
     <string name="loading">Загрузка…</string>
     <string name="ok">ОК</string>
-    <string name="about_text">KFW — пошаговая текстовая ролевая игра с режимом hot-seat. Android-версия запускает полную оригинальную игру на Python без упрощения содержимого.\n\nПункт «Состояние» в дневном меню открывает сведения о персонаже, сохранение, загрузку и выход. Широкие таблицы и ASCII-рисунки можно листать по горизонтали. A− / A+ меняют размер текста.\n\nТребуется Android 7.0 или новее. Сохранения совместимы с настольной версией. Старые сохранения Python содержат исполняемый код: импортируйте их только из надёжных источников.</string>
+    <string name="about_text">KFW — пошаговая текстовая ролевая игра с режимом hot-seat. Android-версия запускает полную оригинальную игру на Python без упрощения содержимого.\n\nМини-игры на титульном экране: «Шоколад» — история в семи сценах, и РИНГ — бесконечная лестница боёв на арене, где три поражения заканчивают забег. Мини-игры не сохраняются.\n\nПункт «Состояние» в дневном меню открывает сведения о персонаже, сохранение, загрузку и выход. Широкие таблицы и ASCII-рисунки можно листать по горизонтали. A− / A+ меняют размер текста.\n\nТребуется Android 7.0 или новее. Сохранения совместимы с настольной версией. Старые сохранения Python содержат исполняемый код: импортируйте их только из надёжных источников.</string>
     <string name="license_title">Лицензия KFW</string>
     <string name="third_party_licenses">Лицензии компонентов</string>
     <string name="language_restart">Применяю язык и перезапускаю…</string>

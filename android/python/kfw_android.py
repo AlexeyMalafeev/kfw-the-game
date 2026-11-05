@@ -215,7 +215,26 @@ def _write_crash_report(g):
             traceback.print_exc()
 
 
-def run(host, mode="new", language="en", save_name=None, home=None, resource_root=None):
+def _play_minigame(name):
+    from kf_lib.minigames import MINIGAMES
+
+    if name not in MINIGAMES:
+        raise ValueError(f"Unknown mini-game: {name}")
+    _reset_default_styles()  # RING offers the default styles
+    MINIGAMES[name]()
+
+
+def run(
+    host,
+    mode="new",
+    language="en",
+    save_name=None,
+    home=None,
+    resource_root=None,
+    minigame=None,
+):
+    """mode: "new", "load" (save_name), "ai" (watch AI players) or "minigame"
+    (minigame: a key of kf_lib.minigames.MINIGAMES; nothing is saved)."""
     runtime = AndroidRuntime(host)
     g = None
     status = "finished"
@@ -236,16 +255,21 @@ def run(host, mode="new", language="en", save_name=None, home=None, resource_roo
             from kf_lib.actors import player as player_module
 
             try:
-                if mode == "load":
-                    if not save_name:
-                        raise ValueError("A save file is required in load mode")
-                    g = game_module.Game()
-                    g.load_game(save_name)
-                elif mode in ("new", "ai"):
-                    g = _new_game(game_module, player_module, ui, ai_only=mode == "ai")
+                if mode == "minigame":
+                    _play_minigame(minigame)
                 else:
-                    raise ValueError(f"Unknown Android game mode: {mode}")
-                g.play()
+                    if mode == "load":
+                        if not save_name:
+                            raise ValueError("A save file is required in load mode")
+                        g = game_module.Game()
+                        g.load_game(save_name)
+                    elif mode in ("new", "ai"):
+                        g = _new_game(
+                            game_module, player_module, ui, ai_only=mode == "ai"
+                        )
+                    else:
+                        raise ValueError(f"Unknown Android game mode: {mode}")
+                    g.play()
             except SessionClosed:
                 status = "stopped"
             except KeyboardInterrupt:

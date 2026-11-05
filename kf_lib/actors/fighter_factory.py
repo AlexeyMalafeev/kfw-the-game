@@ -2,7 +2,7 @@ import random
 
 from kf_lib.i18n import _
 from kf_lib.kung_fu import styles, style_gen
-from kf_lib.ui import get_int_from_user, grey, menu
+from kf_lib.ui import get_int_from_user, get_str_from_user, grey, menu
 from kf_lib.utils import rnd, rndint
 from . import names
 from .fighter import Fighter
@@ -31,33 +31,28 @@ THUG_LV = (1, 5)
 TOUGH_THIEF_LV = (7, 10)
 
 
-def from_exp_worth(x):  # todo reimplement
-    """Return a list of fighters with x exp worth."""
-    max_diff = round(x / 10)
-    too_high = x + max_diff + 1
-    weapon_chance = 0.35
-    min_lv = 1
-    max_lv = 20
-    max_n = 5
-    i = 0
-    while True:
-        i += 1
-        if max_n > 1:
-            n = rndint(1, max_n)
-        else:
-            n = 1
-        if max_lv <= min_lv:
-            max_lv = min_lv + 1
-        lv = rndint(min_lv, max_lv)
+def from_exp_worth(x, max_lv=20, max_n=5, weapon_chance=0.35, max_tries=300):
+    """Return a random group of 1 to max_n fighters (all of one level from 1 to
+    max_lv; a lone fighter may carry a weapon) whose total exp worth is in
+    [x, x + x / 10]. If no such group turns up in max_tries rolls, return the
+    closest one rolled."""
+    too_high = x + round(x / 10) + 1
+    best, best_gap = None, None
+    for _ in range(max_tries):
+        n = rndint(1, max_n)
+        lv = rndint(1, max_lv)
         fighters = new_fighter(lv=lv, n=n)
         if n == 1:
-            f = fighters
             if rnd() <= weapon_chance:
-                f.arm()
-            fighters = [f]
-        exp = sum([ff.get_exp_worth() for ff in fighters])
+                fighters.arm()
+            fighters = [fighters]
+        exp = sum(f.get_exp_worth() for f in fighters)
         if x <= exp < too_high:
             return fighters
+        gap = x - exp if exp < x else exp - too_high + 1
+        if best_gap is None or gap < best_gap:
+            best, best_gap = fighters, gap
+    return best
 
 
 def new_beggar():
@@ -106,10 +101,17 @@ def new_craftsman():
 
 # todo more general function new_custom_f, then ..._hcf from it (set class, experiment)
 def new_custom_hcf():
-    name = input(_('Name: '))
-    max_len = max((len(s.name) for s in styles.default_styles))
+    name = ''
+    while not name:
+        name = get_str_from_user(_('Name:')).strip()
+    max_len = max((len(s.display_public_name) for s in styles.default_styles))
     legend = [
-        ('{:<{}} {}'.format(s.name, max_len, grey(s.descr_short)), s)
+        (
+            '{:<{}} {}'.format(
+                s.display_public_name, max_len, grey(s.public_descr_short)
+            ),
+            s,
+        )
         for s in styles.default_styles
     ]
     # todo select starting atts

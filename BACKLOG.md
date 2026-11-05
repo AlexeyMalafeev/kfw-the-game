@@ -120,7 +120,6 @@ styles, techniques, weapons. The 50 that remain, by doc → pointer:
   - `text_content.md` — `MISC` dead; only `Thug 1`/`Robber 1` get group
     names; unused name constants; terminal `'Flying'` art branch (3 moves
     on Stance); `concat` correct only at `BUFFER_WIDTH = 1`
-  - `minigames.md` RING — `from_exp_worth` retry loop unbounded
 
 ## Fight mechanics
 

@@ -7,6 +7,10 @@
     <string name="continue_game">Continue</string>
     <string name="load_game">Load game</string>
     <string name="watch_ai">Watch an AI game</string>
+    <string name="minigames">Mini-games</string>
+    <string name="choose_minigame">Choose a mini-game</string>
+    <string name="minigame_chocolate">Chocolate — a story in seven scenes</string>
+    <string name="minigame_ring">RING — an endless arena ladder</string>
     <string name="language">Language: English</string>
     <string name="choose_language">Choose language</string>
     <string name="import_save">Import save</string>
@@ -34,13 +38,15 @@
     <string name="quit_to_title">Quit to title</string>
     <string name="unsaved_warning">Return to the title screen? Progress since your last save will be lost. You can save through State → Save and Quit in the game.</string>
     <string name="cancel">Cancel</string>
+    <string name="minigame_leave_warning">Return to the title screen? This mini-game ends here: mini-games are not saved.</string>
     <string name="leave_without_saving">Leave without saving</string>
     <string name="game_finished">Game finished</string>
     <string name="error_title">The game stopped unexpectedly</string>
     <string name="error_emergency">Details were saved to errors.txt. An emergency save was created when possible.</string>
+    <string name="error_details">Details were saved to errors.txt.</string>
     <string name="loading">Loading…</string>
     <string name="ok">OK</string>
-    <string name="about_text">KFW is a turn-based hot-seat text RPG. This Android edition runs the complete original Python game; no game content has been simplified.\n\nUse State in the day menu to inspect your character, save, load or quit. On a phone, swipe wide tables and ASCII art horizontally. Use A− / A+ to change text size.\n\nAndroid 7.0 or later is required. Saves are compatible with the desktop version. Legacy Python saves are executable content: import them only from people you trust.</string>
+    <string name="about_text">KFW is a turn-based hot-seat text RPG. This Android edition runs the complete original Python game; no game content has been simplified.\n\nMini-games on the title screen: Chocolate, a story in seven scenes, and RING, an endless arena ladder where three lost fights end the run. Mini-games are not saved.\n\nUse State in the day menu to inspect your character, save, load or quit. On a phone, swipe wide tables and ASCII art horizontally. Use A− / A+ to change text size.\n\nAndroid 7.0 or later is required. Saves are compatible with the desktop version. Legacy Python saves are executable content: import them only from people you trust.</string>
     <string name="license_title">KFW license</string>
     <string name="third_party_licenses">Third-party licenses</string>
     <string name="language_restart">Applying the language and restarting…</string>

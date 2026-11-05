@@ -2,24 +2,46 @@
 
 Two mini-games, Chocolate and RING, launched from the main entry point with
 `python kfw.py --minigame {chocolate,ring}` (plus the usual `--lang` and
-`--no-color`). Sources: `kf_lib/minigames/` (`_chocolate.py`, `_ring.py`;
-`MINIGAMES` in `__init__.py` maps the flag value to a `play_*()` function),
-`kfw.py`, `kf_lib/actors/fighter_factory.py`. Tests: `test/test_minigames.py`.
+`--no-color`), or on Android from the title screen's **Mini-games** button.
+Sources: `kf_lib/minigames/` (`_chocolate.py`, `_ring.py`; `MINIGAMES` in
+`__init__.py` maps the flag value to a `play_*()` function), `kfw.py`,
+`kf_lib/actors/fighter_factory.py`, `android/python/kfw_android.py`. Tests:
+`test/test_minigames.py`, `test/test_android_runtime.py`.
 Items marked ⚠️ look unintentional or surprising — verify before building on
 them.
 
 ## Shared conventions
 
 - They reuse the main game's machinery: `HumanControlledFighter` (the
-  human-driven fighter without a `Game` attached), `Fighter.fight()` with its
-  prefight screen, "Auto fight?" prompt and post-fight menu, the color markup
-  (`ui.rprint`) and the i18n catalogs. They create no `Game`, so nothing is
-  saved and no exp, stats or accomplishments are recorded (those hooks in
-  `BaseFight` act on players only).
+  human-driven fighter without a `Game` attached; its level-up banner and
+  sound are the ones `HumanPlayer` uses, `announce_level_up()`),
+  `Fighter.fight()` with its prefight screen, "Auto fight?" prompt and
+  post-fight menu, the color markup (`ui.rprint`; no bare `print()`, so every
+  line gets the automatic colors) and the i18n catalogs. They create no
+  `Game`, so nothing is saved and no exp, stats or accomplishments are
+  recorded (those hooks in `BaseFight` act on players only).
 - `kfw.py` sets the language and colors first, then dispatches to the
   mini-game; Ctrl+C ends it with the usual farewell. Crashes print a plain
   traceback (no `crash_report`, which needs a `Game`).
-- Interactive: like the main game they need a real TTY.
+- Interactive: like the main game they need a real TTY, or the Android app.
+- Music (heard on Android only, see `docs/audio.md`): fights pick their own
+  tunes as in the main game, and the end-of-fight jingle stops the music, so
+  the screens between fights are quiet until a mini-game starts a tune again.
+
+## On Android
+
+The title screen's **Mini-games** button opens a picker (Chocolate, RING).
+`MainActivity` starts the session with `kfw_android.run(mode="minigame",
+minigame=<MINIGAMES key>)`, which resets the default-style list (a
+generated-style game earlier in the same app process replaces it, and RING's
+style menu reads it) and calls the `play_*()` function inside the usual
+Android runtime: native menu buttons, the keyboard for RING's name and level,
+colors kept. When the mini-game returns, the app goes back to the title.
+Leaving early with ‹ or Back asks for confirmation with a mini-game message
+(nothing is saved), and a crash dialog mentions only `errors.txt` (there is
+no `Game` for an emergency save). The instrumentation self-test plays both
+mini-games on the device; `android/scripts/ui_smoke.py` plays a whole RING
+run from the title screen and leaves Chocolate early.
 
 ## Chocolate — `kf_lib/minigames/_chocolate.py`
 
@@ -52,6 +74,8 @@ people are named anywhere in the game.
 - Russian: scene titles and messages go through `_()`; the hero, gang names
   and the two techs are in the names catalog (`EXTRA_NAMES` in
   `dev_scripts/i18n_extract.py`, translations in `dev_scripts/_names_ru.py`).
+- Music: Strange Dreams (the main game's story tune) on the welcome screen
+  and every scene card; A Legend Is Born on "The End".
 
 History: a 2020–2022 prototype in `minigames/Chocolate_mini_game.py`, broken
 for years by stale imports and renamed moves/techs; revived 2026-10. Moves
@@ -68,20 +92,33 @@ An endless arena ladder around the normal fight engine:
 
 1. Difficulty menu: easy 0.9 / normal 1.0 / hard 1.1 / extreme 1.2, a
    multiplier on opponent strength.
-2. `fighter_factory.new_custom_hcf()` builds the player's fighter:
-   `input()` for the name, a style menu over `styles.default_styles`, a
-   level prompt (1–20) applied via `level_up()`.
+2. `fighter_factory.new_custom_hcf()` builds the player's fighter: a name
+   prompt (`get_str_from_user`; an empty or blank name is asked again), a
+   style menu, and a level prompt (1–20) applied via `level_up()` — the
+   level-up banner once, then the usual attribute and move choices for every
+   level gained. The style menu lists `styles.default_styles` (the hand-made
+   styles, the ones a main game offers when "Randomly generated styles?" is
+   answered no) the way the main game's style menu does:
+   `display_public_name` (translated) and `public_descr_short`, so the secret
+   technique shows as `???`.
 3. Each round, opponents come from `fighter_factory.from_exp_worth(
-   p.get_exp_worth() * difficulty)`: a retry loop that rolls a random group
-   (`new_fighter`, level 1–20, up to 5 members, 35% weapon chance for a lone
-   opponent) until the group's total `get_exp_worth()` lands in
-   `[x, x + x / 10)`.
+   p.get_exp_worth() * difficulty, max_lv=p.level + OPP_LV_MARGIN)` (margin
+   5): it rolls random groups (`new_fighter`, 1 to 5 members of one level
+   from 1 to `max_lv`, 35% weapon chance for a lone opponent) until the
+   group's total `get_exp_worth()` lands in `[x, x + x / 10]`, and after 300
+   rolls settles for the closest group rolled. Measured 2026-11 (player
+   levels 1–80, easy and extreme, 8 searches each): a median search took
+   0.03–0.6 s, the slowest 1.6 s, and the fallback was needed once, for a
+   lv.1 player on extreme (only three exp values fit the band there). Until
+   2026-11 the cap was a fixed level 20 with no roll limit: five lv.20
+   fighters are worth about 850, a lv.40 player about 900, so from about
+   level 40 (35 on extreme) the loop never ended.
 4. `p.fight(opp[0], en_allies=opp[1:], hide_stats=difficulty >= 1.0)`. Win →
-   `p.level_up()` (full interactive level-up). Loss → one of 3 attempts is
-   spent. At 0 attempts it prints the reached level and ends.
+   `p.level_up()` (full interactive level-up, bold green banner). Loss → one
+   of 3 attempts is spent; the remaining count shows in yellow, red at 0. At
+   0 attempts it prints the reached level (cyan) and a bold "Game over".
 
-- ⚠️ `from_exp_worth` carries a `# todo reimplement` in `fighter_factory.py`:
-  the retry loop has no termination guarantee beyond eventually rolling a
-  matching group.
+- Music: Choosing a Style (the main game's setup tune) from the welcome
+  screen through character creation, until the first fight.
 - BACKLOG ("Minigames & far-future mods") has related ideas — RING score for
   exp bonuses, kumite mini-game, tournament betting — none implemented.

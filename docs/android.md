@@ -65,6 +65,9 @@ locations, not files under `app/build/generated/`. No manual copy step is needed
 - **Continue** loads the newest valid save. **Load game** offers all valid saves, newest
   first. **Watch an AI game** runs four visible Smart AI players; their pauses use the same
   Continue button as human play.
+- **Mini-games** offers Chocolate (Zen's story in seven scenes) and RING (an endless arena
+  ladder; three lost fights end the run), the same games as `kfw.py --minigame`. They are
+  not saved: the run ends at the title, and leaving early says so. See `docs/minigames.md`.
 - Game menus become touch buttons with their real labels. Scroll the bottom panel for
   more moves or actions. The optional Back button closes weak menus such as the post-fight
   menu.
@@ -120,9 +123,10 @@ be loaded and exported. Python diagnostics also go to Logcat.
 - `android/python/kfw_android.py` owns the embedded runtime. It stages read-only `moves/`,
   `quotes/` and `locale/` into app-private HOME before importing any `kf_lib` module. This
   preserves the desktop cwd-relative resource loaders while keeping saves and logs out of
-  upgrade-managed code directories. Before each new (not loaded) game it also restores the
-  pristine default-style list, so a previous generated-style session cannot leak into the
-  next one.
+  upgrade-managed code directories. Before each new (not loaded) game and each mini-game it
+  also restores the pristine default-style list, so a previous generated-style session
+  cannot leak into the next one. `run()` takes a mode: `new`, `load` (with a save name),
+  `ai`, or `minigame` (with `minigame=` a key of `kf_lib.minigames.MINIGAMES`).
 - `GameHost.java` is the blocking input/output bridge between the Python game thread and
   the Android main thread. Closing a host wakes pending input and unwinds the old session.
   A new session waits for the previous game thread in the background before installing
@@ -166,12 +170,15 @@ cd ..
   --artifacts android/build/ui-smoke
 ```
 
-The instrumentation suite executes localized resources, new game, interactive combat and
-save/load in an isolated app-private HOME. The UIAutomator script drives the real native UI:
+The instrumentation suite executes localized resources, new game, interactive combat,
+save/load and a complete run of both mini-games in an isolated app-private HOME. The
+UIAutomator script drives the real native UI:
 new game, a key outside the menu, keyboard input, background/resume, rotation, a system
 font-size change, State/Save, title, Continue, a
 deterministic NormalFight (launched through the game's Debug Menu) with manual move
-selection, post-fight Back and another save. Screenshots
+selection, post-fight Back and another save; then a whole RING run from the Mini-games
+picker (extreme difficulty, auto fights) back to the title, and Chocolate left early through
+the ‹ button and its mini-game confirmation. Screenshots
 are written to the artifacts directory. Add `--reset` only on a disposable test device: it
 explicitly clears all KFW app data before the run.
 
