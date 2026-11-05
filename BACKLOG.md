@@ -775,3 +775,116 @@ debug menu, biographies (gender-aware), all name catalogs — 954 prose +
 - **Two-count sentences** ("{n} police officers fighting {m} thugs") can't
   inflect both counts via one `ngettext`; current phrasing parenthesizes the
   numbers
+
+## Claude's Suggestions
+
+Feature ideas Claude (Opus 5.5) proposed on 2026-11-06, when the author asked
+for a fresh look at what would make the gameplay deeper and more captivating.
+They came from reading this backlog, `docs/` and the code, and none of them
+was on the backlog before, except as a one-line title. They have a section of
+their own to credit Claude's part in how the game's concept and content
+evolve, not only its code; later ideas from Claude go here too. Ordered by
+Claude's pick (1–3 first). Most target one of three gaps: a world that
+remembers what the player did, goals the player chooses, and decisions
+inside fights.
+
+1. **A nemesis who grows with you.** Now: an enemy is a beaten thug renamed
+   to a robber nickname (`try_enemy`), frozen at the level he had then (only
+   school students level up during a game: monthly, when taught, in Student
+   Rivalry), so by mid-game his ambushes with 2–4 weak thugs are free wins.
+   Idea: one enemy at a time becomes the player's nemesis. He levels up
+   alongside the player, studies the player's signature move (`move_usage` /
+   `get_favorite_move`) and gains a defense bonus against it, taunts about
+   their last fight, enters the player's tournaments, and goes after the
+   school, students or sweetheart. It ends in a final duel, where winning may
+   reform him into a friend ("enemy becomes friend" under Game systems). Why:
+   the long, personal arc the game lacks; stories happen once and enemies
+   never change. Medium: mostly encounters and quotes; the only fight change
+   is one NPC's bonus. Pairs with 7.
+2. **Fight plans for auto-fights.** Now: an auto-fight uses the default fight
+   AI for everyone, and the AI picks crowd targets at random. Idea: before an
+   auto-fight, or as a standing setting, the player picks a plan: Aggressive,
+   Patient (guard and counter), Keep distance, Close in; in crowds also
+   Weakest first / Leader first. Each plan is a set of fight-AI weights plus a
+   targeting rule; some unlock with techs or the master's teachings. AI
+   players get the same lever. Why: the most common way to fight becomes a
+   decision, and close-range or counter styles can play like themselves.
+   Small to medium; changes no fight rules. Related: "different fight AI
+   behaviors" under AI.
+3. **Reading the opponent.** Now: turns are scheduled on a time axis the
+   player can't see (a commented-out `print(self.current_fight.order)` sits in
+   `HumanControlledFighter.choose_move`), and every strike lands instantly on
+   the attacker's turn, so defense is passive dice. Two steps: (a) show who
+   acts next and when ("Wang in 0.5 s, you in 1.5 s"), making a move's time
+   cost a visible choice; display only. (b) The heaviest strikes get a
+   wind-up: announced on the attacker's turn, landing on his next one; in
+   between, the defender can Guard, step out of range (the strike misses) or
+   strike first to break it. A fight-AI rule "guard or step back against an
+   announced strike" gives Guard the job the genetic weights never found
+   (Guard is still at dead-slot level, see the 2026-10-25 snapshot). Why:
+   fights become read-and-respond, and Guard, footwork, speed and counters get
+   value from the situation instead of from number tuning. (a) small; (b)
+   large and balance-affecting: rule experiments, then a `run_test_fb.py`
+   re-run.
+4. **Lei tai fights with ring-outs.** A fight mode on the raised challenge
+   platform: a knockback that would push a fighter past distance 4 throws him
+   off, and he loses without a KO (`change_distance` clamps to 1–4 today; the
+   overflow is the hook). For some tournaments and challenges. Push and
+   knockback moves become a way to win, and staying close keeps a fighter
+   away from the edge. Small to medium; affects only this mode. Related:
+   "knockback against a wall" under Fight mechanics.
+5. **Steal another school's secret technique.** Every tech style's lv-7 tech
+   is already secret (left out of the public name and emphases). Let the
+   player pursue a rival school's secret: watch its students fight to learn
+   its true name, befriend a student, beat its master, or steal the manual at
+   night (a big rep loss; the school becomes an enemy). Reward: that tech as
+   one extra tech, at most one per game. Why: a goal the player picks and
+   works toward (techs now come on a fixed schedule or by luck), and the
+   central wuxia plot, on infrastructure that already exists. Medium.
+6. **Rivalry between players.** Now: hot-seat players mostly race side by
+   side; `PlayerMatch` pairs a player only with AI players. Idea: a
+   "Challenge a rival" day action with stakes the challenger names (money,
+   rep, school rank), where refusing costs face; plus dirty tricks: hire thugs
+   to ambush a rival (money, and rep if the gossipmonger finds out), spread
+   rumors, poach a rival master's students. Tournaments already pair human
+   players; check how two interactive humans share one fight's menus.
+   Medium.
+7. **Move mastery.** Moves improve with use: fewer fumbles and better
+   accuracy at, e.g., 25 / 100 / 250 uses, and a new function once perfected,
+   read from the saved `move_usage` counts. With 1, a real trade-off: perfect
+   one move, or stay unpredictable to the nemesis. Small; balance-affecting,
+   and the fight-balance harness uses fresh fighters, so it needs its own
+   test. Related: "upgrade moves from pathetic to ultimate" under Moves.
+8. **Schools that rise and fall.** Now: the schools are fixed at game start;
+   brawls and the All-Schools Tournament change only prestige. Idea: results
+   move students between schools; a school left with no students closes, and
+   a new one opens with a freshly generated style (40,293 possible), so the
+   late game gets new opponents and styles. Medium. Related: "rankings
+   between schools" under Game systems, the Out-of-towners outline under
+   Content.
+9. **A campaign clock.** An optional game mode: on day 1 the town learns
+   that, say, the Ten Masters of the North arrive in two years. What the
+   player builds by then (level, rep, friends, spouse, students, reformed
+   enemies) decides who stands with them in the showdown. Why: a direction
+   and a deadline for a long game, and a payoff for the social side (friends
+   do almost nothing outside fights, see `docs/social_and_traits.md`). The
+   Content section lists "10 masters from the North" and the epic showdown as
+   story titles; new here is making it a whole game's backbone. Medium to
+   large.
+10. **Friends with loyalty.** A loyalty value per friend. Friends ask for
+    help (an ambush, a debt, an attack on their school); helping raises
+    loyalty, refusing lowers it. Loyal friends join fights more often, teach
+    a move or vouch for the player (rep); neglected ones drift away
+    (friendship is permanent today, there is no `remove_friend`). Gives the
+    dead `check_partners` (friends joining training) a reason to exist.
+    Medium.
+11. **Lasting injuries.** A bad defeat (a KO by a critical or EPIC hit, or by
+    a crowd) sometimes leaves a lasting injury, e.g. "bad knee: kicks −20%",
+    until a doctor (a money sink; nothing costs upkeep today) or a story
+    heals it. Losses would matter without a game over. Keep it rare and
+    always curable, or it only frustrates. Small to medium;
+    balance-affecting. Related: "knowledge of medicine" under Traits.
+12. **A world seed.** A `kfw.py --seed` option, so friends can play the same
+    starting world (styles, schools, criminals) and compare days to victory;
+    their choices still change everything after that. Small; replay value
+    more than depth.
