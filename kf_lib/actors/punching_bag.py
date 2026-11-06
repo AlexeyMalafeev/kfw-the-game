@@ -6,7 +6,7 @@ from .fighter import Fighter
 
 BAG_NAME = 'Punching Bag'
 BAG_HP = 9999  # far more than a round can take: the bag is never knocked out
-# ASCII art (moves/ascii_mapping.txt): hanging still / swinging after a hit
+# ASCII art (moves/ascii_mapping.txt): hanging still / dented by a hit
 ART_STILL = 'Punching Bag'
 ART_HIT = 'Punching Bag Hit'
 HIT_ARTS = {'Hit', 'Hit Effect', 'Knockback'}

@@ -34,7 +34,7 @@ All notable changes to KFW are documented here. Format loosely follows
   style, your own level-up choices), then play as many rounds as you like;
   the move menu shows the clock, and the round ends with a gong and a score
   screen (damage, strikes landed, hardest blow, criticals and epics). The
-  bag has its own ASCII art: it hangs from a chain and swings when you hit
+  bag has its own ASCII art: it hangs from its hook and dents where you hit
   it. Your best damage is kept as a record
 - **Practice on a punching bag in the main game**: State → Moves → Punching
   Bag lets your character try out moves on the same bag for 10 or 20 moves:

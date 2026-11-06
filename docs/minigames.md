@@ -180,7 +180,7 @@ module holds the game flow and the records.
   never takes a turn (no "Punching Bag: Do Nothing" screens). It can't fall,
   lose balance, be stunned, shocked or slowed (those `cause_*` methods are
   no-ops) and never counters or speaks. It has its own ASCII art, hanging
-  still or swinging after a hit (`docs/text_content.md`). A bag fight gives
+  still or dented by a hit (`docs/text_content.md`). A bag fight gives
   no exp and records no stats even for a main-game player (`BagFight`
   overrides those steps). `is_living = False` makes the
   engine skip bleeding and stamina damage ("gasps for breath!") on it. Heavy

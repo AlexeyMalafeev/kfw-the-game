@@ -180,11 +180,13 @@ Besides move names, the mapping contains situational pictures the fight code
 asks for directly: `Stance`, `Win`, `Lying`, `Falling`, `Knockback`,
 `Dodge`/`Block`/`Hit`, their `Lying …` variants, `Hit Effect` and `Lying Hit
 Effect`, and the punching bag's two (since 2026-11): `Punching Bag`, hanging
-still from its chain, and `Punching Bag Hit`, swinging away with a `*` where
-the blow lands. `PunchingBag.set_ascii` maps every picture the fight asks for
-to one of them (`Hit`, `Hit Effect` and `Knockback` to the swing). The bag is
-always on the right, so the file holds the mirror image of how it shows. Each `Move` caches its pair at construction (`Move.set_ascii` →
-`get_ascii(self.name)`).
+still from its hook, and `Punching Bag Hit`, deformed by the blow (the hook
+swings, the side facing the attacker is dented in, a `*` marks the impact).
+`PunchingBag.set_ascii` maps every picture the fight asks for to one of them
+(`Hit`, `Hit Effect` and `Knockback` to the dented one). Both are as tall as
+the fighter pictures (five lines above the floor line). The bag is always on
+the right, so the file holds the mirror image of how it shows. Each `Move`
+caches its pair at construction (`Move.set_ascii` → `get_ascii(self.name)`).
 
 ### Per-fight flow (`fighter/_ascii.py`)
 
