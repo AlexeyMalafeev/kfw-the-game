@@ -3,7 +3,7 @@
 All notable changes to KFW are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); releases have codenames.
 
-## [Unreleased]
+## [v0.7.8-beta "The Bag Won't Strike Back!"] — 2026-11-06
 
 ### Added
 - **The gossipmonger tells a free rumor**: before asking for money, the
@@ -40,8 +40,7 @@ All notable changes to KFW are documented here. Format loosely follows
   Bag lets your character try out moves on the same bag for 10 or 20 moves:
   combos, distances, the hardest-hitting choices. It doesn't use up the day
   and gives nothing: no exp, no fight stats, no effect on your favorite
-  move in rumors. The old unused sparring-against-a-dummy day action is
-  gone
+  move in rumors
 - **RING keeps records**: the best run per difficulty (most fights won, with
   the fighter's name, style and levels) shows on the welcome screen and at
   game over, with "New record!" when you beat it. Records of RING and the
@@ -68,8 +67,6 @@ All notable changes to KFW are documented here. Format loosely follows
   most. The favorite and most feared moves in rumors, the stats table and
   the ending biography now skip them; a biography names the most feared
   move even when the player has no signature move yet
-
-### Changed
 - **Your spouse can help against the Fat Girl**: when she ambushes a married
   player, the spouse may step in (the usual 60% chance). Friends, the master,
   schoolmates and improvised weapons still stay out of it
