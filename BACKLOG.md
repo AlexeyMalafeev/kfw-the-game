@@ -740,6 +740,12 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 
 ## UI / UX
 
+- **HIGH: "How to play" on the Android title screen** — a main-menu item
+  next to Mini-games that opens a short guide to the game, in English and
+  Russian (follows `--lang`/the app language like the rest of the UI). The
+  README's "How to play" section (premise + the five ways to win) is a
+  starting point; the guide should also cover the basics a new player
+  needs (day loop, fights, training)
 - use a custom console (colors at least); revisit the abandoned rich stub
 - game beginning text
 - generate player description in text (style, strong points, everything)
