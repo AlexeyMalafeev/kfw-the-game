@@ -45,11 +45,6 @@ out first), and the index of ⚠️ points in `docs/*.md`. Fixed entries move to
   `generated_styles=` → 100 interactive prompts; also persists nothing
   despite the name),
   `ML_learn.py` (input path `'../../ml/...'` resolves outside the repo)
-- the music microlags: short stutters in playback (reported 2026-11-09).
-  Music plays only on Android (`GameAudio.java`, two `MediaPlayer`s, intro
-  handed to the loop with `setNextMediaPlayer`; see `docs/audio.md`). Not
-  yet pinned down where it happens — mid-tune, at the intro/loop handover,
-  at loop restarts, or while sound effects play — so find that first
 
 ### Unverified reports
 
@@ -751,9 +746,17 @@ buffs ±4, techs 1 ±9, techs 2 ±25) — so the comparison below pools 5 seeds 
 - display all player fighter atts in state menu (suboption?)
 - common log for all players; get verbose fighter info
 - add timer to fight screens?
+
+## Audio (see `docs/audio.md`)
+
+- **bug: the music microlags** — short stutters in playback (reported
+  2026-11-09). Music plays only on Android (`GameAudio.java`, two
+  `MediaPlayer`s, intro handed to the loop with `setNextMediaPlayer`). Not
+  yet pinned down where it happens — mid-tune, at the intro/loop handover,
+  at loop restarts, or while sound effects play — so find that first
 - optional "realistic" sound pack: a second set of music and effects in a
   more realistic style than the current retro-console chiptune, chosen by the
-  player (the render pipeline and player are in `docs/audio.md`)
+  player
 
 ## Localization (see `docs/i18n.md`)
 
